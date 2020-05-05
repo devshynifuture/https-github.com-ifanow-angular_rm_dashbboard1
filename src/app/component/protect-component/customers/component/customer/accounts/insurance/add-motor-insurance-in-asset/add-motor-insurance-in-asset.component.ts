@@ -4,14 +4,20 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
-import { MatInput } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-motor-insurance-in-asset',
   templateUrl: './add-motor-insurance-in-asset.component.html',
-  styleUrls: ['./add-motor-insurance-in-asset.component.scss']
+  styleUrls: ['./add-motor-insurance-in-asset.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class AddMotorInsuranceInAssetComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -30,6 +36,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     // }
   };
   maxDate = new Date();
+  minDate = new Date();
   inputData: any;
   ownerName: any;
   nomineesListFM: any = [];
@@ -60,7 +67,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   bankAccountDetails: { accountList: any; controleData: any; };
   accountList: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   
@@ -337,6 +344,36 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+  }
+  dateChange(value,form,formValue){
+    if(form=='policyExpiryDate' && formValue){
+    let startDate =  new Date(this.motorInsuranceForm.controls.policyStartDate.value);
+      let policyExpiryDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+      let comparedDate :any = new Date(this.motorInsuranceForm.controls.policyStartDate.value);
+      comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+      if(policyExpiryDate < comparedDate){
+        this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+        this.motorInsuranceForm.get('policyExpiryDate').markAsTouched();
+      }else{
+        this.motorInsuranceForm.get('policyExpiryDate').setErrors();
+      }
+    }else{
+      if(formValue){
+        let policyExpiryDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+        let policyStartDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
+
+        if(policyStartDate >= policyExpiryDate){
+          this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+          this.motorInsuranceForm.get('policyExpiryDate').markAsTouched();
+        }else{
+          this.motorInsuranceForm.get('policyExpiryDate').setErrors();
+
+        }
+      }
+    }
+  
   }
   onChange(value,event) {
     if (parseInt(event.target.value) > 100) {
@@ -418,6 +455,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       }
 
     })
+    this.motorInsuranceForm.get('registrationDate').setErrors(null);
     if (this.motorInsuranceForm.invalid) {
       this.motorInsuranceForm.markAllAsTouched();
     } else {
