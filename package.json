@@ -75,6 +75,9 @@
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.9.1"
   },
+  "resolutions": {
+    "moment": "2.24.0"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.25",
     "@angular/compiler-cli": "~8.2.14",

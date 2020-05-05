@@ -43,15 +43,27 @@
                 <!-- Portfolio Asset allocation chart -->
                 <div class="wrapperBox">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0">
                             <h5 class="roboto m-0">Asset allocation</h5>
                             <div class="borderChatBox bg-white">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="col-md-12" id="piechartMutualFund" [chart]="chart"></div>
+                                    <div class="col-md-6 p-0">
+                                        <div id="piechartMutualFund" [chart]="chart"></div>
                                     </div>
-                                    <div class="col-md-8 b-a bl-0 p-0">
-                                        <div class="row b-b pt-10 pb-10" *ngFor="let data of chartData">
+                                    <div class="col-md-6 pr-0">
+
+                                        <ul class="pointUl">
+                                            <li *ngFor="let data of chartData">
+                                                <span class="bg-primary pointNumber"> </span>
+                                                <span class="f-14 mr-8"
+                                                    appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
+                                                <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                                                <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
+                                            </li>
+                                        </ul>
+
+
+                                        <!-- <div class="row b-b pt-10 pb-10" *ngFor="let data of chartData">
                                             <div class="col-md-1">
                                                 <div class="hw-16 mt-2 bg-primary"></div>
                                             </div>
@@ -73,7 +85,8 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
+
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +97,7 @@
                 <!-- portfolio section -->
                 <div class="wrapperBox">
                     <div class="row">
-                        <div class="col-md-8 d-flex align-items-center">
+                        <div class="col-md-8 pl-0 d-flex align-items-center">
                             <h5 class="roboto m-0">Portfolio</h5>
                         </div>
                         <div class="col-md-4 text-right">
@@ -98,7 +111,7 @@
                         <!-- portfolio data present -->
                         <div class="fundBox bg-white" *ngFor="let portData of portFolioData">
                             <div class="row">
-                                <div class="col-md-8  pr-0">
+                                <div class="col-md-9  pr-0">
                                     <h5 class="roboto">{{portData.assetTypeString}}</h5>
                                 </div>
                                 <div class="col-md-4 d-flex justify-content-end">
@@ -368,13 +381,13 @@
                 <!-- activity section -->
                 <div class="wrapperBox">
                     <div class="row">
-                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                        <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0">Activity overview</h5>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 pl-0">
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Advice awaiting your consent</h5>
                                 <p class="f-12 text-primitive">last 30 days</p>
@@ -382,7 +395,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 pl-0">
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Action plans in process</h5>
                                 <p class="f-12 text-primitive">currently</p>
@@ -390,7 +403,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 pl-0">
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Money to be deployed
                                 </h5>
@@ -406,14 +419,14 @@
                 <!-- document vault -->
                 <div class="wrapperBox">
                     <div class="row">
-                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                        <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Document vault</h5>
                         </div>
                     </div>
 
 
                     <div class="row">
-                        <div class="col-md-12" *ngIf="documentVault && documentVault.length > 0">
+                        <div class="col-md-12 pl-0" *ngIf="documentVault && documentVault.length > 0">
                             <div class="bg-white vaultbBox" *ngFor="let docs of documentVault">
                                 <div class="row">
                                     <div class="col-md-7 p-0">
@@ -559,7 +572,7 @@
                 <div class="wrapperBox"
                     *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                     <div class="row">
-                        <div class="col-md-8 d-flex align-items-center">
+                        <div class="col-md-8 pl-0 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions</h5>
                         </div>
                         <div class="col-md-4 text-right">
@@ -592,7 +605,7 @@
                                 <div class="col-md-12">
                                     <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
                                     <p class="mb-4">{{clientData.name}}</p>
-                                    <span class="f-12 spanClass text-primary" [class]="tnx.status">
+                                    <span class="f-12 spanClass btn-danger-solid">
                                         {{tnx.statusDesc}}
                                     </span>
                                 </div>
@@ -604,12 +617,12 @@
                 <!-- risk profile -->
                 <div class="wrapperBox">
                     <div class="row">
-                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                        <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0">Risk profile</h5>
                         </div>
                     </div>
 
-                    <div class="riskProfileBox bg-white"
+                    <div class="riskProfileBox p-20 bg-white"
                         *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
                         <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
@@ -626,6 +639,10 @@
                                     Your risk profile: {{risk.riskProfileStatus}}
                                 </h5>
                                 <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
+
+                                <!-- <img src="/assets/images/svg/aggressive.svg"> -->
+
+
                             </div>
                         </div>
                     </div>
@@ -813,13 +830,25 @@
                         <img [src]="orgDetails.reportLogoUrl">
                     </div>
                 </div>
-                <div class="col-md-9 p-0 text-left">
+                <div class="col-md-9 pr-0 text-left">
                     <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
                     <p class="text-custom m-0">Contact</p>
                 </div>
             </div>
         </div>
 
-        <app-market-summary class="row"></app-market-summary>
+        <div class="b-b mb-20 pb-20">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <h5 class="roboto f-500 d-flex justify-content-between">
+                        Your risk profile <span class="f-12 text-primitive">03/12/2019</span>
+                    </h5>
+                    <!-- <img src="/assets/images/svg/moderately-aggressive.svg"> -->
+
+                </div>
+            </div>
+        </div>
+
+        <app-market-summary></app-market-summary>
     </div>
 </div>
