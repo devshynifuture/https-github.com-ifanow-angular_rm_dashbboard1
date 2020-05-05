@@ -10,10 +10,10 @@
     <div class="row">
         <div class="col-md-12 p-0 text-center">
             <mat-button-toggle-group class="br0" [value]="selectedVal" #group="matButtonToggleGroup" (change)="onValChange(group.value)">
-                <mat-button-toggle value="Equities" class=" width78" value="Equities">Equities
+                <mat-button-toggle value="Equities" class=" width75" value="Equities">Equities
                 </mat-button-toggle>
-                <mat-button-toggle value="Debt" class="  width78" value="Debt">Debt</mat-button-toggle>
-                <mat-button-toggle value="C&M" class="  width78" value="C&M">C&M</mat-button-toggle>
+                <mat-button-toggle value="Debt" class="  width75" value="Debt">Debt</mat-button-toggle>
+                <mat-button-toggle value="C&M" class="  width75" value="C&M">C&M</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
     </div>
@@ -27,7 +27,7 @@
             <p *ngIf="bscData" class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
                 {{bscData.change_in_percentage}}%</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="bscData" class="m-0 roboto text-black f-500">₹{{bscData.current_value}}</p>
         </div>
     </div>
@@ -40,7 +40,7 @@
             <p *ngIf="nscData" class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': nscData.colourFlag,'text-danger': nscData.colourFlag==false}">
                 {{nscData.change_in_percentage}}%</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="nscData" class="m-0 roboto text-black f-500">₹{{nscData.current_value}}</p>
         </div>
     </div>
@@ -52,7 +52,7 @@
         <div class="col-md-3 p-0">
             <p *ngIf="nifty500Data" [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}" class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="nifty500Data" class="m-0 roboto text-black f-500">₹{{nifty500Data.current_value}}</p>
         </div>
     </div>
@@ -67,7 +67,7 @@
             <p *ngIf="deptData" class="m-0 roboto f-400" [ngClass]="{'greenColor-text': deptData.colourFlag,'text-danger': deptData.colourFlag==false}">
                 {{deptData.change_in_percentage}}%</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="deptData" class="m-0 roboto text-black f-500">₹{{deptData.current_value}}</p>
         </div>
     </div>
@@ -81,7 +81,7 @@
         <div class="col-md-3 p-0">
             <p *ngIf="goldData" [ngClass]="{'greenColor-text': goldData.carat_22.colourFlag,'text-danger': goldData.carat_22.colourFlag==false}" class="m-0 f-400 roboto">{{goldData.carat_22.change_in_percentage}}%</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="goldData" class="m-0 roboto text-black f-500">{{goldData.carat_22.current_value}}</p>
         </div>
     </div>
@@ -93,7 +93,7 @@
         <div class="col-md-3 p-0">
             <p *ngIf="goldData" [ngClass]="{'greenColor-text': goldData.carat_24.colourFlag,'text-danger': goldData.carat_24.colourFlag==false}" class="m-0 roboto f-400 ">{{goldData.carat_24.change_in_percentage}}%</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="goldData" class="m-0 roboto text-black f-500">{{goldData.carat_24.current_value}}</p>
         </div>
     </div>
@@ -105,7 +105,7 @@
         <div class="col-md-3 p-0">
             <p *ngIf="silverData" [ngClass]="{'greenColor-text': silverData.colourFlag,'text-danger': silverData.colourFlag==false}" class="m-0 f-400 roboto">{{silverData.change_in_percentage}}%</p>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 text-right p-0">
             <p *ngIf="silverData" class="m-0 roboto text-black f-500">{{silverData.current_value}}</p>
         </div>
     </div>
