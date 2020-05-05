@@ -101,9 +101,9 @@
                 <div class="form-group ">
                     <h5 class="mb-8 f-14"> Name</h5>
                     <mat-form-field>
-                        <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,nomineesListFM)">
+                        <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData(insuredMemberList)">
                             <mat-option value='' disabled>Select insured members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                            <mat-option *ngFor="let f of insuredMemberList" [disabled]="f.isDisabled"  [value]="f.userName">
                                 {{f.userName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required

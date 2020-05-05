@@ -62,6 +62,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   bankList: any;
   showinsuredMemberSum = true;
   showSumAssured = false;
+  insuredMemberList: any;
 
   constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -95,10 +96,12 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
+    this.insuredMemberList = Object.assign([], value);
+    this.insuredMemberList.forEach(item => item.isDisabled = false);
   }
-  getFamilyMember(data, index) {
-    this.familyMemberLifeData = data;
-  }
+  // getFamilyMember(data, index) {
+  //   this.familyMemberLifeData = data;
+  // }
 
 
   disabledMember(value, type) {
@@ -380,21 +383,21 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   bankAccountList(value) {
     this.bankList = value;
   }
-  getFamilyData(value,data){
-
-    data.forEach(element => {
-      for (let e in this.insuredMembersForm.controls) {
-        let name = this.insuredMembersForm.controls[e].get('insuredMembers')
-        if(element.userName == name.value){
-          this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
-          this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
-          this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+  getFamilyData(data){
+    if(data){
+      data.forEach(element => {
+        for (let e in this.insuredMembersForm.controls) {
+          let name = this.insuredMembersForm.controls[e].get('insuredMembers')
+          if(element.userName == name.value){
+            this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
+            this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
+            this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+            element.isDisabled = true;
+          }
         }
-      }
-     
-    });
-    
-
+       
+      });
+    }
   }
 
   addTransaction(data) {
@@ -405,6 +408,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       relationshipId:[data ? data.relationshipId : ''],
       familyMemberId:[data ? data.familyMemberId : '']
     }));
+    this.resetValue(this.insuredMemberList);
+    this.getFamilyData(this.insuredMemberList);
     this.onChangeSetErrorsType(this.critialIllnessForm.get('PlanType').value,'planType')
   }
 
@@ -414,7 +419,14 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     this.insuredMembersForm.removeAt(item);
 
     }
+    this.resetValue(this.insuredMemberList);
+    this.getFamilyData(this.insuredMemberList);
   }
+  resetValue(data){
+    if(data){
+      data.forEach(item => item.isDisabled = false);
+    }
+}
   /***owner***/
 
   openOptionField() {
