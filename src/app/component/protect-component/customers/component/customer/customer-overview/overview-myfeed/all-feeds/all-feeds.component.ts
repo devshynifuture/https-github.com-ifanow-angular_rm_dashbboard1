@@ -6,6 +6,10 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Chart } from 'angular-highcharts';
 import { PlanService } from '../../../plan/plan.service';
+import { DatePipe } from '@angular/common';
+import * as Highcharts from 'highcharts';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-feeds',
@@ -16,13 +20,13 @@ import { PlanService } from '../../../plan/plan.service';
 export class AllFeedsComponent implements OnInit {
   clientData: any;
   advisorId: any;
-  orgDetails:any;
+  orgDetails: any;
   chart: Chart;
   cashflowColumns = ['bankName', 'inflow', 'outflow', 'netflow'];
   displayedColumns: string[] = ['description', 'date', 'amount'];
   cashFlowViewDataSource = [];
 
-  chartData:any[] = [
+  chartData: any[] = [
     {
       name: 'Equity',
       y: 20,
@@ -61,70 +65,75 @@ export class AllFeedsComponent implements OnInit {
     }]
 
   chartTotal = 100;
-
+  clientId: any;
+  expenseList = [];
+  incomeList = [];
   constructor(
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
     private eventService: EventService,
     private authService: AuthService,
     private plansService: PlanService,
+    private datePipe: DatePipe,
+    private router: Router
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
     this.clientData = AuthService.getClientData();
+    this.clientId - AuthService.getClientId();
   }
 
   tabsLoaded = {
-    portfolioSummary:{
+    portfolioSummary: {
       dataLoaded: false,
       hasData: false,
     },
-    rtaFeeds:{
+    rtaFeeds: {
       dataLoaded: false,
       hasData: false,
     },
-    recentTransactions:{
+    recentTransactions: {
       dataLoaded: false,
       hasData: false,
     },
-    documentsVault:{
+    documentsVault: {
       dataLoaded: false,
       hasData: false,
     },
-    riskProfile:{
+    riskProfile: {
       dataLoaded: false,
       hasData: false,
     },
-    globalRiskProfile:{
+    globalRiskProfile: {
       dataLoaded: false,
       hasData: false,
     },
-    goalsData:{
+    goalsData: {
       dataLoaded: false,
       hasData: false,
     },
-    cashflowData:{
+    cashflowData: {
       dataLoaded: false,
       hasData: false,
     },
-    customerProfile:{
+    customerProfile: {
       dataLoaded: false,
       hasData: false,
     },
   };
-  hasError:boolean = false;
+  hasError: boolean = false;
 
-  portFolioData:any[] = [];
-  rtaFeedsData:any[] = [];
-  recentTransactions:any[] = [];
-  riskProfile:any[] = [];
-  globalRiskProfile:any[] = [];
-  documentVault:any[] = [];
-  adviseData:any = null;
-  goalsData:any[] = [];
-  cashflowData:any = {};
-  customerProfile:any = {
-    familyMemberCount:0,
+  portFolioData: any[] = [];
+  rtaFeedsData: any[] = [];
+  recentTransactions: any[] = [];
+  riskProfile: any[] = [];
+  globalRiskProfile: any[] = [];
+  documentVault: any[] = [];
+  adviseData: any = null;
+  goalsData: any[] = [];
+  cashflowData: any = {};
+  customerProfile: any = {
+    familyMemberCount: 0,
     completenessStatus: 0,
   };
 
@@ -142,19 +151,19 @@ export class AllFeedsComponent implements OnInit {
     this.loadCashFlowSummary(); //To be implemented later
   }
 
-  loadCustomerProfile(){
+  loadCustomerProfile() {
     const obj = {
       advisorId: this.advisorId,
-      clientId:1,
+      clientId: 1,
       userId: this.clientData.userId
     }
 
     this.loaderFn.increaseCounter();
     this.customerService.getCustomerFeedsProfile(obj).subscribe(
       res => {
-        if(res == null) {
+        if (res == null) {
           this.customerProfile = {
-            familyMemberCount:0,
+            familyMemberCount: 0,
             completenessStatus: 0,
           }
         } else {
@@ -170,7 +179,7 @@ export class AllFeedsComponent implements OnInit {
     )
   }
 
-  initializePieChart(){
+  initializePieChart() {
     this.chart = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -211,9 +220,9 @@ export class AllFeedsComponent implements OnInit {
     });
   }
 
-  loadPortfolioSummary(){
+  loadPortfolioSummary() {
     const obj = {
-      clientId: this.clientData.clientId, 
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
@@ -221,7 +230,7 @@ export class AllFeedsComponent implements OnInit {
     // ?advisorId=2808&clientId=53004&targetDate=1587965868704
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.portFolioData = [];
       } else {
         this.tabsLoaded.portfolioSummary.hasData = true;
@@ -239,9 +248,9 @@ export class AllFeedsComponent implements OnInit {
         }
         this.chartTotal = 1;
         res.forEach(element => {
-          if(element.investedAmount > 0) {
+          if (element.investedAmount > 0) {
             this.chartTotal += element.investedAmount;
-            if(counter < 4) {
+            if (counter < 4) {
               this.chartData.push({
                 y: element.investedAmount,
                 name: element.assetTypeString,
@@ -251,13 +260,13 @@ export class AllFeedsComponent implements OnInit {
                 }
               })
             } else {
-              othersData.y += element.investedAmount; 
+              othersData.y += element.investedAmount;
             }
-            counter ++;
+            counter++;
           }
         });
-        this.chartTotal -=1;
-        if(counter > 4) {
+        this.chartTotal -= 1;
+        if (counter > 4) {
           this.chartData.push(othersData);
         }
         this.pieChart(this.chartData);
@@ -271,15 +280,15 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadRTAFeedsTransactions(){
+  loadRTAFeedsTransactions() {
     const obj = {
-      clientId: this.clientData.clientId, 
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       limit: 5
     }
     this.loaderFn.increaseCounter();
     this.customerService.getRTAFeeds(obj).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.rtaFeedsData = [];
       } else {
         this.tabsLoaded.rtaFeeds.hasData = true;
@@ -294,15 +303,15 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadDocumentValutData(){
+  loadDocumentValutData() {
     const obj = {
-      clientId: this.clientData.clientId, 
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       limit: 5
     }
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.documentVault = [];
       } else {
         this.tabsLoaded.documentsVault.hasData = true;
@@ -317,13 +326,13 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadRiskProfile(){
+  loadRiskProfile() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
     this.customerService.getRiskProfile(obj).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.riskProfile = [];
       } else {
         this.tabsLoaded.riskProfile.hasData = true;
@@ -338,9 +347,9 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadGlobalRiskProfile(){
+  loadGlobalRiskProfile() {
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.globalRiskProfile = [];
       } else {
         this.tabsLoaded.globalRiskProfile.hasData = true;
@@ -355,11 +364,11 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadRecentTransactions(){
+  loadRecentTransactions() {
     const startDate = new Date();
     const endDate = new Date();
     endDate.setDate(endDate.getDate() - 15);
-    
+
     const obj = {
       clientId: 53637, //this.clientData.clientId,
       advisorId: 414, //this.advisorId,
@@ -369,7 +378,7 @@ export class AllFeedsComponent implements OnInit {
     this.loaderFn.increaseCounter();
 
     this.customerService.getRecentTransactions(obj).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.recentTransactions = [];
       } else {
         this.tabsLoaded.recentTransactions.hasData = true;
@@ -391,8 +400,8 @@ export class AllFeedsComponent implements OnInit {
     }
 
     this.loaderFn.increaseCounter();
-    this.plansService.getAllGoals(obj).subscribe((res)=>{
-      if(res == null) {
+    this.plansService.getAllGoals(obj).subscribe((res) => {
+      if (res == null) {
         this.goalsData = [];
       } else {
         this.tabsLoaded.goalsData.hasData = true;
@@ -406,10 +415,10 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadCashFlowSummary(){
+  loadCashFlowSummary() {
     const startDate = new Date();
     const obj = {
-      clientId: 53644, //this.clientData.clientId,
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: startDate.getTime()
     }
@@ -468,15 +477,15 @@ export class AllFeedsComponent implements OnInit {
     this.loaderFn.increaseCounter();
 
     this.customerService.getCashFlowList(obj).subscribe(res => {
-      if(res == null) {
+      if (res == null) {
         this.cashflowData = {
-            // emptyData: [{
-            //   bankName: 'Not enough data to display',
-            //   inflow: 0,
-            //   outflow: 0,
-            //   netflow: 0
-            // }]
-          };
+          // emptyData: [{
+          //   bankName: 'Not enough data to display',
+          //   inflow: 0,
+          //   outflow: 0,
+          //   netflow: 0
+          // }]
+        };
       } else {
         this.cashFlowViewDataSource = [];
         this.sortDataUsingFlowType(res, true);
@@ -496,16 +505,78 @@ export class AllFeedsComponent implements OnInit {
 
   // copied from summary
   sortDataUsingFlowType(ObjectArray, flag) {
+
     if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
       this.cashFlowViewDataSource = ObjectArray['expense'];
       this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
+        this.expenseList.push(0);
+      });
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(Math.round(element.currentValue));
+        this.incomeList.push(0);
+      });
     } else if (ObjectArray['expense'].length > 0) {
       this.cashFlowViewDataSource = ObjectArray['expense'];
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
+      });
     } else {
       this.cashFlowViewDataSource = ObjectArray['income'];
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(Math.round(element.currentValue));
+      });
     }
+    this.cashFlow('cashFlow', ObjectArray);
   }
-  
+  cashFlow(id, data) {
+    console.log(data);
+    const { expense, income } = data;
+    const timeArray = [];
+
+    if (income.length > 0) {
+      income.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
+      });
+    }
+    if (expense.length > 0) {
+      expense.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
+      });
+    }
+    console.log('timearray : ', timeArray);
+    const chart1 = new Highcharts.Chart('cashFlow', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: timeArray
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'Income',
+        color: '#5cc644',
+        data: this.incomeList,
+        type: undefined,
+      }, {
+        name: 'Expense',
+        color: '#ef6725',
+        data: this.expenseList,
+        type: undefined,
+      }]
+    });
+  }
+
   pieChart(data) {
     this.chart.removeSeries(0);
     this.chart.addSeries({
@@ -517,7 +588,7 @@ export class AllFeedsComponent implements OnInit {
   }
 
   riskProfileMaxScore(id) {
-    if(this.globalRiskProfile.length > 0) {
+    if (this.globalRiskProfile.length > 0) {
       return this.globalRiskProfile.find(data => data.id == id).scoreUpperLimit;
     } else {
       return 1;
@@ -525,10 +596,42 @@ export class AllFeedsComponent implements OnInit {
   }
 
   riskProfileDesc(id) {
-    if(this.globalRiskProfile.length > 0) {
+    if (this.globalRiskProfile.length > 0) {
       return this.globalRiskProfile.find(data => data.id == id).id;
     } else {
       return 'Dummy risk profile description';
+    }
+  }
+
+  routeAndAddQueryParams(value) {
+    switch (true) {
+      case (value == 'Fixed Income'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab3' } });
+        break;
+      case (value == 'Real estate'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab4' } });
+        break;
+      case (value == 'Stocks'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab2' } });
+        break;
+      case (value == 'Mutual funds'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab1' } });
+        break;
+      case (value == 'Retirement accounts'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab5' } });
+        break;
+      case (value == 'Small savings'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab6' } });
+        break;
+      case (value == 'Cash and bank'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab7' } });
+        break;
+      case (value == 'Commodities'):
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab8' } });
+        break;
+      default:
+        this.router.navigate(['/customer/detail/account/liabilities']);
+        break;
     }
   }
 }
