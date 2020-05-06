@@ -741,10 +741,15 @@
             <div class="row">
                 <div class="col-md-12 p-0">
                     <h5 class="roboto f-500 d-flex justify-content-between">
-                        Your risk profile <span class="f-12 text-primitive">03/12/2019</span>
+                        Your risk profile
                     </h5>
-                    <!-- <img src="/assets/images/svg/moderately-aggressive.svg"> -->
-
+                    <div  *ngFor="let risk of riskProfile">
+                        <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                        <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                        <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                        <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                        <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
+                    </div>
                 </div>
             </div>
         </div>
