@@ -281,9 +281,7 @@ export class LinkBankComponent implements OnInit {
   }
 
   closeDialog(data): void {
-    setTimeout(() => {
-      this.dialogRef.close(data);
-    }, 5000);
+    this.dialogRef.close(data);
   }
 
 }
