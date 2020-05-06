@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {AppConstants} from 'src/app/services/app-constants';
-import {CustomerService} from '../../../customer.service';
-import {LoaderFunction} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {Chart} from 'angular-highcharts';
-import {PlanService} from '../../../plan/plan.service';
-import {DatePipe} from '@angular/common';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AppConstants } from 'src/app/services/app-constants';
+import { CustomerService } from '../../../customer.service';
+import { LoaderFunction } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { Chart } from 'angular-highcharts';
+import { PlanService } from '../../../plan/plan.service';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-feeds',
@@ -68,7 +68,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.5,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: 0; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   // vaibhav
@@ -76,7 +76,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.4,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: 0; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   chartTotal = 100;
@@ -498,6 +498,7 @@ export class AllFeedsComponent implements OnInit {
         familyMemberFullName: transactions[0].ownerName,
         cashflowLedgger: [
           {
+
             bankName: 'N/A',
             inflow: income,
             outflow: expense,
