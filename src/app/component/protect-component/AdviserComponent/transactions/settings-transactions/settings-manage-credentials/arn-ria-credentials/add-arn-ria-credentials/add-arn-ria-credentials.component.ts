@@ -47,7 +47,6 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getdataForm(this.inputData)
-    this.euinValue = 'E'
     this.accountType = 'ARN'
   }
   euinChangeFun = function (value) {
@@ -88,8 +87,8 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       data = this.dataSource;
     }
     this.addCredential = this.fb.group({
-      platform: [(!data) ? '1' : (data.aggregatorType) ? data.aggregatorType : '1' + '', [Validators.required]],
-      accType: [(!data) ? '1' : (data.accountType) ? data.accountType : '1' + '', [Validators.required]],
+      platform: [(!data) ? '1' : (data.aggregatorType) ? (data.aggregatorType) + '' : '1', [Validators.required]],
+      accType: [(!data) ? '1' : (data.accountType) ? (data.accountType) + '' : '1', [Validators.required]],
       brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
       appId: [(!data) ? '' : data.userId, [Validators.required]],
       memberId: [(!data) ? '' : data.memberId, [Validators.required]],
@@ -97,7 +96,12 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
       setDefault: [(!data) ? '' : (data.defaultLogin), [Validators.required]],
     });
-    this.platForm = this.addCredential.controls.euin.value
+    this.platForm = this.addCredential.controls.platform.value
+    if(!data.euin){
+      this.euinValue = 'E'
+    }else{
+      this.euinValue = this.addCredential.controls.euin.value
+    }
   }
 
   getFormControl(): any {

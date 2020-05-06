@@ -215,13 +215,16 @@ export class SummaryComponent implements OnInit {
         this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
       });
       this.outflowFlag = true;
-    } else {
+    } else if (ObjectArray['income'].length > 0) {
       this.cashFlowViewDataSource = ObjectArray['income'];
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
         this.incomeList.push(Math.round(element.currentValue));
       });
       this.inflowFlag = true;
+    }
+    else {
+      this.cashFlowViewDataSource = [];
     }
     this.cashFlow('cashFlow', ObjectArray);
   }

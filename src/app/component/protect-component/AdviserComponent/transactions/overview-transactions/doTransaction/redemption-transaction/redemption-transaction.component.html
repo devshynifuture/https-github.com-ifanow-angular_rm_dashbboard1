@@ -82,7 +82,7 @@
                     <div class="col-md-11 p-0">
                         <div class="form-group ">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control" formControlName="schemeRedeem" matInput placeholder="Start typing to see scheme names" type="text">
+                                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"  [formControl]="myControl"formControlName="schemeRedeem" matInput placeholder="Start typing to see scheme names" type="text">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (click)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
