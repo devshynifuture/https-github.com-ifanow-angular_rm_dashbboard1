@@ -8,6 +8,8 @@ import {Chart} from 'angular-highcharts';
 import {PlanService} from '../../../plan/plan.service';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-all-feeds',
@@ -83,6 +85,9 @@ export class AllFeedsComponent implements OnInit {
   clientId: any;
   expenseList = [];
   incomeList = [];
+  advisorInfo:any;
+  advisorImg:string = '';
+
   constructor(
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
@@ -90,7 +95,8 @@ export class AllFeedsComponent implements OnInit {
     private authService: AuthService,
     private plansService: PlanService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private orgSetting: OrgSettingServiceService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -99,6 +105,8 @@ export class AllFeedsComponent implements OnInit {
     }
     this.clientData = AuthService.getClientData();
     this.clientId - AuthService.getClientId();
+    this.advisorInfo = AuthService.getUserInfo();
+    this.advisorImg = authService.profilePic;
   }
 
   tabsLoaded = {
@@ -154,10 +162,11 @@ export class AllFeedsComponent implements OnInit {
     familyMemberCount: 0,
     completenessStatus: 0,
   };
-
+  appearancePortfolio:any = {};
 
   ngOnInit() {
     this.loadCustomerProfile();
+    this.getAppearance();
     this.initializePieChart();
     this.loadPortfolioSummary();
     this.loadRTAFeedsTransactions();
@@ -195,6 +204,23 @@ export class AllFeedsComponent implements OnInit {
         this.loaderFn.decreaseCounter();
       }
     )
+  }
+
+
+  getAppearance(){
+    this.loaderFn.increaseCounter()
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.orgSetting.getAppearancePreference(obj).subscribe(
+      data => {
+        this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+      }
+    );
   }
 
   initializePieChart() {

@@ -713,7 +713,7 @@
 
     <div class="col-md-4 pr-0 paddleft30 mt-40">
         <div class="b-b mb-20 pb-20">
-            <div class="row">
+            <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
                 <div class="col-md-3">
                     <div class="advi_name">
                         <img [src]="orgDetails.reportLogoUrl">
@@ -721,6 +721,17 @@
                 </div>
                 <div class="col-md-9 pr-0 text-left">
                     <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
+                    <p class="text-custom m-0">Contact</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
+                <div class="col-md-3">
+                    <div class="advi_name">
+                        <img [src]="advisorImg">
+                    </div>
+                </div>
+                <div class="col-md-9 pr-0 text-left">
+                    <p class="text-black m-0">{{advisorInfo.name}}</p>
                     <p class="text-custom m-0">Contact</p>
                 </div>
             </div>
