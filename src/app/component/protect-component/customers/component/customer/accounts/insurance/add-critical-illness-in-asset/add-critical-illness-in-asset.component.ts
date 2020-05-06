@@ -63,6 +63,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   showinsuredMemberSum = true;
   showSumAssured = false;
   insuredMemberList: any;
+  options: any;
 
   constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -454,6 +455,16 @@ changeTheInput(form1,form2,event) {
   }
  
 }
+findCompanyName(data) {
+  const inpValue = this.critialIllnessForm.get('insurerName').value;
+  this.customerService.getCompanyNames(inpValue).subscribe(
+    data => {
+      console.log(data);
+      this.options =data;
+    }
+  );
+}
+
   getFamilyMemberList() {
     const obj = {
       advisorId: this.advisorId,

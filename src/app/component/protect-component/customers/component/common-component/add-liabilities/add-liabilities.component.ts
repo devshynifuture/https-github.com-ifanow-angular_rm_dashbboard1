@@ -348,10 +348,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         this.custumService.geCalculatedEmi(obj).subscribe(
           data =>{
             console.log(data)
-            if(!this.addLiabilityForm.controls.emi.value){
               this.addLiabilityForm.controls['emi'].setValue(data);
-
-            }
+            
           }, (error) => {
             this.eventService.showErrorMessage(error);
           }

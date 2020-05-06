@@ -59,6 +59,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   bankAccountDetails: any;
   bankList: any;
   insuredMemberList: any;
+  options: any;
 
   constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -445,6 +446,16 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     }
 
   }
+  findCompanyName(data) {
+    const inpValue = this.personalAccidentForm.get('insurerName').value;
+    this.customerService.getCompanyNames(inpValue).subscribe(
+      data => {
+        console.log(data);
+        this.options =data;
+      }
+    );
+  }
+
   savePersonalAccident() {
     let memberList = [];
     let finalMemberList = this.personalAccidentForm.get('InsuredMemberForm') as FormArray

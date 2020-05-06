@@ -431,18 +431,16 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   preventDefault(e) {
     e.preventDefault();
   }
-  findPolicyName(data) {
-    const inpValue = this.motorInsuranceForm.get('policyName').value;
-    const obj = {
-      policyName: inpValue
-    };
-    this.customerService.getPolicyName(obj).subscribe(
+  findCompanyName(data) {
+    const inpValue = this.motorInsuranceForm.get('insurerName').value;
+    this.customerService.getCompanyNames(inpValue).subscribe(
       data => {
-        console.log(data.policyDetails);
-        this.options = data.policyDetails;
+        console.log(data);
+        this.options =data;
       }
     );
   }
+
   saveMotorInsurance() {
     let addOns = [];
     let addOnList = this.motorInsuranceForm.get('addOnForm') as FormArray

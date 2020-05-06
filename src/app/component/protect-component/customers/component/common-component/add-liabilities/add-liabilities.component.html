@@ -109,7 +109,7 @@
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="Validations($event.target.value,'Loan amount')" formControlName="loanAmount"
+                        [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="Validations($event.target.value,'Loan amount');calculateEmi()" formControlName="loanAmount"
                         [maxLength]="10">
                     <mat-error class="f-12 pt-4">
                         This field is required

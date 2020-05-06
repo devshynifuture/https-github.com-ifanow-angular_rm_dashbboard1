@@ -60,6 +60,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   dataForEdit: any;
   policyFeature: any;
   id: any;
+  options: any;
   constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -349,6 +350,16 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
+  findCompanyName(data) {
+    const inpValue = this.homeInsuranceForm.get('insurerName').value;
+    this.customerService.getCompanyNames(inpValue).subscribe(
+      data => {
+        console.log(data);
+        this.options =data;
+      }
+    );
+  }
+
   dateChange(value,form,formValue){
     if(form=='policyExpiryDate' && formValue){
     let startDate =  new Date(this.homeInsuranceForm.controls.policyStartDate.value);

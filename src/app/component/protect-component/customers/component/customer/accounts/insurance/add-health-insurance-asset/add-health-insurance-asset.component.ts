@@ -68,6 +68,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     showinsuredMemberSum = true;
     showDeductibleSum = false;
     insuredMemberList: any;
+    options: any;
 
     constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
@@ -154,7 +155,17 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     // get addBankAccount() {
     //   return this.healthInsuranceForm.get('addBankAccount') as FormArray;
     // }
-
+    findCompanyName(data) {
+        const inpValue = this.healthInsuranceForm.get('insurerName').value;
+        this.customerService.getCompanyNames(inpValue).subscribe(
+          data => {
+            console.log(data);
+            this.options =data;
+          }
+        );
+      }
+    
+    
     onChangeJointOwnership(data) {
         this.callMethod = {
             methodName: 'onChangeJointOwnership',
