@@ -88,8 +88,8 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       data = this.dataSource;
     }
     this.addCredential = this.fb.group({
-      platform: [(!data) ? '1' : (data.aggregatorType) ? data.aggregatorType : '1' + '', [Validators.required]],
-      accType: [(!data) ? '1' : (data.accountType) ? data.accountType : '1' + '', [Validators.required]],
+      platform: [(!data) ? '1' : (data.aggregatorType) ? (data.aggregatorType) + '' : '1', [Validators.required]],
+      accType: [(!data) ? '1' : (data.accountType) ? (data.accountType) + '' : '1', [Validators.required]],
       brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
       appId: [(!data) ? '' : data.userId, [Validators.required]],
       memberId: [(!data) ? '' : data.memberId, [Validators.required]],
