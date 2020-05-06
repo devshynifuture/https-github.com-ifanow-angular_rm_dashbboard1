@@ -26,10 +26,11 @@
 }
 
 .detailsRecent {
-    border-bottom: 0.5px solid #83959D;
+    // border-bottom: 0.5px solid #83959D;
+    border-bottom: 1px solid #BCC6CA;
     padding: 0px 10px 15px 10px;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    // margin-bottom: 15px;
+    margin-top: 10px;
 }
 
 .bPrimitive {
@@ -57,10 +58,18 @@
     text-align: left;
     font-size: 16px;
     justify-content: flex-start;
+    line-height: 18px;
 }
 
-::ng-deep .overviewTab .mat-tab-label-active {
-    color: #008FFF;
+// ::ng-deep .overviewTab .mat-tab-label-active {
+//     color: #008FFF;
+// }
+::ng-deep .tabClassTransaction .overviewTab .mat-tab-header {
+    border-bottom: transparent;
+}
+
+.shadowBox:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
 }
 
 // ------------------- media css ----------------------------
@@ -73,6 +82,7 @@
 .height23 {
     height: 23px;
 }
+
 .skeletonAnimation .relClass {
     position: relative;
     .bar {
