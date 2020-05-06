@@ -72,9 +72,10 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.secondHolderNominee = data.nomineeList[1]
       this.thirdHolderNominee = data.nomineeList[2]
       this.getdataForm(this.firstHolderNominee)
-    }
-    if (this.clientData) {
-      this.getNomineeList(this.clientData)
+    }else{
+      if (this.clientData) {
+        this.getNomineeList(this.clientData)
+      }
     }
   }
 
