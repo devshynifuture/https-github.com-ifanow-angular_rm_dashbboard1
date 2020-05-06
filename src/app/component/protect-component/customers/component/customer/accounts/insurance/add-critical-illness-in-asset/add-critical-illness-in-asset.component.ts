@@ -62,6 +62,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   bankList: any;
   showinsuredMemberSum = true;
   showSumAssured = false;
+  insuredMemberList: any;
 
   constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -95,10 +96,12 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
+    this.insuredMemberList = Object.assign([], value);
+    this.insuredMemberList.forEach(item => item.isDisabled = false);
   }
-  getFamilyMember(data, index) {
-    this.familyMemberLifeData = data;
-  }
+  // getFamilyMember(data, index) {
+  //   this.familyMemberLifeData = data;
+  // }
 
 
   disabledMember(value, type) {
@@ -266,7 +269,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       additionalCovers: [this.dataForEdit ?  this.addOns.addOnId + '' : null],
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
+      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
@@ -314,17 +317,21 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
+      if(this.dataForEdit.nominees.length > 0){
       this.getNominee.removeAt(0);
       this.dataForEdit.nominees.forEach(element => {
         this.addNewNominee(element);
       });
     }
+    }
     /***nominee***/
     if (this.dataForEdit) {
+      if(this.dataForEdit.insuredMembers.length > 0){
       this.insuredMembersForm.removeAt(0);
       this.dataForEdit.insuredMembers.forEach(element => {
         this.addTransaction(element);
       });
+    }
     }
 
     if(this.dataForEdit){
@@ -380,21 +387,21 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   bankAccountList(value) {
     this.bankList = value;
   }
-  getFamilyData(value,data){
-
-    data.forEach(element => {
-      for (let e in this.insuredMembersForm.controls) {
-        let name = this.insuredMembersForm.controls[e].get('insuredMembers')
-        if(element.userName == name.value){
-          this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
-          this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
-          this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+  getFamilyData(data){
+    if(data){
+      data.forEach(element => {
+        for (let e in this.insuredMembersForm.controls) {
+          let name = this.insuredMembersForm.controls[e].get('insuredMembers')
+          if(element.userName == name.value){
+            this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
+            this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
+            this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+            element.isDisabled = true;
+          }
         }
-      }
-     
-    });
-    
-
+       
+      });
+    }
   }
 
   addTransaction(data) {
@@ -405,6 +412,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       relationshipId:[data ? data.relationshipId : ''],
       familyMemberId:[data ? data.familyMemberId : '']
     }));
+    this.resetValue(this.insuredMemberList);
+    this.getFamilyData(this.insuredMemberList);
     this.onChangeSetErrorsType(this.critialIllnessForm.get('PlanType').value,'planType')
   }
 
@@ -414,7 +423,14 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     this.insuredMembersForm.removeAt(item);
 
     }
+    this.resetValue(this.insuredMemberList);
+    this.getFamilyData(this.insuredMemberList);
   }
+  resetValue(data){
+    if(data){
+      data.forEach(item => item.isDisabled = false);
+    }
+}
   /***owner***/
 
   openOptionField() {

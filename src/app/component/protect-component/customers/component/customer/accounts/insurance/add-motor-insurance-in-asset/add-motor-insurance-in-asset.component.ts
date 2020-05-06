@@ -319,18 +319,22 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
+      if(this.dataForEdit.nominees.length > 0){
       this.getNominee.removeAt(0);
       this.dataForEdit.nominees.forEach(element => {
         this.addNewNominee(element);
       });
     }
+    }
     /***nominee***/
   
     if (this.dataForEdit) {
+      if(this.dataForEdit.addOns.length > 0){
       this.addOnForm.removeAt(0);
       this.dataForEdit.addOns.forEach(element => {
         this.addNewAddOns(element);
       });
+    }
     }
 
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.motorInsuranceForm }
