@@ -4,11 +4,13 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
-import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-critical-illness-in-asset',
@@ -65,7 +67,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   insuredMemberList: any;
   options: any;
 
-  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private enumService:EnumServiceService,private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService,private dialog: MatDialog) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -357,6 +359,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
   onChangeSetErrorsType(value, formName) {
@@ -510,6 +513,19 @@ findCompanyName(data) {
       }
     }
   
+  }
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
   }
   saveCriticalIllness() {
     let memberList = [];

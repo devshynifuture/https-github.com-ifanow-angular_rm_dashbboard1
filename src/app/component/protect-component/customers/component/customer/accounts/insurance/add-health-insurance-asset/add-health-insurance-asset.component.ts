@@ -9,6 +9,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
     selector: 'app-add-health-insurance-asset',
@@ -70,7 +72,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     insuredMemberList: any;
     options: any;
 
-    constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
+    constructor(private enumService:EnumServiceService,private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
 
     get data() {
@@ -104,9 +106,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         return this.healthInsuranceForm.get('getNomineeName') as FormArray;
     }
 
-    bankAccountList(value) {
-        this.bankList = value;
-    }
+    // bankAccountList(value) {
+    //     this.bankList = value;
+    // }
 
     getFormDataNominee(data) {
         console.log(data);
@@ -161,11 +163,26 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
           data => {
             console.log(data);
             this.options =data;
+          },
+          (error) =>{
+              console.log(error);
           }
         );
       }
     
+      openDialog(eventData): void {
+        const dialogRef = this.dialog.open(LinkBankComponent, {
+          width: '50%',
+          data: this.bankList
+        });
     
+        dialogRef.afterClosed().subscribe(result => {
+          setTimeout(() => {
+            this.bankList = this.enumService.getBank();
+          }, 5000);
+        })
+    
+      }
     onChangeJointOwnership(data) {
         this.callMethod = {
             methodName: 'onChangeJointOwnership',
@@ -441,6 +458,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.bankList = this.enumService.getBank();
         this.minDate.setFullYear(this.minDate.getFullYear() - 100);
     }
     dateChange(value,form,formValue){

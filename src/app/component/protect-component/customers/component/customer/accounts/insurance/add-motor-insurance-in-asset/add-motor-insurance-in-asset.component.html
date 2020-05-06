@@ -498,9 +498,9 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex"  (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount>
+            <div class="col-md-1 p-0 pt-8 d-flex">
                 <!--  prod build appBankAccount appBankAccount  [data]="bankAccountDetails"  [data]="bankAccountDetails" (inputChange)='bankAccountList($event.value)' -->
-                <i class="material-icons text-primitive c-p float-left"  >add</i>
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
 
