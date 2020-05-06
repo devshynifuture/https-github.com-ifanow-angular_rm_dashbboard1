@@ -65,6 +65,7 @@ export class AllFeedsComponent implements OnInit {
     }
   ]
 
+  // vaibhav
   portfolioConfig = {
     slidesToShow: 1.5,
     infinite: false,
@@ -72,6 +73,7 @@ export class AllFeedsComponent implements OnInit {
     "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
   }
 
+  // vaibhav
   recentTnxConfig = {
     slidesToShow: 1.4,
     infinite: false,
