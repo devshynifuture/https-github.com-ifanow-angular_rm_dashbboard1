@@ -12,7 +12,7 @@
             </div>
         </div> -->
 
-        <div class="col-md-8 text-right pt-4" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
+        <div class="col-md-8 text-right pt-4" *ngIf="!isLoading">
             <mat-form-field class="searchInputWidth" floatLabel="never" appearance="standard">
                 <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data" class="form-control br-0">
             </mat-form-field>
@@ -29,7 +29,7 @@
                     INVESTMENT READY
                 </button>
             </mat-menu>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openNewCustomerIIN()"> ADD
+            <button *ngIf="dataSource.filteredData.length > 0" mat-stroked-button class="btn-primary addon v-middle" (click)="openNewCustomerIIN()"> ADD
                 NEW</button>
 
         </div>

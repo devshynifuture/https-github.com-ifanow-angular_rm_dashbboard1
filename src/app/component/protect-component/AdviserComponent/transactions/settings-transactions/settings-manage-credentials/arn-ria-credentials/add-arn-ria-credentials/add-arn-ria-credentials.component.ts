@@ -47,7 +47,6 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getdataForm(this.inputData)
-    this.euinValue = 'E'
     this.accountType = 'ARN'
   }
   euinChangeFun = function (value) {
@@ -97,7 +96,12 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
       setDefault: [(!data) ? '' : (data.defaultLogin), [Validators.required]],
     });
-    this.platForm = this.addCredential.controls.euin.value
+    this.platForm = this.addCredential.controls.platform.value
+    if(!data.euin){
+      this.euinValue = 'E'
+    }else{
+      this.euinValue = this.addCredential.controls.euin.value
+    }
   }
 
   getFormControl(): any {
