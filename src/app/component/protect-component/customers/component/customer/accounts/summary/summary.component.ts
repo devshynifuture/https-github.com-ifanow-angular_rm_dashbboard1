@@ -85,7 +85,7 @@ export class SummaryComponent implements OnInit {
     this.userData = AuthService.getUserInfo();
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.calculateTotalSummaryValues();
   }
 

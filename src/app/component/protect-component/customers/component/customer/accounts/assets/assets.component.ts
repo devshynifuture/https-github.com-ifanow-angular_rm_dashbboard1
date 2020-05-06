@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MatDialog} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {ActivatedRoute} from '@angular/router';
-import {UpperCustomerComponent} from '../../../common-component/upper-customer/upper-customer.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { ActivatedRoute } from '@angular/router';
+import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
   selector: 'app-assets',
@@ -107,7 +107,8 @@ export class AssetsComponent implements OnInit {
   ngOnInit() {
     // this.viewMode = 'tab2';
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    console.log("this is client id:::", this.clientId);
     this.getAssetCountGLobalData();
     this.route.queryParams.subscribe((params) => {
       if (params.tab) {

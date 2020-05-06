@@ -1,8 +1,11 @@
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { MatInput } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
+import { MfServiceService } from '../../mf-service.service';
+import { EventService } from '../../../../../../../../../../Data-service/event.service';
+import { CustomerService } from '../../../../../customer.service';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -16,20 +19,45 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   ownerName: any;
   selectedFamilyData: any;
   nomineesListFM: any = [];
+  transactionTypeList = [];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   validatorType = ValidatorType
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder) { }
+  constructor(
+    public subInjectService: SubscriptionInject,
+    private fb: FormBuilder,
+    private customerService: CustomerService,
+    private eventService: EventService
+  ) { }
   @Input()
   set data(data) {
     this._data = data;
+    console.log("this is some data ::::", data);
     this.getSchemeLevelHoldings(data);
   }
   get data() {
     return this._data;
   }
   ngOnInit() {
+    this.getTransactionTypeData();
+    this.transactionListForm.valueChanges.subscribe(res => console.log("this is transactionForm values::::", res));
     console.log(this._data)
+  }
+
+  setTransactionType(id, fg) {
+    fg.patchValue(id);
+  }
+
+  getTransactionTypeData() {
+    this.customerService.getTransactionTypeData({})
+      .subscribe(res => {
+        if (res) {
+          console.log("this is transaction Type:::", res);
+          this.transactionTypeList = res;
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS");
+      })
   }
 
   getSchemeLevelHoldings(data) {
@@ -108,7 +136,6 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             'date': element.date,
             'transactionAmount': element.transactionAmount,
             'Units': element.Units
-
           }
           obj.transaction.push(obj1)
         }
