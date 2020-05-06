@@ -5,13 +5,19 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatInput } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-fire-and-perils-insurance-in-asset',
   templateUrl: './add-fire-and-perils-insurance-in-asset.component.html',
-  styleUrls: ['./add-fire-and-perils-insurance-in-asset.component.scss']
+  styleUrls: ['./add-fire-and-perils-insurance-in-asset.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -30,6 +36,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     // }
   };
   maxDate = new Date();
+  minDate = new Date();
 
   inputData: any;
   ownerName: any;
@@ -54,7 +61,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   dataForEdit: any;
   policyFeature: any;
   id: any;
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -308,17 +315,21 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
+      if(this.dataForEdit.nominees.length > 0){
       this.getNominee.removeAt(0);
       this.dataForEdit.nominees.forEach(element => {
         this.addNewNominee(element);
       });
     }
+    }
     /***nominee***/
     if (this.dataForEdit) {
+      if(this.dataForEdit.addOns.length > 0){
       this.addOnForm.removeAt(0);
       this.dataForEdit.addOns.forEach(element => {
         this.addNewAddOns(element);
       });
+    }
     }
     if (this.dataForEdit) {
       if( this.dataForEdit.policyFeatures.length > 0){
@@ -337,6 +348,36 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+    this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+  }
+  dateChange(value,form,formValue){
+    if(form=='policyExpiryDate' && formValue){
+    let startDate =  new Date(this.fireInsuranceForm.controls.policyStartDate.value);
+      let policyExpiryDate = this.datePipe.transform(this.fireInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+      let comparedDate :any = new Date(this.fireInsuranceForm.controls.policyStartDate.value);
+      comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+      if(policyExpiryDate < comparedDate){
+        this.fireInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+        this.fireInsuranceForm.get('policyExpiryDate').markAsTouched();
+      }else{
+        this.fireInsuranceForm.get('policyExpiryDate').setErrors();
+      }
+    }else{
+      if(formValue){
+        let policyExpiryDate = this.datePipe.transform(this.fireInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+        let policyStartDate = this.datePipe.transform(this.fireInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
+
+        if(policyStartDate >= policyExpiryDate){
+          this.fireInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+          this.fireInsuranceForm.get('policyExpiryDate').markAsTouched();
+        }else{
+          this.fireInsuranceForm.get('policyExpiryDate').setErrors();
+
+        }
+      }
+    }
+  
   }
   addNewAddOns(data) {
     this.addOnForm.push(this.fb.group({

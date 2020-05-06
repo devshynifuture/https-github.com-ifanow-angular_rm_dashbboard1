@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-5 pr-0 form-group">
             <mat-form-field>
-                <input matInput type="text" [maxLength]="30" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0">
+                <input matInput type="text" [maxLength]="30"  [inputValidator]="validatorType.TEXT_ONLY" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0">
                 <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
@@ -152,7 +152,7 @@
                 <h5 class="mb-8 f-14">Sum insured</h5>
                 <mat-form-field class="iconRupess">
                     <input type="text" matInput #sumInsured class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="sumInsured">
-                    <mat-hint align="end" class="f-12">{{sumInsured.value.length}}/8</mat-hint>
+                    <mat-hint align="end" class="f-12">{{sumInsured.value.length}}/10</mat-hint>
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -172,8 +172,8 @@
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="number" formControlName="premium" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premium autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
-                <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
+                <input matInput type="number" formControlName="premium" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premium autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                <mat-hint align="end" class="f-12">{{premium.value.length}}/10</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -186,8 +186,8 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input matInput formControlName="policyStartDate" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="policyStartDatePicker" (focus)="policyStartDatePicker.open()" (input)="preventDefault($event)">
-                <mat-datepicker-toggle matSuffix [for]="policyStartDatePicker"></mat-datepicker-toggle>
+                <input (focus)="policyStartDatePicker.open()"  (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate" matInput>
+                <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyStartDatePicker></mat-datepicker>
                 <mat-error>This field is required
                 </mat-error>
@@ -202,10 +202,13 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input matInput formControlName="policyExpiryDate" class="form-control br-0 b-0" [matDatepicker]="policyExpiryDatePicker" (focus)="policyExpiryDatePicker.open()" (input)="preventDefault($event)">
-                <mat-datepicker-toggle matSuffix [for]="policyExpiryDatePicker"></mat-datepicker-toggle>
+                <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0" formControlName="policyExpiryDate" matInput>
+                <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
-                <mat-error>This field is required
+                <mat-error class="f-12" *ngIf="(homeInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
+                </mat-error>
+                <mat-error class="f-12" *ngIf="(homeInsuranceForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
+
                 </mat-error>
             </mat-form-field>
         </div>
@@ -253,7 +256,7 @@
                     <h5 class="mb-0 f-14">Sum insured</h5>
                     <mat-form-field class="iconRupess">
                         <input matInput type="number" formControlName="sumAddOns" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #sumAddOns autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
-                        <mat-hint align="end" class="f-12">{{sumAddOns.value.length}}/8</mat-hint>
+                        <mat-hint align="end" class="f-12">{{sumAddOns.value.length}}/10</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>

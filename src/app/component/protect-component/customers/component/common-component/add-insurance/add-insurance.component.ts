@@ -46,6 +46,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     // }
   };
   maxDate = new Date();
+  minDate = new Date();
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   ownerName: any;
   familyMemberId: any;
@@ -361,6 +362,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
   ngOnInit() {
     this.addMoreFlag = false;
+    this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+
   }
   onChange(form,value,event) {
     if (parseInt(event.target.value) > 100) {

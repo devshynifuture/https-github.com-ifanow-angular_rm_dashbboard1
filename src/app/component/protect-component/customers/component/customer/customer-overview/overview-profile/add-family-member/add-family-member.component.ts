@@ -37,6 +37,7 @@ export class AddFamilyMemberComponent implements OnInit {
       { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 7 }
     ]
   }
+  advisorId: any;
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService, private peopleService: PeopleService) { }
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -57,6 +58,7 @@ export class AddFamilyMemberComponent implements OnInit {
     this.createFamily = this.fb.group({
       familyMemberList: new FormArray([])
     })
+    this.advisorId = AuthService.getAdvisorId();
   }
   get getFamilyForm() { return this.createFamily.controls; }
   get getFamilyListList() { return this.getFamilyForm.familyMemberList as FormArray; }
@@ -78,6 +80,7 @@ export class AddFamilyMemberComponent implements OnInit {
       let arrayObj = [];
       this.getFamilyListList.controls.forEach(element => {
         arrayObj.push({
+          "advisorId": this.advisorId,
           "isKycCompliant": 0,
           "taxStatusId": 0,
           "emailList": [

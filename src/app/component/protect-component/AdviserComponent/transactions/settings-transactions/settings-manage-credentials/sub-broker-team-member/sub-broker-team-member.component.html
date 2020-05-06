@@ -3,15 +3,6 @@
         <div class="col-md-8 p-0">
             <h4 class="m-0 pt-12">Sub broker/Team member</h4>
         </div>
-        <!-- <div class="col-md-4 text-right p-0" *ngIf="dataSource.filteredData.length > 0">
-
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data"
-                        class="form-control br-0">
-                </mat-form-field>
-            </div>
-        </div> -->
         <div class="col-md-4 text-right pr-0" *ngIf="dataSource.filteredData.length > 0">
             <button mat-stroked-button class="btn-primary text-right pl-8" (click)="addSubBroker(null)">
                 ADD NEW</button>
@@ -73,7 +64,8 @@
                     <mat-menu #menu4="matMenu">
                         <!-- ,'edit' prod build -->
                         <button mat-menu-item (click)="addSubBroker(element)">Edit</button>
-                        <button mat-menu-item (click)="deleteSubCred(element)">Delete</button>
+                        <button mat-menu-item *ngIf="element.teamMemberSessionId != advisorId"
+                         (click)="deleteSubCred(element)">Delete</button>
                     </mat-menu>
                 </div>
 
