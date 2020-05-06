@@ -107,14 +107,18 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
-  // onChange(value){
-  //   console.log('onChange',value.checked)
+  onChange(value){
+    console.log('onChange',value.checked)
     
-  //   if(value.checked == true){
-  //     this.firstHolderNominee.address = this.allData.holderList[0].address
-  //     this.getdataForm(this.firstHolderNominee)
-  //   }
-  // }
+    if(value.checked == true){
+    this.nomineeDetails.controls.address1.setValue(this.allData.holderList[0].address1);
+    this.nomineeDetails.controls.address2.setValue(this.allData.holderList[0].address2);
+    this.nomineeDetails.controls.pinCode.setValue(this.allData.holderList[0].pinCode);
+    this.nomineeDetails.controls.city.setValue(this.allData.holderList[0].city);
+    this.nomineeDetails.controls.state.setValue(this.allData.holderList[0].state);
+    this.nomineeDetails.controls.country.setValue(this.allData.holderList[0].country);
+    }
+  }
   selectRelation(value){
     console.log('relation type',value)
     if(value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister'){
