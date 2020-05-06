@@ -3,15 +3,19 @@
     background-color: #F5F7F7;
 }
 
-::ng-deep .mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle {
+.toggleBtnClass .mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle {
     border-left: 1px solid #83959D;
 }
 
-.mat-button-toggle-group-appearance-standard,
+.toggleBtnClass .mat-button-toggle-group-appearance-standard,
 .mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
     border: 1px solid #83959D;
 }
 
-.mat-button-toggle-checked {
+.toggleBtnClass .mat-button-toggle-checked {
     background-color: #ffffff;
+}
+
+.toggleBtnClass .mat-button-toggle-group .mat-button-toggle .mat-button-toggle-button {
+    letter-spacing: normal !important;
 }
