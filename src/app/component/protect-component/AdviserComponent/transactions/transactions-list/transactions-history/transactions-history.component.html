@@ -74,7 +74,7 @@
             <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
         </div>
     </div>
-    <div *ngIf="!(transactionData.status==0 || transactionData.status==1)">
+    <div *ngIf="!(transactionData.status==0 || transactionData.status==1 || transactionData.status==7)">
         <div class="circleGreen" *ngFor="let singleStep of transactionDetails">
             <div class="d-flex">
                 <div class="circle1" *ngIf="singleStep.checked == true">
@@ -92,22 +92,23 @@
                 </div>
             </div>
         </div>
-        <div class="circleGreen" *ngIf="transactionData.status==0 || transactionData.status==1">
-            <div class="d-flex">
-                <div class="circle1">
-                    <i class="material-icons text-success">
-                        check_circle_outline
-                    </i>
-                </div>
-                <div class="circleDetails">
-                    <p class="m-0 f-16 l-18">Rejected</p>
-                    <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text
-                        like this or something short.
-                    </p>
-                </div>
+    </div>
+    <div class="circleGreen" *ngIf="transactionData.status==7">
+        <div class="d-flex">
+            <div class="circle1">
+                <i class="material-icons text-danger">
+                    check_circle_outline
+                </i>
+            </div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18">Transaction rejected</p>
+                <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text
+                    like this or something short.
+                </p>
             </div>
         </div>
     </div>
+
 </div>
 
 

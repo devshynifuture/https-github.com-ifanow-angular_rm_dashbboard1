@@ -593,3 +593,29 @@ button:focus {
 .borderSuccess {
     border: 1px solid $success;
 }
+
+.btn-danger-solid {
+    color: $danger !important;
+    border: 1px solid $danger !important;
+    // background-color: $warning !important;
+}
+
+.greenColor-text {
+    color: $greenColor !important;
+}
+
+.topborderPrimitive {
+    border-top: 4px solid $primitive;
+}
+
+.topborderGreenColor {
+    border-top: 4px solid $greenColor;
+}
+
+.topborderDanger {
+    border-top: 4px solid $danger;
+}
+
+.topborderPrimary {
+    border-top: 4px solid $primary;
+}

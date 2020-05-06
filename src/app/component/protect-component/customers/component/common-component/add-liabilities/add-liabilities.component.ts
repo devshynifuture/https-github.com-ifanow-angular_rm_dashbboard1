@@ -53,6 +53,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   clientId: any;
     nomineesListFM: any = [];
   maxDate = new Date();
+  minDate = new Date();
   transactionViewData =
     {
       optionList: [
@@ -70,6 +71,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   callMethod:any;
   loanTypeDetails: any;
   showFilter: any;
+  // minDate = new Date()
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -91,6 +93,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.show = false;
     this.showTransact = false;
     this.showSelect = false;
+    this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getLiability(this.data);
@@ -312,16 +315,20 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
   Validations(value,form){
     if(form == 'loanTenure'){
-      if(parseInt(value) > 40){
+      if(parseInt(value) > 50){
         this.addLiabilityForm.get('loanTenure').markAsTouched();
       }
+      this.minDate = new Date();
+      this.minDate.setFullYear(this.maxDate.getFullYear() - value);
     }else{
      (this.addLiabilityForm.controls.loanAmount.value) ? this.loanAmount = this.addLiabilityForm.controls.loanAmount.value : null
      let formValue = parseInt(this.addLiabilityForm.controls.loanAmount.value)
-     let emi=parseInt(value) 
+     let emi=parseInt(this.addLiabilityForm.controls.emi.value) 
       if(emi > formValue){
         this.addLiabilityForm.get('emi').setErrors({ max: formValue });
         this.addLiabilityForm.get('emi').markAsTouched();
+      }else{
+        this.addLiabilityForm.get('emi').setErrors(null);
       }
     }
     }
@@ -338,7 +345,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       ownerName: [data.ownerName],
       loanType: [(data.loanTypeId == undefined) ? this.loanTypeDetails +'' : (data.loanTypeId) + '', [Validators.required]],
       loanAmount: [data.loanAmount, [Validators.required]],
-      loanTenure: [data.loanTenure, [Validators.required,Validators.max(40)]],
+      loanTenure: [data.loanTenure, [Validators.required,Validators.max(50)]],
       outstandingCheck: [data.principalOutstanding],
       poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : ''],
       outstandingAmt: [data.principalOutStandingAmount,],

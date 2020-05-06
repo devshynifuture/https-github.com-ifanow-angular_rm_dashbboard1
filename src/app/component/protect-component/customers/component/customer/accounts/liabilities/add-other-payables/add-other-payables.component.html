@@ -3,7 +3,7 @@
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20" *ngIf="!_data|| _data.id==undefined">ADD OTHER PAYABLES</h4>
 
-            <h4 class="mb-0 wrapper-20"*ngIf="_data&&_data.id!=undefined">EDIT OTHER PAYABLES</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_data&&_data.id!=undefined">EDIT OTHER PAYABLES</h4>
 
         </div>
         <div class="col-md-4 text-right">
@@ -15,42 +15,21 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="otherLiabilityForm">
 
-    <!-- <div class="row">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-        </div>
-        <div class="col-md-5 pl-0">
-            <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
-                        <span>{{f.userName}}</span>
-                    </mat-option>
-                </mat-select>
-                <mat-error class="f-12">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div> -->
+
     <div formArrayName="getCoOwnerName">
-        <div class="row" *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index"
-            [formGroupName]="pointIndex">
+        <div class="row" *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8 ">Owner</h5>
             </div>
-            <div class="pr-0" [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+            <div class="pl-0" [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' 
-                        (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
-                        class="form-control br-0" [callMethod]='callMethod'>
-                        <mat-option value='' disabled>Select family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM"  [value]="f.userName">
-                            <span>{{f.userName}}</span>
-                        </mat-option>
-                    </mat-select>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -60,8 +39,7 @@
             <div class="col-md-2" *ngIf="otherLiabilityForm.value.getCoOwnerName.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                            (focusout)="onChangeJointOwnership('owner')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -73,8 +51,7 @@
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
                 <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
-                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
+                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
         </div>
@@ -86,12 +63,10 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input class="form-control b-0 br-0" #dateOfReceipt (ngModelChange)="dateChange(dateOfReceipt.value,'dateOfReceipt',dateOfRepayment.value)" matInput [max]="maxDate" [matDatepicker]="picker"
-                        formControlName="dateOfReceipt" readonly>
+                    <input class="form-control b-0 br-0" #dateOfReceipt (ngModelChange)="dateChange(dateOfReceipt.value,'dateOfReceipt',dateOfRepayment.value)" matInput [max]="maxDate" [matDatepicker]="picker" formControlName="dateOfReceipt" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12"
-                        *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
+                    <mat-error class="f-12" *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -105,10 +80,8 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #creditorName class="form-control br-0" formControlName="creditorName"
-                        maxlength="{{getFormControl().creditorName.maxLength}}">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
+                    <input matInput #creditorName class="form-control br-0" formControlName="creditorName" maxlength="{{getFormControl().creditorName.maxLength}}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
                         This field is required
 
                     </mat-error>
@@ -124,14 +97,12 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)"
-                        formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
+                    <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)" formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
                         This field is required
 
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{amtBorrowed.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{amtBorrowed.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -143,8 +114,7 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
-                        (keypress)="keyPress($event)" formControlName="interest">
+                    <input matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)" (keypress)="keyPress($event)" formControlName="interest">
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
@@ -160,11 +130,10 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="picker2" (ngModelChange)="dateChange(dateOfRepayment.value,'dateOfRepayment',dateOfReceipt.value)" #dateOfRepayment class="form-control b-0 br-0" formControlName="dateOfRepayment"
-                        matInput readonly>
+                    <input [matDatepicker]="picker2" (ngModelChange)="dateChange(dateOfRepayment.value,'dateOfRepayment',dateOfReceipt.value)" #dateOfRepayment class="form-control b-0 br-0" formControlName="dateOfRepayment" matInput readonly>
                     <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
-                    <mat-error class="f-12"  *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.required)">This field is required
+                    <mat-error class="f-12" *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.required)">This field is required
                     </mat-error>
                     <mat-error class="f-12" *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.max)">Date cannot be less than or equal to date of receipt
 
@@ -180,14 +149,12 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #balance class="form-control rupess br-0" (keypress)="keyPress($event)"
-                        formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
+                    <input matInput #balance class="form-control rupess br-0" (keypress)="keyPress($event)" formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
                         This field is required
 
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{balance.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{balance.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -216,8 +183,7 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #collateral class="form-control br-0" formControlName="collateral"
-                            maxlength="{{getFormControl().collateral.maxLength}}">
+                        <input matInput #collateral class="form-control br-0" formControlName="collateral" maxlength="{{getFormControl().collateral.maxLength}}">
                         <mat-hint align="start" class="f-12">Option</mat-hint>
                         <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -225,20 +191,19 @@
             </div>
         </div>
         <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-12">Description</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
-                                formControlName="description" type="text">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
-                        </mat-form-field>
-                    </div>
+            <div class="col-md-5  text-right">
+                <h5 class="m-0 pt-12">Description</h5>
+            </div>
+            <div class="col-md-5 pl-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0" formControlName="description" type="text">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                    </mat-form-field>
                 </div>
             </div>
+        </div>
     </div>
 
 </div>
@@ -249,8 +214,8 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button> -->
-            <app-progress-button (btnClick)="saveFormData()"  class="btn-bottom br-0 text-inherit" [options]="barButtonOptions" >
-                </app-progress-button>
+            <app-progress-button (btnClick)="saveFormData()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

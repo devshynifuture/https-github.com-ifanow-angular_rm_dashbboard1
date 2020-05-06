@@ -54,18 +54,18 @@ export class AccountsComponent implements OnInit {
     this.enumDataService.getBank();
     this.clientData = AuthService.getClientData();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
-    var roterName = this.router.url.split('/')[3];
-    if (roterName === 'summary') {
-      this._value = 1;
-    } else if (roterName === 'assets') {
-      this._value = 2;
-    } else if (roterName === 'liabilities') {
-      this._value = 3;
-    } else if (roterName === 'insurance') {
-      this._value = 4;
-    } else if (roterName === 'documents') {
-      this._value = 5;
-    }
+    // var roterName = this.router.url.split('/')[3];
+    // if (roterName === 'summary') {
+    //   this._value = 1;
+    // } else if (roterName === 'assets') {
+    //   this._value = 2;
+    // } else if (roterName === 'liabilities') {
+    //   this._value = 3;
+    // } else if (roterName === 'insurance') {
+    //   this._value = 4;
+    // } else if (roterName === 'documents') {
+    //   this._value = 5;
+    // }
   }
 
   goToAdvisorHome() {

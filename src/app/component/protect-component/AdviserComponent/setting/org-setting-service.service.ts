@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -164,5 +164,9 @@ export class OrgSettingServiceService {
 
   updateAppearancePreferance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_APPEARANCE_SETTING, data);
+  }
+  getUserRoles(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLES, httpParams);
   }
 }

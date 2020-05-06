@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-sub-broker-team-member',
@@ -25,13 +26,15 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     private utilService: UtilService,
     private event : EventService,
      private subInjectService: SubscriptionInject,
-     public dialog:MatDialog) { }
+     public dialog:MatDialog) {
+      this.advisorId = AuthService.getAdvisorId();
+
+     }
   isLoading = false;
 
 
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
     this.getBSESubBrokerCredentials()
   }
 
@@ -55,6 +58,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     if(data){
       this.isLoading = false;
       console.log('getBSESubBrokerCredentialsRes', data)
+      data = data.filter(element => element.teamMemberSessionId != this.advisorId)
       this.dataSource.data = data
       this.dataSource.sort = this.sort;
     }else{

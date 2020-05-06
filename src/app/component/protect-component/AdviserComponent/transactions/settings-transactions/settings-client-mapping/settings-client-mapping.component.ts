@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AddClientMappingComponent} from './add-client-mapping/add-client-mapping.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {TransactionEnumService} from '../../transaction-enum.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../../transaction-enum.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
@@ -34,12 +34,12 @@ export class SettingsClientMappingComponent implements OnInit {
   isLoading: any;
   advisorId: any;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
-              private eventService: EventService, private utilService: UtilService,
-              private enumServiceService: EnumServiceService,
-              private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
+    private eventService: EventService, private utilService: UtilService,
+    private enumServiceService: EnumServiceService,
+    private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
   }
 
   ngOnInit() {
@@ -70,7 +70,7 @@ export class SettingsClientMappingComponent implements OnInit {
       this.filterData = TransactionEnumService.setPlatformEnum(data);
       this.type = '1';
       this.selectedBrokerCode = data[0];
-      this.selectedPlatform = data[0];
+      this.selectedPlatform = String(data[0].aggregatorType);
       this.dataSource.data = [{}, {}, {}];
       this.sortDataFilterWise();
     } else {
@@ -86,14 +86,14 @@ export class SettingsClientMappingComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: this.selectedBrokerCode.id,
-      aggregatorType: this.selectedPlatform.aggregatorType
+      aggregatorType: this.selectedPlatform
     };
     this.tranService.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
-          this.dataSource.data =TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
+          this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
           this.dataSource.sort = this.sort;
         } else {
           this.isLoading = false;
@@ -116,12 +116,12 @@ export class SettingsClientMappingComponent implements OnInit {
   }
 
   chnageBrokerCode(value) {
-    this.selectedPlatform = value;
+    this.selectedPlatform = String(value.aggregatorType);
     this.sortDataFilterWise();
   }
 
   changePlatform(value) {
-    this.selectedBrokerCode = value;
+    // this.selectedBrokerCode.aggregatorType = value;
     this.sortDataFilterWise();
   }
 
@@ -131,14 +131,14 @@ export class SettingsClientMappingComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: this.selectedBrokerCode.id,
-      aggregatorType: this.selectedPlatform.aggregatorType
+      aggregatorType: this.selectedPlatform
     };
     this.tranService.getUnmappedClients(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
-          this.dataSource.data =TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
+          this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
           this.dataSource.sort = this.sort;
         } else {
           this.dataSource.data = [];

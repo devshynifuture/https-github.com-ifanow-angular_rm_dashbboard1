@@ -101,7 +101,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text"  [maxLength]="40" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
+                <input matInput type="text"  [maxLength]="40" formControlName="insurerName" #insurerName  [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
                 <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
@@ -141,8 +141,8 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input matInput formControlName="policyStartDate" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="policyStartDatePicker" (focus)="policyStartDatePicker.open()" (input)="preventDefault($event)">
-                <mat-datepicker-toggle matSuffix [for]="policyStartDatePicker"></mat-datepicker-toggle>
+                <input (focus)="policyStartDatePicker.open()"  (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate" matInput>
+                <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyStartDatePicker></mat-datepicker>
                 <mat-error>This field is required
                 </mat-error>
@@ -157,10 +157,13 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input matInput formControlName="policyExpiryDate" class="form-control br-0 b-0" [matDatepicker]="policyExpiryDatePicker" (focus)="policyExpiryDatePicker.open()" (input)="preventDefault($event)">
-                <mat-datepicker-toggle matSuffix [for]="policyExpiryDatePicker"></mat-datepicker-toggle>
+                <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0" formControlName="policyExpiryDate" matInput>
+                <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
-                <mat-error>This field is required
+                <mat-error class="f-12" *ngIf="(motorInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
+                </mat-error>
+                <mat-error class="f-12" *ngIf="(motorInsuranceForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
+
                 </mat-error>
             </mat-form-field>
         </div>
@@ -172,8 +175,8 @@
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" #declaredValue formControlName="declaredValue" appInputValueValidation autocomplete="off" class="form-control rupess br-0" placeholder="Enter declared value">
-                <mat-hint align="end" class="f-12">{{declaredValue.value.length}}/8</mat-hint>
+                <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" #declaredValue formControlName="declaredValue" appInputValueValidation autocomplete="off" class="form-control rupess br-0" placeholder="Enter declared value">
+                <mat-hint align="end" class="f-12">{{declaredValue.value.length}}/10</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -186,8 +189,8 @@
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" formControlName="premium" #premium appInputValueValidation autocomplete="off" class="form-control rupess br-0">
-                <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
+                <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="premium" #premium appInputValueValidation autocomplete="off" class="form-control rupess br-0">
+                <mat-hint align="end" class="f-12">{{premium.value.length}}/10</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -329,8 +332,8 @@
             </div>
             <div class="col-md-3 form-group iconPetage">
                 <mat-form-field>
-                    <input class="form-control percentage" matInput type="text" (keyup)="onChange('claimBonus',$event)" formControlName="claimBonus" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #claimBonus autocomplete="true" [maxLength]="8">
-                    <!-- <mat-hint align="end" class="f-12">{{claimBonus.value.length}}/8</mat-hint> -->
+                    <input class="form-control percentage" matInput type="text" (keyup)="onChange('claimBonus',$event)" formControlName="claimBonus" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #claimBonus autocomplete="true" [maxLength]="10">
+                    <!-- <mat-hint align="end" class="f-12">{{claimBonus.value.length}}/10</mat-hint> -->
                 </mat-form-field>
             </div>
         </div>

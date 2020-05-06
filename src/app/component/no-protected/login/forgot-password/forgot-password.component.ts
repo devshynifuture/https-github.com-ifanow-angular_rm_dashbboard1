@@ -171,13 +171,13 @@ export class ForgotPasswordComponent implements OnInit {
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
-
+  intervallTimer;
   otpResendCountDown() {
     let timeLeft = 30;
-    let intervallTimer = interval(1000).subscribe(
+    this.intervallTimer = interval(1000).subscribe(
       data => {
         if (data == 31) {
-          intervallTimer.unsubscribe();
+          this.intervallTimer.unsubscribe();
         } else {
           this.showTimeRemaing = timeLeft--;
         }
@@ -213,6 +213,7 @@ export class ForgotPasswordComponent implements OnInit {
       };
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
+      this.intervallTimer.unsubscribe();
       this.otpResendCountDown();
       this.showTimeRemaing = 30;
       this.signUpBarList[1].flag = true;

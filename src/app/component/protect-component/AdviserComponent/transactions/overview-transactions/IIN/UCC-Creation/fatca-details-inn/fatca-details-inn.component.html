@@ -31,13 +31,13 @@
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="nationality">
-                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('nationality').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('nationality').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 India
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('nationality').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('nationality').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 USA/Canada </mat-radio-button>
 
-                            <mat-radio-button value="3" [ngClass]="fatcaDetails.get('nationality').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="3" [ngClass]="fatcaDetails.get('nationality').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Others </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -273,16 +273,8 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm()">SAVE</button>
-        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
-            <i class="material-icons">
-                keyboard_arrow_up
-            </i></button>
-        <mat-menu #menu="matMenu">
-            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
-                Item 1 </button>
-        </mat-menu>
-
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm()">NEXT</button>
+        
 
     </div>
 

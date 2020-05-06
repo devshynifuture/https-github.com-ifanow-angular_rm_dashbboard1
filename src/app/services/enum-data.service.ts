@@ -5,6 +5,7 @@ import { EnumServiceService } from './enum-service.service';
 import { OnlineTransactionService } from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
 import { AuthService } from '../auth-service/authService';
 import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
+import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ import { CustomerService } from '../component/protect-component/customers/compon
 export class EnumDataService {
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
-    private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService) {
+    private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
+     private orgSettingService: OrgSettingServiceService) {
   }
 
   proofType = [
@@ -36,12 +38,12 @@ export class EnumDataService {
     { roleTypeId: 4, roleTypeName: 'Operations' },
   ];
 
-  clientRoleList = [
-    { clientRoleId: 1, clientRoleName: 'Mutual Fund (MF) only' },
-    { clientRoleId: 2, clientRoleName: 'MF + Multi asset' },
-    { clientRoleId: 3, clientRoleName: 'MF + Multi asset + Basic Plan' },
-    { clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan' },
-  ];
+  // clientRoleList = [
+  //   { clientRoleId: 1, clientRoleName: 'Mutual Fund (MF) only' },
+  //   { clientRoleId: 2, clientRoleName: 'MF + Multi asset' },
+  //   { clientRoleId: 3, clientRoleName: 'MF + Multi asset + Basic Plan' },
+  //   { clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan' },
+  // ];
 
   bankList :any=[];
   advisorId:any;
@@ -72,7 +74,16 @@ export class EnumDataService {
   }
 
   public getClientRole() {
-    this.enumService.addClientRole(this.clientRoleList);
+    let obj =
+    {
+      advisorId: AuthService.getAdvisorId()
+    }
+    this.orgSettingService.getUserRoles(obj).subscribe(
+      data => {
+        console.log(data);
+        this.enumService.addClientRole(data);
+      }
+    )
   }
 
   public getBank() {

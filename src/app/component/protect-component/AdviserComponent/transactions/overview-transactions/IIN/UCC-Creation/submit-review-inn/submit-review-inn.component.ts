@@ -42,6 +42,8 @@ export class SubmitReviewInnComponent implements OnInit {
   validatorType = ValidatorType
   paltform = '2';
   BSEValue = '2';
+  responseMessage: any;
+  statusString: any;
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
@@ -275,6 +277,10 @@ export class SubmitReviewInnComponent implements OnInit {
 
   createIINUCCRes(data) {
     console.log('data respose =', data);
+    this.responseMessage = data.responseMessage
+    this.statusString = data.statusString
+    this.eventService.showErrorMessage(data.statusString);
+    this.eventService.showErrorMessage(data.responseMessage);
   }
 
   uploadForm() {
@@ -290,7 +296,6 @@ export class SubmitReviewInnComponent implements OnInit {
   getTokenRes(data) {
     console.log('token', data);
     this.tokenRes = data;
-    this.soapCall();
   }
 
   getFileDetails(e) {
@@ -315,55 +320,5 @@ export class SubmitReviewInnComponent implements OnInit {
 
         }
       });
-  }
-
-
-  soapCall() {
-    const xmlhttp = new XMLHttpRequest();
-    const headers = xmlhttp.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8; action=http://tempuri.org/IStarMFFileUploadService/UploadFile');
-
-    xmlhttp.open('POST', 'https://www.bsestarmf.in/StarMFFileUploadService/StarMFFileUploadService.svc/Secure', true);
-
-    const sr =
-      `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
-           <soapenv:Header
-            xmlns:wsa="http://www.w3.org/2005/08/addressing">
-            <wsa:To>https://www.bsestarmf.in/StarMFFileUploadService/StarMFFileUploadService.svc/Secure</wsa:To>
-            <wsa:Action>http://tempuri.org/IStarMFFileUploadService/UploadFile</wsa:Action>
-          </soapenv:Header>
-           <ns3:UploadFile
-            xmlns:ns2="http://schemas.datacontract.org/2004/07/StarMFFileUploadService"
-            xmlns:ns3="http://tempuri.org/"
-            xmlns:ns4="http://schemas.microsoft.com/2003/10/Serialization/">
-             <soapenv:Body>
-              <ns3:data>
-              <ns2:ClientCode>` + 'GAURAVD1' + `</ns2:ClientCode>
-               <ns2:DocumentType>` + 'Nrm' + `</ns2:DocumentType>
-               <ns2:EncryptedPassword>` + this.tokenRes.passwordResponseForStarMfFileUpload + `</ns2:EncryptedPassword>
-               <ns2:FileName>` + this.fileName + `</ns2:FileName>
-               <ns2:Flag>` + 'UCC' + `</ns2:Flag>
-               <ns2:MemberCode>` + this.selectedBrokerBse.userId + `</ns2:MemberCode>
-               <ns2:UserId>` + this.selectedBrokerBse.memberId + `</ns2:UserId>
-               <ns2:pFileBytes>` + '' + `</ns2:pFileBytes>
-               </ns3:data>
-            </ns3:UploadFile>
-             </soapenv:Body>
-           </soapenv:Envelope>`;
-
-    xmlhttp.onreadystatechange = () => {
-      if (xmlhttp.readyState == 4) {
-        if (xmlhttp.status == 200) {
-          const xml = xmlhttp.responseXML;
-          // Here I'm getting the value contained by the <return> node.
-          const response_number = parseInt(xml.getElementsByTagName('return')[0].childNodes[0].nodeValue);
-          // Print result square number.
-          console.log(response_number);
-        }
-      }
-    };
-    // Send the POST request.
-    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-    xmlhttp.responseType = 'document';
-    xmlhttp.send(sr);
   }
 }
