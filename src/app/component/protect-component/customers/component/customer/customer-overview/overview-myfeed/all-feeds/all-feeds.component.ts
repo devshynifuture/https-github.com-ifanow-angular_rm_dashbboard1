@@ -540,6 +540,7 @@ export class AllFeedsComponent implements OnInit {
 
   riskProfileDesc(id) {
     if (this.globalRiskProfile.length > 0) {
+      return 'Dummy risk profile description';
       return this.globalRiskProfile.find(data => data.id == id).id;
     } else {
       return 'Dummy risk profile description';

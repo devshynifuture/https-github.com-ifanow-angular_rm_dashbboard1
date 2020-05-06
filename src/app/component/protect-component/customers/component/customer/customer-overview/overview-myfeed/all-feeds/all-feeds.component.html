@@ -422,7 +422,7 @@
                                             src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
 
                                         <p class="mb-0">{{docs.filesCount}} items in your vault
-                                            {{docs.totalBytes/1024 | number : '0.0-2'}} space used</p>
+                                            {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
 
                                         <button [routerLink]="['/customer/detail/overview/documents']"
                                             class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -586,7 +586,11 @@
                                 </h5>
                                 <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
 
-                                <!-- <img src="/assets/images/svg/aggressive.svg"> -->
+                                <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                                <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                                <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                                <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                                <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
 
 
                             </div>
