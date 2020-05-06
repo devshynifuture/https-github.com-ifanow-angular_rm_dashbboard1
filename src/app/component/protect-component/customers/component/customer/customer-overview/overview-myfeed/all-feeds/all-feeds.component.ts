@@ -68,7 +68,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.5,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    // "prevArrow": "<div style='display: none;' class='nav-btn prev-slide'>Prev</div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
   }
 
   // vaibhav
@@ -76,7 +76,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.4,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    // "prevArrow": "<div style='display: none;' class='nav-btn prev-slide'>Prev</div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
   }
 
   chartTotal = 100;
@@ -542,6 +542,7 @@ export class AllFeedsComponent implements OnInit {
 
   riskProfileDesc(id) {
     if (this.globalRiskProfile.length > 0) {
+      return 'Dummy risk profile description';
       return this.globalRiskProfile.find(data => data.id == id).id;
     } else {
       return 'Dummy risk profile description';
