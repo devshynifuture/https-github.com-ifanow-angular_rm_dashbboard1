@@ -105,7 +105,7 @@ export class VerifyMemberComponent implements OnInit {
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
       bank: [(!data) ? '' : data.bank, [Validators.required]],
-      taxStatus: [data ? '' : data.ownerName, [Validators.required]],
+      // taxStatus: [data ? '' : data.ownerName, [Validators.required]],
       fromDate: [data ? '' : data.fromDate, [Validators.required]],
       toDate: [data ? '' : data.toDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(1)]],
@@ -121,6 +121,7 @@ export class VerifyMemberComponent implements OnInit {
   lisNominee(value) {
     // this.showSpinnerOwner = false
     if (value == null) {
+      this.errorMsg = undefined;
       // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
@@ -130,7 +131,11 @@ export class VerifyMemberComponent implements OnInit {
 
   ownerList(value) {
     if (value == '') {
+      this.nomineesListFM = undefined;
       this.showSpinnerOwner = false;
+      this.errorMsg = undefined;
+      this.generalDetails.controls.holdingNature.reset();
+      this.generalDetails.controls.bank.reset();
     } else {
       this.showSpinnerOwner = true;
     }
