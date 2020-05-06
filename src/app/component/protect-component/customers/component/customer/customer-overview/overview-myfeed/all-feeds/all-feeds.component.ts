@@ -62,7 +62,22 @@ export class AllFeedsComponent implements OnInit {
       dataLabels: {
         enabled: false
       }
-    }]
+    }
+  ]
+
+  portfolioConfig = {
+    slidesToShow: 1.5,
+    infinite: false,
+    "nextArrow": "<div class='nav-btn next-slide'>Next</div>",
+    "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
+  }
+
+  recentTnxConfig = {
+    slidesToShow: 1.4,
+    infinite: false,
+    "nextArrow": "<div class='nav-btn next-slide'>Next</div>",
+    "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
+  }
 
   chartTotal = 100;
   clientId: any;
