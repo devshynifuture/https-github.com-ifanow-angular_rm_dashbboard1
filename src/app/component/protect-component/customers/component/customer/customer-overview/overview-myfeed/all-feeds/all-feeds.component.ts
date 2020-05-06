@@ -69,16 +69,16 @@ export class AllFeedsComponent implements OnInit {
   portfolioConfig = {
     slidesToShow: 1.5,
     infinite: false,
-    "nextArrow": "<div class='nav-btn next-slide'>Next</div>",
-    "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
+    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
+    // "prevArrow": "<div style='display: none;' class='nav-btn prev-slide'>Prev</div>",
   }
 
   // vaibhav
   recentTnxConfig = {
     slidesToShow: 1.4,
     infinite: false,
-    "nextArrow": "<div class='nav-btn next-slide'>Next</div>",
-    "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
+    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
+    // "prevArrow": "<div style='display: none;' class='nav-btn prev-slide'>Prev</div>",
   }
 
   chartTotal = 100;
@@ -465,10 +465,10 @@ export class AllFeedsComponent implements OnInit {
 
   createCashflowFamilyObj(data) {
     let tnx = [];
-    if(data.income && data.income.length > 0) {
+    if (data.income && data.income.length > 0) {
       tnx.push(data.income)
     }
-    if(data.expense && data.expense.length > 0) {
+    if (data.expense && data.expense.length > 0) {
       tnx.push(data.expense)
     }
     tnx = tnx.flat();
@@ -476,13 +476,13 @@ export class AllFeedsComponent implements OnInit {
     let familyMembers = [...new Set(tnx.map(obj => obj.ownerName))];
     let totalIncome = 0;
     let totalExpense = 0;
-    
+
     let leddger = familyMembers.map((famId) => {
       let transactions = tnx.filter((tnx) => tnx.ownerName == famId);
       let income = 0;
       let expense = 0;
       transactions.forEach((obj) => {
-        if(obj.inputOutputFlag > 0) {
+        if (obj.inputOutputFlag > 0) {
           income += obj.currentValue;
         } else {
           expense += obj.currentValue;
@@ -492,25 +492,26 @@ export class AllFeedsComponent implements OnInit {
       totalExpense += expense;
       totalIncome += income;
 
-    return {
-      familyMemberId: famId,
-      familyMemberFullName: transactions[0].ownerName,
-      cashflowLedgger: [
-        {
-          bankName: 'N/A',
-          inflow: income,
-          outflow: expense,
-          netflow: income - expense
-        }
-      ]
-    }})
+      return {
+        familyMemberId: famId,
+        familyMemberFullName: transactions[0].ownerName,
+        cashflowLedgger: [
+          {
+            bankName: 'N/A',
+            inflow: income,
+            outflow: expense,
+            netflow: income - expense
+          }
+        ]
+      }
+    })
 
     let total = [{
-        bankName: 'All In-flows & Out-flows',
-        inflow: totalIncome,
-        outflow: totalExpense,
-        netflow: totalIncome - totalExpense,
-      }]
+      bankName: 'All In-flows & Out-flows',
+      inflow: totalIncome,
+      outflow: totalExpense,
+      netflow: totalIncome - totalExpense,
+    }]
 
     this.cashflowData = {
       cashflowData: leddger,
@@ -518,7 +519,7 @@ export class AllFeedsComponent implements OnInit {
     }
   }
 
-  
+
 
   pieChart(data) {
     this.chart.removeSeries(0);

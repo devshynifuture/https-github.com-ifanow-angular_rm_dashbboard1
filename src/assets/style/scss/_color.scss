@@ -601,5 +601,21 @@ button:focus {
 }
 
 .greenColor-text {
-    color: $greenColor;
+    color: $greenColor !important;
+}
+
+.topborderPrimitive {
+    border-top: 4px solid $primitive;
+}
+
+.topborderGreenColor {
+    border-top: 4px solid $greenColor;
+}
+
+.topborderDanger {
+    border-top: 4px solid $danger;
+}
+
+.topborderPrimary {
+    border-top: 4px solid $primary;
 }
