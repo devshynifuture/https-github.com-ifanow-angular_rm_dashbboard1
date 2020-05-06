@@ -47,6 +47,7 @@ export class RightFilterComponent implements OnInit {
   category: any;
   transactionView: any;
   reportType;
+  reportFormat;
   countReport: any;
   countTranView: any;
   countCategory: any;
@@ -61,6 +62,7 @@ export class RightFilterComponent implements OnInit {
   mfData: any;
   finalFilterData: any;
   reportTypeobj: any;
+  reportFormatObj:any;
   overviewFilter: any;
   selectedTransactionView;
   sendTransactionView;
@@ -68,6 +70,7 @@ export class RightFilterComponent implements OnInit {
   transactionPeriodCheck = true;
   overviewFilterCount :any;
   showError: string;
+  countFormat: number;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
@@ -94,6 +97,7 @@ export class RightFilterComponent implements OnInit {
     this.getFamilyMember(this._data.folioWise);//for family memeber
     this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
     this.getReportType();//get type of report categorywise,investor,sub category wise
+    this.getReportFormat();//get capital gain report
     this.getOverviewFilter();//used for overview filter to show specific tables
     this.setDefaultFilters();//setting default selected in each above array
     this.amc = this._data.schemeWise; // amc wise data
@@ -148,6 +152,7 @@ export class RightFilterComponent implements OnInit {
       fromDate: [(data.fromDate == undefined) ? null : new Date(data.fromDate)],
       toDate: [(data.toDate == undefined) ? null : new Date(data.toDate)],
       showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
+      grandfathering: [(data.grandfathering) ? data.grandfathering : '2', [Validators.required]],
     });
   }
 
@@ -207,6 +212,19 @@ export class RightFilterComponent implements OnInit {
     });
     this.reportType = filterData;
   }
+  getReportFormat() {
+    this.reportFormat = ['Summary', 'Detailed'];
+    
+    const filterData = [];
+    this.reportFormat.filter(function (element) {
+      const obj = {
+        name: element,
+        selected: false
+      };
+      filterData.push(obj);
+    });
+    this.reportFormat = filterData;
+  }
   getOverviewFilter() {
     this.overviewFilter = [{ name: 'Summary bar', selected: true },
     { name: 'Scheme wise allocation', selected: true },
@@ -239,6 +257,13 @@ export class RightFilterComponent implements OnInit {
     this.reportType.forEach(item => {
       this.countReport = 0;
       if (item.name == 'Sub Category wise') {
+        item.selected = true;
+        this.countReport++;
+      }
+    });
+    this.reportFormat.forEach(item => {
+      this.countFormat = 0;
+      if (item.name == 'Summary') {
         item.selected = true;
         this.countReport++;
       }
@@ -414,7 +439,14 @@ export class RightFilterComponent implements OnInit {
     });
     this.changeSelect('', '');
   }
-
+  changeFormatFilter(value) {
+    this.reportFormat.forEach(element => {
+      if (element.name != value.name) {
+        element.selected = false;
+      }
+    });
+    this.changeSelect('', '');
+  }
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     console.log('transaction ==', this._data.transactionView);
@@ -511,6 +543,15 @@ export class RightFilterComponent implements OnInit {
       });
       this.reportTypeobj = filter;
     }
+    if (this.reportFormat != undefined) {
+      const filter = [];
+      this.reportFormat.forEach(item => {
+        if (item.selected) {
+          filter.push(item);
+        }
+      });
+      this.reportFormatObj = filter;
+    }
   };
 
   selectAll(event, array, someString) {
@@ -540,12 +581,15 @@ export class RightFilterComponent implements OnInit {
       folio: (this.folioObj) ? this.folioObj : this.folio,
       category: (this.categoryObj) ? this.categoryObj : this.category,
       reportType: (this.reportTypeobj) ? this.reportTypeobj : this.reportType,
+      reportFormat :(this.reportFormatObj) ? this.reportFormatObj : this.reportFormat,
       overviewFilter: this.overviewFilter,
       transactionView: this.transactionView,
       reportAsOn: this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd'),
       fromDate: this.datePipe.transform(this.summaryFilerForm.controls.fromDate.value, 'yyyy-MM-dd'),
       toDate: this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
+      grandfathering: parseInt(this.summaryFilerForm.controls.grandfathering.value),
+
     };
     console.log('dataToSend---------->', this.dataToSend);
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
