@@ -401,6 +401,8 @@ export class SwpTransactionComponent implements OnInit {
         bankDetailId: null,
         nsePaymentMode: null,
         childTransactions: null,
+        isException : true,
+
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.bankDetailId = this.bankDetails.id;
