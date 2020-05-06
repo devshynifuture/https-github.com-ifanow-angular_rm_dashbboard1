@@ -61,7 +61,7 @@ export class LinkBankComponent implements OnInit {
 
   ngOnInit() {
     this.createBankForm(null);
-    this.userData = AuthService.getUserInfo();
+    this.userData = AuthService.getClientData();
   }
 
   toUpperCase(formControl, event) {
@@ -264,8 +264,8 @@ export class LinkBankComponent implements OnInit {
           console.log(data);
           this.barButtonOptions.active = false;
           this.enumDataService.getAccountList();
-          this.valueChange.emit("get-list");
-          this.closeDialog();
+          // this.valueChange.emit("get-list");
+          this.closeDialog("get-list");
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -280,8 +280,10 @@ export class LinkBankComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
-  closeDialog(): void {
-    this.dialogRef.close();
+  closeDialog(data): void {
+    setTimeout(() => {
+      this.dialogRef.close(data);
+    }, 5000);
   }
 
 }

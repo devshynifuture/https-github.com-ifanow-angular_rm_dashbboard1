@@ -152,7 +152,10 @@ export class FixedDepositComponent implements OnInit {
     };
     this.advisorId = AuthService.getAdvisorId();
     // this.getAccountList();
+
+    //link bank
     this.bankList = this.enumService.getBank();
+    //link bank
 
   }
 
@@ -660,7 +663,7 @@ export class FixedDepositComponent implements OnInit {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
-
+//link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
@@ -668,12 +671,11 @@ export class FixedDepositComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result == "get-list"){
         this.bankList = this.enumService.getBank();
-      }
     })
 
   }
+//link bank
 
   
 }
