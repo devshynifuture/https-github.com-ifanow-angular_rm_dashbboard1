@@ -61,32 +61,6 @@
                                                 <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
                                             </li>
                                         </ul>
-
-
-                                        <!-- <div class="row b-b pt-10 pb-10" *ngFor="let data of chartData">
-                                            <div class="col-md-1">
-                                                <div class="hw-16 mt-2 bg-primary"></div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="f-500 text-black mb-0">{{data.name}}</p>
-                                            </div>
-                                            <div class="col-md-3 relClass ">
-                                                <div class="bar height24">
-                                                    <p class="text-black mb-0 ">
-                                                        <span appFormatNumber>{{(data.y)}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 relClass ">
-                                                <div class="bar height24">
-                                                    <p class="text-black mb-0">
-                                                        <span
-                                                            appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div> -->
-
                                     </div>
                                 </div>
                             </div>
@@ -107,48 +81,50 @@
                     </div>
 
 
-                    <div class="scrollingDiv d-flex">
+                    <div class="scrollingDiv d-flex row">
                         <!-- portfolio data present -->
-                        <div class="fundBox bg-white" *ngFor="let portData of portFolioData">
-                            <div class="row">
-                                <div class="col-md-9  pr-0">
-                                    <h5 class="roboto">{{portData.assetTypeString}}</h5>
+                        <ngx-slick-carousel class="carousel col-md-12" 
+                            [config]="portfolioConfig">
+                            <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
+                                <div class="row">
+                                    <div class="col-md-9  pr-0">
+                                        <h5 class="roboto">{{portData.assetTypeString}}</h5>
+                                    </div>
+                                    <div class="col-md-3 d-flex justify-content-end">
+                                        <span *ngIf="portData.currentValue==0"
+                                            (click)="routeAndAddQueryParams(portData.assetTypeString)"
+                                            class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                            Add
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="col-md-4 d-flex justify-content-end">
-                                    <span *ngIf="portData.currentValue==0"
-                                        (click)="routeAndAddQueryParams(portData.assetTypeString)"
-                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
-                                        <!-- {{portData.type}} -->
-                                        Add
-                                    </span>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
+                                        <h3 class="mb-20">₹<span
+                                                appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
+                                    </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
+                                        <p class="m-0">₹<span
+                                                appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
+                                        <p class="m-0 text-success">₹<span
+                                                appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                    <h3 class="mb-20">₹<span
-                                            appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                    <p class="m-0">₹<span
-                                            appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                    <p class="m-0 text-success">₹<span
-                                            appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
-                                    </p>
-                                </div>
-                            </div>
-
-
-                        </div>
-
+                        </ngx-slick-carousel>
+                        
                         <!-- portfolio data not present -->
                         <div class="fundBox bg-white"
                             *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
@@ -484,45 +460,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                </div>
-
-                <!-- insurance -->
-                <div class="wrapperBox" *ngIf="false">
-                    <div class="row">
-                        <div class="col-md-8 d-flex align-items-center">
-                            <h5 class="roboto m-0">Insurance</h5>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
-                        </div>
-                    </div>
-
-                    <div class="scrollingDiv d-flex" *ngFor="let inc of recentTransactions">
-                        <div class="insuranceListBox bg-white">
-                            <p class="roboto m-0 f-500">{{inc.insuranceType}}</p>
-                            <p class="roboto mb-10">{{inc.insuredFamily}}</p>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <circle-progress [animationDuration]="1000" [animation]="true"
-                                        [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
-                                        [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="inc.progress"
-                                        [radius]="20" [responsive]="true" [showSubtitle]="false" [space]="-10"
-                                        [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35"
-                                        class="progress">
-                                    </circle-progress>
-                                </div>
-                                <div class="col-md-8 d-flex justify-content-center flex-column">
-                                    <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span
-                                            appFormatNumber>{{inc.actual}}</span></p>
-                                    <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span
-                                            appFormatNumber>{{inc.adviced}}</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Recent transactions as per rta -->
@@ -538,33 +475,37 @@
                     </div>
 
                     <div class="scrollingDiv d-flex">
-                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of rtaFeedsData">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="mb-5">{{tnx.fwTransactionType}}</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <p class="mb-5 text-primitive">{{tnx.type}}</p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                        <ngx-slick-carousel class="carousel col-md-12" 
+                            [config]="recentTnxConfig">
+                            <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="mb-5">{{tnx.fwTransactionType}}</p>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <p class="mb-5 text-primitive">{{tnx.type}}</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
-                                    </p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                    <p class="mb-4">{{tnx.investorName}}</p>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                                    </div>
+                                    <div class="col-md-5 pl-0 text-right">
+                                        <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
+                                        <p class="mb-4">{{tnx.investorName}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ngx-slick-carousel>
                     </div>
                 </div>
 
@@ -582,36 +523,40 @@
                     </div>
 
                     <div class="scrollingDiv d-flex">
-                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of recentTransactions">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="mb-5">{{tnx.transactionType}}</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <p class="mb-5 text-primitive">{{tnx.type}}</p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                        <ngx-slick-carousel class="carousel col-md-12" 
+                            [config]="recentTnxConfig">
+                            <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of recentTransactions">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="mb-5">{{tnx.transactionType}}</p>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <p class="mb-5 text-primitive">{{tnx.type}}</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
-                                    </p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                    <p class="mb-4">{{clientData.name}}</p>
-                                    <span class="f-12 spanClass btn-danger-solid">
-                                        {{tnx.statusDesc}}
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                                    </div>
+                                    <div class="col-md-5 pl-0 text-right">
+                                        <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
+                                        <p class="mb-4">{{clientData.name}}</p>
+                                        <span class="f-12 spanClass btn-danger-solid">
+                                            {{tnx.statusDesc}}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ngx-slick-carousel>
                     </div>
                 </div>
 

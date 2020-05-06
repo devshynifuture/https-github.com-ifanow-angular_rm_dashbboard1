@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { EducationComponent } from './education/education.component';
 import { VideosComponent } from './videos/videos.component';
 import { SummaryModule } from '../../accounts/summary/summary.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { SummaryModule } from '../../accounts/summary/summary.module';
     NgCircleProgressModule,
     HighchartsChartModule,
     ChartModule,
-    SummaryModule
+    SummaryModule,
+    SlickCarouselModule,
   ]
 })
 export class OverviewMyfeedModule { }
