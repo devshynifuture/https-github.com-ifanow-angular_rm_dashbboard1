@@ -30,7 +30,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     type: 'first',
     data: ''
   }
-  replaceObj: { panNumber: any; clientName: any; maidanName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
+  replaceObj: { panNumber: any; clientName: any; maidenName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType
   changedValue: string;
   doneData: any;
@@ -151,7 +151,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.personalDetails = this.fb.group({
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
-      maidanName: [!data ? '' : data.maidanName, [Validators.required]],
+      maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dob: [!data ? '' : (data.dob)?new Date(data.dob):new Date(data.dateOfBirth), [Validators.required]],
