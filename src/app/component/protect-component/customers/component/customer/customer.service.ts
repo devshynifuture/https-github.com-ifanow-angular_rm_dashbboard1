@@ -85,6 +85,9 @@ export class CustomerService {
   getBonds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BONDS, data);
   }
+  geCalculatedEmi(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, data);
+  }
 
   addRecurringDeposit(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RECURRING_DEPOSIT, data);

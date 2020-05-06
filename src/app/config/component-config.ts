@@ -92,6 +92,7 @@ export const appConfig = {
   ADD_LIABILITY: 'account/liability/loan/add',
   GET_LIABILITY: 'account/liability/loan/list/get',
   EDIT_LIABILITY: 'account/liability/loan/edit',
+  CALCULATE_EMI:'account/liability/calculate/emi',
   EDIT_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/edit',
   GET_LIST_FAMILY_MEMBER: 'account/income/family-members/get',
   GET_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/get',
