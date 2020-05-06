@@ -12,6 +12,7 @@ import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn
 import { MatInput } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -48,7 +49,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   addressList: any;
   isLoading = false;
   maxDate = new Date();
-
+  maxDateForAdultDob;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private custumService: CustomerService,
@@ -83,6 +84,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.maxDateForAdultDob = new Date();
 
     if (this.firstHolderNominee) {
       this.getdataForm(this.firstHolderNominee)
@@ -104,6 +106,22 @@ export class NomineeDetailsIinComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+  }
+  // onChange(value){
+  //   console.log('onChange',value.checked)
+    
+  //   if(value.checked == true){
+  //     this.firstHolderNominee.address = this.allData.holderList[0].address
+  //     this.getdataForm(this.firstHolderNominee)
+  //   }
+  // }
+  selectRelation(value){
+    console.log('relation type',value)
+    if(value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister'){
+      this.maxDateForAdultDob =  moment().subtract(18, 'years');
+    }else{
+      this.maxDateForAdultDob = new Date()
+    }
   }
   getNomineeList(data) {
     const obj = {

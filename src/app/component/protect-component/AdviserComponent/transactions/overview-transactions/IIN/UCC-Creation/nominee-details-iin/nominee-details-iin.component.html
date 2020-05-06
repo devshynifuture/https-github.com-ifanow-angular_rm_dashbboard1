@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select #relationShip class="form-control" formControlName="relationShip">
+                            <mat-select #relationShip class="form-control" formControlName="relationShip" (selectionChange)="selectRelation($event)">
                                 <mat-option value="Self"> Self </mat-option>
                                 <mat-option value="Wife"> Wife </mat-option>
                                 <mat-option value="Husband"> Husband </mat-option>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput class="form-control b-0" [max]="maxDate" formControlName="dob"
+                            <input matInput class="form-control b-0" [max]="maxDateForAdultDob" formControlName="dob"
                                 [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -124,7 +124,13 @@
 
 
                 <h3 class="f-18 mb-20 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
-
+                <!-- <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <mat-checkbox (change)="onChange($event)">
+                            Address same as mine
+                        </mat-checkbox>
+                    </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address type</h3>
