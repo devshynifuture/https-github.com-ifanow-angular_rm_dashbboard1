@@ -52,7 +52,7 @@
 
                                         <ul class="pointUl">
                                             <li *ngFor="let data of chartData">
-                                                <span class="bg-primary pointNumber"> </span>
+                                                <span class="pointNumber" [style.background-color]="data.color"> </span>
                                                 <span class="f-14 mr-8" appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
                                                 <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
