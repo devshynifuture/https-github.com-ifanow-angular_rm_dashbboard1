@@ -314,20 +314,24 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
-      this.getNominee.removeAt(0);
-      this.dataForEdit.nominees.forEach(element => {
-        this.addNewNominee(element);
-      });
+      if(this.dataForEdit.nominees.length > 0){
+        this.getNominee.removeAt(0);
+        this.dataForEdit.nominees.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
     if (this.dataForEdit) {
-      this.addOnForm.removeAt(0);
-      this.dataForEdit.addOns.forEach(element => {
-        this.addNewAddOns(element);
-      });
+      if(this.dataForEdit.addOns.length > 0){
+        this.addOnForm.removeAt(0);
+        this.dataForEdit.addOns.forEach(element => {
+          this.addNewAddOns(element);
+        });
+      }
     }
     if (this.dataForEdit) {
-      if( this.dataForEdit.policyFeatures.length > 0){
+      if(this.dataForEdit.policyFeatures.length > 0){
         this.planFeatureForm.removeAt(0);
         this.dataForEdit.policyFeatures.forEach(element => {
           this.addNewFeature(element);

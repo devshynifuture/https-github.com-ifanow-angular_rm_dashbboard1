@@ -67,6 +67,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     showSumAssured = false;
     showinsuredMemberSum = true;
     showDeductibleSum = false;
+    insuredMemberList: any;
 
     constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
@@ -122,12 +123,15 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     lisNominee(value) {
         this.ownerData.Fmember = value;
         this.nomineesListFM = Object.assign([], value);
+        this.insuredMemberList = Object.assign([], value);
+        this.insuredMemberList.forEach(item => item.isDisabled = false);
+
     }
 
-    getFamilyMember(data, index) {
-        this.familyMemberLifeData = data;
-        console.log('family Member', this.FamilyMember);
-    }
+    // getFamilyMember(data, index) {
+    //     this.familyMemberLifeData = data;
+    //     console.log('family Member', this.FamilyMember);
+    // }
 
     disabledMember(value, type) {
         this.callMethod = {
@@ -477,21 +481,23 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
     }
 
-    getFamilyData(value, data) {
-
-        data.forEach(element => {
-            for (let e in this.insuredMembersForm.controls) {
-                let name = this.insuredMembersForm.controls[e].get('insuredMembers');
-                if (element.userName == name.value) {
-                    this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
-                    this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
-                    this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+    getFamilyData(data) {
+        if(data){
+            data.forEach(element => {
+                for (let e in this.insuredMembersForm.controls) {
+                    let name = this.insuredMembersForm.controls[e].get('insuredMembers');
+                    if (element.userName == name.value) {
+                        this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
+                        this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
+                        this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+                        element.isDisabled = true;
+    
+                    }
                 }
-            }
-
-        });
-
-
+    
+            });
+        }
+    
     }
 
     addTransaction(data) {
@@ -502,6 +508,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             relationshipId: [data ? data.relationshipId : ''],
             familyMemberId: [data ? data.familyMemberId : '']
         }));
+        this.resetValue(this.insuredMemberList);
+        this.getFamilyData(this.insuredMemberList);
         this.onChangeSetErrorsType(this.healthInsuranceForm.get('PlanType').value,'planType')
     }
 
@@ -510,6 +518,14 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         if (finalMemberList.length > 1) {
             this.insuredMembersForm.removeAt(item);
 
+        }
+        this.resetValue(this.insuredMemberList);
+        this.getFamilyData(this.insuredMemberList);
+
+    }
+    resetValue(data){
+        if(data){
+            data.forEach(item => item.isDisabled = false);
         }
     }
 

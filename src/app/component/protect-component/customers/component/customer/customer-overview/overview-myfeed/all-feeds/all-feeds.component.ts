@@ -423,159 +423,85 @@ export class AllFeedsComponent implements OnInit {
       targetDate: startDate.getTime()
     }
 
-    // this.cashflowData = {
-    //   cashflowData: [
-    //     {
-    //       familyMemberId: 100,
-    //       familyMemberFullName: 'Sohan Savant',
-    //       cashflowLedgger: [
-    //         {
-    //           bankName: 'ABC Bank / 4421',
-    //           inflow: 13442,
-    //           outflow: 0,
-    //           netflow: 13442,
-    //           date: 345678965
-    //         }, {
-    //           bankName: 'XYZ Bank / 9924',
-    //           inflow: 0,
-    //           outflow: 13442,
-    //           netflow: -13442,
-    //           date: 345678965
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       familyMemberId: 100,
-    //       familyMemberFullName: 'Rakesh Mishra',
-    //       cashflowLedgger: [
-    //         {
-    //           bankName: 'TUV Bank / 4421',
-    //           inflow: 13442,
-    //           outflow: 0,
-    //           netflow: 13442,
-    //           date: 345678965
-    //         }, {
-    //           bankName: 'Axis Bank / 9924',
-    //           inflow: 0,
-    //           outflow: 13442,
-    //           netflow: -13442,
-    //           date: 345678965
-    //         }
-    //       ]
-    //     },
-    //   ],
+    this.cashflowData = {
+      cashflowData: [
+        {
+          familyMemberId: 100,
+          familyMemberFullName: 'Sohan Savant',
+          cashflowLedgger: [
+            {
+              bankName: 'ABC Bank / 4421',
+              inflow: 13442,
+              outflow: 0,
+              netflow: 13442,
+              date: 345678965
+            }, {
+              bankName: 'XYZ Bank / 9924',
+              inflow: 0,
+              outflow: 13442,
+              netflow: -13442,
+              date: 345678965
+            }
+          ]
+        },
+        {
+          familyMemberId: 100,
+          familyMemberFullName: 'Rakesh Mishra',
+          cashflowLedgger: [
+            {
+              bankName: 'TUV Bank / 4421',
+              inflow: 13442,
+              outflow: 0,
+              netflow: 13442,
+              date: 345678965
+            }, {
+              bankName: 'Axis Bank / 9924',
+              inflow: 0,
+              outflow: 13442,
+              netflow: -13442,
+              date: 345678965
+            }
+          ]
+        },
+      ],
 
-    //   total: [{
-    //     bankName: 'All In-flows & Out-flows',
-    //     inflow: 293939,
-    //     outflow: 39933,
-    //     netflow: -13442,
-    //   }]
-    // }
-    // this.tabsLoaded.cashflowData.hasData = true;
-    // this.tabsLoaded.cashflowData.dataLoaded = true;
-    this.loaderFn.increaseCounter();
-
-    this.customerService.getCashFlowList(obj).subscribe(res => {
-      if (res == null) {
-        this.cashflowData = {
-          // emptyData: [{
-          //   bankName: 'Not enough data to display',
-          //   inflow: 0,
-          //   outflow: 0,
-          //   netflow: 0
-          // }]
-        };
-      } else {
-        this.cashFlowViewDataSource = [];
-        this.sortDataUsingFlowType(res, true);
-        this.tabsLoaded.cashflowData.hasData = true;
-        this.cashflowData = res;
-      }
-      this.tabsLoaded.cashflowData.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.eventService.openSnackBar(err, "Dismiss")
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-
-
-  // copied from summary
-  sortDataUsingFlowType(ObjectArray, flag) {
-
-    if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
-      this.cashFlowViewDataSource = ObjectArray['expense'];
-      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
-      ObjectArray['expense'].forEach(element => {
-        element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
-        this.expenseList.push(0);
-      });
-      ObjectArray['income'].forEach(element => {
-        element['colourFlag'] = true;
-        this.incomeList.push(Math.round(element.currentValue));
-        this.incomeList.push(0);
-      });
-    } else if (ObjectArray['expense'].length > 0) {
-      this.cashFlowViewDataSource = ObjectArray['expense'];
-      ObjectArray['expense'].forEach(element => {
-        element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
-      });
-    } else {
-      this.cashFlowViewDataSource = ObjectArray['income'];
-      ObjectArray['income'].forEach(element => {
-        element['colourFlag'] = true;
-        this.incomeList.push(Math.round(element.currentValue));
-      });
-    }
-    this.cashFlow('cashFlow', ObjectArray);
-  }
-  cashFlow(id, data) {
-    console.log(data);
-    const { expense, income } = data;
-    const timeArray = [];
-
-    if (income.length > 0) {
-      income.forEach(element => {
-        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
-      });
-    }
-    if (expense.length > 0) {
-      expense.forEach(element => {
-        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
-      });
-    }
-    console.log('timearray : ', timeArray);
-    const chart1 = new Highcharts.Chart('cashFlow', {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: ''
-      },
-      xAxis: {
-        categories: timeArray
-      },
-      credits: {
-        enabled: false
-      },
-      series: [{
-        name: 'Income',
-        color: '#5cc644',
-        data: this.incomeList,
-        type: undefined,
-      }, {
-        name: 'Expense',
-        color: '#ef6725',
-        data: this.expenseList,
-        type: undefined,
+      total: [{
+        bankName: 'All In-flows & Out-flows',
+        inflow: 293939,
+        outflow: 39933,
+        netflow: -13442,
       }]
-    });
+    }
+    this.tabsLoaded.cashflowData.hasData = true;
+    this.tabsLoaded.cashflowData.dataLoaded = true;
+  //   this.loaderFn.increaseCounter();
+
+  //   this.customerService.getCashFlowList(obj).subscribe(res => {
+  //     if (res == null) {
+  //       this.cashflowData = {
+  //         emptyData: [{
+  //           bankName: 'Not enough data to display',
+  //           inflow: 0,
+  //           outflow: 0,
+  //           netflow: 0
+  //         }]
+  //       };
+  //     } else {
+  //       this.cashFlowViewDataSource = [];
+  //       this.tabsLoaded.cashflowData.hasData = true;
+  //       this.cashflowData = res;
+  //     }
+  //     this.tabsLoaded.cashflowData.dataLoaded = true;
+  //     this.loaderFn.decreaseCounter();
+  //   }, err => {
+  //     this.hasError = true;
+  //     this.eventService.openSnackBar(err, "Dismiss")
+  //     this.loaderFn.decreaseCounter();
+  //   })
   }
+
+
+  
 
   pieChart(data) {
     this.chart.removeSeries(0);

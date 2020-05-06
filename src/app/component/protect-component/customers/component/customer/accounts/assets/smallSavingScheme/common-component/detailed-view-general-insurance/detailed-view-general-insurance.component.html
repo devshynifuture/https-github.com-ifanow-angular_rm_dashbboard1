@@ -20,7 +20,7 @@
                     <div class="insurance-ui bt">
                         <div class="row bb p-8 b-l br" *ngIf="_data.policyHolderName">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Name of policy holder
+                                Name of policy holder   
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
                                 {{(_data.policyHolderName) ? _data.policyHolderName : 'N.A.'}}
@@ -460,18 +460,18 @@
 
                         <div class="bt" *ngIf="_data.policyFeatures?.length > 0 && showInsurance !='Home' && showInsurance !='Fire & special perils'">
                             <div class="row bb p-8 b-l br" *ngFor="let data of _data.policyFeatures; let i = index">
-                                <div class="col-md-8 bb p-8 text-left f-14 roboto p-0">
+                                <div class="col-md-8  text-left f-14 roboto p-0">
                                     Plan features {{i+1}}
                                 </div>
-                                <div class="col-md-4 bb p-8 text-right f-14 roboto p-0">
+                                <div class="col-md-4  text-right f-14 roboto p-0">
                                     {{(data.type)?data.type:'N.A.'}}
                                 </div>
-                                <div class="col-md-8 bb p-8 text-left f-14 roboto p-0">
+                                <!-- <div class="col-md-8 bb p-8 text-left f-14 roboto p-0">
                                     Sum insured{{i+1}}
                                 </div>
                                 <div class="col-md-4 bb p-8 text-right f-14 roboto p-0" *ngIf="data.featureSumInsured">
                                     {{(data.featureSumInsured) ? '₹' : ''}}<span appFormatNumber>{{(data.featureSumInsured)?data.featureSumInsured:'N.A.'}}</span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="bt" *ngIf="_data.policyFeatures?.length > 0 && showInsurance =='Home' || showInsurance =='Fire & special perils'">
