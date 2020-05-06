@@ -86,8 +86,8 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Name</label>
                     <mat-form-field>
-                        <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,nomineesListFM)">
-                            <mat-option (click)="getFamilyMember(option,i)" *ngFor="let option of nomineesListFM;index as i" [value]="option.userName">
+                        <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData(insuredMemberList)">
+                            <mat-option *ngFor="let option of insuredMemberList;index as i" [disabled]="option.isDisabled"  [value]="option.userName">
                                 {{option.userName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required
