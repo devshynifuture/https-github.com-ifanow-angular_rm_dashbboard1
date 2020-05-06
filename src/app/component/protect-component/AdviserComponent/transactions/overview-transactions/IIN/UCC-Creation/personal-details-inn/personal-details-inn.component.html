@@ -54,11 +54,12 @@
 
                 <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Maidan name</h3>
+                        <h3 class="f-16 pt-20 m-0">Mother maiden name</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input #maidanName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="maidanName" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #maidenName matInput placeholder="Enter maiden name"
+                            appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="maidenName" type="text" class="form-control">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -136,7 +137,7 @@
         </div>
 
 
-        <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+        <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
             <div class="row ">
                 <div class="col-md-12">
                     <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
@@ -154,7 +155,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>
@@ -177,17 +178,8 @@
             PREVIOUS
         </button> -->
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true)">SAVE</button>
-        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
-            <i class="material-icons">
-                keyboard_arrow_up
-            </i></button>
-        <mat-menu #menu="matMenu">
-            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
-                Item 1 </button>
-        </mat-menu>
-
-
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true)">NEXT</button>
+       
     </div>
 
 </div>

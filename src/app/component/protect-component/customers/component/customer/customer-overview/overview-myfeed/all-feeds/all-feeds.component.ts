@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {AppConstants} from 'src/app/services/app-constants';
-import {CustomerService} from '../../../customer.service';
-import {LoaderFunction} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {Chart} from 'angular-highcharts';
-import {PlanService} from '../../../plan/plan.service';
-import {DatePipe} from '@angular/common';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AppConstants } from 'src/app/services/app-constants';
+import { CustomerService } from '../../../customer.service';
+import { LoaderFunction } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { Chart } from 'angular-highcharts';
+import { PlanService } from '../../../plan/plan.service';
+import { DatePipe } from '@angular/common';
+import * as Highcharts from 'highcharts';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-feeds',
@@ -60,13 +62,29 @@ export class AllFeedsComponent implements OnInit {
       dataLabels: {
         enabled: false
       }
-    }]
+    }
+  ]
+
+  // vaibhav
+  portfolioConfig = {
+    slidesToShow: 1.5,
+    infinite: false,
+    "nextArrow": "<div class='nav-btn next-slide'>Next</div>",
+    "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
+  }
+
+  // vaibhav
+  recentTnxConfig = {
+    slidesToShow: 1.4,
+    infinite: false,
+    "nextArrow": "<div class='nav-btn next-slide'>Next</div>",
+    "prevArrow": "<div class='nav-btn prev-slide'>Prev</div>",
+  }
 
   chartTotal = 100;
   clientId: any;
   expenseList = [];
   incomeList = [];
-
   constructor(
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
@@ -78,9 +96,6 @@ export class AllFeedsComponent implements OnInit {
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
-    if (!this.orgDetails) {
-      this.orgDetails = {};
-    }
     this.clientData = AuthService.getClientData();
     this.clientId - AuthService.getClientId();
   }
@@ -424,83 +439,85 @@ export class AllFeedsComponent implements OnInit {
       advisorId: this.advisorId,
       targetDate: startDate.getTime()
     }
+    this.loaderFn.increaseCounter();
+    this.customerService.getCashFlowList(obj).subscribe(res => {
+      if (res == null) {
+        this.cashflowData = {
+          emptyData: [{
+            bankName: 'Not enough data to display',
+            inflow: 0,
+            outflow: 0,
+            netflow: 0
+          }]
+        };
+      } else {
+        this.createCashflowFamilyObj(res);
+        this.tabsLoaded.cashflowData.hasData = true;
+      }
+      this.tabsLoaded.cashflowData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  createCashflowFamilyObj(data) {
+    let tnx = [];
+    if(data.income && data.income.length > 0) {
+      tnx.push(data.income)
+    }
+    if(data.expense && data.expense.length > 0) {
+      tnx.push(data.expense)
+    }
+    tnx = tnx.flat();
+
+    let familyMembers = [...new Set(tnx.map(obj => obj.ownerName))];
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    let leddger = familyMembers.map((famId) => {
+      let transactions = tnx.filter((tnx) => tnx.ownerName == famId);
+      let income = 0;
+      let expense = 0;
+      transactions.forEach((obj) => {
+        if(obj.inputOutputFlag > 0) {
+          income += obj.currentValue;
+        } else {
+          expense += obj.currentValue;
+        }
+      })
+
+      totalExpense += expense;
+      totalIncome += income;
+
+    return {
+      familyMemberId: famId,
+      familyMemberFullName: transactions[0].ownerName,
+      cashflowLedgger: [
+        {
+          bankName: 'N/A',
+          inflow: income,
+          outflow: expense,
+          netflow: income - expense
+        }
+      ]
+    }})
+
+    let total = [{
+        bankName: 'All In-flows & Out-flows',
+        inflow: totalIncome,
+        outflow: totalExpense,
+        netflow: totalIncome - totalExpense,
+      }]
 
     this.cashflowData = {
-      cashflowData: [
-        {
-          familyMemberId: 100,
-          familyMemberFullName: 'Sohan Savant',
-          cashflowLedgger: [
-            {
-              bankName: 'ABC Bank / 4421',
-              inflow: 13442,
-              outflow: 0,
-              netflow: 13442,
-              date: 345678965
-            }, {
-              bankName: 'XYZ Bank / 9924',
-              inflow: 0,
-              outflow: 13442,
-              netflow: -13442,
-              date: 345678965
-            }
-          ]
-        },
-        {
-          familyMemberId: 100,
-          familyMemberFullName: 'Rakesh Mishra',
-          cashflowLedgger: [
-            {
-              bankName: 'TUV Bank / 4421',
-              inflow: 13442,
-              outflow: 0,
-              netflow: 13442,
-              date: 345678965
-            }, {
-              bankName: 'Axis Bank / 9924',
-              inflow: 0,
-              outflow: 13442,
-              netflow: -13442,
-              date: 345678965
-            }
-          ]
-        },
-      ],
-
-      total: [{
-        bankName: 'All In-flows & Out-flows',
-        inflow: 293939,
-        outflow: 39933,
-        netflow: -13442,
-      }]
+      cashflowData: leddger,
+      total: total
     }
-    this.tabsLoaded.cashflowData.hasData = true;
-    this.tabsLoaded.cashflowData.dataLoaded = true;
-    //   this.loaderFn.increaseCounter();
-
-    //   this.customerService.getCashFlowList(obj).subscribe(res => {
-    //     if (res == null) {
-    //       this.cashflowData = {
-    //         emptyData: [{
-    //           bankName: 'Not enough data to display',
-    //           inflow: 0,
-    //           outflow: 0,
-    //           netflow: 0
-    //         }]
-    //       };
-    //     } else {
-    //       this.cashFlowViewDataSource = [];
-    //       this.tabsLoaded.cashflowData.hasData = true;
-    //       this.cashflowData = res;
-    //     }
-    //     this.tabsLoaded.cashflowData.dataLoaded = true;
-    //     this.loaderFn.decreaseCounter();
-    //   }, err => {
-    //     this.hasError = true;
-    //     this.eventService.openSnackBar(err, "Dismiss")
-    //     this.loaderFn.decreaseCounter();
-    //   })
   }
+
 
 
   pieChart(data) {
@@ -532,28 +549,28 @@ export class AllFeedsComponent implements OnInit {
   routeAndAddQueryParams(value) {
     switch (true) {
       case (value == 'Fixed Income'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab3'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab3' } });
         break;
       case (value == 'Real estate'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab4'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab4' } });
         break;
       case (value == 'Stocks'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab2'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab2' } });
         break;
       case (value == 'Mutual funds'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab1'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab1' } });
         break;
       case (value == 'Retirement accounts'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab5'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab5' } });
         break;
       case (value == 'Small savings'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab6'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab6' } });
         break;
       case (value == 'Cash and bank'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab7'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab7' } });
         break;
       case (value == 'Commodities'):
-        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab8'}});
+        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab8' } });
         break;
       default:
         this.router.navigate(['/customer/detail/account/liabilities']);
