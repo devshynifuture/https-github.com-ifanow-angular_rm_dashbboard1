@@ -671,7 +671,9 @@ export class FixedDepositComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
         this.bankList = this.enumService.getBank();
+      }, 5000);
     })
 
   }
