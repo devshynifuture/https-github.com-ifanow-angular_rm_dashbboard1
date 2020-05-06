@@ -422,84 +422,84 @@ export class AllFeedsComponent implements OnInit {
       advisorId: this.advisorId,
       targetDate: startDate.getTime()
     }
-
-    this.cashflowData = {
-      cashflowData: [
-        {
-          familyMemberId: 100,
-          familyMemberFullName: 'Sohan Savant',
-          cashflowLedgger: [
-            {
-              bankName: 'ABC Bank / 4421',
-              inflow: 13442,
-              outflow: 0,
-              netflow: 13442,
-              date: 345678965
-            }, {
-              bankName: 'XYZ Bank / 9924',
-              inflow: 0,
-              outflow: 13442,
-              netflow: -13442,
-              date: 345678965
-            }
-          ]
-        },
-        {
-          familyMemberId: 100,
-          familyMemberFullName: 'Rakesh Mishra',
-          cashflowLedgger: [
-            {
-              bankName: 'TUV Bank / 4421',
-              inflow: 13442,
-              outflow: 0,
-              netflow: 13442,
-              date: 345678965
-            }, {
-              bankName: 'Axis Bank / 9924',
-              inflow: 0,
-              outflow: 13442,
-              netflow: -13442,
-              date: 345678965
-            }
-          ]
-        },
-      ],
-
-      total: [{
-        bankName: 'All In-flows & Out-flows',
-        inflow: 293939,
-        outflow: 39933,
-        netflow: -13442,
-      }]
-    }
-    this.tabsLoaded.cashflowData.hasData = true;
-    this.tabsLoaded.cashflowData.dataLoaded = true;
-  //   this.loaderFn.increaseCounter();
-
-  //   this.customerService.getCashFlowList(obj).subscribe(res => {
-  //     if (res == null) {
-  //       this.cashflowData = {
-  //         emptyData: [{
-  //           bankName: 'Not enough data to display',
-  //           inflow: 0,
-  //           outflow: 0,
-  //           netflow: 0
-  //         }]
-  //       };
-  //     } else {
-  //       this.cashFlowViewDataSource = [];
-  //       this.tabsLoaded.cashflowData.hasData = true;
-  //       this.cashflowData = res;
-  //     }
-  //     this.tabsLoaded.cashflowData.dataLoaded = true;
-  //     this.loaderFn.decreaseCounter();
-  //   }, err => {
-  //     this.hasError = true;
-  //     this.eventService.openSnackBar(err, "Dismiss")
-  //     this.loaderFn.decreaseCounter();
-  //   })
+    this.loaderFn.increaseCounter();
+    this.customerService.getCashFlowList(obj).subscribe(res => {
+      if (res == null) {
+        this.cashflowData = {
+          emptyData: [{
+            bankName: 'Not enough data to display',
+            inflow: 0,
+            outflow: 0,
+            netflow: 0
+          }]
+        };
+      } else {
+        this.createCashflowFamilyObj(res);
+        this.tabsLoaded.cashflowData.hasData = true;
+      }
+      this.tabsLoaded.cashflowData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
 
+  createCashflowFamilyObj(data) {
+    let tnx = [];
+    if(data.income && data.income.length > 0) {
+      tnx.push(data.income)
+    }
+    if(data.expense && data.expense.length > 0) {
+      tnx.push(data.expense)
+    }
+    tnx = tnx.flat();
+
+    let familyMembers = [...new Set(tnx.map(obj => obj.ownerName))];
+    let totalIncome = 0;
+    let totalExpense = 0;
+    
+    let leddger = familyMembers.map((famId) => {
+      let transactions = tnx.filter((tnx) => tnx.ownerName == famId);
+      let income = 0;
+      let expense = 0;
+      transactions.forEach((obj) => {
+        if(obj.inputOutputFlag > 0) {
+          income += obj.currentValue;
+        } else {
+          expense += obj.currentValue;
+        }
+      })
+
+      totalExpense += expense;
+      totalIncome += income;
+
+    return {
+      familyMemberId: famId,
+      familyMemberFullName: transactions[0].ownerName,
+      cashflowLedgger: [
+        {
+          bankName: 'N/A',
+          inflow: income,
+          outflow: expense,
+          netflow: income - expense
+        }
+      ]
+    }})
+
+    let total = [{
+        bankName: 'All In-flows & Out-flows',
+        inflow: totalIncome,
+        outflow: totalExpense,
+        netflow: totalIncome - totalExpense,
+      }]
+
+    this.cashflowData = {
+      cashflowData: leddger,
+      total: total
+    }
+  }
 
   
 

@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {TransactionsHistoryComponent} from './transactions-history/transactions-history.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {TransactionEnumService} from '../transaction-enum.service';
-import {OnlineTrasactionComponent} from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { TransactionsHistoryComponent } from './transactions-history/transactions-history.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { OnlineTrasactionComponent } from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-transactions-list',
@@ -26,13 +26,13 @@ export class TransactionsListComponent implements OnInit {
   finalStartDate;
   finalEndDate;
   errMessage: any;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
-
+  maxDate = new Date();
   constructor(private onlineTransact: OnlineTransactionService,
-              private eventService: EventService, private utilService: UtilService,
-              private subInjectService: SubscriptionInject,
-              private tranService: OnlineTransactionService) {
+    private eventService: EventService, private utilService: UtilService,
+    private subInjectService: SubscriptionInject,
+    private tranService: OnlineTransactionService) {
   }
 
   isLoading = false;
@@ -67,7 +67,7 @@ export class TransactionsListComponent implements OnInit {
       this.filterData = data;
       this.selectedBroker = data[0];
       this.selectedPreviousToShowDate = '7';
-      this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 1).getTime();
+      this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
       this.finalEndDate = new Date().getTime();
       this.getAllTransactionList();
     } else {
@@ -89,13 +89,13 @@ export class TransactionsListComponent implements OnInit {
     };
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.isLoading = false;
           this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
           this.dataSource.data = TransactionEnumService.setTransactionStatus(data);
           this.dataSource.sort = this.sort;
           console.log(this.dataSource.data);
-        }else{
+        } else {
           this.isLoading = false;
           this.eventService.openSnackBar('no transaction found', 'Dismiss');
           this.dataSource.data = [];
@@ -111,7 +111,7 @@ export class TransactionsListComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   applyFilter(event: Event) {
