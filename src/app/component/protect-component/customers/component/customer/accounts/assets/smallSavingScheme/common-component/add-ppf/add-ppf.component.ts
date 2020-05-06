@@ -263,15 +263,15 @@ addNewNominee(data) {
     let arrOfExtend:any = this.ppfSchemeForm.get('extendedGroup').value
     let startDate:any
     let y:any;
-    if(new Date(this.ppfSchemeForm.value.commencementDate).getMonth()> 4){
+    if(new Date(this.ppfSchemeForm.value.commencementDate).getMonth()> 3){
       y =  new Date(this.ppfSchemeForm.value.commencementDate).getFullYear() + 1;
-      startDate = new Date(y , 4, 1);
+      startDate = new Date(y , 3, 1);
     }
     else{
       y =  new Date(this.ppfSchemeForm.value.commencementDate).getFullYear();
-      startDate = new Date(y , 4, 1);
+      startDate = new Date(y , 3, 1);
     }
-    startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
+    // startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
     maturityDate =startDate.setFullYear(startDate.getFullYear() + 15);
     if(extended == "yes"){
       arrOfExtend.forEach((element, index) => {
