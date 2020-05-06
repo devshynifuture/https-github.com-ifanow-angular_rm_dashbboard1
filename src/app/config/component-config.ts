@@ -210,7 +210,7 @@ export const appConfig = {
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
-  CAPITAL_GAIN_GET:'mutual-fund/capital/gains/grandfathering/get',
+  CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',
   BANK_NAME_GET: 'account/asset/client/family-member/bank-detail/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
@@ -599,7 +599,7 @@ export const appConfig = {
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
   GET_APPEARANCE_SETTING: 'setting/preferences/appearance/get',
   UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
-
+  GET_USER_ROLES: 'setting/users-roles/role/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
