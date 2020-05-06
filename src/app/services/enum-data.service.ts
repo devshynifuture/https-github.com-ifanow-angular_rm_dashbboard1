@@ -3,6 +3,8 @@ import { UtilService } from './util.service';
 import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { EnumServiceService } from './enum-service.service';
 import { OnlineTransactionService } from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { AuthService } from '../auth-service/authService';
+import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { OnlineTransactionService } from '../component/protect-component/Adviser
 export class EnumDataService {
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
-    private onlineTransactionService: OnlineTransactionService) {
+    private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService) {
   }
 
   proofType = [
@@ -41,10 +43,25 @@ export class EnumDataService {
     { clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan' },
   ];
 
-  bankList = [
-    { bankId: 1, bankName: 'HDFC' },
-    { bankId: 2, bankName: 'SBI' },
-  ];
+  bankList :any=[];
+  advisorId:any;
+  clientId:any;
+
+  getAccountList() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.custumService.getBankAccount(obj).subscribe(
+      (data) => {
+        this.bankList = data;
+        this.enumService.addBank(this.bankList);
+      }
+    );
+  }
 
   public getProofType() {
     this.enumService.proofType(this.proofType);
@@ -59,7 +76,12 @@ export class EnumDataService {
   }
 
   public getBank() {
-    this.enumService.addBank(this.bankList);
+    if(this.bankList.length <= 0 ){
+      this.getAccountList()
+    }
+    else{
+      this.enumService.addBank(this.bankList);
+    }
   }
 
 

@@ -4,6 +4,7 @@ import {RoutingState} from '../../../../../../services/routing-state.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {slideInAnimation} from '../../../../../../animation/router.animation';
 import {AuthService} from 'src/app/auth-service/authService';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-accounts',
@@ -26,7 +27,7 @@ export class AccountsComponent implements OnInit {
   showRouter = false;
   selected;
 
-  constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
+  constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private ngZone: NgZone,
               public routingStateService: RoutingState, public authService: AuthService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
@@ -50,6 +51,7 @@ export class AccountsComponent implements OnInit {
     this.selected = 1;
     this._value = 1;
     this.loading = false;
+    this.enumDataService.getBank();
     this.clientData = AuthService.getClientData();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     var roterName = this.router.url.split('/')[3];
