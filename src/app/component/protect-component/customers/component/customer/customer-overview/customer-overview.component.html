@@ -1,7 +1,7 @@
 <div class="row" id="overview-secondhead">
   <div class="col-md-2 d-flex align-items-center">
     <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2"
-      mat-stroked-button>
+            mat-stroked-button>
       <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
     </button>
   </div>
@@ -18,11 +18,7 @@
   </div>
 
   <div class="col-md-2 d-flex align-items-center borderLeft">
-    <p (click)="logout()" class="m-0 f-14 text-white d-flex align-items-center">{{clientData.name}}
-      <!-- <i class="material-icons f-14 ml-4">
-        keyboard_arrow_down
-      </i> -->
-    </p>
+    <p (click)="logout()" class="m-0 f-14 text-white d-flex align-items-center">{{clientData.displayName}}</p>
   </div>
 
 </div>
