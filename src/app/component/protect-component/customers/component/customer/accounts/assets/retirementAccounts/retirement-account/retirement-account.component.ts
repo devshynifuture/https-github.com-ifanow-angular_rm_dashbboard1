@@ -195,7 +195,7 @@ export class RetirementAccountComponent implements OnInit {
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
-  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','year','bal', 'desc', 'status', 'icons'];
+  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','bal', 'desc', 'status', 'icons'];
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;

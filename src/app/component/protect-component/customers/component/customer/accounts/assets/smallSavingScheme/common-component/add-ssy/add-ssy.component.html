@@ -139,6 +139,9 @@
                     <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.required">
                         This field is required
                     </mat-error>
+                    <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.before">
+                        Setected date of Commencement must not be before birth of owner
+                    </mat-error>
                     <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.incorrect">
                         Setected owner is not allowed for SSY as on date of Commencement her age is above 21
                     </mat-error>
