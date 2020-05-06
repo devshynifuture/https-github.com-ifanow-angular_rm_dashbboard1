@@ -122,6 +122,46 @@ nav p:nth-child(4),nav span:nth-child(4){
 
 }
 }
+#mobile-footer-tabs{
+nav.mob-five{
+  display: flex;
+  p{
+    width: 20% !important;
+    // min-width: 30% !important;
+  }
+   // p:nth-child(1) b{
+   //  top: 40px !important; 
+   // }
+   span{
+    min-width: 25%;
+    left: 10px;
+   }
+   // span:nth-child(5){
+   //      min-width: 26%;
+   // }
+   nav p:nth-child(1):hover ~ span {
+  left: 3%;
+}
+
+nav p:nth-child(2):hover ~ span {
+  left: 21%;
+}
+
+nav p:nth-child(3):hover ~ span {
+  left: 39%;
+}
+
+nav p:nth-child(4):hover ~ span {
+  left: 57%;
+}
+nav p:nth-child(5):hover ~ span {
+  left: 73%;
+}
+.minw-30{
+  min-width: 30% !important;
+}
+}
+}
 }
 
 
