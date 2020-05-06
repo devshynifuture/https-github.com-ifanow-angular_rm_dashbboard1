@@ -60,9 +60,9 @@ export class MarketSummaryComponent implements OnInit {
     }
     if (gold) {
       gold.carat_22.change_in_percentage = parseFloat(gold.carat_22.change_in_percentage).toFixed(2);
-      gold.carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
+      gold.carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(gold.carat_22.change_in_percentage.replace('%', ''))
       gold.carat_24.change_in_percentage = parseFloat(gold.carat_24.change_in_percentage).toFixed(2);
-      gold.carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
+      gold.carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(gold.carat_24.change_in_percentage.replace('%', ''))
     }
     if (silver) {
       silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
