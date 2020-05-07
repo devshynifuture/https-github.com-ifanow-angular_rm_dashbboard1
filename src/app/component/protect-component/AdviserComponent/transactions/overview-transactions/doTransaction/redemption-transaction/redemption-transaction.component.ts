@@ -135,7 +135,7 @@ export class RedemptionTransactionComponent implements OnInit {
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       // investor: [(!data) ? '' : this.scheme, [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
-      redeemType: [(!data) ? '1' : data.redeemType, [Validators.required]],
+      redeemType: [(data.redeemType) ? data.redeemType:'1', [Validators.required]],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(data.folioSelection) ? data.investmentAccountSelection:'', [Validators.required]],

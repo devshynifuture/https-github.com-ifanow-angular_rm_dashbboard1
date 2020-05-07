@@ -91,6 +91,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value='' disabled>Select scheme folio</mat-option>
                                     <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" value="option">
                                         {{folio.folioNumber}}</mat-option>
                                 </mat-select>
@@ -166,6 +167,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="reinvest">
+                                    <mat-option value='' disabled>Select re-investment</mat-option>
                                     <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
                                         {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                                     </mat-option>
@@ -185,6 +187,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
+                                    <mat-option value='' disabled>Select STP frequency</mat-option>
                                     <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of switchFrequency" value="option">{{frequency.frequency}}
                                     </mat-option>
                                 </mat-select>
