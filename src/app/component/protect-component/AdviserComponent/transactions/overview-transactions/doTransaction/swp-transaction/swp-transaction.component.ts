@@ -339,7 +339,7 @@ export class SwpTransactionComponent implements OnInit {
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection :'' , [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
