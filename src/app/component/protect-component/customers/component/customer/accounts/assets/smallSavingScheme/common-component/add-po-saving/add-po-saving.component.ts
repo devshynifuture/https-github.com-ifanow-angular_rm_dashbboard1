@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -9,7 +9,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from './../../../asset-validation.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-po-saving',
   templateUrl: './add-po-saving.component.html',
@@ -50,13 +51,15 @@ export class AddPoSavingComponent implements OnInit {
   nomineesList: any[] = [];
   nominees: any[];
   flag: any;
+  bankList:any = [];
+
   maxDate:Date=new Date();
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
   callMethod: { methodName: string; ParamValue: any; };
 
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService,
-    private eventService: EventService, private subInjectService: SubscriptionInject) {
+    private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -226,6 +229,7 @@ addNewNominee(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
+    this.bankList = this.enumService.getBank();
 
   }
   getFormDataNominee(data) {
@@ -263,7 +267,7 @@ addNewNominee(data) {
       })]),
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      bankAccNo: [data.acNumber],
+      bankAccNo: [data.userBankMappingId],
       description: [data.description]
 
     });
@@ -329,6 +333,7 @@ addNewNominee(data) {
           nomineeList: this.poSavingForm.value.getNomineeName,
           nominees: this.nominees,
           acNumber: this.poSavingForm.get('bankAccNo').value,
+          userBankMappingId: this.poSavingForm.get('bankAccNo').value,
           description: this.poSavingForm.get('description').value,
           // ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
         };
@@ -352,6 +357,7 @@ addNewNominee(data) {
           nomineeList: this.poSavingForm.value.getNomineeName,
           nominees: this.nominees,
           acNumber: this.poSavingForm.get('bankAccNo').value,
+          userBankMappingId: this.poSavingForm.get('bankAccNo').value,
           description: this.poSavingForm.get('description').value,
         };
         obj.nomineeList.forEach((element, index) => {
@@ -412,4 +418,20 @@ addNewNominee(data) {
       return false;
     }
   }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

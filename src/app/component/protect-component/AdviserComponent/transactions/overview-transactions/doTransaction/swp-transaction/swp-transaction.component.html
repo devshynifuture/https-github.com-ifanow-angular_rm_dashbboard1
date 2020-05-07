@@ -107,6 +107,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value='' disabled>Select scheme folio</mat-option>
                                     <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" value="option">
                                         {{folio.folioNumber}}</mat-option>
                                 </mat-select>
@@ -152,6 +153,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
+                                    <mat-option value='' disabled>Select SWP frequency</mat-option>
                                     <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency" value="option">{{frequency.frequency}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
@@ -168,8 +170,8 @@
 
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
-                            <mat-form-field *ngIf="selectScheme == 2">
-                                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
+                            <mat-form-field *ngIf="selectScheme == 2"floatLabel="never" appearance="standard">
+                                <input #employeeContry placeholder="Enter amount" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount: ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>
@@ -190,6 +192,7 @@
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="date">
+                                <mat-option value='' disabled>Select 1st date SWP</mat-option>
                                 <mat-option *ngFor="let date of dateDisplay" value="{{date.dateToDisplay}}">
                                     {{date.dateToDisplay}}</mat-option>
                             </mat-select>
@@ -207,6 +210,7 @@
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="tenure">
+                                <mat-option value='' disabled>Select Switch type</mat-option>
                                 <mat-option value="1">No. of installment</mat-option>
                                 <mat-option value="2">No. year</mat-option>
                                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
@@ -225,8 +229,8 @@
                     </div>
 
                     <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <input #employeeContry class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input #employeeContry placeholder="Enter installment" class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
                             <mat-error class="f-12 pt-4">
                                 This field is required
                             </mat-error>

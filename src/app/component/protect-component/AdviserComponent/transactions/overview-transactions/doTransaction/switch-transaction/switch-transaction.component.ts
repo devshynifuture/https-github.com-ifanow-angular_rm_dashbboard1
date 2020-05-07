@@ -360,17 +360,17 @@ export class SwitchTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
+      reinvest: [(data.reinvest) ? data.reinvest :'' , [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
+      investmentAccountSelection: [(data.investmentAccountSelection) ?data.investmentAccountSelection : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      folioSelection: [(data.folioSelection) ? data.folioSelection :'' , [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      tenure: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
       schemeSwitch: [(!data) ? '' : data.schemeName, [Validators.required]],
       transferIn: [(!data) ? '' : data.transferIn, [Validators.required]],
-      switchType: [(!data) ? '' : data.switchType, [Validators.required]],
+      switchType: [(data.switchType) ? data.switchType :'', [Validators.required]],
     });
 
     this.ownerData = this.switchTransaction.controls;
