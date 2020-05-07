@@ -29,11 +29,8 @@ export class TransactionsListComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
   maxDate = new Date();
-<<<<<<< HEAD
   dontHide: boolean;
-=======
   credentialData: any;
->>>>>>> b681c4078e07280da4143a0b02766e01932f084a
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private utilService: UtilService,
     private subInjectService: SubscriptionInject,

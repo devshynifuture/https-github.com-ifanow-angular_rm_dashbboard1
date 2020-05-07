@@ -3,14 +3,11 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-<<<<<<< HEAD
     <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
         <div class="row">
 
-=======
     <div class="col-md-9" *ngIf="credentialData ">
         <div [ngClass]="{'pe-none': isLoading}" class="row">
->>>>>>> b681c4078e07280da4143a0b02766e01932f084a
             <div class="col-md-4 pl-0" [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}">
                 <mat-chip-list>
                     <mat-chip-list class="newDateIcon">
