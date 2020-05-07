@@ -42,8 +42,7 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="  col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading"
-                            appSkeletonLoading>
+                        <div class="  col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                             <div class="bg-white shadowBox p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -99,8 +98,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN"
-                            appSkeletonLoading>
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading>
                             <div class="bg-white shadowBox p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -147,8 +145,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate"
-                            appSkeletonLoading>
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading>
                             <div class="bg-white shadowBox p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -212,29 +209,34 @@
                                             </div>
                                         </div>
 
-                                        <div [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                            class="row skeletonAnimation">
+                                        <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div [ngClass]="{'height23': isLoading}" class="bar"></div>
+                                                    <div class="col-md-6 relClass">
+                                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                            asd
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 relClass">
+                                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                            as
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row pt-12">
+                                                    <div class="col-md-6 relClass">
+                                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                            asd
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 relClass">
                                                         <div [ngClass]="{'height23': isLoading}" class="bar"></div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row pt-12">
-                                                    <div class="col-md-6">
-                                                        <div [ngClass]="{'height23': isLoading}" class="bar"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div [ngClass]="{'height23': isLoading}" class="bar"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row pt-12">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12 relClass">
                                                         <div [ngClass]="{'height23': isLoading}" class="bar"></div>
                                                     </div>
 
