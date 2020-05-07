@@ -112,6 +112,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option value='' disabled>Select re-investment</mat-option>
                                     <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
                                         {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                                     </mat-option>
@@ -130,7 +131,8 @@
                     <div class="col-md-7 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                <mat-select class="form-control" formControlName="folioSelection">
+                                    <mat-option value='' disabled>Select scheme folio</mat-option>
                                     <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
@@ -174,6 +176,7 @@
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select (selectionChange)="redemptionType($event)" class="form-control br-0" formControlName="redeemType">
+                                <mat-option value='' disabled>Select redemption type</mat-option>
                                 <mat-option value="1">Amount Rs.
                                 </mat-option>
                                 <mat-option value="2">No. of units
