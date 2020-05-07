@@ -41,6 +41,7 @@
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="platform"
                                 (selectionChange)="selectPlatform($event)">
+                                <mat-option value='' disabled>Select platform</mat-option>
                                 <mat-option value="1">NSE
                                 </mat-option>
                                 <mat-option value="2">BSE
@@ -57,6 +58,7 @@
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="bseBroker">
+                                <mat-option value='' disabled>Select broker code</mat-option>
                                 <mat-option *ngFor="let bsetype of bse" (click)="selectArnNse(bsetype)"
                                     [value]="bsetype.brokerCode">
                                     {{bsetype.brokerCode}}
@@ -74,8 +76,8 @@
                     <h5>3) Provide account number</h5>
                     <p class="f-12 text-primitive">This will be displayed as UCC number</p>
                     <div class="form-group">
-                        <mat-form-field>
-                            <input matInput class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input matInput placeholder="Enter account number" class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
                                 appInputValueValidation [maxLength]="9" formControlName="accountNumber">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
