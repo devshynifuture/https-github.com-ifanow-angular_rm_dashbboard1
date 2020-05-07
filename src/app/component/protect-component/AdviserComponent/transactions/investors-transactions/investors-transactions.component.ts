@@ -45,8 +45,11 @@ export class InvestorsTransactionsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
+    if (this.dataSource.filteredData.length == 0) {
+      this.noData = 'No investors found';
+    }
   }
-  refresh(flag){
+  refresh(flag) {
     this.dontHide = true
     this.getIINUCC()
   }

@@ -29,6 +29,7 @@ export class TransactionsListComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
   maxDate = new Date();
+  credentialData: any;
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private utilService: UtilService,
     private subInjectService: SubscriptionInject,
@@ -65,6 +66,7 @@ export class TransactionsListComponent implements OnInit {
       this.isLoading = false;
       console.log(data);
       this.filterData = data;
+      this.credentialData = data;
       this.selectedBroker = data[0];
       this.selectedPreviousToShowDate = '7';
       this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
