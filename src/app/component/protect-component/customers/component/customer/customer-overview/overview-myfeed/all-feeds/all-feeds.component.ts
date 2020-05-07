@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {AppConstants} from 'src/app/services/app-constants';
-import {CustomerService} from '../../../customer.service';
-import {LoaderFunction} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {Chart} from 'angular-highcharts';
-import {PlanService} from '../../../plan/plan.service';
-import {DatePipe} from '@angular/common';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AppConstants } from 'src/app/services/app-constants';
+import { CustomerService } from '../../../customer.service';
+import { LoaderFunction } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { Chart } from 'angular-highcharts';
+import { PlanService } from '../../../plan/plan.service';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
@@ -70,7 +70,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.5,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   // vaibhav
@@ -78,15 +78,15 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.4,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   chartTotal = 100;
   clientId: any;
   expenseList = [];
   incomeList = [];
-  advisorInfo:any;
-  advisorImg:string = '';
+  advisorInfo: any;
+  advisorImg: string = '';
 
   constructor(
     private customerService: CustomerService,
@@ -162,7 +162,7 @@ export class AllFeedsComponent implements OnInit {
     familyMemberCount: 0,
     completenessStatus: 0,
   };
-  appearancePortfolio:any = {};
+  appearancePortfolio: any = {};
 
   ngOnInit() {
     this.loadCustomerProfile();
@@ -207,7 +207,7 @@ export class AllFeedsComponent implements OnInit {
   }
 
 
-  getAppearance(){
+  getAppearance() {
     this.loaderFn.increaseCounter()
     let obj = {
       advisorId: this.advisorId
@@ -524,6 +524,7 @@ export class AllFeedsComponent implements OnInit {
         familyMemberFullName: transactions[0].ownerName,
         cashflowLedgger: [
           {
+
             bankName: 'N/A',
             inflow: income,
             outflow: expense,
