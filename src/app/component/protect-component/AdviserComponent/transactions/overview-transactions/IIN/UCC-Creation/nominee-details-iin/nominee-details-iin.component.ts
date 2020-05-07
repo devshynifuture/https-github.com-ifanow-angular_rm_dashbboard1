@@ -197,7 +197,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       type: [!data ? '1' : (data.type) ? data.type + '' : '1', [Validators.required]],
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
-      addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
+      addressType: [(data.address.addressType) ? data.address.addressType : '', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
