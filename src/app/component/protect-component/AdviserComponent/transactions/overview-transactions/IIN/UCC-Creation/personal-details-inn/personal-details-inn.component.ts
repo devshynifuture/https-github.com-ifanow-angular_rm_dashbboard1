@@ -110,7 +110,7 @@ export class PersonalDetailsInnComponent implements OnInit {
           if (this.addressList.emailList.length > 0) {
             this.addressList.email = this.addressList.emailList[0].email
           } else if (this.addressList.mobileList.length > 0) {
-            this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
+            this.addressList.mobileNo = (this.addressList.mobileList[0].mobileNo)+''
           }
           this.getdataForm(this.addressList)
         },
@@ -129,7 +129,7 @@ export class PersonalDetailsInnComponent implements OnInit {
             if (this.addressList.emailList.length > 0) {
               this.addressList.email = this.addressList.emailList[0].email
             } else if (this.addressList.mobileList.length > 0) {
-              this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
+              this.addressList.mobileNo = (this.addressList.mobileList[0].mobileNo)+''
             }
             this.getdataForm(this.addressList)
           },
