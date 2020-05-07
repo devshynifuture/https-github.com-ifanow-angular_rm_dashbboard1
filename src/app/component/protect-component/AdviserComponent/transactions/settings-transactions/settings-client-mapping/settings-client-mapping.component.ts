@@ -35,6 +35,8 @@ export class SettingsClientMappingComponent implements OnInit {
   advisorId: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  credentialsData: any;
+  noData: string;
 
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private utilService: UtilService,
@@ -59,6 +61,7 @@ export class SettingsClientMappingComponent implements OnInit {
       data => this.getFilterOptionDataRes(data), error => {
         this.isLoading = false;
         this.dataSource.data = [];
+        this.noData = "No credentials found";
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
@@ -67,6 +70,7 @@ export class SettingsClientMappingComponent implements OnInit {
   getFilterOptionDataRes(data) {
     console.log(data);
     if (data) {
+      this.credentialsData = data;
       this.filterData = TransactionEnumService.setPlatformEnum(data);
       this.type = '1';
       this.selectedBrokerCode = data[0];
@@ -76,6 +80,7 @@ export class SettingsClientMappingComponent implements OnInit {
     } else {
       this.isLoading = false;
       this.dataSource.data = [];
+      this.noData = "No credentials found";
     }
 
   }
@@ -97,12 +102,14 @@ export class SettingsClientMappingComponent implements OnInit {
           this.dataSource.sort = this.sort;
         } else {
           this.isLoading = false;
+          this.noData = "No clients found";
           this.dataSource.data = [];
         }
         this.isLoading = false;
       },
       err => {
         this.isLoading = false;
+        this.noData = "No clients found";
         this.dataSource.data = [];
         this.eventService.openSnackBar(err, 'Dismiss');
       }

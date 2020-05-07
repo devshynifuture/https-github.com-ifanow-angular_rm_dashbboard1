@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black pt-8">Client mapping</h4>
     </div>
     <div class="col-md-9">
-        <div class="row">
+        <div *ngIf="!isLoading && dataSource.filteredData.length > 0" class="row">
             <div class="col-md-4 text-right pr-0 ">
                 <div class="form-group mb-0 mr-16 matInputClass">
                     <mat-form-field floatLabel="never" appearance="standard">
@@ -110,7 +110,10 @@
         <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
             class="d-flex flex-column align-items-center pt-44">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">No credentials found</h4>
+            <h4 class="pt-12">{{noData}}</h4>
+            <button *ngIf="noData=='No credentials found'" mat-stroked-button class="btn-primary addon v-middle"
+                [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']">
+                ADD NEW</button>
         </div>
     </div>
 </div>
