@@ -109,7 +109,7 @@ export class VerifyMemberComponent implements OnInit {
       fromDate: [data ? '' : data.fromDate, [Validators.required]],
       toDate: [data ? '' : data.toDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(1)]],
-      selectDateOption: [data ? '' : data.mandateAmount, [Validators.required]],
+      selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
     });
   }
 
