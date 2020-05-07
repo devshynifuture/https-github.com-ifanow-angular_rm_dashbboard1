@@ -19,6 +19,6 @@
     stroke: #008FFF;
 }
 
-.inputPaddNone .mat-form-field-appearance-standard .mat-form-field-flex {
-    padding-top: .75em !important;
+::ng-deep .inputPaddNone .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
 }
