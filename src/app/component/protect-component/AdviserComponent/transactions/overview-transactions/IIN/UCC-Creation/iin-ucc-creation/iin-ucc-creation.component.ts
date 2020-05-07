@@ -54,7 +54,7 @@ export class IinUccCreationComponent implements OnInit {
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
-      taxStatus: [data ? '' : data.ownerName, [Validators.required]],
+      taxStatus: [(!data) ? '' : data.ownerName, [Validators.required]],
     });
   }
   getFormControl(): any {
@@ -98,8 +98,8 @@ export class IinUccCreationComponent implements OnInit {
   }
   getClientAndFamilyMember(data) {
     const obj = {
-      advisorId:this.advisorId,
-      displayName:data
+      advisorId: this.advisorId,
+      displayName: data
     };
 
     this.onlineTransact.getClientAndFmList(obj).subscribe(
@@ -107,9 +107,9 @@ export class IinUccCreationComponent implements OnInit {
       }
     );
   }
-  getClientAndFmListRes(data){
+  getClientAndFmListRes(data) {
     this.nomineesListFM = data
-    console.log('getClientAndFmListRes data',this.nomineesListFM)
+    console.log('getClientAndFmListRes data', this.nomineesListFM)
   }
   lisNominee(value) {
     // this.showSpinnerOwner = false
@@ -135,6 +135,10 @@ export class IinUccCreationComponent implements OnInit {
   }
 
   saveGeneralDetails(data) {
+    if (this.generalDetails.invalid) {
+      this.generalDetails.markAllAsTouched();
+      return;
+    }
     const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
       holdingNature: this.generalDetails.controls.holdingNature.value,
