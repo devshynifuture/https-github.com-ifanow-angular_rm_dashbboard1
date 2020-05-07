@@ -1,18 +1,22 @@
-import {Injectable} from '@angular/core';
+
+import { Injectable } from '@angular/core';
 
 // import {Router} from '@angular/router';
+import { EventService } from '../Data-service/event.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     /*private myRoute: Router*/
+
   ) {
   }
 
   static getAdminStatus() {
     if (this.getUserInfo().hasOwnProperty('isAdmin')) {
       return this.getUserInfo().isAdmin;
-    } else {
+    }
+    else {
       return false;
     }
   }
@@ -36,7 +40,8 @@ export class AuthService {
   static getRmId() {
     if (this.getUserInfo().hasOwnProperty('rmId')) {
       return this.getUserInfo().rmId;
-    } else {
+    }
+    else {
       return null;
     }
   }
@@ -49,7 +54,6 @@ export class AuthService {
     let clientDataString = localStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
-
   static getProfileDetails() {
     let clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
@@ -58,7 +62,7 @@ export class AuthService {
 
   static getClientId() {
     const clientData = this.getClientData();
-    return clientData ? clientData.clientId ? clientData.clientId : clientData.id : undefined;
+    return clientData ? clientData.clientId? clientData.clientId:clientData.id : undefined;
   }
 
   static setProfilePic(pic) {
@@ -91,9 +95,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    console.log(' authservuce , isloggedin : ', this.getToken());
-    console.log(' authservuce , isloggedin : ', AuthService.getUserInfo());
-    return this.getToken() !== null && AuthService.getUserInfo() && AuthService.getUserInfo().userType;
+    return this.getToken() !== null;
   }
 
   isAdvisor() {
@@ -119,20 +121,27 @@ export class AuthService {
   setUserInfo(info) {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
+  selectedClient:any;
 
   setClientData(clientData) {
     sessionStorage.setItem('clientData', JSON.stringify(clientData));
     localStorage.setItem('clientData', JSON.stringify(clientData));
-
+    // if(clientData){
+    //   this.selectedClient = clientData;
+    // }
     console.log('setClientData : ', clientData);
   }
 
   setProfileDetails(profileData) {
     sessionStorage.setItem('profileData', JSON.stringify(profileData));
     localStorage.setItem('profileData', JSON.stringify(profileData));
-
+    
     console.log('setClientData : ', profileData);
   }
+
+  // getSelectedClient(){
+  //   return this.selectedClient;
+  // }
 
   static setSubscriptionUpperSliderData(data) {
     sessionStorage.setItem("subUpperData", JSON.stringify(data))

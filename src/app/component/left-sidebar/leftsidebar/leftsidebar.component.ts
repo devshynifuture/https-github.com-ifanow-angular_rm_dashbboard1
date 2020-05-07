@@ -49,6 +49,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     protected dynamicComponentService: DynamicComponentService,
     private enumDataService: EnumDataService,
     private settingsService: SettingsService,
+    private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
@@ -101,6 +102,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   selectClient(singleClientData) {
+    this.auth.setClientData(singleClientData);
     this.myControl.setValue(singleClientData.displayName)
     this.ngZone.run(() => {
       this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });

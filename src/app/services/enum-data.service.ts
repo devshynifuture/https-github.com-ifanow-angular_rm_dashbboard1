@@ -47,15 +47,15 @@ export class EnumDataService {
 
   bankList :any=[];
   advisorId:any;
-  clientId:any;
+  clientData:any;
 
   getAccountList() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
 
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientData.clientId
     };
     this.custumService.getBankAccount(obj).subscribe(
       (data) => {

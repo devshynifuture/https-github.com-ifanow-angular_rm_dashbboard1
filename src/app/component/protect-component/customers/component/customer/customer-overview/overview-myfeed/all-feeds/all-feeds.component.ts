@@ -605,4 +605,13 @@ export class AllFeedsComponent implements OnInit {
         break;
     }
   }
+
+  carouselWheelEvent(carousel, event) {
+    event.preventDefault();
+    if(event.deltaY > 0) {
+      carousel.slickNext();
+    } else {
+      carousel.slickPrev();
+    }
+  }
 }
