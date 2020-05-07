@@ -309,8 +309,8 @@
                                 <!-- <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
                                 </mat-option> -->
                                 <mat-option value='' disabled>Select roles</mat-option>
-                                <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
-                                    {{role.clientRoleName}}</mat-option>
+                                <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                                    {{role.roleName}}</mat-option>
                             </mat-select>
                             <mat-error>This Field is required</mat-error>
                         </mat-form-field>
@@ -852,8 +852,8 @@
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
                                 <mat-option value='' disabled>Select roles</mat-option>
-                                <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
-                                    {{role.clientRoleName}}</mat-option>
+                                <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                                    {{role.roleName}}</mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>

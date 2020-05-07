@@ -61,6 +61,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   dataForEdit: any;
   policyFeature: any;
   id: any;
+  options: any;
   constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -427,6 +428,15 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   }
   preventDefault(e) {
     e.preventDefault();
+  }
+  findCompanyName(data) {
+    const inpValue = this.fireInsuranceForm.get('insurerName').value;
+    this.customerService.getCompanyNames(inpValue).subscribe(
+      data => {
+        console.log(data);
+        this.options =data;
+      }
+    );
   }
   saveFireInsurance() {
     let featureList = [];

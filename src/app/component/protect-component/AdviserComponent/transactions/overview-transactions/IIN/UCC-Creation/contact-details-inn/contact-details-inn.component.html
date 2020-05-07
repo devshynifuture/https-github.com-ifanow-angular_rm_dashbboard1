@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Address line 1" matInput formControlName="addressLine1" type="text" class="form-control">
+                            <input placeholder="Address line 1" matInput formControlName="address1" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Address line2" matInput formControlName="addressLine2" type="text" class="form-control">
+                            <input placeholder="Address line2" matInput formControlName="address2" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
@@ -196,7 +196,7 @@
         </div>
 
 
-        <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+        <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
             <div class="row ">
                 <div class="col-md-12">
                     <h3 class="f-16 mt-4 mb-10">Upload address proof</h3>
@@ -205,7 +205,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>
@@ -228,15 +228,8 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">SAVE</button>
-        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
-            <i class="material-icons">
-                keyboard_arrow_up
-            </i></button>
-        <mat-menu #menu="matMenu">
-            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
-                Item 1 </button>
-        </mat-menu>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">NEXT</button>
+      
 
 
     </div>

@@ -32,7 +32,7 @@
       <app-mutual-fund-unrealized-tran [mutualFund]="mfData" (changeInput)="changeInput($event)"></app-mutual-fund-unrealized-tran>
     </div>
     <div *ngSwitchCase="'Capital Gains'">
-      <app-mutual-funds-capital (changeInput)="changeInput($event)"></app-mutual-funds-capital>
+      <app-mutual-funds-capital [mutualFund]="mfData" (changeInput)="changeInput($event)"></app-mutual-funds-capital>
     </div>
     <div *ngSwitchCase="'Goal Linkage'">
       <app-mutual-fund-goal-linkage (changeInput)="changeInput($event)"></app-mutual-fund-goal-linkage>

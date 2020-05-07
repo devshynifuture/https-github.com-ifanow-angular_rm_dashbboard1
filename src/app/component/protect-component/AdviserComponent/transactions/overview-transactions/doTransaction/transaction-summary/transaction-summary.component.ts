@@ -120,7 +120,7 @@ export class TransactionSummaryComponent implements OnInit {
   openPlatform(): void {
     this.showPlatform = false;
     const dialogRef = this.dialog.open(PlatformPopUpComponent, {
-      width: '494px',
+      width: '467px',
       data: { platform: this.platForm, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {

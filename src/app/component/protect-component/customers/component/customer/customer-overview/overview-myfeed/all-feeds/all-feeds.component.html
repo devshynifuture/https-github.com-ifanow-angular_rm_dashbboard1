@@ -9,16 +9,15 @@
 
 
                 <!-- your account intro -->
-                <div class="wrapperBox mb-20"
-                    [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
+                <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
-                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                        <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Your account</h5>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 p-0">
@@ -26,8 +25,7 @@
                                             An important note
                                         </h5>
                                         <p>
-                                            Document vault is a safe and secure way to manage your important documents.
-                                            This will help you get better organized!
+                                            Document vault is a safe and secure way to manage your important documents. This will help you get better organized!
                                         </p>
                                         <p class="m-0 text-primary">Read more</p>
                                     </div>
@@ -54,39 +52,12 @@
 
                                         <ul class="pointUl">
                                             <li *ngFor="let data of chartData">
-                                                <span class="bg-primary pointNumber"> </span>
-                                                <span class="f-14 mr-8"
-                                                    appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
+                                                <span class="pointNumber" [style.background-color]="data.color"> </span>
+                                                <span class="f-14 mr-8" appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
                                                 <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
                                             </li>
                                         </ul>
-
-
-                                        <!-- <div class="row b-b pt-10 pb-10" *ngFor="let data of chartData">
-                                            <div class="col-md-1">
-                                                <div class="hw-16 mt-2 bg-primary"></div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="f-500 text-black mb-0">{{data.name}}</p>
-                                            </div>
-                                            <div class="col-md-3 relClass ">
-                                                <div class="bar height24">
-                                                    <p class="text-black mb-0 ">
-                                                        <span appFormatNumber>{{(data.y)}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 relClass ">
-                                                <div class="bar height24">
-                                                    <p class="text-black mb-0">
-                                                        <span
-                                                            appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div> -->
-
                                     </div>
                                 </div>
                             </div>
@@ -98,67 +69,61 @@
                 <div class="wrapperBox">
                     <div class="row">
                         <div class="col-md-8 pl-0 d-flex align-items-center">
-                            <h5 class="roboto m-0">Portfolio</h5>
+                            <h5 class="roboto mb-8">Portfolio</h5>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a [routerLink]="['/customer/detail/account/summary']"
-                                class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <a [routerLink]="['/customer/detail/account/summary']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
 
 
-                    <div class="scrollingDiv d-flex">
+                    <div class="scrollingDiv d-flex row">
                         <!-- portfolio data present -->
-                        <div class="fundBox bg-white" *ngFor="let portData of portFolioData">
-                            <div class="row">
-                                <div class="col-md-9  pr-0">
-                                    <h5 class="roboto">{{portData.assetTypeString}}</h5>
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig">
+                            <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
+                                <div class="row">
+                                    <div class="col-md-9  pr-0">
+                                        <h5 class="roboto">{{portData.assetTypeString}}</h5>
+                                    </div>
+                                    <div class="col-md-3 d-flex justify-content-end">
+                                        <span *ngIf="portData.currentValue==0" (click)="routeAndAddQueryParams(portData.assetTypeString)" class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                            Add
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="col-md-4 d-flex justify-content-end">
-                                    <span *ngIf="portData.currentValue==0"
-                                        (click)="routeAndAddQueryParams(portData.assetTypeString)"
-                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
-                                        <!-- {{portData.type}} -->
-                                        Add
-                                    </span>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
+                                        <h3 class="mb-20">₹<span appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
+                                    </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
+                                        <p class="m-0">₹<span appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
+                                        <p class="m-0 text-success">₹<span appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                    <h3 class="mb-20">₹<span
-                                            appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                    <p class="m-0">₹<span
-                                            appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                    <p class="m-0 text-success">₹<span
-                                            appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
-                                    </p>
-                                </div>
-                            </div>
-
-
-                        </div>
+                        </ngx-slick-carousel>
 
                         <!-- portfolio data not present -->
-                        <div class="fundBox bg-white"
-                            *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
+                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
                                 </div>
                                 <div class="col-md-4 d-flex justify-content-end">
-                                    <span
-                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                    <span class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
                                         Add
                                     </span>
                                 </div>
@@ -188,16 +153,15 @@
                 </div>
 
                 <!-- complete your profile -->
-                <div class="wrapperBox mb-20"
-                    [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
+                <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
-                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                        <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Complete your profile</h5>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 p-0">
@@ -205,8 +169,7 @@
                                             Add missing data in your profile
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Add profile details
@@ -224,16 +187,15 @@
                 </div>
 
 
-                <div class="wrapperBox mb-20"
-                    [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
+                <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
                     <div class="row">
-                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                        <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Family members</h5>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 p-0">
@@ -241,12 +203,10 @@
                                             Add your family members
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
-                                        <button [routerLink]="['/customer/detail/overview/profile']"
-                                            class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button [routerLink]="['/customer/detail/overview/profile']" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Add family details
                                         </button>
 
@@ -280,8 +240,7 @@
                                             Upload your CAS statement
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -356,8 +315,7 @@
                                                 Tellus about your goals
                                             </h5>
                                             <p>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                             </p>
 
                                             <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -408,8 +366,7 @@
                                 <h5 class="m-0 roboto">Money to be deployed
                                 </h5>
                                 <p class="f-12 text-primitive">current + upcoming</p>
-                                <h3 class="text-primary m-0 f-22">₹<span
-                                        appFormatNumber>{{adviseData?.deployed || 0}}</span>
+                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed || 0}}</span>
                                 </h3>
                             </div>
                         </div>
@@ -434,22 +391,15 @@
                                             Your secure online vault
                                         </h5>
 
-                                        <img class="documentImg"
-                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg"
-                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg"
-                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg"
-                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg"
-                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
 
-                                        <p class="mb-0">{{docs.filesCount}} items in your vault
-                                            {{docs.totalBytes/1024 | number : '0.0-2'}} space used</p>
+                                        <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
 
-                                        <button [routerLink]="['/customer/detail/overview/documents']"
-                                            class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button [routerLink]="['/customer/detail/overview/documents']" class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Access your vault
                                         </button>
 
@@ -466,13 +416,12 @@
                     </div>
 
                     <div class="row" *ngIf="!documentVault || documentVault.length == 0">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 pr-0">
                                         <h5 class="roboto f-500">You aren’t using the document vault!</h5>
-                                        <p>Document vault is a safe and secure way to manage your important documents.
-                                            This will help you get better organized.</p>
+                                        <p>Document vault is a safe and secure way to manage your important documents. This will help you get better organized.</p>
                                         <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button>
                                             Add documents
                                         </button>
@@ -484,133 +433,99 @@
                             </div>
                         </div>
                     </div>
-
-
-                </div>
-
-                <!-- insurance -->
-                <div class="wrapperBox" *ngIf="false">
-                    <div class="row">
-                        <div class="col-md-8 d-flex align-items-center">
-                            <h5 class="roboto m-0">Insurance</h5>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
-                        </div>
-                    </div>
-
-                    <div class="scrollingDiv d-flex" *ngFor="let inc of recentTransactions">
-                        <div class="insuranceListBox bg-white">
-                            <p class="roboto m-0 f-500">{{inc.insuranceType}}</p>
-                            <p class="roboto mb-10">{{inc.insuredFamily}}</p>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <circle-progress [animationDuration]="1000" [animation]="true"
-                                        [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
-                                        [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="inc.progress"
-                                        [radius]="20" [responsive]="true" [showSubtitle]="false" [space]="-10"
-                                        [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35"
-                                        class="progress">
-                                    </circle-progress>
-                                </div>
-                                <div class="col-md-8 d-flex justify-content-center flex-column">
-                                    <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span
-                                            appFormatNumber>{{inc.actual}}</span></p>
-                                    <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span
-                                            appFormatNumber>{{inc.adviced}}</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Recent transactions as per rta -->
                 <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
-                            <h5 class="roboto m-0">Recent transactions (As per RTA feeds)</h5>
+                            <h5 class="roboto mb-8">Recent transactions (As per RTA feeds)</h5>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a [routerLink]="['/admin/transactions/overview']"
-                                class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <a [routerLink]="['/admin/transactions/overview']" class="viewBtn c-p mb-8 text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
 
                     <div class="scrollingDiv d-flex">
-                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of rtaFeedsData">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="mb-5">{{tnx.fwTransactionType}}</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <p class="mb-5 text-primitive">{{tnx.type}}</p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig">
+                            <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="mb-5">{{tnx.fwTransactionType}}</p>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <p class="mb-5 text-primitive">{{tnx.type}}</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
-                                    </p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                    <p class="mb-4">{{tnx.investorName}}</p>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                                    </div>
+                                    <div class="col-md-5 pl-0 text-right">
+                                        <p class="text-primitive mb-10 f-12">
+                                            {{tnx.transactionDate | date:'dd/MM h:mm a'}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
+                                        <p class="mb-4">{{tnx.investorName}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ngx-slick-carousel>
                     </div>
                 </div>
 
                 <!-- recent transactions-->
-                <div class="wrapperBox"
-                    *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                     <div class="row">
                         <div class="col-md-8 pl-0 d-flex align-items-center">
-                            <h5 class="roboto m-0">Recent transactions</h5>
+                            <h5 class="roboto mb-8">Recent transactions</h5>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <a [routerLink]="['/admin/transactions/overview']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
 
                     <div class="scrollingDiv d-flex">
-                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of recentTransactions">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="mb-5">{{tnx.transactionType}}</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <p class="mb-5 text-primitive">{{tnx.type}}</p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig">
+                            <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of recentTransactions">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="mb-5">{{tnx.transactionType}}</p>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <p class="mb-5 text-primitive">{{tnx.type}}</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
-                                    </p>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                    <p class="mb-4">{{clientData.name}}</p>
-                                    <span class="f-12 spanClass btn-danger-solid">
-                                        {{tnx.statusDesc}}
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                                    </div>
+                                    <div class="col-md-5 pl-0 text-right">
+                                        <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
+                                        <p class="mb-4">{{clientData.name}}</p>
+                                        <span class="f-12 spanClass btn-danger-solid">
+                                            {{tnx.statusDesc}}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ngx-slick-carousel>
                     </div>
                 </div>
 
@@ -622,8 +537,7 @@
                         </div>
                     </div>
 
-                    <div class="riskProfileBox p-20 bg-white"
-                        *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
+                    <div class="riskProfileBox p-20 bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
                         <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>
@@ -640,7 +554,11 @@
                                 </h5>
                                 <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
 
-                                <!-- <img src="/assets/images/svg/aggressive.svg"> -->
+                                <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                                <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                                <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                                <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                                <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
 
 
                             </div>
@@ -655,8 +573,7 @@
                                             Do you know you risk profile?
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -678,34 +595,38 @@
 
                 <!-- cashflow -->
                 <!-- to be used later if ever the api created -->
-                <div class="wrapperBox">
+                <div class="wrapperBox boxTable">
                     <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
                         <ng-container *ngFor="let flowData of cashflowData.cashflowData">
                             {{flowData.familyMemberFullName}}
-                            <table mat-table [dataSource]="flowData.cashflowLedgger" class="mt-8" id="table-low">
+                            <table mat-table [dataSource]="flowData.cashflowLedgger" class="mb-12 tableOne" id="table-low">
                                 <ng-container matColumnDef="bankName">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br w-40 topborderPrimitive"> Bank A/c
+                                    </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
                                         <div class="bar"> {{element.bankName}} </div>
                                     </td>
                                 </ng-container>
-        
+
                                 <ng-container matColumnDef="inflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> In-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                        In-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
                                         <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span> </div>
                                     </td>
                                 </ng-container>
-        
+
                                 <ng-container matColumnDef="outflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                        Out-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
                                         <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="netflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                        Out-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
                                         <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
                                     </td>
                                 </ng-container>
@@ -714,30 +635,34 @@
                             </table>
                         </ng-container>
                         <ng-container>
-                            <table mat-table [dataSource]="cashflowData.total" class="mt-8" id="table-low">
+                            <table mat-table [dataSource]="cashflowData.total" class="mb-12" id="table-low">
                                 <ng-container matColumnDef="bankName">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
+                                    </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
                                         <div class="bar"> {{element.bankName}} </div>
                                     </td>
                                 </ng-container>
-        
+
                                 <ng-container matColumnDef="inflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> In-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                        In-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
                                         <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span> </div>
                                     </td>
                                 </ng-container>
-        
+
                                 <ng-container matColumnDef="outflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                        Out-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
                                         <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="netflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                        Out-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
                                         <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
                                     </td>
                                 </ng-container>
@@ -746,30 +671,34 @@
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf="!tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
-                        <table mat-table [dataSource]="cashflowData.emptyData" class="mt-8" id="table-low">
+                        <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
                             <ng-container matColumnDef="bankName">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
-                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
                                     <div class="bar"> {{element.bankName}} </div>
                                 </td>
                             </ng-container>
-    
+
                             <ng-container matColumnDef="inflow">
-                                <th mat-header-cell *matHeaderCellDef class="br"> In-flows </th>
-                                <td valign="top" mat-cell *matCellDef="let element" class="br">
-                                    <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span> </div>
+                                <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                    In-flows </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                    <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span>
+                                    </div>
                                 </td>
                             </ng-container>
-    
+
                             <ng-container matColumnDef="outflow">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
-                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right"> Out-flows
+                                </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
                                     <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="netflow">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
-                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right"> Out-flows
+                                </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
                                     <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
                                 </td>
                             </ng-container>
@@ -784,7 +713,7 @@
 
     <div class="col-md-4 pr-0 paddleft30 mt-40">
         <div class="b-b mb-20 pb-20">
-            <div class="row">
+            <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
                 <div class="col-md-3">
                     <div class="advi_name">
                         <img [src]="orgDetails.reportLogoUrl">
@@ -795,16 +724,32 @@
                     <p class="text-custom m-0">Contact</p>
                 </div>
             </div>
+            <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
+                <div class="col-md-3">
+                    <div class="advi_name">
+                        <img [src]="advisorImg">
+                    </div>
+                </div>
+                <div class="col-md-9 pr-0 text-left">
+                    <p class="text-black m-0">{{advisorInfo.name}}</p>
+                    <p class="text-custom m-0">Contact</p>
+                </div>
+            </div>
         </div>
 
         <div class="b-b mb-20 pb-20">
             <div class="row">
                 <div class="col-md-12 p-0">
                     <h5 class="roboto f-500 d-flex justify-content-between">
-                        Your risk profile <span class="f-12 text-primitive">03/12/2019</span>
+                        Your risk profile
                     </h5>
-                    <!-- <img src="/assets/images/svg/moderately-aggressive.svg"> -->
-
+                    <div  *ngFor="let risk of riskProfile">
+                        <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                        <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                        <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                        <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                        <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
+                    </div>
                 </div>
             </div>
         </div>

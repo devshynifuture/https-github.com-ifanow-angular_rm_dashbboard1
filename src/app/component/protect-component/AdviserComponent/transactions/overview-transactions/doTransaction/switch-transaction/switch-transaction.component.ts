@@ -66,6 +66,7 @@ export class SwitchTransactionComponent implements OnInit {
   id = 0;
   navOfSelectedSchemeSwitchIn: any;
   validatorType = ValidatorType;
+  showSpinnerEx: boolean = false;
 
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
@@ -111,30 +112,31 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
+    this.getSchemeList('')
     this.switchTransaction.controls.transferIn.reset();
   }
 
   getSchemeList(data) {
-    if (data.target.value == '') {
-      this.scheme = undefined;
-      this.schemeList = undefined;
-      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
-      this.switchTransaction.controls.employeeContry.setValue();
-      this.schemeDetails.minimumPurchaseAmount = 0;
-      this.showSpinner = false;
-      return;
-    }
+    // if (data.target.value == '') {
+    //   this.scheme = undefined;
+    //   this.schemeList = undefined;
+    //   this.switchTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+    //   this.switchTransaction.controls.employeeContry.setValue();
+    //   this.schemeDetails.minimumPurchaseAmount = 0;
+    //   this.showSpinner = false;
+    //   return;
+    // }
     this.getExistingSchemesRes([]);
     if (this.switchTransaction.get('schemeSwitch').invalid) {
-      this.showSpinner = false;
+      // this.showSpinner = false;
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
-    if (this.selectScheme == 2 && data.target.value.length > 2) {
-      this.showSpinner = true;
+    if (this.selectScheme == 2) {
+      this.showSpinnerEx = true;
       const obj = {
-        searchQuery: data.target.value,
+        searchQuery: (data == '')?'':data.target.value,
         bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
@@ -148,7 +150,7 @@ export class SwitchTransactionComponent implements OnInit {
       };
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-          this.showSpinner = false;
+          this.showSpinnerEx = false;
           this.switchTransaction.get('schemeSwitch').setErrors({setValue: error});
           this.switchTransaction.get('schemeSwitch').markAsTouched();
           (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
@@ -162,6 +164,7 @@ export class SwitchTransactionComponent implements OnInit {
 
   getExistingSchemesRes(data) {
     this.showSpinner = false;
+    this.showSpinnerEx = false;
     this.schemeList = data;
   }
 

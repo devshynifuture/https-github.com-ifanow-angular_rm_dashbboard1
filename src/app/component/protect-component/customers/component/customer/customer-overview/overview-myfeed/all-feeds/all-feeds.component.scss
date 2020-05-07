@@ -49,7 +49,7 @@
         }
     }
     .scrollingDiv {
-        margin-top: 10px;
+        // margin-top: 10px;
         .fundBox {
             min-width: 240px;
             height: 170px;
@@ -338,4 +338,23 @@
     display: inline-block;
     border-radius: 50%;
     margin-right: 8px;
+}
+
+.next-slide {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    cursor: pointer;
+}
+
+.tableOne {
+    tr.mat-header-row {
+        height: 35px;
+    }
+}
+
+.boxTable {
+    #table-low thead tr {
+        background-color: transparent !important;
+    }
 }

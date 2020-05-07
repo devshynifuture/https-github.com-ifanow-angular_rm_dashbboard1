@@ -332,7 +332,32 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       }
     }
     }
-   
+    calculateEmi(){
+       let form =this.addLiabilityForm.controls;
+      if(form.loanAmount.value && form.loanTenure.value && form.CommencementDate.value  && form.emiFrequency.value && form.interest.value){
+        const obj = {
+          loanAmount: this.addLiabilityForm.controls.loanAmount.value,
+          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
+          loanTenure:this.addLiabilityForm.controls.loanTenure.value,
+          commencementDate:this.addLiabilityForm.controls.CommencementDate.value,
+          principalOutstandingAsOn:(this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
+          principalOutstanding:(this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
+          frequencyOfPayments:this.addLiabilityForm.controls.emiFrequency.value,
+          annualInterestRate:this.addLiabilityForm.controls.interest.value
+        };
+        this.custumService.geCalculatedEmi(obj).subscribe(
+          data =>{
+            console.log(data)
+              this.addLiabilityForm.controls['emi'].setValue(data);
+            
+          }, (error) => {
+            this.eventService.showErrorMessage(error);
+          }
+        );
+      }
+
+
+    }
   getLiability(data) {
     if (data == 'tab1') {
       data = {};

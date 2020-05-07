@@ -3,12 +3,13 @@
         <h4 class="m-0 text-black">Empanelled AMCs</h4>
     </div>
     <div class="col-md-6 clientsetting-transactions">
-        <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="mt-20 skeletonAnimation" id="table-low">
+        <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
+            class="mt-20 skeletonAnimation" id="table-low">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columns">
                 <th class="br" mat-header-cell *matHeaderCellDef> {{column}} </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                            {{element.amcName}}
+                        <span *ngIf="column=='AMC name'">{{element.amcName}}</span>
                     </div>
 
                     <div class="bar">

@@ -31,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CustomDirectiveModule,
     TableVirtualScrollModule,
     ScrollingModule,
+    CustomCommonModule
   ]
 })
 export class AssetsModule { }

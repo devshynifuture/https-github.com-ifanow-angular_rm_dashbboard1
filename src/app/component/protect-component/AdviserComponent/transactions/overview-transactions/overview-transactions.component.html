@@ -42,13 +42,13 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
-                            <div class="bg-white bPrimitive p-9">
+                        <div class="  col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                            <div class="bg-white shadowBox bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">Transactions</h5>
                                     </div>
-                                    <div class="col-md-8 p-0 d-flex  justify-content-end text-right">
+                                    <div class="col-md-8 p-0 d-flex align-items-center  justify-content-end text-right">
                                         <span class="text-primitive f-12">Last 7 days</span>
                                         <i class="material-icons c-p"> more_vert </i>
                                     </div>
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 br-primitive">
+                                    <div class="col-md-6 text-center br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -82,7 +82,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 text-center">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -95,7 +95,7 @@
                         </div>
 
                         <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading>
-                            <div class="bg-white bPrimitive p-9">
+                            <div class="bg-white shadowBox bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">IIN/UCC</h5>
@@ -120,7 +120,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 br-primitive">
+                                    <div class="col-md-6 text-center br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -128,7 +128,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 text-center">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading>
-                            <div class="bg-white bPrimitive p-9">
+                            <div class="bg-white shadowBox bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">Mandates</h5>
@@ -166,7 +166,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 br-primitive">
+                                    <div class="col-md-6 text-center br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingMandate}" class="bar">
@@ -174,7 +174,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 text-center">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingMandate}" class="bar">
@@ -192,7 +192,7 @@
                 <div class="col-md-4 p-0 ">
                     <div class="bg-white bPrimitive p-9">
                         <div class="row pb-12">
-                            <div class="col-md-12 p-0">
+                            <div class="col-md-12 tabClassTransaction p-0">
                                 <mat-tab-group class="overviewTab" animationDuration="0ms">
                                     <mat-tab label="Recent">
                                         <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
@@ -203,13 +203,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 p-0">
-                                                    <p class="text-primitive mb-10 text-right f-12">
+                                                    <p class="text-success mb-10 text-right f-12">
                                                         {{(transact.aggregatorType ==1)?'NSE':'BSE'}}</p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 p-0">
-                                                    <p class="f-16  mb-10 f-500">{{transact.amtUnitType}} {{transact.amount}}</p>
+                                                    <p class="f-16  mb-10 f-500">{{(transact.amtUnitType == 'Amount')?'₹':'Units'}} {{transact.amount}}
+                                                    </p>
                                                 </div>
                                                 <div class="col-md-6 p-0">
                                                     <p class="text-primitive text-right mb-10 f-12">
