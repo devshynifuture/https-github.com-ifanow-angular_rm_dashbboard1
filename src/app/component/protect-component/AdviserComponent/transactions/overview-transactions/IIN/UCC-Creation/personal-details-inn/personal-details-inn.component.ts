@@ -151,7 +151,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.personalDetails = this.fb.group({
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
-      maidenName: [!data ? '' : data.maidenName, [Validators.required]],
+      // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dob: [!data ? '' : (data.dob)?new Date(data.dob):new Date(data.dateOfBirth), [Validators.required]],

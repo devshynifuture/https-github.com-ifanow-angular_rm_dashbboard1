@@ -61,12 +61,12 @@ export class AddCamsDetailsComponent implements OnInit {
           ...jsonObj
         }
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
-          this.eventService.openSnackBar("CAMS Added successfully");
+          this.eventService.openSnackBar("CAMS Modified successfully");
           this.Close(true);
         })
       } else {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
-          this.eventService.openSnackBar("CAMS Modified successfully");
+          this.eventService.openSnackBar("CAMS Added successfully");
           this.Close(true);
         })
       }
