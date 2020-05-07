@@ -25,6 +25,7 @@ export class MandatesTransactionsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   credentialData: any;
   noData: string;
+  dontHide: boolean;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
     private subInjectService: SubscriptionInject) {
@@ -37,6 +38,7 @@ export class MandatesTransactionsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     // this.getNSEAchmandate();
     this.getFilterOptionData();
+    this.dontHide = true
   }
 
   getFilterOptionData() {
@@ -73,6 +75,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   getNSEAchmandate() {
+    this.dontHide = true
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     const obj1 = {
@@ -89,6 +92,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   getMandateListRes(data) {
+    this.dontHide = true
     this.isLoading = false;
     if (data) {
       console.log(data);
@@ -147,7 +151,10 @@ export class MandatesTransactionsComponent implements OnInit {
     //   err => this.eventService.openSnackBar(err, 'Dismiss')
     // );
   }
-
+  refresh(flag){
+    this.dontHide = true
+    this.getNSEAchmandate()
+  }
   openMandateClient(data) {
     const fragmentData = {
       flag: 'mandate',

@@ -12,7 +12,7 @@
             </div>
         </div> -->
 
-        <div class="col-md-8 text-right pt-4" *ngIf="!isLoading && dataSource.filteredData.length>0">
+        <div class="col-md-8 text-right pt-4" *ngIf="(!isLoading && dataSource.filteredData.length>0) || dontHide ==true ">
             <mat-form-field class=" searchInputWidth" floatLabel="never" appearance="standard">
                 <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data"
                     class="form-control br-0">
@@ -20,7 +20,7 @@
 
 
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
-            <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getMappedData()">
+            <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="refresh(true)">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"
                 [matMenuTriggerFor]="IINUCCMenu"><i class="material-icons">filter_list</i>FILTERS</button>
             <mat-menu #IINUCCMenu>
