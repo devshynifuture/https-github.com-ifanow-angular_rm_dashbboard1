@@ -23,6 +23,7 @@ export class IinUccCreationComponent implements OnInit {
   generalDetails: any;
   advisorId: any;
   clientData: any;
+  isLoading: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
@@ -54,7 +55,7 @@ export class IinUccCreationComponent implements OnInit {
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
-      taxStatus: [data ? '' : data.ownerName, [Validators.required]],
+      taxStatus: [(!data) ? '' : data.ownerName, [Validators.required]],
     });
   }
   getFormControl(): any {
@@ -97,19 +98,36 @@ export class IinUccCreationComponent implements OnInit {
     console.log('INN UCC CREATION DATA GET', data);
   }
   getClientAndFamilyMember(data) {
+    this.isLoading = true
+    if (data == '') {
+      this.generalDetails.controls.ownerName.setErrors({ invalid: false });
+      this.generalDetails.controls.ownerName.setValidators([Validators.required]);
+      this.generalDetails.controls.ownerName.updateValueAndValidity();
+      this.nomineesListFM = undefined;
+      return;
+    }
     const obj = {
-      advisorId:this.advisorId,
-      displayName:data
+      advisorId: this.advisorId,
+      displayName: data
     };
 
     this.onlineTransact.getClientAndFmList(obj).subscribe(
       data => this.getClientAndFmListRes(data), (error) => {
+
       }
     );
   }
-  getClientAndFmListRes(data){
+  getClientAndFmListRes(data) {
+    if (data == 0) {
+      this.isLoading = false
+      this.generalDetails.controls.ownerName.setErrors({ invalid: true });
+      this.generalDetails.controls.ownerName.markAsTouched();
+      data = undefined;
+    }
+    this.isLoading = false
+
     this.nomineesListFM = data
-    console.log('getClientAndFmListRes data',this.nomineesListFM)
+    console.log('getClientAndFmListRes data', this.nomineesListFM)
   }
   lisNominee(value) {
     // this.showSpinnerOwner = false
@@ -135,6 +153,10 @@ export class IinUccCreationComponent implements OnInit {
   }
 
   saveGeneralDetails(data) {
+    if (this.generalDetails.invalid) {
+      this.generalDetails.markAllAsTouched();
+      return;
+    }
     const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
       holdingNature: this.generalDetails.controls.holdingNature.value,

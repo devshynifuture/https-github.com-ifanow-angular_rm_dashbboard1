@@ -47,7 +47,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getdataForm(this.inputData)
-    this.accountType = 'ARN'
+    this.accountType = 'ARN-'
   }
   euinChangeFun = function (value) {
     var test = value.slice(1, value.length + 1)
@@ -112,9 +112,9 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   }
   accountTypeSelect(value) {
     if (value.value == '1') {
-      this.accountType = 'ARN'
+      this.accountType = 'ARN-'
     } else {
-      this.accountType = 'RIA'
+      this.accountType = 'RIA-'
     }
   }
   addBSECredentials() {

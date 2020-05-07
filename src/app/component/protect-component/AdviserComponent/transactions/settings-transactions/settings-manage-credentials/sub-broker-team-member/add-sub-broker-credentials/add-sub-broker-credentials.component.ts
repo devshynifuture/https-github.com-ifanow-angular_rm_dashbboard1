@@ -27,6 +27,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
   selectBrokerCred: any;
   inputData: any;
   isLoadingBroker: boolean = false;
+  euinValue: string;
 
   constructor(private eventService: EventService,
     private settingService: SettingsService,
@@ -90,12 +91,17 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       data = this.dataSource;
     }
     this.addSubCredential = this.fb.group({
-      platform: [(!data) ? '' : (data.aggregatorType)?(data.aggregatorType):'1' + '', [Validators.required]],
-      brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
-      appId: [(!data) ? '' : data.name, [Validators.required]],
+      platform: [(data.aggregatorType) ? (data.aggregatorType) + '' : '', [Validators.required]],
+      brokerCode: [(data.brokerCode) ? data.brokerCode : '', [Validators.required]],
+      appId: [(data.name) ?  data.name : '', [Validators.required]],
       memberId: [(!data) ? '' : data.subBrokerCode, [Validators.required]],
       euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
     });
+    if(!data.euin){
+      this.euinValue = 'E'
+    }else{
+      this.euinValue = this.addSubCredential.controls.euin.value
+    }
   }
 
   getFormControl(): any {
@@ -112,7 +118,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       this.addSubCredential.markAllAsTouched();
     } else {
       const obj = {
-        id : (this.inputData)?this.inputData.id:null,
+        id: (this.inputData) ? this.inputData.id : null,
         advisorId: this.advisorId,
         teamMemberSessionId: (this.selectedTeam == undefined) ? this.inputData.teamMemberSessionId : this.selectedTeam.adminAdvisorId,
         tpUserCredentialId: (this.selectBrokerCred == undefined) ? this.inputData.tpUserCredentialId : this.selectBrokerCred.tpUserCredentialId,

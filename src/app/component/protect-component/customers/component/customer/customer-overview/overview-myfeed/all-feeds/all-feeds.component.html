@@ -53,7 +53,7 @@
                                         <ul class="pointUl">
                                             <li *ngFor="let data of chartData">
                                                 <span class="pointNumber" [style.background-color]="data.color"> </span>
-                                                <span class="f-14 mr-8" appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
+                                                <span class="f-14 mr-8" appFormatNumber>{{(data.y/chartTotal*100 | number : '0.0-2')}}</span>
                                                 <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
                                             </li>
@@ -66,7 +66,7 @@
                 </div>
 
                 <!-- portfolio section -->
-                <div class="wrapperBox">
+                <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.displaySection">
                     <div class="row">
                         <div class="col-md-8 pl-0 d-flex align-items-center">
                             <h5 class="roboto mb-8">Portfolio</h5>
@@ -118,7 +118,7 @@
                         </ngx-slick-carousel>
 
                         <!-- portfolio data not present -->
-                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
+                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioData.dataLoaded && portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
@@ -338,7 +338,7 @@
                 </div>
 
                 <!-- activity section -->
-                <div class="wrapperBox">
+                <div class="wrapperBox" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0">Activity overview</h5>
@@ -728,12 +728,12 @@
                 </div>
             </div>
             <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
-                <div class="col-md-3">
+                <div class="col-md-3 pl-0">
                     <div class="advi_name">
                         <img [src]="advisorImg">
                     </div>
                 </div>
-                <div class="col-md-9 pr-0 text-left">
+                <div class="col-md-9 p-0 text-left">
                     <p class="text-black m-0">{{advisorInfo.name}}</p>
                     <p class="text-custom m-0">Contact</p>
                 </div>
@@ -746,13 +746,13 @@
                     <h5 class="roboto f-500 d-flex justify-content-between">
                         Your risk profile
                     </h5>
-                    <div  *ngFor="let risk of riskProfile">
+                    <!-- <div  *ngFor="let risk of riskProfile">
                         <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
                         <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
                         <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
                         <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
                         <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
