@@ -169,6 +169,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       state: [!data.address ? data.state : data.address.state],
       country: [!data.address ? data.country : data.address.country],
     });
+    this.personalDetails.controls.gender.disable();
   }
   getFormControl(): any {
     return this.personalDetails.controls;
