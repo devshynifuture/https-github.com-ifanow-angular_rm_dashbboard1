@@ -1,7 +1,7 @@
 <div class="popup-header-fix w-65">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h3 class="mb-0 wrapper-20">{{transactionType}} TRANSACTION</h3>
+            <h3 class="mb-0 wrapper-20"> <img (click)="backToTransact()" class="mr-8 c-p" src="/assets/images/svg/back-arrow.svg"> {{transactionType}} TRANSACTION</h3>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -15,7 +15,8 @@
     <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black"><img (click)="backToTransact()" class="v-initial pr-12" src="/assets/images/svg/back-arrow.svg">Investor name: {{selectedFamilyMember}}
+                <h5 class="m-0 text-black">
+                    Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
@@ -55,7 +56,7 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black ">Select a scheme to withdraw</h5>
+                        <h5 class="m-0   text-black ">Select a scheme to withdraw</h5>
                     </div>
                 </div>
                 <div class="row">
@@ -154,7 +155,8 @@
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
                                     <mat-option value='' disabled>Select SWP frequency</mat-option>
-                                    <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency" value="option">{{frequency.frequency}}</mat-option>
+                                    <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency" value="option">{{frequency.frequency}}
+                                    </mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
                                     This field is required
@@ -169,9 +171,10 @@
                     </div>
 
                     <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field *ngIf="selectScheme == 2"floatLabel="never" appearance="standard">
-                                <input #employeeContry placeholder="Enter amount" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
+                        <div class="form-group  inputPaddNone">
+                            <mat-form-field *ngIf="selectScheme == 2" floatLabel="never" appearance="standard">
+                                <input #employeeContry placeholder="Enter amount" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10"
+                                    type="text">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount: ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>
@@ -187,7 +190,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="mb-8 pt-40 text-black ">Select 1st date SWP</h5>
+                        <h5 class="mb-8 pt-28 text-black ">Select 1st date SWP</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <mat-form-field>
@@ -204,7 +207,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="mb-8 pt-40  text-black">Select tenure</h5>
+                        <h5 class="mb-8 pt-28  text-black">Select tenure</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -225,10 +228,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="mb-8 pt-40  text-black">Enter installment</h5>
+                        <h5 class="mb-8 pt-28  text-black">Enter installment</h5>
                     </div>
 
-                    <div class="col-md-5 p-0">
+                    <div class="col-md-5 form-group inputPaddNone p-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input #employeeContry placeholder="Enter installment" class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
                             <mat-error class="f-12 pt-4">

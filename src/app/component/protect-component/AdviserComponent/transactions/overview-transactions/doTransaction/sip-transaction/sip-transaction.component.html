@@ -202,10 +202,10 @@
                 </div>
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0  text-black pb-20">Enter amount</h5>
+                        <h5 class="m-0  text-black pb-8">Enter amount</h5>
                     </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group iconRupess mb-0">
+                    <div class="col-md-5 inputPaddNone p-0">
+                        <div class="form-group iconRupess  ">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input #employeeContry placeholder="Enter amount" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10"
                                     type="text">
@@ -228,11 +228,11 @@
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option" class="mediumRadio" formControlName="modeOfPaymentSelection">
-                            <mat-radio-button checked="true" value="1" [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==1,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==1,'b-a':sipTransaction.get('modeOfPaymentSelection').value==2}"
+                            <mat-radio-button checked="true" value="1" [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==1,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==1,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==2}"
                                 class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">
                                 Net banking
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==2,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==2,'b-a':sipTransaction.get('modeOfPaymentSelection').value==1}" class="b-a radioBtn bor_top_tb_right">
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==2,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==2,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==1}" class="b-a radioBtn bor_top_tb_right">
                                 Debit mandate
                             </mat-radio-button>
                         </mat-radio-group>
@@ -285,7 +285,7 @@
                         <h5 class="m-0  pb-8 text-black">Enter installment</h5>
                     </div>
 
-                    <div class="col-md-5 p-0">
+                    <div class="col-md-5 inputPaddNone p-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input #employeeContry placeholder="Enter installment" class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
                             <mat-error class="f-12 pt-4">

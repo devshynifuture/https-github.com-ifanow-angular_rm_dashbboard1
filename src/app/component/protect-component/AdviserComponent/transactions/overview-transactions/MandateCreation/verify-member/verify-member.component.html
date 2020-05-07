@@ -38,9 +38,9 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select IIN/UCC</h3>
+                <h5 class=" pt-8 m-0">Select IIN/UCC </h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="holdingNature">
                         <mat-option value='' disabled>Select IIN/UCC</mat-option>
@@ -56,9 +56,9 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select Bank</h3>
+                <h5 class=" pt-8 m-0">Select Bank</h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="bank">
                         <mat-option value='' disabled>Select bank</mat-option>
@@ -74,11 +74,11 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-20 m-0">Select from date</h3>
+                <h5 class="pt-8 m-0">Select from date </h5>
             </div>
-            <div class="col-md-3">
-                <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
-                    <input autocomplete="off" placeholder="Enter date" (click)="picker.open()" matInput formControlName="fromDate" [matDatepicker]="picker" class="form-control b-0" readonly>
+            <div class="col-md-3 form-group">
+                <mat-form-field class="ba-date">
+                    <input autocomplete="off" value="DD/mm/yy" (click)="picker.open()" matInput formControlName="fromDate" [matDatepicker]="picker" class="form-control b-0" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4">
@@ -89,7 +89,7 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select to date</h3>
+                <h5 class=" pt-8 m-0">Select to date </h5>
             </div>
             <div class="col-md-3">
                 <mat-form-field>
@@ -121,7 +121,7 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-20 m-0">Enter mandate amount</h3>
+                <h5 class="  pt-20 m-0">Enter mandate amount</h5>
             </div>
             <div class="col-md-5 form-group">
                 <mat-form-field appearance="standard" floatLabel="never">
