@@ -6,10 +6,9 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {Chart} from 'angular-highcharts';
 import {PlanService} from '../../../plan/plan.service';
-import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-all-feeds',
@@ -65,7 +64,6 @@ export class AllFeedsComponent implements OnInit {
     }
   ]
 
-  // vaibhav
   portfolioConfig = {
     slidesToShow: 1.5,
     infinite: false,
@@ -73,7 +71,6 @@ export class AllFeedsComponent implements OnInit {
     "prevArrow": "<div style='position: absolute; top: 35%; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/left-arrow.svg'></div>",
   }
 
-  // vaibhav
   recentTnxConfig = {
     slidesToShow: 1.4,
     infinite: false,
@@ -94,9 +91,9 @@ export class AllFeedsComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private plansService: PlanService,
-    private datePipe: DatePipe,
     private router: Router,
-    private orgSetting: OrgSettingServiceService
+    private orgSetting: OrgSettingServiceService,
+    private enumSerice: EnumServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -110,9 +107,10 @@ export class AllFeedsComponent implements OnInit {
   }
 
   tabsLoaded = {
-    portfolioSummary: {
+    portfolioData: {
       dataLoaded: false,
       hasData: false,
+      displaySection: false,
     },
     rtaFeeds: {
       dataLoaded: false,
@@ -137,6 +135,7 @@ export class AllFeedsComponent implements OnInit {
     goalsData: {
       dataLoaded: false,
       hasData: false,
+      displaySection: false,
     },
     cashflowData: {
       dataLoaded: false,
@@ -145,6 +144,11 @@ export class AllFeedsComponent implements OnInit {
     customerProfile: {
       dataLoaded: false,
       hasData: false,
+    },
+    portfolioSummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      displaySection: false,
     },
   };
   hasError: boolean = false;
@@ -162,13 +166,15 @@ export class AllFeedsComponent implements OnInit {
     familyMemberCount: 0,
     completenessStatus: 0,
   };
+  portfolioSummaryData: any[] = [];
   appearancePortfolio:any = {};
 
   ngOnInit() {
+    this.loadLogicBasedOnRoleType();
     this.loadCustomerProfile();
-    this.getAppearance();
+    this.getAppearanceSettings();
     this.initializePieChart();
-    this.loadPortfolioSummary();
+    this.loadPortfolioData();
     this.loadRTAFeedsTransactions();
     this.loadRecentTransactions();
     this.loadDocumentValutData();
@@ -178,6 +184,30 @@ export class AllFeedsComponent implements OnInit {
     this.loadCashFlowSummary(); //To be implemented later
   }
 
+  // logic to decide which apis to load and not load
+  // decides apis to be called based on the role type of clients:- MF, MF+assets and so on
+
+  // TODO:- change ids at later stage
+  loadLogicBasedOnRoleType() {
+    console.log(this.enumSerice.getClientRole());
+    // break intentionally not applied. DO NOT ADD BREAKS!!!!!
+    switch(this.clientData.roleId) {
+      case 4:
+      case 3:
+        this.tabsLoaded.goalsData.displaySection = true;
+      case 2:
+        this.tabsLoaded.portfolioData.displaySection = true;
+      case 1:
+        this.tabsLoaded.portfolioSummaryData.displaySection = true;
+        break;
+      default:
+        console.error("Unidentified role master id found", this.clientData.roleId);
+        break;
+    }
+  }
+
+
+  // Load data from various apis
   loadCustomerProfile() {
     const obj = {
       advisorId: this.advisorId,
@@ -206,8 +236,7 @@ export class AllFeedsComponent implements OnInit {
     )
   }
 
-
-  getAppearance(){
+  getAppearanceSettings(){
     this.loaderFn.increaseCounter()
     let obj = {
       advisorId: this.advisorId
@@ -264,64 +293,65 @@ export class AllFeedsComponent implements OnInit {
     });
   }
 
-  loadPortfolioSummary() {
+  loadPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
 
-    // ?advisorId=2808&clientId=53004&targetDate=1587965868704
-    this.loaderFn.increaseCounter();
-    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
-      if (res == null) {
-        this.portFolioData = [];
-      } else {
-        this.tabsLoaded.portfolioSummary.hasData = true;
-        this.portFolioData = res;
-
-        this.chartData = [];
-        let counter = 0;
-        let othersData = {
-          y: 0,
-          name: 'Others',
-          color: AppConstants.DONUT_CHART_COLORS[4],
-          dataLabels: {
-            enabled: false
-          }
-        }
-        this.chartTotal = 1;
-        res.forEach(element => {
-          if (element.investedAmount > 0) {
-            this.chartTotal += element.investedAmount;
-            if (counter < 4) {
-              this.chartData.push({
-                y: element.investedAmount,
-                name: element.assetTypeString,
-                color: AppConstants.DONUT_CHART_COLORS[counter],
-                dataLabels: {
-                  enabled: false
-                }
-              })
-            } else {
-              othersData.y += element.investedAmount;
+    if(this.tabsLoaded.portfolioData.displaySection) {
+      this.loaderFn.increaseCounter();
+      this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+        if (res == null) {
+          this.portFolioData = [];
+        } else {
+          this.tabsLoaded.portfolioData.hasData = true;
+          this.portFolioData = res;
+  
+          this.chartData = [];
+          let counter = 0;
+          let othersData = {
+            y: 0,
+            name: 'Others',
+            color: AppConstants.DONUT_CHART_COLORS[4],
+            dataLabels: {
+              enabled: false
             }
-            counter++;
           }
-        });
-        this.chartTotal -= 1;
-        if (counter > 4) {
-          this.chartData.push(othersData);
+          this.chartTotal = 1;
+          res.forEach(element => {
+            if (element.investedAmount > 0) {
+              this.chartTotal += element.investedAmount;
+              if (counter < 4) {
+                this.chartData.push({
+                  y: element.investedAmount,
+                  name: element.assetTypeString,
+                  color: AppConstants.DONUT_CHART_COLORS[counter],
+                  dataLabels: {
+                    enabled: false
+                  }
+                })
+              } else {
+                othersData.y += element.investedAmount;
+              }
+              counter++;
+            }
+          });
+          this.chartTotal -= 1;
+          if (counter > 4) {
+            this.chartData.push(othersData);
+          }
+          this.pieChart(this.chartData);
         }
-        this.pieChart(this.chartData);
-      }
-      this.tabsLoaded.portfolioSummary.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.eventService.openSnackBar(err, "Dismiss")
-      this.loaderFn.decreaseCounter();
-    })
+        this.tabsLoaded.portfolioData.dataLoaded = true;
+        this.loaderFn.decreaseCounter();
+      }, err => {
+        this.hasError = true;
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.loaderFn.decreaseCounter();
+      })
+    }
   }
 
   loadRTAFeedsTransactions() {
@@ -443,22 +473,25 @@ export class AllFeedsComponent implements OnInit {
       advisorId: this.advisorId
     }
 
-    this.loaderFn.increaseCounter();
-    this.plansService.getAllGoals(obj).subscribe((res) => {
-      if (res == null) {
-        this.goalsData = [];
-      } else {
-        this.tabsLoaded.goalsData.hasData = true;
-        this.goalsData = res;
-      }
-      this.tabsLoaded.goalsData.dataLoaded = true;
-    }, err => {
-      this.eventService.openSnackBar(err, "Dismiss")
-      this.loaderFn.decreaseCounter();
-      this.hasError = true;
-    })
+    if(this.tabsLoaded.goalsData.displaySection) {
+      this.loaderFn.increaseCounter();
+      this.plansService.getAllGoals(obj).subscribe((res) => {
+        if (res == null) {
+          this.goalsData = [];
+        } else {
+          this.tabsLoaded.goalsData.hasData = true;
+          this.goalsData = res;
+        }
+        this.tabsLoaded.goalsData.dataLoaded = true;
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.loaderFn.decreaseCounter();
+        this.hasError = true;
+      })
+    }
   }
 
+  // logics section below
   loadCashFlowSummary() {
     const startDate = new Date();
     const obj = {
@@ -546,8 +579,6 @@ export class AllFeedsComponent implements OnInit {
     }
   }
 
-
-
   pieChart(data) {
     this.chart.removeSeries(0);
     this.chart.addSeries({
@@ -562,7 +593,7 @@ export class AllFeedsComponent implements OnInit {
     if (this.globalRiskProfile.length > 0) {
       return this.globalRiskProfile.find(data => data.id == id).scoreUpperLimit;
     } else {
-      return 1;
+      return 0;
     }
   }
 
