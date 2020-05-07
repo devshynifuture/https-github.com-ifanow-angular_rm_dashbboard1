@@ -12,8 +12,8 @@
             </div>
         </div> -->
 
-        <div class="col-md-8 text-right pt-4" *ngIf="credentialData">
-            <mat-form-field class="searchInputWidth" floatLabel="never" appearance="standard">
+        <div class="col-md-8 text-right pt-4" *ngIf="!isLoading && dataSource.filteredData.length>0">
+            <mat-form-field class=" searchInputWidth" floatLabel="never" appearance="standard">
                 <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data"
                     class="form-control br-0">
             </mat-form-field>

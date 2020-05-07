@@ -10,7 +10,7 @@
                 </mat-form-field>
             </div>
         </div> -->
-        <div *ngIf="credentialData" class="col-md-8 pt-4 text-right pl-0">
+        <div *ngIf="!isLoading && dataSource.filteredData.length > 0" class="col-md-8 pt-4 text-right pl-0">
 
             <mat-form-field class="searchInputWidth" appearance="standard" floatLabel="never">
                 <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput

@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-arn-ria-credentials',
@@ -44,21 +44,23 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId()
-    this.getdataForm(this.inputData)
-    this.accountType = 'ARN-'
+    this.advisorId = AuthService.getAdvisorId();
+    this.getdataForm(this.inputData);
+    this.accountType = 'ARN-';
   }
-  euinChangeFun = function (value) {
-    var test = value.slice(1, value.length + 1)
-    var exp = /^E/i
+
+  euinChangeFun = function(value) {
+    var test = value.slice(1, value.length + 1);
+    var exp = /^E/i;
     if (exp.test(value) == false) {
       this.invalidEuinStart = true;
       return;
     }
     if (value.length > 7) {
       this.invalidEuinLen = true;
-      this.invalidEuinStart = false
+      this.invalidEuinStart = false;
       this.euinNumber = false;
       if (value.length == 7) {
         this.invalidEuinLen = false;
@@ -66,10 +68,10 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       return;
     }
     if (value.length > 1) {
-      var exp = /^[0-9]{1,6}$/
+      var exp = /^[0-9]{1,6}$/;
       if (exp.test(test) == false) {
         this.invalidEuinLen = false;
-        this.invalidEuinStart = false
+        this.invalidEuinStart = false;
         this.euinNumber = true;
         return;
       }
@@ -78,7 +80,8 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       this.euinAbsent = true;
       return;
     }
-  }
+  };
+
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -108,32 +111,35 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   getFormControl(): any {
     return this.addCredential.controls;
   }
+
   paltFormSelect(value) {
-    this.platForm = value.value
+    this.platForm = value.value;
   }
+
   accountTypeSelect(value) {
     if (value.value == '1') {
-      this.accountType = 'ARN-'
+      this.accountType = 'ARN-';
     } else {
-      this.accountType = 'RIA-'
+      this.accountType = 'RIA-';
     }
   }
+
   addBSECredentials() {
-    var setDefault = '0'
+    var setDefault = '0';
     if (this.platForm == '1') {
-      this.addCredential.controls.memberId.setValue(0)
-    } if (!this.addCredential.controls.setDefault.value) {
-      this.addCredential.controls.setDefault.setValue(0)
+      this.addCredential.controls.memberId.setValue(0);
+    }
+    if (!this.addCredential.controls.setDefault.value) {
+      this.addCredential.controls.setDefault.setValue(0);
     }
     if (this.addCredential.invalid) {
       this.addCredential.markAllAsTouched();
-    }
-    else if (this.addCredential.get('euin').invalid) {
+    } else if (this.addCredential.get('euin').invalid) {
       this.addCredential.get('euin').markAsTouched();
-      return
+      return;
     } else {
       if (this.platForm == '1') {
-        this.addCredential.controls.memberId.setValue('')
+        this.addCredential.controls.memberId.setValue('');
       }
       let obj = {
         accountType: this.addCredential.controls.accType.value,
@@ -149,18 +155,20 @@ export class AddArnRiaCredentialsComponent implements OnInit {
         password: this.addCredential.controls.pwd.value,
         subBrokerCode: (this.addCredential.controls.subBrokerCode == undefined) ? '' : this.addCredential.controls.subBrokerCode.value,
         userId: this.addCredential.controls.appId.value,
-      }
+      };
       this.onlineTransact.addBSECredentilas(obj).subscribe(
         data => this.addBSECredentilasRes(data)
       );
     }
 
   }
+
   addBSECredentilasRes(data) {
     this.eventService.openSnackBar('Credential added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 }
