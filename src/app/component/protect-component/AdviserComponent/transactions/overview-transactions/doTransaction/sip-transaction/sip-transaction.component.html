@@ -245,6 +245,7 @@
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="date">
+                                <mat-option value='' disabled>Select 1st date SIP</mat-option>
                                 <mat-option *ngFor="let date of dateDisplay" [value]="date.dateToDisplay">
                                     {{date.dateToDisplay}}</mat-option>
                             </mat-select>
@@ -262,6 +263,7 @@
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="tenure">
+                                <mat-option value='' disabled>Select tenure</mat-option>
                                 <mat-option value="1">No. of installment</mat-option>
                                 <mat-option value="2">No. year</mat-option>
                                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
@@ -280,8 +282,8 @@
                     </div>
 
                     <div class="col-md-5 p-0">
-                        <mat-form-field>
-                            <input #employeeContry class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input #employeeContry placeholder="Enter installment" class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
                             <mat-error class="f-12 pt-4">
                                 This field is required
                             </mat-error>
