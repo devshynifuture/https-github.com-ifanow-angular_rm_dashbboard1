@@ -199,9 +199,10 @@
                     </div>
 
                     <div class="col-md-5 p-0">
-                        <div class="form-group mb-0 iconRupess">
-                            <mat-form-field>
-                                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control  rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
+                        <div class="form-group  inputPaddNone iconRupess">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <input placeholder="Enter Amounts/Units" #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control  rupess" formControlName="employeeContry" matInput maxlength="10"
+                                    type="text">
                                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start" class="f-12 text-custom">
                                     Min amount: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumPurchaseAmount }}
                                 </mat-hint>

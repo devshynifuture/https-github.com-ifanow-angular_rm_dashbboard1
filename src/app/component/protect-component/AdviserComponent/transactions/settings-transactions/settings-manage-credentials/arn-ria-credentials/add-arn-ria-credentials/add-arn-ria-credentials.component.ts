@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {UtilService} from 'src/app/services/util.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 
@@ -12,10 +12,7 @@ import {EventService} from 'src/app/Data-service/event.service';
   styleUrls: ['./add-arn-ria-credentials.component.scss']
 })
 export class AddArnRiaCredentialsComponent implements OnInit {
-  memId;
-  euin;
-  addCredential: any;
-  dataSource: any;
+  addCredential: FormGroup;
   advisorId: any;
   invalidEuinStart = false;
   invalidEuinLen = false;
@@ -25,10 +22,12 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   isViewInitCalled = false;
   platForm: any;
   euinValue: string;
-  accountType: string;
+  brokerCode: string;
+  defaultLoginDisabled: boolean = false;
 
-
-  constructor(private eventService: EventService, private fb: FormBuilder, private utilService: UtilService, private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) {
+  constructor(private eventService: EventService, private fb: FormBuilder,
+              private utilService: UtilService, private onlineTransact: OnlineTransactionService,
+              private subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -47,13 +46,13 @@ export class AddArnRiaCredentialsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.brokerCode = 'ARN-';
     this.getdataForm(this.inputData);
-    this.accountType = 'ARN-';
   }
 
   euinChangeFun = function(value) {
-    var test = value.slice(1, value.length + 1);
-    var exp = /^E/i;
+    const test = value.slice(1, value.length + 1);
+    let exp = /^E/i;
     if (exp.test(value) == false) {
       this.invalidEuinStart = true;
       return;
@@ -68,7 +67,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       return;
     }
     if (value.length > 1) {
-      var exp = /^[0-9]{1,6}$/;
+      exp = /^[0-9]{1,6}$/;
       if (exp.test(test) == false) {
         this.invalidEuinLen = false;
         this.invalidEuinStart = false;
@@ -86,9 +85,6 @@ export class AddArnRiaCredentialsComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.dataSource) {
-      data = this.dataSource;
-    }
     this.addCredential = this.fb.group({
       platform: [(!data) ? '1' : (data.aggregatorType) ? (data.aggregatorType) + '' : '1', [Validators.required]],
       accType: [(!data) ? '1' : (data.accountType) ? (data.accountType) + '' : '1', [Validators.required]],
@@ -97,14 +93,39 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       memberId: [(!data) ? '' : data.memberId, [Validators.required]],
       pwd: [(!data) ? '' : data.password, [Validators.required]],
       euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
-      setDefault: [(!data) ? '0' : (data.defaultLogin), [Validators.required]],
+      defaultLogin: [(!data) ? false : (data.defaultLogin == 1), [Validators.required]],
     });
-    this.platForm = this.addCredential.controls.platform.value
-    this.addCredential.controls.setDefault.value = 0
-    if(!data.euin){
-      this.euinValue = 'E'
-    }else{
-      this.euinValue = this.addCredential.controls.euin.value
+    this.setEuinValidator(data.accountType);
+    this.setBrokerCode(data.brokerCode);
+    this.addCredential.controls.accType.valueChanges.subscribe((newValue) => {
+      console.log('accTypeNew Value : ', newValue);
+      this.setEuinValidator(newValue);
+    });
+    if (data.defaultLogin == 1) {
+      this.defaultLoginDisabled = true;
+    }
+    this.platForm = this.addCredential.controls.platform.value;
+    if (!data.euin) {
+      this.euinValue = 'E';
+    } else {
+      this.euinValue = this.addCredential.controls.euin.value;
+    }
+  }
+
+  setBrokerCode(value) {
+    if (value && value.length > 0) {
+      this.brokerCode = value;
+    }
+  }
+
+  setEuinValidator(newValue) {
+    if (newValue == 2) {
+      this.addCredential.controls.euin.clearAsyncValidators();
+      this.addCredential.controls.euin.clearValidators();
+      this.addCredential.controls.euin.updateValueAndValidity();
+
+    } else {
+      this.addCredential.controls.euin.setValidators([Validators.required, Validators.maxLength(7), Validators.minLength(7)]);
     }
   }
 
@@ -118,19 +139,18 @@ export class AddArnRiaCredentialsComponent implements OnInit {
 
   accountTypeSelect(value) {
     if (value.value == '1') {
-      this.accountType = 'ARN-';
+      this.brokerCode = 'ARN-';
     } else {
-      this.accountType = 'RIA-';
+      this.brokerCode = 'IN';
     }
   }
 
   addBSECredentials() {
-    var setDefault = '0';
     if (this.platForm == '1') {
       this.addCredential.controls.memberId.setValue(0);
     }
-    if (!this.addCredential.controls.setDefault.value) {
-      this.addCredential.controls.setDefault.setValue(0);
+    if (!this.addCredential.controls.defaultLogin.value) {
+      this.addCredential.controls.defaultLogin.setValue(0);
     }
     if (this.addCredential.invalid) {
       this.addCredential.markAllAsTouched();
@@ -141,13 +161,13 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       if (this.platForm == '1') {
         this.addCredential.controls.memberId.setValue('');
       }
-      let obj = {
+      const obj = {
         accountType: this.addCredential.controls.accType.value,
         advisorId: this.advisorId,
         aggregatorType: this.addCredential.controls.platform.value,
         brokerCode: this.addCredential.controls.brokerCode.value,
-        defaultLogin: (this.addCredential.controls.setDefault.value == true) ? 1 : 0,
-        euin: this.addCredential.controls.euin.value,
+        defaultLogin: (this.addCredential.controls.defaultLogin.value == true) ? 1 : 0,
+        euin: this.addCredential.controls.accType.value == 1 ? this.addCredential.controls.euin.value : '',
         memberId: (this.addCredential.controls.memberId == undefined) ? '' : this.addCredential.controls.memberId.value,
         id: (this.addCredential.controls.id == undefined) ? this.inputData.id : '',
         orderSerialNo: 0,
@@ -157,7 +177,9 @@ export class AddArnRiaCredentialsComponent implements OnInit {
         userId: this.addCredential.controls.appId.value,
       };
       this.onlineTransact.addBSECredentilas(obj).subscribe(
-        data => this.addBSECredentilasRes(data)
+        data => this.addBSECredentilasRes(data), error => {
+          this.eventService.showErrorMessage(error);
+        }
       );
     }
 
