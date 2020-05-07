@@ -15,6 +15,7 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="type" (selectionChange)="sortDataFilterWise()" class="form-control br-0">
+                        <mat-option value='' disabled>Select filter option</mat-option>
                         <mat-option value="1">Mapped clients</mat-option>
                         <mat-option value="2">Unmapped clients</mat-option>
                     </mat-select>
@@ -25,6 +26,7 @@
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedBrokerCode"
                         (selectionChange)="chnageBrokerCode(selectedBrokerCode)" class="form-control br-0">
+                        <mat-option value='' disabled>Select broker code</mat-option>
                         <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
                             {{singleBrokerCode.brokerCode}}
                         </mat-option>
@@ -35,6 +37,7 @@
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="changePlatform(selectedPlatform)"
                         class="form-control br-0">
+                        <mat-option value='' disabled>Select platform</mat-option>
                         <mat-option value="1">NSE</mat-option>
                         <mat-option value="2">
                             BSE</mat-option>
