@@ -79,7 +79,8 @@
 
                     <div class="scrollingDiv d-flex row">
                         <!-- portfolio data present -->
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig"
+                        #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
                             <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
                                 <div class="row">
                                     <div class="col-md-9  pr-0">
@@ -448,7 +449,8 @@
 
                     <div class="scrollingDiv d-flex">
 
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig"
+                        #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
                             <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -494,7 +496,8 @@
 
                     <div class="scrollingDiv d-flex">
 
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig"
+                        #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
                             <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of recentTransactions">
                                 <div class="row">
                                     <div class="col-md-8">
