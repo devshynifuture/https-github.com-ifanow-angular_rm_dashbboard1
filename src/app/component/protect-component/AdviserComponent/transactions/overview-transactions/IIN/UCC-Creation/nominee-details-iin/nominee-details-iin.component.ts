@@ -73,7 +73,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.secondHolderNominee = data.nomineeList[1]
       this.thirdHolderNominee = data.nomineeList[2]
       this.getdataForm(this.firstHolderNominee)
-    }else{
+    } else {
       if (this.clientData) {
         this.getNomineeList(this.clientData)
       }
@@ -107,23 +107,23 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
-  onChange(value){
-    console.log('onChange',value.checked)
-    
-    if(value.checked == true){
-    this.nomineeDetails.controls.address1.setValue(this.allData.holderList[0].address1);
-    this.nomineeDetails.controls.address2.setValue(this.allData.holderList[0].address2);
-    this.nomineeDetails.controls.pinCode.setValue(this.allData.holderList[0].pinCode);
-    this.nomineeDetails.controls.city.setValue(this.allData.holderList[0].city);
-    this.nomineeDetails.controls.state.setValue(this.allData.holderList[0].state);
-    this.nomineeDetails.controls.country.setValue(this.allData.holderList[0].country);
+  onChange(value) {
+    console.log('onChange', value.checked)
+
+    if (value.checked == true) {
+      this.nomineeDetails.controls.address1.setValue(this.allData.holderList[0].address1);
+      this.nomineeDetails.controls.address2.setValue(this.allData.holderList[0].address2);
+      this.nomineeDetails.controls.pinCode.setValue(this.allData.holderList[0].pinCode);
+      this.nomineeDetails.controls.city.setValue(this.allData.holderList[0].city);
+      this.nomineeDetails.controls.state.setValue(this.allData.holderList[0].state);
+      this.nomineeDetails.controls.country.setValue(this.allData.holderList[0].country);
     }
   }
-  selectRelation(value){
-    console.log('relation type',value)
-    if(value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister'){
-      this.maxDateForAdultDob =  moment().subtract(18, 'years');
-    }else{
+  selectRelation(value) {
+    console.log('relation type', value)
+    if (value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister') {
+      this.maxDateForAdultDob = moment().subtract(18, 'years');
+    } else {
       this.maxDateForAdultDob = new Date()
     }
   }
@@ -193,11 +193,11 @@ export class NomineeDetailsIinComponent implements OnInit {
     }
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
-      relationShip: [!data ? '' : (data.relationShip) ? data.relationShip : data.relationshipId + "", [Validators.required]],
+      relationShip: [(data.relationShip) ? data.relationShip : (data.relationshipId) ? data.relationshipId + "" : '', [Validators.required]],
       type: [!data ? '1' : (data.type) ? data.type + '' : '1', [Validators.required]],
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
-      addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
+      addressType: [(data.address.addressType) ? data.address.addressType : '', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],

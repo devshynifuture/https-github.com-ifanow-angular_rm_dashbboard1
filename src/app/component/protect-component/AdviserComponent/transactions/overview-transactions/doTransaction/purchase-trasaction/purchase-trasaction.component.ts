@@ -446,7 +446,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       //  investor: [(!data) ? '' : data.investor, [Validators.required]],
       // employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required,]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
-      investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
+      investmentAccountSelection: [(data.investmentAccountSelection) ? data.folioNo : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],

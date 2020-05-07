@@ -137,7 +137,7 @@ export class SubmitReviewInnComponent implements OnInit {
   getdataForm(data) {
 
     this.reviewSubmit = this.fb.group({
-      bseBroker: [!data ? '' : data.bseBroker, [Validators.required]],
+      bseBroker: [!(data.bseBroker) ? data.bseBroker:'', [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
       platform: [!data ? '2' : '2', [Validators.required]],

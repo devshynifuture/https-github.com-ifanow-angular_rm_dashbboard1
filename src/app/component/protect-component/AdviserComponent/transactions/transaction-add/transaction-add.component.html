@@ -16,7 +16,7 @@
     <div class="pt-90 pr-40 pl-40 pb-40" *ngIf="formStep == 'step-1'">
         <div class="row">
             <div class="col-md-8 p-0">
-                <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
+                <h5 class="m-0 text-black pb-12">Select an investor from the search box below</h5>
                 <mat-form-field class="w-100">
                     <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
                         <mat-option value=''>Search family members</mat-option>

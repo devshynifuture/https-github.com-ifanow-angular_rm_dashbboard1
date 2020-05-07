@@ -141,8 +141,12 @@
         </table>
         <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">{{(errMessage)?errMessage:'No transactions found'}}</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
+            <h4 class="pt-12">{{noData}}</h4>
+            <button *ngIf="noData=='No transactions found'" mat-stroked-button class="btn-primary addon v-middle  "
+                (click)="openTransaction()">
+                ADD NEW</button>
+            <button *ngIf="noData=='No credentials found'" mat-stroked-button class="btn-primary addon v-middle"
+                [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']">
                 ADD NEW</button>
         </div>
     </div>
