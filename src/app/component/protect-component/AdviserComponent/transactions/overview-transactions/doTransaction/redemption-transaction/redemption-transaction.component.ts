@@ -192,7 +192,7 @@ export class RedemptionTransactionComponent implements OnInit {
         this.showSpinner = false;
         this.redemptionTransaction.get('schemeRedeem').setErrors({setValue: error.message});
         this.redemptionTransaction.get('schemeRedeem').markAsTouched();
-        // this.eventService.showErrorMessage(error);
+        // this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -225,7 +225,7 @@ export class RedemptionTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -266,7 +266,7 @@ export class RedemptionTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -355,7 +355,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.redeemBSERes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }
