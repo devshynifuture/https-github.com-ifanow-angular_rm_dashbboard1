@@ -46,6 +46,7 @@
             <div class="col-md-5">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="holdingNature">
+                        <mat-option value='' disabled>Select IIN/UCC</mat-option>
                         <mat-option [value]="clientCode.clientCode" *ngFor="let clientCode of clientCodeData"
                             (click)="selectIINUCC(clientCode)">
                             {{clientCode.clientCode}} </mat-option>
@@ -64,6 +65,7 @@
             <div class="col-md-5">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="bank">
+                        <mat-option value='' disabled>Select bank</mat-option>
                         <mat-option [value]="bank.bankName" *ngFor="let bank of bankDetails" (click)="selectBank(bank)">
                             {{bank.bankName}} </mat-option>
                     </mat-select>
@@ -125,11 +127,11 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Enter mandate amount</h3>
+                <h3 class="f-16 pt-20 m-0">Enter mandate amount</h3>
             </div>
             <div class="col-md-5 form-group">
-                <mat-form-field>
-                    <input matInput #mandateAmount type="number" class="form-control br-0"
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input placeholder="Enter mandate amount" matInput #mandateAmount type="number" class="form-control br-0"
                         formControlName="mandateAmount">
                     <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.required" class="f-12 pt-4">
                         This field is required
