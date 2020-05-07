@@ -42,9 +42,8 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="  col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading"
-                            appSkeletonLoading>
-                            <div class="bg-white shadowBox bPrimitive p-9">
+                        <div class="  col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                            <div class="bg-white shadowBox p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">Transactions</h5>
@@ -54,7 +53,7 @@
                                         <i class="material-icons c-p"> more_vert </i>
                                     </div>
                                 </div>
-                                <div class="borderTransactions">
+                                <div class="borderTransactions bottomBorder">
                                     <p class="f-12 mb-8 roboto">TOTAL TRANSACTIONS DONE</p>
                                     <h4 class="f-30 f-300 text-primary mb-4 relClass">
                                         <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -75,7 +74,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 text-center br-primitive">
+                                    <div class="col-md-6  br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -83,7 +82,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-6  ">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -95,16 +94,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN"
-                            appSkeletonLoading>
-                            <div class="bg-white shadowBox bPrimitive p-9">
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading>
+                            <div class="bg-white shadowBox p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">IIN/UCC</h5>
                                     </div>
                                     <div class="col-md-8 p-0"></div>
                                 </div>
-                                <div class="borderTransactions">
+                                <div class="borderTransactions bottomBorder">
                                     <p class="f-12 mb-8 roboto">TOTAL IIN/UCC REGISTERED</p>
                                     <h4 class="f-30 mb-4 f-300 text-success relClass">
                                         <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -122,7 +120,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 text-center br-primitive">
+                                    <div class="col-md-6  br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -130,7 +128,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-6">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -143,16 +141,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate"
-                            appSkeletonLoading>
-                            <div class="bg-white shadowBox bPrimitive p-9">
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading>
+                            <div class="bg-white shadowBox p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">Mandates</h5>
                                     </div>
                                     <div class="col-md-8 p-0"></div>
                                 </div>
-                                <div class="borderTransactions">
+                                <div class="borderTransactions bottomBorder">
                                     <p class="f-12 mb-8 roboto">TOTAL MANDATES REGISTERED</p>
                                     <h4 class="f-30 text-primary mb-4 relClass">
                                         <div [ngClass]="{'height23': isLoadingMandate}" class="bar">{{acceptCount}}
@@ -169,7 +166,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 text-center br-primitive">
+                                    <div class="col-md-6  br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingMandate}" class="bar">
@@ -177,7 +174,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-6  ">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingMandate}" class="bar">
@@ -193,13 +190,12 @@
                 </div>
 
                 <div class="col-md-4 p-0 ">
-                    <div class="bg-white bPrimitive p-9">
+                    <div class="bg-white p-9">
                         <div class="row pb-12">
                             <div class="col-md-12 tabClassTransaction p-0">
                                 <mat-tab-group class="overviewTab" animationDuration="0ms">
                                     <mat-tab label="Recent">
-                                        <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading"
-                                            appSkeletonLoading *ngFor="let transact of transactionList">
+                                        <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
                                             <div class="row">
                                                 <div class="col-md-6 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
@@ -217,8 +213,7 @@
                                                 <div class="col-md-6 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-16  mb-10 f-500">
-                                                            {{(transact.amtUnitType == 'Amount')?'₹':'Units'}}
-                                                            {{transact.amount}}
+                                                            {{(transact.amtUnitType == 'Amount')?'₹':'Units'}} {{transact.amount}}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -236,23 +231,17 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div (click)="openMobileErrorCopyTransactionPopup()"
-                                                    class="col-md-12 p-0">
+                                                <div (click)="openMobileErrorCopyTransactionPopup()" class="col-md-12 p-0">
                                                     <p class="f-14 mb-8 f-500">{{transact.clientName}}</p>
                                                 </div>
                                             </div>
-                                            <span *ngIf="transact.status == 6"
-                                                class="text-primary p-2 br-1 b-a-custom f-12">ORDER PROCEED</span>
-                                            <span *ngIf="transact.status == 0"
-                                                class="text-primary p-2 br-1 b-a-custom f-12">UNKNOWN</span>
-                                            <span *ngIf="transact.status == 3"
-                                                class="text-success p-2 br-1 borderSuccess f-12">PAYMENT
+                                            <span *ngIf="transact.status == 6" class="text-primary p-2 br-1 b-a-custom f-12">ORDER PROCEED</span>
+                                            <span *ngIf="transact.status == 0" class="text-primary p-2 br-1 b-a-custom f-12">UNKNOWN</span>
+                                            <span *ngIf="transact.status == 3" class="text-success p-2 br-1 borderSuccess f-12">PAYMENT
                                                 SUCCESSFUL</span>
-                                            <span *ngIf="transact.status == 7"
-                                                class="text-danger p-2 br-1 borderDanger f-12">TRANSACTION
+                                            <span *ngIf="transact.status == 7" class="text-danger p-2 br-1 borderDanger f-12">TRANSACTION
                                                 REJECTED</span>
-                                            <span *ngIf="transact.status == 2"
-                                                class="text-warning p-2 br-1 borderWarning f-12">PENDING
+                                            <span *ngIf="transact.status == 2" class="text-warning p-2 br-1 borderWarning f-12">PENDING
                                                 AUTHERIZATION</span>
                                         </div>
                                     </mat-tab>
