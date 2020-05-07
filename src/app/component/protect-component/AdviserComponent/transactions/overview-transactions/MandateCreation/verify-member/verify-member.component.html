@@ -100,6 +100,7 @@
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="selectDateOption"
                         (ngModelChange)="continuesTill($event)">
+                        <mat-option value='' disabled>Select date option</mat-option>
                         <mat-option [value]="1">
                             Custom date </mat-option>
                         <mat-option [value]="2">
