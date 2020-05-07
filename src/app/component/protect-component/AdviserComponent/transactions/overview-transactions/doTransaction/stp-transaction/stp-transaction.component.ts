@@ -112,7 +112,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
     // this.stpTransaction.controls.investor.reset();
-
+    this.getSchemeList('')
     this.stpTransaction.controls.transferIn.reset();
   }
 
@@ -180,15 +180,15 @@ export class StpTransactionComponent implements OnInit {
   getSchemeList(value) {
     this.getExistingSchemesRes([]);
     if (this.stpTransaction.get('schemeStp').invalid) {
-      this.showSpinner = false;
+      this.showSpinner = true;
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
-    if (this.selectScheme == 2 && value.length > 2) {
+    if (this.selectScheme == 2) {
       this.showSpinner = true;
       const obj = {
-        searchQuery: value,
+        searchQuery:(value == '')?'':value.target.value,
         bseOrderType: 'STP',
         showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,

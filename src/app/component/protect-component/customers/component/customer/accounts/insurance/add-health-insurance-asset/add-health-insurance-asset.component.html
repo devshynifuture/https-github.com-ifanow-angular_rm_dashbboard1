@@ -181,12 +181,18 @@
         <div class="row pt-40">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Name of insurer</h5>
+                <p class="m-0 f-12 text-custom">Start typing to see insurer names</p>
+
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #insurerName [maxLength]="40"  [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text">
-                        <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
+                        <input #insurerName  (keyup)="findCompanyName($event)"  autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of options" [value]="option.name">
+                                {{option.name}}
+                            </mat-option>
+                        </mat-autocomplete>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -536,9 +542,9 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount class="col-md-1 p-0 pt-8 d-flex">
+                <div  class="col-md-1 p-0 pt-8 d-flex">
                     <!-- prod build -->
-                    <i class="material-icons text-primitive c-p float-left">add</i>
+                    <i class="material-icons text-primitive c-p float-left"  (click)="openDialog(null)"> add</i>
                 </div>
             </div>
 
