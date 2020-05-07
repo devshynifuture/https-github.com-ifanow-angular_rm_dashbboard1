@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ProgressButtonComponent } from './progress-button/progress-button.component';
 import { CustomDirectiveModule } from "./directives/common-directive.module";
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { LinkBankComponent } from './link-bank/link-bank.component';
 
 // import {AppModule} from "../app.module";
 
@@ -15,6 +16,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     // ConfirmDialogComponent,
     DialogContainerComponent,
     ProgressButtonComponent,
+    LinkBankComponent,
     // DynamicComponentComponent
   ],
   imports: [
@@ -33,7 +35,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     // PlanEntryModule,
     // EntryComponentsModule
   ],
-  exports: [DialogContainerComponent, ProgressButtonComponent],
+  exports: [DialogContainerComponent, ProgressButtonComponent, LinkBankComponent],
+  entryComponents: [LinkBankComponent]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomCommonModule {

@@ -261,8 +261,18 @@ addNewNominee(data) {
   setCommencementDate(extended) {
     let maturityDate:any = this.ppfSchemeForm.get('maturityDate').value;
     let arrOfExtend:any = this.ppfSchemeForm.get('extendedGroup').value
-    let startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
-    maturityDate =startDate.setFullYear(startDate.getFullYear() + 16);
+    let startDate:any
+    let y:any;
+    if(new Date(this.ppfSchemeForm.value.commencementDate).getMonth()> 3){
+      y =  new Date(this.ppfSchemeForm.value.commencementDate).getFullYear() + 1;
+      startDate = new Date(y , 3, 1);
+    }
+    else{
+      y =  new Date(this.ppfSchemeForm.value.commencementDate).getFullYear();
+      startDate = new Date(y , 3, 1);
+    }
+    // startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
+    maturityDate =startDate.setFullYear(startDate.getFullYear() + 15);
     if(extended == "yes"){
       arrOfExtend.forEach((element, index) => {
         maturityDate = new Date(maturityDate).setFullYear(new Date(maturityDate).getFullYear() + 5);

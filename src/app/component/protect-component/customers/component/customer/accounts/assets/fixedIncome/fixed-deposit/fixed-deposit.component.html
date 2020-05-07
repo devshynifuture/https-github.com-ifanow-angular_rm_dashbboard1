@@ -1,4 +1,5 @@
 <!-- start ADD Fixed DEPOSIT (fixed DEPOSIT) -->
+
 <div class="popup-header-fix-60" *ngIf="adviceShowHeaderAndFooter">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
@@ -348,7 +349,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-40">
+            <!-- <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-12">Linked bank account </h5>
                 </div>
@@ -363,7 +364,30 @@
                         </mat-form-field>
                     </div>
                 </div>
+            </div> -->
+            <div class="row pt-32">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Linked bank account</h5>
+                </div>
+                <div class="col-md-5 form-group">
+                    <mat-form-field>
+                        <mat-select class="form-control" formControlName="bankACNo" matInput>
+                            <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                {{option.bankName}}</mat-option>
+                        </mat-select>
+                        <mat-error>This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div  class="col-md-1 p-0 pt-8 d-flex">
+                    <!-- prod build -->
+                    <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                </div>
             </div>
+            <!-- <div>
+                <h1>Add bank</h1>
+                <app-link-bank></app-link-bank>
+            </div> -->
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-12">Institution name</h5>

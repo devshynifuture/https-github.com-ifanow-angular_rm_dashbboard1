@@ -85,6 +85,9 @@ export class CustomerService {
   getBonds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BONDS, data);
   }
+  geCalculatedEmi(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, {request :JSON.stringify(data)});
+  }
 
   addRecurringDeposit(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RECURRING_DEPOSIT, data);
@@ -417,6 +420,9 @@ export class CustomerService {
   getPolicyName(data) {
     const httpParams = new HttpParams().set('policyName', data.policyName).set('insuranceSubTypeId', data.insuranceSubTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams);
+  }
+  getCompanyNames(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET,{query:data});
   }
 
 

@@ -83,6 +83,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.getdataForm(this.inputData, false);
     this.transactionSummary = {};
     this.childTransactions = [];
@@ -104,6 +105,7 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
+      this.getSchemeList('')
     // this.redemptionTransaction.controls.investor.reset();
   }
 
@@ -160,14 +162,14 @@ export class RedemptionTransactionComponent implements OnInit {
 
   getSchemeList(data) {
     this.getExistingSchemesRes([]);
-    if (data.target.value == '') {
-      this.scheme = undefined;
-      this.schemeList = undefined;
-      this.redemptionTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
-      this.redemptionTransaction.controls.employeeContry.setValue();
-      this.schemeDetails.minimumPurchaseAmount = 0;
-      return;
-    }
+    // if (data.target.value == '') {
+    //   this.scheme = undefined;
+    //   this.schemeList = undefined;
+    //   this.redemptionTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+    //   this.redemptionTransaction.controls.employeeContry.setValue();
+    //   this.schemeDetails.minimumPurchaseAmount = 0;
+    //   return;
+    // }
     if (this.redemptionTransaction.get('schemeRedeem').invalid) {
       this.showSpinner = false;
       this.folioList = [];
@@ -175,7 +177,7 @@ export class RedemptionTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: ''});
     }
     const obj = {
-      searchQuery: data.target.value,
+      searchQuery: (data == '')?'':data.target.value,
       bseOrderType: 'REDEMPTION',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -187,7 +189,6 @@ export class RedemptionTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
-    if (data.target.value.length > 2) {
       this.showSpinner = true;
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
@@ -197,7 +198,6 @@ export class RedemptionTransactionComponent implements OnInit {
           // this.eventService.showErrorMessage(error);
         }
       );
-    }
   }
 
   getExistingSchemesRes(data) {

@@ -87,11 +87,17 @@ export class AddSsyComponent implements OnInit {
   }
   setCommencementDate(date) {
     this.commencementDate = date
-   console.log(this.age(this.selectOwner[0].dateOfBirth), "owner age");
-    if(this.age(this.selectOwner[0].dateOfBirth) > 21){
+   console.log(this.age(this.selectOwner[0].dateOfBirth), "owner age", new Date(this.selectOwner[0].dateOfBirth));
+   if(new Date(this.selectOwner[0].dateOfBirth).getTime() > new Date(this.ssySchemeForm.get('commDate').value).getTime())
+   {
+    this.ssySchemeForm.get('commDate').setErrors({ before: true });
+   }
+    else if(this.age(this.selectOwner[0].dateOfBirth) > 21){
       this.ssySchemeForm.get('commDate').setErrors({ incorrect: true });
     }
     else{
+      this.ssySchemeForm.get('commDate').setErrors({ before: false });
+      this.ssySchemeForm.get('commDate').updateValueAndValidity();
       this.ssySchemeForm.get('commDate').setErrors({ incorrect: false });
       this.ssySchemeForm.get('commDate').updateValueAndValidity();
     }
