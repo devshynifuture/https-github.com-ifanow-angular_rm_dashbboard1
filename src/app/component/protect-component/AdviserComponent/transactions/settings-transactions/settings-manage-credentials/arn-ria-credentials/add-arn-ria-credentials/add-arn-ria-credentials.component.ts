@@ -46,8 +46,8 @@ export class AddArnRiaCredentialsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getdataForm(this.inputData);
     this.brokerCode = 'ARN-';
+    this.getdataForm(this.inputData);
   }
 
   euinChangeFun = function(value) {
@@ -95,16 +95,11 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
       defaultLogin: [(!data) ? false : (data.defaultLogin == 1), [Validators.required]],
     });
+    this.setEuinValidator(data.accountType);
+    this.setBrokerCode(data.brokerCode);
     this.addCredential.controls.accType.valueChanges.subscribe((newValue) => {
       console.log('accTypeNew Value : ', newValue);
-      if (newValue == 2) {
-        this.addCredential.controls.euin.clearAsyncValidators();
-        this.addCredential.controls.euin.clearValidators();
-        this.addCredential.controls.euin.updateValueAndValidity();
-
-      } else {
-        this.addCredential.controls.euin.setValidators([Validators.required, Validators.maxLength(7), Validators.minLength(7)]);
-      }
+      this.setEuinValidator(newValue);
     });
     if (data.defaultLogin == 1) {
       this.defaultLoginDisabled = true;
@@ -114,6 +109,23 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       this.euinValue = 'E';
     } else {
       this.euinValue = this.addCredential.controls.euin.value;
+    }
+  }
+
+  setBrokerCode(value) {
+    if (value && value.length > 0) {
+      this.brokerCode = value;
+    }
+  }
+
+  setEuinValidator(newValue) {
+    if (newValue == 2) {
+      this.addCredential.controls.euin.clearAsyncValidators();
+      this.addCredential.controls.euin.clearValidators();
+      this.addCredential.controls.euin.updateValueAndValidity();
+
+    } else {
+      this.addCredential.controls.euin.setValidators([Validators.required, Validators.maxLength(7), Validators.minLength(7)]);
     }
   }
 
@@ -165,7 +177,9 @@ export class AddArnRiaCredentialsComponent implements OnInit {
         userId: this.addCredential.controls.appId.value,
       };
       this.onlineTransact.addBSECredentilas(obj).subscribe(
-        data => this.addBSECredentilasRes(data)
+        data => this.addBSECredentilasRes(data), error => {
+          this.eventService.showErrorMessage(error);
+        }
       );
     }
 
