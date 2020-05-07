@@ -165,11 +165,11 @@ export class PurchaseTrasactionComponent implements OnInit {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
     if (this.selectScheme == 2) {
-      this.getNewSchemesRes([]);
+      // this.getNewSchemesRes([]);
       if (data.length > 2) {
         this.showSpinner = true;
         this.onlineTransact.getNewSchemes(obj).subscribe(
-          data => this.getNewSchemesRes(data), (error) => {
+          responseData => this.getNewSchemesRes(responseData, data), (error) => {
             this.showSpinner = false;
             this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
@@ -192,10 +192,12 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
 
-  getNewSchemesRes(data) {
+  getNewSchemesRes(responseData, inputData) {
     this.showSpinner = false;
-    console.log('new schemes', data);
-    this.schemeList = data;
+    console.log('new schemes', responseData);
+    this.schemeList = responseData;
+    this.purchaseTransaction.controls.schemePurchase.setValue(inputData);
+
   }
 
   getExistingSchemesRes(data) {
