@@ -56,7 +56,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
       // add action
       if(!this.data.mainData.arnRiaDetailsId) {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
-          this.eventService.openSnackBar("Karvy details Added successfully");
+          this.eventService.openSnackBar("Franklin details Added successfully");
           this.Close(true);
         })
       } else {
@@ -65,7 +65,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
           ...jsonObj
         }
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
-          this.eventService.openSnackBar("Karvy details Modified successfully");
+          this.eventService.openSnackBar("Franklin details Modified successfully");
           this.Close(true);
         })
       }
