@@ -1,7 +1,7 @@
 <div class="popup-header-fix w-65">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h3 class="mb-0 wrapper-20">{{transactionType}} TRANSACTION</h3>
+            <h3 class="mb-0 wrapper-20"> <img class="c-p mr-8" (click)="backToTransact()" src="/assets/images/svg/back-arrow.svg"> {{transactionType}} TRANSACTION</h3>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -17,7 +17,8 @@
             <div class="col-md-12 p-0">
                 <!-- (click)="backToTransact('back',null)" removed for prod build -->
 
-                <h5 class="m-0 text-black"><img (click)="backToTransact()" src="/assets/images/svg/back-arrow.svg"> Investor name: {{selectedFamilyMember}}
+                <h5 class="m-0 text-black">
+                    Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
@@ -157,7 +158,7 @@
                         <h5 class="mb-8 pt-28 text-black ">Select scheme folio</h5>
                     </div>
                     <div class="col-md-7 p-0">
-                        <div class="form-group mb-0">
+                        <div class="form-group">
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="investmentAccountSelection">
                                     <mat-option value='' disabled>Select scheme folio</mat-option>
@@ -180,11 +181,11 @@
 
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="mb-8 pt-20 text-black  ">Enter amount</h5>
+                        <h5 class="mb-8 pt-20 text-black ">Enter amount</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
-                        <div class="form-group iconRupess mb-0">
+                        <div class="form-group paddTopNone iconRupess mb-0">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input #employeeContry placeholder="Enter amount" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enteredAmount($event.target.value)" class="form-control rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
                                 <mat-hint align="start" class="f-12 text-custom">

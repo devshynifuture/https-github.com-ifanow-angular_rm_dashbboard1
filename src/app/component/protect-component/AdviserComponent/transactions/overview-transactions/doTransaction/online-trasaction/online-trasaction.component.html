@@ -172,26 +172,5 @@
         <app-swp-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWP'" [data]='transactionData'>
         </app-swp-transaction>
     </div>
-    <div *ngIf="transactionType==undefined" class="bottom-fixed row pl-20 pr-20 w-65 d-flex align-items-center">
 
-        <div class="col-md-4 p-0 d-flex align-item-center justifly-content-start">
-            <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
-        </div>
-
-        <!-- <div *ngIf="noSubBroker==false && noMapping==false " class="col-md-8 p-0 d-flex align-item-center justify-content-end">
-            <button (click)="saveAndNext()" class="btn-green text-white" mat-button>NEXT</button>
-        </div> -->
-        <!--
-    <div class="col-md-8 p-0 d-flex align-item-center justifly-content-end" *ngIf="formStep == 'step-3' && transactionType!=undefined">
-        {{formStep}}
-        <button class="br-0 text-success f-14" (click)="saveAndAddAnother()" mat-button mat-raised-button>
-            SAVE & ADD ANOTHER
-        </button>
-
-        <button mat-button class="btn-green text-white" (click)="onAddTransaction()">
-            SAVE & PROCEED
-        </button>
-    </div> -->
-
-    </div>
 </div>

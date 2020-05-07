@@ -25,6 +25,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   noData: string;
   innUccPendindList: any;
   credentialData: any;
+  dontHide: boolean;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
@@ -45,7 +46,10 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
   }
-
+  refresh(flag){
+    this.dontHide = true
+    this.getIINUCC()
+  }
   getFilterOptionData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
@@ -111,6 +115,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     );
   }
   getIINUCC() {
+    this.dontHide = true
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     const obj = {
@@ -119,6 +124,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
         this.isLoading = false;
+        this.dontHide = true
         this.innUccPendindList = data || [];
         this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data)
         this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
