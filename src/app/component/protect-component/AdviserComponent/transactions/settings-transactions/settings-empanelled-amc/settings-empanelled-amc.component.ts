@@ -3,6 +3,7 @@ import { OnlineTransactionService } from '../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { apiConfig } from 'src/app/config/main-config';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-settings-empanelled-amc',
@@ -11,14 +12,49 @@ import { apiConfig } from 'src/app/config/main-config';
 })
 export class SettingsEmpanelledAmcComponent implements OnInit {
   displayedColumns;
-  dataSource = [{}, {}, {}];
+  dataSource = new MatTableDataSource();
   advisorId: any;
   isLoading = false;
+  credentialData: any;
+  noData: string;
   constructor(private tranService: OnlineTransactionService, private eventService: EventService) { }
   columns = [];
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getEmpanelledAmcData();
+    // this.getEmpanelledAmcData();
+    this.getFilterOptionData();
+  }
+  getFilterOptionData() {
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    let obj = {
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
+    }
+    console.log('encode', obj)
+    this.tranService.getBSECredentials(obj).subscribe(
+      data => this.getFilterOptionDataRes(data),
+      err => {
+        this.isLoading = false;
+        this.noData = "No credentials found";
+        this.dataSource = undefined;
+      }
+    );
+  }
+
+  getFilterOptionDataRes(data) {
+
+    console.log(data);
+    if (data) {
+      this.credentialData = data;
+      this.getEmpanelledAmcData();
+    }
+    else {
+      this.isLoading = false;
+      this.dataSource = undefined;
+      this.noData = "No credentials found";
+    }
+    // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
   getEmpanelledAmcData() {
     this.isLoading = true
@@ -33,12 +69,15 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
         this.getEmpanelledAmcDataRes(data);
         this.dataSource = data.amcMasterList;
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.isLoading = false;
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.dataSource = undefined;
+      }
     )
   }
   getEmpanelledAmcDataRes(data) {
     this.isLoading = false
-
     this.columns.push("AMC name");
     data.brokerList.forEach(element => {
       this.columns.push(element.brokerCode)
