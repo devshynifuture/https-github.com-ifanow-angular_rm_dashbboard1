@@ -141,6 +141,11 @@ export class OverviewTransactionsComponent implements OnInit {
 
   getAllTransactionList() {
     this.isLoading = true
+    this.transactionList = [
+      { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
+      { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
+      { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined }
+    ]
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: null,
