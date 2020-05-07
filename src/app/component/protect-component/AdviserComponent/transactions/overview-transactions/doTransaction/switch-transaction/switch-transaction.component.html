@@ -226,7 +226,7 @@
                     </div>
 
                     <div class="col-md-5 p-0 iconRupess">
-                        <div class="form-group mb-0">
+                        <div class="form-group inputPaddNone">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input placeholder="Enter Amounts/Units" #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10"
                                     type="text">
