@@ -6,8 +6,8 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {Observable, of} from 'rxjs';
+import {ValidatorType} from 'src/app/services/util.service';
+import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -72,13 +72,13 @@ export class PurchaseTrasactionComponent implements OnInit {
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   @Output() changedValue = new EventEmitter();
   validatorType = ValidatorType;
+  filterSchemeList: Observable<any[]>;
 
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
               private customerService: CustomerService) {
   }
 
-  filterSchemeList: Observable<any[]>;
 
   get data() {
     return this.inputData;
@@ -476,32 +476,15 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     });
 
-    // @ts-ignore
     this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value + ''))
+      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
     );
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.amc;
       this.getFolioList();
     }
-  }
-
-  private _filter(value: any): any[] {
-    const filterValue = this._normalizeValue(value);
-    console.log('_filter value : ', value);
-    console.log('_filter this.schemeList : ', this.schemeList);
-
-    if (this.schemeList) {
-      return this.schemeList.filter(singleScheme => this._normalizeValue(singleScheme.schemeName).includes(filterValue));
-    } else {
-      return [];
-    }
-  }
-
-  private _normalizeValue(value: string): string {
-    return value.toLowerCase().replace(/\s/g, '');
   }
 
   getFormControl(): any {
