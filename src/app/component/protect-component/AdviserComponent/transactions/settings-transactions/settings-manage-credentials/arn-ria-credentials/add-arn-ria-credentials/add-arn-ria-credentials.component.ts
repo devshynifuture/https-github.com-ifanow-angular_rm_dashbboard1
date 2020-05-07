@@ -94,9 +94,10 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       memberId: [(!data) ? '' : data.memberId, [Validators.required]],
       pwd: [(!data) ? '' : data.password, [Validators.required]],
       euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
-      setDefault: [(!data) ? '' : (data.defaultLogin), [Validators.required]],
+      setDefault: [(!data) ? '0' : (data.defaultLogin), [Validators.required]],
     });
     this.platForm = this.addCredential.controls.platform.value
+    this.addCredential.controls.setDefault.value = 0
     if(!data.euin){
       this.euinValue = 'E'
     }else{
