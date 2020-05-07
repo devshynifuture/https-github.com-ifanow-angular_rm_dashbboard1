@@ -4,11 +4,12 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-kvp',
   templateUrl: './add-kvp.component.html',
@@ -50,9 +51,11 @@ export class AddKvpComponent implements OnInit {
   kvpData;
   flag: any;
   callMethod:any;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -74,6 +77,8 @@ export class AddKvpComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
+    this.bankList = this.enumService.getBank();
+
   }
 
   // ===================owner-nominee directive=====================//
@@ -247,7 +252,7 @@ addNewNominee(data) {
       ownerType: [data.ownershipTypeId ? String(data.ownershipTypeId) : '1', [Validators.required]],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      bankAccNum: [data.bankAccountNumber],
+      bankAccNum: [data.userBankMappingId],
       description: [data.description],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -322,6 +327,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
         "postOfficeBranch": this.KVPFormScheme.get('poBranch').value,
         "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
         "nominees": this.nominees,
+        "userBankMappingId": this.KVPFormScheme.get('bankAccNum').value,
         "bankAccountNumber": this.KVPFormScheme.get('bankAccNum').value,
         "description": this.KVPFormScheme.get('description').value,
         "nomineeList": this.KVPFormScheme.value.getNomineeName,
@@ -393,4 +399,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       return false;
     }
   }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

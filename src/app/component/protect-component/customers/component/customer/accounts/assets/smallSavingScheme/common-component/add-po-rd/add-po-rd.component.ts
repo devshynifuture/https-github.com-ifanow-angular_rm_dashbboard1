@@ -4,11 +4,12 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-po-rd',
   templateUrl: './add-po-rd.component.html',
@@ -52,9 +53,11 @@ export class AddPoRdComponent implements OnInit {
   flag: any;
   multiplesOfFive: boolean = true;
   adviceShowHeaderAndFooter: boolean = true;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
-    private subInjectService: SubscriptionInject) {
+    private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
   @Input() popupHeaderText: string = 'Add Post office recurring deposit (PO RD)';
@@ -69,6 +72,8 @@ export class AddPoRdComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
+    this.bankList = this.enumService.getBank();
+
   }
 
   numberMultiplesOfFive(event) {
@@ -273,7 +278,7 @@ checkValue(){
       rdNum: [data.rdNumber],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      linkedBankAcc: [data.linkedBankAccount],
+      linkedBankAcc: [data.userBankMappingId],
       description: [data.description],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -359,6 +364,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
         ownerTypeId: this.PORDForm.get('ownership').value,
         interestCompounding: this.PORDForm.get('compound').value,
         linkedBankAccount: this.PORDForm.get('linkedBankAcc').value,
+        userBankMappingId: this.PORDForm.get('linkedBankAcc').value,
         nomineeList: this.PORDForm.value.getNomineeName,
         isActive: 1,
       };
@@ -431,4 +437,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
       return false;
     }
   }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }
