@@ -9,9 +9,10 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
 import { AssetValidationService } from '../../../asset-validation.service';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-po-mis',
   templateUrl: './add-po-mis.component.html',
@@ -58,11 +59,13 @@ export class AddPoMisComponent implements OnInit {
   flag: any;
   callMethod:any;
   editApi: any;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
-    public custumService: CustomerService, public eventService: EventService) {
+    public custumService: CustomerService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -86,6 +89,7 @@ export class AddPoMisComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.show = false;
     this.getPomisData(this.data);
+    this.bankList = this.enumService.getBank();
 
   }
 
@@ -260,7 +264,7 @@ addNewNominee(data) {
       ownershipType: [(data.ownerTypeId) ? data.ownerTypeId : '1', [Validators.required]],
       poBranch: [data.postOfficeBranch],
       nominees: [data.nominees],
-      accNumber: [(data.bankAccountNumber)],
+      accNumber: [(data.userBankMappingId)],
       description: [data.description],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
       getNomineeName: this.fb.array([this.fb.group({
@@ -361,6 +365,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
           commencementDate: this.pomisForm.controls.commencementdate.value,
           postOfficeBranch: this.pomisForm.controls.poBranch.value,
           bankAccountNumber: this.pomisForm.controls.accNumber.value,
+          userBankMappingId: this.pomisForm.controls.accNumber.value,
           ownerTypeId: this.pomisForm.controls.ownershipType.value,
           nomineeList: this.pomisForm.value.getNomineeName,
           // nominees: this.nominees,
@@ -451,4 +456,19 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
     this.show = false;
 
   }
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }
