@@ -725,12 +725,12 @@
                 </div>
             </div>
             <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
-                <div class="col-md-3">
+                <div class="col-md-3 pl-0">
                     <div class="advi_name">
                         <img [src]="advisorImg">
                     </div>
                 </div>
-                <div class="col-md-9 pr-0 text-left">
+                <div class="col-md-9 p-0 text-left">
                     <p class="text-black m-0">{{advisorInfo.name}}</p>
                     <p class="text-custom m-0">Contact</p>
                 </div>
@@ -743,13 +743,13 @@
                     <h5 class="roboto f-500 d-flex justify-content-between">
                         Your risk profile
                     </h5>
-                    <div  *ngFor="let risk of riskProfile">
+                    <!-- <div  *ngFor="let risk of riskProfile">
                         <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
                         <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
                         <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
                         <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
                         <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

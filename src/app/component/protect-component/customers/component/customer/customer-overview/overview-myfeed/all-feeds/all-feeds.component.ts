@@ -70,7 +70,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.5,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; left: 0; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   // vaibhav
@@ -78,7 +78,7 @@ export class AllFeedsComponent implements OnInit {
     slidesToShow: 1.4,
     infinite: false,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; left: 0; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   chartTotal = 100;
