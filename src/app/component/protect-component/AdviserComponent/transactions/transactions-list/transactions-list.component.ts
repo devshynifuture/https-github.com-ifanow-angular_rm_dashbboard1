@@ -29,6 +29,7 @@ export class TransactionsListComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
   maxDate = new Date();
+  dontHide: boolean;
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private utilService: UtilService,
     private subInjectService: SubscriptionInject,
@@ -59,7 +60,10 @@ export class TransactionsListComponent implements OnInit {
       }
     );
   }
-
+  refresh(flag){
+    this.dontHide = true
+    this.getAllTransactionList()
+  }
   getFilterOptionDataRes(data) {
     if (data) {
       this.isLoading = false;
@@ -79,6 +83,7 @@ export class TransactionsListComponent implements OnInit {
   }
 
   getAllTransactionList() {
+    this.dontHide = true
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     const obj = {
@@ -90,12 +95,14 @@ export class TransactionsListComponent implements OnInit {
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
         if (data) {
+          this.dontHide = true
           this.isLoading = false;
           this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
           this.dataSource.data = TransactionEnumService.setTransactionStatus(data);
           this.dataSource.sort = this.sort;
           console.log(this.dataSource.data);
         } else {
+          this.dontHide = true
           this.isLoading = false;
           this.noData = "No transactions found";
           // this.eventService.openSnackBar('no transaction found', 'Dismiss');
