@@ -97,6 +97,13 @@ export class IinUccCreationComponent implements OnInit {
     console.log('INN UCC CREATION DATA GET', data);
   }
   getClientAndFamilyMember(data) {
+    if (data == '') {
+      this.generalDetails.controls.ownerName.setErrors({ invalid: false });
+      this.generalDetails.controls.ownerName.setValidators([Validators.required]);
+      this.generalDetails.controls.ownerName.updateValueAndValidity();
+      this.nomineesListFM = undefined;
+      return;
+    }
     const obj = {
       advisorId: this.advisorId,
       displayName: data
@@ -104,10 +111,16 @@ export class IinUccCreationComponent implements OnInit {
 
     this.onlineTransact.getClientAndFmList(obj).subscribe(
       data => this.getClientAndFmListRes(data), (error) => {
+
       }
     );
   }
   getClientAndFmListRes(data) {
+    if (data == 0) {
+      this.generalDetails.controls.ownerName.setErrors({ invalid: true });
+      this.generalDetails.controls.ownerName.markAsTouched();
+      data = undefined;
+    }
     this.nomineesListFM = data
     console.log('getClientAndFmListRes data', this.nomineesListFM)
   }

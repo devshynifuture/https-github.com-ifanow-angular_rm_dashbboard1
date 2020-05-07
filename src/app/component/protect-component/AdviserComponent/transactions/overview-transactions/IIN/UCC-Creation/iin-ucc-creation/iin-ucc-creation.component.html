@@ -45,10 +45,10 @@
                             <span>{{f.name}}</span>
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error *ngIf="generalDetails.get('ownerName').required" class="f-12 pt-4">
+                    <mat-error *ngIf="generalDetails.get('ownerName').errors?.required" class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-error class="f-12">
+                    <mat-error class="f-12" *ngIf="generalDetails.get('ownerName').errors?.invalid">
                         This family member does not exist
                     </mat-error>
                 </mat-form-field>
