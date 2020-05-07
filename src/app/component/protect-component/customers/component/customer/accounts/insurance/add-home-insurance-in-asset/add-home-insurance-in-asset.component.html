@@ -64,8 +64,12 @@
         </div>
         <div class="col-md-5 pr-0 form-group">
             <mat-form-field>
-                <input matInput type="text" [maxLength]="30"  [inputValidator]="validatorType.TEXT_ONLY" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0">
-                <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
+                <input #insurerName  (keyup)="findCompanyName($event)"  autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option.name">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>

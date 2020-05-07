@@ -100,9 +100,13 @@
             <h5 class="m-0 pt-20 ">Name of insurer</h5>
         </div>
         <div class="col-md-5 form-group">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text"  [maxLength]="40" formControlName="insurerName" #insurerName  [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
-                <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
+            <mat-form-field>
+                <input #insurerName  (keyup)="findCompanyName($event)"  autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option.name">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -494,9 +498,9 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex"  (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount>
+            <div class="col-md-1 p-0 pt-8 d-flex">
                 <!--  prod build appBankAccount appBankAccount  [data]="bankAccountDetails"  [data]="bankAccountDetails" (inputChange)='bankAccountList($event.value)' -->
-                <i class="material-icons text-primitive c-p float-left"  >add</i>
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
 
