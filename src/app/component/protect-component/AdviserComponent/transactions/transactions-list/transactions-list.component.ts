@@ -53,7 +53,7 @@ export class TransactionsListComponent implements OnInit {
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data), error => {
         this.isLoading = false;
-        this.noData = 'No Transactions found';
+        this.noData = 'No credentials found';
         this.eventService.openSnackBar(error, 'Dismiss');
         this.dataSource.data = [];
       }
@@ -72,7 +72,7 @@ export class TransactionsListComponent implements OnInit {
       this.getAllTransactionList();
     } else {
       this.isLoading = false;
-      this.noData = 'No Transactions found';
+      this.noData = 'No credentials found';
       this.dataSource.data = [];
     }
 
@@ -97,7 +97,8 @@ export class TransactionsListComponent implements OnInit {
           console.log(this.dataSource.data);
         } else {
           this.isLoading = false;
-          this.eventService.openSnackBar('no transaction found', 'Dismiss');
+          this.noData = "No transactions found";
+          // this.eventService.openSnackBar('no transaction found', 'Dismiss');
           this.dataSource.data = [];
         }
       },
