@@ -23,7 +23,7 @@
             <!-- <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
          class="material-icons">filter_list</i>FILTERS
        </button>-->
-            <button *ngIf="dataSource.filteredData.length > 0" (click)="openMandateClient(null)"
+            <button *ngIf="dataSource.filteredData.length > 0 && !isLoading" (click)="openMandateClient(null)"
                 class="btn-primary addon v-middle" mat-stroked-button>
                 ADD NEW
             </button>
