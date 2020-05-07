@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black pt-8">Client mapping</h4>
     </div>
     <div class="col-md-9">
-        <div *ngIf="credentialsData" class="row">
+        <div *ngIf="!isLoading && dataSource.filteredData.length > 0" class="row">
             <div class="col-md-4 text-right pr-0 ">
                 <div class="form-group mb-0 mr-16 matInputClass">
                     <mat-form-field floatLabel="never" appearance="standard">
