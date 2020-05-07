@@ -109,6 +109,9 @@ export class MandatesTransactionsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
+    if (this.dataSource.filteredData.length == 0) {
+      this.noData = 'No mandates found';
+    }
   }
 
   openMandateDetails(data) {
@@ -151,7 +154,7 @@ export class MandatesTransactionsComponent implements OnInit {
     //   err => this.eventService.openSnackBar(err, 'Dismiss')
     // );
   }
-  refresh(flag){
+  refresh(flag) {
     this.dontHide = true
     this.getNSEAchmandate()
   }

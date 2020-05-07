@@ -30,4 +30,9 @@
         </table>
 
     </div>
+    <div *ngIf="dataSource.data.length==0 && isLoading==false"
+    class="d-flex flex-column align-items-center pt-44">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="pt-12">{{noData}}</h4>
+</div>
 </div>

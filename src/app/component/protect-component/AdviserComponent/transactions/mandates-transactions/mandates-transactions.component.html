@@ -1,5 +1,5 @@
 <div class="pt-150  mandates">
-    <div class="row">
+    <div [ngClass]="{'pe-none': isLoading}" class="row">
         <div class="col-md-4 pr-0">
             <h3 class="m-0 pt-8">Mandates</h3>
         </div>
@@ -10,7 +10,7 @@
                 </mat-form-field>
             </div>
         </div> -->
-        <div *ngIf="(!isLoading && dataSource.filteredData.length > 0) || dontHide ==true" class="col-md-8 pt-4 text-right pl-0">
+        <div *ngIf="credentialData" class="col-md-8 pt-4 text-right pl-0">
 
             <mat-form-field class="searchInputWidth" appearance="standard" floatLabel="never">
                 <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
@@ -23,7 +23,7 @@
             <!-- <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
          class="material-icons">filter_list</i>FILTERS
        </button>-->
-            <button *ngIf="dataSource.filteredData.length > 0" (click)="openMandateClient(null)"
+            <button *ngIf="dataSource.filteredData.length > 0 && !isLoading" (click)="openMandateClient(null)"
                 class="btn-primary addon v-middle" mat-stroked-button>
                 ADD NEW
             </button>

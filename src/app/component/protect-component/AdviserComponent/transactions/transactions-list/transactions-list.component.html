@@ -3,9 +3,11 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-    <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
-        <div class="row">
+    <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
+        <div class="row"> -->
 
+    <div class="col-md-9" *ngIf="credentialData ">
+        <div [ngClass]="{'pe-none': isLoading}" class="row">
             <div class="col-md-4 pl-0" [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}">
                 <mat-chip-list>
                     <mat-chip-list class="newDateIcon">
@@ -41,7 +43,7 @@
                 </div>
             </div>
             <div class="col-md-3 text-right pt-4 pr-0" *ngIf="dataSource.data.length > 0">
-                <img src="/assets/images/svg/reload.svg" class="b-a p-8 mr-8 c-p" (click)="getAllTransactionList()">
+                <img src="/assets/images/svg/reload.svg" class="b-a p-8 mr-8 c-p" (click)="refresh(true)">
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"> ADD
                     NEW</button>
             </div>

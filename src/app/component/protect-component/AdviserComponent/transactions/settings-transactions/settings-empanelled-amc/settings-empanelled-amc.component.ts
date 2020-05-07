@@ -37,7 +37,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
       err => {
         this.isLoading = false;
         this.noData = "No credentials found";
-        this.dataSource = undefined;
+        this.dataSource.data = []
       }
     );
   }
@@ -51,8 +51,8 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     }
     else {
       this.isLoading = false;
-      this.dataSource = undefined;
       this.noData = "No credentials found";
+      this.dataSource.data = []
     }
     // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
@@ -72,7 +72,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
       err => {
         this.isLoading = false;
         this.eventService.openSnackBar(err, "Dismiss")
-        this.dataSource = undefined;
+        this.dataSource.data = []
       }
     )
   }
