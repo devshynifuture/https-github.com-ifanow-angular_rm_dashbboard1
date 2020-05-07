@@ -70,7 +70,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   editedId: any;
   noFolio: string;
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
-  dataSource1 = ELEMENT_DATA;
   @Output() changedValue = new EventEmitter();
   validatorType = ValidatorType;
 
@@ -246,7 +245,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -302,7 +301,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         }, (error) => {
           this.purchaseTransaction.get('folioSelection').setValue(2);
           this.ExistingOrNew = 2;
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
 
         }
@@ -316,7 +315,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         }, (error) => {
           this.purchaseTransaction.get('folioSelection').setValue(2);
           this.ExistingOrNew = 2;
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
 
         }
@@ -428,7 +427,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
         this.purchaseTransaction.get('modeOfPaymentSelection').setValue('1');
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -567,7 +566,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.purchaseRes(data), (error) => {
           this.barButtonOptions.active = false;
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }
@@ -646,21 +645,3 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
   }
 }
-
-export interface PeriodicElement {
-  no: any;
-  ownerName: string;
-  folio: string;
-  amount: any;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    no: 1, folio: '758734587', ownerName: 'hdfc', amount: 52435
-
-  },
-  {
-    no: 2, folio: '758734587', ownerName: 'axis', amount: 5256
-
-  },
-];

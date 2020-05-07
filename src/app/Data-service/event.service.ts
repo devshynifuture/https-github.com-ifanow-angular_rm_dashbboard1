@@ -33,8 +33,8 @@ export class EventService {
     flag: '',
     componentName: ''
   });
-  
-  
+
+
   upperSliderDataObs = this.upperSliderData.asObservable();
 
   changeUpperSliderState(sliderState: object) {
