@@ -1,12 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {Observable, of} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -33,6 +35,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   dataSource: any;
   ownerData: any;
   inputData: any;
+  existingSchemeList = [];
   isViewInitCalled = false;
   selectedFamilyMember: any;
   confirmTrasaction = false;
@@ -72,9 +75,11 @@ export class PurchaseTrasactionComponent implements OnInit {
   validatorType = ValidatorType;
 
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-    private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
-    private customerService: CustomerService, private UtilService: UtilService) {
+              private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
+              private customerService: CustomerService) {
   }
+
+  filterSchemeList: Observable<any[]>;
 
   get data() {
     return this.inputData;
@@ -95,14 +100,14 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);
-    Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
-    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
-    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-    Object.assign(this.transactionSummary, { paymentMode: 1 });
-    Object.assign(this.transactionSummary, { allEdit: true });
-    Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
+    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
+    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, {paymentMode: 1});
+    Object.assign(this.transactionSummary, {allEdit: true});
+    Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
     // when multi transact then disabled edit button in transaction summary
-    Object.assign(this.transactionSummary, { isMultiTransact: false });
+    Object.assign(this.transactionSummary, {isMultiTransact: false});
     console.log('this.transactionSummary', this.transactionSummary);
   }
 
@@ -115,55 +120,40 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.navOfSelectedScheme = 0;
     this.purchaseTransaction.get('employeeContry').setValue('');
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
-    Object.assign(this.transactionSummary, { folioNumber: '' }); // to disable folio number from transaction summary
+    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
     this.selectScheme = value;
-    if (value == 1) {
-      this.platformType = this.getDataSummary.defaultClient.aggregatorType;
-      const obj = {
-        searchQuery: '',
-        bseOrderType: 'ORDER',
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: this.getDataSummary.defaultClient.advisorId,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        userAccountType: this.getDataSummary.defaultCredential.accountType,
-        holdingType: this.getDataSummary.defaultClient.holdingType,
-        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-      };
-      this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data), (error) => {
-          this.showSpinner = false;
-          this.purchaseTransaction.get('schemePurchase').setErrors({ setValue: error.message });
-          this.purchaseTransaction.get('schemePurchase').markAsTouched();
-          (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-          // this.eventService.showErrorMessage(error);
+    if (this.getDataSummary) {
+      if (this.selectScheme == 1) {
+        if (this.existingSchemeList && this.existingSchemeList.length > 0) {
+          this.getExistingSchemesRes(this.existingSchemeList);
+        } else {
+          this.showSpinner = true;
+          this.getExistingScheme();
         }
-      );
+      }
     }
   }
 
   getSchemeList(data) {
-    if (data.target.value == '') {
+    if (data == '') {
       this.scheme = undefined;
-      this.schemeList = undefined;
+      // this.schemeList = undefined;
       this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
       this.purchaseTransaction.controls.employeeContry.setValue();
       this.schemeDetails.minAmount = 0;
       return;
     }
-    this.getNewSchemesRes([]);
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.purchaseTransaction.get('schemePurchase').invalid) {
       this.showSpinner = false;
       this.folioList = [];
-      Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
-      Object.assign(this.transactionSummary, { folioNumber: '' }); // to disable folio number from transaction summary
+      Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
+      Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     const obj = {
-      searchQuery: data.target.value,
+      searchQuery: data,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -175,12 +165,13 @@ export class PurchaseTrasactionComponent implements OnInit {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
     if (this.selectScheme == 2) {
-      if (data.target.value.length > 2) {
+      this.getNewSchemesRes([]);
+      if (data.length > 2) {
         this.showSpinner = true;
         this.onlineTransact.getNewSchemes(obj).subscribe(
           data => this.getNewSchemesRes(data), (error) => {
             this.showSpinner = false;
-            this.purchaseTransaction.get('schemePurchase').setErrors({ setValue: error });
+            this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
@@ -188,15 +179,16 @@ export class PurchaseTrasactionComponent implements OnInit {
         );
       }
     } else {
-      this.onlineTransact.getExistingSchemes(obj).subscribe(
-        data => this.getExistingSchemesRes(data), (error) => {
-          this.showSpinner = false;
-          this.purchaseTransaction.get('schemePurchase').setErrors({ setValue: error.message });
-          this.purchaseTransaction.get('schemePurchase').markAsTouched();
-          (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-          // this.eventService.showErrorMessage(error);
-        }
-      );
+      // this.getExistingSchemesRes(data);
+      /*  this.onlineTransact.getExistingSchemes(obj).subscribe(
+          data => this.getExistingSchemesRes(data), (error) => {
+            this.showSpinner = false;
+            this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
+            this.purchaseTransaction.get('schemePurchase').markAsTouched();
+            (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
+            // this.eventService.showErrorMessage(error);
+          }
+        );*/
     }
   }
 
@@ -208,21 +200,24 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getExistingSchemesRes(data) {
     this.showSpinner = false;
-    this.schemeList = data;
+    this.existingSchemeList = data;
+    this.schemeList = this.existingSchemeList;
+    this.purchaseTransaction.controls.schemePurchase.setValue('');
+    // this.filterSchemeList = of(this.schemeList);
   }
 
   reinvest(scheme) {
     this.schemeDetails = scheme;
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.setMinAmount();
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
-  selectExistingOrNew(value) {
+  selectExistingOrNewFolio(value) {
     this.ExistingOrNew = value;
     if (value == '2') {
       this.setMinAmount();
-      Object.assign(this.transactionSummary, { folioNumber: '' });
+      Object.assign(this.transactionSummary, {folioNumber: ''});
     } else {
       this.getFolioList();
     }
@@ -239,7 +234,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -359,40 +354,66 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data) {
       this.folioList = data;
       if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
-        Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
       }
     } else {
       this.purchaseTransaction.get('folioSelection').setValue(2);
       this.noFolio = 'No existing folios';
       this.ExistingOrNew = 2;
     }
-
   }
 
   selectedFolio(folio) {
     this.folioDetails = folio;
-    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
     // Object.assign(this.transactionSummary, {mutualFundId: folio.id});
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
-    this.transactionSummary = { ...this.transactionSummary };
+    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    this.transactionSummary = {...this.transactionSummary};
   }
 
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, {enteredAmount: value});
   }
 
   getDefaultDetails(data) {
-    console.log('get defaul here yupeeee', data);
+    console.log('get default here yupeeee', data);
     this.getDataSummary = data;
-    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
+
+    Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
+    if (this.selectScheme == 1) {
+      this.getExistingScheme();
+    }
     //  this.purchaseTransaction.controls.investor.reset();
   }
 
+  getExistingScheme() {
+    const obj = {
+      bseOrderType: 'ORDER',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+    };
+    this.onlineTransact.getExistingSchemes(obj).subscribe(
+      data => this.getExistingSchemesRes(data), (error) => {
+        this.showSpinner = false;
+        this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
+        this.purchaseTransaction.get('schemePurchase').markAsTouched();
+        (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
+        // this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+
   selectPaymentMode(value) {
-    Object.assign(this.transactionSummary, { paymentMode: value });
+    Object.assign(this.transactionSummary, {paymentMode: value});
     if (value == 2) {
-      Object.assign(this.transactionSummary, { getAch: true });
+      Object.assign(this.transactionSummary, {getAch: true});
       this.getNSEAchmandate();
     }
   }
@@ -414,16 +435,16 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinnerMandate = false;
     console.log('getNSEAchmandateRes', data);
     if (data.length > 1) {
-      Object.assign(this.transactionSummary, { showUmrnEdit: true });
+      Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
     this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED');
     console.log('this.achMandateNSE', this.achMandateNSE);
     this.achMandateNSE = this.achMandateNSE[0];
-    Object.assign(this.transactionSummary, { umrnNo: this.achMandateNSE.umrnNo });
+    Object.assign(this.transactionSummary, {umrnNo: this.achMandateNSE.umrnNo});
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   getdataForm(data, isEdit) {
@@ -454,11 +475,32 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     });
 
+    // @ts-ignore
+    this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value + ''))
+    );
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.amc;
       this.getFolioList();
     }
+  }
+
+  private _filter(value: any): any[] {
+    const filterValue = this._normalizeValue(value);
+    console.log('_filter value : ', value);
+    console.log('_filter this.schemeList : ', this.schemeList);
+
+    if (this.schemeList) {
+      return this.schemeList.filter(singleScheme => this._normalizeValue(singleScheme.schemeName).includes(filterValue));
+    } else {
+      return [];
+    }
+  }
+
+  private _normalizeValue(value: string): string {
+    return value.toLowerCase().replace(/\s/g, '');
   }
 
   getFormControl(): any {
@@ -536,12 +578,12 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
-      Object.assign(this.transactionSummary, { allEdit: false });
+      Object.assign(this.transactionSummary, {allEdit: false});
     }
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, { isMultiTransact: true });
+    Object.assign(this.transactionSummary, {isMultiTransact: true});
     if (this.isEdit != true) {
       this.id++;
     }
