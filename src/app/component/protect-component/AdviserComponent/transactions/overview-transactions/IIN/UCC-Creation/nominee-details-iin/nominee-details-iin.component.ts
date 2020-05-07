@@ -193,7 +193,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     }
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
-      relationShip: [!data ? '' : (data.relationShip) ? data.relationShip : (data.relationshipId) ? data.relationshipId + "" : '', [Validators.required]],
+      relationShip: [(data.relationShip) ? data.relationShip : (data.relationshipId) ? data.relationshipId + "" : '', [Validators.required]],
       type: [!data ? '1' : (data.type) ? data.type + '' : '1', [Validators.required]],
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
