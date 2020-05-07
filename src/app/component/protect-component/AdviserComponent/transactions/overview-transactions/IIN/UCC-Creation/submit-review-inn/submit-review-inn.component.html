@@ -34,7 +34,7 @@
 
 
             <div class="row">
-                <div class="col-md-4 pl-0">
+                <div class="col-md-4 mb-12 pl-0">
                     <h5>1) Select a platform</h5>
                     <p class="f-12 text-primitive">You create IIN UCC for both platform</p>
                     <div class="form-group">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 pl-0">
+                <div class="col-md-4 mb-12 pl-0">
                     <h5>2) Select a broker code</h5>
                     <p class="f-12 text-primitive">You can multiple select broker code</p>
                     <div class="form-group">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 pl-0" *ngIf="BSEValue == '2'">
+                <div class="col-md-4 mb-12 pl-0" *ngIf="BSEValue == '2'">
                     <h5>3) Provide account number</h5>
                     <p class="f-12 text-primitive">This will be displayed as UCC number</p>
                     <div class="form-group">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 pl-0 mt-12">
+                <div class="col-md-4 mb-12 pl-0  ">
                     <h5 *ngIf="BSEValue == '1'">3) Confirm & submit</h5>
                     <h5 *ngIf="BSEValue == '2'">4) Confirm & submit</h5>
                     <p class="f-12 text-primitive">This will send request for UCC creation</p>
@@ -90,7 +90,7 @@
                         account</button>
                 </div>
 
-                <div class="col-md-4 pl-0 mt-12">
+                <div class="col-md-4 mb-12 pl-0  ">
                     <h5 *ngIf="BSEValue == '1'">4) Upload forms</h5>
                     <h5 *ngIf="BSEValue == '2'">5) Upload forms</h5>
                     <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
