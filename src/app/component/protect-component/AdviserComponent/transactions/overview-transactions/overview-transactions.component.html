@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="col-md-8 p-0 d-flex align-items-center  justify-content-end text-right">
                                         <span class="text-primitive f-12">Last 7 days</span>
-                                        <i class="material-icons c-p"> more_vert </i>
+                                        <!-- <i class="material-icons c-p"> more_vert </i> -->
                                     </div>
                                 </div>
                                 <div class="borderTransactions bottomBorder">
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6  br-primitive">
+                                    <div class="col-md-6 text-center height66 br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -82,7 +82,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6  ">
+                                    <div class="col-md-6 text-center height66">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
@@ -120,7 +120,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6  br-primitive">
+                                    <div class="col-md-6 text-center br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -128,7 +128,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 text-center">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingIIN}" class="bar">
@@ -166,7 +166,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6  br-primitive">
+                                    <div class="col-md-6 text-center br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingMandate}" class="bar">
@@ -174,7 +174,7 @@
                                             </div>
                                         </h4>
                                     </div>
-                                    <div class="col-md-6  ">
+                                    <div class="col-md-6 text-center ">
                                         <p class="f-12 roboto">REJECTIONS</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoadingMandate}" class="bar">
@@ -195,6 +195,14 @@
                             <div class="col-md-12 tabClassTransaction p-0">
                                 <mat-tab-group class="overviewTab" animationDuration="0ms">
                                     <mat-tab label="Recent">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <img class="width200" src="assets/images/svg/noDataFound.svg">
+                                            </div>
+                                        </div>
+
+
                                         <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
                                             <div class="row">
                                                 <div class="col-md-6 p-0 relClass">
