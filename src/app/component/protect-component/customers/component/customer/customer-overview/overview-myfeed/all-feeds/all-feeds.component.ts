@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {Component, OnInit} from '@angular/core';
 import {AppConstants} from 'src/app/services/app-constants';
 import {CustomerService} from '../../../customer.service';
@@ -8,19 +7,6 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {Chart} from 'angular-highcharts';
 import {PlanService} from '../../../plan/plan.service';
 import {Router} from '@angular/router';
-=======
-import { Component, OnInit } from '@angular/core';
-import { AppConstants } from 'src/app/services/app-constants';
-import { CustomerService } from '../../../customer.service';
-import { LoaderFunction } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Chart } from 'angular-highcharts';
-import { PlanService } from '../../../plan/plan.service';
-import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
->>>>>>> 7f73cbe834e47711e283482786c5fa39ce227487
 import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 
