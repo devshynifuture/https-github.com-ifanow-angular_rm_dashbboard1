@@ -23,6 +23,7 @@ export class IinUccCreationComponent implements OnInit {
   generalDetails: any;
   advisorId: any;
   clientData: any;
+  isLoading: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
@@ -97,6 +98,7 @@ export class IinUccCreationComponent implements OnInit {
     console.log('INN UCC CREATION DATA GET', data);
   }
   getClientAndFamilyMember(data) {
+    this.isLoading = true
     if (data == '') {
       this.generalDetails.controls.ownerName.setErrors({ invalid: false });
       this.generalDetails.controls.ownerName.setValidators([Validators.required]);
@@ -117,10 +119,13 @@ export class IinUccCreationComponent implements OnInit {
   }
   getClientAndFmListRes(data) {
     if (data == 0) {
+      this.isLoading = false
       this.generalDetails.controls.ownerName.setErrors({ invalid: true });
       this.generalDetails.controls.ownerName.markAsTouched();
       data = undefined;
     }
+    this.isLoading = false
+
     this.nomineesListFM = data
     console.log('getClientAndFmListRes data', this.nomineesListFM)
   }
