@@ -562,6 +562,9 @@ export class CustomerService {
   fetchFileUpload(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_FILE_UPLOAD_DATA, data);
   }
+  fetchFileClientData(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_CLIENT_FILE_UPLOAD, data);
+  }
   getCountAllDocs(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_COUNT_DOCS, data);
   }
