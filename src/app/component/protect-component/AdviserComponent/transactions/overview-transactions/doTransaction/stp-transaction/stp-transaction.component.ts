@@ -6,6 +6,8 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -53,6 +55,7 @@ export class StpTransactionComponent implements OnInit {
   frequency: any;
   dates: any;
   dateDisplay: any;
+  existingSchemeList = [];
   schemeListTransfer: any;
   schemeDetailsTransfer: any;
   schemeTransfer: any;
@@ -66,6 +69,8 @@ export class StpTransactionComponent implements OnInit {
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   validatorType = ValidatorType;
+  filterSchemeList: Observable<any[]>;
+  filterNewSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private eventService: EventService,
@@ -112,7 +117,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
     // this.stpTransaction.controls.investor.reset();
-    this.getSchemeList('');
+    this.getSchemeList();
     this.stpTransaction.controls.transferIn.reset();
   }
 
@@ -175,10 +180,11 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerTrans = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
+    this.stpTransaction.controls.transferIn.setValue(this.stpTransaction.controls.transferIn.value);
+
   }
 
-  getSchemeList(value) {
-    this.getExistingSchemesRes([]);
+  getSchemeList() {
     if (this.stpTransaction.get('schemeStp').invalid) {
       this.showSpinner = true;
       Object.assign(this.transactionSummary, {schemeName: ''});
@@ -188,7 +194,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.selectScheme == 2) {
       this.showSpinner = true;
       const obj = {
-        searchQuery: (value == '') ? '' : value.target.value,
+        // searchQuery: (value == '') ? '' : value.target.value,
         bseOrderType: 'STP',
         showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -217,8 +223,10 @@ export class StpTransactionComponent implements OnInit {
 
   getExistingSchemesRes(data) {
     this.showSpinner = false;
-    this.schemeList = data;
+    this.existingSchemeList = data;
     console.log('data schemelist res', data);
+    this.stpTransaction.controls.schemeStp.setValue(this.stpTransaction.controls.schemeStp.value);
+
   }
 
   selectedFolio(folio) {
@@ -415,7 +423,14 @@ export class StpTransactionComponent implements OnInit {
       schemeStp: [null, [Validators.required]],
       transferIn: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
     });
-
+    this.filterSchemeList = this.stpTransaction.controls.schemeStp.valueChanges.pipe(
+      startWith(''),
+      map(value => this.processTransaction.filterScheme(value + '', this.existingSchemeList))
+    );
+    this.filterNewSchemeList = this.stpTransaction.controls.transferIn.valueChanges.pipe(
+      startWith(''),
+      map(value => this.processTransaction.filterScheme(value + '', this.schemeListTransfer))
+    );
     this.ownerData = this.stpTransaction.controls;
   }
 
