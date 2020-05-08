@@ -277,6 +277,8 @@ export class StpTransactionComponent implements OnInit {
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.getMandateDetails();
     }
+    this.getFrequency();
+
   }
 
   reinvest(scheme) {
@@ -312,7 +314,6 @@ export class StpTransactionComponent implements OnInit {
     this.schemeDetails = data[0];
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     this.getSchemeWiseFolios();
-    this.getFrequency();
   }
 
   getSchemeWiseFolios() {
@@ -343,7 +344,7 @@ export class StpTransactionComponent implements OnInit {
 
   getFrequency() {
     const obj = {
-      isin: this.schemeDetails.isin,
+      isin: this.schemeDetailsTransfer.isin,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'STP'
     };
