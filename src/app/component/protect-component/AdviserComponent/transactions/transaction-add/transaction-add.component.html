@@ -147,13 +147,15 @@
                 </mat-radio-group>
                 <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to invest in</h5>
                 <div class="form-control mb-0 add-transactions">
-                    <input type="text" aria-label="Number" class="form-group h-0" matInput formControlName="scheme" [matAutocomplete]="auto1" value="Start typing to see investor names">
-                    <mat-autocomplete #auto1="matAutocomplete">
-                        <mat-option [value]="item" *ngFor="let item of schemes">
-                            {{ item }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <p class="m-0 f-12 text-custom pt-8">Last closing NAV: 390.27</p>
+                  <input [matAutocomplete]="auto1" aria-label="Number" class="form-group h-0" formControlName="scheme"
+                         matInput placeholder="Start typing to see scheme names"
+                         type="text">
+                  <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-option [value]="item" *ngFor="let item of schemes">
+                      {{ item }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <p class="m-0 f-12 text-custom pt-8">Last closing NAV: 390.27</p>
                 </div>
                 <h5 class="m-0 pt-28 text-black pb-12">Select folio</h5>
                 <mat-radio-group aria-label="Select an option" formControlName="folio">
