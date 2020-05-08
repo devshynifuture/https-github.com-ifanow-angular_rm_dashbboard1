@@ -112,7 +112,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
     // this.stpTransaction.controls.investor.reset();
-    this.getSchemeList('')
+    this.getSchemeList('');
     this.stpTransaction.controls.transferIn.reset();
   }
 
@@ -188,7 +188,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.selectScheme == 2) {
       this.showSpinner = true;
       const obj = {
-        searchQuery:(value == '')?'':value.target.value,
+        searchQuery: (value == '') ? '' : value.target.value,
         bseOrderType: 'STP',
         showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -401,15 +401,15 @@ export class StpTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      reinvest: [(data.reinvest) ? data.reinvest:'', [Validators.required]],
+      reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
-      investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection:'', [Validators.required]],
+      investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(data.folioSelection) ? data.folioSelection: '', [Validators.required]],
+      folioSelection: [(data.folioSelection) ? data.folioSelection : '', [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure :'' , [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       STPType: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       schemeStp: [null, [Validators.required]],
@@ -480,7 +480,7 @@ export class StpTransactionComponent implements OnInit {
         mandateId: null,
         bankDetailId: null,
         nsePaymentMode: null,
-        isException : true,
+        isException: true,
         childTransactions: []
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {

@@ -258,4 +258,20 @@ export class ProcessTransactionService {
     return mm;
   };
 
+  public filterScheme(value: any, schemeList): any[] {
+    const filterValue = this.normalizeValue(value);
+    console.log('_filter value : ', value);
+    console.log('_filter this.schemeList : ', schemeList);
+
+    if (schemeList) {
+      return schemeList.filter(singleScheme => this.normalizeValue(singleScheme.schemeName).includes(filterValue));
+    } else {
+      return [];
+    }
+  }
+
+  public normalizeValue(value: string): string {
+    return value.toLowerCase().replace(/\s/g, '');
+  }
+
 }

@@ -149,11 +149,13 @@ export class SettingsClientMappingComponent implements OnInit {
           this.dataSource.sort = this.sort;
         } else {
           this.dataSource.data = [];
+          this.noData = "No clients found";
         }
         this.isLoading = false;
       },
       err => {
         this.dataSource.data = [];
+        this.noData = "No clients found";
         this.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
