@@ -39,6 +39,10 @@ export class OverviewProfileComponent implements OnInit {
 
   ngOnInit() {
     this.clientData = AuthService.getClientData();
+    this.enumDataService.getRoles();
+    this.enumDataService.getProofType();
+    this.enumDataService.getBank();
+    this.enumDataService.getClientRole();
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
     this.getFamilyMembersList(this.clientData);
