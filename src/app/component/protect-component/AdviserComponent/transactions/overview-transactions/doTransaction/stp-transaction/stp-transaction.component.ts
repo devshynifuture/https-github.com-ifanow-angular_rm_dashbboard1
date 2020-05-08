@@ -152,6 +152,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       this.showSpinnerTrans = true;
       const obj = {
+        amc: this.scheme.amcId,
         searchQuery: value,
         bseOrderType: 'STP',
         showOnlyNonZero: true,
