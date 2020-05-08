@@ -1,11 +1,11 @@
 <div class="popup-header-fix-60">
   <div class="row bb-1">
     <div class="col-md-8 p-0">
-      <h4 class="mb-0 wrapper-20">Add scheme level transactions</h4>
+      <h4 class="mb-0 wrapper-20">{{ data.flag === 'addTransaction' ? 'Add': 'Edit' }} scheme level transactions</h4>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
-        <i class="material-icons c-p pt-8 v-middle" (click)="Close()"> clear</i>
+        <i class="material-icons c-p pt-8 v-middle" (click)="Close(true)"> clear</i>
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@
             <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
               [data]='ownerData' formControlName="ownerName" class="form-control br-0">
               <mat-option value=''>Select family members</mat-option>
-              <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
-                <span>{{f.userName}}</span>
+              <mat-option *ngFor="let f of data.family_member_list" [value]="f.name">
+                <span>{{f.name}}</span>
               </mat-option>
             </mat-select>
             <mat-error class="f-12">
@@ -204,7 +204,7 @@
 <div class="bottom-fixed wrapper-12 pt-16 w-60">
   <div class="row">
     <div class="col-md-4">
-      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button>

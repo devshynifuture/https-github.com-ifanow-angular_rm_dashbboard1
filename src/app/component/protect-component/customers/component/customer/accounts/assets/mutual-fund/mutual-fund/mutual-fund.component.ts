@@ -36,9 +36,9 @@ export class MutualFundComponent implements OnInit {
     this.viewMode = 'Overview Report';
 
     this.advisorId = AuthService.getAdvisorId();
-    this.advisorId = 2929;
+    // this.advisorId = 2929;
 
-    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    // this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.clientId = 15545;
     this.getMutualFund();
 

@@ -117,12 +117,16 @@ export class MutualFundOverviewComponent implements OnInit {
     }
   }
 
+  getTypeOf(value) {
+    return typeof (value);
+  }
+
   getMutualFundData() {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      advisorId: 2753,
-      // advisorId: this.advisorId,
+      // advisorId: 2753,
+      advisorId: this.advisorId,
       clientId: 15545
       // clientId: this.clientId
     };
@@ -134,7 +138,8 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getMutualFundResponse(data) {
     if (data) {
-      console.log("this is mutual fund overview data:::", data);
+      this.MfServiceService.sendMutualFundData(data);
+
       let filterData = this.MfServiceService.doFiltering(data);
       this.asyncFilter(filterData.mutualFundList, filterData.mutualFundCategoryMastersList)
       this.mfData = data;

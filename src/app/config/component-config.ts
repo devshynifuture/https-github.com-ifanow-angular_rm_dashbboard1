@@ -214,6 +214,8 @@ export const appConfig = {
   CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',
   BANK_NAME_GET: 'account/asset/client/family-member/bank-detail/list/get',
   MUFUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
+  MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
+  MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
 
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',

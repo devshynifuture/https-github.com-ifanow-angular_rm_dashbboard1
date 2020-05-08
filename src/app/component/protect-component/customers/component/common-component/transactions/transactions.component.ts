@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MFSchemeLevelHoldingsComponent } from '../../customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MatTableDataSource } from '@angular/material';
+import { CustomerService } from '../../customer/customer.service';
+import { EventService } from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-transactions',
@@ -10,29 +13,82 @@ import { MFSchemeLevelHoldingsComponent } from '../../customer/accounts/assets/m
 })
 export class TransactionsComponent implements OnInit {
   displayedColumns = ['srno', 'type', 'date', 'amt', 'nav', 'unit', 'bunit', 'days', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  @Input() data;
 
-  constructor(private UtilService: UtilService , private subInjectService:SubscriptionInject) { }
+  constructor(
+    private UtilService: UtilService,
+    private subInjectService: SubscriptionInject,
+    private cusService: CustomerService,
+    private eventService: EventService
+  ) { }
+
+  mutualFundTransactions = [];
 
   ngOnInit() {
+    console.log("this is data what we got::", this.data);
+    this.dataSource.data = this.data.mutualFundTransactions;
+    this.mutualFundTransactions = this.data.mutualFundTransactions;
+
   }
-   openMutualFund(flag, data) {
-    const fragmentData = {
-      flag: 'editMF',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: MFSchemeLevelHoldingsComponent
-    };
+  openMutualFund(flag, element) {
+    let fragmentData;
+    if (flag === 'editTransaction') {
+      this.data.mutualFundTransactions = this.mutualFundTransactions.filter(item => item.id === element.id);
+      element.flag = 'editTransaction';
+      fragmentData = {
+        flag,
+        data: { flag, ...this.data, ...element },
+        id: 1,
+        state: 'open',
+        componentName: MFSchemeLevelHoldingsComponent
+      }
+    } else if (flag === 'addTransaction') {
+      fragmentData = {
+        flag,
+        data: { ...this.data, flag, ...element },
+        id: 1,
+        state: 'open',
+        componentName: MFSchemeLevelHoldingsComponent
+      };
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // after closing code here...
+
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
     );
+  }
+
+  deleteTransaction(element) {
+    let requestJsonObj;
+    const data = {
+      id: element.id,
+      unit: element.unit,
+      effect: element.effect,
+      mutualFundId: this.data.id
+    };
+    requestJsonObj = {
+      freezeDate: element.freezeDate ? element.freezeDate : null,
+      mutualFundTransactions: [data]
+    }
+
+    this.cusService.postDeleteTransactionMutualFund(requestJsonObj)
+      .subscribe(res => {
+        if (res) {
+          console.log("success::", res);
+          this.eventService.openSnackBar("Deletion Completed", "DISMISS")
+        } else {
+          this.eventService.openSnackBar("Deletion Failed", "DISMISS")
+        }
+      })
   }
 }
 export interface PeriodicElement {
