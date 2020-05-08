@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -9,7 +9,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import * as moment from 'moment';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-ppf',
   templateUrl: './add-ppf.component.html',
@@ -61,6 +62,8 @@ export class AddPpfComponent implements OnInit {
   commencementDate: any;
   flag: any;
   callMethod:any;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   transactionViewData =
@@ -73,7 +76,7 @@ export class AddPpfComponent implements OnInit {
     }
   adviceShowHeaderAndFooter: boolean = true;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -97,6 +100,8 @@ export class AddPpfComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
     this.calculateDate();
+    this.bankList = this.enumService.getBank();
+
   }
  // ===================owner-nominee directive=====================//
  display(value) {
@@ -331,7 +336,7 @@ addNewNominee(data) {
       extenMaturity: [''],
       frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
       description: [data.description],
-      bankName: [data.bankName],
+      bankName: [data.userBankMappingId],
       linkedBankAccount: [data.linkedBankAccount],
       extendedGroup: this.fb.array([this.fb.group({
         extenMaturity: [''],
@@ -501,6 +506,7 @@ removedList:any=[];
         "commencementDate": this.ppfSchemeForm.get('commencementDate').value,
         "description": this.ppfSchemeForm.get('description').value,
         "bankName": this.ppfSchemeForm.get('bankName').value,
+        "userBankMappingId": this.ppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.ppfSchemeForm.get('linkedBankAccount').value,
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": parseInt(this.ppfSchemeForm.get('futureContribution').value),
@@ -583,5 +589,21 @@ removedList:any=[];
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 
 }

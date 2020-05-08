@@ -14,11 +14,15 @@
 }
 
 .borderTransactions {
-    border: 1px solid #BCC6CA;
+    // border: 1px solid #BCC6CA;
     border-radius: 2px;
     padding: 10px;
-    margin: 0px 12px 20px 12px;
+    margin: 0px 12px 5px 12px;
     height: 80px;
+}
+
+.bottomBorder {
+    border-bottom: 1px solid #BCC6CA;
 }
 
 .width20 {
@@ -70,6 +74,23 @@
 
 .shadowBox:hover {
     box-shadow: 0 0 11px rgba(33, 33, 33, .2);
+}
+
+.shadowBox {
+    // border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, .12);
+    // display: flex;
+    // flex-direction: column;
+    // box-sizing: border-box;
+}
+
+.height66 {
+    height: 66px;
+}
+
+.width200 {
+    width: 200px;
 }
 
 // ------------------- media css ----------------------------

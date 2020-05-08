@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -10,6 +10,8 @@ import * as moment from 'moment';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
 
 @Component({
@@ -73,9 +75,10 @@ export class RecuringDepositComponent implements OnInit {
   nomineesList = [];
   depoData: any = [];
   nominees: any = [];
+  bankList:any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
+  constructor(private event: EventService, public dialog: MatDialog, private fb: FormBuilder, private enumService: EnumServiceService, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
   }
 
@@ -99,6 +102,8 @@ export class RecuringDepositComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.inputData);
+    this.bankList = this.enumService.getBank();
+
     // this.getdataForm()
     this.fdMonths = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120']
   }
@@ -292,7 +297,7 @@ export class RecuringDepositComponent implements OnInit {
       commencementDate: [(data.commencementDate == undefined) ? null : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required, Validators.min(1)]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
+      linkBankAc: [(data == undefined) ? '' : data.userBankMappingId,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
       bankName: [(data == undefined) ? '' : data.bankName,],
@@ -399,6 +404,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
         interestRate: this.recuringDeposit.controls.interestRate.value,
         commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         linkedBankAccount: this.recuringDeposit.controls.linkBankAc.value,
+        userBankMappingId: this.recuringDeposit.controls.linkBankAc.value,
         description: this.recuringDeposit.controls.description.value,
         tenure: this.recuringDeposit.controls.tenure.value,
         maturityDate: this.maturityDate,
@@ -484,4 +490,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
       return false;
     }
   }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

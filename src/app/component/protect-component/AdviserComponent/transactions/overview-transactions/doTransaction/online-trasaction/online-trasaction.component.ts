@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { Router } from '@angular/router';
-import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {Router} from '@angular/router';
+import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -63,9 +63,9 @@ export class OnlineTrasactionComponent implements OnInit {
   clientCodeData: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService: EventService, private fb: FormBuilder,
-    private processTransaction: ProcessTransactionService, private router: Router) {
-      this.advisorId = AuthService.getAdvisorId();
+              private eventService: EventService, private fb: FormBuilder,
+              private processTransaction: ProcessTransactionService, private router: Router) {
+    this.advisorId = AuthService.getAdvisorId();
   }
 
   @Input()
@@ -133,7 +133,8 @@ export class OnlineTrasactionComponent implements OnInit {
           selectedFamilyMember: this.ownerData.ownerName.value,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
-          familyMemberId: this.familyMemberData.familyMemberId
+          familyMemberId: this.familyMemberData.familyMemberId,
+          defaultValue: value
         };
         this.openPurchaseTransaction(data.transactionType, data);
       }
@@ -142,19 +143,19 @@ export class OnlineTrasactionComponent implements OnInit {
   }
 
   noMapFunction() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.router.navigate(['/admin/transactions/investors']);
   }
 
   noBroakerFun() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds']);
 
   }
 
- 
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   ownerList(value) {
@@ -194,7 +195,7 @@ export class OnlineTrasactionComponent implements OnInit {
   lisNominee(value) {
     this.showSpinnerOwner = false;
     if (value == null) {
-      this.transactionAddForm.get('ownerName').setErrors({ setValue: 'family member does not exist' });
+      this.transactionAddForm.get('ownerName').setErrors({setValue: 'family member does not exist'});
       this.transactionAddForm.get('ownerName').markAsTouched();
     }
     console.log(value);

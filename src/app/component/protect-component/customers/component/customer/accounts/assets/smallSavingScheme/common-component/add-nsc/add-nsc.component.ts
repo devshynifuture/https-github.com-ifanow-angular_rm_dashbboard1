@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-nsc',
   templateUrl: './add-nsc.component.html',
@@ -55,6 +56,8 @@ export class AddNscComponent implements OnInit {
   flag: any;
   dataSource: { "id": any; "familyMemberId": any; "ownerName": any; "amountInvested": any; "commencementDate": string; "tenure": any; "certificateNumber": any; "postOfficeBranch": any; "bankAccountNumber": any; "ownerTypeId": number; "nominees": any; "description": any; };
   adviceShowHeaderAndFooter: boolean = true;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input()
   set data(data) {
@@ -71,7 +74,7 @@ export class AddNscComponent implements OnInit {
 
   @Input() popupHeaderText: string = 'Add National savings certificate (NSC)';
 
-  constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
   isOptionalField
   ngOnInit() {
     if (this.data && this.data.flag) {
@@ -79,6 +82,8 @@ export class AddNscComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
+    this.bankList = this.enumService.getBank();
+
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true;
@@ -264,7 +269,7 @@ addNewNominee(data) {
       cNo: [data.certificateNumber],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      linkedBankAccount: [data.bankAccountNumber],
+      linkedBankAccount: [data.userBankMappingId],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -359,7 +364,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormField.get('cNo').value,
           "postOfficeBranch": this.nscFormField.get('poBranch').value,
-          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value,
+          "userBankMappingId": this.nscFormField.get('linkedBankAccount').value,
+          "linkedBankAccount": this.nscFormField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominees": this.nominees,
           "nomineeList": this.nscFormField.value.getNomineeName,
@@ -445,4 +451,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
     this.isOptionalField = true
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
+
+   //link bank
+   openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

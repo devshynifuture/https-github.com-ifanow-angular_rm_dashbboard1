@@ -16,7 +16,7 @@
     <div *ngIf="formStep == 'step-1' || formStep == 'step-2' && transactionType==undefined" class="pt-90 pr-40 pl-40 pb-40">
         <div class="row">
             <div class="col-md-8 p-0">
-                <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
+                <h5 class="m-0 text-black pb-12">Select an investor from the search box below</h5>
                 <mat-form-field appearance="standard" floatLabel="never">
                     <!--                  debounceChangedValue-->
                     <input #searchClient (changedValue)="ownerList($event)" (valueChange1)='lisNominee($event)' [data]='ownerNameQuery' [matAutocomplete]="auto1" appClientSearch appCustomAutoComplete aria-label="client" class="form-control pl-8" formControlName="ownerName"
@@ -172,26 +172,5 @@
         <app-swp-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWP'" [data]='transactionData'>
         </app-swp-transaction>
     </div>
-    <div *ngIf="transactionType==undefined" class="bottom-fixed row pl-20 pr-20 w-65 d-flex align-items-center">
 
-        <div class="col-md-4 p-0 d-flex align-item-center justifly-content-start">
-            <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
-        </div>
-
-        <!-- <div *ngIf="noSubBroker==false && noMapping==false " class="col-md-8 p-0 d-flex align-item-center justify-content-end">
-            <button (click)="saveAndNext()" class="btn-green text-white" mat-button>NEXT</button>
-        </div> -->
-        <!--
-    <div class="col-md-8 p-0 d-flex align-item-center justifly-content-end" *ngIf="formStep == 'step-3' && transactionType!=undefined">
-        {{formStep}}
-        <button class="br-0 text-success f-14" (click)="saveAndAddAnother()" mat-button mat-raised-button>
-            SAVE & ADD ANOTHER
-        </button>
-
-        <button mat-button class="btn-green text-white" (click)="onAddTransaction()">
-            SAVE & PROCEED
-        </button>
-    </div> -->
-
-    </div>
 </div>

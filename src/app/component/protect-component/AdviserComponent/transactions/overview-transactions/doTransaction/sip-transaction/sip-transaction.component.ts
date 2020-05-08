@@ -6,6 +6,8 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -42,6 +44,7 @@ export class SipTransactionComponent implements OnInit {
   transactionSummary: {};
   selectScheme = 2;
   schemeList: any;
+  existingSchemeList = [];
   scheme: any;
   navOfSelectedScheme: any;
   maiSchemeList: any;
@@ -72,6 +75,7 @@ export class SipTransactionComponent implements OnInit {
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   umrn: any;
   validatorType = ValidatorType;
+  filterSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -136,19 +140,28 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
     this.selectScheme = value;
+    if (this.getDataSummary) {
+      if (this.selectScheme == 1) {
+        if (this.existingSchemeList && this.existingSchemeList.length > 0) {
+          this.getExistingSchemesRes(this.existingSchemeList);
+        } else {
+          this.showSpinner = true;
+          this.getExistingScheme();
+        }
+      }
+    }
   }
 
   getSchemeList(data) {
 
     if (data.target.value == '') {
       this.scheme = undefined;
-      this.schemeList = undefined;
+      // this.schemeList = undefined;
       this.sipTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
       this.sipTransaction.controls.employeeContry.setValue();
       this.schemeDetails.minAmount = 0;
       return;
     }
-    this.getNewSchemesRes([]);
     if (this.sipTransaction.get('schemeSip').invalid) {
       this.showSpinner = false;
       Object.assign(this.transactionSummary, {schemeName: ''});
@@ -171,9 +184,11 @@ export class SipTransactionComponent implements OnInit {
     if (data.target.value.length > 2) {
       this.showSpinner = true;
       if (this.selectScheme == 2) {
+        // this.getNewSchemesRes([]);
+
         this.onlineTransact.getNewSchemes(obj).subscribe(
-          data => {
-            this.getNewSchemesRes(data);
+          responseData => {
+            this.getNewSchemesRes(responseData, data);
             this.getNSEAchmandate();
           }, (error) => {
             this.showSpinner = false;
@@ -181,32 +196,50 @@ export class SipTransactionComponent implements OnInit {
             this.sipTransaction.get('schemeSip').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
-          }
-        );
+          });
       } else {
-        this.onlineTransact.getExistingSchemes(obj).subscribe(
-          data => this.getExistingSchemesRes(data), (error) => {
-            this.showSpinner = false;
-            this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
-            this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.showErrorMessage(error);
-          }
-        );
+
       }
     }
   }
 
-  getNewSchemesRes(data) {
+  getNewSchemesRes(responseData, inputData) {
     this.showSpinner = false;
-    console.log('new schemes', data);
-    this.schemeList = data;
+    console.log('new schemes', responseData);
+    this.schemeList = responseData;
+    this.sipTransaction.controls.schemeSip.setValue(inputData);
+  }
+
+  getExistingScheme() {
+    const obj = {
+      bseOrderType: 'SIP',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      advisorId: this.getDataSummary.defaultClient.advisorId,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+    };
+    this.onlineTransact.getExistingSchemes(obj).subscribe(
+      data => this.getExistingSchemesRes(data), (error) => {
+        this.showSpinner = false;
+        this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
+        this.sipTransaction.get('schemeSip').markAsTouched();
+        (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
+        // this.eventService.showErrorMessage(error);
+      }
+    );
   }
 
   getExistingSchemesRes(data) {
     this.getNSEAchmandate();
     this.showSpinner = false;
-    this.schemeList = data;
+    this.existingSchemeList = data;
+    this.schemeList = this.existingSchemeList;
+    this.sipTransaction.controls.schemeSip.setValue('');
+
   }
 
   getDefaultDetails(data) {
@@ -215,6 +248,9 @@ export class SipTransactionComponent implements OnInit {
     // this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     Object.assign(this.transactionSummary, {aggregatorType: this.platformType});
+    if (this.selectScheme == 1) {
+      this.getExistingScheme();
+    }
   }
 
   selectPaymentMode(value) {
@@ -455,20 +491,24 @@ export class SipTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
       // investor: [(!data) ? '' : data.investor, [Validators.required]],
-      reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
+      reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
-      frequency: [(!data) ? '' : data.frequencyType, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
+      frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      date: [(!data) ? '' : data.date, [Validators.required]],
-      tenure: [(!data) ? '' : data.tenure, [Validators.required]],
+      date: [(data.date) ? data.date : '', [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
-      isException : true,
+      isException: true,
     });
+    this.filterSchemeList = this.sipTransaction.controls.schemeSip.valueChanges.pipe(
+      startWith(''),
+      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+    );
     this.ownerData = this.sipTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.scheme.amcId;
