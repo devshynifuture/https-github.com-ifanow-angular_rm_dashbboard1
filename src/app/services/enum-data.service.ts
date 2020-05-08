@@ -6,15 +6,17 @@ import { OnlineTransactionService } from '../component/protect-component/Adviser
 import { AuthService } from '../auth-service/authService';
 import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
 import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnumDataService {
+  searchData: any;
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
-     private orgSettingService: OrgSettingServiceService) {
+    private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
   }
 
   proofType = [
@@ -45,9 +47,9 @@ export class EnumDataService {
   //   { clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan' },
   // ];
 
-  bankList :any=[];
-  advisorId:any;
-  clientData:any;
+  bankList: any = [];
+  advisorId: any;
+  clientData: any;
 
   getAccountList() {
     this.advisorId = AuthService.getAdvisorId();
@@ -85,12 +87,37 @@ export class EnumDataService {
       }
     )
   }
+  searchClientAndFamilymember() {
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      displayName: "%"
+    }
+    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+      this.setSearchData(responseArray);
+    }, error => {
+      console.log('getFamilyMemberListRes error : ', error);
+    });
+  }
+
+  setSearchData(data) {
+    console.log(data);
+    this.searchData = data;
+  }
+
+  getSearchData(value) {
+    const filterValue = value.toLowerCase();
+    return this.searchData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  getEmptySearchStateData() {
+    return this.searchData;
+  }
 
   public getBank() {
-    if(this.bankList.length <= 0 ){
+    if (this.bankList.length <= 0) {
       this.getAccountList()
     }
-    else{
+    else {
       this.enumService.addBank(this.bankList);
     }
   }
