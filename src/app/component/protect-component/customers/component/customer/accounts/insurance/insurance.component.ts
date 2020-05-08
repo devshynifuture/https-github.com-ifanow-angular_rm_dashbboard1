@@ -19,6 +19,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { DetailedViewLifeInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
 import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../assets/file-upload-service.service';
 
 @Component({
   selector: 'app-insurance',
@@ -77,8 +78,11 @@ export class InsuranceComponent implements OnInit {
   lifeInsuranceFilter: any;
   showAdd = true;
   profileData: any;
+  fileUploadData;
+  file;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
+    private fileUpload : FileUploadServiceService,
     private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService,private pdfGen:PdfGenService) {
   }
 
@@ -96,7 +100,18 @@ export class InsuranceComponent implements OnInit {
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
   }
-
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   getCount() {
     const obj = {
       advisorId: this.advisorId,

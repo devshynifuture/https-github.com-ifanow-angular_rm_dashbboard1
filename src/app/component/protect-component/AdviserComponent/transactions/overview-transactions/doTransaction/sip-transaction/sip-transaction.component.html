@@ -95,7 +95,10 @@
                     <div class="col-md-11 p-0">
                         <div class="form-group">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control" formControlName="schemeSip" matInput placeholder="Start typing to see scheme names" type="text">
+                                <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto"
+                                       appCustomAutoComplete aria-label="Number" class="form-control"
+                                       formControlName="schemeSip" matInput
+                                       placeholder="Start typing to see scheme names" type="text">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of filterSchemeList | async" [value]="scheme.schemeName">
                                         {{scheme.schemeName}}
@@ -190,8 +193,9 @@
                             <mat-form-field>
                                 <mat-select class="form-control" formControlName="frequency">
                                     <mat-option value='' disabled>Select SIP frequency</mat-option>
-                                    <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of sipFrequency" [value]="frequency.frequency">
-                                        {{frequency.frequency}}</mat-option>
+                                    <mat-option (click)="selectedFrequency(frequency)"
+                                                *ngFor="let frequency of sipFrequency" [value]="frequency.frequency">
+                                      {{frequency.frequencyName}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
                                     This field is required
@@ -302,8 +306,10 @@
                 </div>
             </div>
             <div class="col-md-4 bg-grey lter p-0">
-                <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)' (folioChange)='onFolioChange($event)' [data]="transactionSummary">
-                </app-transaction-summary>
+              <app-transaction-summary (bankDetailsSend)='getBankDetails($event)'
+                                       (defaultDetails)='getDefaultDetails($event)'
+                                       (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+              </app-transaction-summary>
             </div>
         </div>
     </div>

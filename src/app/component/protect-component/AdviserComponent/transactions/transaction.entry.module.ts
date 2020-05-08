@@ -46,6 +46,7 @@ import { VerifyMemberComponent } from './overview-transactions/MandateCreation/v
 import { DetailedViewMandateComponent } from './mandates-transactions/detailed-view-mandate/detailed-view-mandate.component';
 import { AddHolderNamesComponent } from '../../PeopleComponent/people/Component/people-clients/add-client/add-holder-names/add-holder-names.component';
 import { PeopleEntryModule } from '../../PeopleComponent/people/people-entry-module';
+import { NoCredFoundComponent } from './noCredFound/no-cred-found/no-cred-found.component';
 export const componentList = [
     TransactionAddComponent,
     OnlineTrasactionComponent,
@@ -94,7 +95,7 @@ export const componentList = [
 
 ]
 @NgModule({
-    declarations: [componentList,],
+    declarations: [componentList, NoCredFoundComponent,],
     imports: [
         CommonModule,
         MaterialModule,
