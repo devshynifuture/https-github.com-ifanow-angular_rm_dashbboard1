@@ -559,6 +559,9 @@ export class CustomerService {
     // .set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data);
   }
+  fetchFileUpload(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_FILE_UPLOAD_DATA, data);
+  }
   getCountAllDocs(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_COUNT_DOCS, data);
   }

@@ -17,6 +17,7 @@ import { ExcelService } from '../../../../excel.service';
 import { MathUtilService } from "../../../../../../../../../services/math-util.service";
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvestedB: any;
   sumCouponAmount: any;
   sumCurrentValueB: any;
-  hideFilter:boolean = false;
+  hideFilter: boolean = false;
   @ViewChild('fixedIncomeTableSort', { static: false }) fixedIncomeTableSort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
@@ -50,10 +51,14 @@ export class FixedIncomeComponent implements OnInit {
   hidePdf: boolean;
   noData: string;
   dataList: any;
+  fileUploadData: any;
+  file: any;
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
-    private customerService: CustomerService, private eventService: EventService, private excel:ExcelGenService,  private pdfGen:PdfGenService,
+    private customerService: CustomerService, private eventService: EventService,
+    private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private fileUpload: FileUploadServiceService,
     public util: UtilService, public dialog: MatDialog) {
   }
 
@@ -78,18 +83,29 @@ export class FixedIncomeComponent implements OnInit {
   Close() {
 
   }
-
-  Excel(tableTitle){
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
 
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
 
-  
+
 
   changeRecurringFilterMode(value) {
     console.log('this is filter data', value);
@@ -132,7 +148,7 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-totalSum:any
+  totalSum: any
   getFixedDepositRes(data) {
     this.isLoading = false;
     this.totalSum = data;
@@ -181,9 +197,9 @@ totalSum:any
     );
   }
 
-  reTotalSum:any
-  sumOfMonthlyContribution:any;
-  sumOfMaturityValue:any;
+  reTotalSum: any
+  sumOfMonthlyContribution: any;
+  sumOfMaturityValue: any;
   getRecurringDepositRes(data) {
     this.reTotalSum = data;
     this.isLoading = false;
@@ -191,7 +207,7 @@ totalSum:any
       if (data.assetList) {
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
         this.dataList = data.assetList;
-  
+
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.recurringDepositTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
@@ -200,7 +216,7 @@ totalSum:any
         this.sumOfMaturityValue = data.sumOfMaturityValue;
       }
     }
-     else {
+    else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     }
@@ -222,14 +238,14 @@ totalSum:any
     );
   }
 
-  bondTotalSum:any;
+  bondTotalSum: any;
   getBondsRes(data) {
     this.bondTotalSum = data;
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
         console.log('getBondsRes ******** ', data);
-      this.dataList = data.assetList;
+        this.dataList = data.assetList;
 
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.bondListTableSort;
@@ -245,23 +261,23 @@ totalSum:any
     }
   }
 
-  activeFilter:any = 'All';
+  activeFilter: any = 'All';
   filterFixedIncome(key: string, value: any) {
-    
+
     let dataFiltered = [];
     this.activeFilter = value;
-    if(value == "All"){
+    if (value == "All") {
       dataFiltered = this.dataList;
     }
-    else{
+    else {
       dataFiltered = this.dataList.filter(function (item) {
         return item[key] === value;
       });
-      if(dataFiltered.length <= 0){
+      if (dataFiltered.length <= 0) {
         this.hideFilter = false;
       }
     }
-    
+
     this.isFixedIncomeFiltered = true;
     this.dataSource.data = dataFiltered;
     // this.dataSource = new MatTableDataSource(data);
