@@ -685,7 +685,7 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NPS, data)
   }
   getSchemeChoice() {
-    let httpParams; 
+    let httpParams;
     // = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.SCHEME_CHOICE, httpParams)
   }
@@ -802,11 +802,23 @@ export class CustomerService {
   getRecentTransactions(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, null);
   }
-  getCashFlowFeeds(data){
+  getCashFlowFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_FEEDS, data);
   }
   getCustomerFeedsProfile(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CUSTOMER_FEEDS_PROFILE, data, null);
+  }
+  getTransactionTypeData(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST, data)
+  }
+  postAddTransactionMutualFund(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUFUAL_FUND_TRANSACTION_ADD, data);
+  }
+  postEditTransactionMutualFund(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_EDIT, data);
+  }
+  postDeleteTransactionMutualFund(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_DELETE, data);
   }
 }
 

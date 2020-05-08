@@ -1,25 +1,28 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MfServiceService {
   advisorData: any;
-  constructor(private settingService:SettingsService,private authService : AuthService) {
+  constructor(private settingService: SettingsService, private authService: AuthService) {
   }
 
-  getPersonalDetails(data){
-    const obj={
-      id:data
+  private mutualFundDataSource = new BehaviorSubject('');
+
+  getPersonalDetails(data) {
+    const obj = {
+      id: data
     }
-   this.settingService.getProfileDetails(obj).subscribe(
-    data => {
-      console.log(data)
-      this.authService.setProfileDetails(data);
-      this.advisorData = data;
-    }
+    this.settingService.getProfileDetails(obj).subscribe(
+      data => {
+        console.log(data)
+        this.authService.setProfileDetails(data);
+        this.advisorData = data;
+      }
     );
     return this.advisorData;
   }
@@ -32,11 +35,11 @@ export class MfServiceService {
     if (mutualFundList) {
       catObj = this.categoryFilter(mutualFundList, reportType);
       Object.keys(catObj).map(key => {
-        filteredArray.push({groupName: key});
+        filteredArray.push({ groupName: key });
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
           filteredArray.push(singleData);
-          totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
+          totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, { schemeName: true });
         });
         filteredArray.push(totalObj);
       });
@@ -44,7 +47,7 @@ export class MfServiceService {
       return filteredArray;
     }
   }
- doFiltering(data) {
+  doFiltering(data) {
     data.subCategoryData = this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     data.schemeWise = this.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.filter(data.schemeWise, 'mutualFund');
@@ -286,7 +289,7 @@ export class MfServiceService {
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
-      overviewFilter : dataForFilter.overviewFilter,
+      overviewFilter: dataForFilter.overviewFilter,
       mfData,
     };
     return sendData;
@@ -302,5 +305,13 @@ export class MfServiceService {
       });
     });
     return filter;
+  }
+
+  sendMutualFundData(data) {
+    this.mutualFundDataSource.next(data);
+  }
+
+  getMutualFundData() {
+    return this.mutualFundDataSource.asObservable();
   }
 }
