@@ -742,9 +742,11 @@
 
         <div class="b-b mb-20 pb-20">
             <div class="row">
-                <div class="col-md-12 p-0">
+                <div class="col-md-12 p-0" *ngFor="let risk of riskProfile">
                     <h5 class="roboto f-500 d-flex justify-content-between">
                         Your risk profile
+                        <br>
+                        {{risk.riskProfileStatus}}
                     </h5>
                     <!-- <div  *ngFor="let risk of riskProfile">
                         <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
