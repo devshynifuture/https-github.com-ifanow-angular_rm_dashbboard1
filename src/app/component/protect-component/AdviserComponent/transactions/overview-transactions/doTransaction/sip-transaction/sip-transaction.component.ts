@@ -195,7 +195,7 @@ export class SipTransactionComponent implements OnInit {
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.showErrorMessage(error);
+            // this.eventService.openSnackBar(error, 'dismiss');
           });
       } else {
 
@@ -228,7 +228,7 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
         this.sipTransaction.get('schemeSip').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-        // this.eventService.showErrorMessage(error);
+        // this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -273,7 +273,7 @@ export class SipTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -319,7 +319,7 @@ export class SipTransactionComponent implements OnInit {
     };
     this.onlineTransact.getMandateList(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -392,7 +392,7 @@ export class SipTransactionComponent implements OnInit {
     };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -422,7 +422,7 @@ export class SipTransactionComponent implements OnInit {
         }, (error) => {
           this.sipTransaction.get('folioSelection').setValue(2);
           this.ExistingOrNew = 2;
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
 
         }
@@ -436,7 +436,7 @@ export class SipTransactionComponent implements OnInit {
         }, (error) => {
           this.sipTransaction.get('folioSelection').setValue(2);
           this.ExistingOrNew = 2;
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
 
         }
@@ -602,8 +602,7 @@ export class SipTransactionComponent implements OnInit {
           this.sipBSERes(data);
         }, (error) => {
           this.barButtonOptions.active = false;
-
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }

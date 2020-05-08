@@ -120,6 +120,9 @@ export class SettingsClientMappingComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
+    if (this.dataSource.filteredData.length == 0) {
+      this.noData = 'No clients found';
+    }
   }
 
   chnageBrokerCode(value) {
