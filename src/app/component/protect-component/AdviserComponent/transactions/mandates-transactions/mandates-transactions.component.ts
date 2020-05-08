@@ -94,7 +94,7 @@ export class MandatesTransactionsComponent implements OnInit {
   getMandateListRes(data) {
     this.dontHide = true
     this.isLoading = false;
-    if (data) {
+    if (data && data.length > 0) {
       console.log(data);
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;

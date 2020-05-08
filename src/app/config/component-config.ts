@@ -193,6 +193,7 @@ export const appConfig = {
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   FETCH_FILE_UPLOAD_DATA:'document/account/document/folderid/fetch',
+  FETCH_CLIENT_FILE_UPLOAD:'document/account/document/people/image/id/get',
   GET_COUNT_DOCS: 'document/account/document/all-file/count/get',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
