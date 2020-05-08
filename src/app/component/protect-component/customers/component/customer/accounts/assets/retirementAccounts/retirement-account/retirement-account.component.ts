@@ -515,10 +515,13 @@ export class RetirementAccountComponent implements OnInit {
     );
 
   }
+
+  sumOfGratuityReceived:any;
   getGrauityRes(data) {
     this.isLoading = false;
     if (data != undefined) {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
+      this.sumOfGratuityReceived = data.sumOfGratuityReceived;
       if (data.assetList) {
         console.log('getGrauityRes =', data);
         this.dataSource.data = data.assetList;

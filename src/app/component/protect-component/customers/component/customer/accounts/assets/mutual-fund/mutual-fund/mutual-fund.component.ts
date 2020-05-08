@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MfServiceService} from '../mf-service.service';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MfServiceService } from '../mf-service.service';
+import { map } from 'rxjs/operators';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
@@ -28,17 +28,20 @@ export class MutualFundComponent implements OnInit {
   isShow = true;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
-              public eventService: EventService, private custumService: CustomerService,
-              private mfService: MfServiceService,private settingService: SettingsService) {
+    public eventService: EventService, private custumService: CustomerService,
+    private mfService: MfServiceService, private settingService: SettingsService) {
   }
 
   ngOnInit() {
     this.viewMode = 'Overview Report';
 
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    // this.advisorId = 2929;
+
+    // this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    this.clientId = 15545;
     this.getMutualFund();
-   
+
   }
   // getPersonalDetails(data){
   //   const obj={
@@ -54,8 +57,8 @@ export class MutualFundComponent implements OnInit {
   getMutualFund() {
     this.isLoading = true;
     const obj = {
-      advisorId: 2753,
-      clientId: 15545
+      advisorId: this.advisorId,
+      clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -79,8 +82,8 @@ export class MutualFundComponent implements OnInit {
       this.isLoading = false;
       this.mfData = data;
       this.mfData.viewMode = this.viewMode;
-      if(this.mfData){
-        this.mfData.advisorData=this.mfService.getPersonalDetails(this.advisorId);
+      if (this.mfData) {
+        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
       }
     }
     this.isLoading = false;
@@ -96,7 +99,7 @@ export class MutualFundComponent implements OnInit {
       this.viewMode = data;
     }
   }
-  changeInput(value){
+  changeInput(value) {
     this.isShow = value;
   }
 }

@@ -645,11 +645,11 @@
 
                     </th>
                     <td *matCellDef="let element" class="br amt text-right  " mat-cell>
-                        <div class="bar" appFormatNumber> {{element.amountReceived}} </div>
+                        <div class="bar" *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.gratuityReceived}}</span> </div>
                     </td>
-                    <td *matFooterCellDef [value]="sumOfAmountReceived" appFormatNumber
+                    <td *matFooterCellDef 
                         class="br amt f-600 p-8   text-right" mat-footer-cell>
-                        <div class="bar"> {{ isLoading ? '' : sumOfAmountReceived || '-'}} </div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfGratuityReceived" appFormatNumber>{{sumOfGratuityReceived}}</span> </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="reason">
