@@ -7,6 +7,7 @@ import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subs
 import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
 import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
 import { PeopleService } from '../../../PeopleComponent/people.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-customer',
@@ -28,7 +29,8 @@ import { PeopleService } from '../../../PeopleComponent/people.service';
 })
 export class CustomerComponent extends DialogContainerComponent implements OnInit {
 
-
+firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   status = false;
   loading: boolean;
 
@@ -75,6 +77,12 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   ngOnInit() {
+     this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
     // const performance = Performance().prototype;
     // performance.mark('');
     // performance.toJSON();

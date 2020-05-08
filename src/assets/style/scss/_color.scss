@@ -423,6 +423,11 @@ button:active {
     border-color: $primary !important;
     // background-color: $warning !important;
 }
+.btn-primitive-outline {
+    color: $primitive !important;
+    border-color: $primitive !important;
+    // background-color: $warning !important;
+}
 
 .btn-danger-outline {
     color: $danger !important;
