@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {MatDialog} from '@angular/material';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { MatDialog } from '@angular/material';
 
 
 @Component({
@@ -27,8 +27,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
   portfolioData: any;
   scriptForm: any;
   portfolioFieldData: { familyMemberId: any; };
-    nomineesListFM: any = [];
-  checkValid:boolean = false;
+  nomineesListFM: any = [];
+  checkValid: boolean = false;
+  transactionTypeList = [];
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -37,6 +38,24 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.getFormData(data);
   }
   ngOnInit() {
+    this.getTransactionTypeData();
+  }
+
+  getTransactionTypeData() {
+    this.cusService.getTransactionTypeData({})
+      .subscribe(res => {
+        if (res) {
+          this.transactionTypeList = res;
+        } else {
+          this.eventService.openSnackBar("No TransactionType Data Found", "DISMISS");
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS");
+      })
+  }
+
+  setTransactionType(id, formGroup) {
+    formGroup.patchValue(id);
   }
   getFormData(data) {
     if (data == undefined) {
@@ -140,7 +159,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         element.get('quantity').markAsTouched();
       })
     }
-    else{
+    else {
       if (this.editApiData) {
         let finalStocks = [];
         this.transactionArray.controls.forEach(element => {

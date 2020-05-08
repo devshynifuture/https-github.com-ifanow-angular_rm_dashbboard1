@@ -150,7 +150,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.switchTransaction.get('schemeSwitch').setErrors({setValue: error});
           this.switchTransaction.get('schemeSwitch').markAsTouched();
           (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
-          // this.eventService.showErrorMessage(error);
+          // this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     } else {
@@ -162,7 +162,11 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.showSpinnerEx = false;
     this.existingSchemeList = data;
-    this.switchTransaction.controls.schemeSwitch.setValue(this.switchTransaction.controls.schemeSwitch.value);
+    if (this.switchTransaction.controls.schemeSwitch.value && this.switchTransaction.controls.schemeSwitch.value.length > 1) {
+      this.switchTransaction.controls.schemeSwitch.setValue(this.switchTransaction.controls.schemeSwitch.value);
+    } else {
+      this.switchTransaction.controls.schemeSwitch.setValue('');
+    }
   }
 
   onFolioChange(folio) {
@@ -193,7 +197,7 @@ export class SwitchTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -235,7 +239,7 @@ export class SwitchTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -266,7 +270,7 @@ export class SwitchTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsTranferRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -313,7 +317,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.showSpinnerTran = false;
           this.switchTransaction.get('transferIn').setErrors({setValue: error.message});
           this.switchTransaction.get('transferIn').markAsTouched();
-          // this.eventService.showErrorMessage(error);
+          // this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }
@@ -448,7 +452,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.switchBSERes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }
@@ -493,7 +497,7 @@ export class SwitchTransactionComponent implements OnInit {
       if (this.scheme && this.schemeDetails != undefined && this.switchTransaction != undefined) {
         const obj = {
           id: this.id,
-          amc: this.scheme.amcId,
+          amcId: this.scheme.amcId,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           productDbId: this.schemeDetails.id,
           amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',

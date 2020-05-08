@@ -14,6 +14,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -43,8 +44,11 @@ export class CashAndBankComponent implements OnInit {
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
   @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
+  fileUploadData: any;
+  file: any;
 
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
+    private fileUpload : FileUploadServiceService,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog) {
   }
@@ -62,7 +66,18 @@ export class CashAndBankComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);

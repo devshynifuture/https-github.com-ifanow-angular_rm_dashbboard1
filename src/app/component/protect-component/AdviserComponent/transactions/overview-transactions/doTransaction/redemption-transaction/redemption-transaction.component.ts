@@ -399,7 +399,7 @@ export class RedemptionTransactionComponent implements OnInit {
       if (this.scheme != undefined && this.schemeDetails != undefined && this.redemptionTransaction != undefined) {
         const obj = {
           id: this.id,
-          amc: this.scheme.amcId,
+          amcId: this.scheme.amcId,
           productDbId: this.schemeDetails.id,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,

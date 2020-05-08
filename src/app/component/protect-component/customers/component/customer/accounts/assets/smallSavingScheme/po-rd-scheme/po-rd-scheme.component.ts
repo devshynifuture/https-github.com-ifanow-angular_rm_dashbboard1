@@ -13,6 +13,7 @@ import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { DatePipe } from '@angular/common';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-po-rd-scheme',
@@ -35,8 +36,12 @@ export class PoRdSchemeComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
+  fileUploadData: any;
+  file: any;
 
-  constructor(private excel:ExcelGenService, private datePipe: DatePipe,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+  constructor(private excel:ExcelGenService, 
+    private fileUpload : FileUploadServiceService,
+    private datePipe: DatePipe,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
@@ -48,7 +53,18 @@ export class PoRdSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getPoRdSchemedata();
   }
-
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   Excel(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)

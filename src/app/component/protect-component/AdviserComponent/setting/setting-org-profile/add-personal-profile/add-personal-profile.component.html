@@ -101,7 +101,11 @@
                         <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
-                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
+                        <div *ngIf="showCropper">
+                            <button (click)="imageCropper.zoomIn()">ZoomIn</button>
+                            <button (click)="imageCropper.zoomOut()">ZoomIn</button>
+                        </div>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">
                         <img [src]="finalImage" alt="cropped Image">

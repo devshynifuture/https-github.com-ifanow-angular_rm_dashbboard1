@@ -10,6 +10,7 @@
         [roundCropper]="false"
         [transform]="transform"
         [alignImage]="'center'"
+        (cropperReady)="cropperReady($event)"
         [style.display]="showCropper ? null : 'none'"
         format="png"
         (imageCropped)="imageCropped($event)"

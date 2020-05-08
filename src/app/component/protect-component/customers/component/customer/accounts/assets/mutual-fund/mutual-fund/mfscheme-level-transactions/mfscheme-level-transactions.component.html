@@ -72,8 +72,11 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="transactionType" class="form-control br-0">
-              <mat-option value="1">Deposit</mat-option>
-              <mat-option value="2">Withdrawl</mat-option>
+              <mat-option>None</mat-option>
+              <mat-option [value]="item.id" *ngFor="let item of transactionTypeList"
+                (click)="setTransactionType(item.id, singleTransaction)">
+                {{ item.transactionType }}
+              </mat-option>
             </mat-select>
             <mat-error>
               This field is required
