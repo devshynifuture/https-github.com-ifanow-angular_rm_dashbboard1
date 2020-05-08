@@ -67,7 +67,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     if (this.data.mainData.renewalDate) {
       this.arnRiaFG.controls.renewalDate.setValue(new Date(this.data.mainData.renewalDate));
     }
-    if (this.data.mainData.arnOrRia == 2) {
+    if (this.data.mainData.arnOrRia == 1) {
       this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/[eE]\d{6}/)]);
     }
     this.arnRiaFG.updateValueAndValidity();
@@ -87,7 +87,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     )
     this.subscriber.add(
       this.arnRiaFG.controls.arnOrRia.valueChanges.subscribe((value) => {
-        if (value == 1) {
+        if (value == 2) {
           this.arnRiaFG.controls.euin.clearValidators();
           this.arnRiaFG.controls.euin.setValue('');
         } else {

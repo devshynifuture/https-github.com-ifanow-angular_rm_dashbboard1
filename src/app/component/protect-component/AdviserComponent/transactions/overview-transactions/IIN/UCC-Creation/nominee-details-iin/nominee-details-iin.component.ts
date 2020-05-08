@@ -12,6 +12,7 @@ import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn
 import { MatInput } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -48,7 +49,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   addressList: any;
   isLoading = false;
   maxDate = new Date();
-
+  maxDateForAdultDob;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private custumService: CustomerService,
@@ -72,9 +73,10 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.secondHolderNominee = data.nomineeList[1]
       this.thirdHolderNominee = data.nomineeList[2]
       this.getdataForm(this.firstHolderNominee)
-    }
-    if (this.clientData) {
-      this.getNomineeList(this.clientData)
+    } else {
+      if (this.clientData) {
+        this.getNomineeList(this.clientData)
+      }
     }
   }
 
@@ -82,6 +84,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.maxDateForAdultDob = new Date();
 
     if (this.firstHolderNominee) {
       this.getdataForm(this.firstHolderNominee)
@@ -103,6 +106,26 @@ export class NomineeDetailsIinComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+  }
+  onChange(value) {
+    console.log('onChange', value.checked)
+
+    if (value.checked == true) {
+      this.nomineeDetails.controls.address1.setValue(this.allData.holderList[0].address1);
+      this.nomineeDetails.controls.address2.setValue(this.allData.holderList[0].address2);
+      this.nomineeDetails.controls.pinCode.setValue(this.allData.holderList[0].pinCode);
+      this.nomineeDetails.controls.city.setValue(this.allData.holderList[0].city);
+      this.nomineeDetails.controls.state.setValue(this.allData.holderList[0].state);
+      this.nomineeDetails.controls.country.setValue(this.allData.holderList[0].country);
+    }
+  }
+  selectRelation(value) {
+    console.log('relation type', value)
+    if (value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister') {
+      this.maxDateForAdultDob = moment().subtract(18, 'years');
+    } else {
+      this.maxDateForAdultDob = new Date()
+    }
   }
   getNomineeList(data) {
     const obj = {
@@ -170,11 +193,11 @@ export class NomineeDetailsIinComponent implements OnInit {
     }
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
-      relationShip: [!data ? '' : (data.relationShip) ? data.relationShip : data.relationshipId + "", [Validators.required]],
+      relationShip: [(data.relationShip) ? data.relationShip : (data.relationshipId) ? data.relationshipId + "" : '', [Validators.required]],
       type: [!data ? '1' : (data.type) ? data.type + '' : '1', [Validators.required]],
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
-      addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
+      addressType: [(data.address.addressType) ? data.address.addressType : '', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],

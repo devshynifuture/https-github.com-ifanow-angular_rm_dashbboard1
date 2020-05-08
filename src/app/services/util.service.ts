@@ -1,13 +1,13 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import { ElementRef, Injectable, Input } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { FormGroup } from '@angular/forms';
-import { Subject, BehaviorSubject } from 'rxjs';
+import {ElementRef, Injectable, Input} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {FormGroup} from '@angular/forms';
+import {Subject, BehaviorSubject} from 'rxjs';
 
 
 @Injectable({
@@ -17,11 +17,13 @@ export class UtilService {
   @Input()
   public positiveMethod: Function;
   fragmentData: any;
+
   constructor(
     private eventService: EventService,
     private http: HttpClient,
     private subService: SubscriptionService,
-  ) { }
+  ) {
+  }
 
   private static decimalPipe = new DecimalPipe('en-US');
   private counter: number = 0;
@@ -48,7 +50,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -267,9 +269,9 @@ export class UtilService {
       htmlInput: inputData,
       name: pdfName
     };
-    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
+    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
       data => {
-        const file = new Blob([data], { type: 'application/pdf' });
+        const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
         fragData.isSpinner = false;
         window.open(fileURL);
@@ -312,8 +314,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], { type: mimeString });
-    return new File([imageBlob], imageName, { type: 'image/png' });
+    const imageBlob = new Blob([ia], {type: mimeString});
+    return new File([imageBlob], imageName, {type: 'image/png'});
   }
 
   /**
@@ -362,8 +364,9 @@ export class UtilService {
   }
 
   loader(increament: number) {
-    if (increament === 0)
+    if (increament === 0) {
       this.counter = 0;
+    }
     this.counter += increament;
     if (this.counter == 0) {
       this.isLoading = false;

@@ -49,7 +49,7 @@
         }
     }
     .scrollingDiv {
-        margin-top: 10px;
+        // margin-top: 10px;
         .fundBox {
             min-width: 240px;
             height: 170px;
@@ -163,8 +163,8 @@
 }
 
 .scrolling_myFeed {
-    height: 500px;
-    overflow-y: scroll;
+    // height: 500px;
+    // overflow-y: scroll;
 }
 
 ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
@@ -338,4 +338,23 @@
     display: inline-block;
     border-radius: 50%;
     margin-right: 8px;
+}
+
+.next-slide {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    cursor: pointer;
+}
+
+.tableOne {
+    tr.mat-header-row {
+        height: 35px;
+    }
+}
+
+.boxTable {
+    #table-low thead tr {
+        background-color: transparent !important;
+    }
 }

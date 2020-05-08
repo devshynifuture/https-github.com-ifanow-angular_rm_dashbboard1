@@ -30,7 +30,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     type: 'first',
     data: ''
   }
-  replaceObj: { panNumber: any; clientName: any; maidanName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
+  replaceObj: { panNumber: any; clientName: any; maidenName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType
   changedValue: string;
   doneData: any;
@@ -46,7 +46,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
     private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-    private peopleService: PeopleService,private custumService: CustomerService,
+    private peopleService: PeopleService, private custumService: CustomerService,
     public utils: UtilService,
     public eventService: EventService) {
     this.clientId = AuthService.getClientId()
@@ -98,7 +98,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getAddressList(data) {
-    if(data.userType ==2){
+    if (data.userType == 2) {
       this.sendObj = {
         clientId: data.clientId,
       };
@@ -109,7 +109,8 @@ export class PersonalDetailsInnComponent implements OnInit {
           console.log('adrress', this.addressList)
           if (this.addressList.emailList.length > 0) {
             this.addressList.email = this.addressList.emailList[0].email
-          } else if (this.addressList.mobileList.length > 0) {
+          }
+          if (this.addressList.mobileList.length > 0) {
             this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
           }
           this.getdataForm(this.addressList)
@@ -118,26 +119,26 @@ export class PersonalDetailsInnComponent implements OnInit {
           this.addressList = {};
         }
       );
-    }else{
+    } else {
       this.sendObj = {
         familyMemberId: data.familyMemberId,
       }
-        this.custumService.getFamilyMembers(this.sendObj).subscribe(
-          data => {
-            this.addressList = data[0];
-            console.log('adrress', this.addressList)
-            if (this.addressList.emailList.length > 0) {
-              this.addressList.email = this.addressList.emailList[0].email
-            } else if (this.addressList.mobileList.length > 0) {
-              this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
-            }
-            this.getdataForm(this.addressList)
-          },
-          err => {
-            console.error(err)
+      this.custumService.getFamilyMembers(this.sendObj).subscribe(
+        data => {
+          this.addressList = data[0];
+          console.log('adrress', this.addressList)
+          if (this.addressList.emailList.length > 0) {
+            this.addressList.email = this.addressList.emailList[0].email
+          } else if (this.addressList.mobileList.length > 0) {
+            this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
           }
-        );
-      }
+          this.getdataForm(this.addressList)
+        },
+        err => {
+          console.error(err)
+        }
+      );
+    }
   }
   getdataForm(data) {
     if (!data) {
@@ -151,28 +152,23 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.personalDetails = this.fb.group({
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
-      maidanName: [!data ? '' : data.maidanName, [Validators.required]],
+      // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
-      dob: [!data ? '' : (data.dob)?new Date(data.dob):new Date(data.dateOfBirth), [Validators.required]],
-      gender: [!data ? '1' : data.genderId ? data.genderId + '' : '1', [Validators.required]],
+      dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
+      gender: [!data ? '1' : data.genderId ? data.genderId + '' : data.gender, [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
-      maritalStatus: [!data ? '1' : data.martialStatusId ? data.martialStatusId + '': "1", [Validators.required]],
-      addressLine1: [!data.address ? '' : ''],
-      addressLine2: [!data.address ? '' : ''],
-      pinCode: [!data.address ? '' : ''],
-      city: [!data.address ? '' : ''],
-      district: [!data.address ? '' : ''],
-      state: [!data.address ? '' : ''],
-      country: [!data.address ? '' : ''],
+      maritalStatus: [!data ? '1' : data.martialStatusId ? data.martialStatusId + '' : data.maritalStatus, [Validators.required]],
+      address1: [!data.address ? data.address1 : data.address.address1],
+      address2: [!data.address ? data.address2 : data.address.address2],
+      pinCode: [!data.address ? data.pinCode : data.address.pinCode],
+      city: [!data.address ? data.city : data.address.city],
+      state: [!data.address ? data.state : data.address.state],
+      country: [!data.address ? data.country : data.address.country],
     });
-    // if (data.gender == undefined && data.maritalStatus == undefined) {
-    //   this.personalDetails.controls.gender.setValue('1')
-    //   this.personalDetails.controls.maritalStatus.setValue('1')
-    // }
   }
   getFormControl(): any {
     return this.personalDetails.controls;

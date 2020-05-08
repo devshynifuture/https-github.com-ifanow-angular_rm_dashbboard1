@@ -7,6 +7,8 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {AuthService} from 'src/app/auth-service/authService';
 import {ValidatorType} from 'src/app/services/util.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -43,7 +45,8 @@ export class SwitchTransactionComponent implements OnInit {
   schemeDetails: any;
   maiSchemeList: any;
   reInvestmentOpt = [];
-  schemeList: any;
+  // schemeList: any;
+  existingSchemeList = [];
   showUnits = false;
   getDataSummary: any;
   showSpinner = false;
@@ -66,7 +69,9 @@ export class SwitchTransactionComponent implements OnInit {
   id = 0;
   navOfSelectedSchemeSwitchIn: any;
   validatorType = ValidatorType;
-
+  showSpinnerEx: boolean = false;
+  filterSchemeList: Observable<any[]>;
+  filterNewSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) {
@@ -112,29 +117,22 @@ export class SwitchTransactionComponent implements OnInit {
     this.getDataSummary = data;
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.switchTransaction.controls.transferIn.reset();
+    this.getSchemeList();
+
   }
 
-  getSchemeList(data) {
-    if (data.target.value == '') {
-      this.scheme = undefined;
-      this.schemeList = undefined;
-      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
-      this.switchTransaction.controls.employeeContry.setValue();
-      this.schemeDetails.minimumPurchaseAmount = 0;
-      this.showSpinner = false;
-      return;
-    }
-    this.getExistingSchemesRes([]);
+  getSchemeList() {
+
     if (this.switchTransaction.get('schemeSwitch').invalid) {
-      this.showSpinner = false;
+      // this.showSpinner = false;
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
-    if (this.selectScheme == 2 && data.target.value.length > 2) {
-      this.showSpinner = true;
+    if (this.selectScheme == 2) {
+      this.showSpinnerEx = true;
       const obj = {
-        searchQuery: data.target.value,
+        // searchQuery: (data == '') ? '' : data.target.value,
         bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
@@ -148,7 +146,7 @@ export class SwitchTransactionComponent implements OnInit {
       };
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
-          this.showSpinner = false;
+          this.showSpinnerEx = false;
           this.switchTransaction.get('schemeSwitch').setErrors({setValue: error});
           this.switchTransaction.get('schemeSwitch').markAsTouched();
           (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
@@ -162,7 +160,13 @@ export class SwitchTransactionComponent implements OnInit {
 
   getExistingSchemesRes(data) {
     this.showSpinner = false;
-    this.schemeList = data;
+    this.showSpinnerEx = false;
+    this.existingSchemeList = data;
+    if (this.switchTransaction.controls.schemeSwitch.value && this.switchTransaction.controls.schemeSwitch.value.length > 1) {
+      this.switchTransaction.controls.schemeSwitch.setValue(this.switchTransaction.controls.schemeSwitch.value);
+    } else {
+      this.switchTransaction.controls.schemeSwitch.setValue('');
+    }
   }
 
   onFolioChange(folio) {
@@ -283,21 +287,20 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
 
-  getSchemeListTranfer(data) {
-    if (data.target.value == '') {
+  getSchemeListTranfer(inputData) {
+    if (inputData == '') {
       this.schemeTransfer = undefined;
-      this.schemeListTransfer = undefined;
+      // this.schemeListTransfer = undefined;
       return;
     }
-    this.getNewSchemesRes([]);
     if (this.switchTransaction.get('transferIn').invalid) {
       this.showSpinnerTran = false;
       Object.assign(this.transactionSummary, {schemeNameTranfer: ''});
     }
-    if (this.selectScheme == 2 && data.target.value.length > 2) {
+    if (this.selectScheme == 2 && inputData.length > 2) {
       this.showSpinnerTran = true;
       const obj = {
-        searchQuery: data.target.value,
+        searchQuery: inputData,
         bseOrderType: 'SWITCH',
         amcId: this.scheme.amcId,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -310,7 +313,7 @@ export class SwitchTransactionComponent implements OnInit {
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       };
       this.onlineTransact.getNewSchemes(obj).subscribe(
-        data => this.getNewSchemesRes(data), (error) => {
+        responseData => this.getNewSchemesRes(responseData, inputData), (error) => {
           this.showSpinnerTran = false;
           this.switchTransaction.get('transferIn').setErrors({setValue: error.message});
           this.switchTransaction.get('transferIn').markAsTouched();
@@ -335,10 +338,11 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {enteredAmount: value});
   }
 
-  getNewSchemesRes(data) {
+  getNewSchemesRes(data, inputData) {
     this.showSpinnerTran = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
+    this.switchTransaction.controls.transferIn.setValue(this.switchTransaction.controls.transferIn.value);
   }
 
   getdataForm(data, isEdit) {
@@ -357,19 +361,26 @@ export class SwitchTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
+      reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
-      investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
+      investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      folioSelection: [(data.folioSelection) ? data.folioSelection : '', [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      tenure: [(!data) ? '' : data.employeeContry, [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
       schemeSwitch: [(!data) ? '' : data.schemeName, [Validators.required]],
       transferIn: [(!data) ? '' : data.transferIn, [Validators.required]],
-      switchType: [(!data) ? '' : data.switchType, [Validators.required]],
+      switchType: [(data.switchType) ? data.switchType : '', [Validators.required]],
     });
-
+    this.filterSchemeList = this.switchTransaction.controls.schemeSwitch.valueChanges.pipe(
+      startWith(''),
+      map(value => this.processTransaction.filterScheme(value + '', this.existingSchemeList))
+    );
+    this.filterNewSchemeList = this.switchTransaction.controls.transferIn.valueChanges.pipe(
+      startWith(''),
+      map(value => this.processTransaction.filterScheme(value + '', this.schemeListTransfer))
+    );
     this.ownerData = this.switchTransaction.controls;
     if (data.folioNo) {
       this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
@@ -429,7 +440,7 @@ export class SwitchTransactionComponent implements OnInit {
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         childTransactions: [],
-        isException : true,
+        isException: true,
       };
 
       console.log('switch', obj);
@@ -483,15 +494,17 @@ export class SwitchTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
-      if (this.scheme != undefined && this.schemeDetails != undefined && this.switchTransaction != undefined) {
+      if (this.scheme && this.schemeDetails != undefined && this.switchTransaction != undefined) {
         const obj = {
           id: this.id,
-          amc: this.scheme.amcId,
+          amcId: this.scheme.amcId,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           productDbId: this.schemeDetails.id,
           amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
           toProductDbId: this.schemeDetailsTransfer.id,
-          qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+          qty: (this.switchTransaction.controls.switchType.value == 1) ?
+            0 : (this.switchTransaction.controls.switchType.value == 3) ?
+              this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
           allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
           toIsin: this.schemeDetailsTransfer.isin,
           isin: this.schemeDetails.isin,
@@ -522,7 +535,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.childTransactions.push(obj);
         }
         console.log(this.childTransactions);
-        this.schemeList = [];
+        // this.schemeList = [];
         this.showUnits = false;
         this.switchTransaction.controls.switchType.reset();
         this.switchTransaction.controls.employeeContry.reset();

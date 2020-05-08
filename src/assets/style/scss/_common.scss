@@ -57,12 +57,11 @@ h5 {
     font-family: "Roboto", sans-serif !important;
 }
 
-.proxima,
-.proximaFont,
-.mat-table {
-    font-family: "Proxima Nova", sans-serif !important;
-}
-
+// .proxima,
+// .proximaFont,
+// .mat-table {
+//     font-family: "Proxima Nova", sans-serif !important;
+// }
 .playairFont {
     font-family: "Playfair Display" !important;
 }
@@ -693,7 +692,6 @@ button.primary-sm {
     color: $primary !important;
 }
 
-
 .welcome-page {
     h1 {
         font-size: 280px;
@@ -709,4 +707,8 @@ button.primary-sm {
             font-family: "proxima-nova", sans-serif;
         }
     }
+}
+
+.right_sidenav h5 {
+    font-size: 14px;
 }

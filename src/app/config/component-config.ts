@@ -89,9 +89,11 @@ export const appConfig = {
   GET_GENERAL_INSURANCE: 'account/insurance/general-insurance/list/get',
   DELETE_GENERAL_INSURANCE: 'account/insurance/general-insurance/delete',
   INSURANCE_COUNT_GET: 'account/insurance/count/list',
+  COMPANY_LIST_GET:'account/insurance/company/list/get',
   ADD_LIABILITY: 'account/liability/loan/add',
   GET_LIABILITY: 'account/liability/loan/list/get',
   EDIT_LIABILITY: 'account/liability/loan/edit',
+  CALCULATE_EMI:'account/liability/calculate/emi',
   EDIT_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/edit',
   GET_LIST_FAMILY_MEMBER: 'account/income/family-members/get',
   GET_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/get',
@@ -604,7 +606,7 @@ export const appConfig = {
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
   GET_APPEARANCE_SETTING: 'setting/preferences/appearance/get',
   UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
-
+  GET_USER_ROLES: 'setting/users-roles/role/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

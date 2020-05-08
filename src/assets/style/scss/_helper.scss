@@ -488,7 +488,9 @@ padding-top:18px !important;
 .pt-60 {
     padding-top: 60px !important;
 }
-
+.pt-70{
+    padding-top:70px !important;
+}
 .pt-72 {
     padding-top: 72px !important;
 }
@@ -544,13 +546,18 @@ padding-top:18px !important;
 .pt-220 {
     padding-top: 220px !important;
 }
-
+.pt-250 {
+    padding-top: 250px !important;
+}
 .pr-0 {
     padding-right: $zeropx !important;
 }
 
 .pr-4 {
     padding-right: $p4 !important;
+}
+.pr-5{
+    padding-right:5px !important
 }
 .pr-6{
     padding-right:6px !important
@@ -614,7 +621,9 @@ padding-top:18px !important;
 .pr-58 {
   padding-right: 58px !important;
 }
-
+.pr-72{
+    padding-right:72px !important;
+}
 .pr-76 {
   padding-right: 76px !important;
 }
@@ -696,7 +705,9 @@ padding-top:18px !important;
 .pl-4 {
     padding-left: $p4 !important;
 }
-
+.pl-5{
+    padding-left:5px !important;
+}
 .pl-8 {
     padding-left: $p4*2 !important;
 }

@@ -26,10 +26,10 @@
                             <span>{{f.name}}</span>
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error *ngIf="generalDetails.get('ownerName').required" class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-error class="f-12">
+                    <mat-error *ngIf="nomineesListFM==undefined" class="f-12">
                         This family member does not exist
                     </mat-error>
                 </mat-form-field>
@@ -38,11 +38,12 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select IIN/UCC</h3>
+                <h5 class=" pt-8 m-0">Select IIN/UCC </h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="holdingNature">
+                        <mat-option value='' disabled>Select IIN/UCC</mat-option>
                         <mat-option [value]="clientCode.clientCode" *ngFor="let clientCode of clientCodeData" (click)="selectIINUCC(clientCode)">
                             {{clientCode.clientCode}} </mat-option>
                     </mat-select>
@@ -55,11 +56,12 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select Bank</h3>
+                <h5 class=" pt-8 m-0">Select Bank</h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="bank">
+                        <mat-option value='' disabled>Select bank</mat-option>
                         <mat-option [value]="bank.bankName" *ngFor="let bank of bankDetails" (click)="selectBank(bank)">
                             {{bank.bankName}} </mat-option>
                     </mat-select>
@@ -72,11 +74,11 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select from date</h3>
+                <h5 class="pt-8 m-0">Select from date </h5>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
                 <mat-form-field class="ba-date">
-                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="fromDate" [matDatepicker]="picker" class="form-control b-0" readonly>
+                    <input autocomplete="off" value="DD/mm/yy" (click)="picker.open()" matInput formControlName="fromDate" [matDatepicker]="picker" class="form-control b-0" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4">
@@ -87,11 +89,12 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select to date</h3>
+                <h5 class=" pt-8 m-0">Select to date </h5>
             </div>
             <div class="col-md-3">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="selectDateOption" (ngModelChange)="continuesTill($event)">
+                        <mat-option value='' disabled>Select date option</mat-option>
                         <mat-option [value]="1">
                             Custom date </mat-option>
                         <mat-option [value]="2">
@@ -103,11 +106,11 @@
         </div>
         <div class="row pt-32" *ngIf="customValue == 1">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Select from date</h3>
+                <h3 class="f-16 pt-20 m-0">Select from date</h3>
             </div>
             <div class="col-md-3 form-group">
-                <mat-form-field class="ba-date">
-                    <input autocomplete="off" (click)="picker1.open()" matInput formControlName="toDate" [matDatepicker]="picker1" class="form-control b-0" readonly>
+                <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
+                    <input autocomplete="off" placeholder="Enter date" (click)="picker1.open()" matInput formControlName="toDate" [matDatepicker]="picker1" class="form-control b-0" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4">
@@ -118,13 +121,16 @@
         </div>
         <div class="row pt-32">
             <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Enter mandate amount</h3>
+                <h5 class="  pt-20 m-0">Enter mandate amount</h5>
             </div>
             <div class="col-md-5 form-group">
-                <mat-form-field>
-                    <input matInput #mandateAmount type="number" class="form-control br-0" formControlName="mandateAmount">
-                    <mat-error class="f-12 pt-4">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input placeholder="Enter mandate amount" matInput #mandateAmount type="number" class="form-control br-0" formControlName="mandateAmount">
+                    <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.required" class="f-12 pt-4">
                         This field is required
+                    </mat-error>
+                    <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.min" class="f-12 pt-4">
+                        Amount should be greater than 0
                     </mat-error>
                 </mat-form-field>
             </div>

@@ -27,11 +27,11 @@
 
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Nominee name </h3>
+                        <h3 class="f-16 pt-20 m-0"> Nominee name </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input [matAutocomplete]="auto1" matInput maxlength="30" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [matAutocomplete]="auto1" placeholder="Start typing to see nominee name" matInput maxlength="30" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text" class="form-control">
                             <mat-autocomplete #auto1="matAutocomplete">
                                 <mat-option [value]="fm.name" (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
                             </mat-autocomplete>
@@ -45,7 +45,8 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="relationShip">
+                            <mat-select #relationShip class="form-control" formControlName="relationShip" (selectionChange)="selectRelation($event)">
+                                <mat-option value='' disabled>Select nominee relation</mat-option>
                                 <mat-option value="Self"> Self </mat-option>
                                 <mat-option value="Wife"> Wife </mat-option>
                                 <mat-option value="Husband"> Husband </mat-option>
@@ -74,7 +75,8 @@
                             <mat-radio-button value="1" [ngClass]="nomineeDetails.get('type').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Major
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="nomineeDetails.get('type').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+                            <mat-radio-button *ngIf="nomineeDetails.get('relationShip').value === 'Daughter' || nomineeDetails.get('relationShip').value === 'Son' || nomineeDetails.get('relationShip').value === 'Sister' || nomineeDetails.get('relationShip').value === 'Brother'"
+                                value="2" [ngClass]="nomineeDetails.get('type').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Minor </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -88,7 +90,7 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput class="form-control b-0" [max]="maxDate" formControlName="dob" [matDatepicker]="picker">
+                            <input matInput class="form-control b-0" [max]="maxDateForAdultDob" formControlName="dob" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error class="f-12">This field is required</mat-error>
@@ -113,7 +115,13 @@
 
 
                 <h3 class="f-18 mb-20 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
-
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <mat-checkbox (change)="onChange($event)">
+                            Address same as mine
+                        </mat-checkbox>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address type</h3>
@@ -121,6 +129,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="addressType">
+                                <mat-option value='' disabled>Select address type</mat-option>
                                 <mat-option value="Residential/Business"> Residential/Business </mat-option>
                                 <mat-option value="Residential"> Residential </mat-option>
                                 <mat-option value="Business">Business </mat-option>
@@ -139,7 +148,7 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter Address line 1" matInput formControlName="address1" type="text" class="form-control">
+                            <input placeholder="Flat/building/street" matInput formControlName="address1" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -151,7 +160,7 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input matInput placeholder="Enter Address line 2" formControlName="address2" type="text" class="form-control">
+                            <input matInput placeholder="Block/locality" formControlName="address2" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
@@ -299,16 +308,7 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">SAVE</button>
-        <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
-            <i class="material-icons">
-                keyboard_arrow_up
-            </i></button>
-        <mat-menu #menu="matMenu">
-            <button class="btn-bottom br-0 text-inherit" mat-menu-item>
-                Item 1 </button>
-        </mat-menu>
-
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">NEXT</button>
 
     </div>
 

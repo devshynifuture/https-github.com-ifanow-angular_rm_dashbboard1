@@ -141,3 +141,8 @@
 .btnwidth {
     width: 100px;
 }
+
+.disabledCursor .mat-radio-disabled,
+.mat-radio-disabled .mat-radio-label {
+    cursor: none;
+}

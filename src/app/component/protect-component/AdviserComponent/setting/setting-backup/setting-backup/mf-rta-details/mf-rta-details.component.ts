@@ -173,8 +173,8 @@ export class MfRtaDetailsComponent implements OnInit {
 
   getARNId(id) {
     const arn = this.arnList.find((data) => data.id == id);
-    if (arn) {
-      return arn.number;
+    if (arn && arn.number) {
+      return (arn.arnOrRia == 1 ? 'ARN-' : 'INA-') + arn.number;
     }
     return '';
   }

@@ -4,12 +4,13 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from './../../../asset-validation.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-po-td',
   templateUrl: './add-po-td.component.html',
@@ -52,10 +53,12 @@ export class AddPoTdComponent implements OnInit {
   nominees: any[];
   potdData: any;
   flag: any;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService) { }
+  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -236,7 +239,7 @@ addNewNominee(data) {
       poBranch: [],
       nominee: [],
       tdNum: [data.tdNumber],
-      bankAccNum: [],
+      bankAccNum: [data.userBankMappingId],
       // description: [data.description],
       id: [data.id],
       // nominees: this.nominees
@@ -292,6 +295,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.isOptionalField = true;
+    this.bankList = this.enumService.getBank();
+
   }
   getFormData(data) {
     console.log(data)
@@ -342,6 +347,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
           // "ownerTypeId": this.POTDForm.get('ownershipType').value,
           // "nominees": this.nominees,
           "tdNumber": this.POTDForm.get('tdNum').value,
+          "userBankMappingId": this.POTDForm.get('bankAccNum').value,
           "bankAccountNumber": this.POTDForm.get('bankAccNum').value,
           "description": this.POTDForm.get('description').value,
           "nomineeList": this.POTDForm.value.getNomineeName,
@@ -416,4 +422,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
     }
   }
 
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

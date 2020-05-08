@@ -61,9 +61,14 @@ export class MfServiceService {
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
-        element.forEach(singleData => {
-          finalDataSource.push(singleData);
-        });
+        if(element.length > 0){
+          element.forEach(singleData => {
+            finalDataSource.push(singleData);
+          });
+        }else{
+          finalDataSource.push({});
+        }
+       
       });
     }
     return finalDataSource;

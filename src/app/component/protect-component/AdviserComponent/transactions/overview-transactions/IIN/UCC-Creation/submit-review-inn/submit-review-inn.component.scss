@@ -20,3 +20,7 @@
     color: #ffffff;
     margin-left: 10px;
 }
+
+::ng-deep .inputPaddingNone .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+}

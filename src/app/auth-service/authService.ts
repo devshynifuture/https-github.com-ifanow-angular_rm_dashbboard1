@@ -121,19 +121,27 @@ export class AuthService {
   setUserInfo(info) {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
+  selectedClient:any;
 
   setClientData(clientData) {
     sessionStorage.setItem('clientData', JSON.stringify(clientData));
     localStorage.setItem('clientData', JSON.stringify(clientData));
-
+    // if(clientData){
+    //   this.selectedClient = clientData;
+    // }
     console.log('setClientData : ', clientData);
   }
+
   setProfileDetails(profileData) {
     sessionStorage.setItem('profileData', JSON.stringify(profileData));
     localStorage.setItem('profileData', JSON.stringify(profileData));
-
+    
     console.log('setClientData : ', profileData);
   }
+
+  // getSelectedClient(){
+  //   return this.selectedClient;
+  // }
 
   static setSubscriptionUpperSliderData(data) {
     sessionStorage.setItem("subUpperData", JSON.stringify(data))

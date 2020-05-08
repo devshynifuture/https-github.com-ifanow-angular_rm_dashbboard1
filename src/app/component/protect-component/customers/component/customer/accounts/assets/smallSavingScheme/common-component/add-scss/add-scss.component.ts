@@ -4,12 +4,13 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from './../../../asset-validation.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-scss',
   templateUrl: './add-scss.component.html',
@@ -51,12 +52,13 @@ export class AddScssComponent implements OnInit {
   nomineesList: any[] = [];
   nominees: any[];
   flag: any;
+  bankList:any = [];
 
   @Input() popupHeaderText: string = 'Add Senior citizen savings scheme (SCSS)';
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private cusService: CustomerService, private eventService: EventService, public utils: UtilService) {
+    private cusService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
   ngOnInit() {
@@ -67,6 +69,7 @@ export class AddScssComponent implements OnInit {
     }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.bankList = this.enumService.getBank();
 
     this.getdataForm(this.data);
     this.isOptionalField = true;
@@ -246,7 +249,7 @@ addNewNominee(data) {
       commDate: [data.commencementDate?new Date(data.commencementDate):'', [Validators.required]],
       poBranch: [data.postOfficeBranch?data.postOfficeBranch:''],
       nominees: this.nominees,
-      bankAccNumber: [data.bankAccountNumber?data.bankAccountNumber:''],
+      bankAccNumber: [data.userBankMappingId?data.userBankMappingId:''],
       description: [data.description?data.description:''],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -321,6 +324,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.scssSchemeForm
         commencementDate: this.scssSchemeForm.get('commDate').value,
         postOfficeBranch: this.scssSchemeForm.get('poBranch').value,
         bankAccountNumber: this.scssSchemeForm.get('bankAccNumber').value,
+        userBankMappingId: this.scssSchemeForm.get('bankAccNumber').value,
         // ownerTypeId: this.scssSchemeForm.get('ownershipType').value,
         nomineeList: this.scssSchemeForm.value.getNomineeName,
         description: this.scssSchemeForm.get('description').value
@@ -391,4 +395,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.scssSchemeForm
       return false;
     }
   }
+
+   //link bank
+   openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

@@ -59,6 +59,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   showinsuredMemberSum = true;
   showSumAssured = false;
   insuredMemberList: any;
+  options: any;
 
   constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -438,6 +439,16 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     }
   
   }
+  findCompanyName(data) {
+    const inpValue = this.travelInsuranceForm.get('insurerName').value;
+    this.customerService.getCompanyNames(inpValue).subscribe(
+      data => {
+        console.log(data);
+        this.options =data;
+      }
+    );
+  }
+
   onChangeSetErrorsType(value, formName) {
     if (value == 1) {
       this.showSumAssured = true

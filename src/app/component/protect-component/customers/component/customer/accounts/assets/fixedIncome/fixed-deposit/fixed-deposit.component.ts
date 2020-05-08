@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
@@ -13,6 +13,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { ActiityService } from '../../../../customer-activity/actiity.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
 
 @Component({
@@ -113,8 +115,8 @@ export class FixedDepositComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   tenureFlag: boolean;
 
-  constructor(public utils: UtilService, private event: EventService, private router: Router,
-    private fb: FormBuilder, private custumService: CustomerService,
+  constructor(public utils: UtilService, public dialog: MatDialog, private event: EventService, private router: Router,
+    private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService) {
   }
   @Input()
@@ -142,7 +144,6 @@ export class FixedDepositComponent implements OnInit {
     }
     console.log('This is ngOnInit data of FixedDepositComponent');
     this.getdataForm(this.inputData);
-
     this.isViewInitCalled = true;
     console.log('data', this.inputData);
     this.clientId = AuthService.getClientId();
@@ -150,6 +151,26 @@ export class FixedDepositComponent implements OnInit {
       clientId: this.clientId
     };
     this.advisorId = AuthService.getAdvisorId();
+    // this.getAccountList();
+
+    //link bank
+    this.bankList = this.enumService.getBank();
+    //link bank
+
+  }
+
+  getAccountList() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.custumService.getBankAccount(obj).subscribe(
+      data => this.getBankAccountRes(data)
+    );
+  }
+  bankList:any = [];
+  getBankAccountRes(data){
+    this.bankList = data;
   }
   getOwnerListRes(data) {
     console.log('familymember', data);
@@ -416,7 +437,7 @@ export class FixedDepositComponent implements OnInit {
       frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear],
       maturityDate: [(!data) ? '' : (data.fdEndDateIn == 1) ? '' : new Date(data.maturityDate)],
       payOpt: [(!data.interestPayoutOption) ? '' : data.interestPayoutOption, [Validators.required]],
-      bankACNo: [(!data) ? '' : data.bankAcNumber],
+      bankACNo: [(!data) ? '' : data.userBankMappingId],
       fdNo: [(!data) ? '' : data.fdNumber],
       id: [(!data) ? '' : data.id,],
       familyMemberId: [(!data) ? '' : data.familyMemberId],
@@ -526,6 +547,7 @@ export class FixedDepositComponent implements OnInit {
         maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
         bankAcNumber: this.fixedDeposit.controls.bankACNo.value,
+        userBankMappingId: this.fixedDeposit.controls.bankACNo.value,
         fdNumber: this.fixedDeposit.controls.fdNo.value,
         fdType: this.fixedDeposit.controls.FDType.value,
         interestCompoundingId: (this.fixedDeposit.controls.payOpt.value == 1) ? this.fixedDeposit.value.compound : null,
@@ -631,8 +653,6 @@ export class FixedDepositComponent implements OnInit {
   }
 
 
-
-
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.barButtonOptions.active = false;
@@ -644,4 +664,21 @@ export class FixedDepositComponent implements OnInit {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
+//link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
+
+  
 }

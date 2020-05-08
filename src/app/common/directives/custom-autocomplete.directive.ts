@@ -18,7 +18,7 @@ export class CustomAutocompleteDirective {
     private _el: ElementRef,
     private renderer: Renderer2) {
     _el.nativeElement.oninput = (event) => {
-      console.log('CustomAutocompleteDirective constructor input event : ', event);
+      // console.log('CustomAutocompleteDirective constructor input event : ', event);
       // this.onInputChange(event);
     };
   }

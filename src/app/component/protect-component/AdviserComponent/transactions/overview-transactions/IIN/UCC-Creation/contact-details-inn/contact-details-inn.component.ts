@@ -66,13 +66,13 @@ export class ContactDetailsInnComponent implements OnInit {
       this.firstHolderContact = data.firstHolder
       this.secondHolderContact = data.secondHolder
       this.thirdHolderContact = data.thirdHolder
-      this.getdataForm(this.firstHolderContact)
+     // this.getdataForm(this.firstHolderContact)
     } else if (data.holderList) {
       this.firstHolderContact = data.holderList[0]
       this.secondHolderContact = data.holderList[1]
       this.thirdHolderContact = data.holderList[2]
     }
-    if (this.firstHolderContact.address == undefined) {
+    if (!this.firstHolderContact.address1) {
       this.getAddressList(this.clientData)
     }
     this.generalDetails = data.generalDetails
@@ -87,6 +87,9 @@ export class ContactDetailsInnComponent implements OnInit {
     this.getIsdCodesData();
     let value = {}
     if (this.firstHolderContact) {
+      if(this.firstHolderContact.address){
+        this.firstHolderContact.address = undefined
+      }
       this.getdataForm(this.firstHolderContact)
     } else {
       this.getdataForm('')
@@ -150,7 +153,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.contactDetails = this.fb.group({
       panNumber: [!data ? '' : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : data.clientName, [Validators.required]],
-      maidanName: [!data ? '' : data.maidanName, [Validators.required]],
+      // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dob: [!data ? '' : data.dob, [Validators.required]],
@@ -160,8 +163,8 @@ export class ContactDetailsInnComponent implements OnInit {
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
       // isdCodeId: [!data ? '' : (data.isdCodeId) + "", [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
-      addressLine1: [!data.address ? data.addressLine1 : (data.address.address1) ? data.address.address1 : data.address.addressLine1, [Validators.required]],
-      addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],
+      address1: [!data.address ? data.address1 : (data.address.address1) ? data.address.address1 : data.address.address1, [Validators.required]],
+      address2: [!data.address ? data.address2 : (data.address.address2) ? data.address.address2 : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
       city: [!data.address ? data.city : data.address.city, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
@@ -216,14 +219,12 @@ export class ContactDetailsInnComponent implements OnInit {
 
       this.getFormControl().pincode.setErrors(this.pinInvalid);
       this.getFormControl().city.setValue("");
-      this.getFormControl().district.setValue("");
       this.getFormControl().country.setValue("");
       this.getFormControl().state.setValue("");
 
     }
     else {
       this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
-      this.getFormControl().district.setValue(data[0].PostOffice[0].District);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].State);
       this.pinInvalid = false;
@@ -305,8 +306,8 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     value.address = {
 
-      addressLine1: holder.addressLine1,
-      addressLine2: holder.addressLine2,
+      address1: holder.address1,
+      address2: holder.address2,
       pinCode: holder.pinCode,
       city: holder.city,
       state: holder.state,

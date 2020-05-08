@@ -24,6 +24,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
   innUccPendindList: any;
+  credentialData: any;
+  dontHide: boolean;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
@@ -35,30 +37,52 @@ export class InvestorsTransactionsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.isLoading = true;
-    this.getMappedData();
-    // this.getFilterOptionData();
+    // this.getMappedData();
+    this.getFilterOptionData();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
+    if (this.dataSource.filteredData.length == 0) {
+      this.noData = 'No investors found';
+    }
   }
-
-  // getFilterOptionData() {
-  //   let obj = {
-  //     advisorId: this.advisorId,
-  //     onlyBrokerCred: true
-  //   }
-  //   console.log('encode', obj)
-  //   this.onlineTransact.getBSECredentials(obj).subscribe(
-  //     data => this.getFilterOptionDataRes(data)
-  //   );
-  // }
+  refresh(flag) {
+    this.dontHide = true
+    this.getIINUCC()
+  }
+  getFilterOptionData() {
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    let obj = {
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
+    }
+    console.log('encode', obj)
+    this.onlineTransact.getBSECredentials(obj).subscribe(
+      data => this.getFilterOptionDataRes(data),
+      err => {
+        this.isLoading = false;
+        this.noData = "No credentials found";
+        this.dataSource.data = []
+      }
+    );
+  }
   getFilterOptionDataRes(data) {
 
     console.log(data);
-    this.filterData = TransactionEnumService.setPlatformEnum(data);
+    if (data) {
+      this.credentialData = data;
+      this.getMappedData();
+    }
+    else {
+      this.isLoading = false;
+      this.dataSource.data = [];
+      this.noData = "No credentials found";
+    }
+    // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
 
   // sortDataFilterWise() {
@@ -76,23 +100,25 @@ export class InvestorsTransactionsComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-         this.dataSource.data =  TransactionEnumService.setHoldingTypeEnum(data);
-         this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
+          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
           this.dataSource.sort = this.sort;
         } else if (data == undefined) {
-          this.noData = 'No scheme found';
+          this.noData = 'No investors found';
           this.dataSource.data = [];
         }
         this.isLoading = false;
       },
       err => {
         this.isLoading = false;
+        this.noData = 'No investors found';
         this.dataSource.data = [];
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
-  getIINUCC(){
+  getIINUCC() {
+    this.dontHide = true
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     const obj = {
@@ -101,10 +127,11 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
         this.isLoading = false;
+        this.dontHide = true
         this.innUccPendindList = data || [];
-        this.dataSource.data =TransactionEnumService.setHoldingTypeEnum(data)
-        this.dataSource.data = TransactionEnumService.setTaxStatusDesc( this.dataSource.data, this.enumServiceService);
-          this.dataSource.sort = this.sort;
+        this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data)
+        this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
+        this.dataSource.sort = this.sort;
         console.log('innUccPendindList', this.innUccPendindList)
       },
       err => {

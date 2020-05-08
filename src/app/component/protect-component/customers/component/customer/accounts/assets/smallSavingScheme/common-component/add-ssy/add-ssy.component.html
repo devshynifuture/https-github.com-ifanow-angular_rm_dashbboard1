@@ -139,6 +139,9 @@
                     <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.required">
                         This field is required
                     </mat-error>
+                    <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.before">
+                        Setected date of Commencement must not be before birth of owner
+                    </mat-error>
                     <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.incorrect">
                         Setected owner is not allowed for SSY as on date of Commencement her age is above 21
                     </mat-error>
@@ -210,19 +213,25 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-48">
+        
+        <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field><input autocomplete="off" type="text" #linkedAcc class="form-control br-0"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            formControlName="linkedAcc" matInput maxlength="16">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{linkedAcc.value.length}}/16</mat-hint>
-                    </mat-form-field>
-                </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="linkedAcc" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankName}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div  class="col-md-1 p-0 pt-8 d-flex">
+                <!-- prod build -->
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
         <div class="row pt-48">

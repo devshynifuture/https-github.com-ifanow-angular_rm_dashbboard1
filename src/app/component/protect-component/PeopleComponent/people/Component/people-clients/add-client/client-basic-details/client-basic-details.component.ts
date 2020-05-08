@@ -313,6 +313,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         gardianObj = {};
       }
       const obj: any = {
+        parentAdvisorId: (this.fieldFlag == 'client') ? this.advisorId : null,
         advisorId,
         taxStatusId: parseInt(this.invTaxStatus),
         emailList,

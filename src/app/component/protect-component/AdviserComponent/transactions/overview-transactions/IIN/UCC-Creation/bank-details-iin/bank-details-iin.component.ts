@@ -53,7 +53,7 @@ export class BankDetailsIINComponent implements OnInit {
   holderList: any;
   formId: any;
   maxDate = new Date();
-  
+
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
     private cusService: CustomerService,
@@ -79,7 +79,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.thirdHolderBank = data.bankDetailList[2]
       this.genralDetails = data.generalDetails
       this.getdataForm(this.firstHolderBank);
-    }else{
+    } else {
       if (this.clientData && !this.firstHolderBank) {
         this.getBankList(this.clientData)
       }
@@ -104,7 +104,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.temp.push(this.holdingList.firstHolder)
       this.temp.push(this.holdingList.secondHolder)
       this.temp.push(this.holdingList.thirdHolder)
-    }else{
+    } else {
       this.temp.push(this.holdingList.holderList[0])
       this.temp.push(this.holdingList.holderList[1])
       this.temp.push(this.holdingList.holderList[2])
@@ -160,7 +160,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
         console.log('postal 121221', data);
-       this.bankData(data)
+        this.bankData(data)
       },
         err => {
           console.log(err, 'error internet');
@@ -216,20 +216,20 @@ export class BankDetailsIINComponent implements OnInit {
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       // accountType: [!data ? '1' : (data.accountType == 'SB')?'1':'2', [Validators.required]],
-      accountType: [!data ? '1' : (data.accountType == '1' || data.accountType == 'SB') ? '1': '2', [Validators.required]],
+      accountType: [!data ? '1' : (data.accountType == '1' || data.accountType == 'SB') ? '1' : '2', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
-      paymentMode: [!data ? '' : data.paymentMode, [Validators.required]],
+      paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
-      branchProof: [!data.address ? '' : data.address.branchProof, [Validators.required]],
-      bankMandate: [!data.address ? '1' :( data.address.bankMandate) ?  data.address.bankMandate + '' : '1', [Validators.required]],
-      mandateDate: [!data.address ? '' : data.address.mandateDate, [Validators.required]],
-      mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
+      branchProof: [(!data.address) ? '' : (data.address.branchProof) ? data.address.branchProof : '', [Validators.required]],
+      // bankMandate: [!data.address ? '1' :( data.address.bankMandate) ?  data.address.bankMandate + '' : '1', [Validators.required]],
+      // mandateDate: [!data.address ? '' : data.address.mandateDate, [Validators.required]],
+      // mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
     });
     // if (data.bankMandate == undefined && data.accountType == undefined) {
 
@@ -317,11 +317,11 @@ export class BankDetailsIINComponent implements OnInit {
   reset() {
     this.bankDetails.reset();
   }
-  selectPaymentMode(value){
+  selectPaymentMode(value) {
     console.log(value)
   }
-   
-  setValueFun(value){
+
+  setValueFun(value) {
     this.bankDetails.controls.ifscCode.setValue(value.ifscCode);
     this.bankDetails.controls.bankName.setValue(value.bankName);
     this.bankDetails.controls.micrNo.setValue(value.micrNo);
@@ -333,14 +333,14 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetails.controls.address1.setValue(value.address.address1);
     this.bankDetails.controls.address2.setValue(value.address.address2);
     this.bankDetails.controls.pinCode.setValue(value.address.pinCode);
-     this.bankDetails.controls.city.setValue(value.address.city);
-     this.bankDetails.controls.state.setValue(value.address.state);
-     this.bankDetails.controls.country.setValue(value.address.country);
-     this.bankDetails.controls.branchProof.setValue(value.address.branchProof);
-     this.bankDetails.controls.bankMandate.setValue(value.address.bankMandate);
-     this.bankDetails.controls.mandateDate.setValue(value.address.mandateDate);
-     this.bankDetails.controls.mandateAmount.setValue(value.address.mandateAmount);
-     
+    this.bankDetails.controls.city.setValue(value.address.city);
+    this.bankDetails.controls.state.setValue(value.address.state);
+    this.bankDetails.controls.country.setValue(value.address.country);
+    this.bankDetails.controls.branchProof.setValue(value.address.branchProof);
+    //  this.bankDetails.controls.bankMandate.setValue(value.address.bankMandate);
+    //  this.bankDetails.controls.mandateDate.setValue(value.address.mandateDate);
+    //  this.bankDetails.controls.mandateAmount.setValue(value.address.mandateAmount);
+
   }
   SendToForm(value, flag) {
     this.formId = value
@@ -390,10 +390,10 @@ export class BankDetailsIINComponent implements OnInit {
         if (!element.address) {
           this.getObj = this.setObj(element, value)
           this.bank.push(this.getObj)
-        }else{
-          element.accountType = (element.accountType == '1')?'SB': (element.accountType == '2')? 'CA':'SB';
+        } else {
+          element.accountType = (element.accountType == '1') ? 'SB' : (element.accountType == '2') ? 'CA' : 'SB';
           element.paymentMode = this.bankDetails.controls.paymentMode.value,
-          this.bank.push(element)
+            this.bank.push(element)
         }
       });
       var temp1 = this.holdingList.generalDetails;
@@ -404,7 +404,7 @@ export class BankDetailsIINComponent implements OnInit {
         familyMemberId: this.genralDetails.familyMemberId,
         clientId: this.genralDetails.clientId,
         advisorId: this.genralDetails.advisorId,
-        paymentMode:this.bankDetails.controls.paymentMode.value,
+        paymentMode: this.bankDetails.controls.paymentMode.value,
         holderList: this.temp,
         bankDetailList: this.bank,
         nomineeList: this.inputData.nomineeList,
@@ -420,13 +420,13 @@ export class BankDetailsIINComponent implements OnInit {
     value = {
       ifscCode: holder.ifscCode,
       accountNumber: holder.accountNumber,
-      accountType: (holder.accountType == '1')?'SB': (holder.accountType == '2')? 'CA':'SB',
+      accountType: (holder.accountType == '1') ? 'SB' : (holder.accountType == '2') ? 'CA' : 'SB',
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
-      paymentMode : this.bankDetails.controls.paymentMode.value,
+      paymentMode: this.bankDetails.controls.paymentMode.value,
       defaultFlag: 1
     }
     value.address = {
@@ -437,9 +437,9 @@ export class BankDetailsIINComponent implements OnInit {
       city: holder.city,
       country: holder.country,
       branchProof: holder.branchProof,
-      bankMandate: holder.bankMandate,
-      mandateDate: holder.mandateDate,
-      mandateAmount: holder.mandateAmount,
+      // bankMandate: holder.bankMandate,
+      // mandateDate: holder.mandateDate,
+      // mandateAmount: holder.mandateAmount,
     }
     return value;
   }
@@ -472,7 +472,7 @@ export class BankDetailsIINComponent implements OnInit {
 
       case "third":
         this.getObj = this.setObj(this.bankDetails.value, value)
-        this.thirdHolderBank =  this.getObj;
+        this.thirdHolderBank = this.getObj;
         this.holder.type = value;
         break;
 

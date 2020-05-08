@@ -3,13 +3,14 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-bank-accounts',
   templateUrl: './bank-accounts.component.html',
@@ -59,8 +60,10 @@ export class BankAccountsComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   editData: any;
   maxDate:Date = new Date();
+  bankList:any = [];
+
   callMethod: { methodName: string; ParamValue: any; };
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -81,6 +84,8 @@ export class BankAccountsComponent implements OnInit {
     }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.bankList = this.enumService.getBank();
+
   }
 
    // ===================owner-nominee directive=====================//
@@ -268,7 +273,7 @@ export class BankAccountsComponent implements OnInit {
       interestRate: [(data.interestRate == undefined) ? '' : data.interestRate],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + ""],
       bankName: [(data.bankName == undefined) ? '' : data.bankName, [Validators.required]],
-      bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo, [Validators.required]],
+      bankAcNo: [(data.userBankMappingId == undefined) ? '' : data.userBankMappingId, [Validators.required]],
       description: [(data.description == undefined) ? '' : data.description,],
       // id: [(data.id == undefined) ? '' : data.id,],
       familyMemberId: [[(data.familyMemberId == undefined) ? '' : data.familyMemberId],],
@@ -349,6 +354,7 @@ export class BankAccountsComponent implements OnInit {
         interestRate: this.bankAccounts.controls.interestRate.value,
         accountBalance: this.bankAccounts.controls.accountBalance.value,
         accountNo: this.bankAccounts.controls.bankAcNo.value,
+        userBankMappingId: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
         nominees: this.nominees,
         nomineeList: this.bankAccounts.value.getNomineeName,
@@ -419,4 +425,19 @@ export class BankAccountsComponent implements OnInit {
     this.eventService.openSnackBar('Updated successfully!', 'OK');
 
   }
+   //link bank
+   openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

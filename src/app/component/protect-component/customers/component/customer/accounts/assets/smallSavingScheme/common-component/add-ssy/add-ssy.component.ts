@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -9,7 +9,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-ssy',
   templateUrl: './add-ssy.component.html',
@@ -54,6 +55,8 @@ export class AddSsyComponent implements OnInit {
   commencementDate: any;
   flag: any;
   callMethod:any;
+  bankList:any = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   transactionViewData =
     {
@@ -67,7 +70,7 @@ export class AddSsyComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   DOB: any;
 
-  constructor(private dateFormatPipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe) { }
+  constructor(private dateFormatPipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe,public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -87,11 +90,17 @@ export class AddSsyComponent implements OnInit {
   }
   setCommencementDate(date) {
     this.commencementDate = date
-   console.log(this.age(this.selectOwner[0].dateOfBirth), "owner age");
-    if(this.age(this.selectOwner[0].dateOfBirth) > 21){
+   console.log(this.age(this.selectOwner[0].dateOfBirth), "owner age", new Date(this.selectOwner[0].dateOfBirth));
+   if(new Date(this.selectOwner[0].dateOfBirth).getTime() > new Date(this.ssySchemeForm.get('commDate').value).getTime())
+   {
+    this.ssySchemeForm.get('commDate').setErrors({ before: true });
+   }
+    else if(this.age(this.selectOwner[0].dateOfBirth) > 21){
       this.ssySchemeForm.get('commDate').setErrors({ incorrect: true });
     }
     else{
+      this.ssySchemeForm.get('commDate').setErrors({ before: false });
+      this.ssySchemeForm.get('commDate').updateValueAndValidity();
       this.ssySchemeForm.get('commDate').setErrors({ incorrect: false });
       this.ssySchemeForm.get('commDate').updateValueAndValidity();
     }
@@ -279,7 +288,7 @@ addNewNominee(data) {
       futureAppx: [data.futureApproxContribution, [Validators.required]],
       frquency: [data.frequency ? data.frequency: '', [Validators.required]],
       description: [data.description],
-      linkedAcc: [data.linkedBankAccount],
+      linkedAcc: [data.userBankMappingId],
       bankName: [data.bankName],
       nominees: this.nominees,
       agentName: [data.agentName],
@@ -329,6 +338,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
+    this.bankList = this.enumService.getBank();
+
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -424,6 +435,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
           "description": this.ssySchemeForm.get('description').value,
           "bankName": this.ssySchemeForm.get('bankName').value,
           "linkedBankAccount": this.ssySchemeForm.get('linkedAcc').value,
+          "userBankMappingId": this.ssySchemeForm.get('linkedAcc').value,
           "agentName": this.ssySchemeForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
           "nominees": this.nominees,
@@ -531,4 +543,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
       return false;
     }
   }
+
+   //link bank
+   openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

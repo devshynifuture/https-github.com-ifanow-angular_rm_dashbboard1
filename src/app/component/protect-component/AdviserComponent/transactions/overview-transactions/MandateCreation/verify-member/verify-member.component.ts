@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService} from 'src/app/services/util.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatTableDataSource} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { apiConfig } from 'src/app/config/main-config';
@@ -51,19 +51,19 @@ export class VerifyMemberComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              private onlineTransact: OnlineTransactionService, public eventService: EventService) {
-                this.advisorId = AuthService.getAdvisorId()
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
     this.getdataForm('');
     this.showUploadSection = false
-    this.clientCodeDataShow =false
+    this.clientCodeDataShow = false
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   close() {
@@ -94,7 +94,7 @@ export class VerifyMemberComponent implements OnInit {
       }
     );
   }
-  getBankDetailsNSERes(data){
+  getBankDetailsNSERes(data) {
     this.isLoadingBank = false
     console.log(data)
     this.bankDetails = data
@@ -105,11 +105,11 @@ export class VerifyMemberComponent implements OnInit {
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
       bank: [(!data) ? '' : data.bank, [Validators.required]],
-      taxStatus: [data ? '' : data.ownerName, [Validators.required]],
+      // taxStatus: [data ? '' : data.ownerName, [Validators.required]],
       fromDate: [data ? '' : data.fromDate, [Validators.required]],
       toDate: [data ? '' : data.toDate, [Validators.required]],
-      mandateAmount: [data ? '' : data.mandateAmount, [Validators.required]],
-      selectDateOption: [data ? '' : data.mandateAmount, [Validators.required]],
+      mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(1)]],
+      selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
     });
   }
 
@@ -121,6 +121,7 @@ export class VerifyMemberComponent implements OnInit {
   lisNominee(value) {
     // this.showSpinnerOwner = false
     if (value == null) {
+      this.errorMsg = undefined;
       // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
@@ -130,7 +131,11 @@ export class VerifyMemberComponent implements OnInit {
 
   ownerList(value) {
     if (value == '') {
+      this.nomineesListFM = undefined;
       this.showSpinnerOwner = false;
+      this.errorMsg = undefined;
+      this.generalDetails.controls.holdingNature.reset();
+      this.generalDetails.controls.bank.reset();
     } else {
       this.showSpinnerOwner = true;
     }
@@ -156,7 +161,7 @@ export class VerifyMemberComponent implements OnInit {
   }
 
   ownerDetail() {
-      this.isLoadingUcc = true
+    this.isLoadingUcc = true
     const obj = {
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
@@ -165,12 +170,12 @@ export class VerifyMemberComponent implements OnInit {
     };
     this.onlineTransact.getClientCodes(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.isLoadingUcc = false
           console.log(data);
           this.clientCodeData = data;
-          console.log('clientCodeData',this.clientCodeData)
-        }else{
+          console.log('clientCodeData', this.clientCodeData)
+        } else {
           this.isLoadingUcc = false
           this.clientCodeDataShow = true
         }
@@ -202,9 +207,9 @@ export class VerifyMemberComponent implements OnInit {
 
   selectIINUCC(clientCode) {
     this.detailsIIN = clientCode;
-    console.log('fg',this.detailsIIN)
+    console.log('fg', this.detailsIIN)
     this.getBankDetails()
-  //  this.getBankMandate();
+    //  this.getBankMandate();
   }
 
   getBankMandate() {
@@ -234,33 +239,37 @@ export class VerifyMemberComponent implements OnInit {
   selectMandate(mandate) {
     this.selectedMandate = mandate;
   }
-  selectBank(bank){
+  selectBank(bank) {
     this.dataSource = []
     this.selectedBank = bank
-    this.selectedMandate =bank
+    this.selectedMandate = bank
     this.dataSource.push(bank);
     this.showMandateTable = true;
     console.log(this.selectedBank)
   }
 
   createMandates() {
-    if(!this.selectedMandate){
+    if (!this.selectedMandate) {
       this.selectedMandate = {}
+    }
+    if (this.generalDetails.invalid) {
+      this.generalDetails.markAllAsTouched();
+      return;
     }
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.Todate = new Date(this.generalDetails.controls.toDate.value);
-    Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
-    Object.assign(this.selectedMandate, {clientCode: this.detailsIIN.clientCode});
-    Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
-    Object.assign(this.selectedMandate, {toDate: (this.Todate).getTime()});
-    Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
-    Object.assign(this.selectedMandate, {tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId});
-    Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
+    Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
+    Object.assign(this.selectedMandate, { clientCode: this.detailsIIN.clientCode });
+    Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
+    Object.assign(this.selectedMandate, { toDate: (this.Todate).getTime() });
+    Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
+    Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
+    Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
     console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
         this.eventService.showErrorMessage(error.message);
-        console.log('err',error)
+        console.log('err', error)
         this.errorMsg = error
       }
     );
@@ -268,16 +277,16 @@ export class VerifyMemberComponent implements OnInit {
 
   addMandateRes(data) {
     console.log('res mandate', data);
-    
-   if(data){
-    this.madateResponse = data
-    this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-   // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
 
-   this.showUploadSection = true
-   }
+    if (data) {
+      this.madateResponse = data
+      this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+      // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+
+      this.showUploadSection = true
+    }
   }
-  getFileDetails(e,flag) {
+  getFileDetails(e, flag) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
@@ -285,7 +294,7 @@ export class VerifyMemberComponent implements OnInit {
     const requestMap = {
       tpUserRequestId: 1,
       documentType: flag,
-      tpMandateDetailId : this.madateResponse.id,
+      tpMandateDetailId: this.madateResponse.id,
       //clientCode: this.detailsIIN.clientCode
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,

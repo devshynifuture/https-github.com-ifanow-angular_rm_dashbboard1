@@ -1,5 +1,5 @@
 <div class="pt-150  mandates">
-    <div class="row">
+    <div [ngClass]="{'pe-none': isLoading}" class="row">
         <div class="col-md-4 pr-0">
             <h3 class="m-0 pt-8">Mandates</h3>
         </div>
@@ -10,26 +10,29 @@
                 </mat-form-field>
             </div>
         </div> -->
-        <div *ngIf="dataSource.filteredData.length > 0&&!isLoading" class="col-md-8 pt-4 text-right pl-0">
+        <div *ngIf="credentialData" class="col-md-8 pt-4 text-right pl-0">
 
             <mat-form-field class="searchInputWidth" appearance="standard" floatLabel="never">
-                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="type to filter data">
+                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
+                    placeholder="type to filter data">
             </mat-form-field>
 
 
             <!--            <img src="/assets/images/svg/download-black.svg" class="b-a p-5">-->
-            <img (click)="getNSEAchmandate()" class="b-a p-8 mr-8" src="/assets/images/svg/reload.svg">
+            <img (click)="refresh(true)" class="b-a p-8 mr-8" src="/assets/images/svg/reload.svg">
             <!-- <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
          class="material-icons">filter_list</i>FILTERS
        </button>-->
-            <button (click)="openMandateClient(null)" class="btn-primary addon v-middle" mat-stroked-button>
+            <button *ngIf="dataSource.filteredData.length > 0 && !isLoading" (click)="openMandateClient(null)"
+                class="btn-primary addon v-middle" mat-stroked-button>
                 ADD NEW
             </button>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" class="mt-8" id="table-low" mat-table matSort>
+            <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+                appSkeletonLoading class="skeletonAnimation" class="mt-8" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="position">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
                     <td (click)="openMandateDetails(element)" *matCellDef="let element" class="br" mat-cell>
@@ -77,7 +80,8 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="amount"> Amount</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar"> <span appFormatNumber>{{(isLoading) ? '' : (element.amount) ? element.amount : '-'}}
+                        <div class="bar"> <span
+                                appFormatNumber>{{(isLoading) ? '' : (element.amount) ? element.amount : '-'}}
                             </span></div>
                     </td>
                 </ng-container>
@@ -92,10 +96,14 @@
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="achMandateStatus"> Status</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
-                            <span *ngIf="element.statusString=='PENDING'" class="text-primary t-10 f-500 c-p">{{element.statusString}}</span>
-                            <span *ngIf="element.statusString=='REJECTED'" class="text-danger t-10 f-500 c-p">{{element.statusString}}</span>
-                            <span *ngIf="element.statusString=='APPROVED'" class="text-success t-10 f-500 c-p">{{element.statusString}}</span>
-                            <span *ngIf="element.statusString=='ACCEPTED'" class="text-warning t-10 f-500 c-p">{{element.statusString}}</span>
+                            <span *ngIf="element.statusString=='PENDING'"
+                                class="text-primary t-10 f-500 c-p">{{element.statusString}}</span>
+                            <span *ngIf="element.statusString=='REJECTED'"
+                                class="text-danger t-10 f-500 c-p">{{element.statusString}}</span>
+                            <span *ngIf="element.statusString=='APPROVED'"
+                                class="text-success t-10 f-500 c-p">{{element.statusString}}</span>
+                            <span *ngIf="element.statusString=='ACCEPTED'"
+                                class="text-warning t-10 f-500 c-p">{{element.statusString}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -111,9 +119,16 @@
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
-            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
+                class="d-flex flex-column align-items-center pt-44">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="pt-12">No data found</h4>
+                <h4 class="pt-12">{{noData}}</h4>
+                <button *ngIf="noData=='No mandates found'" mat-stroked-button class="btn-primary addon v-middle  "
+                    (click)="openTransaction()">
+                    ADD NEW</button>
+                <button *ngIf="noData=='No credentials found'" mat-stroked-button class="btn-primary addon v-middle"
+                    [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']">
+                    ADD NEW</button>
             </div>
         </div>
     </div>

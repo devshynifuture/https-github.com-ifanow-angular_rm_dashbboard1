@@ -216,21 +216,24 @@
 
             </div>
         </div>
-        <div class="row pt-40">
+        
+        <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-12">Linked bank account</h5>
+                <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" type="text" matInput #linkBankAc appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16" class="form-control br-0"
-                            formControlName="linkBankAc">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>
-                    </mat-form-field>
-                </div>
-
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="linkBankAc" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankName}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div  class="col-md-1 p-0 pt-8 d-flex">
+                <!-- prod build -->
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
         <div class="row pt-40">
