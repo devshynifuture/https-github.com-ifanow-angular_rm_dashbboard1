@@ -274,4 +274,78 @@ export class ProcessTransactionService {
     return value.toLowerCase().replace(/\s/g, '');
   }
 
+  public filterMandateData(data, amount, toDate) {
+    let selectedMandate;
+    return data.filter(element => {
+      if (element.statusString == 'ACCEPTED') {
+        if (amount && amount > 0 && amount > element.amount) {
+          return false;
+        }
+        if (toDate && toDate > 0 && toDate > element.toDate) {
+          return false;
+        }
+        if (selectedMandate) {
+          if (selectedMandate.amount < element.amount) {
+            selectedMandate = element;
+          } else if (selectedMandate.amount == element.amount) {
+            if (selectedMandate.toDate < element.toDate) {
+              selectedMandate = element;
+            }
+          }
+        } else {
+          selectedMandate = element;
+        }
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  public getMaxAmountMandate(data) {
+    let selectedMandate;
+    data.filter(element => {
+      if (element.statusString == 'ACCEPTED') {
+        if (selectedMandate) {
+          if (selectedMandate.amount < element.amount) {
+            selectedMandate = element;
+          } else if (selectedMandate.amount == element.amount) {
+            if (selectedMandate.toDate < element.toDate) {
+              selectedMandate = element;
+            }
+          }
+        } else {
+          selectedMandate = element;
+        }
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return selectedMandate;
+  }
+
+  public getMaxEndDateMandate(data) {
+    let selectedMandate;
+    data.filter(element => {
+      if (element.statusString == 'ACCEPTED') {
+        if (selectedMandate) {
+          if (selectedMandate.toDate < element.toDate) {
+            selectedMandate = element;
+          } else if (selectedMandate.toDate == element.toDate) {
+            if (selectedMandate.amount < element.amount) {
+              selectedMandate = element;
+            }
+          }
+        } else {
+          selectedMandate = element;
+        }
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return selectedMandate;
+
+  }
 }

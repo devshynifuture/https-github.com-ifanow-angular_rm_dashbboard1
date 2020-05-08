@@ -154,7 +154,7 @@ export class SipTransactionComponent implements OnInit {
 
   getSchemeList(data) {
 
-    if (data.target.value == '') {
+    if (data == '') {
       this.scheme = undefined;
       // this.schemeList = undefined;
       this.sipTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
@@ -170,7 +170,7 @@ export class SipTransactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
     const obj = {
-      searchQuery: data.target.value,
+      searchQuery: data,
       bseOrderType: 'SIP',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -181,7 +181,7 @@ export class SipTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
-    if (data.target.value.length > 2) {
+    if (data.length > 2) {
       this.showSpinner = true;
       if (this.selectScheme == 2) {
         // this.getNewSchemesRes([]);
@@ -207,7 +207,11 @@ export class SipTransactionComponent implements OnInit {
     this.showSpinner = false;
     console.log('new schemes', responseData);
     this.schemeList = responseData;
-    this.sipTransaction.controls.schemeSip.setValue(inputData);
+    if (this.sipTransaction.controls.schemeSip.value && this.sipTransaction.controls.schemeSip.value.length > 0) {
+      this.sipTransaction.controls.schemeSip.setValue(this.sipTransaction.controls.schemeSip.value);
+    } else {
+      this.sipTransaction.controls.schemeSip.setValue('');
+    }
   }
 
   getExistingScheme() {
@@ -331,7 +335,25 @@ export class SipTransactionComponent implements OnInit {
     if (data.length > 1) {
       Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
-    this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED');
+    let selectedMandate;
+    this.achMandateNSE = data.filter(element => {
+      if (element.statusString == 'ACCEPTED') {
+        if (selectedMandate) {
+          if (selectedMandate.amount < element.amount) {
+            selectedMandate = element;
+          } else if (selectedMandate.amount == element.amount) {
+            if (selectedMandate.toDate < element.toDate) {
+              selectedMandate = element;
+            }
+          }
+        } else {
+          selectedMandate = element;
+        }
+        return true;
+      } else {
+        return false;
+      }
+    });
     console.log('this.achMandateNSE', this.achMandateNSE);
     this.achMandateNSE = this.achMandateNSE[0];
     Object.assign(this.transactionSummary, {umrnNo: this.achMandateNSE.umrnNo});
@@ -524,11 +546,8 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sip() {
-    if (this.reInvestmentOpt.length > 1) {
-      if (this.sipTransaction.get('reinvest').invalid) {
-        this.sipTransaction.get('reinvest').markAsTouched();
-        return;
-      }
+    if (this.reInvestmentOpt.length > 1 && this.sipTransaction.get('reinvest').invalid) {
+      this.sipTransaction.get('reinvest').markAsTouched();
     } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
       this.sipTransaction.get('investmentAccountSelection').markAsTouched();
       return;
