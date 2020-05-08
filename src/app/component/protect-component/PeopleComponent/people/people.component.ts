@@ -13,7 +13,7 @@ export class PeopleComponent implements OnInit {
   ngOnInit() {
     this.enumDataService.getRoles();
     this.enumDataService.getProofType();
-    this.enumDataService.getBank();
+    this.enumDataService.getAccountList();
     this.enumDataService.getClientRole();
   }
 
