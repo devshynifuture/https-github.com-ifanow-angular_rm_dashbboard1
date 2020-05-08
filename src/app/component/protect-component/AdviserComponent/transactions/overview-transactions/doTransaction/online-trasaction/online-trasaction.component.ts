@@ -9,7 +9,8 @@ import { ProcessTransactionService } from '../process-transaction.service';
 import { Router } from '@angular/router';
 import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -72,8 +73,18 @@ export class OnlineTrasactionComponent implements OnInit {
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(state => state ? this.enumDataService.getSearchData(state) : this.enumDataService.getEmptySearchStateData())
-      );
+        map(state => {
+          if (state) {
+            let list = this.enumDataService.getSearchData(state);
+            if (list.length == 0) {
+              this.stateCtrl.setErrors({ invalid: true })
+            }
+            return this.enumDataService.getSearchData(state)
+          } else {
+            return this.enumDataService.getEmptySearchStateData();
+          }
+        }),
+      )
   }
   stateCtrl = new FormControl();
   familyMemberList;
@@ -97,7 +108,9 @@ export class OnlineTrasactionComponent implements OnInit {
     this.getdataForm(this.inputData);
     // this.getDefaultDetails(null)
   }
-
+  checkOwnerList(event) {
+    console.log(this.filteredStates)
+  }
   getDefaultDetails(platform) {
     console.log('onlineTransactionComponent platform: ', platform);
 
@@ -205,7 +218,7 @@ export class OnlineTrasactionComponent implements OnInit {
   lisNominee(value) {
     this.showSpinnerOwner = false;
     if (value == null) {
-      this.transactionAddForm.get('ownerName').setErrors({ setValue: 'family member does not exist' });
+      this.stateCtrl.setErrors({ setValue: 'family member does not exist' });
       this.transactionAddForm.get('ownerName').markAsTouched();
     }
     console.log(value);

@@ -101,7 +101,9 @@ export class EnumDataService {
 
   setSearchData(data) {
     console.log(data);
-    this.searchData = data;
+    if (data) {
+      this.searchData = data;
+    }
   }
 
   getSearchData(value) {
@@ -114,7 +116,7 @@ export class EnumDataService {
   }
 
   public getBank() {
-    if (this.bankList.length <= 0) {
+    if (this.bankList && this.bankList.length <= 0) {
       this.getAccountList()
     }
     else {

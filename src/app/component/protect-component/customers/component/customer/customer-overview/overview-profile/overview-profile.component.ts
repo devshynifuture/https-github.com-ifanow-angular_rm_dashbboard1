@@ -187,7 +187,12 @@ export class OverviewProfileComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteFamilyMember(data.id).subscribe(
+        let obj =
+        {
+          "familyMemberId": data.familyMemberId,
+          "userId": data.familyMemberId
+        }
+        this.cusService.deleteFamilyMember(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();

@@ -20,8 +20,9 @@
                 <h5 class="m-0 text-black pb-12">Select an investor from the search box below</h5>
                 <mat-form-field appearance="standard" floatLabel="never">
                     <!--                  debounceChangedValue-->
-                    <input #searchClient [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8"
-                        [formControl]="stateCtrl" matInput placeholder="Start typing to see investor names">
+                    <input #searchClient (input)="checkOwnerList($event)" [matAutocomplete]="auto1" aria-label="client"
+                        class="form-control pl-8" [formControl]="stateCtrl" matInput
+                        placeholder="Start typing to see investor names">
                     <mat-autocomplete #auto1="matAutocomplete">
                         <mat-option (click)="ownerDetails(f)" *ngFor="let f of filteredStates | async" [value]="f.name">
                             <!-- <span>{{f.name}}</span> -->
@@ -38,10 +39,10 @@
                             </div>
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error *ngIf="transactionAddForm.get('ownerName').errors?.required" class="f-12 pt-4">
+                    <!-- <mat-error *ngIf="transactionAddForm.get('ownerName').errors?.required" class="f-12 pt-4">
                         This field is required
-                    </mat-error>
-                    <mat-error *ngIf="transactionAddForm.get('ownerName').errors?.setValue" class="f-12">
+                    </mat-error> -->
+                    <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
                         This family member does not exist
                     </mat-error>
                 </mat-form-field>
