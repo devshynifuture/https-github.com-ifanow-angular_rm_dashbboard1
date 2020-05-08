@@ -144,7 +144,7 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeListTranfer(value) {
-    this.getNewSchemesRes([]);
+    // this.getNewSchemesRes([]);
     if (this.stpTransaction.get('transferIn').invalid) {
       this.showSpinnerTrans = false;
       Object.assign(this.transactionSummary, {schemeNameTranfer: ''});
@@ -152,7 +152,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.selectScheme == 2 && value.length > 2) {
       this.showSpinnerTrans = true;
       const obj = {
-        amc: this.scheme.amcId,
+        amcId: this.scheme.amcId,
         searchQuery: value,
         bseOrderType: 'STP',
         showOnlyNonZero: true,
@@ -226,7 +226,11 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.existingSchemeList = data;
     console.log('data schemelist res', data);
-    this.stpTransaction.controls.schemeStp.setValue(this.stpTransaction.controls.schemeStp.value);
+    if (this.stpTransaction.controls.schemeStp.value && this.stpTransaction.controls.schemeStp.value.length > 1) {
+      this.stpTransaction.controls.schemeStp.setValue(this.stpTransaction.controls.schemeStp.value);
+    } else {
+      this.stpTransaction.controls.schemeStp.setValue('');
+    }
 
   }
 
@@ -565,7 +569,7 @@ export class StpTransactionComponent implements OnInit {
       this.multiTransact = true;
       if (this.scheme != undefined && this.schemeDetails != undefined && this.stpTransaction != undefined) {
         let obj = {
-          amc: this.scheme.amcId,
+          amcId: this.scheme.amcId,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
           productCode: this.schemeDetails.schemeCode,
           dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,

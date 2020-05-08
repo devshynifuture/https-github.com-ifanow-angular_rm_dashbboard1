@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatDialog} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from '../../../../../customer.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from '../../../../../customer.service';
 
 @Component({
   selector: 'app-mfscheme-level-transactions',
@@ -25,17 +25,41 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
   ownerInfo: any;
   portfolioData: any;
   scriptForm: any;
+  transactionTypeList = []
   portfolioFieldData: { familyMemberId: any; };
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject,
+    private cusService: CustomerService,
+  ) { }
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     this.getFormData(data);
   }
   ngOnInit() {
+    this.getTransactionTypeData();
   }
+
+  getTransactionTypeData() {
+    this.cusService.getTransactionTypeData({})
+      .subscribe(res => {
+        if (res) {
+          this.transactionTypeList = res;
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS")
+      })
+  }
+
+  setTransactionType(id, formGroup) {
+    formGroup.patchValue(id);
+  }
+
   getFormData(data) {
     if (data == undefined) {
       data = {};

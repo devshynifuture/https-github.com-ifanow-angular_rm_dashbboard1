@@ -162,7 +162,11 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.showSpinnerEx = false;
     this.existingSchemeList = data;
-    this.switchTransaction.controls.schemeSwitch.setValue(this.switchTransaction.controls.schemeSwitch.value);
+    if (this.switchTransaction.controls.schemeSwitch.value && this.switchTransaction.controls.schemeSwitch.value.length > 1) {
+      this.switchTransaction.controls.schemeSwitch.setValue(this.switchTransaction.controls.schemeSwitch.value);
+    } else {
+      this.switchTransaction.controls.schemeSwitch.setValue('');
+    }
   }
 
   onFolioChange(folio) {
@@ -493,7 +497,7 @@ export class SwitchTransactionComponent implements OnInit {
       if (this.scheme && this.schemeDetails != undefined && this.switchTransaction != undefined) {
         const obj = {
           id: this.id,
-          amc: this.scheme.amcId,
+          amcId: this.scheme.amcId,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           productDbId: this.schemeDetails.id,
           amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',

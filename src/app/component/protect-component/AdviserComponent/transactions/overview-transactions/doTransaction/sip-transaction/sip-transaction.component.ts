@@ -682,9 +682,9 @@ export class SipTransactionComponent implements OnInit {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
               element.id = this.editedId;
-              element.date = this.sipTransaction.controls.date.value,
-                element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId,
-                element.amc = (this.scheme) ? this.scheme.amcId : null;
+              element.date = this.sipTransaction.controls.date.value;
+              element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId;
+              element.amcId = (this.scheme) ? this.scheme.amcId : null;
               element.folioNo = this.sipTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.sipTransaction.get('employeeContry').value;
               element.schemeName = this.sipTransaction.get('schemeSip').value;

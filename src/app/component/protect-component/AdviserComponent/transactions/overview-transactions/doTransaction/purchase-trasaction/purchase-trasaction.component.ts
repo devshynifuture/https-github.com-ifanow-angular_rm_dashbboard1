@@ -482,7 +482,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     );
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
-      this.scheme.amcId = data.amc;
+      this.scheme.amcId = data.amcId;
       this.getFolioList();
     }
   }
@@ -588,7 +588,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       if (this.scheme != undefined && this.schemeDetails != undefined) {
         const obj = {
           id: this.id,
-          amc: (this.scheme) ? this.scheme.amcId : null,
+          amcId: (this.scheme) ? this.scheme.amcId : null,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
           productCode: (this.schemeDetails) ? this.schemeDetails.schemeCode : null,
           dividendReinvestmentFlag: (this.schemeDetails) ? this.schemeDetails.dividendReinvestmentFlag : null,
@@ -604,7 +604,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
               element.id = this.editedId;
-              element.amc = (this.scheme) ? this.scheme.amcId : null;
+              element.amcId = (this.scheme) ? this.scheme.amcId : null;
               element.folioNo = this.purchaseTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.purchaseTransaction.get('employeeContry').value;
               element.schemeName = this.purchaseTransaction.get('schemePurchase').value;
