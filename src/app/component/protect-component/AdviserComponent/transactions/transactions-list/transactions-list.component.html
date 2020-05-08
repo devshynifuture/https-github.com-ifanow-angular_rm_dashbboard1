@@ -3,9 +3,6 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-    <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
-        <div class="row">
-
     <div class="col-md-9" *ngIf="credentialData ">
         <div [ngClass]="{'pe-none': isLoading}" class="row">
             <div class="col-md-4 pl-0" [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}">
