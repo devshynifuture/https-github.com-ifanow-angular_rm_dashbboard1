@@ -302,7 +302,9 @@ export class OrgProfileComponent implements OnInit {
   }
 
   showCroppedImage(imageAsBase64) {
-    this.finalImage = imageAsBase64;
+    setTimeout(() => {
+      this.finalImage = imageAsBase64;
+    });
   }
 
   // save the changes of current page only
