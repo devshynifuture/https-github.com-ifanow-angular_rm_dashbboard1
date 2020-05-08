@@ -173,7 +173,7 @@ export class PurchaseTrasactionComponent implements OnInit {
             this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.showErrorMessage(error);
+            // this.eventService.openSnackBar(error, 'dismiss');
           }
         );
       }
@@ -185,7 +185,7 @@ export class PurchaseTrasactionComponent implements OnInit {
             this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.showErrorMessage(error);
+            // this.eventService.openSnackBar(error, 'dismiss');
           }
         );*/
     }
@@ -406,7 +406,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
         this.purchaseTransaction.get('schemePurchase').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-        // this.eventService.showErrorMessage(error);
+        // this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }

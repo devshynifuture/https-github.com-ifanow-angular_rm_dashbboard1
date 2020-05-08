@@ -149,7 +149,7 @@ export class SwpTransactionComponent implements OnInit {
         this.swpTransaction.get('schemeSwp').setErrors({setValue: error.message});
         this.swpTransaction.get('schemeSwp').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
-        // this.eventService.showErrorMessage(error);
+        // this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -205,7 +205,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -224,7 +224,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -264,7 +264,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -307,7 +307,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
