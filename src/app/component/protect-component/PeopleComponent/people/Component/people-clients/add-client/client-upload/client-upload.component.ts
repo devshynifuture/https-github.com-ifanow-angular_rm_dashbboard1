@@ -6,6 +6,8 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { HttpHeaders } from '@angular/common/http';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { FileUploadServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/file-upload-service.service';
 
 @Component({
   selector: 'app-client-upload',
@@ -74,9 +76,12 @@ export class ClientUploadComponent implements OnInit {
   showErr2 = false;
   userData: any;
   bankList: any;
+  fileUploadData: any;
+  file: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
-    private custumService: CustomerService, private enumService: EnumServiceService) {
+    private custumService: CustomerService, private enumService: EnumServiceService,
+    private fileUpload : FileUploadServiceService,) {
   }
 
   @Input() fieldFlag;
@@ -226,27 +231,31 @@ export class ClientUploadComponent implements OnInit {
       this.filenm = fileName;
     });
     console.log(this.myFiles);
-    this.uploadFile(type);
+    this.uploadFile(type,e);
   }
 
-  uploadFile(imgType) {
+  uploadFile(imgType,e) {
     this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
     this.countFile++;
     let fileName;
     switch (imgType) {
       case 'company-pan':
         fileName = this.fileComPanImg.store;
+        this.fetchData('PAN',e)
         break;
       case 'personal-pan':
         fileName = this.filePerPanImg.store;
+        this.fetchData('PAN',fileName)
         this.addDocObj.proofType = 1;
         break;
       case 'proof-type1':
         fileName = this.fileProof1Img.store;
+        this.fetchData('Bank Account',e)
         this.addDocObj.documentType = 1;
         break;
       case 'proof-type2':
         fileName = this.fileProof2Img.store;
+        this.fetchData('Identity & address proofs',e)
         this.addDocObj.documentType = 2;
         break;
     }
@@ -258,7 +267,19 @@ export class ClientUploadComponent implements OnInit {
       data => this.uploadFileRes(data.preSignedUrl, data.fileName, imgType)
     );
   }
-
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.userData.clientId,
+      asset: value,
+      clientName : this.userData.name
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   removeImg(imgType) {
     switch (imgType) {
       case 'company-pan':

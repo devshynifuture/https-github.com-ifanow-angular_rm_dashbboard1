@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ImageTransform, ImageCroppedEvent } from 'ngx-image-cropper';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { ImageTransform, ImageCroppedEvent, Dimensions } from 'ngx-image-cropper';
 
 @Component({
     selector: 'app-image-cropper',
@@ -18,7 +18,9 @@ export class ImageCropperComponent {
         outputCroppedWidth: 64,
         outputCroppedHeight: 64
     };
+
     @Output() croppedImage: EventEmitter<any> = new EventEmitter();
+    @Output() cropperReadyEvent: EventEmitter<boolean> = new EventEmitter();
 
     containWithinAspectRatio = false
 
@@ -31,4 +33,23 @@ export class ImageCropperComponent {
         this.croppedImage.emit(event.base64)
     }
 
+    zoomOut() {
+        this.scale -= .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+
+    zoomIn() {
+        this.scale += .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+
+    cropperReady(sourceImageDimensions: Dimensions) {
+        this.cropperReadyEvent.emit(true);
+    }
 }

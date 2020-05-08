@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {PhotoCloudinaryUploadService} from 'src/app/services/photo-cloudinary-upload.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AddPersonalProfileComponent implements OnInit {
   imgURL = '';
-  finalImage: any;
+  finalImage: string = '';
   advisorId: any;
   imageUploadEvent: any;
   showCropper = false;
@@ -125,7 +125,9 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   showCroppedImage(imageAsBase64) {
-    this.finalImage = imageAsBase64;
+    setTimeout(() => {
+      this.finalImage = imageAsBase64;
+    });
   }
 
   // save the changes of current page only

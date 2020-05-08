@@ -14,6 +14,8 @@ export class FileUploadServiceService {
   clientId: any;
   fileUploadData: any;
   myFiles: any;
+  fileUploadSuccsess: boolean;
+  basicDetails: any;
 
   constructor(private custumService: CustomerService,
     private http: HttpService,
@@ -24,6 +26,7 @@ export class FileUploadServiceService {
   }
   fetchFileUploadData(value) {
     console.log('here its me',value)
+    this.basicDetails = value
     const obj = {
       advisorId: value.advisorId,
       clientId : value.clientId,
@@ -33,7 +36,32 @@ export class FileUploadServiceService {
     this.custumService.fetchFileUpload(obj).subscribe(
       data => {
         this.fileUploadData = data || [];
+        // if(this.basicDetails.clientName){
+        //   this.fileUploadClient(this.basicDetails)
+        // }
         console.log('fileUploadData', this.fileUploadData);
+        return this.fileUploadData
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+    return this.fileUploadData
+  }
+  fileUploadClient(value){
+    console.log('here its me',value)
+    const obj = {
+      advisorId: value.advisorId,
+      clientId : value.clientId,
+      familyMemberId:0,
+      folderId:this.fileUploadData,
+      searchTerm: value.clientName+"PAN",
+    };
+    this.custumService.fetchFileClientData(obj).subscribe(
+      data => {
+        // this.fileUploadData = data || [];
+        // console.log('fileUploadData', this.fileUploadData);
+        return this.fileUploadData
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -67,12 +95,8 @@ export class FileUploadServiceService {
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
-        setTimeout(() => {
-          // this._bottomSheet.dismiss()
           this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
-        }, 1000);
-        setTimeout(() => {
-        }, 2000);
+          this.fileUploadSuccsess = true
       }
     });
   }
