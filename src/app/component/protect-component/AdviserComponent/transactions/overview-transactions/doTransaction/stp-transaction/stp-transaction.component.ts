@@ -144,7 +144,7 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeListTranfer(value) {
-    this.getNewSchemesRes([]);
+    // this.getNewSchemesRes([]);
     if (this.stpTransaction.get('transferIn').invalid) {
       this.showSpinnerTrans = false;
       Object.assign(this.transactionSummary, {schemeNameTranfer: ''});
