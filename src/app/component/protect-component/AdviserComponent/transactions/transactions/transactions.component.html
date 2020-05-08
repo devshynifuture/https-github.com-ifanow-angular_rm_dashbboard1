@@ -1,28 +1,27 @@
 <div id="uiTransactions" class="mt-60">
-  <div class="row">
-    <div class="col-md-2 mob50">
-      <h3 class="m-0 pt-16">Transactions</h3>
+    <div class="row">
+        <div class="col-md-2 mob50">
+            <!-- <h3 class="m-0 pt-16">Transactions</h3> -->
+        </div>
+        <div class="col-md-10 p-0">
+            <div class="subnav-fixed">
+                <nav (selectedTabChange)="tabClick($event)" mat-align-tabs="end" mat-tab-nav-bar>
+                    <a mat-tab-link routerLink="/admin/transactions/overview" routerLinkActive="active">OVERVIEW</a>
+                    <a class="transactionsWidth" mat-tab-link routerLink="/admin/transactions/transactions" routerLinkActive="active">TRANSACTIONS</a>
+                    <a mat-tab-link routerLink="/admin/transactions/investors" routerLinkActive="active">INVESTORS</a>
+                    <a mat-tab-link routerLink="/admin/transactions/mandates" routerLinkActive="active">MANDATES</a>
+                    <!-- <a mat-tab-link routerLink="'expenses'">EXPENSES</a> -->
+                    <!--                    <a class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link routerLinkActive="active">KYC</a>-->
+                    <a [state]="{ example: 0 }" mat-tab-link routerLink="/admin/transactions/settings" routerLinkActive="active">SETTINGS</a>
+                </nav>
+            </div>
+        </div>
     </div>
-    <div class="col-md-10 p-0">
-      <div class="subnav-fixed">
-        <nav (selectedTabChange)="tabClick($event)" mat-align-tabs="end" mat-tab-nav-bar>
-          <a mat-tab-link routerLink="/admin/transactions/overview" routerLinkActive="active">OVERVIEW</a>
-          <a class="transactionsWidth" mat-tab-link routerLink="/admin/transactions/transactions"
-             routerLinkActive="active">TRANSACTIONS</a>
-          <a mat-tab-link routerLink="/admin/transactions/investors" routerLinkActive="active">INVESTORS</a>
-          <a mat-tab-link routerLink="/admin/transactions/mandates" routerLinkActive="active">MANDATES</a>
-          <!-- <a mat-tab-link routerLink="'expenses'">EXPENSES</a> -->
-          <!--                    <a class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link routerLinkActive="active">KYC</a>-->
-          <a [state]="{ example: 0 }" mat-tab-link routerLink="/admin/transactions/settings" routerLinkActive="active">SETTINGS</a>
-        </nav>
-      </div>
-    </div>
-  </div>
 </div>
 
 
 <div class="row">
-  <div class="col-md-12 p-0">
-    <router-outlet></router-outlet>
-  </div>
+    <div class="col-md-12 p-0">
+        <router-outlet></router-outlet>
+    </div>
 </div>
