@@ -8,6 +8,7 @@ import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MathUtilService} from '../../../../../../../services/math-util.service';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -270,6 +271,8 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.controls.employeeContry.setValidators([Validators.required]);
       this.sipTransaction.controls.employeeContry.updateValueAndValidity();
     }
+    this.checkAndHandleMaxInstallmentValidator();
+
   }
 
   selectedScheme(scheme) {
@@ -374,6 +377,7 @@ export class SipTransactionComponent implements OnInit {
     this.frequency = getFrerq.frequency;
     this.sipTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.additionalPurchaseAmount)]);
     this.dateArray(getFrerq.sipDates);
+    this.checkAndHandleMaxInstallmentValidator();
 
   }
 
@@ -390,8 +394,12 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getBankDetails(value) {
-    this.bankDetails = value[0];
-    console.log('bank details', value);
+    if (value && value.length > 0) {
+      this.bankDetails = value[0];
+      console.log('bank details', value);
+    } else {
+      this.eventService.openSnackBar('Bank detail not found', 'dismiss');
+    }
   }
 
   onFolioChange(folio) {
@@ -520,7 +528,10 @@ export class SipTransactionComponent implements OnInit {
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
     );
-    this.sipTransaction.valueChanges.subscribe(newValue => {
+    this.sipTransaction.controls.tenure.valueChanges.subscribe(newValue => {
+      this.checkAndHandleMaxInstallmentValidator();
+    });
+    this.sipTransaction.controls.date.valueChanges.subscribe(newValue => {
       this.checkAndHandleMaxInstallmentValidator();
     });
     this.ownerData = this.sipTransaction.controls;
@@ -627,17 +638,8 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.get('date').markAsTouched();
     } else if (this.sipTransaction.get('frequency').invalid) {
       this.sipTransaction.get('frequency').markAsTouched();
-    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
-      if (this.selectedMandate) {
-        const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))));
-        const tenure = this.sipTransaction.controls.tenure.value;
-        const noOfInstallments = this.sipTransaction.controls.installment.value;
-        const orderVal = this.sipTransaction.controls.employeeContry.value;
-        const obj = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
-        return this.checkAndHandleMandate(this.mandateDetails, this.selectedMandate, orderVal, obj.endDate);
-      } else {
-        this.eventService.openSnackBar('No mandate found. Please change payment mode.');
-      }
+    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && !this.selectedMandate) {
+      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
     } else {
       return true;
     }
@@ -747,27 +749,17 @@ export class SipTransactionComponent implements OnInit {
     }
   }
 
-  checkAndHandleMandate(mandateList, selectedMandate, amount, endDate) {
-    if (selectedMandate.toDate < endDate) {
-      this.installmentErrorMessage = 'Sip end date cannot be greater than mandate end date.';
-      this.showInstallmentError = true;
-    } else {
-      this.installmentErrorMessage = 'Sip end date cannot be greater than mandate end date.';
-      this.showInstallmentError = false;
-      this.showMandateAmountError = false;
-    }
-
-    return this.showMandateAmountError || this.showInstallmentError;
-  }
-
   checkAndHandleMaxInstallmentValidator() {
     if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && this.selectedMandate &&
       !this.sipTransaction.get('date').invalid && !this.sipTransaction.get('frequency').invalid) {
-      const maxInstallmentNumber = this.calculateMaxInstallmentNumber(new Date(this.sipTransaction.get('date').value).getTime(),
-        this.selectedMandate.toDate, this.sipTransaction.get('frequency').value);
-      this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.max(maxInstallmentNumber)]);
-      this.installmentErrorMessage = 'Installment number cannot be greater than ' + maxInstallmentNumber;
+      setTimeout(() => {
+        const maxInstallmentNumber = this.calculateMaxInstallmentNumber(new Date(this.sipTransaction.get('date').value).getTime(),
+          this.selectedMandate.toDate, this.sipTransaction.get('frequency').value, this.sipTransaction.get('tenure').value);
+        this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.max(maxInstallmentNumber)]);
+        this.installmentErrorMessage = 'Installment number cannot be greater than ' + MathUtilService.roundOffNumber(maxInstallmentNumber);
+        this.sipTransaction.controls.installment.updateValueAndValidity();
 
+      }, 1000);
     } else {
       this.sipTransaction.controls.installment.clearValidators();
       this.sipTransaction.controls.installment.clearAsyncValidators();
@@ -776,17 +768,20 @@ export class SipTransactionComponent implements OnInit {
       } else {
         this.sipTransaction.controls.installment.setValidators([Validators.required]);
       }
+      this.sipTransaction.controls.installment.updateValueAndValidity();
     }
-    this.sipTransaction.controls.installment.updateValueAndValidity();
   }
 
-  calculateMaxInstallmentNumber(sipStartDate, mandateEndDate, frequencyType) {
+  calculateMaxInstallmentNumber(sipStartDate, mandateEndDate, frequencyType, tenure) {
     const difference = mandateEndDate - sipStartDate;
     const differenceInDays = difference / (1000 * 3600 * 24);
     const differenceInMonths = differenceInDays / 30;
     const differenceInWeeks = differenceInDays / 7;
     const differenceInYear = differenceInDays / 365;
-    if (frequencyType == 'MONTHLY') {
+
+    if (tenure == 2) {
+      return differenceInYear;
+    } else if (frequencyType == 'MONTHLY') {
       return differenceInMonths;
     } else if (frequencyType == 'QUATERLY') {
       return differenceInMonths / 3;
