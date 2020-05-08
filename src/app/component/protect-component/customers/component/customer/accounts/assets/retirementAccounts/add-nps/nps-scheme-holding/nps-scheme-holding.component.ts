@@ -129,11 +129,28 @@ export class NpsSchemeHoldingComponent implements OnInit {
       data => this.getGlobalRes(data)
     );
   }
+  schemeListData:any=[];
   getGlobalRes(data) {
 
     console.log('getGlobalRes', data)
-    this.schemeList = data.npsSchemeList;
+    this.schemeListData = data.npsSchemeList;
+    this.schemeList = this.schemeListData;
     this.startFilter();
+  }
+
+  filterSchemeOptions(name){
+    if(name.length >=3){
+      let obj={
+        name:name
+      }
+      this.custumService.getFilterSchemeChoice(obj).subscribe(
+      data =>{
+        this.schemeList = data;
+      });
+    }
+    else{
+      this.schemeList = this.schemeListData;
+    }
   }
 
   startFilter(){
@@ -269,6 +286,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
       this.schemeHoldingsNPS.controls.holdingList.controls[scheme.index].controls['schemeId'].setValue(scheme.scheme.id)
     }
   }
+
+  
 
   displayScheme(scheme){
     // const controls = this.schemeHoldingsNPS.controls.holdingList;
