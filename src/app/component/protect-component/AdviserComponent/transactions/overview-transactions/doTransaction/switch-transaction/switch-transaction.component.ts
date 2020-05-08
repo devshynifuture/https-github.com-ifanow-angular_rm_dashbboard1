@@ -150,7 +150,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.switchTransaction.get('schemeSwitch').setErrors({setValue: error});
           this.switchTransaction.get('schemeSwitch').markAsTouched();
           (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
-          // this.eventService.showErrorMessage(error);
+          // this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     } else {
@@ -197,7 +197,7 @@ export class SwitchTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -239,7 +239,7 @@ export class SwitchTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -270,7 +270,7 @@ export class SwitchTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsTranferRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -317,7 +317,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.showSpinnerTran = false;
           this.switchTransaction.get('transferIn').setErrors({setValue: error.message});
           this.switchTransaction.get('transferIn').markAsTouched();
-          // this.eventService.showErrorMessage(error);
+          // this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }
@@ -452,7 +452,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.switchBSERes(data), (error) => {
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBar(error, 'dismiss');
         }
       );
     }
