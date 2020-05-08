@@ -144,12 +144,13 @@
           <div class="col-md-11 p-0">
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input (changedValue)="getSchemeListTranfer($event)" appCustomAutoComplete [matAutocomplete]="auto1" aria-label="Number"
+                <input (changedValue)="getSchemeListTranfer($event)" appCustomAutoComplete [matAutocomplete]="auto1"
+                       aria-label="Number"
                        class="form-control" formControlName="transferIn" matInput
                        placeholder="Start typing to see transferIn names" type="text">
                 <mat-autocomplete #auto1="matAutocomplete">
                   <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
-                              *ngFor="let scheme of filterNewSchemeList" [value]="scheme.schemeName">
+                              *ngFor="let scheme of filterNewSchemeList  | async" [value]="scheme.schemeName">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>

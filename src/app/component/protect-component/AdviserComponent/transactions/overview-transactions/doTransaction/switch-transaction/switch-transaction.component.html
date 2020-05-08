@@ -170,7 +170,7 @@
                        placeholder="Start typing to see transferIn names" type="text">
                 <mat-autocomplete #auto1="matAutocomplete">
                   <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
-                              *ngFor="let scheme of filterNewSchemeList" [value]="scheme.schemeName">
+                              *ngFor="let scheme of filterNewSchemeList | async" [value]="scheme.schemeName">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
