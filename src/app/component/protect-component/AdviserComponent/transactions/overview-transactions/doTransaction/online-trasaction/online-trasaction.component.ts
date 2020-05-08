@@ -65,6 +65,7 @@ export class OnlineTrasactionComponent implements OnInit {
   transactionData: any;
   clientCodeData: any;
   filteredStates: any;
+  selectedClientOrFamily: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder,
@@ -86,7 +87,7 @@ export class OnlineTrasactionComponent implements OnInit {
         }),
       )
   }
-  stateCtrl = new FormControl();
+  stateCtrl = new FormControl('', [Validators.required]);
   familyMemberList;
   @Input()
   set data(data) {
@@ -113,7 +114,7 @@ export class OnlineTrasactionComponent implements OnInit {
   }
   getDefaultDetails(platform) {
     console.log('onlineTransactionComponent platform: ', platform);
-
+    this.selectedClientOrFamily = platform.name;
     const obj = {
       advisorId: this.advisorId,
       familyMemberId: platform.familyMemberId,
