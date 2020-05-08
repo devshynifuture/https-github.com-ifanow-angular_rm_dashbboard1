@@ -246,7 +246,12 @@
                     <button (click)="pdf('Recurring deposit')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Recurring deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Recurring Deposits',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
@@ -424,7 +429,12 @@
                     <button (click)="pdf('Bonds')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Bonds',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>

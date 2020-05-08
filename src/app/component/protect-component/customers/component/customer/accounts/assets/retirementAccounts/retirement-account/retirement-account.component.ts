@@ -23,6 +23,7 @@ import { DetailedViewNpsComponent } from '../add-nps/detailed-view-nps/detailed-
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { DatailedViewNpsHoldingsComponent } from '../add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 
 @Component({
@@ -66,6 +67,8 @@ export class RetirementAccountComponent implements OnInit {
   excelData: any;
   footer = [];
   noData: any;
+  fileUploadData: any;
+  file: any;
 
   // async ExportTOExcel(value) {
   //   this.excelData = []
@@ -192,7 +195,11 @@ export class RetirementAccountComponent implements OnInit {
   //   }
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
+     private subInjectService: SubscriptionInject, 
+     private fileUpload : FileUploadServiceService,
+     private custumService: CustomerService, private eventService: EventService, 
+     public utils: UtilService, public dialog: MatDialog) {
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','bal', 'desc', 'status', 'icons'];
@@ -225,7 +232,18 @@ export class RetirementAccountComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);

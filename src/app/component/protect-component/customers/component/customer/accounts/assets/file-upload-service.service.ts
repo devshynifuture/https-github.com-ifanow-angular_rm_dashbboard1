@@ -52,7 +52,7 @@ export class FileUploadServiceService {
       fileName: this.myFiles.name
     };
     this.custumService.uploadFile(obj).subscribe(
-      data => this.uploadFileRes(data, fileName)
+      data => this.uploadFileRes(data, this.myFiles)
     );
 
   }

@@ -43,7 +43,12 @@
                     <button (click)="pdf('EPF')" mat-menu-item>PDF</button>
                     <button (click)="Excel('EPF')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img class="" src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('EP',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
@@ -91,7 +96,7 @@
                 <ng-container matColumnDef="cvalue">
                     <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
                         class="br  textRight text-right">
-                        current value-EPF 
+                        current value-EPF
                     </th>
                     <!-- <td mat-cell *matCellDef="let element" class="br amt  text-right">
                         <div class="bar" appFormatNumber> {{ element.currentValue }} </div>
@@ -101,11 +106,13 @@
                         <div class="bar"> {{ sumOfcurrentValue || '-'}} </div>
                     </td> -->
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentEpfValue }}</span> </div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                appFormatNumber>{{element.currentEpfValue }}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
                         <!-- *ngIf="bondTotalSum" for prod build -->
-                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpfBalance" appFormatNumber>{{sumOfcurrentEpfBalance}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpfBalance"
+                                appFormatNumber>{{sumOfcurrentEpfBalance}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="emp">
@@ -114,7 +121,8 @@
                         Employee's <br>contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.employeesMonthlyContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.employeesMonthlyContribution }} </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
                         [value]="sumOfemployeesMonthlyContribution">
@@ -127,8 +135,9 @@
                         Employer's <br>contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        
-                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.employersMonthlyContribution }} </span></div>
+
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.employersMonthlyContribution }} </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
                         [value]="sumOfemployersMonthlyContribution">
@@ -138,10 +147,11 @@
                 <ng-container matColumnDef="vol">
                     <th mat-sort-header="voluntaryContribution" mat-header-cell *matHeaderCellDef
                         class="br textRight text-right">
-                        Voluntary <br>Contribution 
+                        Voluntary <br>Contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.voluntaryContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.voluntaryContribution }} </span></div>
                     </td>
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
@@ -161,10 +171,12 @@
                         current value -EPS
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right amt">
-                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.currentEpsValue }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.currentEpsValue }}
+                            </span></div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right" >
-                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance" appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
+                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right">
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance"
+                                appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
                     </td>
                 </ng-container>
                 <!-- <ng-container matColumnDef="bal">
@@ -261,7 +273,12 @@
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
-                <img class="" src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('NPS',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
@@ -428,7 +445,8 @@
                                     <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0"
                                         (click)="openDetailedView(element,'detailedViewNps')">Detailed view</button>
                                     <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0"
-                                    (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed view</button>
+                                        (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed
+                                        view</button>
                                     <button mat-menu-item class="c-p">Activity</button>
                                     <button mat-menu-item class="c-p"
                                         (click)="deleteModal('NPS',element)">Delete</button>
@@ -460,7 +478,13 @@
                                         <button (click)="pdf('NPS')" mat-menu-item>PDF</button>
                                         <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
                                     </mat-menu>
-                                    <img class="" src="assets/images/svg/up-down.svg">
+                                    <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                                    <mat-menu #menu7="matMenu">
+                                        <button mat-menu-item>Upload file
+                                            <input (change)="fetchData('NPS',$event)" class="uploadInput" id="file-4"
+                                                multiple type="file">
+                                        </button>
+                                    </mat-menu>
                                     <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
                                     <mat-menu #menu6="matMenu">
                                         <button mat-menu-item>Email Report</button>
@@ -528,7 +552,12 @@
                     <button (click)="pdf('Gratuity')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Gratuity')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img class="" src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Gratuity',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
@@ -545,8 +574,8 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 p-0 overflow-hidden real-estate"
             #GRATUITY #Gratuity>
-            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataSource"
-                id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort"
+                [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
@@ -612,7 +641,7 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell
                         mat-sort-header="amountReceived">
-                        amount accumulated<br>  as on date
+                        amount accumulated<br> as on date
 
                     </th>
                     <td *matCellDef="let element" class="br amt text-right  " mat-cell>
@@ -696,7 +725,12 @@
                     <button (click)="pdf('Superannuation')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img class="" src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Superannuation',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
@@ -860,7 +894,12 @@
                     <button (click)="pdf('EPS')" mat-menu-item>PDF</button>
                     <button (click)="Excel('EPS')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img class="" src="assets/images/svg/up-down.svg">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('EPS',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
