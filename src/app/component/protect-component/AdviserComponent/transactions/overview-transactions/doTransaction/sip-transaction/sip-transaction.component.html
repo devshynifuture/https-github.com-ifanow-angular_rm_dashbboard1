@@ -333,7 +333,7 @@
               <mat-error class="f-12 pt-4">
                 This field is required
               </mat-error>
-              <mat-error *ngIf="!sipTransaction.get('installment').errors?.required && showInstallmentError"
+              <mat-error *ngIf="!sipTransaction.get('installment').errors?.max"
                          class="f-12 pt-4">
                 {{installmentErrorMessage}}
               </mat-error>

@@ -332,7 +332,7 @@ export class SipTransactionComponent implements OnInit {
   //   );
   // }
 
-  getNSEAchmandateRes(data) {
+  getMandateDetailsRes(data) {
     this.showSpinnerMandate = false;
     console.log('getNSEAchmandateRes', data);
     if (data.length > 1) {
@@ -374,9 +374,7 @@ export class SipTransactionComponent implements OnInit {
     this.frequency = getFrerq.frequency;
     this.sipTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.additionalPurchaseAmount)]);
     this.dateArray(getFrerq.sipDates);
-    if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
-      // const maxNoOfInstallments = this.calculateMaxInstallmentNumber()
-    }
+
   }
 
   dateArray(sipDates) {
@@ -405,7 +403,7 @@ export class SipTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data), (error) => {
+      data => this.getMandateDetailsRes(data), (error) => {
         this.showSpinnerMandate = false;
         this.mandateDetails = [];
         this.selectedMandate = null;
@@ -522,8 +520,8 @@ export class SipTransactionComponent implements OnInit {
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
     );
-    this.sipTransaction.controls.installment.valueChanges.subscribe(newValue => {
-
+    this.sipTransaction.valueChanges.subscribe(newValue => {
+      this.checkAndHandleMaxInstallmentValidator();
     });
     this.ownerData = this.sipTransaction.controls;
     if (data.folioNo) {
@@ -760,6 +758,26 @@ export class SipTransactionComponent implements OnInit {
     }
 
     return this.showMandateAmountError || this.showInstallmentError;
+  }
+
+  checkAndHandleMaxInstallmentValidator() {
+    if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && this.selectedMandate &&
+      !this.sipTransaction.get('date').invalid && !this.sipTransaction.get('frequency').invalid) {
+      const maxInstallmentNumber = this.calculateMaxInstallmentNumber(new Date(this.sipTransaction.get('date').value).getTime(),
+        this.selectedMandate.toDate, this.sipTransaction.get('frequency').value);
+      this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.max(maxInstallmentNumber)]);
+      this.installmentErrorMessage = 'Installment number cannot be greater than ' + maxInstallmentNumber;
+
+    } else {
+      this.sipTransaction.controls.installment.clearValidators();
+      this.sipTransaction.controls.installment.clearAsyncValidators();
+      if (this.sipTransaction.controls.tenure == '3') {
+
+      } else {
+        this.sipTransaction.controls.installment.setValidators([Validators.required]);
+      }
+    }
+    this.sipTransaction.controls.installment.updateValueAndValidity();
   }
 
   calculateMaxInstallmentNumber(sipStartDate, mandateEndDate, frequencyType) {
