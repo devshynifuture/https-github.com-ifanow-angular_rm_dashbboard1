@@ -548,7 +548,6 @@ export class SipTransactionComponent implements OnInit {
 
   sip() {
     if (this.validateSingleTransaction()) {
-    } else {
       const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))));
       const tenure = this.sipTransaction.controls.tenure.value;
       const noOfInstallments = this.sipTransaction.controls.installment.value;

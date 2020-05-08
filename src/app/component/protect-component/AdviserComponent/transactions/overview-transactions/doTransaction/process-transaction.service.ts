@@ -175,7 +175,7 @@ export class ProcessTransactionService {
     } else {
       obj.noOfInstallments = noOfInstallments;
     }
-    if (tenure == 2) {
+    if (tenure != '3') {
       obj.endDate = this.calculateEndDateFromInstallment(startDate, frequencyType, noOfInstallments);
     }
     return obj;
@@ -201,7 +201,7 @@ export class ProcessTransactionService {
     } else {
       obj.noOfInstallments = installment;
     }
-    if (tenure == 2) {
+    if (tenure != '3') {
       obj.endDate = this.calculateEndDateFromInstallment(obj.startDate, obj.frequencyType, installment);
     }
     return obj;
@@ -220,7 +220,7 @@ export class ProcessTransactionService {
     } else if (frequencyType == 'BUSINESS_DAY') {
       endDate.setDate(endDate.getDate() + noOfInstallment);
     }
-    return endDate;
+    return endDate.getTime();
   }
 
   calculateCurrentValue(nav, unit) {
