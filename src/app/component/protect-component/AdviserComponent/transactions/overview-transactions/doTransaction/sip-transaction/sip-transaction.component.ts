@@ -30,7 +30,10 @@ export class SipTransactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  confirmTrasaction: boolean;
+  showInstallmentError = false;
+  showMandateAmountError = false;
+  mandateAmountErrorMessage = '';
+  installmentErrorMessage = '';
   dataSource: any;
   ownerData: any;
   folioSelection: [2];
@@ -55,14 +58,12 @@ export class SipTransactionComponent implements OnInit {
   ExistingOrNew: any = 2;
   sipFrequency: any;
   dateDisplay: any;
-  sipDate: any;
   dates: any;
   showSpinner = false;
-  showUnits = false;
   mandateDetails: any;
   frequency: any;
   fre: any;
-  achMandateNSE: any;
+  selectedMandate: any;
   platformType: any;
   bankDetails: any;
   showSpinnerFolio = false;
@@ -237,7 +238,6 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getExistingSchemesRes(data) {
-    this.getMandateDetails();
     this.showSpinner = false;
     this.existingSchemeList = data;
     this.schemeList = this.existingSchemeList;
@@ -264,6 +264,11 @@ export class SipTransactionComponent implements OnInit {
     if (value == 2) {
       Object.assign(this.transactionSummary, {getAch: true});
       this.getMandateDetails();
+    } else {
+      this.sipTransaction.controls.employeeContry.clearValidators();
+      this.sipTransaction.controls.employeeContry.clearAsyncValidators();
+      this.sipTransaction.controls.employeeContry.setValidators([Validators.required]);
+      this.sipTransaction.controls.employeeContry.updateValueAndValidity();
     }
   }
 
@@ -334,9 +339,18 @@ export class SipTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
     this.mandateDetails = this.processTransaction.filterMandateData(data);
-    console.log('this.achMandateNSE', this.achMandateNSE);
-    this.achMandateNSE = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
-    Object.assign(this.transactionSummary, {umrnNo: this.achMandateNSE.umrnNo});
+    console.log('this.achMandateNSE', this.selectedMandate);
+    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+        // max
+        this.sipTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
+        this.sipTransaction.controls.employeeContry.updateValueAndValidity();
+        this.mandateAmountErrorMessage = 'Sip amount connot be greater than mandate amount';
+      }
+    }
   }
 
   getFrequency() {
@@ -360,6 +374,9 @@ export class SipTransactionComponent implements OnInit {
     this.frequency = getFrerq.frequency;
     this.sipTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.additionalPurchaseAmount)]);
     this.dateArray(getFrerq.sipDates);
+    if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+      // const maxNoOfInstallments = this.calculateMaxInstallmentNumber()
+    }
   }
 
   dateArray(sipDates) {
@@ -390,7 +407,10 @@ export class SipTransactionComponent implements OnInit {
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
         this.showSpinnerMandate = false;
-        // this.eventService.openSnackBar(error, 'dismiss');
+        this.mandateDetails = [];
+        this.selectedMandate = null;
+        this.eventService.openSnackBar('No mandate found', 'dismiss');
+        this.sipTransaction.controls.modeOfPaymentSelection.setValue('1');
       }
     );
   }
@@ -502,6 +522,9 @@ export class SipTransactionComponent implements OnInit {
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
     );
+    this.sipTransaction.controls.installment.valueChanges.subscribe(newValue => {
+
+    });
     this.ownerData = this.sipTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.scheme.amcId;
@@ -515,25 +538,19 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sip() {
-    if (this.reInvestmentOpt.length > 1 && this.sipTransaction.get('reinvest').invalid) {
-      this.sipTransaction.get('reinvest').markAsTouched();
-    } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
-      this.sipTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
-    } else if (this.sipTransaction.get('employeeContry').invalid) {
-      this.sipTransaction.get('employeeContry').markAsTouched();
-      return;
-    } else if (this.sipTransaction.get('date').invalid) {
-      this.sipTransaction.get('date').markAsTouched();
-      return;
-    } else if (this.sipTransaction.get('frequency').invalid) {
-      this.sipTransaction.get('frequency').markAsTouched();
-      return;
-    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && !this.achMandateNSE) {
-      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
+    if (this.validateSingleTransaction()) {
     } else {
-
-      let obj = {
+      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))));
+      const tenure = this.sipTransaction.controls.tenure.value;
+      const noOfInstallments = this.sipTransaction.controls.installment.value;
+      const orderVal = this.sipTransaction.controls.employeeContry.value;
+      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
+      if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && tenure == '3') {
+        obj.endDate = this.selectedMandate.toDate;
+      }
+      obj = {
+        ...obj,
+        orderVal,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
         holdingNature: this.getDataSummary.defaultClient.holdingType,
@@ -547,9 +564,6 @@ export class SipTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ''))))),
-        frequencyType: this.frequency,
-        noOfInstallments: this.sipTransaction.controls.installment.value,
         orderType: 'SIP',
         buySell: 'PURCHASE',
         transCode: 'NEW',
@@ -557,7 +571,6 @@ export class SipTransactionComponent implements OnInit {
         dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
         amountType: 'Amount',
         clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: this.sipTransaction.controls.employeeContry.value,
         euin: this.getDataSummary.euin.euin,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         schemeCd: this.schemeDetails.schemeCode,
@@ -571,17 +584,17 @@ export class SipTransactionComponent implements OnInit {
         childTransactions: []
         // teamMemberSessionId: sipTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
       };
-      const tenure = this.sipTransaction.controls.tenure.value;
-      const installment = this.sipTransaction.controls.installment.value;
-      obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+      // const tenure = this.sipTransaction.controls.tenure.value;
+      // const installment = this.sipTransaction.controls.installment.value;
+      // obj = this.processTransaction.checkInstallments(obj, tenure, installment);
 
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.achMandateNSE) ? this.achMandateNSE.id : null;
+        obj.mandateId = (this.selectedMandate) ? this.selectedMandate.id : null;
         obj.bankDetailId = this.bankDetails.id;
         obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') ? 'DEBIT_MANDATE' : 'ONLINE';
       } else {
-        obj.mandateType = (this.achMandateNSE) ? this.achMandateNSE.mandateType : null;
-        obj.xSipMandateId = (this.achMandateNSE) ? this.achMandateNSE.mandateId : null;
+        obj.mandateType = (this.selectedMandate) ? this.selectedMandate.mandateType : null;
+        obj.xSipMandateId = (this.selectedMandate) ? this.selectedMandate.mandateId : null;
       }
 
 
@@ -602,6 +615,35 @@ export class SipTransactionComponent implements OnInit {
         }
       );
     }
+  }
+
+
+  validateSingleTransaction() {
+    if (this.reInvestmentOpt.length > 1 && this.sipTransaction.get('reinvest').invalid) {
+      this.sipTransaction.get('reinvest').markAsTouched();
+    } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
+      this.sipTransaction.get('investmentAccountSelection').markAsTouched();
+    } else if (this.sipTransaction.get('employeeContry').invalid) {
+      this.sipTransaction.get('employeeContry').markAsTouched();
+    } else if (this.sipTransaction.get('date').invalid) {
+      this.sipTransaction.get('date').markAsTouched();
+    } else if (this.sipTransaction.get('frequency').invalid) {
+      this.sipTransaction.get('frequency').markAsTouched();
+    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+      if (this.selectedMandate) {
+        const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))));
+        const tenure = this.sipTransaction.controls.tenure.value;
+        const noOfInstallments = this.sipTransaction.controls.installment.value;
+        const orderVal = this.sipTransaction.controls.employeeContry.value;
+        const obj = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
+        return this.checkAndHandleMandate(this.mandateDetails, this.selectedMandate, orderVal, obj.endDate);
+      } else {
+        this.eventService.openSnackBar('No mandate found. Please change payment mode.');
+      }
+    } else {
+      return true;
+    }
+    return false;
   }
 
   sipBSERes(data) {
@@ -658,7 +700,7 @@ export class SipTransactionComponent implements OnInit {
           orderVal: this.sipTransaction.controls.employeeContry.value,
           bankDetailId: (this.bankDetails) ? this.bankDetails.id : null,
           schemeName: this.scheme.schemeName,
-          mandateId: this.achMandateNSE.id,
+          mandateId: this.selectedMandate.id,
           noOfInstallments: this.sipTransaction.controls.installment.value,
           productDbId: this.schemeDetails.id,
           frequencyType: this.frequency,
@@ -672,7 +714,7 @@ export class SipTransactionComponent implements OnInit {
         };
         const tenure = this.sipTransaction.controls.tenure.value;
         const installment = this.sipTransaction.controls.installment.value;
-        obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+        obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
@@ -704,6 +746,40 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.controls.schemeSip.reset();
       }
 
+    }
+  }
+
+  checkAndHandleMandate(mandateList, selectedMandate, amount, endDate) {
+    if (selectedMandate.toDate < endDate) {
+      this.installmentErrorMessage = 'Sip end date cannot be greater than mandate end date.';
+      this.showInstallmentError = true;
+    } else {
+      this.installmentErrorMessage = 'Sip end date cannot be greater than mandate end date.';
+      this.showInstallmentError = false;
+      this.showMandateAmountError = false;
+    }
+
+    return this.showMandateAmountError || this.showInstallmentError;
+  }
+
+  calculateMaxInstallmentNumber(sipStartDate, mandateEndDate, frequencyType) {
+    const difference = mandateEndDate - sipStartDate;
+    const differenceInDays = difference / (1000 * 3600 * 24);
+    const differenceInMonths = differenceInDays / 30;
+    const differenceInWeeks = differenceInDays / 7;
+    const differenceInYear = differenceInDays / 365;
+    if (frequencyType == 'MONTHLY') {
+      return differenceInMonths;
+    } else if (frequencyType == 'QUATERLY') {
+      return differenceInMonths / 3;
+    } else if ((frequencyType == 'WEEKLY' || frequencyType == 'ONCE_IN_A_WEEK')) {
+      return differenceInWeeks;
+    } else if (frequencyType == 'YEARLY') {
+      return differenceInYear;
+    } else if (frequencyType == 'BUSINESS_DAY') {
+      return differenceInDays;
+    } else {
+      return differenceInMonths;
     }
   }
 }

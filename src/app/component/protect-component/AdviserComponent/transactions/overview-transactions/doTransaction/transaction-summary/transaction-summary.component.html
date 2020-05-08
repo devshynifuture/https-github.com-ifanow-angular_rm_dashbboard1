@@ -1,164 +1,180 @@
 <mat-tab-group animationDuration="0ms" mat-align-tabs="center" id="ui-addtransaction-tabs">
-    <mat-tab label="Transaction summary">
-        <div class="p-20 transaction-summary">
-            <div class="row pt-16 pb-16">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">Transaction platform</p>
-                    <div *ngIf="showPlatform == false">
-                        <div class="m-0" *ngIf="selectedPlatform == 2">
-                            {{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} STAR MF</div>
-                        <div class="m-0" *ngIf="selectedPlatform == 1">
-                            {{(selectedPlatform =='2')?'BSE':(selectedPlatform =='1')?'NSE':'-'}} NMF II</div>
-                    </div>
-                </div>
-                <div class="col-md-2" *ngIf="allData">
-                    <button mat-stroked-button
-                        *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true"
-                        class="primary-sm" (click)="showPlatform = true;openPlatform()">Edit</button>
-                </div>
+  <mat-tab label="Transaction summary">
+    <div class="p-20 transaction-summary">
+      <div class="row pt-16 pb-16">
+        <div class="col-md-9">
+          <p class="m-0 roboto text-custom">Transaction platform</p>
+          <div *ngIf="showPlatform == false">
+            <div *ngIf="selectedPlatform == 2" class="m-0">
+              {{(selectedPlatform == '2') ? 'BSE' : (selectedPlatform == '1') ? 'NSE' : '-'}} STAR MF
             </div>
-            <div class="row  pt-16 pb-16" *ngIf="defaultClient">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">Investor details</p>
-                    <h5 class="m-0">{{(!transactionSummary)? '-': transactionSummary.selectedFamilyMember}}</h5>
-                    <div *ngIf="showInvestor == false && defaultClient">
-                        <h5 class="m-0">{{defaultClient.clientCode}} {{(defaultClient.holdingType)}}
-                        </h5>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button mat-stroked-button class="primary-sm"
-                        *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true"
-                        (click)="openDialog()">Edit</button>
-                </div>
+            <div *ngIf="selectedPlatform == 1" class="m-0">
+              {{(selectedPlatform == '2') ? 'BSE' : (selectedPlatform == '1') ? 'NSE' : '-'}} NMF II
             </div>
-            <div class="row  pt-16 pb-16" *ngIf="defaultCredential">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">ARN/RIA and EUIN</p>
-                    <h5 class="m-0">{{defaultClient.brokerCode}}
-                    </h5>
-                    <h5 class="m-0"> {{allData.euin.euin}} - {{allData.euin.name}}</h5>
-                </div>
-                <div class="col-md-2"
-                    *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1 && transactionSummary.isMultiTransact==false">
-                    <button mat-stroked-button class="primary-sm" (click)="showEuin = true;openEuin()">Edit</button>
-                </div>
-            </div>
-            <div class="row  pt-16 pb-16">
-                <div class="col-md-12 p-0">
-                    <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
-                    <div class="bar">
-                        <h5 class="m-0"><span class="f-500">Scheme:</span>
-                            {{(transactionSummary==undefined)?'':transactionSummary.schemeName}}
-                        </h5>
-                    </div>
-                    <div class="bar"
-                        *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')">
-                        <h5 class="m-0"><span class="f-500">Scheme switch in:</span>
-                            {{(transactionSummary==undefined)?'':transactionSummary.schemeNameTranfer}}
-                        </h5>
-                    </div>
-                    <h5 class="m-0"> <span
-                            class="f-500">Folio:</span>{{(transactionSummary==undefined)?'':transactionSummary.folioNumber}}
-                    </h5>
-                    <h5 class="m-0"> <span class="f-500">Amount:</span>
-                        ₹{{(transactionSummary==undefined)?'':transactionSummary.enteredAmount}}/Lumpsum
-                    </h5>
-                </div>
-            </div>
-            <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">Mode of payment</p>
-                    <h5 class="m-0">
-                        {{(transactionSummary==undefined)?'':(transactionSummary.paymentMode==2)?'Debit mandate':'Net banking'}}
-                    </h5>
-                </div>
-            </div>
-            <!-- <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">Bank A/c details</p>
-                    <h5 class="m-0">
-                        <span class="f-500">Bank Name:</span> {{(defaultClient==undefined)?'':defaultClient.bankName}}
-                    </h5>
-                    <mat-select class="form-control" *ngIf="bankDetails && bankDetails.length > 1">
-                        <mat-option *ngFor="let bank of bankDetails" (click)="selectBank(bank)" [value]="bank.bankName">
-                            {{bank.bankName}}
-                        </mat-option>
-                    </mat-select>
-                    <h5 class="m-0">
-                        <span class="f-500">Ac no.:</span>
-                        {{(defaultClient==undefined)?'':defaultClient.accountNo}}</h5>
-                </div>
-                <div class="col-md-2"
-                    *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
-                    <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
-                </div>
-            </div> -->
-            <div *ngIf="selectedPlatform== 1 && bankDetails">
-                <div class="row  pt-16 pb-16" *ngFor="let bank of bankDetails">
-                    <div class="col-md-10 p-0">
-                        <p class="m-0 roboto text-custom">Bank A/c details</p>
-                        <h5 class="m-0">
-                            <span class="f-500">Bank Name:</span> {{bank.bankName}}
-                        </h5>
-                        <mat-select class="form-control" *ngIf="bankDetails && bankDetails.length > 1">
-                            <mat-option *ngFor="let bank of bankDetails" (click)="selectBank(bank)"
-                                [value]="bank.bankName">
-                                {{bank.bankName}}
-                            </mat-option>
-                        </mat-select>
-                        <h5 class="m-0">
-                            <span class="f-500">Ac no.:</span>
-                            {{bank.accountNo}}</h5>
-                    </div>
-                    <div class="col-md-2"
-                        *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
-                        <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1 && transactionSummary.paymentMode ==2">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">UMRN details</p>
-                    <h5 class="m-0">
-                        <span class="f-500">UMRN no.:</span>
-                        {{(transactionSummary == undefined)?'-': transactionSummary.umrnNo}}
-                    </h5>
-                </div>
-                <div class="col-md-2"
-                    *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP') && transactionSummary.showUmrnEdit ==2 && transactionSummary.isMultiTransact==false">
-                    <button mat-stroked-button class="primary-sm" (click)="openUmrn()">Edit</button>
-                </div>
-            </div>
-            <div class="row  pt-16 pb-16">
-                <div class="col-md-9">
-                    <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
-                    <h5 class="m-0">Immediate</h5>
-                </div>
-            </div>
+          </div>
         </div>
-    </mat-tab>
-    <mat-tab label="Rationale">
-        <div class="p-20 rationaletabs">
-            <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital appreciation from a
-                diversified portfolio of predominantly equity and equity related instruments.
-            </p>
-            <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nulla facilisi morbi tempus
-                iaculis. Dui ut ornare lectus sit amet est placerat in egestas. Sed turpis tincidunt
-                id aliquet risus feugiat in. Magna sit amet purus gravida quis blandit turpis cursus.
-            </p>
-            <div class="row pt-12">
-                <div class="col-md-12 p-0">
-                    <button mat-stroked-button class="bg-white pl-12 text-custom"><img
-                            src="/assets/images/svg/attech-light.svg" class="pr-8">Fact
-                        sheet.pdf<img src="/assets/images/svg/s-cross.svg" class="pl-8"></button>
+        <div *ngIf="allData" class="col-md-2">
+          <button (click)="showPlatform = true;openPlatform()"
+                  *ngIf="transactionSummary && allData.showPlatformEdit ==true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true"
+                  class="primary-sm" mat-stroked-button>Edit
+          </button>
+        </div>
+      </div>
+      <div *ngIf="defaultClient" class="row  pt-16 pb-16">
+        <div class="col-md-9">
+          <p class="m-0 roboto text-custom">Investor details</p>
+          <h5 class="m-0">{{(!transactionSummary) ? '-' : transactionSummary.selectedFamilyMember}}</h5>
+          <div *ngIf="showInvestor == false && defaultClient">
+            <h5 class="m-0">{{defaultClient.clientCode}} {{(defaultClient.holdingType)}}
+            </h5>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button (click)="openDialog()"
+                  *ngIf="transactionSummary && allData.showMappingEdit ==true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true"
+                  class="primary-sm"
+                  mat-stroked-button>Edit
+          </button>
+        </div>
+      </div>
+      <div *ngIf="defaultCredential" class="row  pt-16 pb-16">
+        <div class="col-md-9">
+          <p class="m-0 roboto text-custom">ARN/RIA and EUIN</p>
+          <h5 class="m-0">{{defaultClient.brokerCode}}
+          </h5>
+          <h5 class="m-0"> {{allData.euin.euin}} - {{allData.euin.name}}</h5>
+        </div>
+        <div
+          *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1 && transactionSummary.isMultiTransact==false"
+          class="col-md-2">
+          <button (click)="showEuin = true;openEuin()" class="primary-sm" mat-stroked-button>Edit</button>
+        </div>
+      </div>
+      <div class="row  pt-16 pb-16">
+        <div class="col-md-12 p-0">
+          <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
+          <div class="bar">
+            <h5 class="m-0"><span class="f-500">Scheme:</span>
+              {{(transactionSummary == undefined) ? '' : transactionSummary.schemeName}}
+            </h5>
+          </div>
+          <div *ngIf="(transactionSummary.transactType == 'STP'|| transactionSummary.transactType == 'SWITCH')"
+               class="bar">
+            <h5 class="m-0"><span class="f-500">Scheme switch in:</span>
+              {{(transactionSummary == undefined) ? '' : transactionSummary.schemeNameTranfer}}
+            </h5>
+          </div>
+          <h5 class="m-0"> <span
+            class="f-500">Folio:</span>{{(transactionSummary == undefined) ? '' : transactionSummary.folioNumber}}
+          </h5>
+          <h5 class="m-0"><span class="f-500">Amount:</span>
+            ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}/Lumpsum
+          </h5>
+        </div>
+      </div>
+      <div *ngIf="selectedPlatform== 1" class="row  pt-16 pb-16">
+        <div class="col-md-9">
+          <p class="m-0 roboto text-custom">Mode of payment</p>
+          <h5 class="m-0">
+            {{(transactionSummary == undefined) ? '' : (transactionSummary.paymentMode == 2) ? 'Debit mandate' : 'Net banking'}}
+          </h5>
+        </div>
+      </div>
+      <!-- <div class="row  pt-16 pb-16" *ngIf="selectedPlatform== 1">
+          <div class="col-md-9">
+              <p class="m-0 roboto text-custom">Bank A/c details</p>
+              <h5 class="m-0">
+                  <span class="f-500">Bank Name:</span> {{(defaultClient==undefined)?'':defaultClient.bankName}}
+              </h5>
+              <mat-select class="form-control" *ngIf="bankDetails && bankDetails.length > 1">
+                  <mat-option *ngFor="let bank of bankDetails" (click)="selectBank(bank)" [value]="bank.bankName">
+                      {{bank.bankName}}
+                  </mat-option>
+              </mat-select>
+              <h5 class="m-0">
+                  <span class="f-500">Ac no.:</span>
+                  {{(defaultClient==undefined)?'':defaultClient.accountNo}}</h5>
+          </div>
+          <div class="col-md-2"
+              *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')">
+              <button mat-stroked-button class="primary-sm" (click)="showbank = true;openBank()">Edit</button>
+          </div>
+      </div> -->
+      <div *ngIf="selectedPlatform== 1 && bankDetails">
+        <div *ngFor="let bank of bankDetails" class="row  pt-16 pb-16">
+          <div class="col-md-10 p-0">
+            <p class="m-0 roboto text-custom">Bank A/c details</p>
+            <h5 class="m-0">
+              <span class="f-500">Bank Name:</span> {{bank.bankName}}
+            </h5>
+            <mat-select *ngIf="bankDetails && bankDetails.length > 1" class="form-control">
+              <mat-option (click)="selectBank(bank)" *ngFor="let bank of bankDetails"
+                          [value]="bank.bankName">
+                {{bank.bankName}}
+              </mat-option>
+            </mat-select>
+            <h5 class="m-0">
+              <span class="f-500">Ac no.:</span>
+              {{bank.accountNo}}</h5>
+          </div>
+          <div
+            *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.isMultiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')"
+            class="col-md-2">
+            <button (click)="showbank = true;openBank()" class="primary-sm" mat-stroked-button>Edit</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedPlatform== 1 && transactionSummary.paymentMode ==2" class="row  pt-16 pb-16">
+        <div class="col-md-9">
+          <p class="m-0 roboto text-custom">UMRN details</p>
+          <h5 class="m-0">
+            <span class="f-500">UMRN no.:</span>
+            {{(transactionSummary == undefined) ? '-' : transactionSummary.umrnNo}}
+          </h5>
+          <h5 class="m-0">
+            <span class="f-500">Mandate amount.:</span>
+            {{(transactionSummary && transactionSummary.selectedMandate) ? transactionSummary.selectedMandate.amount : '-'}}
+          </h5>
+          <h5 class="m-0">
+            <span class="f-500">End Date.:</span>
+            {{(transactionSummary && transactionSummary.selectedMandate) ? (transactionSummary.selectedMandate.toDate | date:'dd-MM-yyyy') : '-'}}
+          </h5>
+        </div>
+        <div
+          *ngIf=" transactionSummary && transactionSummary.allEdit == true  && (transactionSummary.transactType == 'PURCHASE'|| transactionSummary.transactType == 'SIP') && transactionSummary.showUmrnEdit ==2 && transactionSummary.isMultiTransact==false"
+          class="col-md-2">
+          <button (click)="openUmrn()" class="primary-sm" mat-stroked-button>Edit</button>
+        </div>
+      </div>
+      <div class="row  pt-16 pb-16">
+        <div class="col-md-9">
+          <p class="m-0 roboto text-custom">TRANSACTION INITIATION</p>
+          <h5 class="m-0">Immediate</h5>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Rationale">
+    <div class="p-20 rationaletabs">
+      <p class="m-0 roboto text-custom">The scheme seeks to generate long-term capital appreciation from a
+        diversified portfolio of predominantly equity and equity related instruments.
+      </p>
+      <p class="m-0 roboto text-custom pt-20"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nulla facilisi morbi tempus
+        iaculis. Dui ut ornare lectus sit amet est placerat in egestas. Sed turpis tincidunt
+        id aliquet risus feugiat in. Magna sit amet purus gravida quis blandit turpis cursus.
+      </p>
+      <div class="row pt-12">
+        <div class="col-md-12 p-0">
+          <button class="bg-white pl-12 text-custom" mat-stroked-button><img
+            class="pr-8" src="/assets/images/svg/attech-light.svg">Fact
+            sheet.pdf<img class="pl-8" src="/assets/images/svg/s-cross.svg"></button>
 
-                </div>
-                <div class="col-md-12 p-0">
-                    <button mat-stroked-button class="primary-sm mt-16">Edit</button>
-                </div>
-            </div>
         </div>
-    </mat-tab>
+        <div class="col-md-12 p-0">
+          <button class="primary-sm mt-16" mat-stroked-button>Edit</button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
 </mat-tab-group>
