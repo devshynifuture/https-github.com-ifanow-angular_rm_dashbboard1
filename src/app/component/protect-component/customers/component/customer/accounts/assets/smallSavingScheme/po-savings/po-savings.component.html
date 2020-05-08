@@ -8,7 +8,12 @@
             <button (click)="pdf('OP Savings')" mat-menu-item>PDF</button>
             <button (click)="Excel('OP Savings')" mat-menu-item>XLS</button>
         </mat-menu>
-        <img class="" src="assets/images/svg/up-down.svg">
+        <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+        <mat-menu #menu7="matMenu">
+            <button mat-menu-item>Upload file
+                <input (change)="fetchData('Po Savings',$event)" class="uploadInput" id="file-4" multiple type="file">
+            </button>
+        </mat-menu>
         <img [matMenuTriggerFor]="menu6" class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
         <mat-menu #menu6="matMenu">
             <button mat-menu-item>Email Report</button>

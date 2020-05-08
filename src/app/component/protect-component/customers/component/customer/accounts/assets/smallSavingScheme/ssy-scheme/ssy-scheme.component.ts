@@ -12,6 +12,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -34,8 +35,14 @@ export class SsySchemeComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
+  fileUploadData: any;
+  file: any;
 
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) {
+  constructor(private excel:ExcelGenService,  
+    private pdfGen:PdfGenService, public dialog: MatDialog,
+    private fileUpload : FileUploadServiceService,
+     private cusService: CustomerService, private subInjectService: SubscriptionInject,
+      private eventService: EventService) {
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
@@ -50,7 +57,18 @@ export class SsySchemeComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
