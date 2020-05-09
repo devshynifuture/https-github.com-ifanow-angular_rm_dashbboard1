@@ -450,14 +450,16 @@
                                     </div>
                                 </div> -->
                             <table mat-table [dataSource]="cashFlowViewDataSource" id="table-low" class="mt-8"
-                                class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="cashflowFlag">
                                 <!-- Name Column -->
                                 <ng-container matColumnDef="description">
                                     <th mat-header-cell *matHeaderCellDef> Description </th>
                                     <td mat-cell *matCellDef="let element">
-                                        {{element.ownerName}}
-                                        <span *ngIf="element.assetType==14">RD</span>
-                                        <span *ngIf="element.assetType==13">FD</span>
+                                        <div class="bar">
+                                            {{element.ownerName}}
+                                            <span *ngIf="element.assetType==14">RD</span>
+                                            <span *ngIf="element.assetType==13">FD</span>
+                                        </div>
                                     </td>
                                 </ng-container>
 
@@ -473,12 +475,14 @@
                                 <ng-container matColumnDef="amount">
                                     <th mat-header-cell *matHeaderCellDef> Amount </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <span
-                                            [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
-                                            <span appFormatNumber>
-                                                <div class="bar">{{element.currentValue}}</div>
+                                        <div class="bar">
+                                            <span
+                                                [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
+                                                <span appFormatNumber>
+                                                    {{element.currentValue}}
+                                                </span>
                                             </span>
-                                        </span>
+                                        </div>
                                     </td>
                                 </ng-container>
 
