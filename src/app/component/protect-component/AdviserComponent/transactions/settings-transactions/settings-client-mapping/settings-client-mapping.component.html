@@ -1,113 +1,126 @@
 <div class="row pt-24">
-    <div class="col-md-3 align-items-center d-flex">
-        <h4 class="m-0 text-black pt-8">Client mapping</h4>
-    </div>
-    <div class="col-md-9">
-        <div class="row">
-            <div class="col-md-4 text-right pr-0 ">
-                <div class="form-group mb-0 mr-16 matInputClass">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input autocomplete="off" matInput (keyup)="applyFilter($event)"
-                            placeholder="type to filter data" class="form-control br-0">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-3 pl-0">
-                <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="type" (selectionChange)="sortDataFilterWise()" class="form-control br-0">
-                        <mat-option value="1">Mapped clients</mat-option>
-                        <mat-option value="2">Unmapped clients</mat-option>
-                    </mat-select>
-                </div>
-            </div>
-
-            <div class="col-md-3 pl-0">
-                <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="selectedBrokerCode"
-                        (selectionChange)="chnageBrokerCode(selectedBrokerCode)" class="form-control br-0">
-                        <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
-                            {{singleBrokerCode.brokerCode}}
-                        </mat-option>
-                    </mat-select>
-                </div>
-            </div>
-            <div class="col-md-2 p-0">
-                <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="changePlatform(selectedPlatform)"
-                        class="form-control br-0">
-                        <mat-option value="1">NSE</mat-option>
-                        <mat-option value="2">
-                            BSE</mat-option>
-                    </mat-select>
-                </div>
-            </div>
+  <div class="col-md-3 align-items-center d-flex">
+    <!--        <h4 class="m-0 text-black pt-8">Client mapping</h4>-->
+  </div>
+  <div [ngClass]="{'pe-none': isLoading}" class="col-md-9">
+    <div *ngIf="credentialsData " class="row">
+      <div class="col-md-4 text-right pr-0 ">
+        <div class="form-group mb-0 mr-16 matInputClass">
+          <mat-form-field appearance="standard" floatLabel="never">
+            <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0"
+                   matInput placeholder="type to filter data">
+          </mat-form-field>
         </div>
-
-    </div>
-    <div class="col-md-12 client-mapping">
-        <table mat-table *ngIf="dataSource.filteredData.length > 0" matSort [appSkeletonLoading]="isLoading"
-            [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low">
-            <ng-container matColumnDef="weight">
-                <th mat-sort-header="clientCode" mat-header-cell *matHeaderCellDef class="br"> Client code </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.clientCode}}</div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="symbol">
-                <th mat-sort-header="firstApplicantName" mat-header-cell *matHeaderCellDef class="br"> Investor name
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.firstApplicantName}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="pan">
-                <th mat-sort-header="firstApplicantPan" mat-header-cell *matHeaderCellDef class="br"> First holder PAN
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.firstApplicantPan}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="hold">
-                <th mat-sort-header="holdingTypeName" mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.holdingTypeName}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="tstatus">
-                <th mat-sort-header="taxStatus" mat-header-cell *matHeaderCellDef class="br"> Tax status </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{(element.taxDesc)?element.taxDesc:element.taxStatus}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                <td mat-cell *matCellDef="let element" class="br text-success">
-                    <div class="bar">
-                        {{isLoading ? '' :(element.activationStatus == 'NO')? 'INACTIVE':'INVESTMENT READY'}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="map">
-                <th mat-header-cell *matHeaderCellDef> Map </th>
-                <td mat-cell class="text-center" *matCellDef="let element">
-                    <div class="bar">
-                        <button mat-stroked-button *ngIf="type=='1' && element.id"
-                            class="primary-sm text-white bg-primary br-0"
-                            (click)="unmapClient(element,'CLIENT')">UNMAP</button>
-                        <button mat-stroked-button *ngIf="type=='2' && element.id"
-                            class="primary-sm text-white bg-primary br-0"
-                            (click)="openAddMappiing(element,'')">MAP</button>
-                    </div>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-            class="d-flex flex-column align-items-center pt-44">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">No credentials found</h4>
+      </div>
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <mat-select (selectionChange)="sortDataFilterWise()" [(ngModel)]="type" class="form-control br-0">
+            <mat-option disabled value=''>Select filter option</mat-option>
+            <mat-option value="1">Mapped clients</mat-option>
+            <mat-option value="2">Unmapped clients</mat-option>
+          </mat-select>
         </div>
+      </div>
+
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <mat-select (selectionChange)="chnageBrokerCode(selectedBrokerCode)"
+                      [(ngModel)]="selectedBrokerCode" class="form-control br-0">
+            <mat-option disabled value=''>Select broker code</mat-option>
+            <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
+              {{singleBrokerCode.brokerCode}}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-md-2 p-0">
+        <div class="form-group mb-0">
+          <mat-select (selectionChange)="changePlatform(selectedPlatform)" [(ngModel)]="selectedPlatform"
+                      class="form-control br-0">
+            <mat-option disabled value=''>Select platform</mat-option>
+            <mat-option value="1">NSE</mat-option>
+            <mat-option value="2">
+              BSE
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
     </div>
+
+  </div>
+  <div class="col-md-12 client-mapping">
+    <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+           class="mt-8 skeletonAnimation"
+           id="table-low" mat-table matSort>
+      <ng-container matColumnDef="weight">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="clientCode"> Client code</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.clientCode}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="symbol">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantName"> Investor name
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.firstApplicantName}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="pan">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantPan"> First holder PAN
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.firstApplicantPan}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="hold">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="holdingTypeName"> Holding nature</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.holdingTypeName}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tstatus">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxStatus"> Tax status</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{(element.taxDesc) ? element.taxDesc : element.taxStatus}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status</th>
+        <td *matCellDef="let element" class="br text-success" mat-cell>
+          <div class="bar">
+            {{isLoading ? '' : (element.activationStatus == 'NO') ? 'INACTIVE' : 'INVESTMENT READY'}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="map">
+        <th *matHeaderCellDef mat-header-cell> Map</th>
+        <td *matCellDef="let element" class="text-center" mat-cell>
+          <div class="bar">
+            <button (click)="unmapClient(element,'CLIENT')" *ngIf="type=='1' && element.id"
+                    class="primary-sm text-white bg-primary br-0"
+                    mat-stroked-button>UNMAP
+            </button>
+            <button (click)="openAddMappiing(element,'')" *ngIf="type=='2' && element.id"
+                    class="primary-sm text-white bg-primary br-0"
+                    mat-stroked-button>MAP
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
+         class="d-flex flex-column align-items-center pt-44">
+      <img class="width300" src="assets/images/svg/noDataFound.svg">
+      <h4 class="pt-12">{{noData}}</h4>
+      <button *ngIf="noData=='No credentials found'"
+              [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
+              class="btn-primary addon v-middle"
+              mat-stroked-button>
+        ADD NEW
+      </button>
+    </div>
+  </div>
 </div>

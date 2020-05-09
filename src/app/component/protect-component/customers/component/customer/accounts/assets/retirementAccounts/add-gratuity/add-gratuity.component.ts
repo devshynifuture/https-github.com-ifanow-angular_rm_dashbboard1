@@ -4,12 +4,13 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-gratuity',
   templateUrl: './add-gratuity.component.html',
@@ -50,9 +51,10 @@ export class AddGratuityComponent implements OnInit {
   maxDate:Date = new Date();
   nomineesListFM:any =[];
   callMethod:any;
+  bankList:any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public event: EventService,  public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -74,6 +76,7 @@ export class AddGratuityComponent implements OnInit {
     }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.bankList = this.enumService.getBank();
   }
  
 
@@ -251,7 +254,7 @@ addNewNominee(data) {
       nameOfOrg: [(data == undefined) ? '' : data.organizationName,],
       yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt,],
       resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt,],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
+      bankAcNo: [(data == undefined) ? '' : data.userBankMappingId,],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       
@@ -320,6 +323,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
         yearOfReceipt: this.gratuity.controls.yearOfReceipt.value,
         reasonOfReceipt: this.gratuity.controls.resonOfRecipt.value,
         bankAccountNumber: this.gratuity.controls.bankAcNo.value,
+        userBankMappingId: this.gratuity.controls.bankAcNo.value,
         description: this.gratuity.controls.description.value,
         nomineeList: this.gratuity.value.getNomineeName,
         id: this.gratuity.controls.id.value
@@ -381,4 +385,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
 
   }
+
+    //link bank
+    openDialog(eventData): void {
+      const dialogRef = this.dialog.open(LinkBankComponent, {
+        width: '50%',
+        data: this.bankList
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        setTimeout(() => {
+          this.bankList = this.enumService.getBank();
+        }, 5000);
+      })
+  
+    }
+  //link bank
 }

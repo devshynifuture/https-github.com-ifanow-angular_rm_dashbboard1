@@ -80,7 +80,7 @@
             </div>
         </div>
     </div>
-    <div class="row pt-28" [hidden]="arnRiaFG.get('arnOrRia').value != 2">
+    <div class="row pt-28" [hidden]="arnRiaFG.get('arnOrRia').value != 1">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">EUIN</h5>
         </div>
@@ -110,6 +110,7 @@
                     <mat-error *ngIf="arnRiaFG.get('commencementDate').errors?.matDatepickerMax">
                         Please enter valid date</mat-error>
                 </mat-form-field>
+                <button (click)="clearDate('commencementDate')">clear</button>
             </div>
         </div>
     </div>
@@ -129,6 +130,7 @@
                     <mat-error *ngIf="arnRiaFG.get('renewalDate').errors?.matDatepickerMin">
                         Please enter valid date</mat-error>
                 </mat-form-field>
+                <button (click)="clearDate('renewalDate')">clear</button>
             </div>
         </div>
     </div>

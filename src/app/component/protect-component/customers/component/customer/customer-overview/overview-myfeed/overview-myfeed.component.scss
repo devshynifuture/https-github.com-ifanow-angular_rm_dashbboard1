@@ -178,3 +178,10 @@
 ::ng-deep .matToggleToggle button {
     height: 30px !important;
 }
+
+.sticky-top {
+    //position: -webkit-sticky;
+    position: sticky;
+    top: 140px;
+    z-index: 1020;
+}

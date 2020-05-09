@@ -153,7 +153,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.contactDetails = this.fb.group({
       panNumber: [!data ? '' : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : data.clientName, [Validators.required]],
-      maidenName: [!data ? '' : data.maidenName, [Validators.required]],
+      // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dob: [!data ? '' : data.dob, [Validators.required]],

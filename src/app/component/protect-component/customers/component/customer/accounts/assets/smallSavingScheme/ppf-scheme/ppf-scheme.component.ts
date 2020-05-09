@@ -11,6 +11,7 @@ import { ExcelService } from '../../../../excel.service';
 import { DetailedPpfComponent } from './detailed-ppf/detailed-ppf.component';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -29,7 +30,11 @@ export class PPFSchemeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   SumOfAmountInvested: any;
   SumOfCurrentValue: any;
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  fileUploadData: any;
+  file: any;
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
+    private fileUpload : FileUploadServiceService,
+    public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
@@ -41,6 +46,18 @@ export class PPFSchemeComponent implements OnInit {
   Excel(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
+  }
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
   }
 
   pdf(tableTitle){

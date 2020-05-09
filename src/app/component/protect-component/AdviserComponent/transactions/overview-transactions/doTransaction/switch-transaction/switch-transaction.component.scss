@@ -18,3 +18,7 @@
 .mat-spinner circle {
     stroke: #008FFF;
 }
+
+::ng-deep .inputPaddNone .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+}

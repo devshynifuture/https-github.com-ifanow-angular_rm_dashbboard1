@@ -88,6 +88,8 @@ export class OverviewTransactionsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getAllTransactionList();
+          this.transactionList = undefined;
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -141,6 +143,11 @@ export class OverviewTransactionsComponent implements OnInit {
 
   getAllTransactionList() {
     this.isLoading = true
+    // this.transactionList = [
+    //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
+    //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
+    //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined }
+    // ]
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: null,

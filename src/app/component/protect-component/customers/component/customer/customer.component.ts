@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../../../auth-service/authService';
-import { DialogContainerComponent } from '../../../../../common/dialog-container/dialog-container.component';
-import { EventService } from '../../../../../Data-service/event.service';
-import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
-import { PeopleService } from '../../../PeopleComponent/people.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../../../../auth-service/authService';
+import {DialogContainerComponent} from '../../../../../common/dialog-container/dialog-container.component';
+import {EventService} from '../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {DynamicComponentService} from '../../../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../../../animation/animation';
+import {PeopleService} from '../../../PeopleComponent/people.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-customer',
@@ -15,8 +16,9 @@ import { PeopleService } from '../../../PeopleComponent/people.service';
   //templateUrl: './customer.mobile.component.html',
   //  templateUrl: './goal.mobile.component.html',
   //templateUrl: './transactions-mob.component.html',
-    //templateUrl: './profile-mobile.html',
-   //templateUrl: './document-mob.html',
+  // templateUrl: './profile-mobile.html',
+  //templateUrl: './document-mob.html',
+  //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
@@ -27,13 +29,14 @@ import { PeopleService } from '../../../PeopleComponent/people.service';
 })
 export class CustomerComponent extends DialogContainerComponent implements OnInit {
 
-
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   status = false;
   loading: boolean;
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
-    private authService: AuthService, private peopleService: PeopleService) {
+              protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
+              private authService: AuthService, private peopleService: PeopleService, private _formBuilder: FormBuilder) {
     super(eventService, subinject, dynamicComponentService);
     if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.clientId) {
       console.log(router.getCurrentNavigation().extras.state);
@@ -74,6 +77,12 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   ngOnInit() {
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
     // const performance = Performance().prototype;
     // performance.mark('');
     // performance.toJSON();
@@ -101,6 +110,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.clientId = AuthService.getClientId();
 
   }
+
   getClientData(data) {
     const obj = {
       clientId: data.clientId
@@ -115,10 +125,11 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
         }
       },
       err => {
-        console.error(err)
+        console.error(err);
       }
     );
   }
+
   clickEvent(value) {
     this.value = value;
   }

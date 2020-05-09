@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatTableDataSource } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FileUploadService } from 'src/app/services/file-upload.service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
-import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FileUploadService} from 'src/app/services/file-upload.service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 
 @Component({
   selector: 'app-verify-member',
@@ -41,25 +40,25 @@ export class VerifyMemberComponent implements OnInit {
   advisorId: any;
   bankDetails: any;
   selectedBank: any;
-  isLoadingUcc: boolean = false;
-  isLoadingBank: boolean = false;
-  showUploadSection: boolean = false;
+  isLoadingUcc = false;
+  isLoadingBank = false;
+  showUploadSection = false;
   madateResponse: any;
   file: any;
-  clientCodeDataShow: boolean = false;
+  clientCodeDataShow = false;
   errorMsg: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    private onlineTransact: OnlineTransactionService, public eventService: EventService) {
-    this.advisorId = AuthService.getAdvisorId()
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
     this.getdataForm('');
-    this.showUploadSection = false
-    this.clientCodeDataShow = false
+    this.showUploadSection = false;
+    this.clientCodeDataShow = false;
   }
 
   Close(flag) {
@@ -84,7 +83,7 @@ export class VerifyMemberComponent implements OnInit {
     this.generalDetails.controls.toDate.setValue(this.Todate);
   }
   getBankDetails() {
-    this.isLoadingBank = true
+    this.isLoadingBank = true;
     const obj = {
       tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId
     };
@@ -95,9 +94,9 @@ export class VerifyMemberComponent implements OnInit {
     );
   }
   getBankDetailsNSERes(data) {
-    this.isLoadingBank = false
-    console.log(data)
-    this.bankDetails = data
+    this.isLoadingBank = false;
+    console.log(data);
+    this.bankDetails = data;
   }
   getdataForm(data) {
 
@@ -108,8 +107,8 @@ export class VerifyMemberComponent implements OnInit {
       // taxStatus: [data ? '' : data.ownerName, [Validators.required]],
       fromDate: [data ? '' : data.fromDate, [Validators.required]],
       toDate: [data ? '' : data.toDate, [Validators.required]],
-      mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(1)]],
-      selectDateOption: [data ? '' : data.mandateAmount, [Validators.required]],
+      mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(100)]],
+      selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
     });
   }
 
@@ -161,7 +160,7 @@ export class VerifyMemberComponent implements OnInit {
   }
 
   ownerDetail() {
-    this.isLoadingUcc = true
+    this.isLoadingUcc = true;
     const obj = {
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
@@ -171,13 +170,13 @@ export class VerifyMemberComponent implements OnInit {
     this.onlineTransact.getClientCodes(obj).subscribe(
       data => {
         if (data) {
-          this.isLoadingUcc = false
+          this.isLoadingUcc = false;
           console.log(data);
           this.clientCodeData = data;
-          console.log('clientCodeData', this.clientCodeData)
+          console.log('clientCodeData', this.clientCodeData);
         } else {
-          this.isLoadingUcc = false
-          this.clientCodeDataShow = true
+          this.isLoadingUcc = false;
+          this.clientCodeDataShow = true;
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -207,8 +206,8 @@ export class VerifyMemberComponent implements OnInit {
 
   selectIINUCC(clientCode) {
     this.detailsIIN = clientCode;
-    console.log('fg', this.detailsIIN)
-    this.getBankDetails()
+    console.log('fg', this.detailsIIN);
+    this.getBankDetails();
     //  this.getBankMandate();
   }
 
@@ -240,17 +239,17 @@ export class VerifyMemberComponent implements OnInit {
     this.selectedMandate = mandate;
   }
   selectBank(bank) {
-    this.dataSource = []
-    this.selectedBank = bank
-    this.selectedMandate = bank
+    this.dataSource = [];
+    this.selectedBank = bank;
+    this.selectedMandate = bank;
     this.dataSource.push(bank);
     this.showMandateTable = true;
-    console.log(this.selectedBank)
+    console.log(this.selectedBank);
   }
 
   createMandates() {
     if (!this.selectedMandate) {
-      this.selectedMandate = {}
+      this.selectedMandate = {};
     }
     if (this.generalDetails.invalid) {
       this.generalDetails.markAllAsTouched();
@@ -269,8 +268,8 @@ export class VerifyMemberComponent implements OnInit {
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
         this.eventService.showErrorMessage(error.message);
-        console.log('err', error)
-        this.errorMsg = error
+        console.log('err', error);
+        this.errorMsg = error;
       }
     );
   }
@@ -279,11 +278,11 @@ export class VerifyMemberComponent implements OnInit {
     console.log('res mandate', data);
 
     if (data) {
-      this.madateResponse = data
+      this.madateResponse = data;
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');
       // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
 
-      this.showUploadSection = true
+      this.showUploadSection = true;
     }
   }
   getFileDetails(e, flag) {
@@ -295,7 +294,7 @@ export class VerifyMemberComponent implements OnInit {
       tpUserRequestId: 1,
       documentType: flag,
       tpMandateDetailId: this.madateResponse.id,
-      //clientCode: this.detailsIIN.clientCode
+      // clientCode: this.detailsIIN.clientCode
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {

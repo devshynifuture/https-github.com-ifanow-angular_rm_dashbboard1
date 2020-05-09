@@ -39,6 +39,10 @@ export class OverviewProfileComponent implements OnInit {
 
   ngOnInit() {
     this.clientData = AuthService.getClientData();
+    this.enumDataService.getRoles();
+    this.enumDataService.getProofType();
+    this.enumDataService.getBank();
+    this.enumDataService.getClientRole();
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
     this.getFamilyMembersList(this.clientData);
@@ -75,9 +79,14 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
-        this.familyMemberList = data;
-        this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
-        console.log(this.familyMemberList);
+        if (data && data.length > 0) {
+          this.familyMemberList = data;
+          this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+          console.log(this.familyMemberList);
+        }
+        else {
+          this.familyMemberList = undefined;
+        }
       },
       err => {
         console.error(err)
@@ -183,7 +192,12 @@ export class OverviewProfileComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteFamilyMember(data.id).subscribe(
+        let obj =
+        {
+          "familyMemberId": data.familyMemberId,
+          "userId": data.familyMemberId
+        }
+        this.cusService.deleteFamilyMember(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();

@@ -1,17 +1,18 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
-import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {Router} from '@angular/router';
-import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
-import {DynamicComponentService} from '../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
-import {EnumDataService} from '../../../services/enum-data.service';
-import {SettingsService} from '../../protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from 'src/app/services/util.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
+import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
+import { DynamicComponentService } from '../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
+import { EnumDataService } from '../../../services/enum-data.service';
+import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from 'src/app/services/util.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -49,41 +50,43 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     protected dynamicComponentService: DynamicComponentService,
     private enumDataService: EnumDataService,
     private settingsService: SettingsService,
+    private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
     super(eventService, subinject, dynamicComponentService);
+
   }
 
-  getClientList(data) {
-    if (this.myControl.value.length == 0) {
-      this.showDefaultDropDownOnSearch = false;
-      this.clientList = undefined
-      return;
-    }
-    if (this.myControl.value.length < 3) {
-      return;
-    }
-    const obj = {
-      advisorId: this.advisorId,
-      displayName: this.myControl.value
-    };
-    this.peopleService.getClientFamilyMemberList(obj).subscribe(
-      data => this.getClientListResponse(data)
-    );
-  }
+  // getClientList(data) {
+  //   if (this.myControl.value.length == 0) {
+  //     this.showDefaultDropDownOnSearch = false;
+  //     this.clientList = undefined
+  //     return;
+  //   }
+  //   if (this.myControl.value.length < 3) {
+  //     return;
+  //   }
+  //   const obj = {
+  //     advisorId: this.advisorId,
+  //     displayName: this.myControl.value
+  //   };
+  //   this.peopleService.getClientFamilyMemberList(obj).subscribe(
+  //     data => this.getClientListResponse(data)
+  //   );
+  // }
 
-  getClientListResponse(data) {
-    if (data) {
-      this.clientList = data;
-      this.showDefaultDropDownOnSearch = false
-    }
-    else {
-      this.clientList = undefined;
-      this.showDefaultDropDownOnSearch = true;
-    }
-  }
+  // getClientListResponse(data) {
+  //   if (data) {
+  //     this.clientList = data;
+  //     this.showDefaultDropDownOnSearch = false
+  //   }
+  //   else {
+  //     this.clientList = undefined;
+  //     this.showDefaultDropDownOnSearch = true;
+  //   }
+  // }
 
   getActiveLink(value) {
     let link = this.router.url.split('/')[2];
@@ -101,6 +104,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   selectClient(singleClientData) {
+    this.auth.setClientData(singleClientData);
     this.myControl.setValue(singleClientData.displayName)
     this.ngZone.run(() => {
       this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
@@ -111,11 +115,30 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
     this.onResize();
+    this.enumDataService.searchClientAndFamilymember();
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
     this.enumDataService.getDataForTaxMasterService();
     this.getOrgProfiles();
     this.getPersonalProfiles();
+    this.clientList = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(state => {
+          if (state) {
+            let list = this.enumDataService.getSearchData(state);
+            if (list.length == 0) {
+              this.showDefaultDropDownOnSearch = true;
+              return;
+            }
+            this.showDefaultDropDownOnSearch = false;
+            return this.enumDataService.getSearchData(state)
+          } else {
+            this.showDefaultDropDownOnSearch = false;
+            return this.enumDataService.getEmptySearchStateData();
+          }
+        }),
+      )
   }
 
 

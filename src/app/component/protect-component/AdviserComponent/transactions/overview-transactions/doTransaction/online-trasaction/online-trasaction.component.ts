@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
@@ -8,6 +8,9 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { Router } from '@angular/router';
 import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { startWith, map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -61,15 +64,34 @@ export class OnlineTrasactionComponent implements OnInit {
   transactionType: any;
   transactionData: any;
   clientCodeData: any;
+  filteredStates: any;
+  selectedClientOrFamily: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder,
-    private processTransaction: ProcessTransactionService, private router: Router) {
-      this.advisorId = AuthService.getAdvisorId();
+    private processTransaction: ProcessTransactionService, private router: Router, private enumDataService: EnumDataService) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.filteredStates = this.stateCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(state => {
+          if (state) {
+            let list = this.enumDataService.getSearchData(state);
+            if (list.length == 0) {
+              this.stateCtrl.setErrors({ invalid: true })
+            }
+            return this.enumDataService.getSearchData(state)
+          } else {
+            return this.enumDataService.getEmptySearchStateData();
+          }
+        }),
+      )
   }
-
+  stateCtrl = new FormControl('', [Validators.required]);
+  familyMemberList;
   @Input()
   set data(data) {
+    this.familyMemberList = this.enumDataService.getEmptySearchStateData();
     this.inputData = data;
     console.log('This is Input data of Online Transaction Component ', data);
 
@@ -87,10 +109,12 @@ export class OnlineTrasactionComponent implements OnInit {
     this.getdataForm(this.inputData);
     // this.getDefaultDetails(null)
   }
-
+  checkOwnerList(event) {
+    console.log(this.filteredStates)
+  }
   getDefaultDetails(platform) {
     console.log('onlineTransactionComponent platform: ', platform);
-
+    this.selectedClientOrFamily = platform.name;
     const obj = {
       advisorId: this.advisorId,
       familyMemberId: platform.familyMemberId,
@@ -123,7 +147,7 @@ export class OnlineTrasactionComponent implements OnInit {
   }
 
   showData(value) {
-    if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
+    if (this.stateCtrl.valid) {
       if (this.formStep == 'step-1') {
         if (this.noMapping == false && this.noSubBroker == false) {
           this.formStep = 'step-2';
@@ -133,7 +157,8 @@ export class OnlineTrasactionComponent implements OnInit {
           selectedFamilyMember: this.ownerData.ownerName.value,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
-          familyMemberId: this.familyMemberData.familyMemberId
+          familyMemberId: this.familyMemberData.familyMemberId,
+          defaultValue: value
         };
         this.openPurchaseTransaction(data.transactionType, data);
       }
@@ -152,7 +177,7 @@ export class OnlineTrasactionComponent implements OnInit {
 
   }
 
- 
+
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
@@ -194,7 +219,7 @@ export class OnlineTrasactionComponent implements OnInit {
   lisNominee(value) {
     this.showSpinnerOwner = false;
     if (value == null) {
-      this.transactionAddForm.get('ownerName').setErrors({ setValue: 'family member does not exist' });
+      this.stateCtrl.setErrors({ setValue: 'family member does not exist' });
       this.transactionAddForm.get('ownerName').markAsTouched();
     }
     console.log(value);
@@ -288,18 +313,19 @@ export class OnlineTrasactionComponent implements OnInit {
       return;
     }
     console.log(this.formStep);
-    if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
-      this.nomineesListFM.forEach(element => {
-        this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value);
+    if (this.stateCtrl.valid) {
+      this.familyMemberList.forEach(element => {
+        this.checkFamilyMem = element.name.includes(this.stateCtrl.value);
       });
-      if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
-        if (this.allData && this.allData.length > 0) {
-          this.formStep = 'step-2';
-        }
-        this.formStep = 'step-2';
-      } else if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
+      // if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
+      //   if (this.allData && this.allData.length > 0) {
+      //     this.formStep = 'step-2';
+      //   }
+      //   this.formStep = 'step-2';
+      // }
+      if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         const data = {
-          selectedFamilyMember: this.ownerData.ownerName.value,
+          selectedFamilyMember: this.stateCtrl.value,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
           familyMemberId: this.familyMemberData.familyMemberId

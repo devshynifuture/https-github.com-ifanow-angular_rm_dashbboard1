@@ -27,4 +27,8 @@ export class MathUtilService {
     }
     return text;
   }
+
+  static roundOffNumber(numberValue) {
+    return Math.round(numberValue);
+  }
 }

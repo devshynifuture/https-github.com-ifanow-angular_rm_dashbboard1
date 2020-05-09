@@ -4,12 +4,14 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS, MatSort, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatSort, MatInput, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 @Component({
   selector: 'app-add-epf',
   templateUrl: './add-epf.component.html',
@@ -59,9 +61,10 @@ export class AddEPFComponent implements OnInit {
   dataFM = [];
   familyList: any;
   flag: any;
+  bankList:any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
+  constructor(private event: EventService, private dateFormatPipe: DatePipe, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,  public dialog: MatDialog, private enumService: EnumServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -82,6 +85,7 @@ export class AddEPFComponent implements OnInit {
     }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.bankList = this.enumService.getBank();
   }
   
   nomineesList() {
@@ -126,12 +130,17 @@ lisNominee(value) {
   this.nomineesListFM = Object.assign([], value);
 }
 
+selectOwner:any;
 disabledMember(value, type) {
   this.callMethod = {
     methodName : "disabledMember",
     ParamValue : value,
     disControl : type
   }
+
+  setTimeout(() => {
+    this.selectOwner = this.nomineesListFM.filter((m)=> m.familyMemberId == this.epf.value.getCoOwnerName[0].familyMemberId)
+  }, 1000);
 }
 
 displayControler(con) {
@@ -280,7 +289,7 @@ addNewNominee(data) {
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       voluntaryContribution : [(data == undefined) ? '' : data.voluntaryContribution, [Validators.required]],
       EPFNo: [(data == undefined) ? '' : (data.epfNo),],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
+      bankAcNo: [(data == undefined) ? '' : data.userBankMappingId],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
@@ -348,9 +357,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         balanceAsOn: this.datePipe.transform(this.epf.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         epfNo: this.epf.controls.EPFNo.value,
         bankAccountNumber: this.epf.controls.bankAcNo.value,
+        userBankMappingId: this.epf.controls.bankAcNo.value,
         description: this.epf.controls.description.value,
         voluntaryContribution:parseInt(this.epf.controls.voluntaryContribution.value),
         nomineeList: this.epf.value.getNomineeName,
+        familyMemberDob: this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
+
         parentId:0,
         realOrFictitious:1,
         id: this.epf.controls.id.value
@@ -412,4 +424,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
+
+   //link bank
+   openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

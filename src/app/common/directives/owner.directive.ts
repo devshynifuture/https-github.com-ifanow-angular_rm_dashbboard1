@@ -32,8 +32,17 @@ export class OwnerDirective {
     return this.ownerData;
   }
   getListFamilyMem() {
+
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    // for development purpose
+
+
+    // this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+
+    // for development purpose
+    this.clientId = 15545;
+
+    console.log("client id inside owner directive:::", this.clientId);
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId

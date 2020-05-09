@@ -13,6 +13,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../assets/file-upload-service.service';
 
 
 @Component({
@@ -57,10 +58,14 @@ export class LiabilitiesComponent implements OnInit {
   filterForliabilities: any;
   advisorData: any;
   personalProfileData: any;
+  fileUploadData: any;
+  file: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
-    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService,private pdfGen :PdfGenService) {
+    public customerService: CustomerService,
+    private fileUpload : FileUploadServiceService,
+    public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService,private pdfGen :PdfGenService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -108,6 +113,18 @@ export class LiabilitiesComponent implements OnInit {
   //   this.footer.push(Object.assign(footerData))
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+  }
   Excel(tableTitle) {
     this.fragmentData.isSpinner = true;
     let rows = this.tableEl._elementRef.nativeElement.rows;

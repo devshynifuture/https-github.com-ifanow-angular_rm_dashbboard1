@@ -25,7 +25,12 @@
                     <button (click)="pdf('Bank accounts')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Bank accounts')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img src="assets/images/svg/up-down.svg" class="">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Bank A/c',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
@@ -173,7 +178,12 @@
                     <button (click)="pdf('Cash in hand')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Cash in hand')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <img src="assets/images/svg/up-down.svg" class="">
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Cash In Hand',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>

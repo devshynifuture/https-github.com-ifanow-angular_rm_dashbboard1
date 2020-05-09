@@ -13,6 +13,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-scss-scheme',
@@ -38,8 +39,14 @@ export class ScssSchemeComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
+  fileUploadData: any;
+  file: any;
 
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
+  constructor(private excel:ExcelGenService, 
+    private fileUpload : FileUploadServiceService,
+     private pdfGen:PdfGenService, public dialog: MatDialog, 
+     private eventService: EventService, private cusService: CustomerService, 
+     private subInjectService: SubscriptionInject) {
   }
 
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'mValue', 'desc', 'status', 'icons'];
@@ -49,6 +56,18 @@ export class ScssSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getScssSchemedata();
+  }
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
   }
 
   Excel(tableTitle){
