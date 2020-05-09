@@ -32,6 +32,9 @@ export class OverviewProfileComponent implements OnInit {
   clientData: any;
   Tab = "Tab1";
   letsideBarLoader: boolean;
+  adressFlag: boolean = true;
+  bankFlag: boolean;
+  dematFlag: boolean;
 
   // clientData;
 
@@ -99,6 +102,7 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   getAddressList(data) {
+    this.adressFlag = true;
     const obj = {
       userId: data.clientId,
       userType: data.userType
@@ -112,6 +116,7 @@ export class OverviewProfileComponent implements OnInit {
         else {
           this.addressList == undefined;
         }
+        this.adressFlag = false;
       },
       err => {
         console.error(err)
@@ -120,12 +125,14 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   getDematList(data) {
+    this.dematFlag = true;
     const obj = {
       userId: data.clientId,
       userType: data.userType
     };
     this.cusService.getDematList(obj).subscribe(
       data => {
+        this.dematFlag = false;
         console.log(data);
         if (data && data.length > 0) {
           this.dematList = data;
@@ -147,12 +154,14 @@ export class OverviewProfileComponent implements OnInit {
     this.clientOverviewData['age'] = age;
   }
   getBankList(data) {
+    this.bankFlag = true;
     const obj = {
       userId: data.clientId,
       userType: data.userType
     };
     this.cusService.getBankList(obj).subscribe(
       data => {
+        this.bankFlag = false
         console.log(data);
         if (data && data.length > 0) {
           this.bankList = data;
