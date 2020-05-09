@@ -16,6 +16,8 @@ export class MarketSummaryComponent implements OnInit {
   silverData: any;
   nifty500Data: any;
   letsideBarLoader: boolean;
+  deptDataFlag: boolean;
+  nifty500DataFlag: boolean;
 
   constructor(private cusService: CustomerService) { }
 
@@ -36,10 +38,12 @@ export class MarketSummaryComponent implements OnInit {
     )
   }
   getDeptData() {
+    this.deptDataFlag = true
     this.cusService.getDeptData().subscribe(
       data => {
         console.log(data);
         if (data) {
+          this.deptDataFlag = false;
           this.deptData = data;
           this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
           data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage)
@@ -77,10 +81,12 @@ export class MarketSummaryComponent implements OnInit {
     this.silverData = silver;
   }
   getNifty500Data() {
+    this.nifty500DataFlag = true;
     this.cusService.getNiftyData().subscribe(
       data => {
         console.log(data);
         if (data) {
+          this.nifty500DataFlag = false
           data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''))
           this.nifty500Data = data;
         }
