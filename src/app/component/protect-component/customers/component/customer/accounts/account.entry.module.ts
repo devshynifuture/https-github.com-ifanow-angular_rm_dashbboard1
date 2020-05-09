@@ -13,6 +13,7 @@ import { AddScripComponent } from './assets/asset-stocks/add-scrip/add-scrip.com
 import { StockScripLevelTransactionComponent } from './assets/asset-stocks/stock-scrip-level-transaction/stock-scrip-level-transaction.component';
 import { PortfolioFieldComponent } from './assets/asset-stocks/portfolio-field/portfolio-field.component';
 import { ScripFieldComponent } from './assets/asset-stocks/scrip-field/scrip-field.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 export const componentList = [
   UpperCustomerComponent,
   AddAssetStocksComponent,
@@ -32,6 +33,7 @@ export const componentList = [
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
+    CustomDirectiveModule,
     AccountCommonModule,
     AccountUpperSliderModule
   ],

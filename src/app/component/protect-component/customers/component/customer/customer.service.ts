@@ -684,6 +684,8 @@ export class CustomerService {
   getAdviceRealEstate(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_REALESTATE, data)
   }
+
+  
   getAdviceEpf(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_EPF, data)
   }
@@ -694,6 +696,11 @@ export class CustomerService {
     let httpParams;
     // = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.SCHEME_CHOICE, httpParams)
+  }
+
+  getFilterSchemeChoice(data) {
+    let httpParams = new HttpParams().set('query', data.name);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SCHEME_FILTER_CHOICE, httpParams)
   }
   getAdviceGratuity(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GRATUITY, data)
