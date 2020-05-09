@@ -276,6 +276,7 @@
                                     <div class="col-md-12 p-0">
                                         <div class=" text-center mt-20 h-300 bg-white">
                                             <img class="width300" src="assets/images/svg/noDataFound.svg">
+                                            <p class="f-18 f-600 mt-12"> No Data Found </p>
                                         </div>
                                     </div>
                                 </div>
@@ -300,6 +301,16 @@
                         <div class="col-md-5 pl-0">
                             <div class="b-a mt-20 bg-white">
                                 <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
+
+                                <div class="row">
+                                    <div class="col-md-12 p-0">
+                                        <div class=" text-center mt-20 h-300 ">
+                                            <img class="width300" src="assets/images/svg/noDataFound.svg">
+                                            <p class="f-18 f-600 mt-12"> No Data Found </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="highcharts-figure" id="piechartMutualFund"></div>
                             </div>
                         </div>
@@ -325,92 +336,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2 pt-4">
-                            <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
-                                        class="material-icons text-custom">
-                                        keyboard_arrow_down
-                                    </i></button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>Item 1</button>
-                                    <button mat-menu-item>Item 2</button>
-                                </mat-menu> -->
-                        </div>
-                        <div class="col-md-2 pt-4">
-                            <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
-                                        class="material-icons text-custom">
-                                        keyboard_arrow_down
-                                    </i></button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>Item 1</button>
-                                    <button mat-menu-item>Item 2</button>
-                                </mat-menu> -->
-                        </div>
+
+
                     </div>
                     <div class="row pt-20">
                         <div class="col-md-7 pl-8">
-                            <!-- <div class="row b-grey">
-                                    <div class="col-md-7 p-0 br-grey">
-                                        <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Description</h5>
-                                        <p class="m-0 p-4 pb-0">Aditya Birla Sun Life Frontline Equity Fund - Regular -
-                                            Growth
-                                            <span class="text-custom">987987/08</span>
-                                        </p>
-                                        <p class="m-0 p-4"><strong>MF</strong> Rahul Jain</p>
-                                    </div>
-                                    <div class="col-md-3 p-0 br-grey">
-                                        <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Date</h5>
-                                        <p class="m-0 p-4 pt-16">06/10/2019</p>
-                                    </div>
-                                    <div class="col-md-2 p-0">
-                                        <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Amount</h5>
-                                        <p class="m-0 text-danger p-4 pt-16">5,000</p>
-                                    </div>
-                                    <div class="col-md-7 p-0 br-grey">
 
-                                        <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
-                                            <span class="text-custom">09809809809</span>
-                                        </p>
-                                        <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
-                                    </div>
-                                    <div class="col-md-3 p-0 br-grey">
-
-                                        <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
-                                    </div>
-                                    <div class="col-md-2 p-0">
-
-                                        <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
-                                    </div>
-                                    <div class="col-md-7 p-0 br-grey">
-
-                                        <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
-                                            <span class="text-custom">09809809809</span>
-                                        </p>
-                                        <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
-                                    </div>
-                                    <div class="col-md-3 p-0 br-grey">
-
-                                        <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
-                                    </div>
-                                    <div class="col-md-2 p-0">
-
-                                        <p class="m-0 text-danger p-4 bt-grey pt-16">5,000</p>
-                                    </div>
-                                    <div class="col-md-7 p-0 br-grey">
-
-                                        <p class="m-0 p-4 pb-0 bt-grey">ICICI Bank FD
-                                            <span class="text-custom">09809809809</span>
-                                        </p>
-                                        <p class="m-0 p-4"><strong>FD</strong> Rahul Jain</p>
-                                    </div>
-                                    <div class="col-md-3 p-0 br-grey">
-
-                                        <p class="m-0 p-4 bt-grey pt-16">06/10/2019</p>
-                                    </div>
-                                    <div class="col-md-2 p-0">
-
-                                        <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
-                                    </div>
-                                </div> -->
                             <table mat-table [dataSource]="cashFlowViewDataSource" id="table-low" class="mt-8" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="cashflowFlag">
                                 <!-- Name Column -->
                                 <ng-container matColumnDef="description">
@@ -449,6 +380,15 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
+
+                            <div class="row">
+                                <div class="col-md-12 p-0">
+                                    <div class=" text-center mt-20 h-300 bg-white">
+                                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                                        <p class="f-18 f-600 mt-12"> No Data Found </p>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="col-md-5">
