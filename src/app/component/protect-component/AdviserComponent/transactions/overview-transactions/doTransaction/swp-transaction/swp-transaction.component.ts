@@ -68,7 +68,7 @@ export class SwpTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private processTransaction: ProcessTransactionService, private fb: FormBuilder,
+              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
               private eventService: EventService) {
   }
 

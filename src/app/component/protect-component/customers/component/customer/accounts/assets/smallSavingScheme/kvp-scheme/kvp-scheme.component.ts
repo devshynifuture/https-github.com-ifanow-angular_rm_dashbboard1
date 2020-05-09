@@ -123,7 +123,7 @@ export class KvpSchemeComponent implements OnInit {
         UtilService.checkStatusId(this.datasource.filteredData);
         this.sumOfCurrentValue = data.sumOfCurrentValue;
         this.sumOfAmountInvested = data.sumOfAmountInvested;
-        this.sumOfmaturityValue = data.sumOfmaturityValue;
+        this.sumOfmaturityValue = data.sumOfMaturityValue;
         this.kvpData = data;
       }
     }  else {

@@ -250,7 +250,7 @@
                         Purchase value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
-                        <div class="bar" *ngIf="element.purchaseValue">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span> </div>
+                        <div class="bar" ><div *ngIf="element.purchaseValue">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span> </div></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br proximaFont amt text-right f-600 p-8">
                         <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther" appFormatNumber>{{sumOfPurchaseValueOther}}</span></div>

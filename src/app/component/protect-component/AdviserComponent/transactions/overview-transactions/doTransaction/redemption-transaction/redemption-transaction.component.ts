@@ -64,7 +64,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private fb: FormBuilder, private eventService: EventService,
-              private processTransaction: ProcessTransactionService) {
+              public processTransaction: ProcessTransactionService) {
   }
 
   @Output() changedValue = new EventEmitter();

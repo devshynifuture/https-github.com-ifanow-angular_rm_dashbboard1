@@ -23,7 +23,7 @@
                     <input #searchClient (input)="checkOwnerList($event)" [matAutocomplete]="auto1" aria-label="client"
                            class="form-control pl-8" [formControl]="stateCtrl" matInput
                            appPrefixFocusDirective placeholder="Start typing to see investor names">
-                    <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-autocomplete #auto1="matAutocomplete" autoFocus>
                       <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of filteredStates | async"
                                   [value]="f.name">
                         <!-- <span>{{f.name}}</span> -->

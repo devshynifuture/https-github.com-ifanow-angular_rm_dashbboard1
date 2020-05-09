@@ -49,7 +49,6 @@ export class SipTransactionComponent implements OnInit {
   existingSchemeList = [];
   scheme: any;
   navOfSelectedScheme: any;
-  maiSchemeList: any;
   reInvestmentOpt = [];
   getDataSummary: any;
   folioList: any;
@@ -58,7 +57,7 @@ export class SipTransactionComponent implements OnInit {
   sipFrequency: any;
   dateDisplay: any;
   dates: any;
-  showSpinner = false;
+  showSchemeSpinner = false;
   mandateDetails: any;
   frequency: any;
   fre: any;
@@ -78,7 +77,7 @@ export class SipTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private processTransaction: ProcessTransactionService, private fb: FormBuilder,
+              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
               private eventService: EventService) {
   }
 
@@ -145,7 +144,6 @@ export class SipTransactionComponent implements OnInit {
         if (this.existingSchemeList && this.existingSchemeList.length > 0) {
           this.getExistingSchemesRes(this.existingSchemeList);
         } else {
-          this.showSpinner = true;
           this.getExistingScheme();
         }
       }
@@ -163,7 +161,7 @@ export class SipTransactionComponent implements OnInit {
       return;
     }
     if (this.sipTransaction.get('schemeSip').invalid) {
-      this.showSpinner = false;
+      this.showSchemeSpinner = false;
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
       // if scheme not present then min amt is 0
@@ -182,15 +180,14 @@ export class SipTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
     if (data.length > 2) {
-      this.showSpinner = true;
       if (this.selectScheme == 2) {
         // this.getNewSchemesRes([]);
-
+        this.showSchemeSpinner = true;
         this.onlineTransact.getNewSchemes(obj).subscribe(
           responseData => {
             this.getNewSchemesRes(responseData, data);
           }, (error) => {
-            this.showSpinner = false;
+            this.showSchemeSpinner = false;
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
@@ -203,7 +200,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getNewSchemesRes(responseData, inputData) {
-    this.showSpinner = false;
+    this.showSchemeSpinner = false;
     console.log('new schemes', responseData);
     this.schemeList = responseData;
     if (this.sipTransaction.controls.schemeSip.value && this.sipTransaction.controls.schemeSip.value.length > 0) {
@@ -214,6 +211,8 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getExistingScheme() {
+    this.showSchemeSpinner = true;
+
     const obj = {
       bseOrderType: 'SIP',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -227,7 +226,7 @@ export class SipTransactionComponent implements OnInit {
     };
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data), (error) => {
-        this.showSpinner = false;
+        this.showSchemeSpinner = false;
         this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
         this.sipTransaction.get('schemeSip').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
@@ -237,7 +236,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getExistingSchemesRes(data) {
-    this.showSpinner = false;
+    this.showSchemeSpinner = false;
     this.existingSchemeList = data;
     this.schemeList = this.existingSchemeList;
     this.sipTransaction.controls.schemeSip.setValue('');
@@ -250,7 +249,7 @@ export class SipTransactionComponent implements OnInit {
     // this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     Object.assign(this.transactionSummary, {aggregatorType: this.platformType});
-    if (this.selectScheme == 1) {
+    if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
     }
     if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
@@ -273,8 +272,13 @@ export class SipTransactionComponent implements OnInit {
 
   }
 
+
   selectedScheme(scheme) {
     this.scheme = scheme;
+    this.folioList = [];
+    this.reInvestmentOpt = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -292,7 +296,6 @@ export class SipTransactionComponent implements OnInit {
 
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data);
-    this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.setMinAmount();
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
@@ -401,7 +404,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.sipTransaction.controls.investmentAccountSelection.reset();
+    this.sipTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   getMandateDetails() {
@@ -437,6 +440,7 @@ export class SipTransactionComponent implements OnInit {
           this.getFoliosAmcWiseRes(data);
           this.setMinAmount();
         }, (error) => {
+          this.showSpinnerFolio = false;
           this.sipTransaction.get('folioSelection').setValue(2);
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
@@ -451,6 +455,7 @@ export class SipTransactionComponent implements OnInit {
           this.getFoliosAmcWiseRes(data);
           this.setMinAmount();
         }, (error) => {
+          this.showSpinnerFolio = false;
           this.sipTransaction.get('folioSelection').setValue(2);
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
