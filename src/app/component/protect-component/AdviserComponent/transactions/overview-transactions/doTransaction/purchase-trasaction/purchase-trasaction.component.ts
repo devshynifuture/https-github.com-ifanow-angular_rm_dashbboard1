@@ -576,7 +576,9 @@ export class PurchaseTrasactionComponent implements OnInit {
         nsePaymentMode: null,
         bankDetailId: null,
         isException: true,
-        childTransactions: []
+        childTransactions: [],
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.mandateId = (this.selectedMandate == undefined) ? null : this.selectedMandate.id;
