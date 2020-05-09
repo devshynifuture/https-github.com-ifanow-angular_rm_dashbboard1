@@ -17,7 +17,7 @@ import {map, startWith} from 'rxjs/operators';
 export class StpTransactionComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & PROCEED',
+    text: 'TRANSACT NOW',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -511,7 +511,7 @@ export class StpTransactionComponent implements OnInit {
       }
       const tenure = this.stpTransaction.controls.tenure.value;
       const installment = this.stpTransaction.controls.installment.value;
-      obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+      obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
       console.log('json stp', obj);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
@@ -585,7 +585,7 @@ export class StpTransactionComponent implements OnInit {
         };
         const tenure = this.stpTransaction.controls.tenure.value;
         const installment = this.stpTransaction.controls.installment.value;
-        obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+        obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
         console.log(this.childTransactions);
         this.schemeList = [];

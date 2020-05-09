@@ -53,7 +53,7 @@ export class TransactionSummaryComponent implements OnInit {
 
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
               private subInjectService: SubscriptionInject, public dialog: MatDialog,
-              private customerService: CustomerService, private eventService: EventService, ) {
+              private customerService: CustomerService, private eventService: EventService,) {
   }
 
   showPlatform = false;
@@ -152,7 +152,7 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   openUmrn(): void {
-    this.getNSEAchmandate();
+    this.getMandateDetails();
     const dialogRef = this.dialog.open(UmrnPopUpComponent, {
       width: '470px',
       data: {mandate: this.achMandateNSE, animal: this.element}
@@ -167,18 +167,18 @@ export class TransactionSummaryComponent implements OnInit {
     });
   }
 
-  getNSEAchmandate() {
+  getMandateDetails() {
     const obj1 = {
       tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
     };
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data), (error) => {
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
 
-  getNSEAchmandateRes(data) {
+  getMandateDetailsRes(data) {
     console.log('getNSEAchmandateRes', data);
     this.achMandateNSE = data;
   }
@@ -189,7 +189,8 @@ export class TransactionSummaryComponent implements OnInit {
     };
     this.onlineTransact.getBankDetailsNSE(obj).subscribe(
       data => this.getBankDetailsNSERes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.getBankDetailsNSERes(null);
+        // this.eventService.showErrorMessage(error);
       }
     );
   }

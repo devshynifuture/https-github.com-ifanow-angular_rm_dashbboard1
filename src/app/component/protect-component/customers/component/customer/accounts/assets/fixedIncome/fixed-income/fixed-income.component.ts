@@ -53,6 +53,8 @@ export class FixedIncomeComponent implements OnInit {
   dataList: any;
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
+  responseData: any;
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
@@ -84,6 +86,7 @@ export class FixedIncomeComponent implements OnInit {
 
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -92,7 +95,11 @@ export class FixedIncomeComponent implements OnInit {
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
     if(this.fileUploadData){
       this.file = fileName
-      this.fileUpload.uploadFile(fileName)
+      this.responseData = this.fileUpload.uploadFile(fileName)
+      if(this.responseData == true){
+        this.isLoadingUpload = false
+      }
+
     }
   }
   Excel(tableTitle) {

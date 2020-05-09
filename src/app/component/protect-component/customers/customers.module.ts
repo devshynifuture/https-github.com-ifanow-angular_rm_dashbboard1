@@ -17,6 +17,7 @@ import { AdviceEntryModule } from './component/customer/customer-activity/advice
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomerOverviewEntryModule } from './component/customer/customer-overview/customer-overview-entry-module';
 import { TransactionSuccessfulComponent } from './component/customer/transaction-successful/transaction-successful.component';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -43,7 +44,8 @@ import { TransactionSuccessfulComponent } from './component/customer/transaction
     CustomersRoutingModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    MatStepperModule
     // PlanModule
   ],
   exports: [],
