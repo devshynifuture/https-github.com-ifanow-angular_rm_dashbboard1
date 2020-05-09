@@ -6,7 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -184,13 +184,17 @@ export class SwpTransactionComponent implements OnInit {
     this.showSpinner = false;
     console.log('getExistingSchemesRes =', data);
     this.schemeList = data;
-    this.swpTransaction.controls.schemeSwp.setValue(this.swpTransaction.controls.schemeSwp.value);
+    this.swpTransaction.controls.schemeSwp.setValue('');
 
   }
 
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.showUnits = true;
+    this.folioList = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
+    this.swpFrequency = [];
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -239,7 +243,7 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.swpTransaction.controls.investmentAccountSelection.reset();
+    this.swpTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   selectedFolio(folio) {
@@ -267,10 +271,16 @@ export class SwpTransactionComponent implements OnInit {
 
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
-    this.swpFrequency = data;
-    this.swpFrequency = data.filter((element) => {
-      return element.frequency;
-    });
+    // this.swpFrequency = data;
+    this.swpFrequency = this.processTransaction.filterFrequencyList(data);
+    if (this.swpFrequency) {
+      this.swpFrequency.forEach(singleFrequency => {
+        if (singleFrequency.frequency == 'MONTHLY') {
+          this.swpTransaction.controls.frequency.setValue(singleFrequency.frequency);
+          this.selectedFrequency(singleFrequency);
+        }
+      });
+    }
   }
 
   selectedFrequency(getFrerq) {
@@ -347,11 +357,18 @@ export class SwpTransactionComponent implements OnInit {
     } else if (this.swpTransaction.get('employeeContry').invalid) {
       this.swpTransaction.get('employeeContry').markAsTouched();
       return;
-    } else if (this.swpTransaction.get('installment').invalid) {
+    } else if ((this.swpTransaction.get('tenure').value) != 3 && this.swpTransaction.get('installment').invalid) {
       this.swpTransaction.get('installment').markAsTouched();
       return;
     } else {
-      let obj = {
+      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
+      const tenure = this.swpTransaction.controls.tenure.value;
+      const noOfInstallments = this.swpTransaction.controls.installment.value;
+      const orderVal = this.swpTransaction.controls.employeeContry.value;
+      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
+
+      obj = {
+        ...obj,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
         holdingNature: this.getDataSummary.defaultClient.holdingType,
@@ -364,9 +381,6 @@ export class SwpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ''))),
-        noOfInstallments: this.swpTransaction.controls.installment.value,
-        frequencyType: this.frequency,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
         clientCode: this.getDataSummary.defaultClient.clientCode,
@@ -385,9 +399,6 @@ export class SwpTransactionComponent implements OnInit {
         obj.bankDetailId = this.bankDetails.id;
         // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
-      const tenure = this.swpTransaction.controls.tenure.value;
-      const installment = this.swpTransaction.controls.installment.value;
-      obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();

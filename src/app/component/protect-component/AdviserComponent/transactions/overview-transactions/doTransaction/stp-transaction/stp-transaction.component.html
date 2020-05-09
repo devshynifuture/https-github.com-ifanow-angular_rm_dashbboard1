@@ -202,7 +202,7 @@
                 <mat-select class="form-control" formControlName="frequency">
                   <mat-option value='' disabled>Select STP frequency</mat-option>
                   <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of switchFrequency"
-                              [value]="frequency.frequency">{{frequency.frequency}}
+                              [value]="frequency.frequency">{{frequency.frequencyName}}
                   </mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">

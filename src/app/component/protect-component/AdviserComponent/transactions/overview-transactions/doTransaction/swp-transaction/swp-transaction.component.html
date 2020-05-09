@@ -163,7 +163,7 @@
                 <mat-select class="form-control" formControlName="frequency">
                   <mat-option value='' disabled>Select SWP frequency</mat-option>
                   <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency"
-                              value="option">{{frequency.frequency}}
+                              [value]="frequency.frequency">{{frequency.frequencyName}}
                   </mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
@@ -236,7 +236,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="(swpTransaction.get('tenure').value) != 3" class="row">
           <div class="col-md-12 p-0 text-left">
             <h5 class="mb-8 pt-28  text-black">Enter installment</h5>
           </div>
