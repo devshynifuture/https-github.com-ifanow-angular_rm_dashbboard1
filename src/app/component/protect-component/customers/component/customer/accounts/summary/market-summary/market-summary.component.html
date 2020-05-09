@@ -69,8 +69,10 @@
         </div>
         <div class="col-md-3 relClass p-0">
             <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
-                <p [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}"
-                    class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
+                <span *ngIf="nifty500Data">
+                    <p [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}"
+                        class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
+                </span>
             </div>
         </div>
         <div class="col-md-4 text-right relClass p-0">
