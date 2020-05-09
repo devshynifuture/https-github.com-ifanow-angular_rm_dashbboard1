@@ -59,8 +59,6 @@ export class StpTransactionComponent implements OnInit {
   schemeListTransfer: any;
   schemeDetailsTransfer: any;
   schemeTransfer: any;
-  achMandateNSE: any;
-  mandateDetails: any;
   bankDetails: any;
   showSpinnerFolio = false;
   showSpinnerTrans = false;
@@ -117,30 +115,14 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
     // this.stpTransaction.controls.investor.reset();
-    this.getSchemeList();
+    if (!(this.existingSchemeList && this.existingSchemeList.length > 0)) {
+      this.getSchemeList();
+    }
     this.stpTransaction.controls.transferIn.reset();
   }
 
   onFolioChange(folio) {
     this.stpTransaction.controls.folioSelection.reset();
-  }
-
-  getMandateDetails() {
-    const obj1 = {
-      advisorId: this.getDataSummary.defaultClient.advisorId,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-    };
-    this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
-      }
-    );
-  }
-
-  getMandateDetailsRes(data) {
-    console.log('mandate details :', data);
-    this.mandateDetails = data;
   }
 
   getSchemeListTranfer(value) {
@@ -181,7 +163,11 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerTrans = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
-    this.stpTransaction.controls.transferIn.setValue(this.stpTransaction.controls.transferIn.value);
+    if (this.stpTransaction.controls.transferIn.valueChanges) {
+      this.stpTransaction.controls.transferIn.setValue(this.stpTransaction.controls.transferIn.value);
+    } else {
+      this.stpTransaction.controls.transferIn.setValue('');
+    }
 
   }
 
@@ -226,11 +212,7 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.existingSchemeList = data;
     console.log('data schemelist res', data);
-    if (this.stpTransaction.controls.schemeStp.value && this.stpTransaction.controls.schemeStp.value.length > 1) {
-      this.stpTransaction.controls.schemeStp.setValue(this.stpTransaction.controls.schemeStp.value);
-    } else {
-      this.stpTransaction.controls.schemeStp.setValue('');
-    }
+    this.stpTransaction.controls.schemeStp.setValue('');
 
   }
 
@@ -246,6 +228,7 @@ export class StpTransactionComponent implements OnInit {
   selectedSchemeTransfer(schemeTransfer) {
     this.showSpinnerTrans = true;
     this.schemeTransfer = schemeTransfer;
+    this.switchFrequency = [];
     Object.assign(this.transactionSummary, {schemeNameTranfer: schemeTransfer.schemeName});
     this.navOfSelectedScheme = schemeTransfer.nav;
     const obj1 = {
@@ -262,6 +245,8 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsTranferRes(data) {
+    console.log('getSchemeDetailsTranferRes detail : ', data);
+
     // this.maiSchemeList = data
     this.showSpinnerTrans = false;
     this.schemeDetailsTransfer = data[0];
@@ -274,9 +259,9 @@ export class StpTransactionComponent implements OnInit {
     if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
-    if (this.getDataSummary.defaultClient.aggregatorType == 2) {
-      this.getMandateDetails();
-    }
+    // if (this.getDataSummary.defaultClient.aggregatorType == 2) {
+    //   this.getMandateDetails();
+    // }
     this.getFrequency();
 
   }
@@ -292,6 +277,9 @@ export class StpTransactionComponent implements OnInit {
     this.scheme = scheme;
     this.showUnits = true;
     this.showSpinner = true;
+    this.folioList = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -357,10 +345,16 @@ export class StpTransactionComponent implements OnInit {
 
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
-    this.switchFrequency = data;
-    this.switchFrequency = data.filter((element) => {
-      return element.frequency;
-    });
+    // this.switchFrequency = data;
+    this.switchFrequency = this.processTransaction.filterFrequencyList(data);
+    if (this.switchFrequency) {
+      this.switchFrequency.forEach(singleFrequency => {
+        if (singleFrequency.frequency == 'MONTHLY') {
+          this.stpTransaction.controls.frequency.setValue(singleFrequency.frequency);
+          this.selectedFrequency(singleFrequency);
+        }
+      });
+    }
   }
 
   selectedFrequency(getFrerq) {
@@ -466,8 +460,13 @@ export class StpTransactionComponent implements OnInit {
       this.stpTransaction.get('installment').markAsTouched();
       return;
     } else {
-      let obj = {
+      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))));
+      const tenure = this.stpTransaction.controls.tenure.value;
+      const noOfInstallments = this.stpTransaction.controls.installment.value;
+      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
 
+      obj = {
+        ...obj,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
         holdingNature: this.getDataSummary.defaultClient.holdingType,
@@ -482,7 +481,6 @@ export class StpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))),
         toIsin: this.schemeDetailsTransfer.isin,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
@@ -492,8 +490,6 @@ export class StpTransactionComponent implements OnInit {
         buySellType: 'FRESH',
         dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
         amountType: 'Amount',
-        noOfInstallments: this.stpTransaction.controls.installment.value,
-        frequencyType: this.frequency,
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.stpTransaction.controls.employeeContry.value,
         bseDPTransType: 'PHYSICAL',
@@ -505,13 +501,10 @@ export class StpTransactionComponent implements OnInit {
         childTransactions: []
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
+        // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
         obj.bankDetailId = this.bankDetails.id;
         obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
-      const tenure = this.stpTransaction.controls.tenure.value;
-      const installment = this.stpTransaction.controls.installment.value;
-      obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
       console.log('json stp', obj);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
@@ -578,7 +571,7 @@ export class StpTransactionComponent implements OnInit {
           bankDetailId: this.bankDetails.id,
           toIsin: this.schemeDetailsTransfer.isin,
           schemeName: this.scheme.schemeName,
-          mandateId: (this.achMandateNSE) ? this.achMandateNSE.id : null,
+          // mandateId: (this.achMandateNSE) ? this.achMandateNSE.id : null,
           productDbId: this.schemeDetails.id,
           frequencyType: this.frequency,
           startDate: Number(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))),

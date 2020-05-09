@@ -203,7 +203,7 @@ export class SipTransactionComponent implements OnInit {
     this.showSchemeSpinner = false;
     console.log('new schemes', responseData);
     this.schemeList = responseData;
-    if (this.sipTransaction.controls.schemeSip.value && this.sipTransaction.controls.schemeSip.value.length > 0) {
+    if (this.sipTransaction.controls.schemeSip.value) {
       this.sipTransaction.controls.schemeSip.setValue(this.sipTransaction.controls.schemeSip.value);
     } else {
       this.sipTransaction.controls.schemeSip.setValue('');

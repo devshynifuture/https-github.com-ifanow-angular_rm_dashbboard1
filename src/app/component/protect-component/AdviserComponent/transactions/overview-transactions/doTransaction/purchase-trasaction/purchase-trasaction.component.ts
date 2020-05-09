@@ -528,19 +528,26 @@ export class PurchaseTrasactionComponent implements OnInit {
     return this.purchaseTransaction.controls;
   }
 
-  purchase() {
+  validateSinglePurchase() {
     if (this.purchaseTransaction.get('folioSelection').invalid) {
       this.purchaseTransaction.get('folioSelection').markAsTouched();
-      return;
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
     } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
       this.purchaseTransaction.get('reinvest').markAsTouched();
-      return;
     } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
       this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
+    } else if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2' && !this.selectedMandate) {
+      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
     } else {
+      return true;
+    }
+
+    return false;
+  }
+
+  purchase() {
+    if (this.validateSinglePurchase()) {
       const obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
@@ -589,6 +596,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'dismiss');
         }
       );
+
     }
   }
 

@@ -101,6 +101,7 @@ export class InsuranceComponent implements OnInit {
     this.generalInsuranceFlag = false;
   }
   fetchData(value,fileName) {
+    value = this.showInsurance+' Insurance';
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,

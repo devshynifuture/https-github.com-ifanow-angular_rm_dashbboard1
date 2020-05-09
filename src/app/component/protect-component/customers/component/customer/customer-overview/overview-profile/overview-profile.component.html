@@ -49,13 +49,13 @@
 
                     </div>
                 </div>
-
-                <div *ngIf="clientOverviewData" class="row">
-                    <div *ngIf="clientOverviewData.clientType==1" class="col-md-12">
+                <!-- *ngIf="clientOverviewData" -->
+                <div  class="row">
+                    <div class="col-md-12">
                         <div class="primary-border familyMemberBox mt-12">
                             <p class="memberName">Family members</p>
 
-                            <div class="memberSlider">
+                            <div class="memberSlider"  *ngIf="clientOverviewData.clientType > 0">
                                 <div *ngFor="let singleMembers of familyMemberList"
                                     class="memberList primary-border c-p">
                                     <img (click)="open('edit',singleMembers)" width="48px"

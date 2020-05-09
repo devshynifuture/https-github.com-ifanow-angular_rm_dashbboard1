@@ -165,8 +165,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox">
-                 <mat-list-item role="listitem" *ngFor="let item of reportFormat">
-                        <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}}
+                 <mat-list-item role="listitem" *ngFor="let item of financialYears">
+                        <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">{{'FY '+item.from+' - '+item.to}}
                         </mat-checkbox>
                     </mat-list-item>
             </div>
@@ -179,7 +179,7 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox">
                  <mat-list-item role="listitem" *ngFor="let item of reportFormat">
-                        <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}}
+                        <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}} 
                         </mat-checkbox>
                     </mat-list-item>
             </div>
@@ -238,8 +238,8 @@
             </mat-radio-group>
 
         </div>
-          <div class="col-md-6 pl-0" *ngIf=" _data.name=='CAPITAL GAIN REPORT'">
-            <h5 class="m-0 pb-8">grandfathering?</h5>
+          <div class="col-md-6 pl-0" *ngIf=" _data.name=='CAPITAL GAIN REPORT' && this.showGrandfathering">
+            <h5 class="m-0 pb-8">Grandfathering?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="grandfathering">
                 <mat-radio-button value="1"[ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==1,'text-primary':summaryFilerForm.get('grandfathering').value==1,'b-a':summaryFilerForm.get('grandfathering').value==2}">Yes</mat-radio-button>
                 <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==2,'text-primary':summaryFilerForm.get('grandfathering').value==2,'b-a':summaryFilerForm.get('grandfathering').value==1}">No</mat-radio-button>
