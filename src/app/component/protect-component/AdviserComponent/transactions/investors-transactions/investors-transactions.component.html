@@ -121,7 +121,9 @@
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">{{noData}}</h4>
                 <button *ngIf="noData=='No investors found'" mat-stroked-button class="btn-primary addon v-middle  "
-                    (click)="openTransaction()">
+                    >
+                    <!-- (click)="openTransaction()"for prod build -->
+
                     ADD NEW</button>
                 <button *ngIf="noData=='No credentials found'" mat-stroked-button class="btn-primary addon v-middle"
                     [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']">

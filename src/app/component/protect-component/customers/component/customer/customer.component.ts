@@ -77,12 +77,15 @@ firstFormGroup: FormGroup;
 
 
   ngOnInit() {
-     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+    //  this.firstFormGroup = this._formBuilder.group({
+    //   firstCtrl: ['', Validators.required]
+    // });
+    // this.secondFormGroup = this._formBuilder.group({
+    //   secondCtrl: ['', Validators.required]
+    // });
+    
+    // above code commeted for prod build
+
     // const performance = Performance().prototype;
     // performance.mark('');
     // performance.toJSON();
