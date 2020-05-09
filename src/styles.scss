@@ -2097,3 +2097,18 @@
 ngx-slick-carousel > .slick-disabled {
   display: none !important;
 }
+
+.downloadPdfIcon {
+  border: 1px solid #BCC6CA;
+    display: flex;
+    width: 42px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconBorderNone{
+  border: 1px solid #BCC6CA;
+  border-left: transparent;
+  border-right: transparent;
+}

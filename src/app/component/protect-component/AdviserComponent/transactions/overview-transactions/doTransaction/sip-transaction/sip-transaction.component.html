@@ -245,7 +245,7 @@
                 </mat-error>
                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.max)"
                            class="f-12 pt-4">
-                  {{mandateAmountErrorMessage}}
+                  Amount cannot be greater than mandate amount.
                 </mat-error>
               </mat-form-field>
             </div>

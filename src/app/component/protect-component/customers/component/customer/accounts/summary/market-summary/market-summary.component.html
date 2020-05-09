@@ -18,27 +18,37 @@
         </div>
     </div>
 </div>
-<div *ngIf="selectedVal=='Equities'">
+<div class="skeletonAnimation" *ngIf="selectedVal=='Equities'" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
     <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black roboto m-0 pl-4 pb-8 f-300">BSE Sensex</p>
+        <div class="col-md-5 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p class="text-black roboto m-0 pl-4 pb-8 f-300">BSE Sensex</p>
+            </div>
         </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="bscData" class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
-                {{bscData.change_in_percentage}}%</p>
+        <div class="col-md-3 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="bscData" class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
+                    {{bscData.change_in_percentage}}%</p>
+            </div>
         </div>
-        <div class="col-md-4 text-right p-0">
-            <p *ngIf="bscData" class="m-0 roboto text-black f-500">₹{{bscData.current_value}}</p>
+        <div class="col-md-4 relClass text-right p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="bscData" class="m-0 roboto text-black f-500">₹{{bscData.current_value}}</p>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black roboto m-0 pl-4 pb-8 f-300">Nifty 50</p>
+        <div class="col-md-5 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p class="text-black roboto m-0 pl-4 pb-8 f-300">Nifty 50</p>
+            </div>
         </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="nscData" class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': nscData.colourFlag,'text-danger': nscData.colourFlag==false}">
-                {{nscData.change_in_percentage}}%</p>
+        <div class="col-md-3 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="nscData" class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': nscData.colourFlag,'text-danger': nscData.colourFlag==false}">
+                    {{nscData.change_in_percentage}}%</p>
+            </div>
         </div>
         <div class="col-md-4 text-right p-0">
             <p *ngIf="nscData" class="m-0 roboto text-black f-500">₹{{nscData.current_value}}</p>
@@ -46,67 +56,96 @@
     </div>
 
     <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black m-0 roboto pl-4 pb-8 f-300">Nifty 500</p>
+        <div class="col-md-5 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p class="text-black m-0 roboto pl-4 pb-8 f-300">Nifty 500</p>
+            </div>
         </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="nifty500Data" [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}" class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
+        <div class="col-md-3 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="nifty500Data" [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}" class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
+            </div>
         </div>
-        <div class="col-md-4 text-right p-0">
-            <p *ngIf="nifty500Data" class="m-0 roboto text-black f-500">₹{{nifty500Data.current_value}}</p>
+        <div class="col-md-4 text-right relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="nifty500Data" class="m-0 roboto text-black f-500">₹{{nifty500Data.current_value}}</p>
+            </div>
         </div>
     </div>
 
 </div>
 <div *ngIf="selectedVal=='Debt'">
     <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black m-0 roboto pl-4 pb-8 f-300">Dept</p>
+        <div class="col-md-5 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p class="text-black m-0 roboto pl-4 pb-8 f-300">Dept</p>
+            </div>
         </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="deptData" class="m-0 roboto f-400" [ngClass]="{'greenColor-text': deptData.colourFlag,'text-danger': deptData.colourFlag==false}">
-                {{deptData.change_in_percentage}}%</p>
+        <div class="col-md-3 relClass p-0">
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="deptData" class="m-0 roboto f-400" [ngClass]="{'greenColor-text': deptData.colourFlag,'text-danger': deptData.colourFlag==false}">
+                    {{deptData.change_in_percentage}}%</p>
+            </div>
         </div>
         <div class="col-md-4 text-right p-0">
-            <p *ngIf="deptData" class="m-0 roboto text-black f-500">₹{{deptData.current_value}}</p>
+            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                <p *ngIf="deptData" class="m-0 roboto text-black f-500">₹{{deptData.current_value}}</p>
+            </div>
         </div>
-    </div>
 
-</div>
-<div *ngIf="selectedVal=='C&M'">
-    <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black m-0 roboto pl-4 pb-8 f-300">Gold (22 CARAT)</p>
-        </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="goldData" [ngClass]="{'greenColor-text': goldData.carat_22.colourFlag,'text-danger': goldData.carat_22.colourFlag==false}" class="m-0 f-400 roboto">{{goldData.carat_22.change_in_percentage}}%</p>
-        </div>
-        <div class="col-md-4 text-right p-0">
-            <p *ngIf="goldData" class="m-0 roboto text-black f-500">{{goldData.carat_22.current_value}}</p>
-        </div>
     </div>
+    <div *ngIf="selectedVal=='C&M'">
+        <div class="row">
+            <div class="col-md-5 p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p class="text-black m-0 roboto pl-4 pb-8 f-300">Gold (22 CARAT)</p>
+                </div>
+            </div>
+            <div class="col-md-3 p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p *ngIf="goldData" [ngClass]="{'greenColor-text': goldData.carat_22.colourFlag,'text-danger': goldData.carat_22.colourFlag==false}" class="m-0 f-400 roboto">{{goldData.carat_22.change_in_percentage}}%</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-right p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p *ngIf="goldData" class="m-0 roboto text-black f-500">{{goldData.carat_22.current_value}}</p>
+                </div>
+            </div>
+        </div>
 
-    <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black m-0 pl-4 roboto pb-8 f-300">Gold (24 CARAT)</p>
+        <div class="row">
+            <div class="col-md-5 p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p class="text-black m-0 pl-4 roboto pb-8 f-300">Gold (24 CARAT)</p>
+                </div>
+            </div>
+            <div class="col-md-3 p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p *ngIf="goldData" [ngClass]="{'greenColor-text': goldData.carat_24.colourFlag,'text-danger': goldData.carat_24.colourFlag==false}" class="m-0 roboto f-400 ">{{goldData.carat_24.change_in_percentage}}%</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-right p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p *ngIf="goldData" class="m-0 roboto text-black f-500">{{goldData.carat_24.current_value}}</p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="goldData" [ngClass]="{'greenColor-text': goldData.carat_24.colourFlag,'text-danger': goldData.carat_24.colourFlag==false}" class="m-0 roboto f-400 ">{{goldData.carat_24.change_in_percentage}}%</p>
-        </div>
-        <div class="col-md-4 text-right p-0">
-            <p *ngIf="goldData" class="m-0 roboto text-black f-500">{{goldData.carat_24.current_value}}</p>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-5 p-0">
-            <p class="text-black m-0 pl-4 roboto pb-8 f-300">Silver</p>
-        </div>
-        <div class="col-md-3 p-0">
-            <p *ngIf="silverData" [ngClass]="{'greenColor-text': silverData.colourFlag,'text-danger': silverData.colourFlag==false}" class="m-0 f-400 roboto">{{silverData.change_in_percentage}}%</p>
-        </div>
-        <div class="col-md-4 text-right p-0">
-            <p *ngIf="silverData" class="m-0 roboto text-black f-500">{{silverData.current_value}}</p>
+        <div class="row">
+            <div class="col-md-5 p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p class="text-black m-0 pl-4 roboto pb-8 f-300">Silver</p>
+                </div>
+            </div>
+            <div class="col-md-3 p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p *ngIf="silverData" [ngClass]="{'greenColor-text': silverData.colourFlag,'text-danger': silverData.colourFlag==false}" class="m-0 f-400 roboto">{{silverData.change_in_percentage}}%</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-right p-0">
+                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                    <p *ngIf="silverData" class="m-0 roboto text-black f-500">{{silverData.current_value}}</p>
+                </div>
+            </div>
         </div>
     </div>
-</div>

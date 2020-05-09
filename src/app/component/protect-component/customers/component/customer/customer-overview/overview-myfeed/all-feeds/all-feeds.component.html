@@ -6,8 +6,6 @@
                 <p class="m-0 roboto">Your personalized money feed is ready!</p>
             </div>
             <div class="scrolling_myFeed">
-
-
                 <!-- your account intro -->
                 <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
@@ -15,7 +13,6 @@
                             <h5 class="roboto m-0 ">Your account</h5>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
@@ -54,7 +51,6 @@
                                                 <span class="pointNumber" [style.background-color]="data.color"> </span>
                                                 <span class="f-14 mr-8" appFormatNumber>{{(data.y/chartTotal*100 | number : '0.0-2')}}</span>
                                                 <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
-                                                <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
                                             </li>
                                         </ul>
                                     </div>

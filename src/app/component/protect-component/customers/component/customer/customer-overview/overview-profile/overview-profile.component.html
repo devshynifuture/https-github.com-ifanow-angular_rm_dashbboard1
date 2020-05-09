@@ -3,14 +3,10 @@
         <div class="col-width-18 bg-grey lter">
 
             <ul class="vertical-menu  ">
-                <li>
+                <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
-
-                <li>
-                    <img class="mr-8" src="/assets/images/svg/user-icon.svg"> Family details
-                </li>
-                <li>
+                <li (click)="Tab='Tab2'" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
                 <li>
@@ -25,7 +21,7 @@
         </div>
 
 
-        <div class="col-width-79 pl-4">
+        <div *ngIf="Tab=='Tab1'" class="col-width-79 pl-4">
             <div class="bg-grey lter p-9 mt-20">
                 <div class="row">
                     <div class="col-md-10">
@@ -361,12 +357,14 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="Tab=='Tab2'" class="col-width-79 pl-4">
+            <app-overview-risk-profile></app-overview-risk-profile>
+        </div>
+        <!-- <div class="col-width-79 pl-4"> -->
 
-        <div class="col-width-79 pl-4">
+        <!-- step 1 -->
 
-            <!-- step 1 -->
-
-            <!-- <div class="row">
+        <!-- <div class="row">
           <div class="col-md-12">
               <h4 class="mb-28">Hi Rahul, welcome! </h4>
               <p class="mb-28">Please help us know about your family.</p>
@@ -375,9 +373,9 @@
       </div> -->
 
 
-            <!-- step 2 -->
+        <!-- step 2 -->
 
-            <!-- <div class="row">
+        <!-- <div class="row">
           <div class="col-md-9">
               <h5 class="mb-20 mt-20 f-500 roboto">Your risk profile helps us understand how much investment risk you can take.
               </h5>
@@ -441,9 +439,9 @@
           </div>
       </div> -->
 
-            <!-- step 3 -->
+        <!-- step 3 -->
 
-            <!-- <div class="row">
+        <!-- <div class="row">
           <div class="col-md-12 text-right mt-28">
               <button mat-button class="btn-primary-outline mr-20 riskBtn text-primary">Retake risk
                   assessment</button>
@@ -485,7 +483,7 @@
       </div> -->
 
 
-        </div>
+        <!-- </div>
 
     </div>
-</div>
+</div> -->
