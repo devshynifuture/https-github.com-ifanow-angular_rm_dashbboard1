@@ -330,7 +330,7 @@
           <div class="col-md-5 inputPaddNone p-0">
             <mat-form-field appearance="standard" floatLabel="never">
               <input #employeeContry class="form-control br-0 rupess" formControlName="installment"
-                     matInput maxlength="10" placeholder="Enter installment" type="text">
+                     [maxLength]="4" matInput maxlength="10" placeholder="Enter installment" type="text">
               <mat-error *ngIf="sipTransaction.get('installment').errors?.required" class="f-12 pt-4">
                 This field is required
               </mat-error>
