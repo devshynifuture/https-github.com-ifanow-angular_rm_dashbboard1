@@ -76,7 +76,8 @@
                         <div class="primary-border familyMemberBox mt-12">
                             <p class="memberName">Family members</p>
 
-                            <div class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                            <div [hidden]="(!letsideBarLoader && familyMemberList) || familyMemberList==undefined"
+                                class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                                 <div class="familyLoaderBox">
                                     <div class="relClass">
                                         <div class="bar"></div>
@@ -134,7 +135,8 @@
                                 </div>
                             </div>
 
-                            <div (click)="open('add',null)" class="addFamilyMember c-p primary-border-dash">
+                            <div (click)="open('add',null)" *ngIf="!letsideBarLoader"
+                                class="addFamilyMember c-p primary-border-dash">
                                 <i class=" material-icons text-primary ">
                                     add
                                 </i>
