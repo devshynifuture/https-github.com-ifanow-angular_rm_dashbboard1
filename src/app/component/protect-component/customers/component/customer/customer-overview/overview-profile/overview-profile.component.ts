@@ -31,6 +31,7 @@ export class OverviewProfileComponent implements OnInit {
   selectedDemat: any;
   clientData: any;
   Tab = "Tab1";
+
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
