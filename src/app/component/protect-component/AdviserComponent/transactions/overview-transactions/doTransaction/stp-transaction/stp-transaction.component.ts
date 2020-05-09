@@ -163,7 +163,11 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerTrans = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
-    this.stpTransaction.controls.transferIn.setValue(this.stpTransaction.controls.transferIn.value);
+    if (this.stpTransaction.controls.transferIn.valueChanges) {
+      this.stpTransaction.controls.transferIn.setValue(this.stpTransaction.controls.transferIn.value);
+    } else {
+      this.stpTransaction.controls.transferIn.setValue('');
+    }
 
   }
 
@@ -208,11 +212,7 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.existingSchemeList = data;
     console.log('data schemelist res', data);
-    if (this.stpTransaction.controls.schemeStp.value && this.stpTransaction.controls.schemeStp.value.length > 1) {
-      this.stpTransaction.controls.schemeStp.setValue(this.stpTransaction.controls.schemeStp.value);
-    } else {
-      this.stpTransaction.controls.schemeStp.setValue('');
-    }
+    this.stpTransaction.controls.schemeStp.setValue('');
 
   }
 
@@ -345,7 +345,7 @@ export class StpTransactionComponent implements OnInit {
 
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
-    this.switchFrequency = data;
+    // this.switchFrequency = data;
     this.switchFrequency = this.processTransaction.filterFrequencyList(data);
     if (this.switchFrequency) {
       this.switchFrequency.forEach(singleFrequency => {
@@ -460,8 +460,13 @@ export class StpTransactionComponent implements OnInit {
       this.stpTransaction.get('installment').markAsTouched();
       return;
     } else {
-      let obj = {
+      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))));
+      const tenure = this.stpTransaction.controls.tenure.value;
+      const noOfInstallments = this.stpTransaction.controls.installment.value;
+      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
 
+      obj = {
+        ...obj,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
         holdingNature: this.getDataSummary.defaultClient.holdingType,
@@ -476,7 +481,6 @@ export class StpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))),
         toIsin: this.schemeDetailsTransfer.isin,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
@@ -486,8 +490,6 @@ export class StpTransactionComponent implements OnInit {
         buySellType: 'FRESH',
         dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
         amountType: 'Amount',
-        noOfInstallments: this.stpTransaction.controls.installment.value,
-        frequencyType: this.frequency,
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.stpTransaction.controls.employeeContry.value,
         bseDPTransType: 'PHYSICAL',
@@ -503,9 +505,6 @@ export class StpTransactionComponent implements OnInit {
         obj.bankDetailId = this.bankDetails.id;
         obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
-      const tenure = this.stpTransaction.controls.tenure.value;
-      const installment = this.stpTransaction.controls.installment.value;
-      obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
       console.log('json stp', obj);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
