@@ -41,7 +41,38 @@
                         {{data.commencementDate | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-               
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.maturityDate | date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.maturityValue ? data.maturityValue:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Rate
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.rate ? data.rate:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        PO branch
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.postOfficeBranch ? data.postOfficeBranch:'-'}}
+                    </div>
+                </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         PO branch

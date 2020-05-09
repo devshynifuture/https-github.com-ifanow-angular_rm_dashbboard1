@@ -311,7 +311,7 @@ export class AllFeedsComponent implements OnInit {
           this.tabsLoaded.portfolioData.hasData = true;
           this.portFolioData = res;
   
-          this.chartData = [];
+          let chartData = [];
           let counter = 0;
           let othersData = {
             y: 0,
@@ -321,12 +321,12 @@ export class AllFeedsComponent implements OnInit {
               enabled: false
             }
           }
-          this.chartTotal = 1;
+          let chartTotal = 1;
           res.forEach(element => {
             if (element.investedAmount > 0) {
-              this.chartTotal += element.investedAmount;
+              chartTotal += element.investedAmount;
               if (counter < 4) {
-                this.chartData.push({
+                chartData.push({
                   y: element.investedAmount,
                   name: element.assetTypeString,
                   color: AppConstants.DONUT_CHART_COLORS[counter],
@@ -340,11 +340,15 @@ export class AllFeedsComponent implements OnInit {
               counter++;
             }
           });
-          this.chartTotal -= 1;
+          chartTotal -= 1;
           if (counter > 4) {
-            this.chartData.push(othersData);
+            chartData.push(othersData);
           }
-          this.pieChart(this.chartData);
+          if(counter > 0) {
+            this.chartTotal = chartTotal;
+            this.chartData = chartData;
+            this.pieChart(this.chartData);
+          }
         }
         this.tabsLoaded.portfolioData.dataLoaded = true;
         this.loaderFn.decreaseCounter();
@@ -513,8 +517,8 @@ export class AllFeedsComponent implements OnInit {
           }]
         };
       } else {
-        this.createCashflowFamilyObj(res);
         this.tabsLoaded.cashflowData.hasData = true;
+        this.createCashflowFamilyObj(res);
       }
       this.tabsLoaded.cashflowData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -535,6 +539,18 @@ export class AllFeedsComponent implements OnInit {
     }
     tnx = tnx.flat();
 
+    if(tnx.length == 0) {
+      this.cashflowData = {
+        emptyData: [{
+          bankName: 'Not enough data to display',
+          inflow: 0,
+          outflow: 0,
+          netflow: 0
+        }]
+      };
+      this.tabsLoaded.cashflowData.hasData = false;
+      return;
+    }
     let familyMembers = [...new Set(tnx.map(obj => obj.ownerName))];
     let totalIncome = 0;
     let totalExpense = 0;
