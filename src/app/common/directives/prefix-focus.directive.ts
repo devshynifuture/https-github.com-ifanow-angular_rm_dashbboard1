@@ -17,6 +17,6 @@ export class PrefixFocusDirective implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.el.nativeElement.focus(), 0);
+    // setTimeout(() => this.el.nativeElement.focus(), 0);
   }
 }

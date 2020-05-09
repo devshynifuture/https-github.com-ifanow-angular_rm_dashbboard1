@@ -30,7 +30,7 @@ export class FileUploadServiceService {
     const obj = {
       advisorId: value.advisorId,
       clientId : value.clientId,
-      familyMemberId:0,
+      familyMemberId:(value.familyMemberId)?value.familyMemberId:0,
       searchTerm : (value.asset)+'',
     };
     this.custumService.fetchFileUpload(obj).subscribe(
