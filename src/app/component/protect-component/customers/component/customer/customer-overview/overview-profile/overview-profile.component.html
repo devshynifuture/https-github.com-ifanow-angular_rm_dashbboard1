@@ -26,11 +26,16 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="row">
-                            <div class="col-md-2  ">
-
-                                <div class="profilePhoto">
-                                    <img src="/assets/images/svg/profile-photo.svg">
+                            <div class="col-md-2 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                                <div class="relClass">
+                                    <div class="bar120">
+                                        <div class="profilePhoto">
+                                            <img src="/assets/images/svg/profile-photo.svg">
+                                        </div>
+                                    </div>
                                 </div>
+
+
                             </div>
                             <div class="col-md-10 pl-12">
                                 <div class="profileDetails overflow-hidden skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
@@ -67,6 +72,19 @@
                     <div class="col-md-12">
                         <div class="primary-border familyMemberBox mt-12">
                             <p class="memberName">Family members</p>
+
+                            <div class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                                <div class="familyLoaderBox">
+                                    <div class="relClass">
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                                <div class="familyLoaderBox">
+                                    <div class="relClass">
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="memberSlider" *ngIf="clientOverviewData.clientType > 0">
                                 <div *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
@@ -255,7 +273,7 @@
                             <div class=" col-md-3 text-right ">
                             </div>
                         </div>
-                        <div [hidden]="!adressFlag" class="skeletonAnimation" [appSkeletonLoading]="adressFlag" appSkeletonLoading>
+                        <div [hidden]="(!adressFlag && addressList) || addressList==undefined" class="skeletonAnimation" [appSkeletonLoading]="adressFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -289,7 +307,7 @@
                     </div>
 
                     <div class=" col-md-3 pl-20 ">
-                        <div [hidden]="!bankFlag" class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                        <div [hidden]="(!bankFlag && bankList) || bankList==undefined" class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -347,7 +365,7 @@
 
                         </div>
                         <hr class=" bb-primitive hrMargin ">
-                        <div [hidden]="!dematFlag" class="skeletonAnimation" [appSkeletonLoading]="dematFlag" appSkeletonLoading>
+                        <div [hidden]="(!dematFlag && dematList) || dematList==undefined" class="skeletonAnimation" [appSkeletonLoading]="dematFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
