@@ -40,6 +40,7 @@ export class PoMisSchemeComponent implements OnInit {
   footer = [];
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
 
   constructor(private excel:ExcelGenService,
     private fileUpload :FileUploadServiceService,
@@ -62,6 +63,7 @@ export class PoMisSchemeComponent implements OnInit {
     this.excel.generateExcel(rows,tableTitle)
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -72,6 +74,9 @@ export class PoMisSchemeComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;

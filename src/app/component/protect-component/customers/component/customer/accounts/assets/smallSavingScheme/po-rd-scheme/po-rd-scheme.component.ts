@@ -38,6 +38,7 @@ export class PoRdSchemeComponent implements OnInit {
   excelData: any[];
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
 
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
@@ -54,6 +55,7 @@ export class PoRdSchemeComponent implements OnInit {
     this.getPoRdSchemedata();
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -64,6 +66,9 @@ export class PoRdSchemeComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;

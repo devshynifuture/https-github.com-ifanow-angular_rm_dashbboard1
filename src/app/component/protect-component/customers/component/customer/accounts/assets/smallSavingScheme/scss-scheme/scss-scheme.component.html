@@ -4,6 +4,9 @@
     </div>
     <!-- *ngIf="datasource.filteredData > 0" -->
     <div class="col-md-6 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
+        <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+            <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+        </div>
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button (click)="pdf('SCSS')" mat-menu-item>PDF</button>

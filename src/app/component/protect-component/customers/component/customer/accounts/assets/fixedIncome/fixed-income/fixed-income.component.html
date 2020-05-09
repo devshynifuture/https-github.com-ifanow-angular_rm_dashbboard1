@@ -25,9 +25,9 @@
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
             <div class="col-md-6 p-0 text-right right" *ngIf="!hideFilter">
-                <!-- <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
-                </div> -->
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Fixed deposit')" mat-menu-item>PDF</button>
@@ -36,7 +36,7 @@
                 <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
                 <mat-menu #menu7="matMenu">
                     <button mat-menu-item>Upload file
-                        <input (change)="fetchData('Fixed Deposits',$event)" class="uploadInput" id="file-4" multiple type="file">
+                        <input (valueChange1)='loader($event)' (change)="fetchData('Fixed Deposits',$event)" class="uploadInput" id="file-4" multiple type="file">
                     </button>
                 </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -244,6 +244,9 @@
                 </h2>
             </div>
             <div class="col-md-6 p-0 text-right right " *ngIf="!hideFilter">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Recurring deposit')" mat-menu-item>PDF</button>
@@ -427,6 +430,9 @@
                 <h2 class="f-18 m-0 proximaFont">Bonds</h2>
             </div>
             <div class="col-md-6 p-0 text-right right " *ngIf="!hideFilter">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Bonds')" mat-menu-item>PDF</button>

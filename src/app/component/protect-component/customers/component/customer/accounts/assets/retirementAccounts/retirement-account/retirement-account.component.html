@@ -38,6 +38,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Employees Provident Fund (EPF)</h4>
             </div>
             <div class="col-md-6 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('EPF')" mat-menu-item>PDF</button>
@@ -272,6 +275,9 @@
                 <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
                 <mat-menu #menu7="matMenu">
@@ -473,6 +479,9 @@
                                     <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
                                 </div>
                                 <div class="col-md-8 p-0 right text-right">
+                                    <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                                        <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                                    </div>
                                     <img class="c-p" src="assets/images/svg/download-bordered.svg">
                                     <mat-menu #menu5="matMenu">
                                         <button (click)="pdf('NPS')" mat-menu-item>PDF</button>
@@ -545,6 +554,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <!-- <button mat-menu-item>NPS</button>
@@ -720,6 +732,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Superannuation')" mat-menu-item>PDF</button>
@@ -889,6 +904,9 @@
                 <h4 class="m-0 text-black roboto pt-8">EPS</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('EPS')" mat-menu-item>PDF</button>

@@ -17,6 +17,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Gold</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="goldList.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Gold')" mat-menu-item>PDF</button>
@@ -168,6 +171,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Others</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="otherCommodityList.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Others')" mat-menu-item>PDF</button>

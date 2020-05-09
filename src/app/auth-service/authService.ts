@@ -6,6 +6,7 @@ import { EventService } from '../Data-service/event.service';
 
 @Injectable()
 export class AuthService {
+  familyMemberId: any;
   constructor(
     /*private myRoute: Router*/
 
@@ -125,7 +126,13 @@ export class AuthService {
 
   setClientData(clientData) {
     sessionStorage.setItem('clientData', JSON.stringify(clientData));
+    if(clientData.familyMemberId){
+      this.familyMemberId = clientData.familyMemberId
+    }
+    console.log('this.family',this.familyMemberId)
+    clientData.familyMemberId = this.familyMemberId
     localStorage.setItem('clientData', JSON.stringify(clientData));
+  
     // if(clientData){
     //   this.selectedClient = clientData;
     // }

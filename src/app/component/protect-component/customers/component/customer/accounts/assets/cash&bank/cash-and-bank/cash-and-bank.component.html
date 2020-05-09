@@ -20,6 +20,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="bankAccountList.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Bank accounts')" mat-menu-item>PDF</button>
@@ -173,6 +176,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
             </div>
             <div class="col-md-8 p-0 right text-right" *ngIf="cashInHandList.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Cash in hand')" mat-menu-item>PDF</button>
