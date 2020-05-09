@@ -1,0 +1,71 @@
+#Gauge {
+    height: 150px !important;
+}
+
+#container1 {
+    height: 80px !important;
+    width: 650px;
+    margin: 0px auto;
+}
+
+body {
+    font-family: helvetica, sans-serif;
+    font-size: .7em;
+}
+
+p {
+    margin: .5em 1em;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #008FFF;
+}
+
+::ng-deep .smallRadio .mat-radio-button {
+    min-width: 120px !important;
+}
+
+::ng-deep .smallRadio .radioBtn .mat-radio-label {
+    min-width: 120px !important;
+    height: 45px !important;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
+
+::ng-deep .mediumRadio .mat-radio-button {
+    min-width: 180px !important;
+}
+
+::ng-deep .mediumRadio .radioBtn .mat-radio-label {
+    min-width: 180px !important;
+    height: 45px !important;
+    display: flex !important;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px !important;
+}
+
+.errorClass {
+    display: block;
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.riskScoreBox {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.width545 {
+    width: 545px;
+    margin: 0px auto;
+    text-align: left;
+}

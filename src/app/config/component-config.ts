@@ -411,6 +411,7 @@ export const appConfig = {
   ADVICE_ADD_EPF: 'advice/asset/retirement-account/suggest-new-epf/add',
   ADVICE_ADD_NPS: 'advice/asset/retirement/suggest-new-nps/add',
   SCHEME_CHOICE: 'account/asset/nps/global-data/get',
+  SCHEME_FILTER_CHOICE: 'account/asset/nps-master/list/get',
   ADVICE_ADD_GRATUITY: 'advice/asset/retirement-account/suggest-new-gratuity/add',
   ADVICE_ADD_SUPERANNUATION: 'advice/asset/retirement/suggest-new-superannuation/add',
   ADVICE_ADD_EPS: 'advice/asset/retirement/eps/add',

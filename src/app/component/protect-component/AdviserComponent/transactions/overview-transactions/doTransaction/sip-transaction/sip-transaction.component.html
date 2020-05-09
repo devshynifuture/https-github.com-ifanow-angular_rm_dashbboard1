@@ -107,9 +107,10 @@
                        appCustomAutoComplete aria-label="Number" class="form-control"
                        formControlName="schemeSip" matInput
                        placeholder="Start typing to see scheme names" type="text">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectedScheme(scheme)"
-                              *ngFor="let scheme of filterSchemeList | async" [value]="scheme.schemeName">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
+                                  [displayWith]="processTransaction.displaySchemeName">
+                  <mat-option
+                    *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -126,7 +127,7 @@
             </div>
           </div>
           <!-- removed for prod build" -->
-          <div *ngIf="showSpinner == true" class="col-md-1">
+          <div *ngIf="showSchemeSpinner == true" class="col-md-1">
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
@@ -196,7 +197,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div *ngIf="showSpinner == true" class="col-md-1">
+          <div *ngIf="showSpinnerFolio" class="col-md-1">
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
@@ -244,7 +245,7 @@
                 </mat-error>
                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.max)"
                            class="f-12 pt-4">
-                  {{mandateAmountErrorMessage}}
+                  Amount cannot be greater than mandate amount.
                 </mat-error>
               </mat-form-field>
             </div>
