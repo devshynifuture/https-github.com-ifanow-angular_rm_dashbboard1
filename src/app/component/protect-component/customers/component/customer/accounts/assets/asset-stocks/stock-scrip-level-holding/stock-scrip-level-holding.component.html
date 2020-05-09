@@ -13,9 +13,54 @@
 <div class="mb-48">
     <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
-            <h5 class="m-0 pb-8">Owner</h5>
-            <app-owner-column [data]='ownerName' [checkValid]='checkValid' (valueChange)='display($event)'>
-            </app-owner-column>
+            <div formArrayName="getCoOwnerName">
+                <div [ngClass]="{'pt-36': pointIndex>0}" 
+                    *ngFor="let obj of scipLevelHoldingForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                    <h5 class="m-0 pb-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
+                    <div class="pr-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                    (selectionChange)="disabledMember($event.value,'owner')"
+                                    (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                    class="form-control br-0" [callMethod]='callMethod'>
+                                    <!-- || f.familyMemberAge <= 60 -->
+                                    <mat-option value='' disabled>Select family members</mat-option>
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                        <span>{{f.userName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2" *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length > 1">
+                        <div class="form-group mb-0 iconPetage">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                                    (focusout)="onChangeJointOwnership('owner')">
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                    Total percent should be 100%
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center">
+                        <!-- <i *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length < 3"
+                            class="material-icons text-primitive f-20 c-p float-left"
+                            (click)="addNewCoOwner(undefined)">add</i> -->
+                        <i *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length > 1"
+                            class="material-icons text-primitive f-20 c-p pl-10"
+                            (click)="removeCoOwner(pointIndex)">remove</i>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
@@ -56,7 +101,7 @@
                         <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
                             maxlength="20" class="form-control br-0 rupess">
                         <mat-hint align="start"
-                            class="m-0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           text-custom pt-4">
+                            class="m-0 text-custom pt-4">
                             As in statement
                         </mat-hint>
                         <mat-error>This field is required</mat-error>
@@ -66,7 +111,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="holdingAsOn"
+                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="holdingAsOn" [max]="maxDate"
                             [matDatepicker]="picker" class="form-control br-0 b-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>

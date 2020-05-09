@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {Router} from '@angular/router';
-import {EventService} from 'src/app/Data-service/event.service';
-import {RoutingState} from 'src/app/services/routing-state.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
+import { RoutingState } from 'src/app/services/routing-state.service';
 
 @Component({
   selector: 'app-customer-overview',
@@ -18,7 +18,7 @@ export class CustomerOverviewComponent implements OnInit {
   name: string;
 
   constructor(public authService: AuthService, private router: Router,
-              private eventService: EventService, public routingStateService: RoutingState) {
+    private eventService: EventService, public routingStateService: RoutingState) {
 
   }
 
@@ -83,9 +83,9 @@ export class CustomerOverviewComponent implements OnInit {
   }
 
   logout() {
-    if (!this.authService.isAdvisor()) {
-      this.authService.logout();
-      this.router.navigate(['/login']);
-    }
+    // if (!this.authService.isAdvisor()) {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    // }
   }
 }

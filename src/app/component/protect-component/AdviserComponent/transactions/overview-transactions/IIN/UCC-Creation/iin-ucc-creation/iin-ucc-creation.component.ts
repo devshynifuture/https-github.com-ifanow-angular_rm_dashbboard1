@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { DatePipe } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
@@ -9,6 +9,8 @@ import { OnlineTransactionService } from '../../../../online-transaction.service
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { startWith, map } from 'rxjs/operators';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -28,7 +30,7 @@ export class IinUccCreationComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     private peopleService: PeopleService,
-    private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+    private onlineTransact: OnlineTransactionService, public eventService: EventService, private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId()
   }
 
@@ -36,6 +38,21 @@ export class IinUccCreationComponent implements OnInit {
     this.getIINUCCRegistration();
     this.getdataForm('');
     this.getClients()
+    this.nomineesListFM = this.generalDetails.controls.ownerName.valueChanges
+      .pipe(
+        startWith(''),
+        map(state => {
+          if (state) {
+            let list = this.enumDataService.getSearchData(state);
+            if (list.length == 0) {
+              this.generalDetails.controls.ownerName.setErrors({ invalid: true })
+            }
+            return this.enumDataService.getSearchData(state)
+          } else {
+            return this.enumDataService.getEmptySearchStateData();
+          }
+        }),
+      )
   }
 
   Close(flag) {
@@ -97,38 +114,38 @@ export class IinUccCreationComponent implements OnInit {
   getIINUCCRegistrationRes(data) {
     console.log('INN UCC CREATION DATA GET', data);
   }
-  getClientAndFamilyMember(data) {
-    this.isLoading = true
-    if (data == '') {
-      this.generalDetails.controls.ownerName.setErrors({ invalid: false });
-      this.generalDetails.controls.ownerName.setValidators([Validators.required]);
-      this.generalDetails.controls.ownerName.updateValueAndValidity();
-      this.nomineesListFM = undefined;
-      return;
-    }
-    const obj = {
-      advisorId: this.advisorId,
-      displayName: data
-    };
+  // getClientAndFamilyMember(data) {
+  //   this.isLoading = true
+  //   if (data == '') {
+  //     this.generalDetails.controls.ownerName.setErrors({ invalid: false });
+  //     this.generalDetails.controls.ownerName.setValidators([Validators.required]);
+  //     this.generalDetails.controls.ownerName.updateValueAndValidity();
+  //     this.nomineesListFM = undefined;
+  //     return;
+  //   }
+  //   const obj = {
+  //     advisorId: this.advisorId,
+  //     displayName: data
+  //   };
 
-    this.onlineTransact.getClientAndFmList(obj).subscribe(
-      data => this.getClientAndFmListRes(data), (error) => {
+  //   this.onlineTransact.getClientAndFmList(obj).subscribe(
+  //     data => this.getClientAndFmListRes(data), (error) => {
 
-      }
-    );
-  }
-  getClientAndFmListRes(data) {
-    if (data == 0) {
-      this.isLoading = false
-      this.generalDetails.controls.ownerName.setErrors({ invalid: true });
-      this.generalDetails.controls.ownerName.markAsTouched();
-      data = undefined;
-    }
-    this.isLoading = false
+  //     }
+  //   );
+  // }
+  // getClientAndFmListRes(data) {
+  //   if (data == 0) {
+  //     this.isLoading = false
+  //     this.generalDetails.controls.ownerName.setErrors({ invalid: true });
+  //     this.generalDetails.controls.ownerName.markAsTouched();
+  //     data = undefined;
+  //   }
+  //   this.isLoading = false
 
-    this.nomineesListFM = data
-    console.log('getClientAndFmListRes data', this.nomineesListFM)
-  }
+  //   this.nomineesListFM = data
+  //   console.log('getClientAndFmListRes data', this.nomineesListFM)
+  // }
   lisNominee(value) {
     // this.showSpinnerOwner = false
     if (value == null) {

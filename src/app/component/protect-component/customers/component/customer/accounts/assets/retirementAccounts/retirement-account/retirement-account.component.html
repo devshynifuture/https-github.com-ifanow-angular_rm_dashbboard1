@@ -339,78 +339,83 @@
                 <td *matFooterCellDef class="  pl-4 text-left" mat-footer-cell>
                     <div class="bar">
 
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="ownerName"> Owner</th>
-                <td mat-cell *matCellDef="let element" class="br ">
-                    <div class="bar"></div>
-                    <div *ngFor="let owner of element.ownerList; let i = index">
-                        <span *ngIf="i == 0">{{owner.name}}</span>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
-                    {{ isLoading ? '': 'Total' }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell *matHeaderCellDef class="br textRight text-right  "> Current value
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right amt  ">
-                    <div class="bar" appFormatNumber> {{isLoading ? '' : element.currentValuation || '-'}}
-                    </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br   p-8 f-600 amt text-right" appFormatNumber [value]="totalCurrentValue">
-                    {{totalCurrentValue}}</td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-                <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br  textRight textRight">
-                    Total contribution
-                </th>
-                <td mat-cell *matCellDef="let element" class="br amt text-right">
-                    <div class="bar amt" appFormatNumber> {{element.totalAmountInvested}} </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600   text-right" appFormatNumber [value]="totalContribution">
-                    {{totalContribution}}</td>
-            </ng-container>
-            <ng-container matColumnDef="scheme">
-                <th mat-sort-header="schemeChoice" mat-header-cell *matHeaderCellDef class="br"> Scheme choice
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' : (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
-                    </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="pran">
-                <th mat-sort-header="pran" mat-header-cell *matHeaderCellDef class="br text-left  ">PRAN</th>
-                <td mat-cell *matCellDef="let element" class="br text-left  ">
-                    <div class="bar"> {{isLoading ? '' : element.pran || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="isActive"> Status</th>
-                <td mat-cell *matCellDef="let element" class="br text-primary">
-                    <div class="bar"> {{element.statusId}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class=" " mat-header-cell></th>
-                <td mat-cell *matCellDef="let element" class=" ">
-                    <div *ngIf="!isLoading">
-                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="owner">
+                        <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                        <td mat-cell *matCellDef="let element" class="br ">
+                            <div class="bar"></div>
+                            <div *ngFor="let owner of element.ownerList; let i = index">
+                                <span *ngIf="i == 0">{{owner.name}}</span>
+                            </div>
+                        </td>
+                        <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
+                            {{ isLoading ? '': 'Total' }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="cvalue">
+                        <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell
+                            *matHeaderCellDef class="br textRight text-right  "> Current value
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br text-right amt  ">
+                            <div class="bar" ><div *ngIf="element.currentValuation > 0">{{isLoading ?'':'₹'}} <span  appFormatNumber>{{isLoading ? '' : element.currentValuation || '-'}}</span></div>
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br   p-8 f-600 amt text-right">
+                            {{isLoading ?'':'₹'}} <span [value]="totalCurrentValue"  appFormatNumber>{{totalCurrentValue}}</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="total">
+                        <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef
+                            class="br  textRight textRight">
+                            Total contribution
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br amt text-right">
+                            <div class="bar amt" ><div *ngIf="element.totalAmountInvested > 0">{{isLoading ?'':'₹'}} <span  appFormatNumber>{{isLoading ? '' : element.totalAmountInvested || '-'}}</span>
+                            </div>
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600   text-right" >
+                            {{isLoading ?'':'₹'}} <span [value]="totalContribution"  appFormatNumber>{{totalContribution}}</span>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="scheme">
+                        <th mat-sort-header="schemeChoice" mat-header-cell *matHeaderCellDef class="br"> Scheme choice
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar">
+                                {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' : (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
+                            </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="pran">
+                        <th mat-sort-header="pran" mat-header-cell *matHeaderCellDef class="br text-left  ">PRAN</th>
+                        <td mat-cell *matCellDef="let element" class="br text-left  ">
+                            <div class="bar"> {{isLoading ? '' : element.pran || '-'}} </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="desc">
+                        <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="isActive"> Status</th>
+                        <td mat-cell *matCellDef="let element" class="br text-primary">
+                            <div class="bar"> {{element.statusId}} </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                        <th *matHeaderCellDef class=" " mat-header-cell></th>
+                        <td mat-cell *matCellDef="let element" class=" ">
+                            <div *ngIf="!isLoading">
+                                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                                     more_vert
                                 </i>
                         <mat-menu #menubank="matMenu">
@@ -615,23 +620,24 @@
                 <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell mat-sort-header="amountReceived">
                     amount accumulated<br> as on date
 
-                </th>
-                <td *matCellDef="let element" class="br amt text-right  " mat-cell>
-                    <div class="bar" *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.gratuityReceived}}</span> </div>
-                </td>
-                <td *matFooterCellDef class="br amt f-600 p-8   text-right" mat-footer-cell>
-                    <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfGratuityReceived" appFormatNumber>{{sumOfGratuityReceived}}</span> </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="reason">
-                <th *matHeaderCellDef class="br text-left" mat-header-cell mat-sort-header="reasonOfReceipt">
-                    Reason of receipt
-                </th>
-                <td *matCellDef="let element" class="br text-left" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : element.reasonOfReceipt || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right  " mat-cell>
+                        <div class="bar" ><div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.gratuityReceived}}</span></div> </div>
+                    </td>
+                    <td *matFooterCellDef 
+                        class="br amt f-600 p-8   text-right" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfGratuityReceived" appFormatNumber>{{sumOfGratuityReceived}}</span> </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="reason">
+                    <th *matHeaderCellDef class="br text-left" mat-header-cell mat-sort-header="reasonOfReceipt">
+                        Reason of receipt
+                    </th>
+                    <td *matCellDef="let element" class="br text-left" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : element.reasonOfReceipt || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
 
             <ng-container matColumnDef="desc">
                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description

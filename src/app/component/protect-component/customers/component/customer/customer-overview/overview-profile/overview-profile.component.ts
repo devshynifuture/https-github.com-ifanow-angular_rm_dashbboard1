@@ -30,7 +30,7 @@ export class OverviewProfileComponent implements OnInit {
   selectedBankData: any;
   selectedDemat: any;
   clientData: any;
-
+  Tab = "Tab1";
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
@@ -79,9 +79,14 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
-        this.familyMemberList = data;
-        this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
-        console.log(this.familyMemberList);
+        if (data && data.length > 0) {
+          this.familyMemberList = data;
+          this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+          console.log(this.familyMemberList);
+        }
+        else {
+          this.familyMemberList = undefined;
+        }
       },
       err => {
         console.error(err)

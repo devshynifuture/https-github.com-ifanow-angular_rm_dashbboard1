@@ -413,4 +413,8 @@ export class ProcessTransactionService {
       return element.frequency;
     });
   }
+
+  displaySchemeName(scheme) {
+    return scheme && scheme.schemeName ? scheme.schemeName : '';
+  }
 }
