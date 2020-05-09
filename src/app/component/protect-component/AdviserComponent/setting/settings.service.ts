@@ -47,6 +47,14 @@ export class SettingsService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_REPORT_LOGO, data);
   }
 
+  resetWebImage(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_ORG_PROFILE_LOGO, data);
+  }
+
+  resetReportLogoImage(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_ORG_REPORT_LOGO, data);
+  }
+
 
   // users and roles
   getUserRolesGlobalData(data) {

@@ -33,6 +33,7 @@ export class AddPersonalProfileComponent implements OnInit {
   filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  dataLoaded:boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -80,6 +81,7 @@ export class AddPersonalProfileComponent implements OnInit {
         if (data) {
           this.isdCodes = data;
           this.filteredIsdCodes.next(this.isdCodes.slice());
+          this.dataLoaded = true;
         }
       }, err => {
         this.event.showErrorMessage('Error');

@@ -581,6 +581,8 @@ export const appConfig = {
   UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  RESET_ORG_PROFILE_LOGO: 'setting/organisation/logo/delete',
+  RESET_ORG_REPORT_LOGO: 'setting/organisation/report-logo/delete',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
   EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',

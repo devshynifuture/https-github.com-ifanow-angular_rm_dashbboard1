@@ -36,15 +36,6 @@ export class InputValueValidationDirective {
     this.prevValue = this._el.nativeElement.value;
   }
 
-  @HostListener('keypress', ['$event']) onKeyUp(event) {
-    if (event.target.value) {
-      const currValue = event.target.value;
-      if (!this.checkCurrentValue(currValue)) {
-        event.preventDefault();
-      }
-    }
-  }
-
   @HostListener('input', ['$event']) onInputChange(event) {
     const currValue = event.target.value;
     if (!this.checkCurrentValue(currValue)) {
@@ -65,7 +56,9 @@ export class InputValueValidationDirective {
     }
     if (this.maxLength && currValue.length > this.maxLength) {
       currValue = currValue.slice(0, this.maxLength);
-      return false;
+      const newVal = currValue.slice(0, this.maxLength);
+      this.changedValue.emit(newVal);
+      this._el.nativeElement.value = newVal;
       // this.renderer.setProperty(this._el.nativeElement, 'value', currValue.slice(0, this.maxLength));
     }
     if (!isNaN(currValue)) {
