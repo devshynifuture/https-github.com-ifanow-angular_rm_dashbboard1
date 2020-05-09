@@ -228,31 +228,34 @@ export class RightFilterComponent implements OnInit {
   getFinancialYears(form) {
     let calculatingYears =[]
     let sortingYeras:any;
-    let redemptionList = this._data.capitalGainData.redemptionList
-    redemptionList.forEach(element => {
-      const obj={
-        "from": element.financialYear,
-        "to": (element.financialYear+1),
-      }
-      calculatingYears.push(obj);
-    });
-    console.log(calculatingYears);
-    let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
-    sortingYeras=filteredYears.sort((a, b) =>
-    a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
-   );
-    this.financialYears = sortingYeras;
-    this.financialYears.filter(function (element) {
-      if(element.from == 2019 && element.to == 2020){
-        element.selected = true;
-        form.get('grandfathering').setValue('1');
-        form.get('grandfathering').updateValueAndValidity();
+    if(this._data.capitalGainData){
+      let redemptionList = this._data.capitalGainData.redemptionList
+      redemptionList.forEach(element => {
+        const obj={
+          "from": element.financialYear,
+          "to": (element.financialYear+1),
+        }
+        calculatingYears.push(obj);
+      });
+      console.log(calculatingYears);
+      let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
+      sortingYeras=filteredYears.sort((a, b) =>
+      a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
+     );
+      this.financialYears = sortingYeras;
+      this.financialYears.filter(function (element) {
+        if(element.from == 2019 && element.to == 2020){
+          element.selected = true;
+          form.get('grandfathering').setValue('1');
+          form.get('grandfathering').updateValueAndValidity();
+  
+        }else{
+          element.selected=false;
+        }
+  
+      });
+    }
 
-      }else{
-        element.selected=false;
-      }
-
-    });
   }
   getReportFormat() {
     this.reportFormat = ['Summary', 'Detailed'];

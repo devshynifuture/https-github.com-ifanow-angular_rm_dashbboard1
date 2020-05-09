@@ -3,7 +3,7 @@ export class TempserviceService {
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
@@ -26,7 +26,7 @@ export class TempserviceService {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'name';
+      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'ownerName';
     let catObj = {};
     const newArray = [];
 
@@ -51,7 +51,7 @@ export class TempserviceService {
   getSubCategoryArrayForTransaction(mutualFundList, type) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
     // const dataArray = [];
     const filteredData = [];
     let catObj;

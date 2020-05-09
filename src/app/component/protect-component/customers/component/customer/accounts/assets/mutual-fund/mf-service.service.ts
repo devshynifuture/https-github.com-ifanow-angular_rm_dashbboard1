@@ -29,7 +29,7 @@ export class MfServiceService {
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
@@ -282,13 +282,16 @@ export class MfServiceService {
       });
     }
     let capitalGainArray = [];
-    dataForFilter.capitalGainData.responseData.forEach(element => {
-      const family_member_list = this.filterArray(element.mutualFund, 'familyMemberId', dataForFilter.familyMember, 'familyMemberId');
-      if(family_member_list.length > 0){
-        capitalGainArray.push(element)
-      }
-    });
-    dataForFilter.capitalGainData.responseData = capitalGainArray;
+    if(dataForFilter.capitalGainData){
+      dataForFilter.capitalGainData.responseData.forEach(element => {
+        const family_member_list = this.filterArray(element.mutualFund, 'familyMemberId', dataForFilter.familyMember, 'familyMemberId');
+        if(family_member_list.length > 0){
+          capitalGainArray.push(element)
+        }
+      });
+      dataForFilter.capitalGainData.responseData = capitalGainArray;
+    }
+
     const sendData = {
       subCategoryData,
       family_member_list,
