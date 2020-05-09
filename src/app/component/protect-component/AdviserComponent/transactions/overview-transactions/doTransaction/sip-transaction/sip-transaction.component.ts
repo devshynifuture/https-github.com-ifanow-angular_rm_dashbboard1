@@ -18,7 +18,7 @@ import {MathUtilService} from '../../../../../../../services/math-util.service';
 export class SipTransactionComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & PROCEED',
+    text: 'TRANSACT NOW',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -31,8 +31,6 @@ export class SipTransactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  showInstallmentError = false;
-  showMandateAmountError = false;
   mandateAmountErrorMessage = '';
   installmentErrorMessage = '';
   dataSource: any;
