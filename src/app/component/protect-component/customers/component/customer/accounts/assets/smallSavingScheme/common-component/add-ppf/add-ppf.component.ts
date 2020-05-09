@@ -498,7 +498,7 @@ removedList:any=[];
         "advisorId": this.advisorId,
         "clientId": this.clientId,
         'ownerList': this.ppfSchemeForm.value.getCoOwnerName,
-        'maturityDate': this.ppfSchemeForm.value.maturityDate,
+        'maturityDate': new Date(this.ppfSchemeForm.value.maturityDate),
         // "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
         "accountBalance":parseInt(this.ppfSchemeForm.get('accountBalance').value),

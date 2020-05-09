@@ -270,7 +270,8 @@ export class ClientUploadComponent implements OnInit {
   fetchData(value,fileName) {
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.userData.clientId,
+      clientId: (this.userData.clientId)?this.userData.clientId:this.clientId,
+      familyMemberId:this.userData.familyMemberId,
       asset: value,
       clientName : this.userData.name
     }

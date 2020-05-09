@@ -74,7 +74,7 @@ export class SwitchTransactionComponent implements OnInit {
   filterNewSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) {
+              private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
   }
 
   @Output() changedValue = new EventEmitter();
