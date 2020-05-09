@@ -17,7 +17,7 @@ import {map, startWith} from 'rxjs/operators';
 export class RedemptionTransactionComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & PROCEED',
+    text: 'TRANSACT NOW',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -30,7 +30,6 @@ export class RedemptionTransactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  confirmTrasaction: boolean;
   dataSource: any;
   ownerData: any;
   redemptionTransaction: any;
@@ -52,7 +51,7 @@ export class RedemptionTransactionComponent implements OnInit {
   showUnits = false;
   bankDetails: any;
   showSpinnerFolio = false;
-  achMandateNSE: any;
+  platformType;
   currentValue: number;
   multiTransact = false;
   id = 0;
@@ -107,6 +106,8 @@ export class RedemptionTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
+
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.getSchemeList();
     // this.redemptionTransaction.controls.investor.reset();

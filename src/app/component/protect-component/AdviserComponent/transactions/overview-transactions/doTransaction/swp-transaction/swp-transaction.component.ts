@@ -18,7 +18,7 @@ import {map, startWith} from 'rxjs/operators';
 export class SwpTransactionComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & PROCEED',
+    text: 'TRANSACT NOW',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -409,7 +409,7 @@ export class SwpTransactionComponent implements OnInit {
       }
       const tenure = this.swpTransaction.controls.tenure.value;
       const installment = this.swpTransaction.controls.installment.value;
-      obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+      obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
@@ -476,7 +476,7 @@ export class SwpTransactionComponent implements OnInit {
         };
         const tenure = this.swpTransaction.controls.tenure.value;
         const installment = this.swpTransaction.controls.installment.value;
-        obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+        obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
         console.log(this.childTransactions);
         this.swpTransaction.controls.date.reset();
