@@ -13,6 +13,7 @@ import { ExcelService } from '../../../excel.service';
 import { MathUtilService } from '../../../../../../../../services/math-util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../assets/file-upload-service.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -45,9 +46,11 @@ export class OtherPayablesComponent implements OnInit {
   filterData: MatTableDataSource<any>;
   filterForOtherPayables: any;
   personalProfileData: any;
+  fileUploadData: any;
+  file: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
-    public dialog: MatDialog,private excel :ExcelGenService,private pdfGen:PdfGenService) {
+    public dialog: MatDialog,private excel :ExcelGenService,private pdfGen:PdfGenService, private fileUpload : FileUploadServiceService) {
   }
   ngAfterViewInit(): void {
       this.dataSource.sort = this.sort;
@@ -129,6 +132,18 @@ export class OtherPayablesComponent implements OnInit {
   generatePdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  fetchData(value,fileName) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      asset: value
+    }
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    if(this.fileUploadData){
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
   }
   filterOtherPayable(key: string, value: any) {
     let dataFiltered;

@@ -149,7 +149,7 @@ export class MutualFundSummaryComponent implements OnInit {
   subCatArrayForSummary(mutualFundList, type, mfService: MfServiceService) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
