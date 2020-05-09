@@ -9,127 +9,133 @@
     </div>
 </div>
 
-<div [formGroup]="personalProfile" class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
-    <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
-        <mat-tab label="Profile">
-            <div class="row pt-40">
-                <div class="col-md-4 text-right pr-0">
-                    <h5 class="mb-0 mt-20">Name</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="name" class="form-control" placeholder="Enter Name" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
-                            <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40</mat-hint>
-                            <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required
-                            </mat-error>
-                            <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
-                        </mat-form-field>
+<div *ngIf="dataLoaded">
+    <div [formGroup]="personalProfile" class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
+        <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
+            <mat-tab label="Profile">
+                <div class="row pt-40">
+                    <div class="col-md-4 text-right pr-0">
+                        <h5 class="mb-0 mt-20">Name</h5>
                     </div>
-                </div>
-            </div>
-            <div class="row pt-40">
-                <div class="col-md-4 text-right pr-0">
-                    <h5 class="mb-0 mt-20">Email ID</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="emailId" class="form-control" placeholder="Enter Email ID">
-                            <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
-                            <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-40 ">
-                <div class="col-md-4 text-right pr-0">
-                    <h5 class="mb-0 mt-20">Mobile No.</h5>
-                </div>
-                <div class="col-md-2 pr-0">
-                    <div class="form-group">
-                        <mat-form-field appearance="standard">
-                            <mat-select formControlName="isdCodeId" class="form-control">
-                                <mat-option>
-                                    <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code...">
-                                    </ngx-mat-select-search>
-                                </mat-option>
-                                <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
-                                    {{code.code}}({{code.countryCode}})</mat-option>
-                            </mat-select>
-                            <mat-error>This field is required</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter Mobile No" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
-                            <mat-hint align="end" class="">{{personalProfile.get('mobileNo').value.length}}/10
-                            </mat-hint>
-                            <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
-                            <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">
-                                Please enter valid mobile number</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-40">
-                <div class="col-md-4 text-right pr-0">
-                    <h5 class="m-0 pt-8">Username</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput formControlName="userName" class="form-control" readonly>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-
-        </mat-tab>
-        <mat-tab label="Profile picture">
-            <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
-                    <h5 class="m-0 f-14 pt-8">Your profile picture</h5>
-                    <p class="f-12 text-primitive">
-                        This picture is visible on the top right of web login
-                    </p>
-                </div>
-                <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
-                    <div *ngIf="!showCropper">
-                        <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
-                    </div>
-                    <div class="image-cropper">
-                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
-                        <div *ngIf="showCropper">
-                            <button (click)="imageCropper.zoomIn()">ZoomIn</button>
-                            <button (click)="imageCropper.zoomOut()">ZoomIn</button>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <input matInput formControlName="name" class="form-control" placeholder="Enter Name" maxLength="40" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
+                                <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40</mat-hint>
+                                <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required
+                                </mat-error>
+                                <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
+                            </mat-form-field>
                         </div>
                     </div>
-                    <div class="profile-img" [hidden]="!showCropper">
-                        <img [src]="finalImage" alt="cropped Image">
+                </div>
+                <div class="row pt-40">
+                    <div class="col-md-4 text-right pr-0">
+                        <h5 class="mb-0 mt-20">Email ID</h5>
                     </div>
-                    <div class="row pt-24">
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <input matInput formControlName="emailId" class="form-control" placeholder="Enter Email ID">
+                                <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
+                                <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-7" *ngIf="cropImage">
-                    <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
-                    <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
-                        EDIT</button>
-                    <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
-                </div>
-                <div class="col-md-7" *ngIf="!cropImage">
-                    <div class="profile-img">
-                        <img [src]="imgURL">
+                <div class="row pt-40 ">
+                    <div class="col-md-4 text-right pr-0">
+                        <h5 class="mb-0 mt-20">Mobile No.</h5>
                     </div>
-                    <div class="row pt-24">
-                        <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
+                    <div class="col-md-2 pr-0">
+                        <div class="form-group">
+                            <mat-form-field appearance="standard">
+                                <mat-select formControlName="isdCodeId" class="form-control">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code...">
+                                        </ngx-mat-select-search>
+                                    </mat-option>
+                                    <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
+                                        {{code.code}}({{code.countryCode}})</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter Mobile No" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <mat-hint align="end" class="">{{personalProfile.get('mobileNo').value.length}}/10
+                                </mat-hint>
+                                <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
+                                <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">
+                                    Please enter valid mobile number</mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+                <div class="row pt-40">
+                    <div class="col-md-4 text-right pr-0">
+                        <h5 class="m-0 pt-8">Username</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput formControlName="userName" class="form-control" readonly>
+                                <mat-hint align="end">Username cannot be edited</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+    
+            </mat-tab>
+            <mat-tab label="Profile picture">
+                <div class="row pt-40">
+                    <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
+                        <h5 class="m-0 f-14 pt-8">Your profile picture</h5>
+                        <p class="f-12 text-primitive">
+                            This picture is visible on the top right of web login
+                        </p>
+                    </div>
+                    <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
+                        <div *ngIf="!showCropper">
+                            <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
+                        </div>
+                        <div class="image-cropper">
+                            <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
+                            <div *ngIf="showCropper">
+                                <button (click)="imageCropper.zoomIn()">ZoomIn</button>
+                                <button (click)="imageCropper.zoomOut()">ZoomIn</button>
+                            </div>
+                        </div>
+                        <div class="profile-img" [hidden]="!showCropper">
+                            <img [src]="finalImage" alt="cropped Image">
+                        </div>
+                        <div class="row pt-24">
+                        </div>
+                    </div>
+                    <div class="col-md-7" *ngIf="cropImage">
+                        <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+                        <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
+                            EDIT</button>
+                        <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
+                    </div>
+                    <div class="col-md-7" *ngIf="!cropImage">
+                        <div class="profile-img">
+                            <img [src]="imgURL">
+                        </div>
+                        <div class="row pt-24">
+                            <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+<div *ngIf="!dataLoaded">
+    Loading data
 </div>
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">

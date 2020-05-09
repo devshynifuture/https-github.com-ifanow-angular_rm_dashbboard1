@@ -30,6 +30,7 @@ export class OverviewProfileComponent implements OnInit {
   selectedBankData: any;
   selectedDemat: any;
   clientData: any;
+  Tab = "Tab1";
 
   // clientData;
 
