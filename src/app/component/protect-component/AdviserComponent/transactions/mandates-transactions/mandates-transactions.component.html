@@ -1,6 +1,11 @@
 <div class="pt-150  mandates">
   <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-4 pr-0">
+      <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
+        <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
+               placeholder="type to filter data">
+      </mat-form-field>
+
       <!--            <h3 class="m-0 pt-8">Mandates</h3>-->
     </div>
     <!-- <div class="col-md-4 text-right pr-0">
@@ -12,14 +17,13 @@
     </div> -->
     <div *ngIf="credentialData" class="col-md-8 pt-4 text-right pl-0">
 
-      <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
-        <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
-               placeholder="type to filter data">
-      </mat-form-field>
-
 
       <!--            <img src="/assets/images/svg/download-black.svg" class="b-a p-5">-->
-      <img (click)="refresh(true)" class="b-a p-8 mr-8" src="/assets/images/svg/reload.svg">
+      <!--      <img (click)="refresh(true)" class="b-a p-8 mr-8" src="/assets/images/svg/reload.svg">-->
+      <button (click)="refresh(true)" *ngIf="dataSource.filteredData.length > 0 && !isLoading"
+              class="btn-primary addon v-middle mr-8" mat-stroked-button>
+        REFRESH
+      </button>
       <!-- <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
    class="material-icons">filter_list</i>FILTERS
  </button>-->

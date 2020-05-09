@@ -21,20 +21,23 @@
                 <mat-form-field appearance="standard" floatLabel="never">
                     <!--                  debounceChangedValue-->
                     <input #searchClient (input)="checkOwnerList($event)" [matAutocomplete]="auto1" aria-label="client"
-                        class="form-control pl-8" [formControl]="stateCtrl" matInput
-                        placeholder="Start typing to see investor names">
-                    <mat-autocomplete #auto1="matAutocomplete">
-                        <mat-option (click)="ownerDetails(f)" *ngFor="let f of filteredStates | async" [value]="f.name">
-                            <!-- <span>{{f.name}}</span> -->
-                            <div class="row">
-                                <div class="col-md-7 d-flex align-items-center">
-                                    <p class="t-left m-0">{{f.name}}</p>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <button class="small-primitive" *ngIf="f.userType==3" mat-stroked-button>FAMILY
-                                        MEMBER</button>
-                                    <button class="small-primitive" *ngIf="f.userType==2"
-                                        mat-stroked-button>CLIENT</button>
+                           class="form-control pl-8" [formControl]="stateCtrl" matInput
+                           appPrefixFocusDirective placeholder="Start typing to see investor names">
+                    <mat-autocomplete #auto1="matAutocomplete" autoFocus>
+                      <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of filteredStates | async"
+                                  [value]="f.name">
+                        <!-- <span>{{f.name}}</span> -->
+                        <div class="row">
+                          <div class="col-md-7 d-flex align-items-center">
+                            <p class="t-left m-0">{{f.name}}</p>
+                          </div>
+                          <div class="col-md-4 text-right">
+                            <button class="small-primitive" *ngIf="f.userType==3" mat-stroked-button>FAMILY
+                              MEMBER
+                            </button>
+                            <button class="small-primitive" *ngIf="f.userType==2"
+                                    mat-stroked-button>CLIENT
+                            </button>
                                 </div>
                             </div>
                         </mat-option>
