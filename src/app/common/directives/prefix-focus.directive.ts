@@ -1,9 +1,9 @@
-import {Directive, ElementRef, OnInit} from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, OnInit} from '@angular/core';
 
 @Directive({
   selector: '[appPrefixFocusDirective]',
 })
-export class PrefixFocusDirective implements OnInit {
+export class PrefixFocusDirective implements OnInit, AfterViewInit {
 
   constructor(private el: ElementRef) {
     if (!el.nativeElement.focus) {
@@ -12,8 +12,11 @@ export class PrefixFocusDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    const input: HTMLInputElement = this.el.nativeElement as HTMLInputElement;
-    input.focus();
-    input.select();
+
+    // input.select();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.el.nativeElement.focus(), 0);
   }
 }
