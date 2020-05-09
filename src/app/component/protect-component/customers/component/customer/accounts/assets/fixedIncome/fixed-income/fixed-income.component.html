@@ -18,9 +18,6 @@
             <div class="col-md-6 p-0 text-left">
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
-            <div class="col-md-6 p-0 text-right right" *ngIf="!hideFilter">
-               
-                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
@@ -39,7 +36,8 @@
                 <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
                 <mat-menu #menu7="matMenu">
                     <button mat-menu-item>Upload file
-                        <input (change)="fetchData('Fixed Deposits',$event)" class="uploadInput" id="file-4" multiple type="file">
+                        <input (change)="fetchData('Fixed Deposits',$event)" class="uploadInput" id="file-4" multiple
+                            type="file">
                     </button>
                 </mat-menu>
 
