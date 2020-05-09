@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
                             *ngIf="(dataSource.data.length > 0 && insuranceTypeId == 1 && !isLoading ) || (dataSourceGeneralInsurance.data.length > 0 && insuranceTypeId == 2 && !isLoading)">
-                            <div class="pdfClass">
+                            <div >
                                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1"
                                     class="c-p" *ngIf="!fragmentData.isSpinner">
                                 <mat-menu #menu1="matMenu">
