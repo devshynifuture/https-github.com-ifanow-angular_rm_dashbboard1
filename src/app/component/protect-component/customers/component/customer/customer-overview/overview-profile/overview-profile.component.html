@@ -79,13 +79,8 @@
                                         <div class="bar"></div>
                                     </div>
                                 </div>
-                                <div class="familyLoaderBox">
-                                    <div class="relClass">
-                                        <div class="bar"></div>
-                                    </div>
-                                </div>
-                            </div>
 
+                            </div>
                             <div class="memberSlider" *ngIf="clientOverviewData.clientType > 0">
                                 <div *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
                                     <img (click)="open('edit',singleMembers)" width="48px" *ngIf="singleMembers.relationshipId==2" src="/assets/images/svg/women-profile-icon.svg">
