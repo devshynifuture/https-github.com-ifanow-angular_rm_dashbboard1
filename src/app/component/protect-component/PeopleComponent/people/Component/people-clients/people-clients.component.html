@@ -1,108 +1,115 @@
 <div (window:resize)="onResize()" class="row pt-150">
     <div class="col-md-4 d-flex align-items-center">
-<!--        <h4 class="m-0">Clients</h4>-->
+        <!--        <h4 class="m-0">Clients</h4>-->
     </div>
-    <div class="col-md-8">
-        <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right pb-10">
-            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
-            <mat-menu #menu5="matMenu">
-                <button (click)="pdf('Client')" mat-menu-item>PDF</button>
-                <button (click)="Excel('Client')" mat-menu-item>XLS</button>
-            </mat-menu>
-            <img src="assets/images/svg/up-down.svg" class="">
-            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
 
-            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                    class="material-icons">filter_list</i>FILTERS</button>
-            <button (click)="addClient(null)" class="btn-primary pl-8" mat-stroked-button>
-                ADD NEW
-            </button>
-        </div>
+    <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end pb-10">
+
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
+
+        <!-- <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p"> -->
+        <mat-menu #menu5="matMenu">
+            <button (click)="pdf('Client')" mat-menu-item>PDF</button>
+            <button (click)="Excel('Client')" mat-menu-item>XLS</button>
+        </mat-menu>
+
+        <a class="c-p downloadPdfIcon iconBorderNone">
+            <img src="assets/images/svg/up-down.svg">
+        </a>
+
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
+
+        <button mat-stroked-button class="btn-default addon mr-8 v-middle">
+            <i class="material-icons">filter_list</i>FILTERS</button>
+        <button (click)="addClient(null)" class="btn-primary pl-8" mat-stroked-button>
+            ADD NEW
+        </button>
     </div>
+</div>
+<div class="row">
     <div class="col-md-12 people-clients">
-         <div [ngClass]="{'table-scroll':isLoading==false }">
-        <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
-            [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading"
-            class="skeletonAnimation">
-            <ng-container matColumnDef="position" sticky>
-                <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
-                <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.name}}</div>
-                </td>
-            </ng-container>
+        <div [ngClass]="{'table-scroll':isLoading==false }">
+            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+                <ng-container matColumnDef="position" sticky>
+                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
+                    <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name}}</div>
+                    </td>
+                </ng-container>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br"> Registered mobile </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.mobileNo}}</div>
-                </td>
-            </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br"> Registered mobile </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.mobileNo}}</div>
+                    </td>
+                </ng-container>
 
-            <!-- Weight Column -->
-            <ng-container matColumnDef="weight">
-                <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.email}}</div>
-                </td>
-            </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.email}}</div>
+                    </td>
+                </ng-container>
 
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="symbol">
-                <th mat-sort-header="pan" mat-header-cell *matHeaderCellDef class="br"> PAN </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.pan}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="member">
-                <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br"> Members </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.count}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.ownerName}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="login">
-                <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.login}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.status}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="icons">
-                <th mat-header-cell *matHeaderCellDef class="br"> </th>
-                <td mat-cell *matCellDef="let element" class="br c-p">
-                    <img *ngIf="isLoading==false" src="/assets/images/svg/action.svg">
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="icons1" sticky>
-                <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element">
-                    <img *ngIf="isLoading==false" class="c-p" [matMenuTriggerFor]="menu"
-                        src="/assets/images/svg/dot-menu.svg">
-                    <mat-menu #menu="matMenu">
-                        <button (click)="addClient(element)" mat-menu-item>
-                            <span>Edit</span>
-                        </button>
-                        <button (click)="deleteModal('CLIENT',element)" mat-menu-item>
-                            <span>Delete</span>
-                        </button>
-                    </mat-menu>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-sort-header="pan" mat-header-cell *matHeaderCellDef class="br"> PAN </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.pan}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="member">
+                    <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br"> Members </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.count}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.ownerName}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="login">
+                    <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.login}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.status}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="br"> </th>
+                    <td mat-cell *matCellDef="let element" class="br c-p">
+                        <img *ngIf="isLoading==false" src="/assets/images/svg/action.svg">
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons1" sticky>
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <img *ngIf="isLoading==false" class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                        <mat-menu #menu="matMenu">
+                            <button (click)="addClient(element)" mat-menu-item>
+                                <span>Edit</span>
+                            </button>
+                            <button (click)="deleteModal('CLIENT',element)" mat-menu-item>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
         <div *ngIf="clientDatasource.data.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Clients found</h4>

@@ -30,6 +30,8 @@ export class OverviewProfileComponent implements OnInit {
   selectedBankData: any;
   selectedDemat: any;
   clientData: any;
+  Tab = "Tab1";
+  letsideBarLoader: boolean;
 
   // clientData;
 
@@ -45,6 +47,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getClientRole();
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
+    this.letsideBarLoader = true;
     this.getFamilyMembersList(this.clientData);
     this.getAddressList(this.clientData);
     this.getDematList(this.clientData);
@@ -62,6 +65,7 @@ export class OverviewProfileComponent implements OnInit {
         if (data == undefined) {
           return;
         } else {
+          this.letsideBarLoader = false;
           this.authService.setClientData(data);
           this.clientOverviewData = data;
           this.calculateAge(this.clientOverviewData.dateOfBirth);

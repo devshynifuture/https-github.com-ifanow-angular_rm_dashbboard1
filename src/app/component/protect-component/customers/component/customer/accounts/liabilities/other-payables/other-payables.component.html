@@ -14,7 +14,12 @@
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
-            <!-- <img src="assets/images/svg/up-down.svg" class="c-p"> -->
+            <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Other Payables',$event)" class="uploadInput" id="file-4" multiple type="file">
+                    </button>
+                </mat-menu>
             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Email report</button>

@@ -27,7 +27,7 @@
             <div class="row">
                 <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 overflow-hidden">
                     <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="dataSource.data.length>0">
-                        <table #tableEl1 mat-table [dataSource]="dataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <table #tableEl1 mat-table [dataSource]="dataSource" id="tbs1" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="categoryName" sticky>
                                 <th class="br" mat-header-cell *matHeaderCellDef>
                                     {{(type.name=='Sub Category wise' || type.name=='')?'Sub category name':(type.name=='Category wise')?'Category name':(type.name=='Investor wise')?'Family member name': (type.name=='Scheme wise') ? 'Scheme name' : 'Sub Category wise'}}

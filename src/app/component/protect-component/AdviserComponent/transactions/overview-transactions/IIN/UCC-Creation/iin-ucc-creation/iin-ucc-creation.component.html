@@ -36,11 +36,10 @@
             </div>
             <div class="col-md-7 form-group text-center">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input #searchClient (keyup)="getClientAndFamilyMember($event.target.value)"
-                        [matAutocomplete]="auto1" appClientSearch aria-label="client" class="form-control pl-8"
+                    <input #searchClient [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8"
                         formControlName="ownerName" matInput placeholder="Start typing to see investor names">
                     <mat-autocomplete #auto1="matAutocomplete">
-                        <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM"
+                        <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM | async"
                             [value]="f.name">
                             <span>{{f.name}}</span>
                         </mat-option>

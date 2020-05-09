@@ -117,8 +117,9 @@ export class SwitchTransactionComponent implements OnInit {
     this.getDataSummary = data;
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.switchTransaction.controls.transferIn.reset();
-    this.getSchemeList();
-
+    if (!(this.existingSchemeList && this.existingSchemeList.length > 0)) {
+      this.getSchemeList();
+    }
   }
 
   getSchemeList() {
@@ -170,7 +171,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.switchTransaction.controls.investmentAccountSelection.reset();
+    this.switchTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   selectedFolio(folio) {
@@ -187,6 +188,9 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinner = true;
     this.scheme = scheme;
     this.showUnits = true;
+    this.folioList = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -299,6 +303,8 @@ export class SwitchTransactionComponent implements OnInit {
     }
     if (this.selectScheme == 2 && inputData.length > 2) {
       this.showSpinnerTran = true;
+      this.reInvestmentOpt = [];
+
       const obj = {
         searchQuery: inputData,
         bseOrderType: 'SWITCH',
@@ -342,7 +348,11 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinnerTran = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
-    this.switchTransaction.controls.transferIn.setValue(this.switchTransaction.controls.transferIn.value);
+    if (this.switchTransaction.controls.transferIn.value) {
+      this.switchTransaction.controls.transferIn.setValue(this.switchTransaction.controls.transferIn.value + '');
+    } else {
+      this.switchTransaction.controls.transferIn.setValue('');
+    }
   }
 
   getdataForm(data, isEdit) {
@@ -452,6 +462,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.switchBSERes(data), (error) => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'dismiss');
         }
       );

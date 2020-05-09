@@ -2,37 +2,43 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Kisan vikas patra (KVP)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
+    <div class="col-md-8 p-0  d-flex align-items-center  justify-content-end " *ngIf="datasource.filteredData.length > 0">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
-        <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
         <mat-menu #menu5="matMenu">
             <button (click)="pdf('KVP')" mat-menu-item>PDF</button>
             <button (click)="Excel('KVP')" mat-menu-item>XLS</button>
         </mat-menu>
-        <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+
+        <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+            <img src="assets/images/svg/up-down.svg">
+        </a>
+
         <mat-menu #menu7="matMenu">
             <button mat-menu-item>Upload file
                 <input (change)="fetchData('KVP',$event)" class="uploadInput" id="file-4" multiple type="file">
             </button>
         </mat-menu>
-        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+
+        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
         <mat-menu #menu6="matMenu">
             <button mat-menu-item>Email Report</button>
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
         </mat-menu>
 
-        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
         <button mat-stroked-button (click)="openAddKVP(null,'addKvp')" class="btn-primary addon v-middle">ADD
             NEW</button>
     </div>
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
-    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
-        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no" sticky>
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -55,13 +61,12 @@
                 {{isLoading ? '' : 'Total' }} </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-right"> Current
-                value </th>
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-right"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-             <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -75,27 +80,27 @@
             <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br t-right">Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-             <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
             </td>
-            
+
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br t-right"> Maturity value
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-             <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfmaturityValue" appFormatNumber>{{sumOfmaturityValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfmaturityValue" appFormatNumber>{{sumOfmaturityValue}}</span></div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left"> Maturity
-                date </th>
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left"> Maturity date
+            </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
             </td>

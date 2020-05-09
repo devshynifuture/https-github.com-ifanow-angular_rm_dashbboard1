@@ -2,29 +2,35 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">National savings certificate (NSC)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
+    <div class="col-md-8 p-0  d-flex align-items-center justify-content-end" *ngIf="datasource.filteredData.length > 0">
         <div class="p-0 d-flex align-items-center justify-content-center mt-8">
             <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
         </div>
-        <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
         <mat-menu #menu5="matMenu">
             <button (click)="pdf('NSC')" mat-menu-item>PDF</button>
             <button (click)="Excel('NSC')" mat-menu-item>XLS</button>
         </mat-menu>
-        <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+
+        <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+            <img src="assets/images/svg/up-down.svg">
+        </a>
         <mat-menu #menu7="matMenu">
             <button mat-menu-item>Upload file
                 <input (change)="fetchData('NSC',$event)" class="uploadInput" id="file-4" multiple type="file">
             </button>
         </mat-menu>
-        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+
+        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
         <mat-menu #menu6="matMenu">
             <button mat-menu-item>Email Report</button>
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
         </mat-menu>
 
-        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
         </button>
         <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"> ADD NEW
@@ -32,8 +38,7 @@
     </div>
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden col-md-12 p-0 mt-8 real-estate">
-    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low"
-        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
             <td mat-cell *matCellDef="let element;let i=index" class="br">
@@ -58,8 +63,7 @@
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar" appFormatNumber> {{element.currentValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef appFormatNumber
-                [value]="SumOfCurrentValue">
+            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef appFormatNumber [value]="SumOfCurrentValue">
                 <div class="bar"> {{SumOfCurrentValue}} </div>
             </td>
         </ng-container>
@@ -77,8 +81,7 @@
             <td mat-cell *matCellDef="let element" class="br text-right amt">
                 <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef appFormatNumber
-                [value]="SumOfMaturityValue">
+            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef appFormatNumber [value]="SumOfMaturityValue">
                 <div class="bar"> {{SumOfMaturityValue}} </div>
             </td>
         </ng-container>
