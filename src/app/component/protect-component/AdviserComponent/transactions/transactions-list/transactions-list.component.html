@@ -41,16 +41,16 @@
             <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
                 <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
                 <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
-          NEW
-        </button>
+                    NEW
+                </button>
             </div>
         </div>
 
     </div>
 
     <div class="col-md-12 all-transactions">
-        <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8" class="skeletonAnimation" id="table-low" mat-table matSort>
 
+        <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
             <ng-container matColumnDef="position">
                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform</th>
                 <td *matCellDef="let element" class="br" mat-cell>
@@ -64,19 +64,19 @@
           </td>
       </ng-container> -->
             <ng-container matColumnDef="weight">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="clientName"> Investor name Client code
+                <th *matHeaderCellDef class="br w-18" mat-header-cell mat-sort-header="clientName"> Investor name Client code
                 </th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar">
-                        <span>
-              <span>{{element.clientName}}</span><br>
+
+                        <span>{{element.clientName}}</span>
                         <span>{{element.clientCode}}</span>
-                        </span>
+
                     </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="symbol">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="schemeName"> Scheme details</th>
+                <th *matHeaderCellDef class="br w-27" mat-header-cell mat-sort-header="schemeName"> Scheme details</th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar"> {{element.schemeName}} </div>
                 </td>
@@ -126,23 +126,24 @@
                 <td (click)="openTransactionHistory(element)" *matCellDef="let element" mat-cell>
                     <div class="bar">
                         <i *ngIf="element.platformName" class="material-icons c-p text-custom">
-              keyboard_arrow_right
-            </i>
+                            keyboard_arrow_right
+                        </i>
                     </div>
                 </td>
             </ng-container>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
+
         <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">{{noData}}</h4>
             <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  " mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
             <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
         </div>
     </div>
 </div>
