@@ -192,7 +192,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getCashFlowStatus() {
     // Used for cashFlow status
-    if (this.totalValue.totalTransactionAmt && this.totalValue.switchIn && this.totalValue.withdrawals && this.totalValue.redemption) {
+    if (this.totalValue) {
       this.datasource1.data = [
         { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
         { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
@@ -402,25 +402,26 @@ export class MutualFundOverviewComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.totalValue = {};
-            this.dataSource2.data = [{}, {}, {}]
-            this.dataSource4.data = [{}, {}, {}]
-            this.dataSource.data = [{}, {}, {}]
-            this.dataSource3.data = [{}, {}, {}]
+            
+            this.dataSource2 =new MatTableDataSource([{}, {}, {}]);
+            this.dataSource4 =new MatTableDataSource([{}, {}, {}]);
+            this.dataSource =new MatTableDataSource([{}, {}, {}]);
+            this.dataSource3 =new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
-            this.dataSource2.data = this.rightFilterData.schemeWise;
-            this.dataSource4 = this.rightFilterData.category;
-            this.dataSource.data = this.rightFilterData.family_member_list;
-            this.dataSource3.data = this.rightFilterData.subCategoryData;
+            this.dataSource2 =new MatTableDataSource( this.rightFilterData.schemeWise);
+            this.dataSource4 = new MatTableDataSource(this.rightFilterData.category);
+            this.dataSource = new MatTableDataSource(this.rightFilterData.family_member_list);
+            this.dataSource3 = new MatTableDataSource(this.rightFilterData.subCategoryData);
             this.showHideTable = this.rightFilterData.overviewFilter;
             (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
-            (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false);
-            (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false);
-            (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false);
-            (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false);
-            (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false);
+            (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false,this.dataSource2.data =[]);
+            (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false,this.datasource1.data =[]);
+            (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false,this.dataSource.data =[]);
+            (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false,this.dataSource4.data =[]);
+            (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false,this.dataSource3.data =[]);
 
 
             this.isLoading = false;

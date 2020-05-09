@@ -81,7 +81,7 @@
                 <ng-container matColumnDef="schemeName" sticky>
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
                     <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"><span *ngIf="element.schemeName!='Total'">{{element.schemeName}}</span>
+                        <div class="bar"><span *ngIf="element.schemeName!='Total'">{{element.schemeName+'|'+element.folioNumber+'|'+element.ownerName}}</span>
                             <span class="f-700" *ngIf="element.schemeName=='Total'">{{element.schemeName}}</span>
                         </div>
                     </td>
@@ -94,9 +94,9 @@
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"> <span appFormatNumber
-                                *ngIf="element.amountInvested">{{(element.amountInvested) ? element.amountInvested : 0}}</span>
+                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? element.amountInvested : 0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalAmountInvested">{{(element.totalAmountInvested) ? element.totalAmountInvested : 0}}</span>
+                                *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? element.totalAmountInvested : 0}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -147,7 +147,7 @@
                         </div>
                     </td> -->
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                        <div class="bar">{{(grandTotal.totalGain) ? (grandTotal.totalGain | number:'1.2-2') : 0}}
+                        <div class="bar" appFormatNumber [value]="grandTotal.totalGain">
                         </div>
                     </td>
                 </ng-container>
@@ -155,10 +155,10 @@
                 <ng-container matColumnDef="absoluteReturn">
                     <th class="br text-right w-7" mat-header-cell *matHeaderCellDef>Abs Ret %</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber
-                                *ngIf="element.absoluteReturn">{{(element.absoluteReturn) ? element.absoluteReturn : 0}}</span>
+                        <div class="bar">
+                            <span *ngIf="element.absoluteReturn">{{(isLoading) ? '' : ((element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0)}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalAbsoluteReturn">{{(element.totalAbsoluteReturn) ? element.totalAbsoluteReturn : 0}}</span>
+                                *ngIf="element.totalAbsoluteReturn || element.totalAbsoluteReturn ==0">{{(element.totalAbsoluteReturn == 0 || element.totalAbsoluteReturn  == 'Infinity' || element.totalAbsoluteReturn  == '-Infinity') ? 0 : (element.totalAbsoluteReturn) ? element.totalAbsoluteReturn : 0}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -177,7 +177,7 @@
                         <div class="bar"> <span
                                 *ngIf="element.xirr || element.xirr == 0">{{(element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
                             <span class="f-700"
-                                *ngIf="element.totalXirr">{{(element.totalXirr || element.totalXirr == 0) ? (element.totalXirr | number:'1.2-2') : 0}}</span>
+                                *ngIf="element.totalXirr || element.totalXirr == 0">{{(element.totalXirr  == 0) ? 0 : (element.totalXirr) ? (element.totalXirr | number:'1.2-2') : 0}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -495,7 +495,7 @@
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.schemeName}}
+                                        {{item.schemeName+'|'+item.folioNumber+'|'+item.ownerName}}
                                     </td>
 
                                     <td valign="top"
@@ -518,7 +518,7 @@
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.absoluteReturn | number:'1.2-2'}}
+                                        {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
                                     </td>
 
                                     <td valign="top"

@@ -253,7 +253,7 @@
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
-                *ngIf="showSchemeWise && dataSource2.data.length > 0">
+                *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
@@ -297,12 +297,15 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{(element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0}}</div>
+                                <div class="bar">
+                                        <span *ngIf="!isLoading">    {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                <span *ngIf="isLoading"> {{''}} </span>
+                                    </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
-                                </div>
+                                        <span *ngIf="!isLoading">   {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}</span>
+                                        </div>
                             </td>
                             <!-- <td *matFooterCellDef  appFormatNumber [value]="totalValue.absReturn" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
@@ -311,13 +314,15 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                    {{element.xirr | number:'1.2-2'}} </div>
+                                        <span *ngIf="!isLoading">  {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                            <span *ngIf="isLoading"> {{''}}</span>
+                                        </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0}}</div>
                             </td> -->
                             <td *matFooterCellDef class="br f-600 text-right" mat-footer-cell>
-                                {{totalValue.xirr | number:'1.2-2'}}
+                                {{(totalValue.xirr) ? (totalValue.xirr | number:'1.2-2') : 0}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
@@ -344,7 +349,7 @@
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow"
-                *ngIf="showCashFlow && datasource1.data.length > 0">
+                *ngIf="showCashFlow || datasource1.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
@@ -373,7 +378,7 @@
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
-                *ngIf="showSubCategory && dataSource3.data.length > 0">
+                *ngIf="showSubCategory || dataSource3.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
@@ -418,7 +423,11 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{(element) ? (element.absoluteReturn | number:'1.2-2') : 0}}</div>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
+
+                                    </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">{{(totalValue.absReturn)?(totalValue.absReturn | number:'1.2-2'):0}}
@@ -428,14 +437,18 @@
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
+                                    {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+                                <div class="bar"> 
+                                        <span *ngIf="!isLoading">  {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                        <span *ngIf="isLoading">{{''}}</span>
+
+                                        </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0.00}}
@@ -476,7 +489,7 @@
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise"
-                *ngIf="showFamilyMember && dataSource.data.length > 0">
+                *ngIf="showFamilyMember || dataSource.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
@@ -520,7 +533,10 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.absoluteReturn | number:'1.2-2'}}</div>
+                                <div class="bar">
+                                        <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                        <span *ngIf="isLoading">{{''}}</span>
+                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">{{(totalValue.absReturn)?(totalValue.absReturn | number:'1.2-2'):0}}
@@ -529,15 +545,16 @@
                             <!-- <td *matFooterCellDef appFormatNumber  [value]="totalValue.absReturn" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                <div class="bar">
-                                    {{(totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
-                                </div>
+                                {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+                                <div class="bar"> 
+                                        <span *ngIf="!isLoading">   {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                        <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0.00}}
@@ -577,7 +594,7 @@
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise"
-                *ngIf="showCategory && dataSource4.data.length >0">
+                *ngIf="showCategory || dataSource4.data.length >0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
@@ -620,7 +637,10 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{(element) ? (element.absoluteReturn | number:'1.2-2') : 0 }}</div>
+                                <div class="bar">
+                                   <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                   <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar"> {{(totalValue.absReturn)?(totalValue.absReturn | number:'1.2-2'):0}}
@@ -630,14 +650,17 @@
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue) ? (totalValue.absReturn | number:'1.2-2') : 0}}
+                                    {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+                                <div class="bar"> 
+                                   <span *ngIf="!isLoading"> {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                   <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar"> {{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0.00}}
@@ -924,10 +947,10 @@
                         <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
                             appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                            appFormatNumber>{{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}} </td>
@@ -1094,10 +1117,10 @@
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                            appFormatNumber>{{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
@@ -1179,7 +1202,7 @@
                             appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
@@ -1260,7 +1283,7 @@
                             appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
                         <td
                             style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>

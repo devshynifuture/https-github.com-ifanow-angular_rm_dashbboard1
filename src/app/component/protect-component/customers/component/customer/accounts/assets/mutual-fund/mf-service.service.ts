@@ -111,7 +111,7 @@ export class MfServiceService {
     amtInvested += (data.amountInvested) ? data.amountInvested : 0;
     currentValue += (data.currentValue) ? data.currentValue : 0;
     unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
-    absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+    absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
