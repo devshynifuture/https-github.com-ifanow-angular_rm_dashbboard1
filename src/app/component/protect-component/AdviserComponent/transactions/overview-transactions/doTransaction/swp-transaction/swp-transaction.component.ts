@@ -56,7 +56,6 @@ export class SwpTransactionComponent implements OnInit {
   folioDetails: any;
   scheme: any;
   folioList: any;
-  mandateDetails: any;
   bankDetails: any;
   showSpinnerFolio = false;
   currentValue: number;
@@ -172,9 +171,6 @@ export class SwpTransactionComponent implements OnInit {
       this.reInvestmentOpt = [];
     }
     this.getFrequency();
-    if (this.getDataSummary.defaultClient.aggregatorType == 2) {
-      this.getMandateDetails();
-    }
     this.getSchemeWiseFolios();
   }
 
@@ -299,24 +295,6 @@ export class SwpTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay);
   }
 
-  getMandateDetails() {
-    const obj1 = {
-      advisorId: this.getDataSummary.defaultClient.advisorId,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-    };
-    this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
-      }
-    );
-  }
-
-  getMandateDetailsRes(data) {
-    console.log('mandate details :', data);
-    this.mandateDetails = data;
-  }
-
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
@@ -405,7 +383,7 @@ export class SwpTransactionComponent implements OnInit {
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.bankDetailId = this.bankDetails.id;
-        obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
+        // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
       const tenure = this.swpTransaction.controls.tenure.value;
       const installment = this.swpTransaction.controls.installment.value;
