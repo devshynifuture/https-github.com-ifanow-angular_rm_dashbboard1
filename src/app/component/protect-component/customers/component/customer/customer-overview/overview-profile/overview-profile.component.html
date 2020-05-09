@@ -282,8 +282,8 @@
                             <div class=" col-md-3 text-right ">
                             </div>
                         </div>
-                        <div [hidden]="!adressFlag" class="skeletonAnimation" [appSkeletonLoading]="adressFlag"
-                            appSkeletonLoading>
+                        <div [hidden]="(!adressFlag && addressList) || addressList==undefined" class="skeletonAnimation"
+                            [appSkeletonLoading]="adressFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -323,8 +323,8 @@
                     </div>
 
                     <div class=" col-md-3 pl-20 ">
-                        <div [hidden]="!bankFlag" class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader"
-                            appSkeletonLoading>
+                        <div [hidden]="(!bankFlag && bankList) || bankList==undefined" class="skeletonAnimation"
+                            [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -390,8 +390,8 @@
 
                         </div>
                         <hr class=" bb-primitive hrMargin ">
-                        <div [hidden]="!dematFlag" class="skeletonAnimation" [appSkeletonLoading]="dematFlag"
-                            appSkeletonLoading>
+                        <div [hidden]="(!dematFlag && dematList) || dematList==undefined" class="skeletonAnimation"
+                            [appSkeletonLoading]="dematFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
