@@ -393,7 +393,7 @@ export class SwpTransactionComponent implements OnInit {
         nsePaymentMode: null,
         childTransactions: null,
         isException: true,
-
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.bankDetailId = this.bankDetails.id;

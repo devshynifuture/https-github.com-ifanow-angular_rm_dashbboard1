@@ -498,7 +498,9 @@ export class StpTransactionComponent implements OnInit {
         bankDetailId: null,
         nsePaymentMode: null,
         isException: true,
-        childTransactions: []
+        childTransactions: [],
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;

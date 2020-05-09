@@ -451,6 +451,8 @@ export class SwitchTransactionComponent implements OnInit {
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         childTransactions: [],
         isException: true,
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
       };
 
       console.log('switch', obj);
