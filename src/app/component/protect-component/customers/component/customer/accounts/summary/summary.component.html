@@ -351,7 +351,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="finalTotal>0">
+                                <div [hidden]="!finalTotal">
                                     <div class="highcharts-figure" id="piechartMutualFund"></div>
                                 </div>
                             </div>
@@ -444,7 +444,7 @@
 
                         </div>
                         <div class="col-md-5">
-                            <div *ngIf="cashFlowViewDataSource.length>0 && !cashflowFlag" id="cashFlow"></div>
+                            <div [hidden]="cashFlowViewDataSource.length==0" id="cashFlow"></div>
                         </div>
                     </div>
 

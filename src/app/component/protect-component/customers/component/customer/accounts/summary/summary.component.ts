@@ -138,7 +138,9 @@ export class SummaryComponent implements OnInit {
           this.pieChart('piechartMutualFund', data);
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.finalTotal = 0;
+      }
     );
     this.getSummaryList(obj);
     this.getCashFlowList(obj);
@@ -170,7 +172,9 @@ export class SummaryComponent implements OnInit {
         }
         this.lineChart('container');
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.finalTotal = 0
+      }
     );
   }
 

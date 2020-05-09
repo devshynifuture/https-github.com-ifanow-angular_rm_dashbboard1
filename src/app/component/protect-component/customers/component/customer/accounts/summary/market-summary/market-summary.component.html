@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="col-md-3 relClass p-0">
-            <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
+            <div *ngIf="bscData" [ngClass]="{'height23': StockFeedFlag}" class="bar">
                 <p class="m-0 f-400 roboto"
                     [ngClass]="{'greenColor-text': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
                     {{bscData.change_in_percentage}}%</p>
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="col-md-3 relClass p-0">
-            <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
+            <div *ngIf="nscData" [ngClass]="{'height23': StockFeedFlag}" class="bar">
                 <p class="m-0 f-400 roboto"
                     [ngClass]="{'greenColor-text': nscData.colourFlag,'text-danger': nscData.colourFlag==false}">
                     {{nscData.change_in_percentage}}%</p>
