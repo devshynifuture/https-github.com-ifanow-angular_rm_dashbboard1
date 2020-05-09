@@ -30,7 +30,7 @@ export class OverviewProfileComponent implements OnInit {
   selectedBankData: any;
   selectedDemat: any;
   clientData: any;
-
+  Tab = "Tab1";
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
