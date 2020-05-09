@@ -265,11 +265,11 @@ export class SipTransactionComponent implements OnInit {
     } else {
       this.sipTransaction.controls.employeeContry.clearValidators();
       this.sipTransaction.controls.employeeContry.clearAsyncValidators();
-      this.sipTransaction.controls.employeeContry.setValidators([Validators.required]);
+
+      this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
       this.sipTransaction.controls.employeeContry.updateValueAndValidity();
     }
     this.checkAndHandleMaxInstallmentValidator();
-
   }
 
 
@@ -278,6 +278,7 @@ export class SipTransactionComponent implements OnInit {
     this.folioList = [];
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
+    this.sipFrequency = [];
     this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
@@ -371,6 +372,14 @@ export class SipTransactionComponent implements OnInit {
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
     this.sipFrequency = this.processTransaction.filterFrequencyList(data);
+    if (this.sipFrequency) {
+      this.sipFrequency.forEach(singleFrequency => {
+        if (singleFrequency.frequency == 'MONTHLY') {
+          this.sipTransaction.controls.frequency.setValue(singleFrequency.frequency);
+          this.selectedFrequency(singleFrequency);
+        }
+      });
+    }
   }
 
   selectedFrequency(getFrerq) {
@@ -522,7 +531,7 @@ export class SipTransactionComponent implements OnInit {
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
       isException: true,

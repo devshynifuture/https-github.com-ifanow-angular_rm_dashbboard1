@@ -31,6 +31,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  mandateDetails = [];
   purchaseTransaction: any;
   dataSource: any;
   ownerData: any;
@@ -57,7 +58,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   folioDetails: any;
   showSpinner = false;
   bankDetails: any;
-  achMandateNSE: any;
+  selectedMandate: any;
   callOnFolioSelection: boolean;
   showSpinnerMandate = false;
   showSpinnerFolio = false;
@@ -230,11 +231,15 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.purchaseTransaction.controls.investmentAccountSelection.reset();
+    this.purchaseTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   selectedScheme(scheme) {
     this.scheme = scheme;
+    this.folioList = [];
+    this.reInvestmentOpt = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -277,8 +282,19 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
-    this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
-    // this.purchaseTransaction.updateValueAndValidity();
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount),
+          Validators.max(this.selectedMandate.amount)]);
+        this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
+      } else {
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+      }
+    } else {
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+    }// this.purchaseTransaction.updateValueAndValidity();
   }
 
   getFolioList() {
@@ -382,8 +398,11 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
-    if (this.selectScheme == 1) {
+    if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
+    }
+    if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
+      this.getMandateDetails();
     }
     //  this.purchaseTransaction.controls.investor.reset();
   }
@@ -415,33 +434,51 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {paymentMode: value});
     if (value == 2) {
       Object.assign(this.transactionSummary, {getAch: true});
-      this.getNSEAchmandate();
+      this.getMandateDetails();
+    } else {
+      this.purchaseTransaction.controls.employeeContry.clearValidators();
+      this.purchaseTransaction.controls.employeeContry.clearAsyncValidators();
+
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
+      this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
     }
+
   }
 
-  getNSEAchmandate() {
+  getMandateDetails() {
     this.showSpinnerMandate = true;
     const obj1 = {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data), (error) => {
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data), (error) => {
         this.purchaseTransaction.get('modeOfPaymentSelection').setValue('1');
         this.eventService.openSnackBar(error, 'dismiss');
+        this.showSpinnerMandate = false;
+        this.mandateDetails = [];
+        this.selectedMandate = null;
       }
     );
   }
 
-  getNSEAchmandateRes(data) {
+  getMandateDetailsRes(data) {
     this.showSpinnerMandate = false;
     console.log('getNSEAchmandateRes', data);
     if (data.length > 1) {
       Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
-    this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED');
-    console.log('this.achMandateNSE', this.achMandateNSE);
-    this.achMandateNSE = this.achMandateNSE[0];
-    Object.assign(this.transactionSummary, {umrnNo: this.achMandateNSE.umrnNo});
+    this.mandateDetails = this.processTransaction.filterMandateData(data);
+    console.log('this.achMandateNSE', this.selectedMandate);
+    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
+        // max
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
+        this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
+      }
+    }
   }
 
   close() {
@@ -535,7 +572,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         childTransactions: []
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
+        obj.mandateId = (this.selectedMandate == undefined) ? null : this.selectedMandate.id;
         obj.bankDetailId = this.bankDetails.id;
         obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }

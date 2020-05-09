@@ -217,6 +217,10 @@
                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied
                 </mat-error>
+                <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.max)"
+                           class="f-12 pt-4">
+                  Amount cannot be greater than mandate amount.
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -242,7 +246,7 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
-          <div *ngIf="showSpinnerMandate == true" class="col-md-1">
+          <div *ngIf="showSpinnerMandate" class="col-md-1">
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
@@ -269,7 +273,7 @@
 
     <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1" class="br-0 text-success f-14"
             mat-button mat-raised-button>
-      SAVE & ADD ANOTHERplatformType
+      SAVE & ADD ANOTHER
     </button>
 
     <!-- <button mat-button class="btn-green text-white ml-12" (click)="purchase()">
