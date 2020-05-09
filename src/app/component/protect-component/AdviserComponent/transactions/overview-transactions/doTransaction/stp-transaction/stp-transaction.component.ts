@@ -73,7 +73,7 @@ export class StpTransactionComponent implements OnInit {
   filterNewSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private processTransaction: ProcessTransactionService, private eventService: EventService,
+              public processTransaction: ProcessTransactionService, private eventService: EventService,
               private fb: FormBuilder) {
   }
 

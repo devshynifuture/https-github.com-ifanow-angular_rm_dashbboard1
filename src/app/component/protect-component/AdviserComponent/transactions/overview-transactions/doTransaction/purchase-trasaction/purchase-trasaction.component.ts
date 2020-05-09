@@ -74,7 +74,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
 
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+  constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
               private customerService: CustomerService) {
   }
