@@ -119,7 +119,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      advisorId: 2753,
+      advisorId: 2929,
       clientId: 15545
     };
     this.custumService.getMutualFund(obj).subscribe(

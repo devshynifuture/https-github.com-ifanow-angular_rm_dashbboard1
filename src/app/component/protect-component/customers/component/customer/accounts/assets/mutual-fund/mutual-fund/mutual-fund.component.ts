@@ -26,6 +26,7 @@ export class MutualFundComponent implements OnInit {
 
   dataHolder: any = {};
   isShow = true;
+  capitalGainData: any;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
               public eventService: EventService, private custumService: CustomerService,
@@ -54,7 +55,7 @@ export class MutualFundComponent implements OnInit {
   getMutualFund() {
     this.isLoading = true;
     const obj = {
-      advisorId: 2753,
+      advisorId: 2929,
       clientId: 15545
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {

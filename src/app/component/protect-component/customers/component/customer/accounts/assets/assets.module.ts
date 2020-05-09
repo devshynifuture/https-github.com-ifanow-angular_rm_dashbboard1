@@ -32,6 +32,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { MfCapitalDetailedComponent } from './mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     PoRdSchemeComponent,
     PoTdSchemeComponent,
     PoMisSchemeComponent,
+    MfCapitalDetailedComponent,
   ],
   imports: [
     CommonModule,
