@@ -72,6 +72,23 @@
     border-bottom: transparent;
 }
 
+.tabClassTransaction {
+    max-height: 550px;
+    overflow-y: auto;
+}
+
+.tabClassTransaction::-webkit-scrollbar {
+    width: 4px;
+}
+
+.tabClassTransaction::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.tabClassTransaction::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .shadowBox:hover {
     box-shadow: 0 0 11px rgba(33, 33, 33, .2);
 }
