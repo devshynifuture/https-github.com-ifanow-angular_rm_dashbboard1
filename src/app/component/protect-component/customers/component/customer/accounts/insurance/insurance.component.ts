@@ -101,7 +101,12 @@ export class InsuranceComponent implements OnInit {
     this.generalInsuranceFlag = false;
   }
   fetchData(value,fileName) {
-    value = this.showInsurance+' Insurance';
+    if(this.insuranceTypeId == 1){
+      value='Life Insurance';
+    }else{
+      value='General Insurance';
+    }
+
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
