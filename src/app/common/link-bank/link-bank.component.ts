@@ -248,7 +248,7 @@ export class LinkBankComponent implements OnInit {
           city: this.bankForm.get('branchCity').value,
           state: this.bankForm.get('branchState').value,
           country: this.bankForm.get('branchCountry').value,
-          addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+          addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList) ? this.bankList.address.addressId : null
         },
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
@@ -257,7 +257,7 @@ export class LinkBankComponent implements OnInit {
         holderNameList: this.bankForm.get('holderNameList').value,
         userBankMappingId: (this.userData.bankData) ? this.userData.bankData.userBankMappingId : (this.bankList) ? this.bankList.userBankMappingId : null,
         bankId: (this.userData.bankData) ? this.userData.bankData.bankId : (this.bankList) ? this.bankList.bankId : null,
-        addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+        addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList) ? this.bankList.address.addressId : null
       };
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {
