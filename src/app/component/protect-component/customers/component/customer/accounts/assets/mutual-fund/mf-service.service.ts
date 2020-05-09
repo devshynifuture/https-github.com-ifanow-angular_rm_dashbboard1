@@ -29,7 +29,7 @@ export class MfServiceService {
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
@@ -93,7 +93,11 @@ export class MfServiceService {
     // this.totalGain = 0;
     // this.allocationPer = 0;
   }
-
+  getYearFromDate(date){ //for converting timeStampdate into year
+    date = new Date(date);
+    date =date.getFullYear();
+    return date;
+  }
   calculateTotalValue(data) {// for getting total value as per category in Summary
     let amtInvested = 0;
     let currentValue = 0;
@@ -133,7 +137,7 @@ export class MfServiceService {
     for (const [key, value] of Object.entries(primaryObject)) {
       if (exceptionKeys[key]) {
       } else {
-        if (primaryObject[key] && secondary[key]) {
+        if ((primaryObject[key] || primaryObject[key]==0) && (secondary[key]) || secondary[key]==0) {
           primaryObject[key] = value + secondary[key];
         }
       }
@@ -277,6 +281,17 @@ export class MfServiceService {
         );
       });
     }
+    let capitalGainArray = [];
+    if(dataForFilter.capitalGainData){
+      dataForFilter.capitalGainData.responseData.forEach(element => {
+        const family_member_list = this.filterArray(element.mutualFund, 'familyMemberId', dataForFilter.familyMember, 'familyMemberId');
+        if(family_member_list.length > 0){
+          capitalGainArray.push(element)
+        }
+      });
+      dataForFilter.capitalGainData.responseData = capitalGainArray;
+    }
+
     const sendData = {
       subCategoryData,
       family_member_list,
@@ -289,8 +304,12 @@ export class MfServiceService {
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
-      overviewFilter: dataForFilter.overviewFilter,
+      overviewFilter : dataForFilter.overviewFilter,
+      reportFormat:dataForFilter.reportFormat,
+      financialYear:dataForFilter.financialYear,
+      grandfathering:dataForFilter.grandfathering,    
       mfData,
+      capitalGainData:dataForFilter.capitalGainData
     };
     return sendData;
   }

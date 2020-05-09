@@ -15,6 +15,7 @@ export class MarketSummaryComponent implements OnInit {
   goldData: any;
   silverData: any;
   nifty500Data: any;
+  letsideBarLoader: boolean;
 
   constructor(private cusService: CustomerService) { }
 
@@ -24,6 +25,7 @@ export class MarketSummaryComponent implements OnInit {
     this.getNifty500Data();
   }
   getStockFeeds() {
+    this.letsideBarLoader = true;
     this.selectedVal = 'Equities';
     this.StockFeedFlag = true;
     this.cusService.getStockFeeds().subscribe(
@@ -48,6 +50,7 @@ export class MarketSummaryComponent implements OnInit {
 
   getStockFeedsResponse(data) {
     this.StockFeedFlag = false;
+    this.letsideBarLoader = false;
     const { bse, nse, gold, silver } = data;
     bse.date = new Date(bse.date).getTime();
     if (bse) {
