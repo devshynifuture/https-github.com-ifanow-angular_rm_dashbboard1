@@ -19,6 +19,7 @@ export class FileUploadServiceService {
   clientData: any;
   getUserInfo: any;
   familyMemberId: any;
+  folderId: any;
 
   constructor(private custumService: CustomerService,
     private http: HttpService,
@@ -42,6 +43,7 @@ export class FileUploadServiceService {
     this.custumService.fetchFileUpload(obj).subscribe(
       data => {
         this.fileUploadData = data || [];
+        this.folderId = data
         console.log('fileUploadData', this.fileUploadData);
         return this.fileUploadData
       },
@@ -81,7 +83,7 @@ export class FileUploadServiceService {
       clientId: this.clientId,
       advisorId: this.advisorId,
       familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
-      folderId: this.fileUploadData,
+      folderId:this.folderId,
       fileName: this.myFiles.name
     };
     this.custumService.uploadFile(obj).subscribe(
