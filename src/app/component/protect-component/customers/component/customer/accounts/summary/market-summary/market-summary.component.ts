@@ -9,12 +9,12 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 export class MarketSummaryComponent implements OnInit {
   selectedVal: string;
   StockFeedFlag: boolean;
-  deptData: any;
-  bscData: any;
-  nscData: any;
-  goldData: any;
-  silverData: any;
-  nifty500Data: any;
+  deptData: any = {};
+  bscData: any = {};
+  nscData: any = {};
+  goldData: any = {};
+  silverData: any = {};
+  nifty500Data: any = {};
   letsideBarLoader: boolean;
   deptDataFlag: boolean;
   nifty500DataFlag: boolean;

@@ -104,8 +104,8 @@ export class AllFeedsComponent implements OnInit {
     }
     this.clientData = AuthService.getClientData();
     this.clientId - AuthService.getClientId();
-    this.advisorInfo = AuthService.getUserInfo();
-    this.advisorImg = authService.profilePic;
+    this.advisorInfo = AuthService.getAdvisorDetails();
+    this.advisorImg = this.advisorInfo.profilePic;
   }
 
   tabsLoaded = {
