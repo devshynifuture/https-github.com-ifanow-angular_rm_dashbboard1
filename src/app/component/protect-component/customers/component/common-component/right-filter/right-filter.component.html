@@ -187,7 +187,7 @@
     </mat-accordion>
 
     <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
-        <div class="col-md-4 pl-0" *ngIf="transactionPeriod == false && _data.name!='CAPITAL GAIN REPORT'" >
+        <div class="col-md-4 pl-0" *ngIf="transactionPeriod == false && _data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'" >
             <h5 class="m-0 pb-8">Report as on</h5>
             <div class="col-md-12 p-0">
                 <div class="from-group  ">

@@ -228,6 +228,8 @@ export class MutualFundsCapitalComponent implements OnInit {
               }
             }
           });
+        } else{
+          filterObj = [];
         }
       });
       return filterObj;
@@ -257,6 +259,8 @@ export class MutualFundsCapitalComponent implements OnInit {
                }
              }
            });
+        }else{
+          this.mfList = [];
         }
       });
       (category == 'DEBT') ? this.debtObj =finalValue : this.equityObj =finalValue;

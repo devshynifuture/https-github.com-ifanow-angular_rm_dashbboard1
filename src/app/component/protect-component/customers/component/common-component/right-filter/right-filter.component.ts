@@ -68,8 +68,8 @@ export class RightFilterComponent implements OnInit {
   overviewFilter: any;
   selectedTransactionView;
   sendTransactionView;
-  transactionPeriod = true;
-  transactionPeriodCheck = true;
+  transactionPeriod = false;
+  transactionPeriodCheck = false;
   overviewFilterCount :any;
   showError: string;
   countFormat: number;
@@ -89,10 +89,12 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
-    this.transactionPeriodCheck = true
-    this.amc = this._data.schemeWise;//amc wise data 
-    this.folio = this._data.folioWise;//for getting all folios
+    // (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
+    this.transactionPeriodCheck = false
+    // this.amc = this._data.schemeWise;//amc wise data 
+    // this.folio = this._data.folioWise;//for getting all folios
+    this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()];//amc wise data 
+    this.folio = [...new Map(this._data.folioWise.map(item => [item.folioNumber, item])).values()];//for getting all folios
     this.showSummaryFilterForm('');//as on date and showZero folio form
 
     this.getCategoryWise(this._data.category);//get category wise data
@@ -104,8 +106,6 @@ export class RightFilterComponent implements OnInit {
     this.getFinancialYears(this.summaryFilerForm);//for getting financial years for capital gain
     this.getOverviewFilter();//used for overview filter to show specific tables
     this.setDefaultFilters();//setting default selected in each above array
-    this.amc = this._data.schemeWise; // amc wise data
-    this.folio = this._data.folioWise; // for getting all folios
     if (this._data.category) {
       this.getCategoryWise(this._data.category);
       // get category wise data
@@ -145,15 +145,17 @@ export class RightFilterComponent implements OnInit {
       };
       filterData.push(obj);
     });
-    this.category = filterData;
+    this.category =[...new Map(filterData.map(item => [item.categoryId, item])).values()]; ;
   }
 
   showSummaryFilterForm(data) {
+    const fromDate = new Date();
+    fromDate.setFullYear(fromDate.getFullYear() - 1);
     var todayDate = new Date().toISOString().slice(0, 10);
     this.summaryFilerForm = this.fb.group({
       reportAsOn: [new Date(todayDate), [Validators.required]],
-      fromDate: [(data.fromDate == undefined) ? null : new Date(data.fromDate)],
-      toDate: [(data.toDate == undefined) ? null : new Date(data.toDate)],
+      fromDate: [new Date(fromDate),[Validators.required]],
+      toDate: [new Date(todayDate),[Validators.required]],
       showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
       grandfathering: [(data.grandfathering) ? data.grandfathering : '', [Validators.required]],
     });
@@ -659,7 +661,9 @@ export class RightFilterComponent implements OnInit {
       toDate: this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
       grandfathering: parseInt(this.summaryFilerForm.controls.grandfathering.value),
-      capitalGainData:this._data.capitalGainData
+      capitalGainData:this._data.capitalGainData,
+      name:this._data.name,
+      transactionPeriodCheck:this.transactionPeriodCheck
     };
     console.log('dataToSend---------->', this.dataToSend);
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
