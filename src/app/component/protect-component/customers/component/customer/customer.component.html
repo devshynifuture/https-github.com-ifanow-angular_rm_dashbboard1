@@ -24,7 +24,22 @@
                 <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
             </nav>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-2 hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none ng-tns-c1-0">
+            <nav mat-tab-nav-bar>
+                <a class="sidenav-link" mat-list-item *ngIf="user.userType == 1">
+                    <img [src]="'/assets/images/svg/comment-icon.svg'" [matMenuTriggerFor]="menu" class="c-p header-img">
+                    <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    </mat-menu>
+                </a>
+                <a class="sidenav-link" mat-list-item *ngIf="user.userType == 2">
+                    <img [src]="'/assets/images/svg/comment-icon.svg'" [matMenuTriggerFor]="menu" class="c-p header-img">
+                    <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    </mat-menu>
+                </a>
+            </nav>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 p-0">

@@ -12,13 +12,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  //templateUrl: './mobile-bottom-nav.html',
-  //templateUrl: './customer.mobile.component.html',
-  //  templateUrl: './goal.mobile.component.html',
-  //templateUrl: './transactions-mob.component.html',
-  // templateUrl: './profile-mobile.html',
-  //templateUrl: './document-mob.html',
-  //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
@@ -33,13 +26,21 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   secondFormGroup: FormGroup;
   status = false;
   loading: boolean;
+  user:any;
 
-  constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
-              private authService: AuthService, private peopleService: PeopleService, private _formBuilder: FormBuilder) {
+  constructor(
+    private router: Router, 
+    protected eventService: EventService, 
+    protected subinject: SubscriptionInject,
+    protected dynamicComponentService: DynamicComponentService, 
+    private route: ActivatedRoute,
+    private authService: AuthService, 
+    private peopleService: PeopleService, 
+    private _formBuilder: FormBuilder
+  ) {
     super(eventService, subinject, dynamicComponentService);
+    this.user = AuthService.getUserInfo();
     if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.clientId) {
-      console.log(router.getCurrentNavigation().extras.state);
       this.getClientData(router.getCurrentNavigation().extras.state);
     }
     this.eventService.tabChangeData.subscribe(
@@ -69,9 +70,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
   getTabChangeData(data) {
     setTimeout(() => {
-
       this.value = data;
-
     }, 300);
   }
 
@@ -83,10 +82,6 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
-    // const performance = Performance().prototype;
-    // performance.mark('');
-    // performance.toJSON();
-    // Performance.prototype  .mark();
     this.showRouter = true;
     this.selected = 1;
     this._value = 1;
@@ -130,12 +125,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     );
   }
 
-  clickEvent(value) {
-    this.value = value;
+  logout() {
+    // if (!this.authService.isAdvisor()) {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    // }
   }
-
-  tabClick(event) {
-    // this.eventService.sidebarData(event.tab.textLabel);
-  }
-
 }
