@@ -394,7 +394,7 @@
 
                                         <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
 
-                                        <button [routerLink]="['/customer/detail/overview/documents']" class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button  (click)="routeAndAddQueryParams('Documents')">
                                             Access your vault
                                         </button>
 
@@ -417,7 +417,7 @@
                                     <div class="col-md-7 pr-0">
                                         <h5 class="roboto f-500">You aren’t using the document vault!</h5>
                                         <p>Document vault is a safe and secure way to manage your important documents. This will help you get better organized.</p>
-                                        <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button>
+                                        <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                             Add documents
                                         </button>
                                     </div>
