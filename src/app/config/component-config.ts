@@ -211,6 +211,7 @@ export const appConfig = {
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
+  REPORT_WISE_CALCULATION:'mutual-fund/reportwise/calculation/get',
   MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST: 'mutual-fund/transaction/type/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',

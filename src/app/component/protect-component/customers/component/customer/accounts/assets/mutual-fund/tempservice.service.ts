@@ -146,7 +146,7 @@ export class TempserviceService {
     amtInvested += (data.amountInvested) ? data.amountInvested : 0;
     currentValue += (data.currentValue) ? data.currentValue : 0;
     unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
-    absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
+    absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
@@ -225,7 +225,7 @@ export class TempserviceService {
       dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;
       totalAmount += (data.totalAmount) ? data.totalAmount : 0;
       totalGain += (data.unrealizedGain) ? data.unrealizedGain : 0;
-      absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
+      absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr==0)?data.xirr:0;
       allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
       withdrawals += (data.switchOut) ? data.switchOut : 0;

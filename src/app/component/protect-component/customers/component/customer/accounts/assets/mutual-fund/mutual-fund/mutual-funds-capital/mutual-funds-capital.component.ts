@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Input, Output, EventEmitter } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../../excel.service';
@@ -10,6 +10,8 @@ import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -43,6 +45,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   redemptiontransaction: any[];
   isLoading: Boolean;
   @Input() mutualFund;
+  @Output() changeInput = new EventEmitter();
   purchaseAgainstRedemption: any[];
   total_stGain = 0;
   total_ltGain = 0;
@@ -66,7 +69,10 @@ export class MutualFundsCapitalComponent implements OnInit {
   dataToSend: { mfListData: any; grandfatheringEffect: any; fromDateYear: any; toDateYear: any; };
   capitalGainData: any;
   // capitalGainData: any;
-  constructor(private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
+  constructor(private pdfGen:PdfGenService,private excel: ExcelGenService,private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl2', { static: false }) tableEl2;
+  @ViewChild('tableEl3', { static: false }) tableEl3;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -114,6 +120,7 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.dataSource1 = new MatTableDataSource([{}, {}, {}]);
             this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
+            this.changeInput.emit(true);
             this.dataToSend = {
               mfListData : this.rightFilterData.capitalGainData.responseData,
               grandfatheringEffect : this.rightFilterData.grandfathering,
@@ -152,6 +159,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   // }
   getCapitalgain() {
     this.isLoading = true;
+    this.changeInput.emit(true);
     const obj = {
       advisorIds: [2929],
       clientId: 15545,
@@ -171,6 +179,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   }
   calculateCapitalGain(data){
     this.isLoading = false;
+    this.changeInput.emit(false);
     if (data) {
       this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
        this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
@@ -299,6 +308,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   }
   outputResponse(data){
     this.isLoading =false;
+    this.changeInput.emit(false);
     this.fromDateYear = data.fromDateYear;
     this.toDateYear = data.toDateYear;
     this.grandFatheringEffect = data.grandfatheringEffect
@@ -316,5 +326,17 @@ export class MutualFundsCapitalComponent implements OnInit {
     // this.objSendToDetailedCapital.fromDateYear = data.financialYear[0].from;
     // this.objSendToDetailedCapital.toDateYear =data.financialYear[0].to;
     // this.getCapitalgainRes(data.capitalGainData.responseData);
+  }
+  Excel(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+       let rows2 = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+    let rows3 = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+  }
+  pdf(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
 } 

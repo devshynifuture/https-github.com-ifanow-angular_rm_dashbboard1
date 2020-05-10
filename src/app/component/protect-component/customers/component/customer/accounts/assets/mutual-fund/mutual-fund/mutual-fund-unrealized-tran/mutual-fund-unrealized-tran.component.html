@@ -132,7 +132,7 @@
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        <span>{{isLoading ? '':((element.xirr || element.xirr == 0)?(element.xirr | number:'1.2-2'):0)}}</span>
+                                        <span>{{isLoading ? '':((element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2'):0)}}</span>
                                     </div>
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">

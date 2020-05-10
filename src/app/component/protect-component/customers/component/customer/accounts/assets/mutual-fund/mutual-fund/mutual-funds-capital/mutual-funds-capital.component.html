@@ -8,8 +8,8 @@
             <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
                 <mat-menu #menu1="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button mat-menu-item (click)="ExportTOExcel('Mutual Fund Capital Gains')">XLS</button>
+                    <button mat-menu-item (click)="pdf('Capital gain')">PDF</button>
+                    <button mat-menu-item (click)="Excel('Capital Gain')">XLS</button>
                 </mat-menu>
                 <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
@@ -31,7 +31,7 @@
                         EQUITY
                     </h5>
                 </div>
-                <table mat-table [dataSource]="dataSource" id="table-low"
+                <table #tableEl mat-table [dataSource]="dataSource" id="table-low"
                     class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
 
@@ -155,7 +155,7 @@
                         DEBT
                     </h5>
                 </div>
-                <table mat-table [dataSource]="dataSource1" id="table-low"
+                <table #tableEl2 mat-table [dataSource]="dataSource1" id="table-low"
                 class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
 
@@ -278,7 +278,7 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
-                <table mat-table [dataSource]="dataSource2" id="table-low"
+                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low"
                     class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
 
