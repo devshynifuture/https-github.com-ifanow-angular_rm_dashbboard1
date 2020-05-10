@@ -37,11 +37,13 @@ export class KvpSchemeComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean;
+  clientData: any;
 
   constructor(private excel:ExcelGenService,
     private fileUpload : FileUploadServiceService,
     private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
 
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
 
@@ -61,6 +63,7 @@ export class KvpSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

@@ -33,9 +33,13 @@ export class PPFSchemeComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
+  clientData: any;
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
     private fileUpload : FileUploadServiceService,
-    public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+    public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { 
+
+      this.clientData = AuthService.getClientData()
+    }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
@@ -53,6 +57,7 @@ export class PPFSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

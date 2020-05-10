@@ -39,6 +39,7 @@ export class RealEstateComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
+  clientData: any;
 
   constructor( public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
@@ -50,7 +51,7 @@ export class RealEstateComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.clientData = AuthService.getClientData();
     this.getRealEstate();
 
   }
@@ -64,6 +65,7 @@ export class RealEstateComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

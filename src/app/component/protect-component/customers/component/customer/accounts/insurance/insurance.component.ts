@@ -80,11 +80,14 @@ export class InsuranceComponent implements OnInit {
   profileData: any;
   fileUploadData;
   file;
+  clientData;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private fileUpload : FileUploadServiceService,
     private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService,private pdfGen:PdfGenService) {
-  }
+      this.clientData = AuthService.getClientData()
+
+    }
 
   insuranceTypeId;
 
@@ -110,6 +113,7 @@ export class InsuranceComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

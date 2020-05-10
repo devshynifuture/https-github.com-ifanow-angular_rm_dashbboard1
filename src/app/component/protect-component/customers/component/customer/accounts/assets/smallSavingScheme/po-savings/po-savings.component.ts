@@ -43,13 +43,15 @@ export class PoSavingsComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
+  clientData: any;
 
 
   constructor(private excel:ExcelGenService,  
     private fileUpload : FileUploadServiceService,
     private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -66,6 +68,7 @@ export class PoSavingsComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

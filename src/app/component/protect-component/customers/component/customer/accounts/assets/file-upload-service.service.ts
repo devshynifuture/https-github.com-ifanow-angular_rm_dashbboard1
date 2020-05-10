@@ -78,7 +78,6 @@ export class FileUploadServiceService {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      familyMemberId: this.clientData.familyMemberId,
       folderId: this.fileUploadData,
       fileName: this.myFiles.name
     };

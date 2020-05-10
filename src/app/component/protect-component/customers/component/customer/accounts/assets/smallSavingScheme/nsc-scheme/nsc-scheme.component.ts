@@ -42,12 +42,14 @@ export class NscSchemeComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
+  clientData: any;
 
   constructor( private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
     private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
 
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -67,6 +69,7 @@ export class NscSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

@@ -92,20 +92,17 @@ export class FixedIncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId : this.clientData.familyMemberId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
     if(this.fileUploadData){
       this.file = fileName
-      this.responseData = this.fileUpload.uploadFile(fileName)
-      if(this.responseData == true){
-       
-      }
-      setTimeout(() => {
-        this.isLoadingUpload = false
-      }, 7000);
+      this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;

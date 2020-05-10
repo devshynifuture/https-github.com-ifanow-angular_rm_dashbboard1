@@ -47,11 +47,13 @@ export class CashAndBankComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
+  clientData: any;
 
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload : FileUploadServiceService,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog) {
+      this.clientData =AuthService.getClientData()
   }
 
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -72,6 +74,7 @@ export class CashAndBankComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

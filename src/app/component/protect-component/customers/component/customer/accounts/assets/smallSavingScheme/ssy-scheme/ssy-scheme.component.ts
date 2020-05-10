@@ -38,12 +38,14 @@ export class SsySchemeComponent implements OnInit {
   fileUploadData: any;
   file: any;
   isLoadingUpload: boolean = false;
+  clientData: any;
 
-  constructor(private excel:ExcelGenService,  
-    private pdfGen:PdfGenService, public dialog: MatDialog,
-    private fileUpload : FileUploadServiceService,
-     private cusService: CustomerService, private subInjectService: SubscriptionInject,
-      private eventService: EventService) {
+  constructor(private excel: ExcelGenService,
+    private pdfGen: PdfGenService, public dialog: MatDialog,
+    private fileUpload: FileUploadServiceService,
+    private cusService: CustomerService, private subInjectService: SubscriptionInject,
+    private eventService: EventService) {
+    this.clientData = AuthService.getClientData()
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
@@ -54,19 +56,20 @@ export class SsySchemeComponent implements OnInit {
     this.getSsySchemedata();
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
-  fetchData(value,fileName) {
+  fetchData(value, fileName) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
-    if(this.fileUploadData){
+    if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
@@ -74,7 +77,7 @@ export class SsySchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }

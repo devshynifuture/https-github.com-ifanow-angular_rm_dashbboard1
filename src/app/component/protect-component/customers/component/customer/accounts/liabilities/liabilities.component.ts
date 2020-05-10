@@ -60,13 +60,15 @@ export class LiabilitiesComponent implements OnInit {
   personalProfileData: any;
   fileUploadData: any;
   file: any;
+  clientData: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService,
     private fileUpload : FileUploadServiceService,
     public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService,private pdfGen :PdfGenService) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -117,6 +119,7 @@ export class LiabilitiesComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)

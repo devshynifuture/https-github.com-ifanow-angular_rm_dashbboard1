@@ -37,6 +37,7 @@ export class PoTdSchemeComponent implements OnInit {
   sumOfMaturityValue: any;
   fileUploadData: any;
   file: any;
+  clientData: any;
 
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
@@ -44,7 +45,8 @@ export class PoTdSchemeComponent implements OnInit {
     private eventService: EventService,
     private cusService: CustomerService,
     private subInjectService: SubscriptionInject) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
 
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -58,6 +60,7 @@ export class PoTdSchemeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
