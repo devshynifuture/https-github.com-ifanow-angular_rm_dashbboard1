@@ -124,8 +124,8 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.dataToSend = {
               mfListData : this.rightFilterData.capitalGainData.responseData,
               grandfatheringEffect : this.rightFilterData.grandfathering,
-              fromDateYear : this.rightFilterData.financialYear[0].from,
-              toDateYear : this.rightFilterData.financialYear[0].to
+              fromDateYear : (this.rightFilterData.financialYear.length >0) ? this.rightFilterData.financialYear[0].from : 2019,
+              toDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
             }
             if(this.rightFilterData.reportFormat[0].name == 'Detailed'){
               this.summaryView = false
@@ -161,8 +161,8 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.isLoading = true;
     this.changeInput.emit(true);
     const obj = {
-      advisorIds: [2929],
-      clientId: 15545,
+      advisorIds: [this.advisorId],
+      clientId: this.clientId,
       parentId: 0
 
     };
@@ -215,19 +215,20 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.totalReinvesment = 0;
       let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
       mutualFund.forEach(element => {
-        element.redemptionTransactions.forEach(ele => {
-          let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
-          if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
-            if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
-              element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
-              this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
-              this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
-              this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
-              filterObj.push(element);
+        if(element.redemptionTransactions){
+          element.redemptionTransactions.forEach(ele => {
+            let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+            if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
+              if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
+                element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
+                this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
+                this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
+                this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
+                filterObj.push(element);
+              }
             }
-          }
-        });
-  
+          });
+        }
       });
       return filterObj;
     }
@@ -237,24 +238,26 @@ export class MutualFundsCapitalComponent implements OnInit {
       let finalValue ={};
       this.mfList = this.MfServiceService.filter(data, 'mutualFund');
       this.mfList.forEach(element => {
-        element.redemptionTransactions.forEach(ele => {
-         let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
-          if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
-            if (ele.purchaceAgainstRedemptionTransactions) {
-              let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
-              finalValue = this.MfServiceService.addTwoObjectValues(totalValue, finalValue, {totalAmt: true});
-              // this.getFinalTotalValue(totalValue);
-              element.stGain = totalValue.stGain;
-              element.ltGain = totalValue.ltGain;
-              element.stLoss = totalValue.stLoss;
-              element.ltLoss = totalValue.ltLoss;
-              element.indexGain = totalValue.indexGain;
-              element.indexLoss = totalValue.indexLoss;
-            } else {
-              ele.purchaceAgainstRedemptionTransactions = []
-            }
-          }
-        });
+        if(element.redemptionTransactions){
+          element.redemptionTransactions.forEach(ele => {
+            let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+             if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
+               if (ele.purchaceAgainstRedemptionTransactions) {
+                 let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
+                 finalValue = this.MfServiceService.addTwoObjectValues(totalValue, finalValue, {totalAmt: true});
+                 // this.getFinalTotalValue(totalValue);
+                 element.stGain = totalValue.stGain;
+                 element.ltGain = totalValue.ltGain;
+                 element.stLoss = totalValue.stLoss;
+                 element.ltLoss = totalValue.ltLoss;
+                 element.indexGain = totalValue.indexGain;
+                 element.indexLoss = totalValue.indexLoss;
+               } else {
+                 ele.purchaceAgainstRedemptionTransactions = []
+               }
+             }
+           });
+        }
       });
       (category == 'DEBT') ? this.debtObj =finalValue : this.equityObj =finalValue;
       finalValue={};

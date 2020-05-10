@@ -119,15 +119,15 @@ export class MfCapitalDetailedComponent implements OnInit {
               data:this.rightFilterData.capitalGainData.responseData,
               summaryView:(this.rightFilterData.reportFormat[0].name == 'Detailed') ? false : true,
               grandfatheringEffect : this.rightFilterData.grandfathering,
-              fromDateYear : this.rightFilterData.financialYear[0].from,
-              toDateYear : this.rightFilterData.financialYear[0].to
+              fromDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
+              toDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
             }
             
             this.reponseToInput.emit(obj);
             // (this.rightFilterData.reportFormat[0].name == 'Detailed') ?  this.reponseToInput.emit(false): this.reponseToInput.emit(true);;
             (this.rightFilterData.grandfathering == 1) ? this.grandFatheringEffect = true : this.grandFatheringEffect = false;
-            this.fromDateYear = this.rightFilterData.financialYear[0].from;
-            this.toDateYear =this.rightFilterData.financialYear[0].to;
+            this.fromDateYear = (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019;
+            this.toDateYear =(this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020;
             if(this.rightFilterData.reportFormat[0].name == 'Detailed'){
               this.getDetailedData(this.rightFilterData.capitalGainData.responseData);
             }
@@ -152,76 +152,77 @@ export class MfCapitalDetailedComponent implements OnInit {
         }
         filteredArray.push(obj);
         let totalObj: any = {};
-        element.redemptionTransactions.forEach(obj => {
-          let financialyear = this.MfServiceService.getYearFromDate(obj.transactionDate)
-          if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
-            if(obj.purchaceAgainstRedemptionTransactions || (obj.purchaceAgainstRedemptionTransactions) ? obj.purchaceAgainstRedemptionTransactions.length > 0 :obj.purchaceAgainstRedemptionTransactions){
-              obj.purchaceAgainstRedemptionTransactions.forEach((ele,ind) => {
-                totalObj = this.getFilteredValues(ele,category);
-                ele.stGain = totalObj.stGain;
-                ele.ltGain = totalObj.ltGain;
-                ele.stLoss = totalObj.stLoss;
-                ele.ltLoss = totalObj.ltLoss;
-                ele.indexGain = totalObj.indexGain;
-                ele.indexLoss = totalObj.indexLoss;
-                ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
-                ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
-                if(ind == 0){
-                ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
-                ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
-                ele.redeemAmount = (obj.amount) ? obj.amount : 0;
-                ele.redeemStt = (obj.stt) ? obj.stt:0;
-                ele.redeemUnit = (obj.unit) ? obj.unit : 0;
-                ele.redeemRate = (obj.purchasePrice) ? obj.purchasePrice :0;
+        if(element.redemptionTransactions){
+          element.redemptionTransactions.forEach(obj => {
+            let financialyear = this.MfServiceService.getYearFromDate(obj.transactionDate)
+            if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
+              if(obj.purchaceAgainstRedemptionTransactions || (obj.purchaceAgainstRedemptionTransactions) ? obj.purchaceAgainstRedemptionTransactions.length > 0 :obj.purchaceAgainstRedemptionTransactions){
+                obj.purchaceAgainstRedemptionTransactions.forEach((ele,ind) => {
+                  totalObj = this.getFilteredValues(ele,category);
+                  ele.stGain = totalObj.stGain;
+                  ele.ltGain = totalObj.ltGain;
+                  ele.stLoss = totalObj.stLoss;
+                  ele.ltLoss = totalObj.ltLoss;
+                  ele.indexGain = totalObj.indexGain;
+                  ele.indexLoss = totalObj.indexLoss;
+                  ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
+                  ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
+                  if(ind == 0){
+                  ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
+                  ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
+                  ele.redeemAmount = (obj.amount) ? obj.amount : 0;
+                  ele.redeemStt = (obj.stt) ? obj.stt:0;
+                  ele.redeemUnit = (obj.unit) ? obj.unit : 0;
+                  ele.redeemRate = (obj.purchasePrice) ? obj.purchasePrice :0;
+                  }
+                  filteredArray.push(ele)
+                  totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(ele), totalValue, {totalAmt: true});
+      
+              });
+              }else{
+                obj.purchaceAgainstRedemptionTransactions =[];
+                const array={
+                  redeemTransactionDate : (obj.transactionDate) ? obj.transactionDate : 0,
+                  transactionType : (obj.fwTransactionType) ? obj.fwTransactionType : 0,
+                  redeemAmount : (obj.amount) ? obj.amount : 0,
+                  redeemStt :  (obj.stt) ? obj.stt:0,
+                  redeemUnit :(obj.unit) ? obj.unit : 0,
+                  redeemRate : (obj.purchasePrice) ? obj.purchasePrice :0,
+                  stGain :0,
+                  ltGain :0,
+                  stLoss :0,
+                  ltLoss :0,
+                  indexGain :0,
+                  indexLoss :0,
+                  transactionDate:'',
+                  amount:0,
+                  unit:0,
+                  purchasePrice:0,
+                  days:0
                 }
-                filteredArray.push(ele)
-                totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(ele), totalValue, {totalAmt: true});
-    
-            });
-            }else{
-              obj.purchaceAgainstRedemptionTransactions =[];
-              const array={
-                redeemTransactionDate : (obj.transactionDate) ? obj.transactionDate : 0,
-                transactionType : (obj.fwTransactionType) ? obj.fwTransactionType : 0,
-                redeemAmount : (obj.amount) ? obj.amount : 0,
-                redeemStt :  (obj.stt) ? obj.stt:0,
-                redeemUnit :(obj.unit) ? obj.unit : 0,
-                redeemRate : (obj.purchasePrice) ? obj.purchasePrice :0,
-                stGain :0,
-                ltGain :0,
-                stLoss :0,
-                ltLoss :0,
-                indexGain :0,
-                indexLoss :0,
-                transactionDate:'',
-                amount:0,
-                unit:0,
-                purchasePrice:0,
-                days:0
+                filteredArray.push(array)
+                totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(array), totalValue, {totalAmt: true});
               }
-              filteredArray.push(array)
-              totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(array), totalValue, {totalAmt: true});
             }
-          }
-  
-        });
-          this.getFinalTotalValue(totalValue);
-          filteredArray.push(totalValue)
-          let filterr ={
-            totalAmt:'Total',
-            totalAmount :totalValue.totalAmount,
-            totalStt: totalValue.totalStt,
-            purchaseAmount:totalValue.purchaseAmount,
-            totalStGain  :totalValue.totalStGain,
-            totalLtGain :totalValue.totalLtGain,
-            totalStLoss  :totalValue.totalStLoss,
-            totalLtLoss  :totalValue.totalLtLoss,
-            totalIndexGain :totalValue.totalIndexGain,
-            totalIndexLoss :totalValue.totalIndexLoss
-          }
-         categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
-          totalValue= {};
-  
+    
+          });
+            this.getFinalTotalValue(totalValue);
+            filteredArray.push(totalValue)
+            let filterr ={
+              totalAmt:'Total',
+              totalAmount :totalValue.totalAmount,
+              totalStt: totalValue.totalStt,
+              purchaseAmount:totalValue.purchaseAmount,
+              totalStGain  :totalValue.totalStGain,
+              totalLtGain :totalValue.totalLtGain,
+              totalStLoss  :totalValue.totalStLoss,
+              totalLtLoss  :totalValue.totalLtLoss,
+              totalIndexGain :totalValue.totalIndexGain,
+              totalIndexLoss :totalValue.totalIndexLoss
+            }
+           categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
+            totalValue= {};
+        }
       });
       (category == 'DEBT') ? this.debtObj =categoryWiseTotal : this.equityObj =categoryWiseTotal;
       console.log('DEBT',this.debtObj);
@@ -327,6 +328,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       });
       return filterObj;
     }
+    
   }
   isGroup = (index, item) => item.schemeName;// for grouping schme name
 

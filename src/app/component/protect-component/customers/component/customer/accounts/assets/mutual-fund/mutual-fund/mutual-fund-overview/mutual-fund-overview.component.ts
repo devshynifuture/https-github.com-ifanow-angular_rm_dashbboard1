@@ -130,7 +130,7 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
-      clientId: 15545
+      clientId: this.clientId
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
@@ -254,7 +254,7 @@ export class MutualFundOverviewComponent implements OnInit {
         });
         const obj = {
           advisorId: this.advisorId,
-          clientId: 15545,
+          clientId: this.clientId,
           request: catObj
         };
         this.custumService.getReportWiseCalculations(obj).subscribe(

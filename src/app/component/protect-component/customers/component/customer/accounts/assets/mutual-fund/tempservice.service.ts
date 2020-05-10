@@ -101,7 +101,9 @@ export class TempserviceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      filterData.push(element[key]);
+      if(element[key]){
+        filterData.push(element[key]);
+      }
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
