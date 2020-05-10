@@ -61,6 +61,7 @@ export class LiabilitiesComponent implements OnInit {
   fileUploadData: any;
   file: any;
   clientData: any;
+  isLoadingUpload: boolean = false;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -116,6 +117,7 @@ export class LiabilitiesComponent implements OnInit {
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -127,6 +129,9 @@ export class LiabilitiesComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle) {
     this.fragmentData.isSpinner = true;

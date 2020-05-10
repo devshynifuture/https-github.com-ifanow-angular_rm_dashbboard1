@@ -18,6 +18,7 @@ export class FileUploadServiceService {
   basicDetails: any;
   clientData: any;
   getUserInfo: any;
+  familyMemberId: any;
 
   constructor(private custumService: CustomerService,
     private http: HttpService,
@@ -31,6 +32,7 @@ export class FileUploadServiceService {
   fetchFileUploadData(value) {
     console.log('here its me', value)
     this.basicDetails = value
+    this.familyMemberId = value.familyMemberId
     const obj = {
       advisorId: value.advisorId,
       clientId: value.clientId,
@@ -78,6 +80,7 @@ export class FileUploadServiceService {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
+      familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
       folderId: this.fileUploadData,
       fileName: this.myFiles.name
     };
