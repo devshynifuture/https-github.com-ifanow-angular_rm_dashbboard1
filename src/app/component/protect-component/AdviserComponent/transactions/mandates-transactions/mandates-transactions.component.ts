@@ -73,7 +73,9 @@ export class MandatesTransactionsComponent implements OnInit {
     }
     // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
-
+  openTransaction(){
+    console.log('transaction');
+  }
   getNSEAchmandate() {
     this.dontHide = true
     this.dataSource.data = [{}, {}, {}];
