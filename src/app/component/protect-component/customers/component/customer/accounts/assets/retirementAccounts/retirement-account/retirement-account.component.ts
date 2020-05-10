@@ -69,6 +69,8 @@ export class RetirementAccountComponent implements OnInit {
   noData: any;
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
 
   // async ExportTOExcel(value) {
   //   this.excelData = []
@@ -200,6 +202,7 @@ export class RetirementAccountComponent implements OnInit {
      private fileUpload : FileUploadServiceService,
      private custumService: CustomerService, private eventService: EventService, 
      public utils: UtilService, public dialog: MatDialog) {
+      this.clientData = AuthService.getClientData()
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','bal', 'desc', 'status', 'icons'];
@@ -233,9 +236,11 @@ export class RetirementAccountComponent implements OnInit {
     this.excel.generateExcel(rows,tableTitle)
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
@@ -243,6 +248,9 @@ export class RetirementAccountComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;

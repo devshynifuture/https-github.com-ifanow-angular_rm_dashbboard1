@@ -77,6 +77,7 @@ export class SummaryComponent implements OnInit {
   silverData: any;
   nifty500Data: any;
   deptData;
+  finalTotal: number;
   constructor(public eventService: EventService, private cusService: CustomerService,
     private datePipe: DatePipe) {
   }
@@ -137,7 +138,9 @@ export class SummaryComponent implements OnInit {
           this.pieChart('piechartMutualFund', data);
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.finalTotal = 0;
+      }
     );
     this.getSummaryList(obj);
     this.getCashFlowList(obj);
@@ -169,7 +172,9 @@ export class SummaryComponent implements OnInit {
         }
         this.lineChart('container');
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.finalTotal = 0
+      }
     );
   }
 
@@ -315,6 +320,7 @@ export class SummaryComponent implements OnInit {
     });
     console.log(this.totalAssetsWithoutLiability, 'total asset without liability');
     console.log(this.liabilityTotal, 'liability total');
+    this.finalTotal = this.totalAssetsWithoutLiability - this.liabilityTotal;
   }
 
   dateChange(event) {

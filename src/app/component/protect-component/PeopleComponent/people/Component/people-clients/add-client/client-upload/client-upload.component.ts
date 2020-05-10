@@ -78,10 +78,12 @@ export class ClientUploadComponent implements OnInit {
   bankList: any;
   fileUploadData: any;
   file: any;
+  clientData: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
     private custumService: CustomerService, private enumService: EnumServiceService,
     private fileUpload : FileUploadServiceService,) {
+      this.clientData = AuthService.getClientData()
   }
 
   @Input() fieldFlag;

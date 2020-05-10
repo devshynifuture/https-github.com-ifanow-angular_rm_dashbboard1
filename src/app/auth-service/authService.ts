@@ -6,6 +6,7 @@ import { EventService } from '../Data-service/event.service';
 
 @Injectable()
 export class AuthService {
+  familyMemberId: any;
   constructor(
     /*private myRoute: Router*/
 
@@ -73,6 +74,15 @@ export class AuthService {
     localStorage.setItem('orgData', JSON.stringify(data));
   }
 
+  static setAdvisorDetails(data) {
+    localStorage.setItem('advisorDetail', JSON.stringify(data));
+  }
+
+  static getAdvisorDetails() {
+    const advisorDetail =  localStorage.getItem('advisorDetail')
+    return advisorDetail ? JSON.parse(advisorDetail) : '';
+  }
+
   get orgData() {
     return JSON.parse(localStorage.getItem('orgData'));
   }
@@ -114,6 +124,7 @@ export class AuthService {
     sessionStorage.removeItem('clientData');
     localStorage.removeItem('profilePic');
     localStorage.removeItem('orgData');
+    localStorage.removeItem('advisorDetail');
 
     // this.myRoute.navigate(['login']);
   }
@@ -125,7 +136,13 @@ export class AuthService {
 
   setClientData(clientData) {
     sessionStorage.setItem('clientData', JSON.stringify(clientData));
+    if(clientData.familyMemberId){
+      this.familyMemberId = clientData.familyMemberId
+    }
+    console.log('this.family',this.familyMemberId)
+    clientData.familyMemberId = this.familyMemberId
     localStorage.setItem('clientData', JSON.stringify(clientData));
+  
     // if(clientData){
     //   this.selectedClient = clientData;
     // }

@@ -16,7 +16,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
             </div>
             <div class="col-md-8 p-0  d-flex align-items-center justify-content-end" *ngIf="bankAccountList.filteredData.length > 0">
-
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
@@ -174,7 +176,9 @@
                 <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
             </div>
             <div class="col-md-8 p-0 d-flex align-items-center justify-content-end" *ngIf="cashInHandList.filteredData.length > 0">
-
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>

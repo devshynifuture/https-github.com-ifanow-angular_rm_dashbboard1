@@ -46,11 +46,14 @@ export class CashAndBankComponent implements OnInit {
   @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
 
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload : FileUploadServiceService,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog) {
+      this.clientData =AuthService.getClientData()
   }
 
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -67,9 +70,11 @@ export class CashAndBankComponent implements OnInit {
     this.excel.generateExcel(rows,tableTitle)
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
@@ -77,6 +82,9 @@ export class CashAndBankComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;

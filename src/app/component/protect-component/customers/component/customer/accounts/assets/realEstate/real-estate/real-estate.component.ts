@@ -38,6 +38,8 @@ export class RealEstateComponent implements OnInit {
   noData: string;
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
 
   constructor( public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
@@ -49,7 +51,7 @@ export class RealEstateComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.clientData = AuthService.getClientData();
     this.getRealEstate();
 
   }
@@ -59,9 +61,11 @@ export class RealEstateComponent implements OnInit {
     this.excel.generateExcel(rows,tableTitle)
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
@@ -69,6 +73,9 @@ export class RealEstateComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
