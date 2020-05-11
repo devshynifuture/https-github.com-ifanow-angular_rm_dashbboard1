@@ -16,6 +16,8 @@ import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/i
 import {map, startWith} from 'rxjs/operators';
 import {EnumDataService} from 'src/app/services/enum-data.service';
 
+const moment = require('moment');
+
 @Component({
   selector: 'app-verify-member',
   templateUrl: './verify-member.component.html',
@@ -23,8 +25,7 @@ import {EnumDataService} from 'src/app/services/enum-data.service';
 })
 export class VerifyMemberComponent implements OnInit {
   inputData: any;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
-  data1: Array<any> = [{}, {}, {}];
+  displayedColumns: string[] = ['position', 'bankName', 'accountNo', 'ifsc', 'branchName', 'accountType'];
   dataSource = [];
   nomineesListFM: any = [];
   showSpinnerOwner = false;
@@ -36,7 +37,7 @@ export class VerifyMemberComponent implements OnInit {
   showMandateTable = false;
   selectedMandate: any;
   customValue: any;
-  Todate: any;
+  toDate: any;
   formDate: Date;
   isLoading;
   advisorId: any;
@@ -49,11 +50,14 @@ export class VerifyMemberComponent implements OnInit {
   file: any;
   clientCodeDataShow = false;
   errorMsg: any;
+  currentDate = new Date();
 
-
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              private onlineTransact: OnlineTransactionService, public eventService: EventService, private enumDataService: EnumDataService) {
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private processTrasaction: ProcessTransactionService,
+              private custumService: CustomerService, private datePipe: DatePipe,
+              public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, public eventService: EventService,
+              private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -78,7 +82,7 @@ export class VerifyMemberComponent implements OnInit {
       );
   }
 
-  Close(flag) {
+  closeRightSlider(flag) {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
@@ -93,11 +97,11 @@ export class VerifyMemberComponent implements OnInit {
 
   continuesTill(value) {
     this.customValue = value;
-    this.Todate = new Date();
-    this.Todate.setDate('31');
-    this.Todate.setMonth('11');
-    this.Todate.setFullYear('2099');
-    this.generalDetails.controls.toDate.setValue(this.Todate);
+    this.toDate = new Date();
+    this.toDate.setDate('31');
+    this.toDate.setMonth('11');
+    this.toDate.setFullYear('2099');
+    this.generalDetails.controls.toDate.setValue(this.toDate);
   }
 
   getBankDetails() {
@@ -116,17 +120,26 @@ export class VerifyMemberComponent implements OnInit {
     this.isLoadingBank = false;
     console.log(data);
     this.bankDetails = data;
+    if (this.bankDetails && this.bankDetails.length == 1) {
+      this.generalDetails.controls.bank.setValue(this.bankDetails[0].id);
+    }
   }
 
   getdataForm(data) {
-
+    const endDate = new Date();
+    endDate.setDate(31);
+    endDate.setMonth(11);
+    endDate.setFullYear(2099);
+    this.toDate = endDate;
+    const fromDate = new Date();
+    fromDate.setMinutes(fromDate.getMinutes() + 2);
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
       bank: [(!data) ? '' : data.bank, [Validators.required]],
       // taxStatus: [data ? '' : data.ownerName, [Validators.required]],
-      fromDate: [data ? '' : data.fromDate, [Validators.required]],
-      toDate: [data ? '' : data.toDate, [Validators.required]],
+      fromDate: [fromDate, [Validators.required]],
+      toDate: [endDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(100)]],
       selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
     });
@@ -193,6 +206,9 @@ export class VerifyMemberComponent implements OnInit {
           this.isLoadingUcc = false;
           console.log(data);
           this.clientCodeData = data;
+          if (this.clientCodeData.length == 1) {
+            this.generalDetails.controls.holdingNature.setValue(this.clientCodeData[0].clientCode);
+          }
           console.log('clientCodeData', this.clientCodeData);
         } else {
           this.isLoadingUcc = false;
@@ -204,7 +220,7 @@ export class VerifyMemberComponent implements OnInit {
   }
 
   openNewCustomerIIN() {
-    this.close();
+    this.closeRightSlider(false);
     const fragmentData = {
       flag: 'addNewCustomer',
       id: 1,
@@ -279,11 +295,11 @@ export class VerifyMemberComponent implements OnInit {
       return;
     }
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
-    this.Todate = new Date(this.generalDetails.controls.toDate.value);
+    this.toDate = new Date(this.generalDetails.controls.toDate.value);
     Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
     Object.assign(this.selectedMandate, {clientCode: this.detailsIIN.clientCode});
     Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
-    Object.assign(this.selectedMandate, {toDate: (this.Todate).getTime()});
+    Object.assign(this.selectedMandate, {toDate: (this.toDate).getTime()});
     Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
     Object.assign(this.selectedMandate, {tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId});
     Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
