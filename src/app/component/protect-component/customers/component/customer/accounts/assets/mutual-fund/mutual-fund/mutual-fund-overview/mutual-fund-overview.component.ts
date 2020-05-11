@@ -65,7 +65,7 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
 
-  @Input() mutualFund;
+  mutualFund;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -127,8 +127,8 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
-      clientId: 15545
-      // clientId: this.clientId
+      // clientId: 15545
+      clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
       data => this.getMutualFundResponse(data), (error) => {
@@ -139,6 +139,7 @@ export class MutualFundOverviewComponent implements OnInit {
   getMutualFundResponse(data) {
     if (data) {
       this.MfServiceService.sendMutualFundData(data);
+      this.MfServiceService.changeShowMutualFundDropDown(false);
 
       let filterData = this.MfServiceService.doFiltering(data);
       this.asyncFilter(filterData.mutualFundList, filterData.mutualFundCategoryMastersList)
@@ -332,19 +333,19 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   openMutualFund(flag, data) {
     let component;
-    switch (true) {
-      case (flag == 'addPortfolio'):
+    switch (flag) {
+      case 'addPortfolio':
         component = AddMutualFundComponent;
         break;
-      case (flag == 'holding'):
+      case 'addMutualFund':
         component = MFSchemeLevelHoldingsComponent;
         break;
       default:
         component = MFSchemeLevelTransactionsComponent;
     }
     const fragmentData = {
-      flag: 'editMF',
-      data,
+      flag,
+      data: { flag },
       id: 1,
       state: 'open',
       componentName: component
@@ -353,6 +354,9 @@ export class MutualFundOverviewComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getMutualFundData();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

@@ -1,11 +1,14 @@
-import {Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import {MfServiceService} from '../../mf-service.service';
-import {RightFilterComponent} from "../../../../../../common-component/right-filter/right-filter.component";
-import {EventService} from "../../../../../../../../../../Data-service/event.service";
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MfServiceService } from '../../mf-service.service';
+import { RightFilterComponent } from "../../../../../../common-component/right-filter/right-filter.component";
+import { EventService } from "../../../../../../../../../../Data-service/event.service";
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../../customer.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -29,41 +32,85 @@ export class MutualFundAllTransactionComponent implements OnInit {
   rightFilterData: any;
   schemeWiseForFilter: any;
   mutualFundListFilter: any;
+  isLoading = false;
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private eventService: EventService,
-              private excel : ExcelGenService) {
+    private mfService: MfServiceService, private eventService: EventService,
+    private excel: ExcelGenService,
+    private customerService: CustomerService) {
   }
-  @ViewChild('allTranTemplate', {static: false}) allTranTemplate: ElementRef;
+  @ViewChild('allTranTemplate', { static: false }) allTranTemplate: ElementRef;
   @ViewChild('tableEl', { static: false }) tableEl;
 
-  @Input() mutualFund;
+  mutualFund;
 
   ngOnInit() {
+    this.getMutualFund();
+  }
+
+  getMutualFund() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.customerService.getMutualFund(obj).pipe(map((data) => {
+      return this.doFiltering(data);
+    })).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+
+  doFiltering(data) {
+    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
+
+  getMutualFundResponse(data) {
+    if (data) {
+      this.isLoading = false;
+      this.mfData = data;
+      this.mutualFund = data;
+      this.mfService.changeShowMutualFundDropDown(false);
+      this.divergeData();
+      if (this.mfData) {
+        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
+      }
+    }
+    this.isLoading = false;
+  }
+
+  divergeData() {
     if (this.mutualFund != undefined) {
       this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
       this.getSchemeWise(); // get scheme wise list
       this.mfSchemes(); // get mutualFund list
       this.getTotalValue(); // to get GrandTotal value
-      this.subCatArray(this.mutualFundList,''); // for displaying table values as per category
+      this.subCatArray(this.mutualFundList, ''); // for displaying table values as per category
       this.getDataForRightFilter();
     }
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
 
-  subCatArray(mutualFundList,type) {
+  subCatArray(mutualFundList, type) {
     var reportType;
-    (type=='' || type[0].name=='Sub Category wise')?reportType='subCategoryName':(type[0].name=='Category wise')?reportType='categoryName':reportType='name'
+    (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' : (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name'
     const filteredArray = [];
     if (this.mutualFundList != undefined) {
-      this.catObj = this.mfService.categoryFilter(mutualFundList,reportType);
+      this.catObj = this.mfService.categoryFilter(mutualFundList, reportType);
       Object.keys(this.catObj).map(key => {
         this.mfService.initializeValues(); // for initializing total values object
-        filteredArray.push({groupName: key});
+        filteredArray.push({ groupName: key });
         this.catObj[key].forEach((singleData) => {
           const obj = {
             schemeName: singleData.schemeName,
@@ -122,7 +169,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
   mfSchemes() {
     this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
   }
- getDataForRightFilter(){//for rightSidefilter data this does not change after generating report
+  getDataForRightFilter() {//for rightSidefilter data this does not change after generating report
     var subCatData = this.mfService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.schemeWiseForFilter = this.mfService.filter(subCatData, 'mutualFundSchemeMaster');
     this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
@@ -135,12 +182,12 @@ export class MutualFundAllTransactionComponent implements OnInit {
   }
   generatePdf() {
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test','')
+    this.utilService.htmlToPdf(para.innerHTML, 'Test', '')
   }
-  editTransaction(portfolioData, data) {
+  editTransaction(flag, element) {
     const fragmentData = {
-      flag: portfolioData,
-      data,
+      flag,
+      data: { flag, ...element },
       id: 1,
       state: 'open',
       componentName: MFSchemeLevelHoldingsComponent
@@ -163,14 +210,14 @@ export class MutualFundAllTransactionComponent implements OnInit {
     }
     const fragmentData = {
       flag: 'openFilter',
-      data: {...this.mutualFund},
+      data: { ...this.mutualFund },
       id: 1,
       state: 'open35',
       componentName: RightFilterComponent
     };
     fragmentData.data = {
-      name:'TRANSACTION REPORT',
-      mfData:this.mutualFund,
+      name: 'TRANSACTION REPORT',
+      mfData: this.mutualFund,
       folioWise: this.mutualFundListFilter,
       schemeWise: this.schemeWiseForFilter,
       familyMember: this.mutualFund.family_member_list,
@@ -182,9 +229,9 @@ export class MutualFundAllTransactionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if(sideBarData.data){
-            this.rightFilterData=sideBarData.data
-            this.subCatArray(this.rightFilterData.mutualFundList,this.rightFilterData.reportType)
+          if (sideBarData.data) {
+            this.rightFilterData = sideBarData.data
+            this.subCatArray(this.rightFilterData.mutualFundList, this.rightFilterData.reportType)
           }
           rightSideDataSub.unsubscribe();
         }

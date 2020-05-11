@@ -5,7 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { MatDialog } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
@@ -30,8 +30,13 @@ export class AssetsComponent implements OnInit {
   Settab: any;
   viewMode = 'tab1';
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
-    public dialog: MatDialog, private cusService: CustomerService, private route: ActivatedRoute) {
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService,
+    public dialog: MatDialog,
+    private cusService: CustomerService,
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   private loadComponent = false;
@@ -118,6 +123,18 @@ export class AssetsComponent implements OnInit {
       }
     });
 
+  }
+
+  getRouterLink(assetType) {
+    if (assetType['viewmode'] === 'tab1') {
+      return assetType['name'].toLowerCase().split(' ').join('-') + '/overview';
+    } else {
+      return assetType['name'].toLowerCase().split(' ').join('-');
+    }
+  }
+
+  getActiveRouteStatus(assetType) {
+    return this.router.url.split('/')[5] === assetType['name'].toLowerCase().split(' ').join('-');
   }
 
   getAssetCountGLobalData() {

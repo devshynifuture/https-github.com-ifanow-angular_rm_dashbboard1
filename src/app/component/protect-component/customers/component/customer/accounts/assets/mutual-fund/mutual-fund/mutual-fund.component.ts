@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -25,7 +25,7 @@ export class MutualFundComponent implements OnInit {
   isLoading = true;
 
   dataHolder: any = {};
-  isShow = true;
+  isShow
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
@@ -33,14 +33,16 @@ export class MutualFundComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfService.getMutualFundShowDropdown()
+      .subscribe(res => {
+        this.isShow = res;
+      })
     this.viewMode = 'Overview Report';
 
     this.advisorId = AuthService.getAdvisorId();
     // this.advisorId = 2929;
 
-    // this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    this.clientId = 15545;
-    this.getMutualFund();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
 
   }
   // getPersonalDetails(data){
@@ -54,53 +56,22 @@ export class MutualFundComponent implements OnInit {
   //     }
   //   );
   // }
-  getMutualFund() {
-    this.isLoading = true;
-    const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId
-    };
-    this.custumService.getMutualFund(obj).pipe(map((data) => {
-      return this.doFiltering(data);
-    })).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
-    );
-  }
-
-  doFiltering(data) {
-    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
-    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
-    return data;
-  }
-
-
-  getMutualFundResponse(data) {
-    if (data) {
-      this.isLoading = false;
-      this.mfData = data;
-      this.mfData.viewMode = this.viewMode;
-      if (this.mfData) {
-        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
-      }
-    }
-    this.isLoading = false;
-  }
 
   unrealiseTransaction() {
     this.mfDataUnrealised = this.mfData;
   }
 
   changeViewMode(data) {
-    if (this.mfData) {
-      this.mfData.viewMode = data;
-      this.viewMode = data;
-    }
+    this.viewMode = data;
   }
+
   changeInput(value) {
     this.isShow = value;
+  }
+
+  refreshMFData(value) {
+    if (value) {
+    }
   }
 }
 
