@@ -3,7 +3,8 @@
         <!--        <h3 class="m-0">Leads</h3>-->
     </div>
 
-    <div *ngIf="leadDataSource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end ">
+    <div *ngIf="leadDataSource.data.length>0 && isLoading==false"
+        class="col-md-8 d-flex align-items-center justify-content-end ">
         <!-- <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p"> -->
 
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
@@ -21,8 +22,8 @@
 
         <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
 
-        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTERS</button>
+        <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+                class="material-icons">filter_list</i>FILTERS</button> -->
         <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary pl-8">
             ADD NEW</button>
     </div>
@@ -32,7 +33,9 @@
 
 <div class="row">
     <div class="col-md-12 people-leads">
-        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort" [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
+        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort"
+            [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
+            class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-sort-header="displayName" mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>
@@ -108,7 +111,8 @@
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell class="text-center" *matCellDef="let element">
-                    <img class="c-p" *ngIf="isLoading==false" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                    <img class="c-p" *ngIf="isLoading==false" [matMenuTriggerFor]="menu"
+                        src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">
                         <button (click)="open(element,'lead')" mat-menu-item>
                             <span>Edit</span>

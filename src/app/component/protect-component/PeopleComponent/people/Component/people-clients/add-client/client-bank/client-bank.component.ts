@@ -64,6 +64,13 @@ export class ClientBankComponent implements OnInit {
   }
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
+    if (event.target.value.length < 11) {
+      this.bankForm.get('bankName').enable();
+      this.bankForm.get('branchCity').enable();
+      this.bankForm.get('branchState').enable();
+      this.bankForm.get('branchName').enable();
+      this.bankForm.get('branchCountry').enable();
+    }
     if (event.target.value.length == 11) {
       this.getBankAddress(event.target.value);
       return;
@@ -115,7 +122,6 @@ export class ClientBankComponent implements OnInit {
       ifsc
     };
     console.log('ifsc 121221', obj);
-
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
@@ -127,7 +133,8 @@ export class ClientBankComponent implements OnInit {
         err => {
           console.log(err, 'error internet');
           this.isIfsc = false;
-          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true })
+          this.bankForm.enable();
+          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true });
           this.bankData(err);
         });
     }
@@ -160,6 +167,13 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchAddressLine1').setValue(adderessData);
     this.bankForm.get('branchAddressLine2').setValue(address2);
     this.bankForm.get('branchPinCode').setValue(pincode)
+
+    this.bankForm.get('bankName').disable();
+    this.bankForm.get('branchCity').disable();
+    this.bankForm.get('branchState').disable();
+    this.bankForm.get('branchName').disable();
+    this.bankForm.get('branchCountry').disable();
+
   }
 
   getPostalPin(value) {
@@ -182,6 +196,10 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchCity').setValue(pincodeData[0].District);
     this.bankForm.get('branchState').setValue(pincodeData[0].State);
     this.bankForm.get('branchCountry').setValue(pincodeData[0].Country);
+
+    this.bankForm.get('branchCity').disable();
+    this.bankForm.get('branchState').disable();
+    this.bankForm.get('branchCountry').disable();
   }
 
   getHolderList(data) {
