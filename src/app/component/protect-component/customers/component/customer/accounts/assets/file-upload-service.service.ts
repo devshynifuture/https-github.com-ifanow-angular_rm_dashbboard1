@@ -80,8 +80,8 @@ export class FileUploadServiceService {
     this.myFiles = fileName.target.files[0]
     console.log('uploadFile', fileName);
     const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
+      clientId: this.basicDetails.clientId,
+      advisorId: this.basicDetails.advisorId,
       familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
       folderId:this.folderId,
       fileName: this.myFiles.name
