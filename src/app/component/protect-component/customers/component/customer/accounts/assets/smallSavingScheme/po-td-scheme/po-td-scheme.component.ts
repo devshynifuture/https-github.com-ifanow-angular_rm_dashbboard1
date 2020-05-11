@@ -39,6 +39,7 @@ export class PoTdSchemeComponent implements OnInit {
   file: any;
   clientData: any;
   isLoadingUpload:any;
+  myFiles: any;
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
     private fileUpload : FileUploadServiceService,
@@ -57,17 +58,22 @@ export class PoTdSchemeComponent implements OnInit {
     this.getPoTdSchemedata();
   }
   fetchData(value, fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId:this.clientData.familyMemberId,
+      familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
