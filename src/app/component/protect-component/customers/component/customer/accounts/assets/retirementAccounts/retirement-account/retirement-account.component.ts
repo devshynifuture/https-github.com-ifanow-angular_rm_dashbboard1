@@ -549,13 +549,14 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     this.isLoading = false;
-    this.totalContribution = data.sumOfAmountInvested;
-    this.totalCurrentValue = data.sumOfCurrentValue;
+    
     if (data != undefined) {
       if (data.assetList) {
         console.log('getNPSRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.npsListTableSort;
+        this.totalContribution = data.sumOfAmountInvested;
+        this.totalCurrentValue = data.sumOfCurrentValue;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }
     } 
