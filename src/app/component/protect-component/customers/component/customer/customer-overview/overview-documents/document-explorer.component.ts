@@ -461,10 +461,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   downlodFiles(element, value) {
-    if (value != 'preview') {
-      this.isLoading = true
-    }else if(value == 'download'){
+    if (value == 'download') {
       this.isLoading = false
+    } else if (value != 'preview') {
+      this.isLoading = true
     }
     const obj = {
       clientId: this.clientId,
@@ -482,8 +482,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log(data);
     if (value == 'shareLink' || value == 'share') {
       console.log('shareLink', data)
-      this.urlShorten(data,value)
-      
+      this.urlShorten(data, value)
+
     } else if (value == 'preview') {
       this.urlData = data
     } else if (value == 'DocPreview') {
@@ -523,7 +523,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: 'You have received this email because AdvisorName shared link with you.'+this.element.link
+        messageBody: 'You have received this email because AdvisorName shared link with you.' + this.element.link
       }
       this.custumService.sendSharebleLink(obj).subscribe(
         data => this.sendSharebleLinkRes(data),
@@ -781,13 +781,15 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
   }
-  urlShorten(data,value) {
+  urlShorten(data, value) {
     this.isLoading = true
     var link =
-    {"destination":data, 
-    "domain": 
-    { 
-    "fullName": "rebrand.ly"}
+    {
+      "destination": data,
+      "domain":
+      {
+        "fullName": "rebrand.ly"
+      }
     }
     const httpOptions = {
       headers: new HttpHeaders()
