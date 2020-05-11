@@ -145,6 +145,7 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   getFixedDepositList() {
+    this.showRequring = '1';
     this.isLoading = true;
     const obj = {
       clientId: this.clientId,
