@@ -7,7 +7,7 @@
                     Mutual fund {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}
                 </h4>
             </div>
-            <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0">
+            <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (customDataSource.data.length > 0 || dataSource.data.length > 0)">
                 <div class="pdfClass">
                     <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
                     <mat-menu #menu5="matMenu">
@@ -132,7 +132,7 @@
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        <span>{{isLoading ? '':((element.xirr || element.xirr == 0)?(element.xirr | number:'1.2-2'):0)}}</span>
+                                        <span>{{isLoading ? '':((element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2'):0)}}</span>
                                     </div>
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">

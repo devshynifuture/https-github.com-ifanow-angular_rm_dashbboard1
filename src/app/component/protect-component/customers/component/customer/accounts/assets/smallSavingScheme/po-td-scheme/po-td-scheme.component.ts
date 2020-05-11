@@ -38,7 +38,7 @@ export class PoTdSchemeComponent implements OnInit {
   fileUploadData: any;
   file: any;
   clientData: any;
-
+  isLoadingUpload:any;
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
     private fileUpload : FileUploadServiceService,

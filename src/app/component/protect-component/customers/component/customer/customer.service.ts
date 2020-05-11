@@ -633,6 +633,9 @@ export class CustomerService {
   getMutualFund(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
+  getReportWiseCalculations(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{report:data.request});
+  }
   getMfUnrealizedTransactions(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }

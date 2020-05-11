@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerComponent } from './component/customer/customer.component';
+import { AdvisorAndOrganizationInfoService } from './resolvers/advisor-and-organization-info.service';
 
 
 const routes: Routes = [
   {
     path: 'detail',
     component: CustomerComponent,
+    resolve: {advisorInfo: AdvisorAndOrganizationInfoService},
     children: [
       {
         path: 'overview',
