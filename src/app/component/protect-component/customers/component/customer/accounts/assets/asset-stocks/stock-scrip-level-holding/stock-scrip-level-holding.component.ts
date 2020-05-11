@@ -316,7 +316,7 @@ addNewNominee(data) {
           finalStocks.push(singleList);
         });
         let obj = {
-          "stocks": [
+          "stockList": [
             {
               "transactionorHoldingSummaryList": finalStocks
             }
@@ -336,12 +336,15 @@ addNewNominee(data) {
         this.HoldingArray.controls.forEach(element => {
           let obj = {
             "scripNameId": element.get('scripName').value.id,
-            "scripCurrentValue": element.get('scripName').value.currentValue,
+            "currentMarketValue": 0,
             "stockType": 2,
+            "amountInvested": 0,
+            "valueAsOn": null,
             "transactionorHoldingSummaryList": [
               {
                 "holdingOrTransaction": 1,
                 "quantity": element.get('holdings').value,
+                "transactionTypeOrScripNameId":1,
                 "holdingOrTransactionDate": element.get('holdingAsOn').value,
                 "investedOrTransactionAmount": element.get('investedAmt').value
               }
@@ -357,7 +360,7 @@ addNewNominee(data) {
           "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
           "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
           "portfolioName": this.portfolioData.portfolioName,
-          "stocks": finalStocks
+          "stockList": finalStocks
         }
         console.log(obj)
         this.cusService.addAssetStocks(obj).subscribe(
