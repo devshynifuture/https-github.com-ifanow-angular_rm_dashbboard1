@@ -190,9 +190,13 @@
                     <th mat-header-cell *matHeaderCellDef class=""></th>
                     <td mat-cell *matCellDef="let element" class="">
                         <div *ngIf="!isLoading">
-                            <i [matMenuTriggerFor]="menu4" class="material-icons c-p f-20 text-black">
+                            <!-- <i [matMenuTriggerFor]="menu4" class="material-icons c-p f-20 text-black">
                                 more_vert
-                            </i>
+                            </i> -->
+
+                            <img [matMenuTriggerFor]="menu4" class="c-p" src="/assets/images/svg/dot-menu.svg">
+
+
                             <mat-menu #menu4="matMenu">
                                 <button (click)="openPortfolioSummary('addFixedDeposit',element)" mat-menu-item>Edit</button>
                                 <button (click)="openDetailedFixedDeposit('addFixedDeposit',element)" mat-menu-item>Detailed
@@ -370,11 +374,13 @@
                 </ng-container>
                 <ng-container matColumnDef="icons" sticky>
                     <th mat-header-cell *matHeaderCellDef class=""></th>
-                    <td mat-cell *matCellDef="let element" class="">
+                    <td mat-cell *matCellDef="let element" class="text-center">
                         <div *ngIf="!isLoading">
-                            <i class="material-icons f-20 c-p text-black" [matMenuTriggerFor]="menu4">
+                            <!-- <i class="material-icons f-20 c-p text-black" >
                                 more_vert
-                            </i>
+                            </i> -->
+                            <img class="c-p" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
+
                             <mat-menu #menu4="matMenu">
                                 <button mat-menu-item (click)="openAddRecurringDeposit(element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Detailed
@@ -589,11 +595,13 @@
                     </ng-container>
                     <ng-container matColumnDef="icons" sticky>
                         <th mat-header-cell *matHeaderCellDef class=" "></th>
-                        <td mat-cell *matCellDef="let element" class=" ">
+                        <td mat-cell *matCellDef="let element" class="text-center">
                             <div *ngIf="!isLoading">
-                                <i class="material-icons f-20 c-p text-black" [matMenuTriggerFor]="menu4">
+                                <!-- <i class="material-icons f-20 c-p text-black" >
                                     more_vert
-                                </i>
+                                </i> -->
+                                <img class="c-p" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
+
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="openBonds(element)">Edit</button>
                                     <button mat-menu-item (click)="detailedViewBonds(element)">Detailed view</button>

@@ -121,10 +121,10 @@ export class MfRtaDetailsComponent implements OnInit {
     };
 
     switch (componentID) {
-      case 1: // Karvy
+      case 2: // CAMS
         fragmentData.componentName = AddCamsDetailsComponent;
         break;
-      case 2: // CAMS
+      case 1: // Karvy
         fragmentData.componentName = AddKarvyDetailsComponent;
         break;
       case 3: // Franklin

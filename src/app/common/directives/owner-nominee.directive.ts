@@ -77,11 +77,10 @@ export class OwnerNomineeDirective {
   getListFamilyMem(): any {
     const obj = {
       userId: this.clientId,
-      userType: 2
     };
 
     if (this.sendData.length <= 0) {
-      this.peopleService.getClientFamilyMembers(obj).subscribe(
+      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
         data => this.getListOfFamilyByClientRes(data)
       );
     }

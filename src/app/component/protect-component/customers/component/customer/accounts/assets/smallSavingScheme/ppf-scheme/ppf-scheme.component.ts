@@ -34,6 +34,7 @@ export class PPFSchemeComponent implements OnInit {
   file: any;
   isLoadingUpload: boolean = false;
   clientData: any;
+  myFiles: any;
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
     private fileUpload : FileUploadServiceService,
     public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { 
@@ -52,16 +53,17 @@ export class PPFSchemeComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-  fetchData(value,fileName) {
+  fetchData(value, fileName) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId:this.clientData.familyMemberId,
+      familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
-    if(this.fileUploadData){
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
@@ -69,7 +71,6 @@ export class PPFSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);

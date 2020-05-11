@@ -91,7 +91,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('', false);
+      this.getDataForm('', false);
     }
   }
 
@@ -100,7 +100,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData, false);
+    this.getDataForm(this.inputData, false);
     this.childTransactions = [];
     this.transactionSummary = {};
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
@@ -204,7 +204,8 @@ export class SipTransactionComponent implements OnInit {
     console.log('new schemes', responseData);
     this.schemeList = responseData;
     if (this.sipTransaction.controls.schemeSip.value) {
-      this.sipTransaction.controls.schemeSip.setValue(this.sipTransaction.controls.schemeSip.value);
+      this.filterSchemeList = new Observable().pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(inputData + '', this.schemeList)));
     } else {
       this.sipTransaction.controls.schemeSip.setValue('');
     }
@@ -505,7 +506,7 @@ export class SipTransactionComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
-  getdataForm(data, isEdit) {
+  getDataForm(data, isEdit) {
     if (isEdit == true) {
       this.isEdit = isEdit;
       this.editedId = data.id;
@@ -536,10 +537,10 @@ export class SipTransactionComponent implements OnInit {
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
       isException: true,
     });
-    this.filterSchemeList = this.sipTransaction.controls.schemeSip.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
-    );
+    this.sipTransaction.controls.schemeSip.valueChanges.subscribe((newValue) => {
+      this.filterSchemeList = new Observable().pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
+    });
     this.sipTransaction.controls.tenure.valueChanges.subscribe(newValue => {
       this.checkAndHandleMaxInstallmentValidator();
     });

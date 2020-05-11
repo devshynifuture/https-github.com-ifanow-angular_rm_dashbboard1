@@ -14,6 +14,7 @@ import { ClientDematComponent } from 'src/app/component/protect-component/People
 import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-overview-profile',
@@ -39,7 +40,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService) {
+    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -48,6 +49,11 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getProofType();
     this.enumDataService.getBank();
     this.enumDataService.getClientRole();
+    this.route.queryParams.subscribe((params) => {
+      if (params.Tab) {
+        this.Tab = params.Tab;
+      }
+    });
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
     this.letsideBarLoader = true;
@@ -70,7 +76,7 @@ export class OverviewProfileComponent implements OnInit {
           return;
         } else {
           this.letsideBarLoader = false;
-          this.authService.setClientData(data);
+          // this.authService.setClientData(data);
           this.clientOverviewData = data;
           this.calculateAge(this.clientOverviewData.dateOfBirth);
         }
@@ -332,17 +338,19 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (flag == 'Address') {
-            this.addressList = undefined;
-            this.getAddressList(this.clientData);
+          if (sideBarData.clientData) {
+            if (flag == 'Address') {
+              this.addressList = undefined;
+              this.getAddressList(this.clientData);
 
-          } else if (flag == 'Bank') {
-            this.bankList = undefined;
-            this.getBankList(this.clientData);
-          }
-          else {
-            this.dematList = undefined;
-            this.getDematList(this.clientData);
+            } else if (flag == 'Bank') {
+              this.bankList = undefined;
+              this.getBankList(this.clientData);
+            }
+            else {
+              this.dematList = undefined;
+              this.getDematList(this.clientData);
+            }
           }
           clientData = [];
           if (UtilService.isRefreshRequired(sideBarData)) {

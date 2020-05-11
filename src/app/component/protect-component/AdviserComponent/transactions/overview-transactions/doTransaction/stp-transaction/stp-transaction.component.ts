@@ -6,7 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -85,7 +85,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('');
+      this.getDataForm('');
     }
   }
 
@@ -94,7 +94,7 @@ export class StpTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData);
+    this.getDataForm(this.inputData);
     this.childTransactions = [];
     this.transactionSummary = {};
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
@@ -164,7 +164,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('new schemes', data);
     this.schemeListTransfer = data;
     if (this.stpTransaction.controls.transferIn.valueChanges) {
-      this.stpTransaction.controls.transferIn.setValue(this.stpTransaction.controls.transferIn.value);
+      this.filterNewSchemeList = of(this.processTransaction.filterScheme(this.stpTransaction.controls.transferIn.value, this.schemeListTransfer));
     } else {
       this.stpTransaction.controls.transferIn.setValue('');
     }
@@ -397,7 +397,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('bank details', value);
   }
 
-  getdataForm(data) {
+  getDataForm(data) {
     if (!data) {
       data = {};
     }
@@ -427,10 +427,9 @@ export class StpTransactionComponent implements OnInit {
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.existingSchemeList))
     );
-    this.filterNewSchemeList = this.stpTransaction.controls.transferIn.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeListTransfer))
-    );
+    this.stpTransaction.controls.transferIn.valueChanges.subscribe((newValue) => {
+      this.filterNewSchemeList = of(this.processTransaction.filterScheme(newValue + '', this.schemeListTransfer));
+    });
     this.ownerData = this.stpTransaction.controls;
   }
 

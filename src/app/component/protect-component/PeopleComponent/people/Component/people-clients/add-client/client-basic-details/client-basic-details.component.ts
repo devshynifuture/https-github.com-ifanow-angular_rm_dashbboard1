@@ -231,8 +231,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
-  addRole(role){
-    this.sendRole=role
+  addRole(role) {
+    this.sendRole = role
   }
   saveNextClient(flag) {
     // if (this.invTypeCategory == '1') {
@@ -327,7 +327,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
         roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.role,
-        advisorOrClientRole:this.sendRole.advisorOrClientRole,
+        advisorOrClientRole: (this.sendRole) ? this.sendRole.advisorOrClientRole : this.basicDetailsData.advisorOrClientRole,
         genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.gender.value : null,
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ?
           this.minorForm.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
@@ -345,8 +345,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadRating != '') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadRating != '') ? this.nonIndividualForm.value.leadRating : null,
         companyStatus: ((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) ? this.nonIndividualForm.value.comStatus : null,
         leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leaadStatus != '') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadStatus != '') ? this.nonIndividualForm.value.leadStatus : null,
-        occupationId: (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) && this.nonIndividualForm.value.comOccupation != '') ? this.nonIndividualForm.value.comOccupation : null,
-        guardianData: gardianObj
+        occupationId: (this.fieldFlag == 'client' && this.invTypeCategory != '3') ? this.basicDetailsData.occupationId : (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetailsData.occupationId : this.nonIndividualForm.controls.comOccupation.value,
+        guardianData: gardianObj.name ? gardianObj : null
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {

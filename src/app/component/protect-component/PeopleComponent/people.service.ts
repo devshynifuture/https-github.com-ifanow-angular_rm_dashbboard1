@@ -106,6 +106,11 @@ export class PeopleService {
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBERS, httpParams);
   }
 
+  getClientFamilyMemberListAsset(data) {
+    const httpParams = new HttpParams().set('clientId', data.userId);
+    return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, httpParams);
+  }
+
   getClientFamilyMemberList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST, data, 1);
   }
