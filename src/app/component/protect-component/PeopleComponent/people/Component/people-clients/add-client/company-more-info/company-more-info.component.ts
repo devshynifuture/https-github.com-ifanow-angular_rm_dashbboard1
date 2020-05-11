@@ -69,7 +69,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       name: [data.name],
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
-      designation: [(data.occupationId) ? String(data.occupationId) : '1'],
+      designation: [(data.occupationId) ? String(data.occupationId) : ''],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
     });
     console.log(this.moreInfoForm)
@@ -137,7 +137,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       displayName: this.moreInfoForm.controls.displayName.value,
       bio: this.moreInfoForm.controls.bio.value,
       martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
-      occupationId: this.moreInfoForm.controls.designation.value,
+      occupationId: (this.moreInfoForm.controls.designation.value != '') ? this.moreInfoForm.controls.designation.value : null,
       companyPersonDetailId: this.moreInfoData.companyPersonDetailId,
       pan: this.moreInfoForm.value.pan,
       clientId: (this.moreInfoData && this.moreInfoData.length > 0) ? this.moreInfoData.clientId : this.companyIndividualData.clientId,

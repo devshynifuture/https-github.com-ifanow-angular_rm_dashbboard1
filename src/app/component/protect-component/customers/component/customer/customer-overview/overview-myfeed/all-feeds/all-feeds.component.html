@@ -385,7 +385,6 @@
                                         <h5 class="roboto f-500">
                                             Your secure online vault
                                         </h5>
-
                                         <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
                                         <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
                                         <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
@@ -394,7 +393,7 @@
 
                                         <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
 
-                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button  (click)="routeAndAddQueryParams('Documents')">
+                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                             Access your vault
                                         </button>
 
@@ -571,7 +570,7 @@
                                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
-                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab2'}" routerLinkActive="router-link-active" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Take the test
                                         </button>
 
@@ -751,7 +750,8 @@
                 </div>
             </div>
 
-            <app-market-summary></app-market-summary>
+            <app-market-summary class="feedSumaaryMarket"></app-market-summary>
+
         </div>
     </div>
 </div>
