@@ -1,16 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { Router } from '@angular/router';
-import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { EnumDataService } from 'src/app/services/enum-data.service';
-import { startWith, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {Router} from '@angular/router';
+import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -262,7 +261,7 @@ export class OnlineTrasactionComponent implements OnInit {
   }
 
   selectTransactionType(value: string) {
-    this.selectedDiv = value;
+    // this.selectedDiv = value;
     this.transactionAddForm.controls.transactionType.setValue(value);
 
     console.log(this.transactionAddForm);
