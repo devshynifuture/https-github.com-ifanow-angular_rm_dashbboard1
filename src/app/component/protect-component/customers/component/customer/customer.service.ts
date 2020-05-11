@@ -631,7 +631,11 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
   getMutualFund(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
+    const obj ={
+      toDate : data.toDate,
+      id:data.id
+    }
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
   }
   getReportWiseCalculations(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{report:data.request});
