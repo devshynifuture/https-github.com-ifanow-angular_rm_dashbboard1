@@ -58,7 +58,7 @@
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(1, element, false)">Edit</button>
+                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -147,7 +147,7 @@
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(2, element, false)">Edit</button>
+                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -222,7 +222,7 @@
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(3, element, false)">Edit</button>
+                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -305,7 +305,7 @@
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(4, element, false)">Edit</button>
+                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
