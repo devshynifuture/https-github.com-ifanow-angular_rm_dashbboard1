@@ -7,7 +7,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -196,8 +196,14 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinner = false;
     console.log('new schemes', responseData);
     this.schemeList = responseData;
-    this.purchaseTransaction.controls.schemePurchase.setValue(inputData);
+    this.filterSchemeList = new Observable().pipe(startWith(''),
+      map(value => this.processTransaction.filterScheme(this.purchaseTransaction.controls.schemePurchase.value, this.schemeList)));
 
+    // this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+    // );
+    // this.purchaseTransaction.controls.schemePurchase.setValue({schemeName: });
   }
 
   getExistingSchemesRes(data) {
@@ -512,11 +518,14 @@ export class PurchaseTrasactionComponent implements OnInit {
       schemePurchase: [(!data) ? '' : data.schemeName, [Validators.required]],
 
     });
-
-    this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
-    );
+    this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
+      this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
+    });
+    /* this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+       startWith(''),
+       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+     );*/
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.amcId;

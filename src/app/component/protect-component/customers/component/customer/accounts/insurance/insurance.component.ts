@@ -81,7 +81,8 @@ export class InsuranceComponent implements OnInit {
   fileUploadData;
   file;
   clientData;
-
+  myFiles;
+  
   constructor(private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService, private pdfGen: PdfGenService) {
@@ -105,11 +106,6 @@ export class InsuranceComponent implements OnInit {
   }
 
   fetchData(value, fileName) {
-    if (this.insuranceTypeId == 1) {
-      value = 'Life Insurance';
-    } else {
-      value = 'General Insurance';
-    }
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
@@ -117,7 +113,8 @@ export class InsuranceComponent implements OnInit {
       familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)

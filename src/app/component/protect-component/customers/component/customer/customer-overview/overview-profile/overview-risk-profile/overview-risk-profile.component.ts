@@ -360,8 +360,8 @@ export class OverviewRiskProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        this.getResultData(sideBarData)
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getResultData(sideBarData)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
@@ -375,7 +375,11 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.showRisk = false
       if (data.refreshRequired == false) {
         this.getRiskProfileList(false);
-      } else {
+      }
+      else if (data.state) {
+        this.getRiskProfileList(false);
+      }
+      else {
         this.riskAssessmentQuestionList = data.refreshRequired
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.progressBar = this.statusArray.length * 7

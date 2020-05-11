@@ -851,7 +851,7 @@
                 <div class="col-md-5 p-0">
                     <div class="form-group m-0">
                         <mat-form-field>
-                            <mat-select formControlName="role" class="form-control" >
+                            <mat-select formControlName="role" class="form-control">
                                 <mat-option value='' disabled>Select roles</mat-option>
                                 <mat-option [value]="role.id" *ngFor="let role of clientRoles">
                                     {{role.roleName}}</mat-option>
@@ -874,7 +874,8 @@
         <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'"
             class="col-md-8 col-8 d-flex align-items-end justify-content-end">
 
-            <button mat-stroked-button (click)="saveNextClient('Next')" class=" br-0 bg-white text-inherit">SAVE & NEXT
+            <button [ngClass]="{'event-none': barButtonOptions.active}" mat-stroked-button
+                (click)="saveNextClient('Next')" class=" br-0 bg-white text-inherit">SAVE & NEXT
             </button>
             <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
@@ -883,8 +884,8 @@
             <!--  -->
             <!-- ================= ERROR ======================= -->
 
-            <app-progress-button (btnClick)="saveNextClient('close')" class="br-0 text-inherit ml-12"
-                [options]="barButtonOptions">
+            <app-progress-button [ngClass]="{'event-none': barButtonOptions.active}"
+                (btnClick)="saveNextClient('close')" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
           CLOSE
@@ -893,11 +894,12 @@
         <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 col-8 d-flex align-items-end justify-content-end">
             <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
-            <button mat-stroked-button (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &
+            <button [ngClass]="{'event-none': barButtonOptions.active}" mat-stroked-button
+                (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
             </button>
-            <app-progress-button (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit ml-12"
-                [options]="barButtonOptions">
+            <app-progress-button [ngClass]="{'event-none': barButtonOptions.active}"
+                (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
           & CLOSE

@@ -30,7 +30,7 @@ export class FileUploadServiceService {
     this.getUserInfo = AuthService.getUserInfo()
 
   }
-  fetchFileUploadData(value) {
+  fetchFileUploadData(value,myFiles) {
     console.log('here its me', value)
     this.basicDetails = value
     this.familyMemberId = value.familyMemberId
@@ -40,20 +40,52 @@ export class FileUploadServiceService {
       familyMemberId: (value.familyMemberId) ? value.familyMemberId : 0,
       searchTerm: (value.asset) + '',
     };
-    this.custumService.fetchFileUpload(obj).subscribe(
+     this.custumService.fetchFileUpload(obj).subscribe(
       data => {
         this.fileUploadData = data || [];
         this.folderId = data
         console.log('fileUploadData', this.fileUploadData);
-        return this.fileUploadData
+        this.uploadFile(myFiles)
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
-    return this.fileUploadData
   }
-  // fileUploadClient(value) {
+
+  uploadFile(fileName) {
+    this.fileUploadSuccsess = false
+    this.countFile++;
+    console.log('uploadFile', fileName);
+    const obj = {
+      clientId: this.basicDetails.clientId,
+      advisorId: this.basicDetails.advisorId,
+      familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
+      folderId:this.folderId,
+      fileName: fileName.name
+    };
+    this.custumService.uploadFile(obj).subscribe(
+      data => {
+        const fileuploadurl = data;
+        const httpOptions = {
+          headers: new HttpHeaders()
+            .set('Content-Type', '')
+        };
+        this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
+          console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+          if (responseData == null) {
+            this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
+            this.fileUploadSuccsess = true
+            return responseData
+          }
+        });
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+    // fileUploadClient(value) {
   //   console.log('here its me', value)
   //   const obj = {
   //     advisorId: value.advisorId,
@@ -74,38 +106,4 @@ export class FileUploadServiceService {
   //   );
   //   return this.fileUploadData
   // }
-  uploadFile(fileName) {
-    this.fileUploadSuccsess = false
-    this.countFile++;
-    this.myFiles = fileName.target.files[0]
-    console.log('uploadFile', fileName);
-    const obj = {
-      clientId: this.basicDetails.clientId,
-      advisorId: this.basicDetails.advisorId,
-      familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
-      folderId:this.folderId,
-      fileName: this.myFiles.name
-    };
-    this.custumService.uploadFile(obj).subscribe(
-      data => {
-        const fileuploadurl = data;
-        const httpOptions = {
-          headers: new HttpHeaders()
-            .set('Content-Type', '')
-        };
-        this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
-          console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-          if (responseData == null) {
-            this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
-            this.fileUploadSuccsess = true
-            return responseData
-          }
-          return responseData
-        });
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
-  }
 }
