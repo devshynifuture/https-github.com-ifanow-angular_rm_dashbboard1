@@ -721,17 +721,31 @@ export class RightFilterComponent implements OnInit {
       this.obj = {
         advisorId:this.advisorId,
         clientId:this.clientId,
-        date: this.finalFilterData.reportAsOn,
+        toDate: this.finalFilterData.reportAsOn,
         id: JSON.stringify(this.finalFilterData.categoryWiseMfList)
       }
       this.custumService.getMutualFund(this.obj).subscribe(
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
-          this.finalFilterData.mutualFundList = data;
+          this.finalFilterData.mfData = data;
           this.Close(this.finalFilterData);
         }
       );
+      // this.obj = {
+      //   advisorId:this.advisorId,
+      //   clientId:this.clientId,
+      //   lastDate: (this.finalFilterData.reportAsOn) ? this.finalFilterData.reportAsOn : this.finalFilterData.toDate,
+      //   reportType:this.finalFilterData.categoryWiseMfList
+      // }
+      // this.custumService.getDatedReportWiseCalculations(this.obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.barButtonOptions.active = false;
+      //     this.finalFilterData.mutualFundList = data;
+      //     this.Close(this.finalFilterData);
+      //   }
+      // );
       // this.barButtonOptions.active = false;
       // this.Close(this.finalFilterData);
     }
