@@ -463,6 +463,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   downlodFiles(element, value) {
     if (value != 'preview') {
       this.isLoading = true
+    }else if(value == 'download'){
+      this.isLoading = false
     }
     const obj = {
       clientId: this.clientId,
