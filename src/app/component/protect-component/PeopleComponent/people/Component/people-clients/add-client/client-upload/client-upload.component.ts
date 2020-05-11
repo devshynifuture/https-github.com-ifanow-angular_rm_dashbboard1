@@ -85,6 +85,7 @@ export class ClientUploadComponent implements OnInit {
     private custumService: CustomerService, private enumService: EnumServiceService,
     private fileUpload : FileUploadServiceService,) {
       this.clientData = AuthService.getClientData()
+       this.clientId = AuthService.getClientId();
   }
 
   @Input() fieldFlag;
@@ -274,8 +275,8 @@ export class ClientUploadComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      clientId: this.userData.clientId,
+      familyMemberId: (this.userData.familyMemberId)?this.userData.familyMemberId:0,
       asset: value
     }
     this.myFiles = fileName.target.files[0]

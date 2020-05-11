@@ -85,7 +85,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('');
+      this.getDataForm('');
     }
   }
 
@@ -94,7 +94,7 @@ export class StpTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData);
+    this.getDataForm(this.inputData);
     this.childTransactions = [];
     this.transactionSummary = {};
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
@@ -397,7 +397,7 @@ export class StpTransactionComponent implements OnInit {
     console.log('bank details', value);
   }
 
-  getdataForm(data) {
+  getDataForm(data) {
     if (!data) {
       data = {};
     }
