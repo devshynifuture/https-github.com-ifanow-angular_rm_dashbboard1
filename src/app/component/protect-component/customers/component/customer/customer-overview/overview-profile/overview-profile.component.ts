@@ -76,7 +76,7 @@ export class OverviewProfileComponent implements OnInit {
           return;
         } else {
           this.letsideBarLoader = false;
-          this.authService.setClientData(data);
+          // this.authService.setClientData(data);
           this.clientOverviewData = data;
           this.calculateAge(this.clientOverviewData.dateOfBirth);
         }
