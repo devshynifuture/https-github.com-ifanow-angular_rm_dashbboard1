@@ -55,6 +55,7 @@ export class FixedIncomeComponent implements OnInit {
   file: any;
   isLoadingUpload: boolean = false;
   responseData: any;
+  clientData: any;
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
@@ -77,6 +78,7 @@ export class FixedIncomeComponent implements OnInit {
     this.hidePdf = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData()
 
     this.getFixedDepositList();
     // this.dataSource = new MatTableDataSource(this.data);
@@ -90,17 +92,17 @@ export class FixedIncomeComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
     if(this.fileUploadData){
       this.file = fileName
-      this.responseData = this.fileUpload.uploadFile(fileName)
-      if(this.responseData == true){
-        this.isLoadingUpload = false
-      }
-
+      this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;

@@ -3,7 +3,9 @@
         <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
     </div>
     <div *ngIf="datasource.filteredData.length > 0" class="col-md-8 p-0  d-flex align-items-center justify-content-end">
-
+        <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+            <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+        </div>
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
         </a>

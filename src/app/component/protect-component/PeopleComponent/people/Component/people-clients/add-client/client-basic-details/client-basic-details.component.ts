@@ -61,6 +61,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   familyMemberType: { name: string; value: string; };
   invTaxStatusList: any[];
   countryCodeFlag: any;
+  sendRole: any;
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -230,7 +231,9 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
-
+  addRole(role){
+    this.sendRole=role
+  }
   saveNextClient(flag) {
     // if (this.invTypeCategory == '1') {
     //   this.basicDetails.get('email').setValidators([Validators.required]);
@@ -324,6 +327,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
         roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.role,
+        advisorOrClientRole:this.sendRole.advisorOrClientRole,
         genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.gender.value : null,
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ?
           this.minorForm.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),

@@ -19,7 +19,9 @@
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
-
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
@@ -228,6 +230,9 @@
                 </h2>
             </div>
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end" *ngIf="!hideFilter">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
@@ -402,6 +407,9 @@
                 <h2 class="f-18 m-0 proximaFont">Bonds</h2>
             </div>
             <div class="col-md-6 p-0  d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>

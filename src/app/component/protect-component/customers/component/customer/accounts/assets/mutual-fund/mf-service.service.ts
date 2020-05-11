@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BehaviorSubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MfServiceService {
   advisorData: any;
-  constructor(private settingService: SettingsService, private authService: AuthService) {
+  constructor(private settingService: SettingsService, private authService: AuthService,private datePipe: DatePipe) {
   }
 
   private mutualFundDataSource = new BehaviorSubject('');
@@ -57,7 +58,9 @@ export class MfServiceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      filterData.push(element[key]);
+      if(element[key]){
+        filterData.push(element[key]);
+      }
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
@@ -111,7 +114,7 @@ export class MfServiceService {
     amtInvested += (data.amountInvested) ? data.amountInvested : 0;
     currentValue += (data.currentValue) ? data.currentValue : 0;
     unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
-    absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+    absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
@@ -255,32 +258,45 @@ export class MfServiceService {
   }
 
   filterFinalData(mfData, dataForFilter) {
+    let mutualFundList;
     const family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
     const category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
     const subCategoryData = this.filter(category, 'mutualFundSubCategoryMaster');
     const schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
     const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
-    const mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
-    let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    // dataForFilter.folio.forEach(element => {
+    //   mutualFundList = mutualFundListFilter.filter((item: any) =>
+    //  item.folioNumber == element.folioNumber
+    //     );
+    // });
+
     if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
         item.folioNumber != 0
       );
     }
+    if(dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT'){
+      dataForFilter.reportAsOn = null;
+    }
     if (dataForFilter.reportAsOn) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          item.transactionDate <= dataForFilter.reportAsOn
+          this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
         );
       });
     }
-    if (dataForFilter.fromDate && dataForFilter.toDate) {
-      mutualFundList.forEach(element => {
-        element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
-        );
-      });
+    if(dataForFilter.transactionPeriodCheck){
+      if (dataForFilter.fromDate && dataForFilter.toDate) {
+        mutualFundList.forEach(element => {
+          element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
+            item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
+          );
+        });
+      }
     }
+
     let capitalGainArray = [];
     if(dataForFilter.capitalGainData){
       dataForFilter.capitalGainData.responseData.forEach(element => {

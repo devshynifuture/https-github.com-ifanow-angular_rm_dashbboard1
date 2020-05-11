@@ -332,6 +332,7 @@ export class RedemptionTransactionComponent implements OnInit {
         nsePaymentMode: null,
         isException: true,
         childTransactions: [],
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
 
         // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
       };

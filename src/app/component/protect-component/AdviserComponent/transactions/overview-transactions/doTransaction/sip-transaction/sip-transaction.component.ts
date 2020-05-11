@@ -601,7 +601,9 @@ export class SipTransactionComponent implements OnInit {
         nsePaymentMode: null,
         mandateType: null,
         xSipMandateId: null,
-        childTransactions: []
+        childTransactions: [],
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
         // teamMemberSessionId: sipTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
       };
       // const tenure = this.sipTransaction.controls.tenure.value;

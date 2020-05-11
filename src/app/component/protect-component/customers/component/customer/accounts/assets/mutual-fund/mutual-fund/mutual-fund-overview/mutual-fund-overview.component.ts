@@ -14,6 +14,7 @@ import { RightFilterComponent } from 'src/app/component/protect-component/custom
 import { WebworkerService } from 'src/app/services/web-worker.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -41,7 +42,7 @@ export class MutualFundOverviewComponent implements OnInit {
   datasource1 = new MatTableDataSource([{}, {}, {}]);
 
   subCategoryArray: any;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   rightFilterData: any;
   showHideTable: any;
   showSummaryBar = true;
@@ -57,7 +58,7 @@ export class MutualFundOverviewComponent implements OnInit {
   clientId;
 
   @Output() changeInput = new EventEmitter();
-  constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
+  constructor(private datePipe: DatePipe,public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
 
@@ -105,7 +106,9 @@ export class MutualFundOverviewComponent implements OnInit {
         this.totalValue = data.totalValue;
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
-        this.getCashFlowStatus();
+        if(this.showCashFlow){
+          this.getCashFlowStatus();
+        }
         this.isLoading = false;
         this.changeInput.emit(false);
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
@@ -127,7 +130,7 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
-      clientId: 15545
+      clientId: this.clientId
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
@@ -146,8 +149,8 @@ export class MutualFundOverviewComponent implements OnInit {
       console.log(data);
       this.dataSource4 = new MatTableDataSource(data.mutualFundCategoryMastersList); // category wise allocation
       this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
-      this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
       this.schemeWiseAllocation(data); // for shemeWiseAllocation
+      this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
       this.isLoading = false;
       this.changeInput.emit(false);
     } else {
@@ -192,7 +195,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getCashFlowStatus() {
     // Used for cashFlow status
-    if (this.totalValue.totalTransactionAmt && this.totalValue.switchIn && this.totalValue.withdrawals && this.totalValue.redemption) {
+    if (this.totalValue) {
       this.datasource1.data = [
         { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
         { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
@@ -211,7 +214,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   }
   getsubCategorywiseAllocation(data) {
-    this.isLoading = true;
+     this.isLoading = true;
     this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if (this.dataSource3.data.length > 0) {
@@ -222,7 +225,7 @@ export class MutualFundOverviewComponent implements OnInit {
     }
   }
   getFamilyMemberWiseAllocation(data) {
-    this.isLoading = true;
+     this.isLoading = true;
     this.changeInput.emit(true);
     if (this.dataSource.data.length > 0) {
       this.dataSource = new MatTableDataSource(data.family_member_list);
@@ -232,21 +235,95 @@ export class MutualFundOverviewComponent implements OnInit {
     }
   }
   schemeWiseAllocation(data) {
-    this.isLoading = true;
+    let dataToShow = [];
     this.changeInput.emit(true);
+    this.dataSource2.data=[];
     this.filteredArray = this.MfServiceService.filter(this.filteredArray, 'mutualFundSchemeMaster');
-    if (this.dataSource2.data.length > 0) {
-      this.dataSource2 = new MatTableDataSource(this.filteredArray);
-      this.isLoading = false;
-      this.changeInput.emit(false);
-    }
+    this.filteredArray.forEach(element => {
+      if(element.mutualFund.length > 1){
+        //  this.isLoading = true;
+        // let xirr =this.getReportWiseCalculation(element.mutualFund)
+        let catObj = this.MfServiceService.categoryFilter(element.mutualFund, 'schemeCode');
+        Object.keys(catObj).map(key => {
+          catObj[key].forEach((singleData) => {
+            singleData.navDate =  this.datePipe.transform(singleData.navDate, 'yyyy-MM-dd')
+           singleData.mutualFundTransactions.forEach(element => {
+            element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+           });
+          });
+        });
+        const obj = {
+          advisorId: this.advisorId,
+          clientId: this.clientId,
+          request: catObj
+        };
+        this.custumService.getReportWiseCalculations(obj).subscribe(
+          data => {
+            console.log(data)
+            console.log(catObj);
+            Object.keys(catObj).map(key => {
+              catObj[key] = data[key]
+               element.xirr = catObj[key].xirr;
+               
+               dataToShow.push(element);
+               this.dataSource2 = new MatTableDataSource(dataToShow);
+               this.isLoading = false;
+               this.changeInput.emit(false);
+            });
+          }, (error) => {
+            this.eventService.showErrorMessage(error);
+          }
+        );
 
+
+        
+      }else{
+        dataToShow.push(element);
+        this.dataSource2 = new MatTableDataSource(dataToShow);
+        this.changeInput.emit(false);
+      }
+    });
+    // if (dataToShow.length > 0) {
+       this.isLoading = false;
+    //   this.changeInput.emit(false);
+   
   }
 
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData)
+  }
+  getReportWiseCalculation(data){
+    let xirr;
+    let catObj = this.MfServiceService.categoryFilter(data, 'schemeCode');
+    Object.keys(catObj).map(key => {
+      catObj[key].forEach((singleData) => {
+        singleData.navDate =  this.datePipe.transform(singleData.navDate, 'yyyy-MM-dd')
+       singleData.mutualFundTransactions.forEach(element => {
+        element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+       });
+      });
+    });
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: 15545,
+      request: catObj
+    };
+    this.custumService.getReportWiseCalculations(obj).subscribe(
+      data => {
+        console.log(data)
+        console.log(catObj);
+        Object.keys(catObj).map(key => {
+          catObj[key] = data[key]
+           xirr = catObj[key]
+        });
+        console.log(catObj)
+        return xirr;
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
@@ -402,25 +479,26 @@ export class MutualFundOverviewComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.totalValue = {};
-            this.dataSource2.data = [{}, {}, {}]
-            this.dataSource4.data = [{}, {}, {}]
-            this.dataSource.data = [{}, {}, {}]
-            this.dataSource3.data = [{}, {}, {}]
+            
+            this.dataSource2 =new MatTableDataSource([{}, {}, {}]);
+            this.dataSource4 =new MatTableDataSource([{}, {}, {}]);
+            this.dataSource =new MatTableDataSource([{}, {}, {}]);
+            this.dataSource3 =new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
-            this.dataSource2.data = this.rightFilterData.schemeWise;
-            this.dataSource4 = this.rightFilterData.category;
-            this.dataSource.data = this.rightFilterData.family_member_list;
-            this.dataSource3.data = this.rightFilterData.subCategoryData;
+            this.dataSource2 =new MatTableDataSource( this.rightFilterData.schemeWise);
+            this.dataSource4 = new MatTableDataSource(this.rightFilterData.category);
+            this.dataSource = new MatTableDataSource(this.rightFilterData.family_member_list);
+            this.dataSource3 = new MatTableDataSource(this.rightFilterData.subCategoryData);
             this.showHideTable = this.rightFilterData.overviewFilter;
             (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
-            (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false);
-            (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false);
-            (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false);
-            (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false);
-            (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false);
+            (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false,this.dataSource2.data =[]);
+            (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false,this.datasource1.data =[]);
+            (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false,this.dataSource.data =[]);
+            (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false,this.dataSource4.data =[]);
+            (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false,this.dataSource3.data =[]);
 
 
             this.isLoading = false;

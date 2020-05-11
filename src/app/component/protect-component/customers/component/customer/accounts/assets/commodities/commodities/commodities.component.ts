@@ -51,6 +51,8 @@ export class CommoditiesComponent implements OnInit {
   noData: string;
   fileUploadData: any;
   file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
   
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
@@ -61,6 +63,7 @@ export class CommoditiesComponent implements OnInit {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
     this.getGoldList()
 
   }
@@ -70,9 +73,11 @@ export class CommoditiesComponent implements OnInit {
     this.excel.generateExcel(rows,tableTitle)
   }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
@@ -80,6 +85,9 @@ export class CommoditiesComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;

@@ -102,7 +102,7 @@
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24">
-                                            <span>{{(totalValue) ? (totalValue.xirr | number:'1.2-2') : 0}}</span> {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700" *ngIf="!isLoading">
+                                            <span>{{(isLoading) ? '' :((totalValue) ? (totalValue.xirr | number:'1.2-2') : 0)}}</span> {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700" *ngIf="!isLoading">
                                                 arrow_upward
                                             </i>
                                         </div>
@@ -228,7 +228,8 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSchemeWise && dataSource2.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
+                *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
@@ -237,14 +238,15 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br"> Scheme name</th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">{{element.schemeName}}</div>
+                                <div class="bar" ><span> {{(isLoading) ? '' : element.schemeName}}</span></div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.amountInvested}}</span>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.amountInvested"></span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -256,7 +258,8 @@
                         <ng-container matColumnDef="value">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.currentValue}}</span>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.currentValue">{{element.currentValue}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -270,12 +273,14 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                    {{(element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0}}</div>
+                                        <span *ngIf="!isLoading">    {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                <span *ngIf="isLoading"> {{''}} </span>
+                                    </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
-                                </div>
+                                        <span *ngIf="!isLoading">   {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}</span>
+                                        </div>
                             </td>
                             <!-- <td *matFooterCellDef  appFormatNumber [value]="totalValue.absReturn" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
@@ -284,19 +289,23 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                    {{element.xirr | number:'1.2-2'}} </div>
+                                        <span *ngIf="!isLoading">  {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                            <span *ngIf="isLoading"> {{''}}</span>
+                                        </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0}}</div>
                             </td> -->
                             <td *matFooterCellDef class="br f-600 text-right" mat-footer-cell>
-                                {{totalValue.xirr | number:'1.2-2'}}
+                                {{(totalValue.xirr) ? (totalValue.xirr | number:'1.2-2') : 0}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <div class="bar">{{(element.allocatedPercentage | number:'1.2-2')}}</div>
+                                <div class="bar"><span *ngIf="!isLoading">{{(element.allocatedPercentage | number:'1.2-2')}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
@@ -316,7 +325,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow" *ngIf="showCashFlow && datasource1.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow"  *ngIf="showCashFlow || datasource1.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
@@ -325,13 +334,17 @@
                         <ng-container matColumnDef="data">
                             <th mat-header-cell *matHeaderCellDef class="t-55"> Scheme name </th>
                             <td mat-cell *matCellDef="let element" class="t-55">
-                                <div class="bar">{{element.data}}</div>
+                                <div class="bar"><span *ngIf="!isLoading">{{element.data}}</span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="amts">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber *ngIf="element.data != 'i. Realized XIRR (All Transactions)'">{{element.amts}}</span><span *ngIf="element.data == 'i. Realized XIRR (All Transactions)'">{{element.amts | number:'1.2-2'}}</span>
+                                <div class="bar"><span appFormatNumber *ngIf="element.data != 'i. Realized XIRR (All Transactions)' && !isLoading" [value]="element.amts"></span>
+                                    <span *ngIf="element.data == 'i. Realized XIRR (All Transactions)' && !isLoading">{{element.amts | number:'1.2-2'}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                         </ng-container>
@@ -341,7 +354,8 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSubCategory && dataSource3.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
+                *ngIf="showSubCategory || dataSource3.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
@@ -351,7 +365,10 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br"> Sub Category Name</th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">{{element.subCategory}} </div>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading">{{element.subCategory}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
 
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
@@ -359,7 +376,8 @@
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.amountInvested}}</span></div>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.amountInvested"></span>
+                                    <span *ngIf="isLoading">{{''}}</span></div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.totalTransactionAmt)?totalValue.totalTransactionAmt:0}}
@@ -371,7 +389,9 @@
                         <ng-container matColumnDef="value">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.currentValue}}</span></div>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.currentValue"></span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.currentValue)?totalValue.currentValue:0}}
@@ -383,7 +403,11 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{(element) ? (element.absoluteReturn | number:'1.2-2') : 0}}</div>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
+
+                                    </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">{{(totalValue.absReturn)?(totalValue.absReturn | number:'1.2-2'):0}}
@@ -393,14 +417,18 @@
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
+                                    {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+                                <div class="bar"> 
+                                        <span *ngIf="!isLoading">  {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                        <span *ngIf="isLoading">{{''}}</span>
+
+                                        </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0.00}}
@@ -417,7 +445,9 @@
                         <ng-container matColumnDef="alloc">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <div class="bar"> {{element.allocatedPercentage | number:'1.2-2' }}</div>
+                                <div class="bar"><span *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2' }}</span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{7800}}</div>
@@ -440,7 +470,8 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise" *ngIf="showFamilyMember && dataSource.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise"
+                *ngIf="showFamilyMember || dataSource.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
@@ -457,7 +488,9 @@
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.amountInv}}</span></div>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.amountInv"></span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar"> {{(totalValue.totalTransactionAmt)?totalValue.totalTransactionAmt:0}}
@@ -469,7 +502,9 @@
                         <ng-container matColumnDef="value">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.currentValue}}</span></div>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.currentValue"></span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.currentValue)?totalValue.currentValue:0}}
@@ -481,7 +516,10 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.absoluteReturn | number:'1.2-2'}}</div>
+                                <div class="bar">
+                                        <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                        <span *ngIf="isLoading">{{''}}</span>
+                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">{{(totalValue.absReturn)?(totalValue.absReturn | number:'1.2-2'):0}}
@@ -490,15 +528,16 @@
                             <!-- <td *matFooterCellDef appFormatNumber  [value]="totalValue.absReturn" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                <div class="bar">
-                                    {{(totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
-                                </div>
+                                {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+                                <div class="bar"> 
+                                        <span *ngIf="!isLoading">   {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                        <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0.00}}
@@ -515,7 +554,9 @@
                         <ng-container matColumnDef="alloc">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <div class="bar"> {{element.allocatedPercentage | number:'1.2-2'}}</div>
+                                <div class="bar"><span *ngIf="!isLoading"> {{element.allocatedPercentage | number:'1.2-2'}}</span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{7800}}</div>
@@ -537,7 +578,8 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise" *ngIf="showCategory && dataSource4.data.length >0">
+            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise"
+                *ngIf="showCategory || dataSource4.data.length >0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
@@ -546,14 +588,18 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br"> Category name </th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar">{{element.category}} </div>
+                                <div class="bar"><span *ngIf="!isLoading" >{{element.category}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
+                                    </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.amountInvested}}</span></div>
+                                <div class="bar"><span appFormatNumber  *ngIf="!isLoading" [value]="element.amountInvested"></span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.totalTransactionAmt)?totalValue.totalTransactionAmt:0}}
@@ -565,7 +611,9 @@
                         <ng-container matColumnDef="value">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber>{{element.currentValue}}</span></div>
+                                <div class="bar"><span appFormatNumber [value]='element.currentValue' *ngIf="!isLoading"></span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(totalValue.currentValue)?totalValue.currentValue:0}}
@@ -577,7 +625,10 @@
                         <ng-container matColumnDef="abs">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> {{(element) ? (element.absoluteReturn | number:'1.2-2') : 0 }}</div>
+                                <div class="bar">
+                                   <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                   <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar"> {{(totalValue.absReturn)?(totalValue.absReturn | number:'1.2-2'):0}}
@@ -587,14 +638,17 @@
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue) ? (totalValue.absReturn | number:'1.2-2') : 0}}
+                                    {{(totalValue.absReturn == 0) ? 0 : (totalValue.absReturn) ? (totalValue.absReturn | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+                                <div class="bar"> 
+                                   <span *ngIf="!isLoading"> {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                   <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar"> {{(totalValue.xirr)?(totalValue.xirr | number:'1.2-2'):0.00}}
@@ -611,7 +665,9 @@
                         <ng-container matColumnDef="alloc">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <div class="bar"> {{element.allocatedPercentage | number:'1.2-2'}}</div>
+                                <div class="bar"> <span *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2'}}</span>
+                                <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{7800}}</div>
@@ -856,11 +912,15 @@
                     <tr *ngFor="let item of dataSource2.data">
                         <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.schemeName) ? item.schemeName : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}} </td>
                         <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -998,11 +1058,15 @@
                     <tr *ngFor="let item of dataSource3.data">
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.subCategory) ? item.subCategory : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -1061,11 +1125,15 @@
                     <tr *ngFor="let item of dataSource.data">
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.name) ? item.name : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInv) ? item.amountInv : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.amountInv) ? item.amountInv : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -1123,11 +1191,15 @@
                     <tr *ngFor="let item of dataSource4.data">
                         <td style="font-size: 13px; padding: 5px; border-left: 1px solid #dee5e7;  border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.category) ? item.category : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
+                        <td
+                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>

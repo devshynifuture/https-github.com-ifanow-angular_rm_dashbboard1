@@ -126,7 +126,7 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city"
-                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30"
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="6"
                         class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>

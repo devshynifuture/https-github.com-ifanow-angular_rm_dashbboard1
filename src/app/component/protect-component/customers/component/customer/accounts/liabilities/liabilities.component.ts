@@ -60,13 +60,16 @@ export class LiabilitiesComponent implements OnInit {
   personalProfileData: any;
   fileUploadData: any;
   file: any;
+  clientData: any;
+  isLoadingUpload: boolean = false;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService,
     private fileUpload : FileUploadServiceService,
     public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService,private pdfGen :PdfGenService) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -114,9 +117,11 @@ export class LiabilitiesComponent implements OnInit {
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
   fetchData(value,fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      familyMemberId:this.clientData.familyMemberId,
       asset: value
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
@@ -124,6 +129,9 @@ export class LiabilitiesComponent implements OnInit {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle) {
     this.fragmentData.isSpinner = true;

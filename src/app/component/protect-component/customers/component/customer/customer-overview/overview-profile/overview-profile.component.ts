@@ -31,6 +31,11 @@ export class OverviewProfileComponent implements OnInit {
   selectedDemat: any;
   clientData: any;
   Tab = "Tab1";
+  letsideBarLoader: boolean;
+  adressFlag: boolean = true;
+  bankFlag: boolean;
+  dematFlag: boolean;
+
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
@@ -45,6 +50,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getClientRole();
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
+    this.letsideBarLoader = true;
     this.getFamilyMembersList(this.clientData);
     this.getAddressList(this.clientData);
     this.getDematList(this.clientData);
@@ -53,6 +59,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getDataForTaxMasterService()
   }
   getClientData(data) {
+    this.letsideBarLoader = true;
     const obj = {
       clientId: data.clientId
     };
@@ -62,6 +69,7 @@ export class OverviewProfileComponent implements OnInit {
         if (data == undefined) {
           return;
         } else {
+          this.letsideBarLoader = false;
           this.authService.setClientData(data);
           this.clientOverviewData = data;
           this.calculateAge(this.clientOverviewData.dateOfBirth);
@@ -95,6 +103,7 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   getAddressList(data) {
+    this.adressFlag = true;
     const obj = {
       userId: data.clientId,
       userType: data.userType
@@ -108,26 +117,31 @@ export class OverviewProfileComponent implements OnInit {
         else {
           this.addressList == undefined;
         }
+        this.adressFlag = false;
       },
       err => {
+        this.adressFlag = false;
         console.error(err)
       }
     );
   }
 
   getDematList(data) {
+    this.dematFlag = true;
     const obj = {
       userId: data.clientId,
       userType: data.userType
     };
     this.cusService.getDematList(obj).subscribe(
       data => {
+        this.dematFlag = false;
         console.log(data);
         if (data && data.length > 0) {
           this.dematList = data;
           this.selectedDemat = data[0];
         }
       }, err => {
+        this.bankList = false;
         console.error(err)
       }
     );
@@ -143,12 +157,14 @@ export class OverviewProfileComponent implements OnInit {
     this.clientOverviewData['age'] = age;
   }
   getBankList(data) {
+    this.bankFlag = true;
     const obj = {
       userId: data.clientId,
       userType: data.userType
     };
     this.cusService.getBankList(obj).subscribe(
       data => {
+        this.bankFlag = false
         console.log(data);
         if (data && data.length > 0) {
           this.bankList = data;
@@ -161,6 +177,8 @@ export class OverviewProfileComponent implements OnInit {
         }
       },
       err => {
+        this.bankFlag = false;
+        this.bankList = undefined
         console.error(err)
       }
     );
@@ -246,6 +264,7 @@ export class OverviewProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           this.getFamilyMembersList(this.clientData);
+          this.familyMemberList = undefined;
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
           rightSideDataSub.unsubscribe();
@@ -269,9 +288,13 @@ export class OverviewProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           this.getClientData(this.clientOverviewData);
+          this.clientOverviewData = undefined
           this.getAddressList(this.clientData);
           this.getBankList(this.clientData);
           this.getDematList(this.clientData);
+          this.addressList = undefined;
+          this.bankList = undefined;
+          this.dematList = undefined;
           // this.authService.setClientData(sideBarData.clientData);
           // this.clientOverviewData = sideBarData.clientData;
           this.getFamilyMembersList(this.clientData);
@@ -309,7 +332,18 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          (flag == 'Address') ? this.getAddressList(this.clientData) : (flag == 'Bank') ? this.getBankList(this.clientData) : this.getDematList(this.clientData);
+          if (flag == 'Address') {
+            this.addressList = undefined;
+            this.getAddressList(this.clientData);
+
+          } else if (flag == 'Bank') {
+            this.bankList = undefined;
+            this.getBankList(this.clientData);
+          }
+          else {
+            this.dematList = undefined;
+            this.getDematList(this.clientData);
+          }
           clientData = [];
           if (UtilService.isRefreshRequired(sideBarData)) {
 
