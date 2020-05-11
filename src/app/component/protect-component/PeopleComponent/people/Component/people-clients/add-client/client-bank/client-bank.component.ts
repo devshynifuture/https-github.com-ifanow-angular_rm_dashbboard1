@@ -34,6 +34,7 @@ export class ClientBankComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  disableBtn: boolean;
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
@@ -204,7 +205,7 @@ export class ClientBankComponent implements OnInit {
           });
         });
       }
-      (flag == 'Save') ? this.barButtonOptions.active = true : '';
+      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;;
       const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
@@ -235,10 +236,12 @@ export class ClientBankComponent implements OnInit {
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {
           console.log(data);
+          this.disableBtn = false;
           this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
         },
         err => {
+          this.disableBtn = false;
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
         }

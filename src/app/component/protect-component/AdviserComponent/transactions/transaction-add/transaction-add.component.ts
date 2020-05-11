@@ -1,7 +1,7 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
-import { ValidatorType } from 'src/app/services/util.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SubscriptionInject} from './../../Subscriptions/subscription-inject.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-transaction-add',
@@ -107,7 +107,7 @@ export class TransactionAddComponent implements OnInit {
     // let obj = {
     //   'transactionType': value
     // }
-    this.selectedDiv = value;
+    // this.selectedDiv = value;
     this.transactionAddForm.controls.transactionType.setValue(value);
 
     console.log(this.transactionAddForm);

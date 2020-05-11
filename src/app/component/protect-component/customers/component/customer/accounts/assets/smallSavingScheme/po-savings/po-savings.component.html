@@ -122,11 +122,9 @@
         </ng-container>
         <ng-container matColumnDef="icons" sticky>
             <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-            <td *matCellDef="let element" class="t-2" mat-cell>
+            <td *matCellDef="let element" class="t-2 text-center" mat-cell>
                 <div *ngIf="!isLoading">
-                    <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                        more_vert
-                    </i>
+                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
                         <button (click)="openAddPOSAVING(element)" mat-menu-item>Edit</button>
                         <button (click)="openDetailPoSaving(element)" mat-menu-item>Detailed view</button>

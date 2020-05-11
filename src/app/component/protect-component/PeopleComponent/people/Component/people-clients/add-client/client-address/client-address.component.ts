@@ -37,7 +37,7 @@ export class ClientAddressComponent implements OnInit {
   };
   permanentAddFlag: boolean;
   userMappingIdFlag: boolean;
-
+  disableBtn = false;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService) {
@@ -166,7 +166,7 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     } else {
-      (flag == 'Save') ? this.barButtonOptions.active = true : '';
+      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,
@@ -187,6 +187,7 @@ export class ClientAddressComponent implements OnInit {
 
       this.peopleService.addEditClientAddress(obj).subscribe(
         data => {
+          this.disableBtn = false
           console.log(data);
           this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
@@ -194,6 +195,7 @@ export class ClientAddressComponent implements OnInit {
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
+          this.disableBtn = false
         }
       );
     }

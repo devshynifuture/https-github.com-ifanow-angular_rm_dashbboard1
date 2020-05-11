@@ -62,6 +62,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   invTaxStatusList: any[];
   countryCodeFlag: any;
   sendRole: any;
+  disableBtn: boolean = false;
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -86,15 +87,13 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.familyMemberType = { name: 'Individual', value: '1' }
         this.invTypeCategory = '1'
         this.createIndividualForm(this.basicDetailsData);
-        this.invTaxStatusList = this.enumService.getIndividualTaxList();
       }
       else {
         this.familyMemberType = { name: 'Minor', value: '2' };
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData)
-        this.invTaxStatusList = this.enumService.getMinorTaxList();
       }
-      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
+      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
@@ -102,17 +101,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
         this.invTaxStatus = '';
-        this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(null);
         return;
       } else {
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
-        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
       }
       (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
-      (this.invTypeCategory == '1') ? this.invTaxStatusList = this.enumService.getIndividualTaxList() : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.invTaxStatusList = this.enumService.getMinorTaxList() : this.invTaxStatusList = this.enumService.getCorporateTaxList();
     }
     console.log(data);
   }
@@ -259,7 +256,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.mobileData.markAllAsTouched();
     }
     else {
-      (flag == 'close') ? this.barButtonOptions.active = true : '';
+      (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const mobileList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
@@ -298,7 +295,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           pan: 'pan',
           genderId: this.minorForm.value.gGender,
           relationshipId: (this.minorForm.value.relationWithMinor == '') ? null : this.minorForm.value.relationWithMinor,
-          aadhaarNumber: null,
+          aadhaarNumber: (this.basicDetailsData.guardianData) ? this.basicDetailsData.guardianData.aadhaarNumber : null,
           occupationId: 1,
           martialStatusId: 1,
           anniversaryDate: null,
@@ -354,6 +351,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         // }
         this.peopleService.addClient(obj).subscribe(
           data => {
+            this.disableBtn = false;
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
@@ -391,6 +389,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
+            this.disableBtn = false;
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
@@ -483,7 +482,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    (flag == 'close') ? this.barButtonOptions.active = true : '';
+    (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
+    ;
     const obj = {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
@@ -520,6 +520,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.displayName = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
+        this.disableBtn = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
         if (flag == 'Next') {

@@ -3,16 +3,16 @@
         <div class="col-width-18 bg-grey lter">
 
             <ul class="vertical-menu  ">
-                <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
+                <li (click)="Tab='Tab1'" class="c-p" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
-                <li (click)="Tab='Tab2'" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
+                <li (click)="Tab='Tab2'" class="c-p" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
-                <li>
+                <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Financial health check
                 </li>
-                <li>
+                <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Preliminary data
                 </li>
 
@@ -26,8 +26,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="row">
-                            <div class="col-md-2 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader"
-                                appSkeletonLoading>
+                            <div class="col-md-2 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                                 <div class="relClass">
                                     <div class="bar120">
                                         <div class="profilePhoto">
@@ -39,8 +38,7 @@
 
                             </div>
                             <div class="col-md-10 pl-12">
-                                <div class="profileDetails overflow-hidden skeletonAnimation"
-                                    [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                                <div class="profileDetails overflow-hidden skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height23': letsideBarLoader}">
                                             <h1 class="f-26 roboto f-500">
@@ -100,31 +98,15 @@
                             </div> -->
 
                             <div class="memberSlider">
-                                <div *ngFor="let singleMembers of familyMemberList"
-                                    class="memberList primary-border c-p">
-                                    <img (click)="open('edit',singleMembers)" width="48px"
-                                        *ngIf="singleMembers.relationshipId==2"
-                                        src="/assets/images/svg/women-profile-icon.svg">
-                                    <img (click)="open('edit',singleMembers)" width="36px"
-                                        style="margin-right: 10px; margin-left: 2px;"
-                                        *ngIf="singleMembers.relationshipId==3"
-                                        src="/assets/images/svg/son-profile.svg">
-                                    <img (click)="open('edit',singleMembers)" width="36px"
-                                        style="margin-right: 10px; margin-left: 2px;"
-                                        *ngIf="singleMembers.relationshipId==4"
-                                        src="/assets/images/svg/daughter-profile.svg">
-                                    <img (click)="open('edit',singleMembers)" width="48px"
-                                        *ngIf="singleMembers.relationshipId==5"
-                                        src="/assets/images/svg/mother-profile.svg">
-                                    <img (click)="open('edit',singleMembers)" width="48px"
-                                        *ngIf="singleMembers.relationshipId==6"
-                                        src="/assets/images/svg/father-profile.svg">
-                                    <img (click)="open('edit',singleMembers)" width="48px"
-                                        *ngIf="singleMembers.relationshipId==7"
-                                        src="/assets/images/svg/man-profile.svg">
+                                <div *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
+                                    <img (click)="open('edit',singleMembers)" width="48px" *ngIf="singleMembers.relationshipId==2" src="/assets/images/svg/women-profile-icon.svg">
+                                    <img (click)="open('edit',singleMembers)" width="36px" style="margin-right: 10px; margin-left: 2px;" *ngIf="singleMembers.relationshipId==3" src="/assets/images/svg/son-profile.svg">
+                                    <img (click)="open('edit',singleMembers)" width="36px" style="margin-right: 10px; margin-left: 2px;" *ngIf="singleMembers.relationshipId==4" src="/assets/images/svg/daughter-profile.svg">
+                                    <img (click)="open('edit',singleMembers)" width="48px" *ngIf="singleMembers.relationshipId==5" src="/assets/images/svg/mother-profile.svg">
+                                    <img (click)="open('edit',singleMembers)" width="48px" *ngIf="singleMembers.relationshipId==6" src="/assets/images/svg/father-profile.svg">
+                                    <img (click)="open('edit',singleMembers)" width="48px" *ngIf="singleMembers.relationshipId==7" src="/assets/images/svg/man-profile.svg">
                                     <div (click)="open('edit',singleMembers)" class="familyList">
-                                        <h4 (click)="open('edit',singleMembers)" title="{{singleMembers.displayName}}"
-                                            class="f-12 m-0">
+                                        <h4 (click)="open('edit',singleMembers)" title="{{singleMembers.displayName}}" class="f-12 m-0">
                                             {{singleMembers.displayName}}</h4>
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             <span *ngIf="singleMembers.relationshipId==2">Wife </span>
@@ -137,8 +119,7 @@
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}}</p>
                                     </div>
-                                    <span class="material-icons familyDelete f-20"
-                                        (click)="deleteModal('FAMILY MEMBER',singleMembers)">
+                                    <span class="material-icons familyDelete f-20" (click)="deleteModal('FAMILY MEMBER',singleMembers)">
                                         delete
                                     </span>
 
@@ -149,8 +130,7 @@
                                 </div>
                             </div>
 
-                            <div (click)="open('add',null)" *ngIf="!letsideBarLoader"
-                                class="addFamilyMember c-p primary-border-dash">
+                            <div (click)="open('add',null)" *ngIf="!letsideBarLoader" class="addFamilyMember c-p primary-border-dash">
                                 <i class=" material-icons text-primary ">
                                     add
                                 </i>
@@ -168,22 +148,19 @@
                             </div>
 
                             <div class=" col-md-2 text-right ">
-                                <a (click)="openClient('edit client',clientOverviewData)"
-                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <a (click)="openClient('edit client',clientOverviewData)" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
 
                         </div>
 
                         <div class="row">
-                            <div class=" col-md-6 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader"
-                                appSkeletonLoading>
+                            <div class=" col-md-6 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">DISPLAY NAME</p>
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName)?clientOverviewData.displayName:'N/A'}}
+                                                <span *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName)?clientOverviewData.displayName:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -246,8 +223,7 @@
                                 </div>
                             </div>
 
-                            <div class=" col-md-6 pl-0 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader"
-                                appSkeletonLoading>
+                            <div class=" col-md-6 pl-0 skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">EMAIL</p>
                                     <div class="relClass">
@@ -278,8 +254,7 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber)?clientOverviewData.aadhaarNumber:'N/A'}}
+                                                <span *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber)?clientOverviewData.aadhaarNumber:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -346,8 +321,7 @@
                             <div class=" col-md-3 text-right ">
                             </div>
                         </div>
-                        <div [hidden]="!adressFlag " class="skeletonAnimation" [appSkeletonLoading]="adressFlag"
-                            appSkeletonLoading>
+                        <div [hidden]="!adressFlag " class="skeletonAnimation" [appSkeletonLoading]="adressFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -359,16 +333,11 @@
                             <div *ngFor="let singleAddress of addressList" class=" col-md-12 mb-8 ">
                                 <div class="d-flex justify-content-between align-items-center mb-8">
                                     <p class=" f-12 mb-0 mt-8 text-primitive ">PERMANENT</p>
-                                    <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
-                                        class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                    <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                 </div>
                                 <p class=" f-14 ">
-                                    {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}}
-                                    {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}}
-                                    {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}}
-                                    {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
-                                    ? singleAddress.pinCode + '.' : ''}}
-                                    {{singleAddress.state ? singleAddress.state : ''}}
+                                    {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}} {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}} {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}} {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
+                                    ? singleAddress.pinCode + '.' : ''}} {{singleAddress.state ? singleAddress.state : ''}}
                                 </p>
 
 
@@ -378,8 +347,7 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 class="text-center pt-12">No data Found</h4>
-                                    <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
-                                        class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')" class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                                 </div>
                             </div>
 
@@ -388,8 +356,7 @@
 
                     <div class=" col-md-3 pl-20 ">
                         <h5 *ngIf="bankFlag" class=" headingDetails "> Bank </h5>
-                        <div [hidden]="!bankFlag" class="skeletonAnimation" [appSkeletonLoading]="bankFlag"
-                            appSkeletonLoading>
+                        <div [hidden]="!bankFlag" class="skeletonAnimation" [appSkeletonLoading]="bankFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -403,8 +370,7 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 class="text-center pt-12">No data Found</h4>
-                                    <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')"
-                                        class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
                                 </div>
                             </div>
 
@@ -413,14 +379,12 @@
                                     <div class="col-md-6  ">
 
                                         <h5 class=" headingDetails d-flex"> Bank
-                                            <i (click)="openAddEdit(clientOverviewData,null,'Bank','Add')"
-                                                class=" material-icons f-18 ">
+                                            <i (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class=" material-icons f-18 ">
                                                 add_circle_outline</i>
                                         </h5>
 
                                     </div>
-                                    <div *ngIf="bankList && bankList.length>1"
-                                        class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                    <div *ngIf="bankList && bankList.length>1" class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
                                         <span class=" f-12 text-primitive ">{{i + 1}} of {{bankList.length}}</span>
                                         <span class=" arrow-primitive arrowSlider c-p ">
                                             <i (click)="previous('bank',i)"
@@ -439,14 +403,10 @@
                                 <div *ngIf="selectedBankData===singleBank" class="row">
                                     <div class=" col-md-9 pr-0 ">
                                         <p class=" m-0 f-14 ">
-                                            <span class=" f-500 roboto ">{{selectedBankData.bankName}}</span><br> A/c:
-                                            {{selectedBankData.accountNumber}} <br>
-                                            {{selectedBankData.accountTypeName }} <br> IFSC:
-                                            {{selectedBankData.ifscCode }} <br> {{selectedBankData.shortAddress}}
+                                            <span class=" f-500 roboto ">{{selectedBankData.bankName}}</span><br> A/c: {{selectedBankData.accountNumber}} <br> {{selectedBankData.accountTypeName }} <br> IFSC: {{selectedBankData.ifscCode }} <br> {{selectedBankData.shortAddress}}
                                     </div>
                                     <div class=" col-md-2 p-0 text-right ">
-                                        <a (click)="openAddEdit(clientOverviewData,selectedBankData,'Bank','Edit')"
-                                            class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                        <a (click)="openAddEdit(clientOverviewData,selectedBankData,'Bank','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
                                 </div>
                             </div>
@@ -455,8 +415,7 @@
                         </div>
                         <hr class=" bb-primitive hrMargin ">
                         <h5 class=" headingDetails " *ngIf="dematFlag"> Demat </h5>
-                        <div [hidden]="!dematFlag " class="skeletonAnimation" [appSkeletonLoading]="dematFlag"
-                            appSkeletonLoading>
+                        <div [hidden]="!dematFlag " class="skeletonAnimation" [appSkeletonLoading]="dematFlag" appSkeletonLoading>
                             <div class="relClass mb-12">
                                 <div class="bar height23"></div>
                             </div>
@@ -468,20 +427,17 @@
                             <h5 class=" headingDetails "> Demat </h5>
                             <div class="d-flex addDenmatClass flex-column align-items-center">
                                 <h4 class="text-center pt-12">No data Found</h4>
-                                <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')"
-                                    class="btn-primary br-0 " mat-stroked-button> ADD DEMAT </button>
+                                <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class="btn-primary br-0 " mat-stroked-button> ADD DEMAT </button>
                             </div>
                         </div>
 
                         <div *ngFor="let singleDemat of dematList;index as i">
                             <div *ngIf="selectedDemat===singleDemat">
                                 <h5 class=" headingDetails "> Demat
-                                    <i (click)="openAddEdit(clientOverviewData,null,'Demat','Add')"
-                                        class=" material-icons f-18 ">
+                                    <i (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class=" material-icons f-18 ">
                                         add_circle_outline</i>
                                 </h5>
-                                <div *ngIf="dematList.length>1"
-                                    class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                <div *ngIf="dematList.length>1" class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
                                     <span class=" f-12 text-primitive ">{{i+1}} of {{dematList.length}}</span>
                                     <span class=" arrow-primitive arrowSlider c-p ">
                                         <i (click)="previous('demat',i)" class=" material-icons f-17 text-primitive ">
@@ -497,17 +453,13 @@
                                 <div class=" row ">
                                     <div class=" col-md-9 pr-0 ">
                                         <p class=" m-0 f-14 ">
-                                            <span
-                                                class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName}}</span>
-                                            <br> DP ID: {{selectedDemat.depositoryParticipantId}} <br> UCC:
-                                            {{selectedDemat.dematClientId}} <br>
-                                            {{selectedDemat.brokerAddress ? selectedDemat.brokerAddress : ''}}
+                                            <span class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName}}</span>
+                                            <br> DP ID: {{selectedDemat.depositoryParticipantId}} <br> UCC: {{selectedDemat.dematClientId}} <br> {{selectedDemat.brokerAddress ? selectedDemat.brokerAddress : ''}}
 
                                         </p>
                                     </div>
                                     <div class=" col-md-2 p-0 text-right ">
-                                        <a (click)="openAddEdit(clientOverviewData,selectedDemat,'Demat','Edit')"
-                                            class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                        <a (click)="openAddEdit(clientOverviewData,selectedDemat,'Demat','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
                                 </div>
                             </div>
