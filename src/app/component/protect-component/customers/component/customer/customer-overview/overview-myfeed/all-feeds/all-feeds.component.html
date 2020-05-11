@@ -394,7 +394,7 @@
 
                                         <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
 
-                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button  (click)="routeAndAddQueryParams('Documents')">
+                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                             Access your vault
                                         </button>
 
@@ -751,7 +751,8 @@
                 </div>
             </div>
 
-            <app-market-summary></app-market-summary>
+            <app-market-summary class="feedSumaaryMarket"></app-market-summary>
+
         </div>
     </div>
 </div>
