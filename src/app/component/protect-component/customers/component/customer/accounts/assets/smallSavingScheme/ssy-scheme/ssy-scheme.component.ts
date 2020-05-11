@@ -39,6 +39,7 @@ export class SsySchemeComponent implements OnInit {
   file: any;
   isLoadingUpload: boolean = false;
   clientData: any;
+  myFiles: any;
 
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
@@ -68,7 +69,8 @@ export class SsySchemeComponent implements OnInit {
       familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
