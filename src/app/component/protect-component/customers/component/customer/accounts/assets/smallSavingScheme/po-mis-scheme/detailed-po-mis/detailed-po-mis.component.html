@@ -32,18 +32,18 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value
+                        Commencement date
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
-                        ₹<span appFormatNumber>{{data.currentValue}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(data.commencementDate)?(data.commencementDate | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity value
+                        Tenure
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
-                        ₹<span appFormatNumber>{{data.maturityValue}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{"5 Years"}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -52,22 +52,6 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(data.maturityDate)?(data.maturityDate | date:'dd/MM/yyyy'):'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
-                        Payout till now
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.totalPayoutTillToday != 0">
-                        ₹<span appFormatNumber>{{data.totalPayoutTillToday}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
-                        Monthly Payout
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.monthlyPayout != 0">
-                        "₹"<span appFormatNumber>{{data.monthlyPayout}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -81,13 +65,36 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Commencement date
+                        Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(data.commencementDate)?(data.commencementDate | date:'dd/MM/yyyy'):'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
+                        ₹<span appFormatNumber>{{data.currentValue}}</span>
                     </div>
                 </div>
-                
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Monthly Payout
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.monthlyPayout != 0">
+                        "₹"<span appFormatNumber>{{data.monthlyPayout}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Payout till now
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.totalPayoutTillToday != 0">
+                        ₹<span appFormatNumber>{{data.totalPayoutTillToday}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
+                        ₹<span appFormatNumber>{{data.maturityValue}}</span>
+                    </div>
+                </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         PO branch
@@ -97,7 +104,7 @@
                         {{ (data.postOfficeBranch)?data.postOfficeBranch:'-' }}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                <!-- <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee{{i+1}}
                     </div>
@@ -105,7 +112,7 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{ data.name }}
                     </div>
-                </div>
+                </div> -->
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Bank account number
