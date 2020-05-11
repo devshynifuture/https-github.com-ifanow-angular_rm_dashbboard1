@@ -38,6 +38,7 @@ export class ClientMoreInfoComponent implements OnInit {
   };
   moreInfoForm;
   occupationList = [];
+  disableBtn = false;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private peopleService: PeopleService, private eventService: EventService,
@@ -149,7 +150,7 @@ export class ClientMoreInfoComponent implements OnInit {
         this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
         this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
       }
-      (flag == 'close') ? this.barButtonOptions.active = true : '';
+      (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
         taxStatusId: this.moreInfoData.taxStatusId,
         // advisorId: this.moreInfoData.advisorId,
@@ -185,6 +186,7 @@ export class ClientMoreInfoComponent implements OnInit {
       };
       this.peopleService.editClient(obj).subscribe(
         data => {
+          this.disableBtn = false;
           this.barButtonOptions.active = false;
           console.log(data);
           this.clientData.emit(data);
@@ -197,6 +199,7 @@ export class ClientMoreInfoComponent implements OnInit {
           }
         },
         err => {
+          this.disableBtn = false;
           this.eventService.openSnackBar(err, 'Dismiss')
           this.barButtonOptions.active = false
         }
@@ -213,7 +216,7 @@ export class ClientMoreInfoComponent implements OnInit {
       this.moreInfoForm.markAllAsTouched();
       return;
     }
-    (flag == 'close') ? this.barButtonOptions.active = true : '';
+    (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
@@ -261,6 +264,7 @@ export class ClientMoreInfoComponent implements OnInit {
     };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
+        this.disableBtn = false
         console.log(data);
         this.clientData.emit(data);
         this.barButtonOptions.active = false;
@@ -275,6 +279,7 @@ export class ClientMoreInfoComponent implements OnInit {
       err => {
         this.eventService.openSnackBar(err, 'Dismiss')
         this.barButtonOptions.active = false;
+        this.disableBtn = false
       }
     );
   }
