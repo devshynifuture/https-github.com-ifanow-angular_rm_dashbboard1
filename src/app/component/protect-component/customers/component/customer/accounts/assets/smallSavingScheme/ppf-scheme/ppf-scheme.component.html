@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="overflow-hidden mt-8 real-estate">
-    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -110,11 +110,12 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2">
+            <td mat-cell *matCellDef="let element" class="t-2 text-center">
                 <div *ngIf="!isLoading">
-                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                    <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                         more_vert
-                    </i>
+                    </i> -->
+                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailPPF(element)">Detailed view</button>

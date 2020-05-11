@@ -309,7 +309,7 @@ export class ProcessTransactionService {
   };
 
   public filterScheme(value: any, schemeList): any[] {
-    const filterValue = this.normalizeValue(value);
+    const filterValue = this.normalizeValue(value + '');
     console.log('_filter value : ', value);
     console.log('_filter this.schemeList : ', schemeList);
 
@@ -324,7 +324,7 @@ export class ProcessTransactionService {
     return value.toLowerCase().replace(/\s/g, '');
   }
 
-  public filterMandateData(data, amount?, toDate?) {
+  public filterActiveMandateData(data, amount?, toDate?) {
     let selectedMandate;
     return data.filter(element => {
       if (element.statusString == 'ACCEPTED') {
@@ -352,10 +352,16 @@ export class ProcessTransactionService {
     });
   }
 
-  public getMaxAmountMandate(data) {
+  public filterRejectedMandateData(data, amount?, toDate?) {
     let selectedMandate;
-    data.filter(element => {
-      if (element.statusString == 'ACCEPTED') {
+    return data.filter(element => {
+      if (element.status != 3) {
+        if (amount && amount > 0 && amount > element.amount) {
+          return false;
+        }
+        if (toDate && toDate > 0 && toDate > element.toDate) {
+          return false;
+        }
         if (selectedMandate) {
           if (selectedMandate.amount < element.amount) {
             selectedMandate = element;
@@ -371,6 +377,28 @@ export class ProcessTransactionService {
       } else {
         return false;
       }
+    });
+  }
+
+  public getMaxAmountMandate(data) {
+    let selectedMandate;
+    data.filter(element => {
+      // if (element.statusString == 'ACCEPTED') {
+      if (selectedMandate) {
+        if (selectedMandate.amount < element.amount) {
+          selectedMandate = element;
+        } else if (selectedMandate.amount == element.amount) {
+          if (selectedMandate.toDate < element.toDate) {
+            selectedMandate = element;
+          }
+        }
+      } else {
+        selectedMandate = element;
+      }
+      return true;
+      // } else {
+      //   return false;
+      // }
     });
     return selectedMandate;
   }

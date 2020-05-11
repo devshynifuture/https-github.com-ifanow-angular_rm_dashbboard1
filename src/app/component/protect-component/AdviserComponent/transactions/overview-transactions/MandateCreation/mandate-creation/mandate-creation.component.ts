@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource } from '@angular/material';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-mandate-creation',
@@ -24,22 +24,25 @@ export class MandateCreationComponent implements OnInit {
   advisorId: any;
   selectedMandate: any;
   isLoading;
+  validatorType = ValidatorType;
+
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-    private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-    public utils: UtilService, public eventService: EventService) { }
-  validatorType = ValidatorType
+              private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+              public utils: UtilService, public eventService: EventService) {
+  }
+
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('all data in per', this.inputData)
-    this.dataSource = this.inputData
+    console.log('all data in per', this.inputData);
+    this.dataSource = this.inputData;
   }
 
   get data() {
     return this.inputData;
   }
   ngOnInit() {
-    this.getdataForm('')
+    this.getdataForm('');
     this.advisorId = AuthService.getAdvisorId();
   }
   Close(flag) {
@@ -47,32 +50,30 @@ export class MandateCreationComponent implements OnInit {
   }
 
   getPostalPin(value) {
-    let obj = {
+    const obj = {
       zipCode: value
-    }
-    console.log(value, "check value");
-    if (value != "") {
+    };
+    console.log(value, 'check value');
+    if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data)
-        this.PinData(data)
-      })
-    }
-    else {
+        console.log('postal 121221', data);
+        this.PinData(data);
+      });
+    } else {
       this.pinInvalid = false;
     }
   }
 
   PinData(data) {
-    if (data[0].Status == "Error") {
+    if (data[0].Status == 'Error') {
       this.pinInvalid = true;
 
       this.getFormControl().pinCode.setErrors(this.pinInvalid);
-      this.getFormControl().city.setValue("");
-      this.getFormControl().country.setValue("");
-      this.getFormControl().state.setValue("");
+      this.getFormControl().city.setValue('');
+      this.getFormControl().country.setValue('');
+      this.getFormControl().state.setValue('');
 
-    }
-    else {
+    } else {
       this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
@@ -83,7 +84,7 @@ export class MandateCreationComponent implements OnInit {
     if (!data) {
       data = {
         address: {}
-      }
+      };
     }
     this.bankDetails = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
@@ -119,7 +120,7 @@ export class MandateCreationComponent implements OnInit {
       return;
     } else if (this.bankDetails.get('micrCode').invalid) {
       this.bankDetails.get('micrCode').markAsTouched();
-      return
+      return;
     } else if (this.bankDetails.get('accountNumber').invalid) {
       this.bankDetails.get('accountNumber').markAsTouched();
       return;
@@ -154,7 +155,7 @@ export class MandateCreationComponent implements OnInit {
       this.bankDetails.get('mandateAmount').markAsTouched();
       return;
     } else {
-      let address = {
+      const address = {
         address1: this.bankDetails.controls.branchAdd1.value,
         address2: this.bankDetails.controls.branchAdd2.value,
         pinCode: this.bankDetails.controls.pinCode.value,
@@ -165,8 +166,8 @@ export class MandateCreationComponent implements OnInit {
         bankMandate: this.bankDetails.controls.bankMandate.value,
         mandateDate: this.bankDetails.controls.mandateDate.value,
         mandateAmount: this.bankDetails.controls.mandateAmount.value,
-      }
-      let value = {
+      };
+      const value = {
         ifscCode: this.bankDetails.controls.ifscCode.value,
         accountNumber: this.bankDetails.controls.accountNumber.value,
         accountType: this.bankDetails.controls.accountType.value,
@@ -175,9 +176,9 @@ export class MandateCreationComponent implements OnInit {
         branchCode: this.bankDetails.controls.branchCode.value,
         micrCode: this.bankDetails.controls.micrCode.value,
         firstHolder: this.bankDetails.controls.firstHolder.value,
-        address: address
-      }
-      console.log('mandate details', value)
+        address
+      };
+      console.log('mandate details', value);
     }
   }
 }

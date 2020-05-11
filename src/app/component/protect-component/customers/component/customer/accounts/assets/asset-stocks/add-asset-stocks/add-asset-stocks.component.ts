@@ -257,7 +257,9 @@ addNewNominee(data) {
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
-              "id": this.editApiData.stocks[0].id
+              "id": this.editApiData.stocks[0].id,
+              "scripNameId": this.editApiData.stocks[0].scripNameId,
+              "transactionorHoldingSummaryList": this.editApiData.stocks[0].transactionorHoldingSummaryList
             }
           ]
         }
@@ -278,7 +280,9 @@ addNewNominee(data) {
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
-              "stockType": 1
+              "stockType": 1,
+              "scripNameId": 0,
+              "transactionorHoldingSummaryList": null
             }
           ]
         }
