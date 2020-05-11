@@ -62,6 +62,7 @@ export class LiabilitiesComponent implements OnInit {
   file: any;
   clientData: any;
   isLoadingUpload: boolean = false;
+  myFiles: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -116,16 +117,17 @@ export class LiabilitiesComponent implements OnInit {
   //   this.footer.push(Object.assign(footerData))
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-  fetchData(value,fileName) {
+  fetchData(value, fileName) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId:this.clientData.familyMemberId,
+      familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
-    if(this.fileUploadData){
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }

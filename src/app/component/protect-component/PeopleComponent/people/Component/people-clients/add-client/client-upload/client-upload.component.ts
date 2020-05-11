@@ -79,6 +79,7 @@ export class ClientUploadComponent implements OnInit {
   fileUploadData: any;
   file: any;
   clientData: any;
+  isLoadingUpload: boolean = false;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
     private custumService: CustomerService, private enumService: EnumServiceService,
@@ -269,19 +270,23 @@ export class ClientUploadComponent implements OnInit {
       data => this.uploadFileRes(data.preSignedUrl, data.fileName, imgType)
     );
   }
-  fetchData(value,fileName) {
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: (this.userData.clientId)?this.userData.clientId:this.clientId,
-      familyMemberId:this.userData.familyMemberId,
-      asset: value,
-      clientName : this.userData.name
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
-    if(this.fileUploadData){
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   removeImg(imgType) {
     switch (imgType) {

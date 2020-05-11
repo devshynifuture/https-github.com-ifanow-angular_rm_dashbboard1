@@ -30,7 +30,7 @@ export class FileUploadServiceService {
     this.getUserInfo = AuthService.getUserInfo()
 
   }
-  fetchFileUploadData(value) {
+  fetchFileUploadData(value,myFiles) {
     console.log('here its me', value)
     this.basicDetails = value
     this.familyMemberId = value.familyMemberId
@@ -40,51 +40,29 @@ export class FileUploadServiceService {
       familyMemberId: (value.familyMemberId) ? value.familyMemberId : 0,
       searchTerm: (value.asset) + '',
     };
-    this.custumService.fetchFileUpload(obj).subscribe(
+     this.custumService.fetchFileUpload(obj).subscribe(
       data => {
         this.fileUploadData = data || [];
         this.folderId = data
         console.log('fileUploadData', this.fileUploadData);
-        return this.fileUploadData
+        this.uploadFile(myFiles)
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
-    return this.fileUploadData
   }
-  // fileUploadClient(value) {
-  //   console.log('here its me', value)
-  //   const obj = {
-  //     advisorId: value.advisorId,
-  //     clientId: value.clientId,
-  //     familyMemberId: this.clientData.familyMemberId,
-  //     folderId: this.fileUploadData,
-  //     searchTerm: value.clientName + "PAN",
-  //   };
-  //   this.custumService.fetchFileClientData(obj).subscribe(
-  //     data => {
-  //       // this.fileUploadData = data || [];
-  //       // console.log('fileUploadData', this.fileUploadData);
-  //       return this.fileUploadData
-  //     },
-  //     err => {
-  //       this.eventService.openSnackBar(err, 'Dismiss');
-  //     }
-  //   );
-  //   return this.fileUploadData
-  // }
+
   uploadFile(fileName) {
     this.fileUploadSuccsess = false
     this.countFile++;
-    this.myFiles = fileName.target.files[0]
     console.log('uploadFile', fileName);
     const obj = {
       clientId: this.basicDetails.clientId,
       advisorId: this.basicDetails.advisorId,
       familyMemberId: ( this.familyMemberId) ? this.familyMemberId : 0,
       folderId:this.folderId,
-      fileName: this.myFiles.name
+      fileName: fileName.name
     };
     this.custumService.uploadFile(obj).subscribe(
       data => {
@@ -108,4 +86,25 @@ export class FileUploadServiceService {
       }
     );
   }
+    // fileUploadClient(value) {
+  //   console.log('here its me', value)
+  //   const obj = {
+  //     advisorId: value.advisorId,
+  //     clientId: value.clientId,
+  //     familyMemberId: this.clientData.familyMemberId,
+  //     folderId: this.fileUploadData,
+  //     searchTerm: value.clientName + "PAN",
+  //   };
+  //   this.custumService.fetchFileClientData(obj).subscribe(
+  //     data => {
+  //       // this.fileUploadData = data || [];
+  //       // console.log('fileUploadData', this.fileUploadData);
+  //       return this.fileUploadData
+  //     },
+  //     err => {
+  //       this.eventService.openSnackBar(err, 'Dismiss');
+  //     }
+  //   );
+  //   return this.fileUploadData
+  // }
 }
