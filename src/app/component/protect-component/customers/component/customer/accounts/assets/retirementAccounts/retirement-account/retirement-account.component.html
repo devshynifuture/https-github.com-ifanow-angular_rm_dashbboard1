@@ -639,14 +639,18 @@
                         <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfGratuityReceived" appFormatNumber>{{sumOfGratuityReceived}}</span> </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="reason">
-                    <th *matHeaderCellDef class="br text-left" mat-header-cell mat-sort-header="reasonOfReceipt">
-                        Reason of receipt
+                <ng-container matColumnDef="salary">
+                <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell mat-sort-header="amountReceived">
+                    'Last drawn Salary<br/> (Basic + DA)
+
                     </th>
-                    <td *matCellDef="let element" class="br text-left" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : element.reasonOfReceipt || '-'}} </div>
+                    <td *matCellDef="let element" class="br amt text-right  " mat-cell>
+                        <div class="bar" ><div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.amountReceived}}</span></div> </div>
                     </td>
-                    <td *matFooterCellDef mat-footer-cell></td>
+                    <td *matFooterCellDef 
+                        class="br amt f-600 p-8   text-right" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountReceived" appFormatNumber>{{sumOfAmountReceived}}</span> </div>
+                    </td>
                 </ng-container>
 
             <ng-container matColumnDef="desc">
