@@ -631,11 +631,8 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
   getMutualFund(data) {
-    const obj ={
-      toDate : data.toDate,
-      id:data.id
-    }
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
+
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
   getReportWiseCalculations(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{report:data.request});
@@ -648,7 +645,7 @@ export class CustomerService {
       lastDate : data.lastDate,
       report:data.reportType
     }
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{reportType:obj});
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,obj);
   }
   capitalGainGet(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);

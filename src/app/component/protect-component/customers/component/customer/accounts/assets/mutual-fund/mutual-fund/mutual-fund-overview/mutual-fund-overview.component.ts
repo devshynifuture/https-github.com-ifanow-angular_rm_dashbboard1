@@ -135,7 +135,7 @@ export class MutualFundOverviewComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       toDate:null,
-      id:[]
+      id:JSON.stringify(null)
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
@@ -527,7 +527,7 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false,this.dataSource.data =[]);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false,this.dataSource4.data =[]);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false,this.dataSource3.data =[]);
-
+            this.getMutualFundResponse(this.rightFilterData.mfData);
 
             this.isLoading = false;
             this.changeInput.emit(false);
