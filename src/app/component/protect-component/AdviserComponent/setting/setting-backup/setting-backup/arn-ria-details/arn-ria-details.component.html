@@ -21,7 +21,8 @@
                     </div>
 
                     <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-                        <button mat-stroked-button class="text-primary mr-12">{{arn.dataUploadTypeId == 1 ? 'AUTO UPLOAD' : 'MANUAL UPLOAD'}}</button>
+                        <span class="text-black roboto f-16 mr-12">{{arn.dataUploadTypeId == 1 ? 'AUTO UPLOAD' : 'MANUAL UPLOAD'}}
+                        </span>
                         <ng-container>
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
 
