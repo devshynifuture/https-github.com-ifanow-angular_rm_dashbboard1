@@ -152,6 +152,6 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   clearDate(fomrControlName) {
-    this.arnRiaFG.get(fomrControlName).setValue('');
+    this.arnRiaFG.get(fomrControlName).setValue(null);
   }
 }
