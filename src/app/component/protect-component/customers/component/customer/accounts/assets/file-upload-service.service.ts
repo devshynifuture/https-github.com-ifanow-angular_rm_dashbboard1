@@ -78,7 +78,6 @@ export class FileUploadServiceService {
             this.fileUploadSuccsess = true
             return responseData
           }
-          return responseData
         });
       },
       err => {
