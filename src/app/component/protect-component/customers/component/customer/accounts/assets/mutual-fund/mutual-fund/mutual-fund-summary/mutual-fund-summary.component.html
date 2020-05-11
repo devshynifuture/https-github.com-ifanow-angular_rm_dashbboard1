@@ -4,7 +4,7 @@
         <div class="col-md-4 pl-0">
             <h4 class="m-0 text-black roboto pt-8">Mutual fund summary</h4>
         </div>
-        <div class="col-md-8 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0">
+        <div class="col-md-8 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (customDataSource.data.length > 0)">
             <div class="pdfClass">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
                 <mat-menu #menu5="matMenu">
@@ -76,7 +76,7 @@
                 <ng-container matColumnDef="schemeName" sticky>
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
                     <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"><span *ngIf="element.schemeName!='Total'">{{element.schemeName+'|'+element.folioNumber+'|'+element.ownerName}}</span>
+                        <div class="bar"><span *ngIf="element.schemeName!='Total'">{{(isLoading) ? '' : (element.schemeName+'|'+element.folioNumber+'|'+element.ownerName)}}</span>
                             <span class="f-700" *ngIf="element.schemeName=='Total'">{{element.schemeName}}</span>
                         </div>
                     </td>

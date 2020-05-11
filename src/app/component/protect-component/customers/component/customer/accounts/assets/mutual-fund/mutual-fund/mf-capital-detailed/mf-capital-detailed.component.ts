@@ -140,7 +140,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   getFilterData(data,category){
     if(data){
 
-      const filteredArray = [];    
+      let filteredArray = [];    
       let totalValue: any = {};
       let categoryWiseTotal:any ={};
       let mfList = this.MfServiceService.filter(data, 'mutualFund');
@@ -222,6 +222,8 @@ export class MfCapitalDetailedComponent implements OnInit {
             }
            categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
             totalValue= {};
+        } else{
+          filteredArray =[];
         }
       });
       (category == 'DEBT') ? this.debtObj =categoryWiseTotal : this.equityObj =categoryWiseTotal;
@@ -318,12 +320,21 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.totalReinvesment = 0;
       let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
       mutualFund.forEach(element => {
-        if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
-          element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
-          this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
-          this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
-          this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
-          filterObj.push(element);
+        if(element.redemptionTransactions){
+          element.redemptionTransactions.forEach(ele => {
+            let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+            if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
+              if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
+                element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
+                this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
+                this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
+                this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
+                filterObj.push(element);
+              }
+            }
+          });
+        } else{
+          filterObj = [];
         }
       });
       return filterObj;

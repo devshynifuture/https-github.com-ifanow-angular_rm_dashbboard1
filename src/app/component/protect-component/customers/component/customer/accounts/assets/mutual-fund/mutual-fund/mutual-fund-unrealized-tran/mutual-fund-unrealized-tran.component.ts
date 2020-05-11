@@ -7,6 +7,7 @@ import { RightFilterComponent } from 'src/app/component/protect-component/custom
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -37,7 +38,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   advisorData: any;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService) {
+    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService,private eventService:EventService) {
   }
 
   @Input() mutualFund;
@@ -100,6 +101,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         this.mutualFundList = data;
         this.asyncFilter(this.mutualFundList);
 
+      },(error) => {
+        this.isLoading = false;
+        this.dataSource.data = [];
+        this.customDataSource.data = [];
+        this.eventService.showErrorMessage(error);
+        this.changeInput.emit(false);
       }
     );
   }

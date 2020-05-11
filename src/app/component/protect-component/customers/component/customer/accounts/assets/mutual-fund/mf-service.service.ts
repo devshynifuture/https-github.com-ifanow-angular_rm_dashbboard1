@@ -258,19 +258,26 @@ export class MfServiceService {
   }
 
   filterFinalData(mfData, dataForFilter) {
+    let mutualFundList;
     const family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
     const category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
     const subCategoryData = this.filter(category, 'mutualFundSubCategoryMaster');
     const schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
     const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
-    const mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
-    let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    // dataForFilter.folio.forEach(element => {
+    //   mutualFundList = mutualFundListFilter.filter((item: any) =>
+    //  item.folioNumber == element.folioNumber
+    //     );
+    // });
+
     if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
         item.folioNumber != 0
       );
     }
-    if(dataForFilter.fromDate && dataForFilter.toDate){
+    if(dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT'){
       dataForFilter.reportAsOn = null;
     }
     if (dataForFilter.reportAsOn) {
@@ -280,13 +287,16 @@ export class MfServiceService {
         );
       });
     }
-    if (dataForFilter.fromDate && dataForFilter.toDate) {
-      mutualFundList.forEach(element => {
-        element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
-        );
-      });
+    if(dataForFilter.transactionPeriodCheck){
+      if (dataForFilter.fromDate && dataForFilter.toDate) {
+        mutualFundList.forEach(element => {
+          element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
+            item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
+          );
+        });
+      }
     }
+
     let capitalGainArray = [];
     if(dataForFilter.capitalGainData){
       dataForFilter.capitalGainData.responseData.forEach(element => {
