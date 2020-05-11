@@ -537,7 +537,7 @@ export class SipTransactionComponent implements OnInit {
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
       isException: true,
     });
-    this.sipTransaction.controls.schemePurchase.schemeSip.subscribe((newValue) => {
+    this.sipTransaction.controls.schemeSip.valueChanges.subscribe((newValue) => {
       this.filterSchemeList = new Observable().pipe(startWith(''),
         map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
     });
