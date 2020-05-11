@@ -62,6 +62,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   invTaxStatusList: any[];
   countryCodeFlag: any;
   sendRole: any;
+  disableBtn: boolean = false;
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -255,7 +256,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.mobileData.markAllAsTouched();
     }
     else {
-      (flag == 'close') ? this.barButtonOptions.active = true : '';
+      (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const mobileList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
@@ -294,7 +295,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           pan: 'pan',
           genderId: this.minorForm.value.gGender,
           relationshipId: (this.minorForm.value.relationWithMinor == '') ? null : this.minorForm.value.relationWithMinor,
-          aadhaarNumber: null,
+          aadhaarNumber: (this.basicDetailsData.guardianData) ? this.basicDetailsData.guardianData.aadhaarNumber : null,
           occupationId: 1,
           martialStatusId: 1,
           anniversaryDate: null,
@@ -350,6 +351,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         // }
         this.peopleService.addClient(obj).subscribe(
           data => {
+            this.disableBtn = false;
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
@@ -387,6 +389,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
+            this.disableBtn = false;
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
@@ -479,7 +482,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    (flag == 'close') ? this.barButtonOptions.active = true : '';
+    (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
+    ;
     const obj = {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
@@ -516,6 +520,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.displayName = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
+        this.disableBtn = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
         if (flag == 'Next') {
