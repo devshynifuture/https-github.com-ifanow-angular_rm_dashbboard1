@@ -221,13 +221,13 @@
                     </div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="profileImg" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper1></app-image-cropper>
-                        <div *ngIf="showCropper">
+                        <div class="zoomClassPosition" *ngIf="showCropper">
 
-                            <i (click)="cropper1.zoomIn()" class="material-icons">
+                            <i (click)="cropper1.zoomIn()" class="material-icons mr-12 c-p">
                                 zoom_in
                             </i>
 
-                            <i (click)="cropper1.zoomOut()" class="material-icons">
+                            <i (click)="cropper1.zoomOut()" class="material-icons c-p">
                                 zoom_out
                             </i>
 
@@ -276,13 +276,13 @@
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="reportImg" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper2>
                         </app-image-cropper>
-                        <div *ngIf="showCropper">
+                        <div class="zoomClassPosition" *ngIf="showCropper">
 
-                            <i (click)="cropper2.zoomIn()" class="material-icons">
+                            <i (click)="cropper2.zoomIn()" class="material-icons mr-12 c-p">
                                 zoom_in
                             </i>
 
-                            <i (click)="cropper2.zoomOut()" class="material-icons">
+                            <i (click)="cropper2.zoomOut()" class="material-icons c-p">
                                 zoom_out
                             </i>
                         </div>
