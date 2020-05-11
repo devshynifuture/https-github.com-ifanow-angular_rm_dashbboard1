@@ -297,6 +297,25 @@ export class MfServiceService {
       }
     }
 
+    // let type = dataForFilter.reportType[0].name;
+    // (type == 'Sub Category wise') ? type = 'subCategoryName' :
+    // (type== 'Category wise') ? type = 'categoryName' : type = 'Investor wise';
+    // let catObj = this.categoryFilter(mutualFundList, type);
+    // console.log(catObj)
+    // let categoryWiseMfList = catObj;
+    // Object.keys(catObj).map(key => {
+    //   catObj[key].forEach((singleData) => {
+    //     singleData.navDate =  this.datePipe.transform(singleData.navDate, 'yyyy-MM-dd')
+    //    singleData.mutualFundTransactions.forEach(element => {
+    //     element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+    //    });
+    //   });
+    // });
+    let categoryWiseMfList = [];
+    mutualFundList.forEach(element => {
+      categoryWiseMfList.push(element.id)
+    });
+
     let capitalGainArray = [];
     if(dataForFilter.capitalGainData){
       dataForFilter.capitalGainData.responseData.forEach(element => {
@@ -325,7 +344,8 @@ export class MfServiceService {
       financialYear:dataForFilter.financialYear,
       grandfathering:dataForFilter.grandfathering,    
       mfData,
-      capitalGainData:dataForFilter.capitalGainData
+      capitalGainData:dataForFilter.capitalGainData,
+      categoryWiseMfList:categoryWiseMfList
     };
     return sendData;
   }

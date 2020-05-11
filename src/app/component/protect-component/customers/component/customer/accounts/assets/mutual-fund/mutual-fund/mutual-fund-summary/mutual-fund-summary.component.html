@@ -98,7 +98,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_amount_invested:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br p-8 f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="mutualFund.total_amount_invested" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                         <!-- {{(grandTotal.totalTransactionAmt)?grandTotal.totalTransactionAmt:0}} -->
                     </td>sdsfds
@@ -116,7 +116,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_current_value:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br p-8 f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="mutualFund.total_current_value" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                     </td>
 
@@ -136,7 +136,7 @@
                         </div>
                     </td> -->
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                        <div class="bar" appFormatNumber [value]="grandTotal.totalGain">
+                        <div class="bar" appFormatNumber [value]="mutualFund.total_unrealized_gain">
                         </div>
                     </td>
                 </ng-container>
@@ -155,7 +155,7 @@
                         </div>
                     </td> -->
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                        <div class="bar">{{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}
+                        <div class="bar">{{(mutualFund.total_absolute_return) ? (mutualFund.total_absolute_return | number:'1.2-2') : 0}}
                         </div>
                     </td>
                 </ng-container>
@@ -174,7 +174,7 @@
                         </div>
                     </td> -->
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                        <div class="bar">{{(grandTotal.xirr) ? (grandTotal.xirr | number:'1.2-2') : 0}}
+                        <div class="bar">{{(mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : 0}}
                         </div>
                     </td>
                 </ng-container>
@@ -191,7 +191,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br p-8 f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="mutualFund.total_dividend_payout" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
