@@ -135,7 +135,7 @@ export class MutualFundOverviewComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       toDate:null,
-      id:[]
+      id:JSON.stringify(null)
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
@@ -515,11 +515,12 @@ export class MutualFundOverviewComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
-            this.dataSource2 =new MatTableDataSource( this.rightFilterData.schemeWise);
-            this.dataSource4 = new MatTableDataSource(this.rightFilterData.category);
-            this.dataSource = new MatTableDataSource(this.rightFilterData.family_member_list);
-            this.dataSource3 = new MatTableDataSource(this.rightFilterData.subCategoryData);
+            this.getMutualFundResponse(this.rightFilterData.mfData);
+            // this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
+            // this.dataSource2 =new MatTableDataSource( this.rightFilterData.schemeWise);
+            // this.dataSource4 = new MatTableDataSource(this.rightFilterData.category);
+            // this.dataSource = new MatTableDataSource(this.rightFilterData.family_member_list);
+            // this.dataSource3 = new MatTableDataSource(this.rightFilterData.subCategoryData);
             this.showHideTable = this.rightFilterData.overviewFilter;
             (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
             (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false,this.dataSource2.data =[]);
@@ -527,7 +528,6 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false,this.dataSource.data =[]);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false,this.dataSource4.data =[]);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false,this.dataSource3.data =[]);
-
 
             this.isLoading = false;
             this.changeInput.emit(false);

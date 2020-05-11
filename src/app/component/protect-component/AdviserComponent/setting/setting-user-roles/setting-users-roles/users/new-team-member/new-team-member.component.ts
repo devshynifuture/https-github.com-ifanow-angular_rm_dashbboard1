@@ -89,7 +89,7 @@ export class NewTeamMemberComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId
     };
-    this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
+    this.settingsService.getAdvisorRoles(obj).subscribe((res) => {
       this.roles = res;
       this.loader(-1);
     }, err => {
