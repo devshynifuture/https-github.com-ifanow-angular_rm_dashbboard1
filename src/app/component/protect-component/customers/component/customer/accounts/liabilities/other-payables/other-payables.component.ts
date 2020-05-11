@@ -49,7 +49,7 @@ export class OtherPayablesComponent implements OnInit {
   fileUploadData: any;
   file: any;
   myFiles: any;
-  isLoadingUpload: boolean;
+  isLoadingUpload: boolean = false;
   clientData: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
