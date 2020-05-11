@@ -7,7 +7,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {AuthService} from 'src/app/auth-service/authService';
 import {ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -349,7 +349,7 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('new schemes', data);
     this.schemeListTransfer = data;
     if (this.switchTransaction.controls.transferIn.value) {
-      this.switchTransaction.controls.transferIn.setValue(this.switchTransaction.controls.transferIn.value + '');
+      this.filterNewSchemeList = of(this.processTransaction.filterScheme(this.switchTransaction.controls.transferIn.value, this.schemeListTransfer));
     } else {
       this.switchTransaction.controls.transferIn.setValue('');
     }
@@ -387,10 +387,9 @@ export class SwitchTransactionComponent implements OnInit {
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.existingSchemeList))
     );
-    this.filterNewSchemeList = this.switchTransaction.controls.transferIn.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeListTransfer))
-    );
+    this.switchTransaction.controls.transferIn.valueChanges.subscribe((newValue) => {
+      this.filterNewSchemeList = of(this.processTransaction.filterScheme(newValue + '', this.schemeListTransfer));
+    });
     this.ownerData = this.switchTransaction.controls;
     if (data.folioNo) {
       this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
