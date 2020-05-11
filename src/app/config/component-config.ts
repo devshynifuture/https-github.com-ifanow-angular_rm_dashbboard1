@@ -221,7 +221,7 @@ export const appConfig = {
   MUFUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
   MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
   MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
-
+  GET_DATED_REPORT_WISE_CALCULATION:'mutual-fund/getDatedReportWiseCalculations/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
