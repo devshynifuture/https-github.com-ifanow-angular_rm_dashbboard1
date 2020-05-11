@@ -80,8 +80,8 @@
                     </div>
                 </div>
                 <!-- *ngIf="clientOverviewData" -->
-                <div class="row">
-                    <div *ngIf="clientOverviewData.clientType!=3" class="col-md-12">
+                <div *ngIf="clientData" class="row">
+                    <div *ngIf="clientData.clientType!=3" class="col-md-12">
                         <div class="primary-border familyMemberBox mt-12">
                             <p class="memberName">Family members</p>
 

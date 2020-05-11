@@ -338,17 +338,19 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (flag == 'Address') {
-            this.addressList = undefined;
-            this.getAddressList(this.clientData);
+          if (sideBarData.clientData) {
+            if (flag == 'Address') {
+              this.addressList = undefined;
+              this.getAddressList(this.clientData);
 
-          } else if (flag == 'Bank') {
-            this.bankList = undefined;
-            this.getBankList(this.clientData);
-          }
-          else {
-            this.dematList = undefined;
-            this.getDematList(this.clientData);
+            } else if (flag == 'Bank') {
+              this.bankList = undefined;
+              this.getBankList(this.clientData);
+            }
+            else {
+              this.dematList = undefined;
+              this.getDematList(this.clientData);
+            }
           }
           clientData = [];
           if (UtilService.isRefreshRequired(sideBarData)) {
