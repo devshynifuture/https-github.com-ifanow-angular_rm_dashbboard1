@@ -92,6 +92,10 @@ export class SettingsService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLE_ROLE_LIST, httpParams);
   }
 
+  getAdvisorRoles(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ADVISOR_ROLE_ROLE_LIST, data);
+  }
+
   getDetailedRole(data) {
     const httpParams = new HttpParams().set('id', data.id);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETIALED_USER_ROLE, httpParams);

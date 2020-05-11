@@ -704,6 +704,7 @@ export const appConfig = {
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 
   GET_USER_ROLE_ROLE_LIST: 'setting/users-roles/role/get',
+  GET_ADVISOR_ROLE_ROLE_LIST: 'setting/users-roles/advisor-role/get',
   EDIT_USER_ROLE: 'setting/users-roles/role/edit',
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
