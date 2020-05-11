@@ -86,15 +86,13 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.familyMemberType = { name: 'Individual', value: '1' }
         this.invTypeCategory = '1'
         this.createIndividualForm(this.basicDetailsData);
-        this.invTaxStatusList = this.enumService.getIndividualTaxList();
       }
       else {
         this.familyMemberType = { name: 'Minor', value: '2' };
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData)
-        this.invTaxStatusList = this.enumService.getMinorTaxList();
       }
-      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
+      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
@@ -102,17 +100,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
         this.invTaxStatus = '';
-        this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(null);
         return;
       } else {
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
-        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
       }
       (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
-      (this.invTypeCategory == '1') ? this.invTaxStatusList = this.enumService.getIndividualTaxList() : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.invTaxStatusList = this.enumService.getMinorTaxList() : this.invTaxStatusList = this.enumService.getCorporateTaxList();
     }
     console.log(data);
   }
