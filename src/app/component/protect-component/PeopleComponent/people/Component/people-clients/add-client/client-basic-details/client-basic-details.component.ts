@@ -169,7 +169,11 @@ export class ClientBasicDetailsComponent implements OnInit {
       role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
   }
-
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase())
+    }
+  }
   getClientOrLeadData(data) {
     const obj = {
       clientId: data.clientId

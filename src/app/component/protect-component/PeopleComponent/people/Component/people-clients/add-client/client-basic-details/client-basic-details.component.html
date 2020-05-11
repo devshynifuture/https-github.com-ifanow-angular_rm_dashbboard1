@@ -67,8 +67,8 @@
                 <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input #fullName [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50"
-                                appInputValueValidation autocomplete="off" class="form-control"
+                            <input #fullName [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)"
+                                [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
                                 formControlName="fullName" matInput placeholder="Enter Name">
                             <mat-error>This field is required</mat-error>
                             <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
