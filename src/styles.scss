@@ -2112,3 +2112,17 @@ ngx-slick-carousel > .slick-disabled {
   border-left: transparent;
   border-right: transparent;
 }
+
+
+
+::ng-deep .rightText .mat-sort-header-container {
+  display: block !important;
+}
+
+::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
+  float: right;
+}
+
+::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
+  float: right;
+}

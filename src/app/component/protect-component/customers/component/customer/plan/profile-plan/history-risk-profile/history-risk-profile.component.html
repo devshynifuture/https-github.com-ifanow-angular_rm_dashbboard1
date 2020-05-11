@@ -1,47 +1,48 @@
 <div class="row bb-1 popup-header-fix w-30">
     <div class="col-md-10 p-0">
         <h4 class="mb-0 l-22 wrapper-20">HISTORY</h4>
-     
+
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-16 c-p pr-16" (click)="Close(false)">
-    clear
+      clear
     </i>
     </div>
 </div>
 
 
-<div class="pt-80 pr-20 pl-20">
-    <table mat-table [dataSource]="dataSourceHistory" [appSkeletonLoading]="isLoading" appSkeletonLoading
-     class="mt-8 skeletonAnimation" id="table-low">
+<div class="pt-80 pr-20 pl-20 pb-90">
+    <table mat-table [dataSource]="dataSourceHistory" [appSkeletonLoading]="isLoading" appSkeletonLoading class="mt-8 skeletonAnimation" id="tbs">
 
-      
         <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let element"> 
-            <div class="bar">{{isLoading ? '' : element.riskAssessmentDate  | date:'dd/MM/yyyy'}} </div></td>
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{isLoading ? '' : element.riskAssessmentDate | date:'dd/MM/yyyy'}} </div>
+            </td>
         </ng-container>
-      
+
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Risk status </th>
-          <td mat-cell *matCellDef="let element" [ngClass]=" element.riskProfileStatus === 'Aggressive' ? 'activeColor' : element.riskProfileStatus === 'Moderate' ? 'moderate' : 'moderateCon'"> 
-            <div class="bar">{{isLoading ? '' : element.riskProfileStatus}} </div></td>
+            <th mat-header-cell *matHeaderCellDef> Risk status </th>
+            <td mat-cell *matCellDef="let element" [ngClass]=" element.riskProfileStatus === 'Aggressive' ? 'activeColor' : element.riskProfileStatus === 'Moderate' ? 'moderate' : 'moderateCon'">
+                <div class="bar">{{isLoading ? '' : element.riskProfileStatus}} </div>
+            </td>
         </ng-container>
-      
+
         <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> score </th>
-          <td mat-cell *matCellDef="let element"> 
-            <div class="bar">{{isLoading ? '' : element.riskAssessmentScore}} </div></td>
+            <th mat-header-cell *matHeaderCellDef> score </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="bar">{{isLoading ? '' : element.riskAssessmentScore}} </div>
+            </td>
         </ng-container>
-    
+
         <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef>  </th>
-          <td mat-cell *matCellDef="let element" class="br t-10 text-primary"(click)="viewResult(element)"> VIEW </td>
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element" class="br t-10 text-primary" (click)="viewResult(element)"> VIEW </td>
         </ng-container>
-        
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    </table>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-30">
     <div class="row">

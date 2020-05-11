@@ -375,12 +375,12 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.showRisk = false
       if (data.refreshRequired == false) {
         this.reset(true);
-      }else if(data.refreshRequired) {
+      } else if (data.refreshRequired) {
         this.riskAssessmentQuestionList = data.refreshRequired
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.progressBar = this.statusArray.length * 7
         this.showButton = false
-      }else{
+      } else {
         this.reset(true);
       }
     }
