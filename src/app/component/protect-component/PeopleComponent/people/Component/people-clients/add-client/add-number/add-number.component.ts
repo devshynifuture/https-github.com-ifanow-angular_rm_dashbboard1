@@ -63,22 +63,16 @@ export class AddNumberComponent implements OnInit {
   }
 
   getIsdCodesData(taxStatusId) {
-    if (taxStatusId == undefined) {
-      return;
-    }
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          if (taxStatusId == undefined) {
-            return;
-          }
           if (taxStatusId == 1) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
           } else {
-            this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
+            this.isdCodes = data
           }
           this.filteredIsdCodes.next(this.isdCodes);
         }
