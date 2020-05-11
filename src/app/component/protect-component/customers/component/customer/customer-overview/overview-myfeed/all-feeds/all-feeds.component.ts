@@ -193,13 +193,13 @@ export class AllFeedsComponent implements OnInit {
   loadLogicBasedOnRoleType() {
     console.log(this.enumSerice.getClientRole());
     // break intentionally not applied. DO NOT ADD BREAKS!!!!!
-    switch(this.clientData.roleId) {
-      case 4:
-      case 3:
+    switch(this.clientData.advisorOrClientRole) {
+      case 7:
+      case 6:
         this.tabsLoaded.goalsData.displaySection = true;
-      case 2:
+      case 5:
         this.tabsLoaded.portfolioData.displaySection = true;
-      case 1:
+      case 4:
         this.tabsLoaded.portfolioSummaryData.displaySection = true;
         break;
       default:
