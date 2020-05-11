@@ -40,9 +40,9 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
-    if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.clientId) {
-      this.getClientData(router.getCurrentNavigation().extras.state);
-    }
+    // if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.clientId) {
+    //   this.getClientData(router.getCurrentNavigation().extras.state);
+    // }
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
