@@ -389,6 +389,7 @@
                     </div>
 
                     <div class=" col-md-3 pl-20 ">
+                        <h5 *ngIf="bankFlag" class=" headingDetails "> Bank </h5>
                         <div [hidden]="!bankFlag" class="skeletonAnimation" [appSkeletonLoading]="bankFlag"
                             appSkeletonLoading>
                             <div class="relClass mb-12">
@@ -455,6 +456,7 @@
 
                         </div>
                         <hr class=" bb-primitive hrMargin ">
+                        <h5 class=" headingDetails " *ngIf="dematFlag"> Demat </h5>
                         <div [hidden]="!dematFlag " class="skeletonAnimation" [appSkeletonLoading]="dematFlag"
                             appSkeletonLoading>
                             <div class="relClass mb-12">
