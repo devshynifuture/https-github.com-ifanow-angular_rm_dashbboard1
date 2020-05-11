@@ -2,10 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {PostalService} from 'src/app/services/postal.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {MatTableDataSource} from '@angular/material';
 
@@ -16,7 +14,7 @@ import {MatTableDataSource} from '@angular/material';
 })
 export class MandateCreationComponent implements OnInit {
   inputData: any;
-  displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
+  displayedColumns: string[] = ['position', 'accountNo', 'accountNo', 'ifsc', 'branchName', 'accountType'];
   data1: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.inputData);
   bankDetails: any;
@@ -26,9 +24,8 @@ export class MandateCreationComponent implements OnInit {
   isLoading;
   validatorType = ValidatorType;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-              public utils: UtilService, public eventService: EventService) {
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private postalService: PostalService, public utils: UtilService, public eventService: EventService) {
   }
 
   @Input()
@@ -41,12 +38,14 @@ export class MandateCreationComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
     this.getdataForm('');
     this.advisorId = AuthService.getAdvisorId();
   }
+
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
   getPostalPin(value) {
@@ -80,6 +79,7 @@ export class MandateCreationComponent implements OnInit {
       this.pinInvalid = false;
     }
   }
+
   getdataForm(data) {
     if (!data) {
       data = {
@@ -107,9 +107,11 @@ export class MandateCreationComponent implements OnInit {
       mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
     });
   }
+
   getFormControl(): any {
     return this.bankDetails.controls;
   }
+
   createMandate() {
 
     if (this.bankDetails.get('ifscCode').invalid) {

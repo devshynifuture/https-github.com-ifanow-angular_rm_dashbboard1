@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
-        <i (click)="Close(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
+        <i (click)="closeRightSlider(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
         <mat-form-field>
           <mat-select class="form-control" formControlName="bank">
             <mat-option disabled value=''>Select bank</mat-option>
-            <mat-option (click)="selectBank(bank)" *ngFor="let bank of bankDetails" [value]="bank.bankName">
+            <mat-option (click)="selectBank(bank)" *ngFor="let bank of bankDetails" [value]="bank.id">
               {{bank.bankName}} </mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>
@@ -81,7 +81,7 @@
       <div class="col-md-3 form-group">
         <mat-form-field class="ba-date">
           <input (click)="picker.open()" [matDatepicker]="picker" autocomplete="off" class="form-control b-0"
-            formControlName="fromDate" matInput readonly value="DD/mm/yy">
+                 [min]="currentDate" formControlName="fromDate" matInput readonly value="dd/MM/yy">
           <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error class="f-12 pt-4">
@@ -185,7 +185,7 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="bankName">
           <th *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar">
@@ -194,7 +194,7 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="weight">
+        <ng-container matColumnDef="accountNo">
           <th *matHeaderCellDef class="br" mat-header-cell>Account no.</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.accountNo}}
@@ -208,14 +208,14 @@
             <div class="bar"> {{element.ifscCode}}</div>
           </td>
         </ng-container>
-        <ng-container matColumnDef="aid">
+        <ng-container matColumnDef="branchName">
           <th *matHeaderCellDef class="br" mat-header-cell> Branch name
           </th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.branchName}}</div>
           </td>
         </ng-container>
-        <ng-container matColumnDef="euin">
+        <ng-container matColumnDef="accountType">
           <th *matHeaderCellDef class="br" mat-header-cell> Account type</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.accountType}}</div>
@@ -242,7 +242,7 @@
 <div class="bottom-fixed wrapper-12 pt-16">
   <div class="row">
     <div class="col-md-2">
-      <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+      <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-10 right text-right">
       <h6>{{errorMsg}}</h6>
