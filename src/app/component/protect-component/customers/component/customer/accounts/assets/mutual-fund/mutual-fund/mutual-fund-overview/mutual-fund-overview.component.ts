@@ -223,7 +223,7 @@ export class MutualFundOverviewComponent implements OnInit {
     // Used for cashFlow status
     if (this.totalValue) {
       this.datasource1.data = [
-        { data: 'a. Investment', amts: (this.mfData.total_amount_invested) ? this.mfData.total_amount_invested : 0 },
+        { data: 'a. Investment', amts: (this.mfData.total_cashflow_amount_inv) ? this.mfData.total_cashflow_amount_inv : 0 },
         { data: 'b. Switch In', amts: (this.mfData.total_switch_in) ? this.mfData.total_switch_in : 0 },
         { data: 'c. Switch Out', amts: (this.mfData.total_switch_out) ? this.mfData.total_switch_out : 0 },
         { data: 'd. Redemption', amts: (this.mfData.total_redemption) ?this.mfData.total_redemption : 0 },

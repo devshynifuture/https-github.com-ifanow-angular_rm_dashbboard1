@@ -235,8 +235,11 @@
                                 <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                     Balance units </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <span appFormatNumber *ngIf="element.balanceUnits">{{isLoading ? '': (element.balanceUnits)}}</span>
-                                    <span appFormatNumber class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  element.totalBalanceUnit}}</span>
+                                    <div  class="bar">
+                                            <span appFormatNumber *ngIf="element.balanceUnits">{{isLoading ? '': ((element.balanceUnits) ? element.balanceUnits : 0)}}</span>
+                                            <span appFormatNumber class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  ((element.totalBalanceUnit) ? element.totalBalanceUnit : 0)}}</span>
+                                    </div>
+                                
                                 </td>
                                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                                     {{(grandTotal)?grandTotal.totalBalanceUnit:'0'}}</td>
@@ -247,7 +250,10 @@
                                 <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
                                     Days</th>
                                 <td class="br text-right" mat-cell *matCellDef="let element" >
-                                    {{isLoading ? '': element.days}} </td>
+                                        <div  class="bar">
+                                                {{isLoading ? '': ((element.days) ? element.days : 0)}} 
+                                            </div>
+                                  </td>
                                 <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                                 </td>
         
