@@ -523,11 +523,54 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-center">
-                    <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                    <!-- <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
+                </div>
+            </div>
+            <div *ngIf="fieldFlag=='client' && basicDetailsData.userId==null" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Client Owner</h5>
+                    <p class="m-0 f-12 text-custom">Team member</p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
+                                class="form-control">
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
+                                </mat-option>
+                                <mat-option value='' disabled>Select owner</mat-option>
+                                <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                    {{singleClient.fullName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
 
+
+            <div *ngIf="fieldFlag=='client'" class="row pt-44 pb-60">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-4">Role</h5>
+                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                    </p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group m-0">
+                        <mat-form-field>
+                            <mat-select formControlName="role" class="form-control">
+                                <mat-option value='' disabled>Select roles</mat-option>
+                                <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                                    {{role.roleName}}</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
             <!--
     <div class="row pt-44">
         <div class="col-md-4 text-right">

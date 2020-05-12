@@ -55,7 +55,9 @@
                                                 <span *ngIf="!letsideBarLoader">{{clientOverviewData.bio}}
                                                     <span *ngIf="clientOverviewData.bio">|</span>
                                                 </span>
-                                                <span *ngIf="!letsideBarLoader">{{clientOverviewData.age}} Years
+                                                <span
+                                                    *ngIf="!letsideBarLoader">{{clientOverviewData.age?clientOverviewData.age:0}}
+                                                    Years
                                                 </span>
                                             </h5>
                                         </div>
