@@ -677,64 +677,64 @@ export class RightFilterComponent implements OnInit {
     this.finalFilterData.transactionView = this.sendTransactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
     console.log(this.finalFilterData);
-    if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
-      let mutualFund = this.finalFilterData.mutualFundList;
-      (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
-      this.obj = {
-        mutualFundList: mutualFund
-      }
-      this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
-        data => {
-          console.log(data);
-          this.barButtonOptions.active = false;
-          this.finalFilterData.mutualFundList = data;
-          this.Close(this.finalFilterData);
-        }
-      );
+    // if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
+    //   let mutualFund = this.finalFilterData.mutualFundList;
+    //   (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
+    //   this.obj = {
+    //     mutualFundList: mutualFund
+    //   }
+    //   this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
+    //     data => {
+    //       console.log(data);
+    //       this.barButtonOptions.active = false;
+    //       this.finalFilterData.mutualFundList = data;
+    //       this.Close(this.finalFilterData);
+    //     }
+    //   );
 
-    } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate && this.dataToSend.toDate != todayDate) {
-      let catObj: any;
-      catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
-      Object.keys(catObj).map(key => {
-        catObj[key].forEach((singleData) => {
-          let singleDataTransaction = singleData;
-          singleData = {};
-          catObj[key] = [];
-          singleDataTransaction.mutualFundTransactions.forEach((ele) => {
-            const singleData = {
-              unit: ele.unit,
-              transactionDate: ele.transactionDate,
-              schemeCode: singleDataTransaction.schemeCode,
-              effect: ele.effect,
-            }
-            catObj[key].push(singleData);
-          });
-        });
+    // } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate && this.dataToSend.toDate != todayDate) {
+    //   let catObj: any;
+    //   catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
+    //   Object.keys(catObj).map(key => {
+    //     catObj[key].forEach((singleData) => {
+    //       let singleDataTransaction = singleData;
+    //       singleData = {};
+    //       catObj[key] = [];
+    //       singleDataTransaction.mutualFundTransactions.forEach((ele) => {
+    //         const singleData = {
+    //           unit: ele.unit,
+    //           transactionDate: ele.transactionDate,
+    //           schemeCode: singleDataTransaction.schemeCode,
+    //           effect: ele.effect,
+    //         }
+    //         catObj[key].push(singleData);
+    //       });
+    //     });
 
-      });
-      catObj.toDate = this.dataToSend.toDate;
-      console.log(catObj.toDate);
-      this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
-        data => {
-          console.log(data);
-        }
-      );
-    } else if(this._data.name != 'CAPITAL GAIN REPORT') {
+    //   });
+    //   catObj.toDate = this.dataToSend.toDate;
+    //   console.log(catObj.toDate);
+    //   this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
+    //     data => {
+    //       console.log(data);
+    //     }
+    //   );
+    // } else if(this._data.name != 'CAPITAL GAIN REPORT') {
      
-      this.obj = {
-        advisorId:this.advisorId,
-        clientId:this.clientId,
-        toDate: JSON.stringify(this.finalFilterData.reportAsOn),
-        id: this.finalFilterData.categoryWiseMfList
-      }
-      this.custumService.getMutualFund(this.obj).subscribe(
-        data => {
-          console.log(data);
-          this.barButtonOptions.active = false;
-          this.finalFilterData.mfData = data;
-          this.Close(this.finalFilterData);
-        }
-      );
+    //   this.obj = {
+    //     advisorId:this.advisorId,
+    //     clientId:this.clientId,
+    //     toDate: JSON.stringify(this.finalFilterData.reportAsOn),
+    //     id: this.finalFilterData.categoryWiseMfList
+    //   }
+    //   this.custumService.getMutualFund(this.obj).subscribe(
+    //     data => {
+    //       console.log(data);
+    //       this.barButtonOptions.active = false;
+    //       this.finalFilterData.mfData = data;
+    //       this.Close(this.finalFilterData);
+    //     }
+    //   );
       // this.obj = {
       //   advisorId:this.advisorId,
       //   clientId:this.clientId,
@@ -751,7 +751,23 @@ export class RightFilterComponent implements OnInit {
       // );
       // this.barButtonOptions.active = false;
       // this.Close(this.finalFilterData);
-    }else{
+    // }
+    if(this._data.name != 'CAPITAL GAIN REPORT'){
+        this.obj = {
+        advisorId:this.advisorId,
+        clientId:this.clientId,
+        toDate:(this.finalFilterData.reportAsOn) ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
+        id: this.finalFilterData.categoryWiseMfList
+      }
+      this.custumService.getMutualFund(this.obj).subscribe(
+        data => {
+          console.log(data);
+          this.barButtonOptions.active = false;
+          this.finalFilterData.mfData = data;
+          this.Close(this.finalFilterData);
+        }
+      );
+    } else{
        this.barButtonOptions.active = false;
        this.Close(this.finalFilterData);
     }

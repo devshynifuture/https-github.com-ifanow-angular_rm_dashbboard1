@@ -101,10 +101,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   getUnrealizedData() {
     this.mutualFund.mutualFundList.forEach(element => {
-      element.navDate = this.datePipe.transform(element.navDate, 'yyyy-MM-dd')
-      element.mutualFundTransactions.forEach(element => {
-        element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
-      });
+      element.navDate = this.datePipe.transform(element.navDate, 'yyyy-MM-dd');
+      element.mutualFundTransactions = [];
+      // element.mutualFundTransactions.forEach(element => {
+      //   element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+      // });
     });
     const obj = {
       mutualFundList: this.mutualFund.mutualFundList
