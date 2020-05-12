@@ -3,7 +3,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelMisService } from '../../aum/excel-mis.service';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -50,8 +50,9 @@ export class SipAmcWiseComponent implements OnInit {
     ],
     [
       'Sr. No.',
-      'Sub Category Name',
-      'Current Name',
+      'Scheme Name',
+      'SIP Amount',
+      'SIP Count',
       '% Weight'
     ],
     [
@@ -78,8 +79,9 @@ export class SipAmcWiseComponent implements OnInit {
     ],
     [
       { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Sub Category Name' },
-      { width: 30, key: 'Current Value' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 30, key: 'SIP Count' },
       { width: 10, key: '% Weight' }
     ],
     [
@@ -433,7 +435,7 @@ export class SipAmcWiseComponent implements OnInit {
     console.log(this.arrayOfExcelData);
   }
   amcWiseExcelReport() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
       amcList: false,
       schemeList: false,
       applicantList: false
@@ -450,7 +452,7 @@ export class SipAmcWiseComponent implements OnInit {
         element.schemeList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       applicantList: false
@@ -470,6 +472,6 @@ export class SipAmcWiseComponent implements OnInit {
       })
     });
 
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'AMC wise MIS report');
+    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'AMC wise MIS report');
   }
 }
