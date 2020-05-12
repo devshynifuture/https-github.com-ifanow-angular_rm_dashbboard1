@@ -288,8 +288,8 @@ img.header-img {
 }
 
 .scorllable {
-    height: 515px;
-    overflow-y: scroll;
+    max-height: 515px;
+    overflow-y: auto;
     padding-bottom: 50px;
     // height: 100vh;
     // // height: 100%;
