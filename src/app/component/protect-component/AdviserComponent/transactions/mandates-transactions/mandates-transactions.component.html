@@ -39,7 +39,7 @@
              appSkeletonLoading class="skeletonAnimation" class="mt-8" id="table-low" mat-table matSort>
         <ng-container matColumnDef="position">
           <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
-          <td (click)="openMandateDetails(element)" *matCellDef="let element" class="br" mat-cell>
+          <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar">
               {{isLoading ? '' : (element.aggregatorType == 1) ? 'NSE' : (element.aggregatorType == 2) ? 'BSE' : '-'}}
             </div>
@@ -121,7 +121,7 @@
 </ng-container> -->
 
         <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+        <tr (click)="openMandateDetails(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
       </table>
       <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
            class="d-flex flex-column align-items-center pt-44">

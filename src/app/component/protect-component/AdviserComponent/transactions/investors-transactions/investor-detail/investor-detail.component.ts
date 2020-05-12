@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {FileUploadService} from 'src/app/services/file-upload.service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
+import {FileUploadService} from '../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../config/main-config';
+import {appConfig} from '../../../../../../config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
-  selector: 'app-detailed-view-mandate',
-  templateUrl: './detailed-view-mandate.component.html',
-  styleUrls: ['./detailed-view-mandate.component.scss']
+  selector: 'app-investor-detail',
+  templateUrl: './investor-detail.component.html',
+  styleUrls: ['./investor-detail.component.scss']
 })
-export class DetailedViewMandateComponent implements OnInit {
+export class InvestorDetailComponent implements OnInit {
+
   data;
   details: any;
   transactionData: any;
@@ -18,16 +19,13 @@ export class DetailedViewMandateComponent implements OnInit {
 
   statusData = [
     {
-      name: 'Pending authorization', checked: false, status: 0
+      name: 'Pending', checked: false, status: 0
     },
     {
       name: 'Form uploaded', checked: false, status: 4
     },
     {
-      name: 'Accpted authorization', checked: false, status: 2
-    },
-    {
-      name: 'Rejected authorization', checked: false, status: 3
+      name: 'Investment Ready', checked: false, status: 2
     }
   ];
   statusDetails: any;
@@ -38,7 +36,7 @@ export class DetailedViewMandateComponent implements OnInit {
 
   ngOnInit() {
     this.details = this.data;
-    console.log('mandateDetails', this.data);
+    console.log('investor detail', this.data);
     this.getDataStatus(this.details);
   }
 
@@ -68,17 +66,16 @@ export class DetailedViewMandateComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
-  getFileDetails(e, flag) {
+  getFileDetails(e) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: 1,
-      documentType: flag,
-      tpMandateDetailId: this.details.id
+      documentType: 1
     };
-    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);

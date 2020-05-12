@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
   <div class="row bb-1">
     <div class="col-md-10 p-0">
-      <h4 class="mb-0 wrapper-20">Mandate - Detailed view</h4>
+      <h4 class="mb-0 wrapper-20">Investor - Detailed view</h4>
     </div>
     <div class="col-md-2 text-left">
       <div class="wrapper-12">
@@ -35,7 +35,7 @@
             Investor name
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.investorName) ? details.investorName : '-' }}
+            {{ (details.investorName) ? details.firstHolderName : '-' }}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -44,55 +44,6 @@
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
             {{(details.clientCode) ? details.clientCode : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Bank name
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.bankName) ? details.bankName : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Bank branch
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.bankBranch) ? details.bankBranch : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Account number
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.accountNo) ? details.accountNo : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Account type
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.accountType) ? details.accountType : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Ifsc code
-          </div>
-
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.ifscCode) ? details.ifscCode : '-' }}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            UMRN no.
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.umrnNo) ? details.umrnNo : '-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -125,16 +76,10 @@
   <div *ngIf="details" class="row">
     <div class="col-md-12 mt-8 p-0">
 
-      <div *ngIf="details.chequeUploadFlag == 0 && details.status != 0" class="custom-file mb-12">
-        <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl" multiple
+      <div class="custom-file mb-12">
+        <input (change)="getFileDetails($event)" class="custom-file-input" id="file-3" lang="pl-Pl"
                type="file">
-        <label class="custom-file-label" for="customFileLang">Upload check</label>
-      </div>
-
-      <div *ngIf="details.formUploadFlag == 0 && details.status != 0" class="custom-file">
-        <input (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl" multiple
-               type="file">
-        <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
+        <!--        <label class="custom-file-label" for="customFileLang">Upload check</label>-->
       </div>
 
       <!-- <button *ngIf="details.chequeUploadFlag == 0">
