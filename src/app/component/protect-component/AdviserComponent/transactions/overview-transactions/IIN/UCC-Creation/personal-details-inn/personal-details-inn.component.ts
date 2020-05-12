@@ -56,6 +56,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
+    this.obj1 = {...data};
     console.log('all data in per', this.inputData);
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
@@ -88,7 +89,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       }
     }
     this.holdingList = [];
-    this.obj1 = [];
+    // this.obj1 = [];
   }
 
   close() {

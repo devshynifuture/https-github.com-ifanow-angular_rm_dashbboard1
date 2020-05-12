@@ -477,6 +477,8 @@ export const appConfig = {
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'nse/tax-master/get',
+  INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
+  INVESTOR_STATUS_CHECK: 'user/register/status/check/update',
 
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',

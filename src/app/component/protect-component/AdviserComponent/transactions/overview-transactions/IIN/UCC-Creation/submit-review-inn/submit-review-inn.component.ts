@@ -24,23 +24,20 @@ export class SubmitReviewInnComponent implements OnInit {
   nse: any;
   bse: any;
   allData: any;
+  createdBrokerMap: any = {};
   selectedBrokerBse: any;
-  selectedBrokerNse: any;
   matValue: any;
-  addedNse = false;
-  addedBse = false;
   doneData: any;
   tokenRes: any;
   fileName: string;
   file: any;
-  byte: any;
   uploadSttus: any;
   toSendObjHolderList: any;
   toSendObjBankList: any;
   toSendObjNomineeList: any;
   clientData: any;
   validatorType = ValidatorType;
-  paltform = '2';
+  platform = '2';
   BSEValue = '2';
   responseMessage: any;
   statusString: any;
@@ -96,23 +93,6 @@ export class SubmitReviewInnComponent implements OnInit {
     this.matValue = false;
   }
 
-  uploadFormImageUpload(file) {
-    const obj = {
-      tpUserCredentialId: this.selectedBrokerBse.id,
-      file: file.target.files[0],
-      documentType: 1,
-    };
-    this.onlineTransact.imageFileUpload(obj).subscribe(
-      data => {
-        this.uploadSttus = data;
-        console.log('uploadSttus', this.uploadSttus);
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
-  }
-
   getBSECredentials() {
     this.isLoading = true;
     const obj = {
@@ -129,7 +109,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.isLoading = false;
     console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
     console.log('nse', this.nse);
     console.log('bse', this.bse);
   }
@@ -184,9 +164,9 @@ export class SubmitReviewInnComponent implements OnInit {
 
   selectPlatform(value) {
     console.log('mat check', value);
-    this.paltform = value.value;
+    this.platform = value.value;
     this.BSEValue = value.value;
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
   }
 
 
@@ -217,82 +197,45 @@ export class SubmitReviewInnComponent implements OnInit {
     this.allData.bankDetailList = this.toSendObjBankList;
     this.allData.nomineeList = this.toSendObjNomineeList;
     this.inputData.clientData = this.clientData;
-    if (this.paltform == '2') {
-      const obj1 = {
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingType,
-        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
-        holderList: this.toSendObjHolderList,
-        bankDetailList: this.toSendObjBankList,
-        nomineeList: this.toSendObjNomineeList,
-        fatcaDetail: this.allData.fatcaDetail,
-        id: 2,
-        divPayMode: this.allData.bankDetailList[0].paymentMode,
-        occupationCode: this.allData.fatcaDetail.occupationCode,
-        clientCode: this.reviewSubmit.controls.accountNumber.value,
-        aggregatorType: this.selectedBrokerBse.aggregatorType,
-        familyMemberId: this.allData.familyMemberId,
-        clientId: this.allData.clientId,
-        advisorId: this.allData.advisorId,
-        tpUserCredentialId: this.selectedBrokerBse.id,
-        commMode: 1,
-        confirmationFlag: 1,
-        tpUserSubRequestClientId1: 2,
+    const obj1 = {
+      ownerName: this.allData.ownerName,
+      holdingType: this.allData.holdingType,
+      taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
+      holderList: this.toSendObjHolderList,
+      bankDetailList: this.toSendObjBankList,
+      nomineeList: this.toSendObjNomineeList,
+      fatcaDetail: this.allData.fatcaDetail,
+      id: 2,
+      divPayMode: this.allData.bankDetailList[0].paymentMode,
+      occupationCode: this.allData.fatcaDetail.occupationCode,
+      clientCode: this.reviewSubmit.controls.accountNumber.value,
+      aggregatorType: this.selectedBrokerBse.aggregatorType,
+      familyMemberId: this.allData.familyMemberId,
+      clientId: this.allData.clientId,
+      advisorId: this.allData.advisorId,
+      tpUserCredentialId: this.selectedBrokerBse.id,
+      commMode: 1,
+      confirmationFlag: 1,
+      tpUserSubRequestClientId1: 2,
 
-      };
-      this.onlineTransact.createIINUCC(obj1).subscribe(
-        data => this.createIINUCCRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
-    } else if (this.paltform == '1') {
-      const obj1 = {
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingType,
-        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
-        holderList: this.toSendObjHolderList,
-        bankDetailList: this.toSendObjBankList,
-        nomineeList: this.toSendObjNomineeList,
-        fatcaDetail: this.allData.fatcaDetail,
-        id: 2,
-        divPayMode: this.allData.bankDetailList[0].paymentMode,
-        occupationCode: this.allData.fatcaDetail.occupationCode,
-        clientCode: this.reviewSubmit.controls.accountNumber.value,
-        aggregatorType: this.selectedBrokerBse.aggregatorType,
-        familyMemberId: this.allData.familyMemberId,
-        clientId: this.allData.clientId,
-        advisorId: this.allData.advisorId,
-        tpUserCredentialId: this.selectedBrokerBse.id,
-        commMode: 1,
-        confirmationFlag: 1,
-        tpUserSubRequestClientId1: 2,
-
-      };
-      this.onlineTransact.createIINUCC(obj1).subscribe(
-        data => this.createIINUCCRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
-    }
-
+    };
+    this.onlineTransact.createIINUCC(obj1).subscribe(
+      data => this.createIINUCCRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
   }
 
   createIINUCCRes(data) {
     console.log('data respose =', data);
+    this.createdBrokerMap[this.selectedBrokerBse.id] = {
+      tpUserRequestId: data.id, tpUserRequest: data,
+      brokerData: this.selectedBrokerBse
+    };
     this.responseMessage = data.responseMessage;
     this.statusString = data.statusString;
     // this.eventService.showErrorMessage(data.statusString);
     // this.eventService.showErrorMessage(data.responseMessage);
-  }
-
-  uploadForm() {
-    const obj1 = {
-      tpUserCredentialId: this.selectedBrokerBse.id
-    };
-    this.onlineTransact.getToken(obj1).subscribe(
-      data => this.getTokenRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      });
   }
 
   getTokenRes(data) {
@@ -305,8 +248,13 @@ export class SubmitReviewInnComponent implements OnInit {
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
+    const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
+    if (!requestMapObject) {
+      this.eventService.openSnackBar('Please create account first', 'dismiss');
+      return;
+    }
     const requestMap = {
-      tpUserRequestId: 1,
+      tpUserRequestId: requestMapObject.tpUserRequestId,
       documentType: 1
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
@@ -315,7 +263,6 @@ export class SubmitReviewInnComponent implements OnInit {
         console.log('getFileDetails uploadFileToServer callback status : ', status);
         console.log('getFileDetails uploadFileToServer callback headers : ', headers);
         console.log('getFileDetails uploadFileToServer callback response : ', response);
-
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);

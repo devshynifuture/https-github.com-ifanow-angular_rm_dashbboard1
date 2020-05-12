@@ -118,7 +118,7 @@
         </ng-container>
 
         <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+        <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
       </table>
       <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
            class="d-flex flex-column align-items-center pt-44">
