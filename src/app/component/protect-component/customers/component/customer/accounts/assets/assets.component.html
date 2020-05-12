@@ -4,10 +4,10 @@
             <ul class="vertical-menu sticky-top">
                 <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode" [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-10 p-0">
+                        <div class="col-md-9 p-0">
                             {{ singleAssetType.name }}
                         </div>
-                        <div class="col-md-2 p-0 text-custom">
+                        <div class="col-md-3 pl-0 pr-8 text-right text-custom">
                             {{ singleAssetType.count }}
                         </div>
                     </div>
