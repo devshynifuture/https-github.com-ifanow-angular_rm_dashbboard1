@@ -353,7 +353,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="icons" sticky >
-                                <th *matHeaderCellDef class="" mat-header-cell>Edit</th>
+                                <th *matHeaderCellDef class="" mat-header-cell></th>
                                 <td *matCellDef="let element" class="" mat-cell>
                                     <div *ngIf="!isLoading">
                                         <i [matMenuTriggerFor]="menu25" class="material-icons c-p text-black">
@@ -361,7 +361,7 @@
                                         </i>
                                         <mat-menu #menu25="matMenu">
                                             <button mat-menu-item >Edit
-                                                records</button>
+                                                Transaction</button>
                                             <button mat-menu-item >Delete Transaction</button>
             
                                         </mat-menu>

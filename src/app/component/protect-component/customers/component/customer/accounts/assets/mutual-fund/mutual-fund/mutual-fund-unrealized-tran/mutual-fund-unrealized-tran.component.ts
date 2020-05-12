@@ -171,7 +171,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   openFilter() {
-
     const fragmentData = {
       flag: 'openFilter',
       data: {},
