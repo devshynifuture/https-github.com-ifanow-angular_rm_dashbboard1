@@ -201,7 +201,7 @@ export class OnlineTransactionService {
   }
 
   getInvestorFormUploadDetail(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.INVESTOR_FORM_UPLOAD_DETAIL, data, 1);
+    return this.http.getEncodedBasic(apiConfig.TRANSACT + appConfig.INVESTOR_FORM_UPLOAD_DETAIL, data, 1);
   }
 
 //

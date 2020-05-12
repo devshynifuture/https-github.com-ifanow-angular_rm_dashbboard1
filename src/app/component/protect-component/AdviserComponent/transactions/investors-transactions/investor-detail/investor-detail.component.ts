@@ -84,8 +84,9 @@ export class InvestorDetailComponent implements OnInit {
       this.statusData[1].checked = true;
       this.isLoading = false;
     }, error => {
+      console.error('investor detail form upload data : ', error);
       this.isLoading = false;
-      this.eventService.openSnackBar(error, 'discuss');
+      // this.eventService.openSnackBar(error, 'discuss');
       this.statusData[1].checked = false;
     });
   }

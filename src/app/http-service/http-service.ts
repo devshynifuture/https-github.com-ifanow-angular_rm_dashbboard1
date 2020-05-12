@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 // import 'rxjs/Rx';
-import { AuthService } from '../auth-service/authService';
+import {AuthService} from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import { catchError } from 'rxjs/operators';
-import { EmailUtilService } from '../services/email-util.service';
+import {catchError} from 'rxjs/operators';
+import {EmailUtilService} from '../services/email-util.service';
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
@@ -249,6 +249,47 @@ export class HttpService {
       .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if ([200, 201, 202, 204].includes(res.status)) {
+          const resData = this.changeBase64ToString(res);
+          return resData;
+        } else {
+          // this._router.navigate(['login']);
+          throw new Error(res.message);
+        }
+      });
+  }
+
+  getEncodedBasic(url: string, params, requestAge: number): Observable<any> {
+    if (!requestAge) {
+      requestAge = DEFAULT_AGE;
+    }
+    const objJson64 = this.changeBase64Data(params);
+    const entry = this.cacheMap.get(url);
+    if (entry) {
+      const isExpired = entry.exitTime < Date.now();
+      if (isExpired) {
+        this.deleteExpiredCache();
+      } else if (entry.request === objJson64) {
+        return Observable.of((entry.response));
+      }
+    }
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('query', objJson64);
+    let httpHeader: HttpHeaders;
+    if (this._userService.getToken()) {
+      httpHeader = new HttpHeaders().set('authToken', this._userService.getToken())
+        .set('Content-Type', 'application/json');
+    } else {
+      httpHeader = new HttpHeaders().set('Content-Type', 'application/json');
+    }
+    const httpOptions = {
+      headers: httpHeader,
+      params: httpParams
+    };
+    url = url.trim();
+    return this._http
+      .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
+      .map((res: any) => {
+        if ([200].includes(res.status)) {
           const resData = this.changeBase64ToString(res);
           return resData;
         } else {
