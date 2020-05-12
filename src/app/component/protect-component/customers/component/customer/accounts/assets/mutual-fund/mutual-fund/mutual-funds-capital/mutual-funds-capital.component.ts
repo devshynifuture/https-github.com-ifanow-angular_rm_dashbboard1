@@ -21,45 +21,45 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   // dataSource = ;
-  dataSource=new MatTableDataSource([{},{},{}]);
+  dataSource = new MatTableDataSource([{}, {}, {}]);
   displayedColumns1: string[] = ['schemeName1', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   // dataSource1 = ELEMENT_DATA1;
-  dataSource1=new MatTableDataSource([{},{},{}]);
+  dataSource1 = new MatTableDataSource([{}, {}, {}]);
   displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
   // dataSource2 = ELEMENT_DATA2;
-  dataSource2 =new MatTableDataSource([{},{},{}]);
+  dataSource2 = new MatTableDataSource([{}, {}, {}]);
   excelData: any[];
-  footer=[];
+  footer = [];
   stGain: number;
   indexedGain: number;
   parentId: any;
   advisorId: any;
   clientId: any;
   adminAdvisorIds: any[] = [];
-  categoryData : any[] =[];
+  categoryData: any[] = [];
   mfList: any[];
   mutualFundTransactions: any[];
   purchaseTransaction: any[];
   redemptiontransaction: any[];
-  isLoading :Boolean;
-  @Input() mutualFund;
+  isLoading: Boolean;
+  mutualFund;
   purchaseAgainstRedemption: any[];
   total_stGain = 0;
   total_ltGain = 0;
   total_stLoss = 0;
-  total_ltLoss =0;
+  total_ltLoss = 0;
   total_indexGain = 0;
   total_indexLoss = 0;
   totalReinvesment = 0;
   totaldividendReinvestment = 0;
   totaldividendPayout = 0;
 
-  constructor(private UtilService:UtilService,private custumService:CustomerService,private eventService:EventService,private reconService:ReconciliationService,private MfServiceService: MfServiceService,private subInjectService :SubscriptionInject) { }
+  constructor(private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
-    this.stGain=875.32;
-    this.indexedGain=125.4,
-    this.advisorId = AuthService.getAdvisorId();
+    this.stGain = 875.32;
+    this.indexedGain = 125.4,
+      this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getUserInfo().parentId
     // this.getAdvisorData();
@@ -114,14 +114,14 @@ export class MutualFundsCapitalComponent implements OnInit {
   //       this.adminAdvisorIds = [this.advisorId];
   //     }
   //   });
-  
+
   // }
-  getCapitalgain(){
+  getCapitalgain() {
     this.isLoading = true;
     const obj = {
       advisorIds: [2929],
       clientId: 15545,
-      parentId :0
+      parentId: 0
 
     };
     this.custumService.capitalGainGet(obj).subscribe(
@@ -130,32 +130,32 @@ export class MutualFundsCapitalComponent implements OnInit {
       }
     );
   }
-  getCapitalgainRes(data){
+  getCapitalgainRes(data) {
     this.isLoading = false;
     console.log(data);
-    if(data){
-      this.categoryData =data;
-      let catObj = this.MfServiceService.categoryFilter(this.categoryData,'category');
-      let debtData = this.filterCategoryWise(catObj['DEBT'],'DEBT');
-      let equityData =  this.filterCategoryWise(catObj['EQUITY'],'EQUITY');
+    if (data) {
+      this.categoryData = data;
+      let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
+      let debtData = this.filterCategoryWise(catObj['DEBT'], 'DEBT');
+      let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
       this.dataSource = new MatTableDataSource(debtData);
       this.dataSource1 = new MatTableDataSource(equityData);
       let dividenedSummaryData = this.getDividendSummaryData(this.categoryData);
-      this.dataSource2 =  new MatTableDataSource(dividenedSummaryData);
-    } else{
-      this.dataSource.data=[];
-      this.dataSource1.data=[];
-      this.dataSource2.data=[];
+      this.dataSource2 = new MatTableDataSource(dividenedSummaryData);
+    } else {
+      this.dataSource.data = [];
+      this.dataSource1.data = [];
+      this.dataSource2.data = [];
     }
 
   }
-  getDividendSummaryData(data){
-    let filterObj =[] 
-    this.totalReinvesment =0;
-    let mutualFund =this.MfServiceService.filter(data, 'mutualFund');
+  getDividendSummaryData(data) {
+    let filterObj = []
+    this.totalReinvesment = 0;
+    let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
     mutualFund.forEach(element => {
-      if(element.dividendPayout!=0 && element.dividendReinvestment!=0){
-        element.totalReinvesment =element.dividendPayout+element.dividendReinvestment
+      if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
+        element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
         this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
         this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
         this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
@@ -164,60 +164,60 @@ export class MutualFundsCapitalComponent implements OnInit {
     });
     return filterObj;
   }
-  filterCategoryWise(data,category){
-    this.mfList =this.MfServiceService.filter(data, 'mutualFund');
+  filterCategoryWise(data, category) {
+    this.mfList = this.MfServiceService.filter(data, 'mutualFund');
     this.mfList.forEach(element => {
-        element.redemptionTransactions.forEach(ele => {
-          if(ele.purchaceAgainstRedemptionTransactions){
-          let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions,category);
+      element.redemptionTransactions.forEach(ele => {
+        if (ele.purchaceAgainstRedemptionTransactions) {
+          let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
           this.getFinalTotalValue(totalValue);
-          element.stGain =totalValue.stGain;
-          element.ltGain =totalValue.ltGain;
+          element.stGain = totalValue.stGain;
+          element.ltGain = totalValue.ltGain;
           element.stLoss = totalValue.stLoss;
-          element.ltLoss =totalValue.ltLoss;
+          element.ltLoss = totalValue.ltLoss;
           element.indexGain = totalValue.indexGain;
           element.indexLoss = totalValue.indexLoss;
-          }else{
-            ele.purchaceAgainstRedemptionTransactions = []
-          }
-        });
-      
-     
+        } else {
+          ele.purchaceAgainstRedemptionTransactions = []
+        }
+      });
+
+
     });
     return this.mfList;
   }
-  getCalculatedValues(data,category){
+  getCalculatedValues(data, category) {
     let days;
-    (category == 'DEBT') ? days = 1095 : days = 365; 
-    let stGain =0;
-    let ltGain =0;
+    (category == 'DEBT') ? days = 1095 : days = 365;
+    let stGain = 0;
+    let ltGain = 0;
     let stLoss = 0;
-    let ltLoss =0;
+    let ltLoss = 0;
     let indexGain = 0;
     let indexLoss = 0;
-    
+
     data.forEach(element => {
-      if(element.days < days){
+      if (element.days < days) {
         stGain += ((element.gainOrLossAmount >= 0) ? (element.gainOrLossAmount) : 0)
         stLoss += ((element.gainOrLossAmount < 0) ? (element.gainOrLossAmount) : 0)
-      }else{
+      } else {
         ltGain += ((element.gainOrLossAmount >= 0) ? element.gainOrLossAmount : 0);
         ltLoss += ((element.gainOrLossAmount < 0) ? element.gainOrLossAmount : 0);
       }
       indexGain += ((element.indexGainOrLoss >= 0) ? (element.indexGainOrLoss) : 0)
       indexLoss += ((element.indexGainOrLoss < 0) ? (element.indexGainOrLoss) : 0)
     });
-    let obj ={
-      stGain:stGain,
-      ltGain:stLoss,
-      stLoss:ltGain,
-      ltLoss:ltLoss,
-      indexGain :indexGain,
-      indexLoss :indexLoss
+    let obj = {
+      stGain: stGain,
+      ltGain: stLoss,
+      stLoss: ltGain,
+      ltLoss: ltLoss,
+      indexGain: indexGain,
+      indexLoss: indexLoss
     };
     return obj;
   }
-  getFinalTotalValue(data){
+  getFinalTotalValue(data) {
 
     this.total_stGain += (data.stGain) ? data.stGain : 0;
     this.total_ltGain += (data.ltGain) ? data.currentValue : 0;
@@ -229,7 +229,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   ExportTOExcel(data) {
     console.log(data);
   }
-} 
+}
 
 export interface PeriodicElement {
   schemeName: string;
@@ -244,11 +244,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName: 'Total', folioNumber: '', investorName: '', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
+  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName: 'Total', folioNumber: '', investorName: '', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
 ];
 
 
@@ -265,14 +265,14 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
-  {schemeName1: 'Total', folioNumber: '', investorName: '', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87},
+  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
+  { schemeName1: 'Total', folioNumber: '', investorName: '', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
 ];
- 
+
 
 
 export interface PeriodicElement2 {
@@ -280,11 +280,11 @@ export interface PeriodicElement2 {
   folioNumber: string;
   dividendPayoutAmount: string;
   dividendReInvestmentAmount: string;
-  totalReinvestmentAmount: string;   
+  totalReinvestmentAmount: string;
 }
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  {schemeName2: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', dividendPayoutAmount: '111,94,925.22', dividendReInvestmentAmount: '23,550', totalReinvestmentAmount: '23,550',},
-  {schemeName2: 'Total', folioNumber: ' ', dividendPayoutAmount: '111,94,925.22', dividendReInvestmentAmount: '23,550', totalReinvestmentAmount: '23,550',},
-  
+  { schemeName2: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', dividendPayoutAmount: '111,94,925.22', dividendReInvestmentAmount: '23,550', totalReinvestmentAmount: '23,550', },
+  { schemeName2: 'Total', folioNumber: ' ', dividendPayoutAmount: '111,94,925.22', dividendReInvestmentAmount: '23,550', totalReinvestmentAmount: '23,550', },
+
 ];

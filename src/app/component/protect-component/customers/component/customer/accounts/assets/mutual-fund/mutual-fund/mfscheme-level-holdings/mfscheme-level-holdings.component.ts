@@ -1,8 +1,8 @@
 import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { Component, OnInit, ViewChildren, QueryList, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators, FormArray, FormGroup, FormControl } from '@angular/forms';
-import { MatInput, MatAutocompleteTrigger, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatInput, MatAutocompleteTrigger, MatAutocompleteSelectedEvent, MatDatepickerInputEvent } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MfServiceService } from '../../mf-service.service';
 import { EventService } from '../../../../../../../../../../Data-service/event.service';
@@ -24,6 +24,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     sip: [, [Validators.required]],
     tag: [, [Validators.required]],
   });
+  dateChanged = false;
   ownerData: any;
   ownerName: any;
   selectedFamilyData: any;
@@ -35,6 +36,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   validatorType = ValidatorType;
   schemeNameControl = new FormControl();
+  @Output() dateChange: EventEmitter<MatDatepickerInputEvent<Date>>
 
   @ViewChild(MatAutocompleteTrigger, { static: false }) trigger: MatAutocompleteTrigger;
 
@@ -242,6 +244,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       Units: [, [Validators.required]],
       id: []
     }))
+  }
+  setDateChange(event) {
+    console.log("this is event", event);
+    this.dateChanged = true;
   }
   removeTransactions(index) {
     (this.transactionArray.length == 1) ? console.log("cannot remove") : this.transactionArray.removeAt(index)
@@ -473,9 +479,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   }
 
   getDateFormatted(dateObj) {
-    if (this.data && this.data.flag === 'editTransaction') {
+    if (this.dateChanged == false) {
       return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
-    } else if (this.data && this.data.flag === 'addTransaction') {
+    } else if (this.data && this.data.flag === 'addTransaction' || this.dateChanged === true) {
       dateObj = new Date(dateObj.format("YYYY-MM-DDTHH:mm:ssZ"));
       return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
     }

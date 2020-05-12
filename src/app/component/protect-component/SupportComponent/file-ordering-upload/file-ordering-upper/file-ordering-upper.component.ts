@@ -166,13 +166,15 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   fileOrderingListData() {
+    console.log(this.data.startedOn)
     this.isLoading = true;
     let tableData = [];
     const reqObj = {
       arnRiaDetailId: this.data.arnRiaDetailId,
       days: this.data.days,
       rmId: this.data.rmId,
-      rtId: this.data.rtId
+      rtId: this.data.rtId,
+      startedOn: this.data.startedOn
     }
     this.fileOrderingService.getFileOrderHistoricalUpperListData(reqObj)
       .subscribe(res => {

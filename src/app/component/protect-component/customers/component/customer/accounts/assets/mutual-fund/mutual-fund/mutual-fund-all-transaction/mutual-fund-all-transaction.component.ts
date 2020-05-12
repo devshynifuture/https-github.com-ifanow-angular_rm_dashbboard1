@@ -79,9 +79,6 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.divergeData();
-      if (this.mfData) {
-        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
-      }
     }
     this.isLoading = false;
   }

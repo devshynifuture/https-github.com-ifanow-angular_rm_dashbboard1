@@ -100,6 +100,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   getMutualFund() {
     this.isLoading = true;
+    this.customDataSource.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -126,12 +127,9 @@ export class MutualFundSummaryComponent implements OnInit {
       this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();
-      if (this.mfData) {
-        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
-        this.isLoading = false;
-      }
+    } else {
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
 
   getListForPdf(columns) {

@@ -39,8 +39,10 @@ export class MutualFundComponent implements OnInit {
       })
     this.viewMode = 'Overview Report';
 
+    this.getMutualFund();
+
     this.advisorId = AuthService.getAdvisorId();
-    // this.advisorId = 2929;
+    // // this.advisorId = 2929;
 
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
 
@@ -56,7 +58,37 @@ export class MutualFundComponent implements OnInit {
   //     }
   //   );
   // }
-
+  getMutualFund() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+    };
+    this.custumService.getMutualFund(obj).pipe(map((data) => {
+      return this.doFiltering(data);
+    })).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  doFiltering(data) {
+    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
+  getMutualFundResponse(data) {
+    if (data) {
+      this.isLoading = false;
+      this.mfData = data;
+      this.mfData.viewMode = this.viewMode;
+      if (this.mfData) {
+        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
+      }
+    }
+    this.isLoading = false;
+  }
   unrealiseTransaction() {
     this.mfDataUnrealised = this.mfData;
   }

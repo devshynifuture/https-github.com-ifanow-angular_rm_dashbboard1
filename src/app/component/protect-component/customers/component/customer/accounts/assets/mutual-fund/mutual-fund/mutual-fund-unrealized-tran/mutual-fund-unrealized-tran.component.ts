@@ -103,9 +103,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.initValueOnInit();
-      if (this.mfData) {
-        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
-      }
+      // if (this.mfData) {
+      //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
+      // }
     }
     this.isLoading = false;
   }

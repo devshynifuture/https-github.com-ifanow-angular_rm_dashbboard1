@@ -283,11 +283,21 @@ export class FileOrderingBulkComponent implements OnInit {
         console.log("this is sidebardata in subs subs : ", sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.fileOrderBulkHistoryListGet({
-              days: this.filterForm.get("filterByPeriod").value.value,
-              rtId: this.filterForm.get("filterByRta").value.value,
-              rmId: this.filterForm.get("filterByRmName").value.id,
-            });
+            let days = this.filterForm.get("filterByPeriod").value.value;
+            let rtId = this.filterForm.get("filterByRta").value.value;
+            let rmId = this.filterForm.get("filterByRmName").value.value;
+            if (days && rtId && rmId) {
+              this.fileOrderBulkHistoryListGet({
+                days: this.filterForm.get("filterByPeriod").value.value,
+                rtId: this.filterForm.get("filterByRta").value.value,
+                rmId: this.filterForm.get("filterByRmName").value.id,
+              });
+            } else {
+              this.fileOrderBulkHistoryListGet({
+                days: 2,
+                rmId: 2,
+              });
+            }
             console.log(
               "this is sidebardata in subs subs 3 ani: ",
               sideBarData
