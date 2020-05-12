@@ -144,7 +144,8 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input #name class="form-control" formControlName="name" matInput maxlength="50">
+                            <input #name class="form-control" (input)="capitalise($event)" formControlName="name"
+                                matInput maxlength="50">
                             <mat-error>This field is required</mat-error>
                             <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                         </mat-form-field>
