@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <app-add-number [flag]="mobileNumberFlag" [isResidential]="companyIndividualData.taxStatusId"
+    <app-add-number [flag]="mobileNumberFlag" [isResidential]="companyIndividualData"
         [numberList]="moreInfoData.mobileList" (numberArray)="getNumberDetails($event)"></app-add-number>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
@@ -78,7 +78,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select formControlName="designation" class="form-control">
-                        <mat-option value='1' disabled>Select option</mat-option>
+                        <mat-option value='' disabled>Select option</mat-option>
                         <mat-option value="1">Goverment</mat-option>
                         <mat-option value="2">Service</mat-option>
                         <mat-option value="3">Private sector</mat-option>

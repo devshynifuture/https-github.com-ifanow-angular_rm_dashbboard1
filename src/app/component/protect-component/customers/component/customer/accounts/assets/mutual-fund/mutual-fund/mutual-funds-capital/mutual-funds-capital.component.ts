@@ -12,6 +12,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { Key } from 'protractor';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -120,7 +121,7 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.dataSource1 = new MatTableDataSource([{}, {}, {}]);
             this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
-            this.changeInput.emit(true);
+            // this.changeInput.emit(true);
             this.dataToSend = {
               mfListData : this.rightFilterData.capitalGainData.responseData,
               grandfatheringEffect : this.rightFilterData.grandfathering,
@@ -179,14 +180,21 @@ export class MutualFundsCapitalComponent implements OnInit {
   }
   calculateCapitalGain(data){
     this.isLoading = false;
+    let equityData;
     this.changeInput.emit(false);
     if (data) {
       this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
        this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       this.categoryData = data;
       let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
+      Object.keys(catObj).map(key => {
+        if(catObj[key] != 'DEBT'){
+          equityData = this.filterCategoryWise(catObj[key], key);
+        }
+      });
       let debtData = this.filterCategoryWise(catObj['DEBT'], 'DEBT');
-      let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
+      // let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
+  
       this.dataSource = new MatTableDataSource(debtData);
       this.dataSource1 = new MatTableDataSource(equityData);
       let dividenedSummaryData = this.getDividendSummaryData(this.categoryData);

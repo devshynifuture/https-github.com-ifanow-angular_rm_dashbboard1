@@ -37,7 +37,7 @@ export class ClientAddressComponent implements OnInit {
   };
   permanentAddFlag: boolean;
   userMappingIdFlag: boolean;
-
+  disableBtn = false;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService) {
@@ -72,7 +72,7 @@ export class ClientAddressComponent implements OnInit {
       addProofType: [(data.proofType) ? String(data.proofType) : '0'],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
-      addressLine2: [data.address2, [Validators.required]],
+      addressLine2: [data.address2],
       pinCode: [data.pinCode, [Validators.required]],
       city: [data.city, [Validators.required]],
       state: [data.state, [Validators.required]],
@@ -98,6 +98,11 @@ export class ClientAddressComponent implements OnInit {
   }
 
   getPostalPin(value) {
+    if (value.length < 6) {
+      this.addressForm.get('city').enable();
+      this.addressForm.get('state').enable();
+      this.addressForm.get('country').enable();
+    }
     const obj = {
       zipCode: value
     };
@@ -117,6 +122,9 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').setValue(pincodeData[0].District);
     this.addressForm.get('state').setValue(pincodeData[0].State);
     this.addressForm.get('country').setValue(pincodeData[0].Country);
+    this.addressForm.get('city').disable();
+    this.addressForm.get('state').disable();
+    this.addressForm.get('country').disable();
   }
 
   getAddressList(data) {
@@ -166,7 +174,7 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     } else {
-      (flag == 'Save') ? this.barButtonOptions.active = true : '';
+      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,
@@ -187,6 +195,7 @@ export class ClientAddressComponent implements OnInit {
 
       this.peopleService.addEditClientAddress(obj).subscribe(
         data => {
+          this.disableBtn = false
           console.log(data);
           this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
@@ -194,6 +203,7 @@ export class ClientAddressComponent implements OnInit {
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
+          this.disableBtn = false
         }
       );
     }

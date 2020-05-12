@@ -3,16 +3,16 @@
         <div class="col-width-18 bg-grey lter">
 
             <ul class="vertical-menu  ">
-                <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
+                <li (click)="Tab='Tab1'" class="c-p" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
-                <li (click)="Tab='Tab2'" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
+                <li (click)="Tab='Tab2'" class="c-p" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
-                <li>
+                <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Financial health check
                 </li>
-                <li>
+                <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Preliminary data
                 </li>
 
@@ -55,7 +55,9 @@
                                                 <span *ngIf="!letsideBarLoader">{{clientOverviewData.bio}}
                                                     <span *ngIf="clientOverviewData.bio">|</span>
                                                 </span>
-                                                <span *ngIf="!letsideBarLoader">{{clientOverviewData.age}} Years
+                                                <span
+                                                    *ngIf="!letsideBarLoader">{{clientOverviewData.age?clientOverviewData.age:0}}
+                                                    Years
                                                 </span>
                                             </h5>
                                         </div>
@@ -225,24 +227,12 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <span *ngIf="!letsideBarLoader">
-                                                <p *ngIf="clientOverviewData.genderId=='1'"
-                                                    class=" f-14 roboto f-500 m-0 ">
-                                                    Male
+                                                <p class=" f-14 roboto f-500 m-0 ">
+                                                    {{clientOverviewData.gender}}
                                                 </p>
                                             </span>
                                         </div>
                                     </div>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.genderId=='2'" class=" f-14 roboto f-500 m-0 ">
-                                            Female
-                                        </p>
-                                    </span>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.genderId=='3'" class=" f-14 roboto f-500 m-0 ">
-                                            Other
-                                        </p>
-                                    </span>
-
                                 </div>
                             </div>
 
@@ -290,48 +280,29 @@
                                     <p class=" text-primitive m-0 f-12 ">TAX STATUS</p>
                                     <div class="relClass">
                                         <div class="bar height23">
-                                            <!-- <p *ngIf="clientOverviewData.taxStatusId=='1'"
-                                                class=" f-14 roboto f-500 m-0 ">
-                                                Resident</p> -->
+                                            <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
+                                                Resident</p>
                                         </div>
                                     </div>
                                     <div class="relClass">
-                                        <div class="bar">
-                                            <!-- <p *ngIf="clientOverviewData.taxStatusId=='2'"
+                                        <!-- <div class="bar"> -->
+                                        <!-- <p *ngIf="!letsideBarLoader"
                                                 class=" f-14 roboto f-500 m-0 ">
                                                 Non-resident</p> -->
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">MARITAL STATUS</p>
                                     <div class="relClass">
-                                        <span *ngIf="!letsideBarLoader">
-                                            <p *ngIf="clientOverviewData.martialStatusId=='0'"
-                                                class=" f-14 roboto f-500 m-0 ">
-                                                N/A</p>
-                                        </span>
-                                    </div>
-                                    <div class="relClass">
                                         <div class="bar height23">
                                             <span *ngIf="!letsideBarLoader">
-                                                <p *ngIf="clientOverviewData.martialStatusId=='1'"
-                                                    class=" f-14 roboto f-500 m-0 ">
-                                                    Married</p>
+                                                <p class=" f-14 roboto f-500 m-0 ">
+                                                    {{clientOverviewData.martialStatus}}</p>
                                             </span>
                                         </div>
                                     </div>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.martialStatusId=='2'"
-                                            class=" f-14 roboto f-500 m-0 ">
-                                            Unmarried</p>
-                                    </span>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.martialStatusId=='3'"
-                                            class=" f-14 roboto f-500 m-0 ">
-                                            Other</p>
-                                    </span>
                                 </div>
                             </div>
                         </div>

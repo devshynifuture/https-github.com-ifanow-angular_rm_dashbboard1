@@ -162,6 +162,7 @@ export class MfServiceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
+    let netGain =0;
     data.mutualFundTransactions.forEach(ele => {
       totalTransactionAmt += (ele.amount) ? ele.amount : 0;
       totalUnit += (ele.unit) ? ele.unit : 0;
@@ -171,7 +172,8 @@ export class MfServiceService {
       dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
       dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
       totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-      totalGain += (ele.gain) ? ele.gain : 0;
+      totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
+      netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0;
       absReturn += (ele.absReturn) ? ele.absReturn : 0;
       xirr += (ele.xirr) ? ele.xirr : 0;
       allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;

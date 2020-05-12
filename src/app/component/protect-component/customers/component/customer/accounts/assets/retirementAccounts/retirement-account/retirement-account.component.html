@@ -302,7 +302,7 @@
         </mat-menu>
     </div>
     <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #NPS #nps>
-        <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
                 <td *matCellDef="let element; let i = index;" class="br t-2" mat-cell>
@@ -385,11 +385,12 @@
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class=" " mat-header-cell></th>
-                        <td mat-cell *matCellDef="let element" class=" ">
+                        <td mat-cell *matCellDef="let element" class="text-center">
                             <div *ngIf="!isLoading">
-                                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                                <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                                     more_vert
-                                </i>
+                                </i> -->
+                                <img   class="c-p " [matMenuTriggerFor]="menubank" src="/assets/images/svg/dot-menu.svg"  >
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0" (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
                                     </button>
@@ -583,16 +584,7 @@
                 </td>
                 <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
             </ng-container>
-            <!-- <ng-container matColumnDef="year">
-                    <th *matHeaderCellDef class="br text-right  textRight " mat-header-cell
-                        mat-sort-header="yearReceipt">
-                        Year of <br> receipt
-                    </th>
-                    <td *matCellDef="let element" class="br amt text-right  " mat-cell>
-                        <div class="bar"> {{element.yearOfReceipt}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
-                </ng-container> -->
+            
             <ng-container matColumnDef="amt">
                 <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell mat-sort-header="amountReceived">
                     amount accumulated<br> as on date
@@ -637,11 +629,12 @@
             </ng-container>
             <ng-container matColumnDef="icons" sticky>
                 <th *matHeaderCellDef class=" " mat-header-cell></th>
-                <td *matCellDef="let element" class=" " mat-cell>
+                <td *matCellDef="let element" class=" text-center " mat-cell>
                     <div *ngIf="!isLoading">
-                        <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                        <!-- <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
                                 more_vert
-                            </i>
+                            </i> -->
+                            <img [matMenuTriggerFor]="menubank"  class="c-p " src="/assets/images/svg/dot-menu.svg"  >
                         <mat-menu #menubank="matMenu">
                             <button (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p" mat-menu-item>Edit</button>
                             <button (click)="openDetailedView(element,'detailedViewGratuity')" class="c-p" mat-menu-item>Detailed

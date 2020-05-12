@@ -23,8 +23,8 @@
 
         <mat-menu #menu7="matMenu">
             <button mat-menu-item>Upload file
-        <input (change)="fetchData('Po MIS',$event)" class="uploadInput" id="file-4" multiple type="file">
-      </button>
+                <input (change)="fetchData('Po MIS',$event)" class="uploadInput" id="file-4" multiple type="file">
+            </button>
         </mat-menu>
         <img [matMenuTriggerFor]="menu6" class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
         <mat-menu #menu6="matMenu">
@@ -33,8 +33,9 @@
             <button mat-menu-item>Option 3</button>
         </mat-menu>
 
-        <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
-    </button>
+        <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+                class="material-icons">filter_list</i>FILTERS
+        </button>
         <button (click)="openAddPOMIS(null)" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW</button>
     </div>
 </div>
@@ -93,7 +94,8 @@
                 Payout received now
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.totalPayoutTillToday }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.totalPayoutTillToday }}</span>
+                </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
                 <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPayoutTillToday" appFormatNumber>{{sumOfPayoutTillToday}}</span></div>
@@ -155,11 +157,9 @@
         </ng-container>
         <ng-container matColumnDef="icons" sticky>
             <th *matHeaderCellDef class="" mat-header-cell></th>
-            <td *matCellDef="let element" class=" " mat-cell>
+            <td *matCellDef="let element" class=" text-center" mat-cell>
                 <div *ngIf="!isLoading">
-                    <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-            more_vert
-          </i>
+                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
                         <button (click)="openAddPOMIS(element)" mat-menu-item>Edit</button>
                         <button (click)="openDetailPOMIS(element)" mat-menu-item>Detailed view</button>

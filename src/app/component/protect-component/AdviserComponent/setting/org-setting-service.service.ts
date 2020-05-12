@@ -160,4 +160,8 @@ export class OrgSettingServiceService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLES, httpParams);
   }
+  getClientUserRoles(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ROLES, httpParams);
+  }
 }

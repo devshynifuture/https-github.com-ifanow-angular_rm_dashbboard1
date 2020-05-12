@@ -12,6 +12,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
+    //templateUrl: './profile-mobile.html',
+   //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
