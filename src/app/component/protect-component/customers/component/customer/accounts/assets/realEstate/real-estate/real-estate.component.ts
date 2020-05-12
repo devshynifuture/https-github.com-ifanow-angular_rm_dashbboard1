@@ -12,6 +12,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -35,16 +36,23 @@ export class RealEstateComponent implements OnInit {
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
+  fileUploadData: any;
+  file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
+  myFiles: any;
 
   constructor( public subInjectService: SubscriptionInject,
-    public custmService: CustomerService, public cusService: CustomerService, private excel:ExcelGenService,  private pdfGen:PdfGenService,
+    public custmService: CustomerService, public cusService: CustomerService,
+     private excel:ExcelGenService,  private pdfGen:PdfGenService,
+     private fileUpload : FileUploadServiceService,
     public eventService: EventService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.clientData = AuthService.getClientData();
     this.getRealEstate();
 
   }
@@ -53,7 +61,24 @@ export class RealEstateComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
+  }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);

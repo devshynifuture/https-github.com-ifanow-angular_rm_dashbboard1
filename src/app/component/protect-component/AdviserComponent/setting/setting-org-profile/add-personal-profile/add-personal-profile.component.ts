@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {PhotoCloudinaryUploadService} from 'src/app/services/photo-cloudinary-upload.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AddPersonalProfileComponent implements OnInit {
   imgURL = '';
-  finalImage: any;
+  finalImage: string = '';
   advisorId: any;
   imageUploadEvent: any;
   showCropper = false;
@@ -33,6 +33,7 @@ export class AddPersonalProfileComponent implements OnInit {
   filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  dataLoaded:boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -80,6 +81,7 @@ export class AddPersonalProfileComponent implements OnInit {
         if (data) {
           this.isdCodes = data;
           this.filteredIsdCodes.next(this.isdCodes.slice());
+          this.dataLoaded = true;
         }
       }, err => {
         this.event.showErrorMessage('Error');
@@ -125,7 +127,9 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   showCroppedImage(imageAsBase64) {
-    this.finalImage = imageAsBase64;
+    setTimeout(() => {
+      this.finalImage = imageAsBase64;
+    });
   }
 
   // save the changes of current page only

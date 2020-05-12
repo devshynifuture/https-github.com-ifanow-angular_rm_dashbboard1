@@ -12,12 +12,19 @@
     justify-content: flex-end;
 }
 
-#table-low th {
-    padding: 7px 8px !important;
-    font-weight: 600;
-    font-size: 13px !important;
-}
-
+// #table-low th {
+//     padding: 7px 8px !important;
+//     font-weight: 600;
+//     font-size: 13px !important;
+// }
 .width300 {
     width: 300px;
+}
+
+.uploadInput {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
 }

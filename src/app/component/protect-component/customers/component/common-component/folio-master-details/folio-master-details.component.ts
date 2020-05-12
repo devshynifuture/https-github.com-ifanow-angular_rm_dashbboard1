@@ -26,7 +26,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
   getFolioMasterDetails(data) {
     const obj = {
-      mfId: 8
+      mfId: this.inputData.id
     }
     this.custumService.getMfFolioMaster(obj).subscribe(
       data => this.getFolioMasterResponse(data), (error) => {

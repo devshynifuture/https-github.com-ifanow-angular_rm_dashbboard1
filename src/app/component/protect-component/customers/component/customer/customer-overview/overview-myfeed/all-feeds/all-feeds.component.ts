@@ -67,6 +67,7 @@ export class AllFeedsComponent implements OnInit {
   portfolioConfig = {
     slidesToShow: 1.5,
     infinite: false,
+    variableWidth: true,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
     "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
@@ -74,6 +75,7 @@ export class AllFeedsComponent implements OnInit {
   recentTnxConfig = {
     slidesToShow: 1.4,
     infinite: false,
+    variableWidth: true,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
     "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
@@ -102,8 +104,8 @@ export class AllFeedsComponent implements OnInit {
     }
     this.clientData = AuthService.getClientData();
     this.clientId - AuthService.getClientId();
-    this.advisorInfo = AuthService.getUserInfo();
-    this.advisorImg = authService.profilePic;
+    this.advisorInfo = AuthService.getAdvisorDetails();
+    this.advisorImg = this.advisorInfo.profilePic;
   }
 
   tabsLoaded = {
@@ -191,13 +193,13 @@ export class AllFeedsComponent implements OnInit {
   loadLogicBasedOnRoleType() {
     console.log(this.enumSerice.getClientRole());
     // break intentionally not applied. DO NOT ADD BREAKS!!!!!
-    switch(this.clientData.roleId) {
-      case 4:
-      case 3:
+    switch(this.clientData.advisorOrClientRole) {
+      case 7:
+      case 6:
         this.tabsLoaded.goalsData.displaySection = true;
-      case 2:
+      case 5:
         this.tabsLoaded.portfolioData.displaySection = true;
-      case 1:
+      case 4:
         this.tabsLoaded.portfolioSummaryData.displaySection = true;
         break;
       default:
@@ -309,7 +311,7 @@ export class AllFeedsComponent implements OnInit {
           this.tabsLoaded.portfolioData.hasData = true;
           this.portFolioData = res;
   
-          this.chartData = [];
+          let chartData = [];
           let counter = 0;
           let othersData = {
             y: 0,
@@ -319,12 +321,12 @@ export class AllFeedsComponent implements OnInit {
               enabled: false
             }
           }
-          this.chartTotal = 1;
+          let chartTotal = 1;
           res.forEach(element => {
             if (element.investedAmount > 0) {
-              this.chartTotal += element.investedAmount;
+              chartTotal += element.investedAmount;
               if (counter < 4) {
-                this.chartData.push({
+                chartData.push({
                   y: element.investedAmount,
                   name: element.assetTypeString,
                   color: AppConstants.DONUT_CHART_COLORS[counter],
@@ -338,11 +340,15 @@ export class AllFeedsComponent implements OnInit {
               counter++;
             }
           });
-          this.chartTotal -= 1;
+          chartTotal -= 1;
           if (counter > 4) {
-            this.chartData.push(othersData);
+            chartData.push(othersData);
           }
-          this.pieChart(this.chartData);
+          if(counter > 0) {
+            this.chartTotal = chartTotal;
+            this.chartData = chartData;
+            this.pieChart(this.chartData);
+          }
         }
         this.tabsLoaded.portfolioData.dataLoaded = true;
         this.loaderFn.decreaseCounter();
@@ -441,11 +447,11 @@ export class AllFeedsComponent implements OnInit {
   loadRecentTransactions() {
     const startDate = new Date();
     const endDate = new Date();
-    endDate.setDate(endDate.getDate() - 15);
+    endDate.setDate(endDate.getDate() - 30);
 
     const obj = {
-      clientId: 53637, //this.clientData.clientId,
-      advisorId: 414, //this.advisorId,
+      clientId: this.clientData.clientId,
+      advisorId: this.advisorId,
       familyMemberId: 0
     }
 
@@ -511,8 +517,8 @@ export class AllFeedsComponent implements OnInit {
           }]
         };
       } else {
-        this.createCashflowFamilyObj(res);
         this.tabsLoaded.cashflowData.hasData = true;
+        this.createCashflowFamilyObj(res);
       }
       this.tabsLoaded.cashflowData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -533,6 +539,18 @@ export class AllFeedsComponent implements OnInit {
     }
     tnx = tnx.flat();
 
+    if(tnx.length == 0) {
+      this.cashflowData = {
+        emptyData: [{
+          bankName: 'Not enough data to display',
+          inflow: 0,
+          outflow: 0,
+          netflow: 0
+        }]
+      };
+      this.tabsLoaded.cashflowData.hasData = false;
+      return;
+    }
     let familyMembers = [...new Set(tnx.map(obj => obj.ownerName))];
     let totalIncome = 0;
     let totalExpense = 0;
@@ -607,30 +625,33 @@ export class AllFeedsComponent implements OnInit {
   }
 
   routeAndAddQueryParams(value) {
-    switch (true) {
-      case (value == 'Fixed Income'):
+    switch (value) {
+      case 'Fixed Income':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab3' } });
         break;
-      case (value == 'Real estate'):
+      case 'Real estate':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab4' } });
         break;
-      case (value == 'Stocks'):
+      case 'Stocks':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab2' } });
         break;
-      case (value == 'Mutual funds'):
+      case 'Mutual funds':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab1' } });
         break;
-      case (value == 'Retirement accounts'):
+      case 'Retirement accounts':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab5' } });
         break;
-      case (value == 'Small savings'):
+      case 'Small savings':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab6' } });
         break;
-      case (value == 'Cash and bank'):
+      case 'Cash and bank':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab7' } });
         break;
-      case (value == 'Commodities'):
+      case 'Commodities':
         this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab8' } });
+        break;
+      case 'Documents':
+        this.router.navigate(['/customer/detail/overview/documents']);
         break;
       default:
         this.router.navigate(['/customer/detail/account/liabilities']);

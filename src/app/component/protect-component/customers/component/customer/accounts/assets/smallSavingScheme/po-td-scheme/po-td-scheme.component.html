@@ -2,21 +2,35 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
-        <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+    <div class="col-md-8 p-0 d-flex align-items-center justify-content-end" *ngIf="dataSource.filteredData.length > 0">
+        <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+            <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+        </div>
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon ">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
         <mat-menu #menu5="matMenu">
             <button (click)="pdf('PO TD')" mat-menu-item>PDF</button>
             <button (click)="Excel('PO TD')" mat-menu-item>XLS</button>
         </mat-menu>
-        <img src="assets/images/svg/up-down.svg" class="">
-        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+
+        <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+            <img src="assets/images/svg/up-down.svg">
+        </a>
+
+        <mat-menu #menu7="matMenu">
+            <button mat-menu-item>Upload file
+                <input (change)="fetchData('Po TD',$event)" class="uploadInput" id="file-4" multiple type="file">
+            </button>
+        </mat-menu>
+        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
         <mat-menu #menu6="matMenu">
             <button mat-menu-item>Email Report</button>
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
         </mat-menu>
 
-        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
         <mat-menu #menu1="matMenu" class="add-new">
@@ -60,8 +74,7 @@
     </div>
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden mt-8 real-estate">
-    <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs"
-        appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no" sticky>
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -83,10 +96,10 @@
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 textRight text-right">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
 
@@ -102,10 +115,10 @@
                 Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="tenure">
@@ -116,13 +129,12 @@
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity
-                value </th>
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
@@ -157,11 +169,9 @@
         </ng-container>
         <ng-container matColumnDef="icons" sticky>
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2">
+            <td mat-cell *matCellDef="let element" class="t-2 text-center">
                 <div *ngIf="!isLoading">
-                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                        more_vert
-                    </i>
+                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="openAddPOTD(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailPOTD(element)">Detailed view</button>

@@ -3,7 +3,7 @@ export class TempserviceService {
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
@@ -26,7 +26,7 @@ export class TempserviceService {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'name';
+      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'ownerName';
     let catObj = {};
     const newArray = [];
 
@@ -51,7 +51,7 @@ export class TempserviceService {
   getSubCategoryArrayForTransaction(mutualFundList, type) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
     // const dataArray = [];
     const filteredData = [];
     let catObj;
@@ -68,7 +68,8 @@ export class TempserviceService {
           }
         const obj = {
           schemeName: singleData.schemeName,
-          nav: singleData.nav
+          nav: singleData.nav,
+          navDate:singleData.navDate
         };
         filteredData.push(obj);
         const obj2 = {
@@ -101,7 +102,9 @@ export class TempserviceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      filterData.push(element[key]);
+      if(element[key]){
+        filterData.push(element[key]);
+      }
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
@@ -146,7 +149,7 @@ export class TempserviceService {
     amtInvested += (data.amountInvested) ? data.amountInvested : 0;
     currentValue += (data.currentValue) ? data.currentValue : 0;
     unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
-    absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+    absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
@@ -210,8 +213,9 @@ export class TempserviceService {
         dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
         dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
         totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-        totalGain += (ele.gain) ? ele.gain : 0;
+        totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
         absReturn += (ele.absReturn) ? ele.absReturn : 0;
+        netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
         xirr += (ele.xirr) ? ele.xirr : 0;
         allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
       });
@@ -225,7 +229,7 @@ export class TempserviceService {
       dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;
       totalAmount += (data.totalAmount) ? data.totalAmount : 0;
       totalGain += (data.unrealizedGain) ? data.unrealizedGain : 0;
-      absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+      absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr==0)?data.xirr:0;
       allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
       withdrawals += (data.switchOut) ? data.switchOut : 0;

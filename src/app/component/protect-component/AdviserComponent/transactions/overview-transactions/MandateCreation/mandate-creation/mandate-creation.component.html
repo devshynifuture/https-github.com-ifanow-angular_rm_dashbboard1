@@ -1,102 +1,103 @@
 <div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20"> CREATE MANDATE</h4>
-        </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
-            </div>
-        </div>
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20"> CREATE MANDATE</h4>
     </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i (click)="Close(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="pt-60 mb-100" [formGroup]="bankDetails">
 
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" matSort class="mt-8 skeletonAnimation" id="table-low"
-            appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="set">
-                <th mat-header-cell *matHeaderCellDef class="br"> Set as default </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        {{''}}
-                    </div>
-                    <div>
-                        <mat-checkbox></mat-checkbox>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        {{isLoading ? '' :element.investorName}}
-                    </div>
-                </td>
-            </ng-container>
+  <div class="col-md-12">
+    <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8 skeletonAnimation"
+           id="table-low"
+           mat-table matSort>
+      <ng-container matColumnDef="set">
+        <th *matHeaderCellDef class="br" mat-header-cell> Set as default</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar">
+            {{''}}
+          </div>
+          <div>
+            <mat-checkbox></mat-checkbox>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="position">
+        <th *matHeaderCellDef class="br" mat-header-cell> Investor name</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar">
+            {{isLoading ? '' : element.investorName}}
+          </div>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br"> Bank name </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        {{isLoading ? '' : element.bankName}}
-                    </div>
-                </td>
-            </ng-container>
+      <ng-container matColumnDef="name">
+        <th *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar">
+            {{isLoading ? '' : element.bankName}}
+          </div>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef class="br">Account no. </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.accountNo}}
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="ifsc">
-                <th mat-header-cell *matHeaderCellDef class="br"> IFSC code
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.ifscCode}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="aid">
-                <th mat-header-cell *matHeaderCellDef class="br"> Branch name
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.branchName}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="euin">
-                <th mat-header-cell *matHeaderCellDef class="br"> Account type </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.accountType}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="hold">
-                <th mat-header-cell *matHeaderCellDef class="br"> Holding nature</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.holdNatureDescription}}</div>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <div *ngIf="isLoading==false" class="d-flex flex-column align-items-center pt-44">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">No data found</h4>
-        </div>
+      <ng-container matColumnDef="accountNo">
+        <th *matHeaderCellDef class="br" mat-header-cell>Account no.</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.accountNo}}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="ifsc">
+        <th *matHeaderCellDef class="br" mat-header-cell> IFSC code
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.ifscCode}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="branchName">
+        <th *matHeaderCellDef class="br" mat-header-cell> Branch name
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.branchName}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="accountType">
+        <th *matHeaderCellDef class="br" mat-header-cell> Account type</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.accountType}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="hold">
+        <th *matHeaderCellDef class="br" mat-header-cell> Holding nature</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.holdNatureDescription}}</div>
+        </td>
+      </ng-container>
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+    <div *ngIf="isLoading==false" class="d-flex flex-column align-items-center pt-44">
+      <img class="width300" src="assets/images/svg/noDataFound.svg">
+      <h4 class="pt-12">No data found</h4>
     </div>
+  </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
-    <div class="row">
-        <div class="col-md-4">
-            <!-- (click)="close()" removed for prod build -->
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="createMandate()">Save</button>
-        </div>
+  <div class="row">
+    <div class="col-md-4">
+      <!-- (click)="close()" removed for prod build -->
+      <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
+    <div class="col-md-8 right text-right">
+      <button (click)="createMandate()" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
+    </div>
+  </div>
 </div>

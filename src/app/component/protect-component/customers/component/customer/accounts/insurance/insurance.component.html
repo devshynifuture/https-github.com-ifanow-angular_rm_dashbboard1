@@ -1,39 +1,41 @@
 <div id="ui-insurance">
     <div class="row">
-        <div class="col-md-2 p-0 vertical-menu pt-8 pb-20 bg-grey lter">
-            <ul class="d-block">
-                <li class="b-ua pb-8 c-p" [ngClass]="{'bg-grey lt':lifeInsuranceFlag}">
-                    <div (click)="getInsuranceData(1)" class="row">
-                        <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
-                        <div class="col-md-1 p-0 text-custom text-left">
-                            {{(lifeInsuranceCount) ? lifeInsuranceCount : ''}}</div>
-                    </div>
-                </li>
-                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-8">
-                    <div>
-                        <div class="row">
-                            <div class="col-md-11 p-0">{{item.name}}</div>
-                            <div class="col-md-1 p-0 text-custom text-left">{{(item.count) ? item.count : ''}}</div>
+        <div class="col-md-2 p-0  pt-8    pb-20 bg-grey lter">
+            <div class="vertical-menu ">
+                <ul class="d-block ">
+                    <li class="b-ua pb-8 c-p" [ngClass]="{'bg-grey lt':lifeInsuranceFlag}">
+                        <div (click)="getInsuranceData(1)" class="row">
+                            <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
+                            <div class="col-md-1 p-0 text-custom text-left">
+                                {{(lifeInsuranceCount) ? lifeInsuranceCount : ''}}</div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-            <!-- toggle('generalInsurance'); -->
-            <ul class="d-block">
-                <li class="pb-8 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
-                    <div (click)="getInsuranceTypeData(2,0)" class="row">
-                        <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
-                        <div class="col-md-1 p-0 text-custom text-center">
-                            {{(generalInsuranceCount) ? generalInsuranceCount : ''}}</div>
-                    </div>
-                </li>
-                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-8 c-p">
-                    <div class="row">
-                        <div class="col-md-11 p-0">{{item1.name}}</div>
-                        <div class="col-md-1 p-0 text-custom text-left">{{(item1.count) ? item1.count : ''}}</div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                    <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-8">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-11 p-0">{{item.name}}</div>
+                                <div class="col-md-1 p-0 text-custom text-left">{{(item.count) ? item.count : ''}}</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- toggle('generalInsurance'); -->
+                <ul class="d-block ">
+                    <li class="pb-8 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
+                        <div (click)="getInsuranceTypeData(2,0)" class="row">
+                            <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
+                            <div class="col-md-1 p-0 text-custom text-center">
+                                {{(generalInsuranceCount) ? generalInsuranceCount : ''}}</div>
+                        </div>
+                    </li>
+                    <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-8 c-p">
+                        <div class="row">
+                            <div class="col-md-11 p-0">{{item1.name}}</div>
+                            <div class="col-md-1 p-0 text-custom text-left">{{(item1.count) ? item1.count : ''}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- <div *ngIf="dataSource==undefined ">
             <mat-spinner class="loader" [diameter]="30"></mat-spinner>
@@ -47,17 +49,38 @@
                             <h4 class="m-0 text-black roboto pt-4">{{showInsurance}} insurance </h4>
                         </div>
                         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="(dataSource.data.length > 0 && insuranceTypeId == 1 && !isLoading ) || (dataSourceGeneralInsurance.data.length > 0 && insuranceTypeId == 2 && !isLoading)">
-                            <div class="pdfClass">
-                                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p" *ngIf="!fragmentData.isSpinner">
+                            <div>
+                                <div class="p-0 d-flex align-items-center justify-content-center">
+                                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                                </div>
+
+                                <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                                    <img src="assets/images/svg/download-bordered.svg">
+                                </a>
+
+                                <!-- <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p" *ngIf="!fragmentData.isSpinner"> -->
+
                                 <mat-menu #menu1="matMenu">
                                     <button mat-menu-item (click)="generatePdf('Insurance')">PDF</button>
                                     <button mat-menu-item (click)="Excel('Insurance')">XLS</button>
                                 </mat-menu>
                                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                             </div>
-                            <img src="assets/images/svg/up-down.svg" class="c-p">
-                            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle" [matMenuTriggerFor]="insuranceMenu"><i
+
+
+                            <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+                                <img src="assets/images/svg/up-down.svg">
+                            </a>
+
+                            <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
+                            <mat-menu #menu7="matMenu">
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Life Insurance',$event)" class="uploadInput" id="file-4"
+                                        multiple type="file">
+                                </button>
+                            </mat-menu>
+                            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
+                            <button mat-stroked-button class="btn-default addon mr-8 v-middle" [matMenuTriggerFor]="insuranceMenu"><i
                                     class="material-icons">filter_list</i>FILTERS</button>
                             <mat-menu #insuranceMenu>
                                 <button mat-menu-item (click)="filterInsurance('statusId', 'LIVE')">

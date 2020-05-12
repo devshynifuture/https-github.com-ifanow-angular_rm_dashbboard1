@@ -26,10 +26,13 @@ export class StockScripLevelTransactionComponent implements OnInit {
   ownerInfo: any;
   portfolioData: any;
   scriptForm: any;
+  maxDate=new Date();
   portfolioFieldData: { familyMemberId: any; };
   nomineesListFM: any = [];
   checkValid: boolean = false;
   transactionTypeList = [];
+  callMethod: { methodName: string; ParamValue: any; };
+  nomineesList: any[] = [];
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -54,6 +57,145 @@ export class StockScripLevelTransactionComponent implements OnInit {
       })
   }
 
+// ===================owner-nominee directive=====================//
+display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+  //  disControl : type
+  }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.scipLevelTransactionForm.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.scipLevelTransactionForm.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.scipLevelTransactionForm.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+  }));
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+ 
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.scipLevelTransactionForm.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.scipLevelTransactionForm.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+this.disabledMember(null, null);
+  this.getNominee.removeAt(item);
+  if (this.scipLevelTransactionForm.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
+
   setTransactionType(id, formGroup) {
     formGroup.patchValue(id);
   }
@@ -68,9 +210,21 @@ export class StockScripLevelTransactionComponent implements OnInit {
       this.ownerName = data.ownerName
     }
     this.scipLevelTransactionForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['', [Validators.required]],
+        share: ['', [Validators.required]],
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
+      })]),
       scripName: [data.scripName, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id: [0]
+      })]),
     })
     if (data.transactionorHoldingSummaryList) {
       data.transactionorHoldingSummaryList.forEach(element => {
@@ -85,10 +239,37 @@ export class StockScripLevelTransactionComponent implements OnInit {
     }
     this.familyMemberId = data.familyMemberId;
     this.portfolioFieldData = {
-      familyMemberId: this.familyMemberId
+      familyMemberId: this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId
     }
     // this.ownerData = this.scipLevelTransactionForm.controls;
     this.scriptForm = { formData: this.scipLevelTransactionForm }
+
+     // ==============owner-nominee Data ========================\\
+    /***owner***/
+    if (this.scipLevelTransactionForm.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
+
+    if (data.ownerList) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
+
+    /***owner***/
+
+    /***nominee***/
+    if (data.nomineeList) {
+      this.getNominee.removeAt(0);
+      data.nomineeList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelTransactionForm }
+    // ==============owner-nominee Data ========================\\
   }
   transactionListForm = this.fb.group({
     transactionListArray: new FormArray([])
@@ -127,21 +308,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     console.log(value)
   }
 
-  display(value) {
-    console.log('value selected', value)
-    this.ownerInfo = value
-    // this.ownerName = value.userName;
-    this.scipLevelTransactionForm.get('ownerName').setValue(value.userName)
-    this.familyMemberId = value.id
-    this.portfolioFieldData = {
-      familyMemberId: this.familyMemberId
-    }
-  }
-
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+  
   getPortfolioData(data) {
     console.log("", data)
     this.portfolioData = data;
@@ -194,6 +361,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
         let finalStocks = [];
         this.transactionArray.controls.forEach(element => {
           let obj = {
+            "valueAsOn": null,
+            "currentMarketValue": 0,
+            "amountInvested": 0,
             "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
             "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
@@ -215,10 +385,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
           "id": this.scipLevelTransactionForm.get('portfolioName').value.id,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
-          "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
+          "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
           "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
-          "stocks": finalStocks
+          "stockList": finalStocks
         }
         console.log(obj)
         this.cusService.addAssetStocks(obj).subscribe(

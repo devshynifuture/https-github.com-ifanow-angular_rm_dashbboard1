@@ -1,40 +1,40 @@
 <div id="ui-liabilities">
     <div class="row">
         <div class="col-md-2 p-0 pt-8 bg-grey lter">
-            <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')"
-                    [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
+
+            <ul class="vertical-menu sticky-top">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')" [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0 f-700">LIABILITIES</div>
                         <div class="col-md-2 p-0 text-custom">{{this.storeData}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'activeColor':showFilter =='1'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'activeColor':showFilter =='1'}" class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Home</div>
-                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.home) ? this.home.length :''}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.home) ? this.home.length :''}}
+                        </div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}" class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Vehicle</div>
-                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.vehicle) ? this.vehicle.length : ''}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">
+                            {{(this.vehicle) ? this.vehicle.length : ''}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Education</div>
-                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.education) ? this.education.length : ''}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">
+                            {{(this.education) ? this.education.length : ''}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Personal</div>
-                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.personal) ? this.personal.length :''}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">
+                            {{(this.personal) ? this.personal.length :''}}</div>
                     </div>
                 </li>
                 <!-- <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='7'}"
@@ -44,19 +44,19 @@
                         <div class="col-md-2 p-0 text-custom">{{0}}</div>
                     </div>
                 </li> -->
-                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'activeColor':showFilter =='4'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'activeColor':showFilter =='4'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Credit card</div>
-                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.creditCard) ? this.creditCard.length :''}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">
+                            {{(this.creditCard) ? this.creditCard.length :''}}</div>
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'activeColor':showFilter =='6'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'activeColor':showFilter =='6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Mortgage</div>
-                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.mortgage) ? this.mortgage.length : ''}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">
+                            {{(this.mortgage) ? this.mortgage.length : ''}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab2'" (click)="sortTable('tab2')" [ngClass]="{'activeColor':viewMode =='tab2'}" class=" c-p">
@@ -103,41 +103,53 @@
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='6'">Mortgage</h4>
 
                         </div>
-                        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
-                            *ngIf="dataSource.filteredData.length > 0 && !isLoading">
+                        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
                             <div class="pdfClass">
-                                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1"
-                                    class="c-p" *ngIf="!fragmentData.isSpinner">
+                                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                                </div>
+
+                                <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                                    <img src="assets/images/svg/download-bordered.svg">
+                                </a>
+                                <!-- <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p" *ngIf="!fragmentData.isSpinner"> -->
                                 <mat-menu #menu1="matMenu">
                                     <button mat-menu-item (click)="generatePdf('Liabilities')">PDF</button>
                                     <button mat-menu-item (click)="Excel('Liabilities')">XLS</button>
                                 </mat-menu>
                                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                             </div>
-                            <!-- <img src="assets/images/svg/up-down.svg" class="c-p"> -->
-                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
-                                class="c-p mr-12">
+
+                            <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+                                <img src="assets/images/svg/up-down.svg">
+                            </a>
+
+
+                            <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
+                            <mat-menu #menu7="matMenu">
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Liabilities',$event)" class="uploadInput" id="file-4"
+                                        multiple type="file">
+                                </button>
+                            </mat-menu>
+                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-8">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Email report</button>
                                 <button mat-menu-item>Option 1</button>
                                 <button mat-menu-item>Option 2</button>
                             </mat-menu>
 
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"
-                                [matMenuTriggerFor]="liabilitiesMenu"><i class="material-icons">filter_list</i>FILTERS
+                            <button mat-stroked-button class="btn-default addon mr-8 v-middle" [matMenuTriggerFor]="liabilitiesMenu"><i class="material-icons">filter_list</i>FILTERS
                             </button>
                             <mat-menu #liabilitiesMenu>
-                                <button mat-menu-item
-                                    (click)="filterLiabilities('loanTypeId','statusId', 'LIVE',showFilter)">
+                                <button mat-menu-item (click)="filterLiabilities('loanTypeId','statusId', 'LIVE',showFilter)">
                                     STATUS - LIVE
                                 </button>
-                                <button mat-menu-item
-                                    (click)="filterLiabilities('loanTypeId','statusId', 'MATURED',showFilter)">
+                                <button mat-menu-item (click)="filterLiabilities('loanTypeId','statusId', 'MATURED',showFilter)">
                                     STATUS - MATURED
                                 </button>
                             </mat-menu>
-                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button
-                                class="btn-primary addon v-middle"> ADD NEW
+                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button class="btn-primary addon v-middle"> ADD NEW
                             </button>
                         </div>
                     </div>
@@ -146,9 +158,7 @@
                     <div class="liabilities">
                         <div class="row">
                             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 overflow-hidden p-0">
-                                <table matSort #tableEl mat-table [dataSource]="dataSource"
-                                    *ngIf="dataSource.filteredData.length > 0" id="tbs" class="skeletonAnimation"
-                                    appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                <table matSort #tableEl mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData.length > 0" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="no" sticky>
                                         <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
                                         <td *matCellDef="let element let i = index;" class="br " mat-cell>
@@ -181,8 +191,7 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="loan">
-                                        <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef
-                                            class="br textRight">
+                                        <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef class="br textRight">
                                             Loan amount</th>
                                         <!-- <td *matCellDef="let element" class="br text-right" mat-cell>
                                             <div class="bar"><span appFormatNumber>{{element.loanAmount}}</span> </div>
@@ -193,16 +202,15 @@
                                         </td> -->
 
                                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                                                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.loanAmount }}</span> </div>
-                                            </td>
-                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                                <div >{{isLoading ? ' ' : '₹'}}<span [value]="totalLoanAmt" appFormatNumber></span></div>
-                                            </td>
+                                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.loanAmount }}</span> </div>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalLoanAmt" appFormatNumber></span></div>
+                                        </td>
 
                                     </ng-container>
                                     <ng-container matColumnDef="ldate">
-                                        <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef
-                                            class="br">
+                                        <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br">
                                             Loan as on
                                         </th>
                                         <td mat-cell *matCellDef="let element" class="br">
@@ -211,8 +219,7 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="today">
-                                        <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef
-                                            class="br textRight"> Outstanding <br> as on today
+                                        <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef class="br textRight"> Outstanding <br> as on today
                                         </th>
                                         <!-- <td *matCellDef="let element" class="br text-right" mat-cell>
                                             <div class="bar"><span appFormatNumber>{{element.outstandingAmount}}</span>
@@ -223,15 +230,14 @@
                                             <div *ngIf="outStandingAmt"><span>{{outStandingAmt}}</span></div>
                                         </td> -->
                                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                                                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.outstandingAmount }}</span> </div>
-                                            </td>
-                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
-                                                    <div>{{isLoading ? ' ' : '₹'}}<span [value]="outStandingAmt" appFormatNumber></span></div>
-                                            </td>
+                                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.outstandingAmount }}</span> </div>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="outStandingAmt" appFormatNumber></span></div>
+                                        </td>
                                     </ng-container>
                                     <ng-container matColumnDef="ten">
-                                        <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef
-                                            class="br textRight">
+                                        <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef class="br textRight">
                                             Tenure <br> remaining</th>
                                         <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar"> {{element.remainingMonths}} </div>
@@ -239,16 +245,15 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="rate">
-                                        <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef
-                                            class="br textRight"> Annual <br> interest rate</th>
+                                        <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef class="br textRight"> Annual <br> interest rate</th>
                                         <td mat-cell *matCellDef="let element" class="br text-right">
-                                            <div class="bar"> {{element.annualInterestRate}}{{!isLoading? "%" : ""}}</div>
+                                            <div class="bar"> {{element.annualInterestRate}}{{!isLoading? "%" : ""}}
+                                            </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="emi">
-                                        <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef
-                                            class="br text-right">
+                                        <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef class="br text-right">
                                             EMI</th>
                                         <!-- <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar" appFormatNumber>
@@ -258,26 +263,24 @@
                                         [value]="totalEmi" appFormatNumber>
                                         <div *ngIf="totalEmi"><span>{{totalEmi}}</span></div>
                                     </td> -->
-                                    <td mat-cell *matCellDef="let element" class="br amt text-right">
-                                            <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.emi }}</span> </div>
+                                        <td mat-cell *matCellDef="let element" class="br amt text-right">
+                                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.emi }}</span> </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                            <div >{{isLoading ? ' ' : '₹'}}<span [value]="totalEmi" appFormatNumber></span></div>
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalEmi" appFormatNumber></span></div>
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="fin">
-                                        <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef
-                                            class="br text-left">
+                                        <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef class="br text-left">
                                             Financial <br> institution</th>
                                         <td mat-cell *matCellDef="let element" class="br">
                                             <div class="bar">
                                                 {{(isLoading ? '' : ((element.financialInstitution) ? element.financialInstitution : '-'))}}
                                             </div>
                                         </td>
-                                       
-                                        <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
-                                       >
-                                    </td>
+
+                                        <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600">
+                                        </td>
                                     </ng-container>
                                     <ng-container matColumnDef="status">
                                         <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br">
@@ -301,14 +304,11 @@
                                                     more_vert
                                                 </i>
                                                 <mat-menu #menu4="matMenu">
-                                                    <button mat-menu-item
-                                                        (click)="open('addLiabilities',element)">Edit</button>
-                                                    <button mat-menu-item
-                                                        (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Detailed
+                                                    <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
+                                                    <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Detailed
                                                         View</button>
                                                     <button mat-menu-item>Activity</button>
-                                                    <button mat-menu-item
-                                                        (click)="deleteModal('LIABILITIES',element)">Delete</button>
+                                                    <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
                                                 </mat-menu>
                                             </div>
                                         </td>
@@ -316,18 +316,15 @@
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"
-                                        [hidden]="isLoading"></tr>
+                                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                                 </table>
 
 
                             </div>
-                            <div *ngIf="dataSource.filteredData.length == 0"
-                                class="w-100 d-flex flex-column align-items-center">
+                            <div *ngIf="dataSource.filteredData.length == 0" class="w-100 d-flex flex-column align-items-center">
                                 <img class="width400" src="assets/images/svg/noDataFound.svg">
                                 <h4 class="text-center pt-12">No Data Found</h4>
-                                <button mat-stroked-button class="btn-primary addon v-middle"
-                                    (click)="open('addLiabilities',showFilter)"> ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addLiabilities',showFilter)"> ADD NEW</button>
                             </div>
                         </div>
 
@@ -349,26 +346,25 @@
 
 <div #liabilitiesTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-            <tr>
-                    <td style="text-align: left;">
-                        <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
-                    </td>
-                    <td style="text-align: right;">
-                        <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
-                            {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
-                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
-                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
-                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
-                    </td>
-                </tr>
-        
-                <tr>
-                    <td colspan="2" style="padding: 10px;"></td>
-                </tr>
-        
         <tr>
-            <td colspan="9"
-                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td style="text-align: left;">
+                <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
+            </td>
+            <td style="text-align: right;">
+                <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
+                    {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
+                <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding: 10px;"></td>
+        </tr>
+
+        <tr>
+            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 <div class="col-md-4 d-flex align-items-center p-0">
                     <h4 class="m-0 text-black roboto" *ngIf="showFilter=='tab1'">Liabilities</h4>
                     <h4 class="m-0 text-black roboto" *ngIf="showFilter=='1'">Home</h4>
@@ -387,107 +383,75 @@
             </td>
         </tr>
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No. </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Owner</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Type </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Loan amount </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Loan as on </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Outstanding as on today </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Tenure remaining</td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Annual interest rate</td>
-                <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-               EMI </td>  
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Financial institution  </td>
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                EMI </td>
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Financial institution </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Status </td>
 
         </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-            *ngFor="let item of dataSource.data ;index as i">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data ;index as i">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.ownerName}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>
                 {{(item.loanTypeId == 1)?'Home Loan':(item.loanTypeId == 2)?'Vehicle':(item.loanTypeId == 3)?'Education':(item.loanTypeId == 4)?'Credit Card':(item.loanTypeId == 5)?'Personal':(item.loanTypeId == 6)?'Mortgage':''}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>{{(item.loanAmount)?item.loanAmount:0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>{{(item.commencementDate)?(item.commencementDate | date:'dd/MM/yyyy'):0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>{{(item.outstandingAmount)?item.outstandingAmount:0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.loanAmount)?item.loanAmount:0}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.commencementDate)?(item.commencementDate | date:'dd/MM/yyyy'):0}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.outstandingAmount)?item.outstandingAmount:0}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.loanTenure)?(item.remainingMonths):0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.annualInterestRate)?(item.annualInterestRate):0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
                 {{(item.emi)}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.financialInstitution)?(item.financialInstitution):0}}</td>
-                <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
-                        {{'LIVE'}} </span>
-                    <span class="text-success" *ngIf="item.statusId == 'MATURED'">
-                        {{'MATURED'}} </span>
+                    {{'LIVE'}} </span>
+                <span class="text-success" *ngIf="item.statusId == 'MATURED'">
+                    {{'MATURED'}} </span>
             </td>
-               
+
         </tr>
-        <tr
-            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber>Total</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="totalLoanAmt">totalLoanAmt</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber></td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber [value]="outStandingAmt">outStandingAmt</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"></td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-               </td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="totalEmi">totalEmi
-                </td>
-                <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                </td>
-                <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                </td>
+        <tr style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>Total</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="totalLoanAmt">totalLoanAmt</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="outStandingAmt">outStandingAmt</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="totalEmi">totalEmi
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            </td>
         </tr>
     </table>
 </div>

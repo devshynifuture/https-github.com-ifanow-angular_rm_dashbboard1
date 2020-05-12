@@ -104,6 +104,32 @@
                         {{bonds.compounding==1?"Half yearly":"Yearly"}}
                     </div>
                 </div>
+
+                <div *ngIf="bonds.interestPayoutOption == 2" class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{bonds.compounding==1?"Half yearly":"Yearly"}} payout
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹{{bonds.couponAmount?utils.formatter(bonds.couponAmount):'-'}}
+                    </div>
+                </div>
+                <div *ngIf="bonds.interestPayoutOption == 2" class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Payout received till date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹{{bonds.totalAmountReceivedTillToday?utils.formatter(bonds.totalAmountReceivedTillToday):'-'}}
+                    </div>
+                </div>
+                <div *ngIf="bonds.interestPayoutOption == 2"F class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Payout received till maturity
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹{{bonds.totalAmountReceivedTillMaturity?utils.formatter(bonds.totalAmountReceivedTillMaturity):'-'}}
+                    </div>
+                </div>
+
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value

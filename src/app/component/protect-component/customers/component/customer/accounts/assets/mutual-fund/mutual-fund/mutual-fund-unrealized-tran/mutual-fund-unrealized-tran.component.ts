@@ -8,8 +8,9 @@ import { RightFilterComponent } from 'src/app/component/protect-component/custom
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { CustomerService } from '../../../../../customer.service';
-import { EventService } from '../../../../../../../../../../Data-service/event.service';
+import { EventService } from 'src/app/Data-service/event.service';
 import { map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -17,8 +18,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
 })
 export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
-  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-    'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
+  // displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+  //   'units','balanceUnits','days','currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr','icons'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
     'gain', 'absReturn', 'xirr', 'allocation'];
   // subCategoryData: any[];
@@ -39,14 +40,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   fragmentData = { isSpinner: false };
   @Output() changeInput = new EventEmitter();
   advisorData: any;
+  displayedColumns: string[];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
 
-  constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService,
-    private eventService: EventService) {
+  constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
+    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
-
   mutualFund;
 
   ngOnInit() {
@@ -54,6 +54,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   initValueOnInit() {
+    if (this.mutualFund.viewMode == 'Unrealized Transactions') {
+      this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+        'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
+    } else {
+      this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+        'units', 'balanceUnits', 'days', 'icons'];
+    }
+    console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
@@ -135,6 +143,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   getUnrealizedData() {
+    this.mutualFund.mutualFundList.forEach(element => {
+      element.navDate = this.datePipe.transform(element.navDate, 'yyyy-MM-dd')
+      element.mutualFundTransactions.forEach(element => {
+        element.transactionDate = this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+      });
+    });
     const obj = {
       mutualFundList: this.mutualFund.mutualFundList
     }
@@ -144,6 +158,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         this.mutualFundList = data;
         this.asyncFilter(this.mutualFundList);
 
+      }, (error) => {
+        this.isLoading = false;
+        this.dataSource.data = [];
+        this.customDataSource.data = [];
+        this.eventService.showErrorMessage(error);
+        this.changeInput.emit(false);
       }
     );
   }

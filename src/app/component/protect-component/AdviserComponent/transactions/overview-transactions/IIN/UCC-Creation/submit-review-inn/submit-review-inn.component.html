@@ -1,138 +1,143 @@
 <div class="dialogclose">
-    <div class="row popup-header-fix-100">
-        <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-        </div>
-        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-
-            <p class="f-16 mb-0">
-                Investment onboarding - IIN/UCC
-            </p>
-        </div>
-        <!-- (click)="dialogClose()" for prod build  -->
-        <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16" (click)="close()">
-                clear
-            </i>
-        </div>
+  <div class="row popup-header-fix-100">
+    <div class="col-md-2 border-right-1 p-0">
+      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
+    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+      <p class="f-16 mb-0">
+        Investment onboarding - IIN/UCC
+      </p>
+    </div>
+    <!-- (click)="dialogClose()" for prod build  -->
+    <div class="col-md-2 text-right">
+      <i (click)="close()" class="material-icons pt-16 c-p pr-16">
+        clear
+      </i>
+    </div>
+  </div>
 </div>
 
 
 <div class="pt-60 mb-100" [formGroup]="reviewSubmit">
-    <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
-    <div class="col-md-10 offset-2 p-0 bl-1 ">
-        <div class="p-20">
-            <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
-            <p class="f-14 mb-4">Thanks for adding the details. Let’s go ahead and complete the process.</p>
-            <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select multiple.
-            </p>
+  <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
+  <div class="col-md-10 offset-2 p-0 bl-1 ">
+    <div class="p-20">
+      <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
+      <p class="f-14 mb-4">Thanks for adding the details. Let’s go ahead and complete the process.</p>
+      <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select
+        multiple.
+      </p>
 
-            <div class="row">
-                <div class="col-md-3 mb-12 pl-0">
-                    <h5>1) Select a platform</h5>
-                    <p class="f-12 text-primitive">You create IIN UCC for both platform</p>
-                    <div class="form-group">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="platform" (selectionChange)="selectPlatform($event)">
-                                <mat-option value='' disabled>Select platform</mat-option>
-                                <mat-option value="1">NSE
-                                </mat-option>
-                                <mat-option value="2">BSE
-                                </mat-option>
-                            </mat-select>
-                            <mat-error>This field is required</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-md-3 mb-12 pl-0">
+          <h5>1) Select a platform</h5>
+          <p class="f-12 text-primitive">You create IIN UCC for both platform</p>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-select (selectionChange)="selectPlatform($event)" class="form-control" formControlName="platform">
+                <mat-option disabled value=''>Select platform</mat-option>
+                <mat-option value="1">NSE
+                </mat-option>
+                <mat-option value="2">BSE
+                </mat-option>
+              </mat-select>
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="col-md-3 mb-12 pl-0">
-                    <h5>2) Select a broker code</h5>
-                    <p class="f-12 text-primitive">You can multiple select broker code</p>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <mat-select class="form-control" formControlName="bseBroker">
-                                        <mat-option value='' disabled>Select broker code</mat-option>
-                                        <mat-option *ngFor="let bsetype of bse" (click)="selectArnNse(bsetype)" [value]="bsetype.brokerCode">
-                                            {{bsetype.brokerCode}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-                        <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
-                            <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-                <div class="col-md-3 mb-12 pl-0" *ngIf="BSEValue == '2'">
-                    <h5>3) Provide account number</h5>
-                    <p class="f-12 text-primitive">This will be displayed as UCC number</p>
-                    <div class="form-group inputPaddingNone">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input matInput placeholder="Enter account number" class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation [maxLength]="9" formControlName="accountNumber">
-                            <mat-error>This field is required</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="col-md-3 mb-12 pl-0  ">
-                    <h5 *ngIf="BSEValue == '1'">3) Confirm & submit</h5>
-                    <h5 *ngIf="BSEValue == '2'">4) Confirm & submit</h5>
-                    <p class="f-12 text-primitive">This will send request for UCC creation</p>
-                    <button class="btnConfirm bg-primary text-white" mat-button (click)="submit()">Create
-                        account</button>
-                </div>
-
-                <div class="col-md-3 mb-12 pl-0  ">
-                    <h5 *ngIf="BSEValue == '1'">4) Upload forms</h5>
-                    <h5 *ngIf="BSEValue == '2'">5) Upload forms</h5>
-                    <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
-
-                    <button class="btnConfirm bg-primary text-white" mat-button>
-                        Upload AOF
-                        <input (change)="getFileDetails($event)" class="uploadInput" id="file-4" multiple type="file">
-                    </button>
-                </div>
-
-                <h5>{{responseMessage}}</h5>
-                <h5>{{statusString}}</h5>
+        <div class="col-md-3 mb-12 pl-0">
+          <h5>2) Select a broker code</h5>
+          <p class="f-12 text-primitive">You can multiple select broker code</p>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-select class="form-control" formControlName="bseBroker">
+                    <mat-option disabled value=''>Select broker code</mat-option>
+                    <mat-option (click)="selectArnNse(bsetype)" *ngFor="let bsetype of bse"
+                                [value]="bsetype.brokerCode">
+                      {{bsetype.brokerCode}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>This field is required</mat-error>
+                </mat-form-field>
+              </div>
             </div>
+
+            <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
+              <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+            </div>
+
+          </div>
+
 
         </div>
 
+        <div *ngIf="BSEValue == '2'" class="col-md-3 mb-12 pl-0">
+          <h5>3) Provide account number</h5>
+          <p class="f-12 text-primitive">This will be displayed as UCC number</p>
+          <div class="form-group inputPaddingNone">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9" appInputValueValidation
+                     class="form-control" formControlName="accountNumber" matInput
+                     placeholder="Enter account number">
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-12 pl-0  ">
+          <h5 *ngIf="BSEValue == '1'">3) Confirm & submit</h5>
+          <h5 *ngIf="BSEValue == '2'">4) Confirm & submit</h5>
+          <p class="f-12 text-primitive">This will send request for UCC creation</p>
+          <button (click)="submit()" class="btnConfirm bg-primary text-white" mat-button>Create
+            account
+          </button>
+        </div>
+
+        <div class="col-md-3 mb-12 pl-0  ">
+          <h5 *ngIf="BSEValue == '1'">4) Upload forms</h5>
+          <h5 *ngIf="BSEValue == '2'">5) Upload forms</h5>
+          <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+
+          <button (click)="uploadFileInput.click()"
+                  *ngIf="selectedBrokerBse&&createdBrokerMap[this.selectedBrokerBse.id]"
+                  class="btnConfirm bg-primary text-white"
+                  mat-button>
+            Upload AOF
+            <input #uploadFileInput (change)="getFileDetails($event)" class="uploadInput" id="file-4" type="file">
+          </button>
+        </div>
+
+        <!--                <h5>{{responseMessage}}</h5>-->
+        <!--                <h5>{{statusString}}</h5>-->
+      </div>
+
     </div>
+
+  </div>
 
 </div>
 
 
-
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-    <div class="col-md-8 p-0 d-flex align-items-center ">
-        <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
-    </div>
+  <div class="col-md-8 p-0 d-flex align-items-center ">
+    <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
+  </div>
 
 
+  <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+    <button (click)="openFatcaDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+      PREVIOUS
+    </button>
 
-        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button (click)="openFatcaDetails()">
-            PREVIOUS
-        </button>
-
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4">SAVE</button>
-
+    <button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>SAVE</button>
 
 
-    </div>
+  </div>
 
 </div>

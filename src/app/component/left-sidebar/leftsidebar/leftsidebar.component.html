@@ -3,7 +3,7 @@
         <mat-nav-list class="pt-0" id="d" [ngStyle]="{'width':showTabs?'230px':''}">
             <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 h-60 logoWrap">
                 <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo">
-                <h5 *ngIf="!userInfo.profilePic">{{logoText | uppercase}}</h5>
+                <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
                 <!-- <div>
           <img class="logo" src="{{userInfo.profilePic}}">
         </div> -->
@@ -184,11 +184,11 @@
 
             <mat-form-field class="widthSerachBox serachbox ml-16">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" (input)="getClientList($event)"
-                        [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40"
+                        matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList | async"
                             [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
@@ -215,7 +215,7 @@
                                     <p class="t-left m-0"> No Client Found</p>
                                 </div>
                                 <div class="col-md-4 text-right">
-                                    <button class="small-primitive" mat-stroked-button disabled>FAMILY MEMBER</button>
+                                    <!-- <button class="small-primitive" mat-stroked-button disabled>FAMILY MEMBER</button> -->
                                 </div>
                             </div>
                         </mat-option>

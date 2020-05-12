@@ -58,8 +58,8 @@
         <div class="col-md-5">
             <div class="form-group p-0">
                 <mat-form-field class="url" floatLabel="never" appearance="standard">
-                    <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">{{arnRiaFG.get('arnOrRia').value == '' ? 'ARN/INA' : arnRiaFG.get('arnOrRia').value == 1 ? 'ARN' : 'INA'}}</button>
-                    <input matInput type="text" formControlName="number" placeholder="Enter ARN/RIA number " class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                    <button mat-stroked-button class="b-0 borderBtn h-40   bg-grey lter min-80 text-custom">{{arnRiaFG.get('arnOrRia').value == '' ? 'ARN/INA' : arnRiaFG.get('arnOrRia').value == 1 ? 'ARN' : 'INA'}}</button>
+                    <input matInput type="text" formControlName="number" placeholder="Enter ARN/RIA number " class="form-control br-0 inputBorderTransparent" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.pattern">Please enter valid number</mat-error>
                 </mat-form-field>
@@ -68,7 +68,7 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">Name of {{arnRiaFG.get('arnOrRia').value == '' ? 'ARN/RIA' : arnRiaFG.get('arnOrRia').value == 1 ? 'ARN' : 'RIA'}} holder
+            <h5 class="m-0 text-right pt-20">Name of {{arnRiaFG.get('arnOrRia').value == '' ? 'ARN/RIA' : arnRiaFG.get('arnOrRia').value == 1 ? 'ARN' : 'RIA'}} holder
             </h5>
         </div>
         <div class="col-md-5">
@@ -82,7 +82,7 @@
     </div>
     <div class="row pt-28" [hidden]="arnRiaFG.get('arnOrRia').value != 1">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">EUIN</h5>
+            <h5 class="m-0 text-right pt-20">EUIN</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group p-0">
@@ -110,7 +110,14 @@
                     <mat-error *ngIf="arnRiaFG.get('commencementDate').errors?.matDatepickerMax">
                         Please enter valid date</mat-error>
                 </mat-form-field>
+
             </div>
+        </div>
+        <div class="col-md-2 d-flex align-items-center">
+            <i (click)="clearDate('commencementDate')" class="material-icons c-p">
+                cancel
+            </i>
+            <!-- <button (click)="clearDate('commencementDate')">clear</button> -->
         </div>
     </div>
     <div class="row pt-40">
@@ -129,8 +136,16 @@
                     <mat-error *ngIf="arnRiaFG.get('renewalDate').errors?.matDatepickerMin">
                         Please enter valid date</mat-error>
                 </mat-form-field>
+
             </div>
         </div>
+        <div class="col-md-2 d-flex align-items-center">
+            <i (click)="clearDate('renewalDate')" class="material-icons c-p">
+                cancel
+            </i>
+            <!-- <button (click)="clearDate('commencementDate')">clear</button> -->
+        </div>
+
     </div>
     <div class="row pt-40">
         <div class="col-md-4 pr-0">

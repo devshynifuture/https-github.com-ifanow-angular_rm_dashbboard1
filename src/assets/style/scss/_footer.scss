@@ -3,6 +3,27 @@ footer {
     margin: 0;
 }
 @media(max-width: 767px){
+
+  .bottom-mob-footer{
+    background: #E5E5E5;
+  position:fixed;
+  width: 100%;
+  bottom:0;
+  z-index: 401;
+  ul{
+     background-color: #ffffff;
+  padding: 10px 20px;
+  border-top: 1px solid #dee5e7 !important;
+  width: 100%;
+  }
+  li{
+    width: 20%;
+
+  }
+  svg:hover {
+  fill: #008FFF;
+}
+  }
 	#mobile-footer-tabs{
 		//  height: 100vh;
   // display: flex;

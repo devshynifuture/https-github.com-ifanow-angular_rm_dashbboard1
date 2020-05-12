@@ -1,23 +1,37 @@
 <div class="row pt-150">
     <div class="col-md-4 d-flex align-items-center">
-        <h3 class="m-0">Leads</h3>
+        <!--        <h3 class="m-0">Leads</h3>-->
     </div>
-    <div class="col-md-8">
-        <div *ngIf="leadDataSource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
-            <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p">
-            <mat-menu #menu5="matMenu">
-                <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
-                <button (click)="Excel('Lead')" mat-menu-item>XLS</button>
-            </mat-menu>
-            <img src="assets/images/svg/up-down.svg" class="">
-            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
 
-            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                    class="material-icons">filter_list</i>FILTERS</button>
-            <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary pl-8">
-                ADD NEW</button>
-        </div>
+    <div *ngIf="leadDataSource.data.length>0 && isLoading==false"
+        class="col-md-8 d-flex align-items-center justify-content-end ">
+        <!-- <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p"> -->
+
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
+
+        <mat-menu #menu5="matMenu">
+            <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
+            <button (click)="Excel('Lead')" mat-menu-item>XLS</button>
+        </mat-menu>
+
+        <a class="c-p downloadPdfIcon iconBorderNone">
+            <img src="assets/images/svg/up-down.svg">
+        </a>
+
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
+
+        <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+                class="material-icons">filter_list</i>FILTERS</button> -->
+        <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary pl-8">
+            ADD NEW</button>
     </div>
+</div>
+
+
+
+<div class="row">
     <div class="col-md-12 people-leads">
         <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort"
             [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"

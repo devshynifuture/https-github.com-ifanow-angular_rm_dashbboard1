@@ -12,6 +12,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -34,9 +35,19 @@ export class PoTdSchemeComponent implements OnInit {
   sumOfCurrentValue: any;
   sumOfAmountInvested: any;
   sumOfMaturityValue: any;
-
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
-  }
+  fileUploadData: any;
+  file: any;
+  clientData: any;
+  isLoadingUpload:any;
+  myFiles: any;
+  constructor(private excel: ExcelGenService,
+    private pdfGen: PdfGenService, public dialog: MatDialog,
+    private fileUpload : FileUploadServiceService,
+    private eventService: EventService,
+    private cusService: CustomerService,
+    private subInjectService: SubscriptionInject) {
+      this.clientData = AuthService.getClientData()
+    }
 
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -46,13 +57,30 @@ export class PoTdSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getPoTdSchemedata();
   }
-
-  Excel(tableTitle){
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
+  }
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
 
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }

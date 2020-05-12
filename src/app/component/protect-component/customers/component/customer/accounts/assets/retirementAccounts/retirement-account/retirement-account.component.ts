@@ -23,6 +23,7 @@ import { DetailedViewNpsComponent } from '../add-nps/detailed-view-nps/detailed-
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { DatailedViewNpsHoldingsComponent } from '../add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 
 @Component({
@@ -66,6 +67,11 @@ export class RetirementAccountComponent implements OnInit {
   excelData: any;
   footer = [];
   noData: any;
+  fileUploadData: any;
+  file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
+  myFiles: any;
 
   // async ExportTOExcel(value) {
   //   this.excelData = []
@@ -192,14 +198,19 @@ export class RetirementAccountComponent implements OnInit {
   //   }
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
+     private subInjectService: SubscriptionInject, 
+     private fileUpload : FileUploadServiceService,
+     private custumService: CustomerService, private eventService: EventService, 
+     public utils: UtilService, public dialog: MatDialog) {
+      this.clientData = AuthService.getClientData()
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','bal', 'desc', 'status', 'icons'];
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
-  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'amt', 'reason', 'desc', 'status', 'icons'];
+  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'amt', 'salary', 'desc', 'status', 'icons'];
   datasource13;
   displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'date', 'desc', 'status', 'icons'];
   datasource14;
@@ -225,7 +236,24 @@ export class RetirementAccountComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
+  }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
@@ -497,10 +525,13 @@ export class RetirementAccountComponent implements OnInit {
     );
 
   }
+
+  sumOfGratuityReceived:any;
   getGrauityRes(data) {
     this.isLoading = false;
     if (data != undefined) {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
+      this.sumOfGratuityReceived = data.sumOfGratuityReceived;
       if (data.assetList) {
         console.log('getGrauityRes =', data);
         this.dataSource.data = data.assetList;
@@ -528,13 +559,14 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     this.isLoading = false;
-    this.totalContribution = data.sumOfAmountInvested;
-    this.totalCurrentValue = data.sumOfCurrentValue;
+    
     if (data != undefined) {
       if (data.assetList) {
         console.log('getNPSRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.npsListTableSort;
+        this.totalContribution = data.sumOfAmountInvested;
+        this.totalCurrentValue = data.sumOfCurrentValue;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }
     } 

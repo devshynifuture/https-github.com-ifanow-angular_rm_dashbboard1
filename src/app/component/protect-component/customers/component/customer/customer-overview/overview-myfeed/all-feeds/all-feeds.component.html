@@ -6,8 +6,6 @@
                 <p class="m-0 roboto">Your personalized money feed is ready!</p>
             </div>
             <div class="scrolling_myFeed">
-
-
                 <!-- your account intro -->
                 <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
@@ -15,7 +13,6 @@
                             <h5 class="roboto m-0 ">Your account</h5>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
@@ -49,13 +46,11 @@
                                         <div id="piechartMutualFund" [chart]="chart"></div>
                                     </div>
                                     <div class="col-md-6 pr-0">
-
                                         <ul class="pointUl">
                                             <li *ngFor="let data of chartData">
                                                 <span class="pointNumber" [style.background-color]="data.color"> </span>
                                                 <span class="f-14 mr-8" appFormatNumber>{{(data.y/chartTotal*100 | number : '0.0-2')}}</span>
                                                 <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
-                                                <!-- <span appFormatNumber class="f-14">{{(data.y)}}</span> -->
                                             </li>
                                         </ul>
                                     </div>
@@ -79,8 +74,7 @@
 
                     <div class="scrollingDiv d-flex row">
                         <!-- portfolio data present -->
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig"
-                        #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
                             <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
                                 <div class="row">
                                     <div class="col-md-9  pr-0">
@@ -175,7 +169,7 @@
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Add profile details
                                         </button>
-                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+                                        <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
                                     </div>
                                     <div class="col-md-5 pr-0">
                                         <img src="/assets/images/svg/vault-icon.svg">
@@ -211,7 +205,7 @@
                                             Add family details
                                         </button>
 
-                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+                                        <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
 
 
                                     </div>
@@ -248,7 +242,7 @@
                                             Show me how to do it
                                         </button>
 
-                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+                                        <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
 
 
                                     </div>
@@ -323,7 +317,7 @@
                                                 Add financial goals
                                             </button>
 
-                                            <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+                                            <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
 
 
                                         </div>
@@ -391,7 +385,6 @@
                                         <h5 class="roboto f-500">
                                             Your secure online vault
                                         </h5>
-
                                         <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
                                         <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
                                         <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
@@ -400,11 +393,11 @@
 
                                         <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
 
-                                        <button [routerLink]="['/customer/detail/overview/documents']" class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                             Access your vault
                                         </button>
 
-                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+                                        <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
 
 
                                     </div>
@@ -423,7 +416,7 @@
                                     <div class="col-md-7 pr-0">
                                         <h5 class="roboto f-500">You aren’t using the document vault!</h5>
                                         <p>Document vault is a safe and secure way to manage your important documents. This will help you get better organized.</p>
-                                        <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button>
+                                        <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                             Add documents
                                         </button>
                                     </div>
@@ -449,8 +442,7 @@
 
                     <div class="scrollingDiv d-flex">
 
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig"
-                        #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig" #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
                             <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -496,8 +488,7 @@
 
                     <div class="scrollingDiv d-flex">
 
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig"
-                        #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig" #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
                             <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of recentTransactions">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -568,7 +559,7 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 p-0">
@@ -579,11 +570,11 @@
                                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
-                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab2'}" routerLinkActive="router-link-active" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Take the test
                                         </button>
 
-                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+                                        <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
 
 
                                     </div>
@@ -715,48 +706,52 @@
     </div>
 
     <div class="col-md-4 pr-0 paddleft30 mt-40">
-        <div class="b-b mb-20 pb-20">
-            <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
-                <div class="col-md-3">
-                    <div class="advi_name">
-                        <img [src]="orgDetails.reportLogoUrl">
+        <div class="sticky-top">
+            <div class="b-b mb-20 pb-20">
+                <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
+                    <div class="col-md-3">
+                        <div class="advi_name">
+                            <img [src]="orgDetails.reportLogoUrl">
+                        </div>
+                    </div>
+                    <div class="col-md-9 pr-0 text-left">
+                        <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
+                        <p class="text-custom m-0">Contact</p>
                     </div>
                 </div>
-                <div class="col-md-9 pr-0 text-left">
-                    <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
-                    <p class="text-custom m-0">Contact</p>
-                </div>
-            </div>
-            <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
-                <div class="col-md-3 pl-0">
-                    <div class="advi_name">
-                        <img [src]="advisorImg">
+                <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
+                    <div class="col-md-3 pl-0">
+                        <div class="advi_name">
+                            <img [src]="advisorImg">
+                        </div>
+                    </div>
+                    <div class="col-md-9 p-0 text-left">
+                        <p class="text-black m-0">{{advisorInfo.fullName}}</p>
+                        <p class="text-custom m-0">Contact</p>
                     </div>
                 </div>
-                <div class="col-md-9 p-0 text-left">
-                    <p class="text-black m-0">{{advisorInfo.name}}</p>
-                    <p class="text-custom m-0">Contact</p>
-                </div>
             </div>
-        </div>
 
-        <div class="b-b mb-20 pb-20">
-            <div class="row">
-                <div class="col-md-12 p-0">
-                    <h5 class="roboto f-500 d-flex justify-content-between">
-                        Your risk profile
-                    </h5>
-                    <!-- <div  *ngFor="let risk of riskProfile">
+            <div class="b-b mb-20 pb-20">
+                <div class="row">
+                    <div class="col-md-12 p-0" *ngFor="let risk of riskProfile">
+                        <h5 class="roboto f-500 d-flex justify-content-between">
+                            Your risk profile
+                            <br> {{risk.riskProfileStatus}}
+                        </h5>
+                        <!-- <div  *ngFor="let risk of riskProfile">
                         <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
                         <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
                         <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
                         <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
                         <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
                     </div> -->
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <app-market-summary></app-market-summary>
+            <app-market-summary class="feedSumaaryMarket"></app-market-summary>
+
+        </div>
     </div>
 </div>

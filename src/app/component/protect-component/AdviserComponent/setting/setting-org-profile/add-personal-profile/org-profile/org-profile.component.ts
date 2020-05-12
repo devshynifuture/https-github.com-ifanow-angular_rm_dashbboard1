@@ -42,6 +42,8 @@ export class OrgProfileComponent implements OnInit {
   filteredCountryCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  dataLoaded:boolean = false;
+  imgData:string = '';
 
   constructor(
     public utils: UtilService, 
@@ -67,8 +69,9 @@ export class OrgProfileComponent implements OnInit {
   }
   ngOnInit() {
     this.selectedTab = this.inputData.openTab;
+    this.profileImg = this.data.logoUrl;
+    this.reportImg = this.data.reportLogoUrl;
     this.getIsdCodesData();
-    this.getOrgProfiles();
     this.getdataForm(this.inputData);
     // listen for search field value changes
     this.filterCtrl.valueChanges
@@ -90,6 +93,7 @@ export class OrgProfileComponent implements OnInit {
           this.isdCodes = data;
           this.filteredIsdCodes.next(this.isdCodes.slice());
           this.filteredCountryCodes.next(this.isdCodes.slice());
+          this.dataLoaded = true;
         }
       }, err => {
         this.event.showErrorMessage('Error');
@@ -129,19 +133,6 @@ export class OrgProfileComponent implements OnInit {
     }
   }
 
-
-  getOrgProfiles() {
-    let obj = {
-      advisorId:this.advisorId
-    }
-    this.settingsService.getOrgProfile(obj).subscribe(
-      data => {
-        this.profileImg = data.logoUrl;
-        this.reportImg = data.reportLogoUrl;
-      },
-      err => this.event.openSnackBar(err, "Dismiss")
-    );
-  }
 
   getdataForm(data) {
     this.orgProfile = this.fb.group({
@@ -302,7 +293,9 @@ export class OrgProfileComponent implements OnInit {
   }
 
   showCroppedImage(imageAsBase64) {
-    this.finalImage = imageAsBase64;
+    setTimeout(() => {
+      this.finalImage = imageAsBase64;
+    });
   }
 
   // save the changes of current page only
@@ -359,5 +352,36 @@ export class OrgProfileComponent implements OnInit {
     }
     // filter the codes
     this.filteredCountryCodes.next(this.isdCodes.filter(code => (code.countryName).toLowerCase().indexOf(search) > -1))
+  }
+
+  cropImg(data) {
+    this.cropImage = true;
+    this.showCropper = true;
+  }
+
+  resetWebImage() {
+    this.settingsService.resetWebImage(this.data.id).subscribe(
+      res => {
+        this.profileImg = res;
+        const orgDetails = this.authService.orgData;
+        orgDetails.logoUrl = res;
+        AuthService.setOrgDetails(orgDetails);
+      }, err => {
+        this.event.openSnackBar("Error occured", 'Dismiss');
+      }
+    )
+  }
+
+  resetLogoImage(){
+    this.settingsService.resetReportLogoImage(this.data.id).subscribe(
+      res => {
+        this.reportImg = res;
+        const orgDetails = this.authService.orgData;
+        orgDetails.reportLogoUrl = res;
+        AuthService.setOrgDetails(orgDetails);
+      }, err => {
+        this.event.openSnackBar("Error occured", 'Dismiss');
+      }
+    )
   }
 }

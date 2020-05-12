@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Input, Output, EventEmitter } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../../excel.service';
@@ -10,6 +10,9 @@ import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { Key } from 'protractor';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -43,6 +46,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   redemptiontransaction: any[];
   isLoading: Boolean;
   mutualFund;
+  @Output() changeInput = new EventEmitter();
   purchaseAgainstRedemption: any[];
   total_stGain = 0;
   total_ltGain = 0;
@@ -53,17 +57,35 @@ export class MutualFundsCapitalComponent implements OnInit {
   totalReinvesment = 0;
   totaldividendReinvestment = 0;
   totaldividendPayout = 0;
-
-  constructor(private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
+  summaryView = true;
+  debtObj: any;
+  equityObj: any;
+  rightFilterData: any;
+  fromDateYear: any;
+  toDateYear: any;
+  grandFatheringEffect: boolean;
+  objSendToDetailedCapital: any;
+  redemption: any[];
+  mutualFundList: any[];
+  dataToSend: { mfListData: any; grandfatheringEffect: any; fromDateYear: any; toDateYear: any; };
+  capitalGainData: any;
+  // capitalGainData: any;
+  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl2', { static: false }) tableEl2;
+  @ViewChild('tableEl3', { static: false }) tableEl3;
 
   ngOnInit() {
-    this.stGain = 875.32;
-    this.indexedGain = 125.4,
-      this.advisorId = AuthService.getAdvisorId();
+    this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getUserInfo().parentId
+    this.fromDateYear = 2019;
+    this.toDateYear = 2020;
+    this.grandFatheringEffect = true;
     // this.getAdvisorData();
     this.getCapitalgain();
+    this.summaryView = true
+    // this.calculateCapitalGain(this.capitalGainData)
 
   }
   openFilter() {
@@ -81,7 +103,8 @@ export class MutualFundsCapitalComponent implements OnInit {
       schemeWise: this.mutualFund.schemeWise,
       familyMember: this.mutualFund.family_member_list,
       category: this.mutualFund.mutualFundCategoryMastersList,
-      transactionView: this.displayedColumns
+      transactionView: this.displayedColumns,
+      capitalGainData: this.objSendToDetailedCapital,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -89,10 +112,29 @@ export class MutualFundsCapitalComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
+
             // this.customDataSource = new MatTableDataSource([{}, {}, {}]);
-            // this.isLoading = true;
+            //  this.isLoading = true;
             // this.changeInput.emit(true);
-            // this.rightFilterData = sideBarData.data;
+            this.rightFilterData = sideBarData.data;
+            this.dataSource = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource1 = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
+            this.isLoading = true;
+            // this.changeInput.emit(true);
+            this.dataToSend = {
+              mfListData: this.rightFilterData.capitalGainData.responseData,
+              grandfatheringEffect: this.rightFilterData.grandfathering,
+              fromDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
+              toDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
+            }
+            if (this.rightFilterData.reportFormat[0].name == 'Detailed') {
+              this.summaryView = false
+            } else {
+              this.summaryView = true;
+              this.calculateCapitalGain(this.rightFilterData.capitalGainData.responseData);
+            }
+
             // this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
@@ -118,77 +160,127 @@ export class MutualFundsCapitalComponent implements OnInit {
   // }
   getCapitalgain() {
     this.isLoading = true;
+    this.changeInput.emit(true);
     const obj = {
-      advisorIds: [2929],
-      clientId: 15545,
+      advisorIds: [this.advisorId],
+      clientId: this.clientId,
       parentId: 0
 
     };
     this.custumService.capitalGainGet(obj).subscribe(
-      data => this.getCapitalgainRes(data), (error) => {
+      data => {
+        this.capitalGainData = data;
+        // this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
+        // this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
+        this.calculateCapitalGain(this.capitalGainData)
+      }, (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
-  getCapitalgainRes(data) {
+  calculateCapitalGain(data) {
     this.isLoading = false;
-    console.log(data);
+    let equityData;
+    this.changeInput.emit(false);
     if (data) {
+      this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
+      this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       this.categoryData = data;
       let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
+      Object.keys(catObj).map(key => {
+        if (catObj[key] != 'DEBT') {
+          equityData = this.filterCategoryWise(catObj[key], key);
+        }
+      });
       let debtData = this.filterCategoryWise(catObj['DEBT'], 'DEBT');
-      let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
+      // let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
+
       this.dataSource = new MatTableDataSource(debtData);
       this.dataSource1 = new MatTableDataSource(equityData);
       let dividenedSummaryData = this.getDividendSummaryData(this.categoryData);
       this.dataSource2 = new MatTableDataSource(dividenedSummaryData);
+      this.objSendToDetailedCapital = {
+        mfData: this.mutualFund,
+        responseData: this.capitalGainData,
+        debtData: debtData,
+        equityData: equityData,
+        dividenedSummaryData: dividenedSummaryData,
+        grandFatheringEffect: this.grandFatheringEffect,
+        redemptionList: this.redemption,
+        mutualFundList: this.mutualFundList,
+        fromDateYear: this.fromDateYear,
+        toDateYear: this.toDateYear,
+      }
     } else {
       this.dataSource.data = [];
       this.dataSource1.data = [];
       this.dataSource2.data = [];
     }
-
   }
   getDividendSummaryData(data) {
-    let filterObj = []
-    this.totalReinvesment = 0;
-    let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
-    mutualFund.forEach(element => {
-      if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
-        element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
-        this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
-        this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
-        this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
-        filterObj.push(element);
-      }
-    });
-    return filterObj;
-  }
-  filterCategoryWise(data, category) {
-    this.mfList = this.MfServiceService.filter(data, 'mutualFund');
-    this.mfList.forEach(element => {
-      element.redemptionTransactions.forEach(ele => {
-        if (ele.purchaceAgainstRedemptionTransactions) {
-          let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
-          this.getFinalTotalValue(totalValue);
-          element.stGain = totalValue.stGain;
-          element.ltGain = totalValue.ltGain;
-          element.stLoss = totalValue.stLoss;
-          element.ltLoss = totalValue.ltLoss;
-          element.indexGain = totalValue.indexGain;
-          element.indexLoss = totalValue.indexLoss;
+    if (data) {
+      let filterObj = []
+      this.totalReinvesment = 0;
+      let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
+      mutualFund.forEach(element => {
+        if (element.redemptionTransactions) {
+          element.redemptionTransactions.forEach(ele => {
+            let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+            if (financialyear >= this.fromDateYear && financialyear <= this.toDateYear) {
+              if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
+                element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
+                this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
+                this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
+                this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
+                filterObj.push(element);
+              }
+            }
+          });
         } else {
-          ele.purchaceAgainstRedemptionTransactions = []
+          filterObj = [];
         }
       });
-
-
-    });
-    return this.mfList;
+      return filterObj;
+    }
+  }
+  filterCategoryWise(data, category) {
+    if (data) {
+      let finalValue = {};
+      this.mfList = this.MfServiceService.filter(data, 'mutualFund');
+      this.mfList.forEach(element => {
+        if (element.redemptionTransactions) {
+          element.redemptionTransactions.forEach(ele => {
+            let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+            if (financialyear >= this.fromDateYear && financialyear <= this.toDateYear) {
+              if (ele.purchaceAgainstRedemptionTransactions) {
+                let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
+                finalValue = this.MfServiceService.addTwoObjectValues(totalValue, finalValue, { totalAmt: true });
+                // this.getFinalTotalValue(totalValue);
+                element.stGain = totalValue.stGain;
+                element.ltGain = totalValue.ltGain;
+                element.stLoss = totalValue.stLoss;
+                element.ltLoss = totalValue.ltLoss;
+                element.indexGain = totalValue.indexGain;
+                element.indexLoss = totalValue.indexLoss;
+              } else {
+                ele.purchaceAgainstRedemptionTransactions = []
+              }
+            }
+          });
+        } else {
+          this.mfList = [];
+        }
+      });
+      (category == 'DEBT') ? this.debtObj = finalValue : this.equityObj = finalValue;
+      finalValue = {};
+      return this.mfList;
+    }
   }
   getCalculatedValues(data, category) {
     let days;
+    let gainLossBasedOnGrandfathering;
     (category == 'DEBT') ? days = 1095 : days = 365;
+    (this.grandFatheringEffect) ? gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount' : gainLossBasedOnGrandfathering = 'gainOrLossAmount';
     let stGain = 0;
     let ltGain = 0;
     let stLoss = 0;
@@ -198,11 +290,11 @@ export class MutualFundsCapitalComponent implements OnInit {
 
     data.forEach(element => {
       if (element.days < days) {
-        stGain += ((element.gainOrLossAmount >= 0) ? (element.gainOrLossAmount) : 0)
-        stLoss += ((element.gainOrLossAmount < 0) ? (element.gainOrLossAmount) : 0)
+        stGain += ((element[gainLossBasedOnGrandfathering] >= 0) ? (element[gainLossBasedOnGrandfathering]) : 0)
+        stLoss += ((element[gainLossBasedOnGrandfathering] < 0) ? (element[gainLossBasedOnGrandfathering]) : 0)
       } else {
-        ltGain += ((element.gainOrLossAmount >= 0) ? element.gainOrLossAmount : 0);
-        ltLoss += ((element.gainOrLossAmount < 0) ? element.gainOrLossAmount : 0);
+        ltGain += ((element[gainLossBasedOnGrandfathering] >= 0) ? element[gainLossBasedOnGrandfathering] : 0);
+        ltLoss += ((element[gainLossBasedOnGrandfathering] < 0) ? element[gainLossBasedOnGrandfathering] : 0);
       }
       indexGain += ((element.indexGainOrLoss >= 0) ? (element.indexGainOrLoss) : 0)
       indexLoss += ((element.indexGainOrLoss < 0) ? (element.indexGainOrLoss) : 0)
@@ -220,71 +312,46 @@ export class MutualFundsCapitalComponent implements OnInit {
   getFinalTotalValue(data) {
 
     this.total_stGain += (data.stGain) ? data.stGain : 0;
-    this.total_ltGain += (data.ltGain) ? data.currentValue : 0;
+    this.total_ltGain += (data.ltGain) ? data.ltGain : 0;
     this.total_stLoss += (data.stLoss) ? data.stLoss : 0;
-    this.total_ltLoss += (data.ltLoss) ? data.absoluteReturn : 0;
+    this.total_ltLoss += (data.ltLoss) ? data.ltLoss : 0;
     this.total_indexGain += (data.indexGain) ? data.indexGain : 0;
     this.total_indexLoss += (data.indexLoss) ? data.indexLoss : 0;
   }
   ExportTOExcel(data) {
     console.log(data);
   }
-}
-
-export interface PeriodicElement {
-  schemeName: string;
-  folioNumber: string;
-  investorName: string;
-  stGain: number;
-  stLoss: number;
-  ltGain: number;
-  indexedGain: number;
-  liloss: number;
-  indexedLoss: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName: 'Agreements & invoices', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName: 'Total', folioNumber: '', investorName: '', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-];
+  outputResponse(data) {
+    this.isLoading = false;
+    this.changeInput.emit(false);
+    this.fromDateYear = data.fromDateYear;
+    this.toDateYear = data.toDateYear;
+    this.grandFatheringEffect = data.grandfatheringEffect
+    if (data.summaryView == true) {
+      this.summaryView = true;
+      this.calculateCapitalGain(data.data);
+    } else {
+      this.summaryView = false
+    }
 
 
-export interface PeriodicElement1 {
-  schemeName1: string;
-  folioNumber: string;
-  investorName: string;
-  stGain: number;
-  stLoss: number;
-  ltGain: number;
-  indexedGain: number;
-  liloss: number;
-  indexedLoss: number;
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName1: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', investorName: 'Mitesh Galani', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-  { schemeName1: 'Total', folioNumber: '', investorName: '', stGain: 875.32, stLoss: 875.32, ltGain: 0, indexedGain: 123.67, liloss: 123.67, indexedLoss: 24.87 },
-];
-
-
-
-export interface PeriodicElement2 {
-  schemeName2: string;
-  folioNumber: string;
-  dividendPayoutAmount: string;
-  dividendReInvestmentAmount: string;
-  totalReinvestmentAmount: string;
-}
-
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { schemeName2: 'DSP Tax Saver Fund - Regular Plan - Growth', folioNumber: '15093075', dividendPayoutAmount: '111,94,925.22', dividendReInvestmentAmount: '23,550', totalReinvestmentAmount: '23,550', },
-  { schemeName2: 'Total', folioNumber: ' ', dividendPayoutAmount: '111,94,925.22', dividendReInvestmentAmount: '23,550', totalReinvestmentAmount: '23,550', },
-
-];
+    // (data.grandfathering == 1) ? this.grandFatheringEffect = true : this.grandFatheringEffect = false;
+    // this.objSendToDetailedCapital.responseData=data.capitalGainData.responseData;
+    // this.objSendToDetailedCapital.grandFatheringEffect=data.grandfathering;
+    // this.objSendToDetailedCapital.fromDateYear = data.financialYear[0].from;
+    // this.objSendToDetailedCapital.toDateYear =data.financialYear[0].to;
+    // this.getCapitalgainRes(data.capitalGainData.responseData);
+  }
+  Excel(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+    let rows2 = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+    let rows3 = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+  }
+  pdf(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+} 

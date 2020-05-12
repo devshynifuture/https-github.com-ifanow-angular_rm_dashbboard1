@@ -975,8 +975,8 @@
                 #ui-liabilities {
                   .vertical-menu {
                     // height: 100vh;
-                    position: relative;
-                    height: calc(100vh - 147px);
+                    // position: relative;
+                    // height: calc(100vh - 147px);
                     display: block !important;
                     width: 100%;
                     text-align: left;
@@ -1621,12 +1621,14 @@
                 }
 
                 .textRight .mat-sort-header-container {
-                  justify-content: flex-end;
+                  display: block;
                 }
 
                 .textRight .mat-sort-header-container button {
                   text-align: right;
                 }
+
+                 
 
                 .example-container {
                   height: auto;
@@ -2097,3 +2099,21 @@
 ngx-slick-carousel > .slick-disabled {
   display: none !important;
 }
+
+.downloadPdfIcon {
+  border: 1px solid #BCC6CA;
+    display: flex;
+    width: 42px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconBorderNone{
+  border: 1px solid #BCC6CA;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+
+

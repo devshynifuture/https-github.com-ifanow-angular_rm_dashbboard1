@@ -12,6 +12,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../file-upload-service.service';
 
 @Component({
   selector: 'app-nsc-scheme',
@@ -38,10 +39,18 @@ export class NscSchemeComponent implements OnInit {
 
   excelData: any[];
   footer;
+  fileUploadData: any;
+  file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
+  myFiles: any;
 
-  constructor( private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+  constructor( private excel:ExcelGenService, 
+    private fileUpload : FileUploadServiceService,
+    private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
-  }
+      this.clientData = AuthService.getClientData()
+    }
 
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
@@ -56,7 +65,24 @@ export class NscSchemeComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
+  }
   pdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);

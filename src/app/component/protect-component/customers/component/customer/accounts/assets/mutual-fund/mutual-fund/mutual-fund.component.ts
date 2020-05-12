@@ -25,7 +25,8 @@ export class MutualFundComponent implements OnInit {
   isLoading = true;
 
   dataHolder: any = {};
-  isShow
+  isShow;
+  capitalGainData: any;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,

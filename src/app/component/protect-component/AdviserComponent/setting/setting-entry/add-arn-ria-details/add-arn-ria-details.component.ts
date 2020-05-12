@@ -150,4 +150,8 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriber.unsubscribe();
   }
+
+  clearDate(fomrControlName) {
+    this.arnRiaFG.get(fomrControlName).setValue(null);
+  }
 }

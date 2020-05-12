@@ -2,23 +2,35 @@
     <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Public provident fund (PPF)</h4>
     </div>
-    <div class="col-md-7 p-0 right text-right" *ngIf="dataSource.data.length > 0">
-        <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+    <div class="col-md-7 p-0  d-flex align-items-center justify-content-end" *ngIf="dataSource.data.length > 0">
+        <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+            <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+        </div>
+        <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+            <img src="assets/images/svg/download-bordered.svg">
+        </a>
         <mat-menu #menu5="matMenu">
             <button (click)="pdf('PPF')" mat-menu-item>PDF</button>
             <button (click)="Excel('PPF')" mat-menu-item>XLS</button>
         </mat-menu>
-        <img src="assets/images/svg/up-down.svg" class="">
-        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
 
-        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+        <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+            <img src="assets/images/svg/up-down.svg">
+        </a>
+        <mat-menu #menu7="matMenu">
+            <button mat-menu-item>Upload file
+                <input (change)="fetchData('PPF',$event)" class="uploadInput" id="file-4" multiple type="file">
+            </button>
+        </mat-menu>
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
+
+        <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPPF(null)">ADD NEW</button>
     </div>
 </div>
 <div class="overflow-hidden mt-8 real-estate">
-    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading
-        [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -44,10 +56,10 @@
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef class="br textRight text-right"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                <div >{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -60,10 +72,10 @@
         <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br textRight text-right"> Total amount invested </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="number">
@@ -98,11 +110,12 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2">
+            <td mat-cell *matCellDef="let element" class="t-2 text-center">
                 <div *ngIf="!isLoading">
-                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                    <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                         more_vert
-                    </i>
+                    </i> -->
+                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailPPF(element)">Detailed view</button>

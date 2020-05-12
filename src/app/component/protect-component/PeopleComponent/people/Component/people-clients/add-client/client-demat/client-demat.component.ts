@@ -39,6 +39,7 @@ export class ClientDematComponent implements OnInit {
     // }
   };
   clientData: any;
+  disableBtn = false;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService) {
@@ -51,7 +52,7 @@ export class ClientDematComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
-    this.idData = (this.fieldFlag == 'client' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId;
+    this.idData = (this.fieldFlag != "familyMember") ? this.userData.clientId : this.userData.familyMemberId;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
       this.holdingMode = '1';
@@ -366,7 +367,7 @@ export class ClientDematComponent implements OnInit {
         // return;
         // }
       }
-      (flag == 'Save') ? this.barButtonOptions.active = true : '';
+      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
       let obj =
       {
         "depositoryParticipantName": this.dematForm.get('depositoryPartName').value,
@@ -388,12 +389,14 @@ export class ClientDematComponent implements OnInit {
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
           console.log(data);
+          this.disableBtn = false;
           this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss')
           this.barButtonOptions.active = false;
+          this.disableBtn = false
         }
       );
 

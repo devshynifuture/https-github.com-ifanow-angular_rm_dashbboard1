@@ -25,9 +25,14 @@ export class StockScripLevelHoldingComponent implements OnInit {
   ownerInfo: any;
   portfolioData: any;
   scripForm: any;
+  maxDate= new Date();
   portfolioFieldData: { familyMemberId: any; };
     nomineesListFM: any = [];
+  nomineesList: any[] = [];
+
   checkValid:boolean= false;
+  callMethod: { methodName: string; ParamValue: any; };
+
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
@@ -38,25 +43,151 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.getFormData(data);
   }
 
-  display(value) {
-    // this.ownerInfo = value.userName
-    console.log('value selected', value)
-    // this.ownerName = value.userName;
-    this.scipLevelHoldingForm.get('ownerName').setValue(value.userName)
-    this.familyMemberId = value.id;
-    this.portfolioFieldData = {
-      familyMemberId: this.familyMemberId
-    }
-  }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+ 
   getPortfolioData(data) {
     console.log("", data)
     this.portfolioData = data;
     this.scipLevelHoldingForm.get('portfolioName').setValue(data.portfolioName)
   }
+
+  // ===================owner-nominee directive=====================//
+display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+  //  disControl : type
+  }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.scipLevelHoldingForm.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.scipLevelHoldingForm.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.scipLevelHoldingForm.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+  }));
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+ 
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.scipLevelHoldingForm.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.scipLevelHoldingForm.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+this.disabledMember(null, null);
+  this.getNominee.removeAt(item);
+  if (this.scipLevelHoldingForm.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
 
   getFormData(data) {
     if (data == null) {
@@ -71,7 +202,19 @@ export class StockScripLevelHoldingComponent implements OnInit {
       // this.scipLevelHoldingForm.get('ownerName').setValue(this.ownerName)
     }
     this.scipLevelHoldingForm = this.fb.group({
-      ownerName: [this.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['', [Validators.required]],
+        share: ['', [Validators.required]],
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
+      })]),
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id: [0]
+      })]),
       portfolioName: [data.portfolioName, [Validators.required]]
     })
     if (data.transactionorHoldingSummaryList) {
@@ -90,8 +233,35 @@ export class StockScripLevelHoldingComponent implements OnInit {
     }
     this.familyMemberId = data.familyMemberId;
     this.portfolioFieldData= {
-      familyMemberId: this.familyMemberId
+      familyMemberId: this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId
     }
+
+    // ==============owner-nominee Data ========================\\
+    /***owner***/
+    if (this.scipLevelHoldingForm.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
+
+    if (data.ownerList) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
+
+    /***owner***/
+
+    /***nominee***/
+    if (data.nomineeList) {
+      this.getNominee.removeAt(0);
+      data.nomineeList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
+    /***nominee***/
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelHoldingForm }
+    // ==============owner-nominee Data ========================\\
     // this.ownerData = this.scipLevelHoldingForm.controls;
   }
   holdingListForm = this.fb.group({
@@ -146,7 +316,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
           finalStocks.push(singleList);
         });
         let obj = {
-          "stocks": [
+          "stockList": [
             {
               "transactionorHoldingSummaryList": finalStocks
             }
@@ -166,12 +336,15 @@ export class StockScripLevelHoldingComponent implements OnInit {
         this.HoldingArray.controls.forEach(element => {
           let obj = {
             "scripNameId": element.get('scripName').value.id,
-            "scripCurrentValue": element.get('scripName').value.currentValue,
+            "currentMarketValue": 0,
             "stockType": 2,
+            "amountInvested": 0,
+            "valueAsOn": null,
             "transactionorHoldingSummaryList": [
               {
                 "holdingOrTransaction": 1,
                 "quantity": element.get('holdings').value,
+                "transactionTypeOrScripNameId":1,
                 "holdingOrTransactionDate": element.get('holdingAsOn').value,
                 "investedOrTransactionAmount": element.get('investedAmt').value
               }
@@ -184,10 +357,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
           "id": this.portfolioData.id,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
-          "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
+          "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
           "portfolioName": this.portfolioData.portfolioName,
-          "stocks": finalStocks
+          "stockList": finalStocks
         }
         console.log(obj)
         this.cusService.addAssetStocks(obj).subscribe(

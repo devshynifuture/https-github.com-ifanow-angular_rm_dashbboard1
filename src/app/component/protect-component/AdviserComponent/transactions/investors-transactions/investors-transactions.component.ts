@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OnlineTransactionService } from '../online-transaction.service';
-import { TransactionEnumService } from '../transaction-enum.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
-import { EnumServiceService } from '../../../../../services/enum-service.service';
-import { IinUccCreationComponent } from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OnlineTransactionService} from '../online-transaction.service';
+import {TransactionEnumService} from '../transaction-enum.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatSort, MatTableDataSource} from '@angular/material';
+import {EnumServiceService} from '../../../../../services/enum-service.service';
+import {IinUccCreationComponent} from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {InvestorDetailComponent} from './investor-detail/investor-detail.component';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -14,22 +16,22 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./investors-transactions.component.scss']
 })
 export class InvestorsTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'status'];
+  displayedColumns: string[] = ['aggregatorType', 'brokerCode', 'name', 'panNo', 'taxStatus', 'holdingType',
+    'clientCode', 'status'];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   filterData: any;
-  selectedBrokerCode: any;
-  selectedPlatform: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
   innUccPendindList: any;
   credentialData: any;
   dontHide: boolean;
+  isPendingData = false;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-    private enumServiceService: EnumServiceService) {
+              private enumServiceService: EnumServiceService, private subInjectService: SubscriptionInject) {
   }
 
   isLoading = false;
@@ -49,38 +51,40 @@ export class InvestorsTransactionsComponent implements OnInit {
       this.noData = 'No investors found';
     }
   }
+
   refresh(flag) {
-    this.dontHide = true
-    this.getIINUCC()
+    this.dontHide = true;
+    this.getIINUCC();
   }
+
   getFilterOptionData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
-    }
-    console.log('encode', obj)
+    };
+    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data),
       err => {
         this.isLoading = false;
-        this.noData = "No credentials found";
-        this.dataSource.data = []
+        this.noData = 'No credentials found';
+        this.dataSource.data = [];
       }
     );
   }
+
   getFilterOptionDataRes(data) {
 
     console.log(data);
     if (data) {
       this.credentialData = data;
       this.getMappedData();
-    }
-    else {
+    } else {
       this.isLoading = false;
       this.dataSource.data = [];
-      this.noData = "No credentials found";
+      this.noData = 'No credentials found';
     }
     // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
@@ -96,6 +100,7 @@ export class InvestorsTransactionsComponent implements OnInit {
       // tpUserCredentialId: this.selectedBrokerCode.id,
       // aggregatorType: this.selectedPlatform.aggregatorType
     };
+    this.isPendingData = false;
     this.onlineTransact.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
@@ -117,28 +122,32 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
+
   getIINUCC() {
-    this.dontHide = true
+    this.dontHide = true;
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId
     };
+    this.isPendingData = true;
+
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
         this.isLoading = false;
-        this.dontHide = true
+        this.dontHide = true;
         this.innUccPendindList = data || [];
-        this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data)
+        this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
         this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
         this.dataSource.sort = this.sort;
-        console.log('innUccPendindList', this.innUccPendindList)
+        console.log('innUccPendindList', this.innUccPendindList);
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss')
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
+
   openNewCustomerIIN() {
     const fragmentData = {
       flag: 'addNewCustomer',
@@ -160,24 +169,29 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   }
 
+  openInvestorDetail(data) {
+    if (this.isLoading || !this.isPendingData) {
+      return;
+    }
+    console.log('this is detailed potd data', data);
+    const fragmentData = {
+      flag: 'investorDetail',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: InvestorDetailComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  bank: string;
-  bankac: string;
-  amt: string;
-  type: string;
-  status: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'NSE', name: 'ARN-83865', weight: 'Rahul Jain', symbol: 'AATPJ1239L', bank: 'Individual', bankac: 'Anyone or survivor',
-    amt: '5011102595', type: '50,000', status: 'Investment ready'
-  },
-
-];

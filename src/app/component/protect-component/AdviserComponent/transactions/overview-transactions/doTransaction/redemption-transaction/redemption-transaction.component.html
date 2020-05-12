@@ -85,12 +85,13 @@
           <div class="col-md-11 p-0">
             <div class="form-group ">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input  [matAutocomplete]="auto" appCustomAutoComplete
+                <input [matAutocomplete]="auto" appCustomAutoComplete
                        aria-label="Number" class="form-control" formControlName="schemeRedeem" matInput
                        placeholder="Start typing to see scheme names" type="text">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (click)="selectedScheme(scheme)" *ngFor="let scheme of filterSchemeList | async"
-                              [value]="scheme.schemeName">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
+                                  [displayWith]="processTransaction.displaySchemeName">
+                  <mat-option
+                    *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -108,26 +109,6 @@
           </div>
           <div *ngIf="showSpinner == true" class="col-md-1">
             <mat-spinner class="mt-8"></mat-spinner>
-          </div>
-        </div>
-        <div *ngIf="reInvestmentOpt.length > 1" class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-28 text-black pb-12">Select re-investment</h5>
-          </div>
-          <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-              <mat-form-field>
-                <mat-select class="form-control" formControlName="investmentAccountSelection">
-                  <mat-option value='' disabled>Select re-investment</mat-option>
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
-                    {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
-                  </mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4">
-                  This field is required
-                </mat-error>
-              </mat-form-field>
-            </div>
           </div>
         </div>
         <div class="row">
@@ -190,7 +171,7 @@
                 </mat-option>
                 <mat-option value="2">No. of units
                 </mat-option>
-                <mat-option value="3">All avialable units
+                <mat-option value="3">All available units
                 </mat-option>
               </mat-select>
               <mat-error class="f-12 pt-4">
@@ -252,7 +233,8 @@
 </div> -->
     <div class="col-md-8 text-right d-flex justify-content-end">
       <!-- commented for prod build -->
-      <button (click)="AddMultiTransaction()" class="br-0 mr-12 text-success f-14" mat-button mat-raised-button>
+      <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1"
+              class="br-0 mr-12 text-success f-14" mat-button mat-raised-button>
         SAVE & ADD ANOTHER
       </button>
       <!-- <button mat-button class="btn-green text-white ml-12" (click)="redeem()">

@@ -5,6 +5,22 @@
     justify-content: end;
     margin-right: 10px;
 }
+
 .hide {
     display: none;
+}
+
+.uploadInput {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 140px;
+    z-index: 1020;
 }

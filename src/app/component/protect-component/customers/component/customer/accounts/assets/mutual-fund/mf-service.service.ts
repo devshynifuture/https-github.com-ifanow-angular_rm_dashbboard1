@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BehaviorSubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MfServiceService {
   advisorData: any;
-  constructor(private settingService: SettingsService, private authService: AuthService) {
+  constructor(private settingService: SettingsService, private authService: AuthService,private datePipe: DatePipe) {
   }
 
   private mutualFundDataSource = new BehaviorSubject('');
@@ -31,7 +32,7 @@ export class MfServiceService {
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
@@ -59,7 +60,9 @@ export class MfServiceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      filterData.push(element[key]);
+      if(element[key]){
+        filterData.push(element[key]);
+      }
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
@@ -95,7 +98,11 @@ export class MfServiceService {
     // this.totalGain = 0;
     // this.allocationPer = 0;
   }
-
+  getYearFromDate(date){ //for converting timeStampdate into year
+    date = new Date(date);
+    date =date.getFullYear();
+    return date;
+  }
   calculateTotalValue(data) {// for getting total value as per category in Summary
     let amtInvested = 0;
     let currentValue = 0;
@@ -109,7 +116,7 @@ export class MfServiceService {
     amtInvested += (data.amountInvested) ? data.amountInvested : 0;
     currentValue += (data.currentValue) ? data.currentValue : 0;
     unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
-    absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+    absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
@@ -135,7 +142,7 @@ export class MfServiceService {
     for (const [key, value] of Object.entries(primaryObject)) {
       if (exceptionKeys[key]) {
       } else {
-        if (primaryObject[key] && secondary[key]) {
+        if ((primaryObject[key] || primaryObject[key]==0) && (secondary[key]) || secondary[key]==0) {
           primaryObject[key] = value + secondary[key];
         }
       }
@@ -157,6 +164,7 @@ export class MfServiceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
+    let netGain =0;
     data.mutualFundTransactions.forEach(ele => {
       totalTransactionAmt += (ele.amount) ? ele.amount : 0;
       totalUnit += (ele.unit) ? ele.unit : 0;
@@ -166,7 +174,8 @@ export class MfServiceService {
       dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
       dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
       totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-      totalGain += (ele.gain) ? ele.gain : 0;
+      totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
+      netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0;
       absReturn += (ele.absReturn) ? ele.absReturn : 0;
       xirr += (ele.xirr) ? ele.xirr : 0;
       allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
@@ -253,32 +262,75 @@ export class MfServiceService {
   }
 
   filterFinalData(mfData, dataForFilter) {
+    let mutualFundList;
     const family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
     const category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
     const subCategoryData = this.filter(category, 'mutualFundSubCategoryMaster');
     const schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
     const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
-    const mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
-    let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    // dataForFilter.folio.forEach(element => {
+    //   mutualFundList = mutualFundListFilter.filter((item: any) =>
+    //  item.folioNumber == element.folioNumber
+    //     );
+    // });
+
     if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
         item.folioNumber != 0
       );
     }
+    if(dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT'){
+      dataForFilter.reportAsOn = null;
+    }
     if (dataForFilter.reportAsOn) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          item.transactionDate <= dataForFilter.reportAsOn
+          this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
         );
       });
     }
-    if (dataForFilter.fromDate && dataForFilter.toDate) {
-      mutualFundList.forEach(element => {
-        element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
-        );
-      });
+    if(dataForFilter.transactionPeriodCheck){
+      if (dataForFilter.fromDate && dataForFilter.toDate) {
+        mutualFundList.forEach(element => {
+          element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
+            item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
+          );
+        });
+      }
     }
+
+    // let type = dataForFilter.reportType[0].name;
+    // (type == 'Sub Category wise') ? type = 'subCategoryName' :
+    // (type== 'Category wise') ? type = 'categoryName' : type = 'Investor wise';
+    // let catObj = this.categoryFilter(mutualFundList, type);
+    // console.log(catObj)
+    // let categoryWiseMfList = catObj;
+    // Object.keys(catObj).map(key => {
+    //   catObj[key].forEach((singleData) => {
+    //     singleData.navDate =  this.datePipe.transform(singleData.navDate, 'yyyy-MM-dd')
+    //    singleData.mutualFundTransactions.forEach(element => {
+    //     element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+    //    });
+    //   });
+    // });
+    let categoryWiseMfList = [];
+    mutualFundList.forEach(element => {
+      categoryWiseMfList.push(element.id)
+    });
+
+    let capitalGainArray = [];
+    if(dataForFilter.capitalGainData){
+      dataForFilter.capitalGainData.responseData.forEach(element => {
+        const family_member_list = this.filterArray(element.mutualFund, 'familyMemberId', dataForFilter.familyMember, 'familyMemberId');
+        if(family_member_list.length > 0){
+          capitalGainArray.push(element)
+        }
+      });
+      dataForFilter.capitalGainData.responseData = capitalGainArray;
+    }
+
     const sendData = {
       subCategoryData,
       family_member_list,
@@ -291,8 +343,13 @@ export class MfServiceService {
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
-      overviewFilter: dataForFilter.overviewFilter,
+      overviewFilter : dataForFilter.overviewFilter,
+      reportFormat:dataForFilter.reportFormat,
+      financialYear:dataForFilter.financialYear,
+      grandfathering:dataForFilter.grandfathering,    
       mfData,
+      capitalGainData:dataForFilter.capitalGainData,
+      categoryWiseMfList:categoryWiseMfList
     };
     return sendData;
   }

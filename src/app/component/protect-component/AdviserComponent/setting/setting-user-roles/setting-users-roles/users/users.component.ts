@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {NewTeamMemberComponent} from './new-team-member/new-team-member.component';
@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
   isLoading: boolean = true;
   counter = 0;
   hasError = false;
-
+  @Input() hideLabel;
   constructor(
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,

@@ -7,7 +7,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -18,7 +18,7 @@ import {map, startWith} from 'rxjs/operators';
 export class PurchaseTrasactionComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & PROCEED',
+    text: 'TRANSACT NOW',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -31,6 +31,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  mandateDetails = [];
   purchaseTransaction: any;
   dataSource: any;
   ownerData: any;
@@ -57,7 +58,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   folioDetails: any;
   showSpinner = false;
   bankDetails: any;
-  achMandateNSE: any;
+  selectedMandate: any;
   callOnFolioSelection: boolean;
   showSpinnerMandate = false;
   showSpinnerFolio = false;
@@ -74,7 +75,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
 
-  constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+  constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
               private customerService: CustomerService) {
   }
@@ -173,7 +174,7 @@ export class PurchaseTrasactionComponent implements OnInit {
             this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.showErrorMessage(error);
+            // this.eventService.openSnackBar(error, 'dismiss');
           }
         );
       }
@@ -185,7 +186,7 @@ export class PurchaseTrasactionComponent implements OnInit {
             this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.showErrorMessage(error);
+            // this.eventService.openSnackBar(error, 'dismiss');
           }
         );*/
     }
@@ -195,8 +196,14 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinner = false;
     console.log('new schemes', responseData);
     this.schemeList = responseData;
-    this.purchaseTransaction.controls.schemePurchase.setValue(inputData);
+    this.filterSchemeList = new Observable().pipe(startWith(''),
+      map(value => this.processTransaction.filterScheme(this.purchaseTransaction.controls.schemePurchase.value, this.schemeList)));
 
+    // this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+    // );
+    // this.purchaseTransaction.controls.schemePurchase.setValue({schemeName: });
   }
 
   getExistingSchemesRes(data) {
@@ -220,7 +227,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.setMinAmount();
       Object.assign(this.transactionSummary, {folioNumber: ''});
     } else {
-      this.getFolioList();
+      if (this.scheme) {
+        this.getFolioList();
+      }
     }
   }
 
@@ -230,11 +239,15 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.purchaseTransaction.controls.investmentAccountSelection.reset();
+    this.purchaseTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   selectedScheme(scheme) {
     this.scheme = scheme;
+    this.folioList = [];
+    this.reInvestmentOpt = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -277,8 +290,19 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
-    this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
-    // this.purchaseTransaction.updateValueAndValidity();
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount),
+          Validators.max(this.selectedMandate.amount)]);
+        this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
+      } else {
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+      }
+    } else {
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+    }// this.purchaseTransaction.updateValueAndValidity();
   }
 
   getFolioList() {
@@ -299,7 +323,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.getFoliosAmcWiseRes(data);
           this.setMinAmount();
         }, (error) => {
-          this.purchaseTransaction.get('folioSelection').setValue(2);
+          this.purchaseTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
@@ -313,7 +337,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.getFoliosAmcWiseRes(data);
           this.setMinAmount();
         }, (error) => {
-          this.purchaseTransaction.get('folioSelection').setValue(2);
+          this.purchaseTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
@@ -358,7 +382,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
       }
     } else {
-      this.purchaseTransaction.get('folioSelection').setValue(2);
+      this.purchaseTransaction.get('folioSelection').setValue('2');
       this.noFolio = 'No existing folios';
       this.ExistingOrNew = 2;
     }
@@ -382,8 +406,11 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
-    if (this.selectScheme == 1) {
+    if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
+    }
+    if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
+      this.getMandateDetails();
     }
     //  this.purchaseTransaction.controls.investor.reset();
   }
@@ -406,7 +433,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
         this.purchaseTransaction.get('schemePurchase').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-        // this.eventService.showErrorMessage(error);
+        // this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -415,33 +442,59 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {paymentMode: value});
     if (value == 2) {
       Object.assign(this.transactionSummary, {getAch: true});
-      this.getNSEAchmandate();
+      this.getMandateDetails();
+    } else {
+      this.purchaseTransaction.controls.employeeContry.clearValidators();
+      this.purchaseTransaction.controls.employeeContry.clearAsyncValidators();
+
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
+      this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
     }
+
   }
 
-  getNSEAchmandate() {
+  getMandateDetails() {
     this.showSpinnerMandate = true;
     const obj1 = {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
-    this.onlineTransact.getNSEAchmandate(obj1).subscribe(
-      data => this.getNSEAchmandateRes(data), (error) => {
-        this.purchaseTransaction.get('modeOfPaymentSelection').setValue('1');
-        this.eventService.openSnackBar(error, 'dismiss');
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
+      data => this.getMandateDetailsRes(data), (error) => {
+        this.handleMandateFailure();
       }
     );
   }
 
-  getNSEAchmandateRes(data) {
+  handleMandateFailure() {
     this.showSpinnerMandate = false;
-    console.log('getNSEAchmandateRes', data);
+    this.mandateDetails = [];
+    this.selectedMandate = null;
+    this.eventService.openSnackBar('No mandate found', 'dismiss');
+    this.purchaseTransaction.controls.modeOfPaymentSelection.setValue('1');
+  }
+
+  getMandateDetailsRes(data) {
+    console.log('mandate res unfiltered : ', data);
+    this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
+    console.log('mandate res filtered : ', this.mandateDetails);
+    if (!this.mandateDetails || this.mandateDetails.length == 0) {
+      this.handleMandateFailure();
+      return;
+    }
+
+    this.showSpinnerMandate = false;
     if (data.length > 1) {
       Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
-    this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED');
-    console.log('this.achMandateNSE', this.achMandateNSE);
-    this.achMandateNSE = this.achMandateNSE[0];
-    Object.assign(this.transactionSummary, {umrnNo: this.achMandateNSE.umrnNo});
+    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
+        this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
+      }
+    }
   }
 
   close() {
@@ -475,11 +528,14 @@ export class PurchaseTrasactionComponent implements OnInit {
       schemePurchase: [(!data) ? '' : data.schemeName, [Validators.required]],
 
     });
-
-    this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
-    );
+    this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
+      this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
+    });
+    /* this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+       startWith(''),
+       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+     );*/
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.amcId;
@@ -491,19 +547,26 @@ export class PurchaseTrasactionComponent implements OnInit {
     return this.purchaseTransaction.controls;
   }
 
-  purchase() {
+  validateSinglePurchase() {
     if (this.purchaseTransaction.get('folioSelection').invalid) {
       this.purchaseTransaction.get('folioSelection').markAsTouched();
-      return;
     } else if (this.purchaseTransaction.get('employeeContry').invalid) {
       this.purchaseTransaction.get('employeeContry').markAsTouched();
     } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
       this.purchaseTransaction.get('reinvest').markAsTouched();
-      return;
     } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
       this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
+    } else if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2' && !this.selectedMandate) {
+      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
     } else {
+      return true;
+    }
+
+    return false;
+  }
+
+  purchase() {
+    if (this.validateSinglePurchase()) {
       const obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
@@ -532,10 +595,12 @@ export class PurchaseTrasactionComponent implements OnInit {
         nsePaymentMode: null,
         bankDetailId: null,
         isException: true,
-        childTransactions: []
+        childTransactions: [],
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
+        obj.mandateId = (this.selectedMandate == undefined) ? null : this.selectedMandate.id;
         obj.bankDetailId = this.bankDetails.id;
         obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
@@ -552,6 +617,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'dismiss');
         }
       );
+
     }
   }
 

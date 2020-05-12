@@ -136,20 +136,20 @@
                         </mat-error>
                       </mat-form-field> -->
                     <mat-form-field>
-                        <!-- <input autocomplete="off" matInput aria-label="State" [matAutocomplete]="auto"
+                        <input autocomplete="off" matInput aria-label="State" #name  [matAutocomplete]="auto" (keyup)="filterSchemeOptions(name.value)"
                             class="form-control br-0 pl-8" formControlName="schemeId">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
-                        </mat-autocomplete> -->
-                        <mat-select matInput formControlName="schemeId" class="form-control br-0">
+                        </mat-autocomplete>
+                        <!-- <mat-select matInput formControlName="schemeId" class="form-control br-0">
                             <mat-option [value]='0' disabled>Select scheme</mat-option>
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">
                             This field is required
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
             </div>

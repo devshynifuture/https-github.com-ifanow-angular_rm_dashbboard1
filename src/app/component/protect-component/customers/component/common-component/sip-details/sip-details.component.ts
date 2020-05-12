@@ -26,7 +26,7 @@ export class SipDetailsComponent implements OnInit {
   }
   getSipDetails(data){
     const obj = {
-      mfId: 1
+      mfId: this.inputData.id
     }
     this.custumService.getMfSipDetails(obj).subscribe(
       data => this.getSipDetailsResponse(data), (error) => {

@@ -3,7 +3,7 @@
         color: #83959D;
         padding: 12px;
         //overflow: hidden;
-        position: relative;
+        //position: relative;
         p.selectMoreDetails {
             color: #83959D;
             font-size: 14px;
@@ -140,4 +140,11 @@
                 margin-bottom: 0px;
             }
         }
+    }
+    
+    .sticky-top {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 130px;
+        z-index: 0;
     }

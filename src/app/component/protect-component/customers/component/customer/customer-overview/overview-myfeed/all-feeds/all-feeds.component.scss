@@ -358,3 +358,14 @@
         background-color: transparent !important;
     }
 }
+
+.sticky-top {
+    //  position: -webkit-sticky;
+    position: sticky;
+    top: 140px;
+    z-index: 1020;
+}
+
+::ng-deep .feedSumaaryMarket .toggleBtnClass .mat-button-toggle {
+    width: 75px !important;
+}

@@ -47,6 +47,14 @@ export class SettingsService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_REPORT_LOGO, data);
   }
 
+  resetWebImage(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_ORG_PROFILE_LOGO, data);
+  }
+
+  resetReportLogoImage(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_ORG_REPORT_LOGO, data);
+  }
+
 
   // users and roles
   getUserRolesGlobalData(data) {
@@ -82,6 +90,10 @@ export class SettingsService {
   getAllRoles(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLE_ROLE_LIST, httpParams);
+  }
+
+  getAdvisorRoles(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ADVISOR_ROLE_ROLE_LIST, data);
   }
 
   getDetailedRole(data) {

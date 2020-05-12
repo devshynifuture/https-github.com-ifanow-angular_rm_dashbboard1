@@ -192,6 +192,8 @@ export const appConfig = {
   DELETE_OTHERS: 'account/asset/commodity/other/delete',
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
+  FETCH_FILE_UPLOAD_DATA: 'document/account/document/folderid/fetch',
+  FETCH_CLIENT_FILE_UPLOAD: 'document/account/document/people/image/id/get',
   GET_COUNT_DOCS: 'document/account/document/all-file/count/get',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
@@ -209,6 +211,7 @@ export const appConfig = {
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
+  REPORT_WISE_CALCULATION: 'mutual-fund/reportwise/calculation/get',
   MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST: 'mutual-fund/transaction/type/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
@@ -218,11 +221,13 @@ export const appConfig = {
   MUTUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
   MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
   MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
+
   MUTUAL_FUND_ADD: 'mutual-fund/mutualFund/add',
   MUTUAL_FUND_EDIT: 'mutual-fund/mutualFund/edit',
   FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID: 'family/name/by/clientId/get',
   MUTUAL_FUND_SCHEME_NAME_LIST_GET: 'mutual-fund/all/schemeName/list/get',
   MUTUAL_FUND_DELETE: 'mutual-fund/mutualFund/scheme/folio/delete',
+  GET_DATED_REPORT_WISE_CALCULATION: 'mutual-fund/getDatedReportWiseCalculations/list/get',
 
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
@@ -414,6 +419,7 @@ export const appConfig = {
   ADVICE_ADD_EPF: 'advice/asset/retirement-account/suggest-new-epf/add',
   ADVICE_ADD_NPS: 'advice/asset/retirement/suggest-new-nps/add',
   SCHEME_CHOICE: 'account/asset/nps/global-data/get',
+  SCHEME_FILTER_CHOICE: 'account/asset/nps-master/list/get',
   ADVICE_ADD_GRATUITY: 'advice/asset/retirement-account/suggest-new-gratuity/add',
   ADVICE_ADD_SUPERANNUATION: 'advice/asset/retirement/suggest-new-superannuation/add',
   ADVICE_ADD_EPS: 'advice/asset/retirement/eps/add',
@@ -478,6 +484,8 @@ export const appConfig = {
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'nse/tax-master/get',
+  INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
+  INVESTOR_STATUS_CHECK: 'user/register/status/check/update',
 
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
@@ -584,6 +592,8 @@ export const appConfig = {
   UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  RESET_ORG_PROFILE_LOGO: 'setting/organisation/logo/delete',
+  RESET_ORG_REPORT_LOGO: 'setting/organisation/report-logo/delete',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
   EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
@@ -612,6 +622,7 @@ export const appConfig = {
   GET_APPEARANCE_SETTING: 'setting/preferences/appearance/get',
   UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
   GET_USER_ROLES: 'setting/users-roles/role/get',
+  GET_CLIENT_ROLES: 'setting/users-roles/client-role/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -661,6 +672,7 @@ export const appConfig = {
   GET_ISD_CODES: 'user/isd-code/list/get',
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
+  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -701,6 +713,7 @@ export const appConfig = {
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 
   GET_USER_ROLE_ROLE_LIST: 'setting/users-roles/role/get',
+  GET_ADVISOR_ROLE_ROLE_LIST: 'setting/users-roles/advisor-role/get',
   EDIT_USER_ROLE: 'setting/users-roles/role/edit',
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',

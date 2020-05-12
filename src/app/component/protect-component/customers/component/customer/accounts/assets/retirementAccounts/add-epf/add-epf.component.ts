@@ -64,7 +64,7 @@ export class AddEPFComponent implements OnInit {
   bankList:any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,  public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private event: EventService, private dateFormatPipe: DatePipe, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,  public dialog: MatDialog, private enumService: EnumServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -130,12 +130,17 @@ lisNominee(value) {
   this.nomineesListFM = Object.assign([], value);
 }
 
+selectOwner:any;
 disabledMember(value, type) {
   this.callMethod = {
     methodName : "disabledMember",
     ParamValue : value,
     disControl : type
   }
+
+  setTimeout(() => {
+    this.selectOwner = this.nomineesListFM.filter((m)=> m.familyMemberId == this.epf.value.getCoOwnerName[0].familyMemberId)
+  }, 1000);
 }
 
 displayControler(con) {
@@ -356,6 +361,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         description: this.epf.controls.description.value,
         voluntaryContribution:parseInt(this.epf.controls.voluntaryContribution.value),
         nomineeList: this.epf.value.getNomineeName,
+        familyMemberDob: this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
+
         parentId:0,
         realOrFictitious:1,
         id: this.epf.controls.id.value

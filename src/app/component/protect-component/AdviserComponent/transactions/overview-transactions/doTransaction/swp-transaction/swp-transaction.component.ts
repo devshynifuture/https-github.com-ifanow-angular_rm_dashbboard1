@@ -6,7 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -18,7 +18,7 @@ import {map, startWith} from 'rxjs/operators';
 export class SwpTransactionComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & PROCEED',
+    text: 'TRANSACT NOW',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -56,7 +56,6 @@ export class SwpTransactionComponent implements OnInit {
   folioDetails: any;
   scheme: any;
   folioList: any;
-  mandateDetails: any;
   bankDetails: any;
   showSpinnerFolio = false;
   currentValue: number;
@@ -68,7 +67,7 @@ export class SwpTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private processTransaction: ProcessTransactionService, private fb: FormBuilder,
+              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
               private eventService: EventService) {
   }
 
@@ -149,7 +148,7 @@ export class SwpTransactionComponent implements OnInit {
         this.swpTransaction.get('schemeSwp').setErrors({setValue: error.message});
         this.swpTransaction.get('schemeSwp').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
-        // this.eventService.showErrorMessage(error);
+        // this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -172,9 +171,6 @@ export class SwpTransactionComponent implements OnInit {
       this.reInvestmentOpt = [];
     }
     this.getFrequency();
-    if (this.getDataSummary.defaultClient.aggregatorType == 2) {
-      this.getMandateDetails();
-    }
     this.getSchemeWiseFolios();
   }
 
@@ -188,13 +184,17 @@ export class SwpTransactionComponent implements OnInit {
     this.showSpinner = false;
     console.log('getExistingSchemesRes =', data);
     this.schemeList = data;
-    this.swpTransaction.controls.schemeSwp.setValue(this.swpTransaction.controls.schemeSwp.value);
+    this.swpTransaction.controls.schemeSwp.setValue('');
 
   }
 
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.showUnits = true;
+    this.folioList = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
+    this.swpFrequency = [];
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -205,7 +205,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -224,7 +224,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
@@ -243,7 +243,7 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.swpTransaction.controls.investmentAccountSelection.reset();
+    this.swpTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   selectedFolio(folio) {
@@ -264,17 +264,23 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
 
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
-    this.swpFrequency = data;
-    this.swpFrequency = data.filter((element) => {
-      return element.frequency;
-    });
+    // this.swpFrequency = data;
+    this.swpFrequency = this.processTransaction.filterFrequencyList(data);
+    if (this.swpFrequency) {
+      this.swpFrequency.forEach(singleFrequency => {
+        if (singleFrequency.frequency == 'MONTHLY') {
+          this.swpTransaction.controls.frequency.setValue(singleFrequency.frequency);
+          this.selectedFrequency(singleFrequency);
+        }
+      });
+    }
   }
 
   selectedFrequency(getFrerq) {
@@ -297,24 +303,6 @@ export class SwpTransactionComponent implements OnInit {
       return element.date > currentDate;
     });
     console.log('dateDisplay = ', this.dateDisplay);
-  }
-
-  getMandateDetails() {
-    const obj1 = {
-      advisorId: this.getDataSummary.defaultClient.advisorId,
-      clientCode: this.getDataSummary.defaultClient.clientCode,
-      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-    };
-    this.onlineTransact.getMandateDetails(obj1).subscribe(
-      data => this.getMandateDetailsRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
-    );
-  }
-
-  getMandateDetailsRes(data) {
-    console.log('mandate details :', data);
-    this.mandateDetails = data;
   }
 
   close() {
@@ -369,11 +357,18 @@ export class SwpTransactionComponent implements OnInit {
     } else if (this.swpTransaction.get('employeeContry').invalid) {
       this.swpTransaction.get('employeeContry').markAsTouched();
       return;
-    } else if (this.swpTransaction.get('installment').invalid) {
+    } else if ((this.swpTransaction.get('tenure').value) != 3 && this.swpTransaction.get('installment').invalid) {
       this.swpTransaction.get('installment').markAsTouched();
       return;
     } else {
-      let obj = {
+      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
+      const tenure = this.swpTransaction.controls.tenure.value;
+      const noOfInstallments = this.swpTransaction.controls.installment.value;
+      const orderVal = this.swpTransaction.controls.employeeContry.value;
+      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
+
+      obj = {
+        ...obj,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
         holdingNature: this.getDataSummary.defaultClient.holdingType,
@@ -386,9 +381,6 @@ export class SwpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ''))),
-        noOfInstallments: this.swpTransaction.controls.installment.value,
-        frequencyType: this.frequency,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
         clientCode: this.getDataSummary.defaultClient.clientCode,
@@ -401,15 +393,12 @@ export class SwpTransactionComponent implements OnInit {
         nsePaymentMode: null,
         childTransactions: null,
         isException: true,
-
+        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
         obj.bankDetailId = this.bankDetails.id;
-        obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
+        // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
-      const tenure = this.swpTransaction.controls.tenure.value;
-      const installment = this.swpTransaction.controls.installment.value;
-      obj = this.processTransaction.checkInstallments(obj, tenure, installment);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
@@ -476,7 +465,7 @@ export class SwpTransactionComponent implements OnInit {
         };
         const tenure = this.swpTransaction.controls.tenure.value;
         const installment = this.swpTransaction.controls.installment.value;
-        obj = this.processTransaction.checkInstallments(obj, tenure, installment);
+        obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
         console.log(this.childTransactions);
         this.swpTransaction.controls.date.reset();

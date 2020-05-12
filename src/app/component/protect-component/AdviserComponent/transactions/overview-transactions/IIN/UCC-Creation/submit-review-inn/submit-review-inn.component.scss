@@ -1,26 +1,27 @@
 .imgAdLogo {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .btnConfirm {
-    width: 140px;
-    height: 40px;
+  width: 140px;
+  height: 40px;
 }
 
 .uploadInput {
-    position: absolute;
-    font-size: 50px;
-    opacity: 0;
-    right: 0;
-    top: 0;
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  display: none;
+  top: 0;
 }
 
 .greenBtn {
-    background: #02B875;
-    color: #ffffff;
-    margin-left: 10px;
+  background: #02B875;
+  color: #ffffff;
+  margin-left: 10px;
 }
 
 ::ng-deep .inputPaddingNone .mat-form-field-appearance-standard .mat-form-field-flex {
-    padding-top: 0px !important;
+  padding-top: 0px !important;
 }

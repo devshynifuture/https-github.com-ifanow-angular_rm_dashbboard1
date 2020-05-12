@@ -368,6 +368,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
           userBankMappingId: this.pomisForm.controls.accNumber.value,
           ownerTypeId: this.pomisForm.controls.ownershipType.value,
           nomineeList: this.pomisForm.value.getNomineeName,
+          tenure: this.pomisForm.value.tenure,
           // nominees: this.nominees,
           description: this.pomisForm.controls.description.value,
           // "createdDate":"2001-01-01"

@@ -13,15 +13,6 @@ export class OrgSettingServiceService {
   constructor(private http: HttpService) {
   }
 
-  getPersonalProfile(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE, data);
-  }
-
-  getOrgProfile(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORG_PROFILE, httpParams);
-  }
-
   editPersonalProfile(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PERSONAL_PROFILE, data);
   }
@@ -168,5 +159,9 @@ export class OrgSettingServiceService {
   getUserRoles(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLES, httpParams);
+  }
+  getClientUserRoles(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ROLES, httpParams);
   }
 }

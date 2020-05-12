@@ -13,6 +13,7 @@ import { ExcelService } from '../../../excel.service';
 import { MathUtilService } from '../../../../../../../../services/math-util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../../assets/file-upload-service.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -45,10 +46,17 @@ export class OtherPayablesComponent implements OnInit {
   filterData: MatTableDataSource<any>;
   filterForOtherPayables: any;
   personalProfileData: any;
+  fileUploadData: any;
+  file: any;
+  myFiles: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
-    public dialog: MatDialog,private excel :ExcelGenService,private pdfGen:PdfGenService) {
-  }
+    public dialog: MatDialog,private excel :ExcelGenService,private pdfGen:PdfGenService, private fileUpload : FileUploadServiceService) {
+ 
+      this.clientData = AuthService.getClientData()
+    }
   ngAfterViewInit(): void {
       this.dataSource.sort = this.sort;
   }
@@ -129,6 +137,24 @@ export class OtherPayablesComponent implements OnInit {
   generatePdf(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   filterOtherPayable(key: string, value: any) {
     let dataFiltered;
