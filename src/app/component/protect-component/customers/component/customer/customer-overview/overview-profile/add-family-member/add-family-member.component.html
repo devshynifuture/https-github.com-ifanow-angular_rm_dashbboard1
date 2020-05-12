@@ -1,7 +1,8 @@
 <div class="popup-header-fix-50">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20"> Add Family member</h4>
+            <h4 class="mb-0 wrapper-20"> <img class="c-p mr-8" src="/assets/images/svg/back-arrow.svg"> Add Family member
+            </h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -131,8 +132,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input #name class="form-control" (input)="capitalise($event)" formControlName="name"
-                                matInput maxlength="50">
+                            <input #name class="form-control" (input)="capitalise($event)" formControlName="name" matInput maxlength="50">
                             <mat-error>This field is required</mat-error>
                             <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                         </mat-form-field>
@@ -238,7 +238,7 @@
                 <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit" mat-button>Next
                 </button>
 
-                <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit ">
                 </app-progress-button>
 
             </div>
