@@ -181,6 +181,9 @@ export class AddFamilyMemberComponent implements OnInit {
   selectFamilyMembersCount() {
     this.next();
   }
+  previous() {
+    this.step--;
+  }
   familyMemberNameList = [];
   createFamilyMember() {
     if (this.selectedCount == 0) {
