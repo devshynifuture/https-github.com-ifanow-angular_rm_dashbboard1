@@ -975,8 +975,8 @@
                 #ui-liabilities {
                   .vertical-menu {
                     // height: 100vh;
-                    position: relative;
-                    height: calc(100vh - 147px);
+                    // position: relative;
+                    // height: calc(100vh - 147px);
                     display: block !important;
                     width: 100%;
                     text-align: left;
@@ -1621,12 +1621,14 @@
                 }
 
                 .textRight .mat-sort-header-container {
-                  justify-content: flex-end;
+                  display: block;
                 }
 
                 .textRight .mat-sort-header-container button {
                   text-align: right;
                 }
+
+                 
 
                 .example-container {
                   height: auto;
@@ -2115,14 +2117,3 @@ ngx-slick-carousel > .slick-disabled {
 
 
 
-::ng-deep .rightText .mat-sort-header-container {
-  display: block !important;
-}
-
-::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
-  float: right;
-}
-
-::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
-  float: right;
-}

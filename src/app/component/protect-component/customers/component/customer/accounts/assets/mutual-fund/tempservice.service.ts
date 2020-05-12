@@ -68,7 +68,8 @@ export class TempserviceService {
           }
         const obj = {
           schemeName: singleData.schemeName,
-          nav: singleData.nav
+          nav: singleData.nav,
+          navDate:singleData.navDate
         };
         filteredData.push(obj);
         const obj2 = {
@@ -212,8 +213,9 @@ export class TempserviceService {
         dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
         dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
         totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-        totalGain += (ele.gain) ? ele.gain : 0;
+        totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
         absReturn += (ele.absReturn) ? ele.absReturn : 0;
+        netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
         xirr += (ele.xirr) ? ele.xirr : 0;
         allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
       });

@@ -59,7 +59,7 @@ export class IinUccCreationComponent implements OnInit {
       );
   }
 
-  Close(flag) {
+  closeRightSlider(flag) {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
@@ -70,6 +70,7 @@ export class IinUccCreationComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+    this.closeRightSlider('');
   }
 
   getdataForm(data) {

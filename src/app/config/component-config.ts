@@ -218,10 +218,17 @@ export const appConfig = {
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',
   BANK_NAME_GET: 'account/asset/client/family-member/bank-detail/list/get',
-  MUFUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
+  MUTUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
   MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
   MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
+
+  MUTUAL_FUND_ADD: 'mutual-fund/mutualFund/add',
+  MUTUAL_FUND_EDIT: 'mutual-fund/mutualFund/edit',
+  FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID: 'family/name/by/clientId/get',
+  MUTUAL_FUND_SCHEME_NAME_LIST_GET: 'mutual-fund/all/schemeName/list/get',
+  MUTUAL_FUND_DELETE: 'mutual-fund/mutualFund/scheme/folio/delete',
   GET_DATED_REPORT_WISE_CALCULATION: 'mutual-fund/getDatedReportWiseCalculations/list/get',
+
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -477,6 +484,8 @@ export const appConfig = {
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'nse/tax-master/get',
+  INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
+  INVESTOR_STATUS_CHECK: 'user/register/status/check/update',
 
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',

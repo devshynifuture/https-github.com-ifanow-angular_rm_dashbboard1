@@ -6,6 +6,9 @@
                     <h3 class="pt-8 mb-0">Applicant wise SIP</h3>
                 </div>
                 <div class="col-md-6 text-right pr-0">
+                    <button (click)="exportToExcelSheet('client-wise', null)" class="btn-default addon"
+                        mat-stroked-button><i class="material-icons">add</i>XLS
+                    </button>
                     <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                 </div>
             </div>
@@ -56,7 +59,7 @@
                                 <td>
                                     <div class="bar"> {{data.weightInPercentage}}{{(isLoading?'':'%') }} </div>
                                 </td>
-                                <td class="text-center" (click)="showSubTableList(data)">
+                                <td class="text-center" (click)="showSubTableList(i,data)">
                                     <div class="bar text-center">
                                         <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="data.showScheme"> add
                                         </i>
@@ -68,6 +71,14 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
+                                    <div class="d-block text-right">
+                                        <button (click)="exportToExcelSheet('investor-wise', clientIndex)"
+                                            mat-icon-button>
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                     <table *ngIf="!data.showScheme && !isLoading" class=" mt-8 mb-8" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">

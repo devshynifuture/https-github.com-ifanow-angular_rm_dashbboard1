@@ -15,6 +15,11 @@ import { MUTUAL_FUND_SUMMARY } from '../../mutual-fund.script';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -38,21 +43,36 @@ export class MutualFundSummaryComponent implements OnInit {
   displayColumnsPDf: any;
   fragmentData = { isSpinner: false };
   advisorData: any;
+
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', { static: false }) tableEl;
   @Output() changeInput = new EventEmitter();
 
 
-  constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService,
-    private workerService: WebworkerService, public dialog: MatDialog, public eventService: EventService) {
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private utilService: UtilService,
+    private mfService: MfServiceService,
+    private excel: ExcelGenService,
+    private workerService: WebworkerService,
+    public dialog: MatDialog,
+    public eventService: EventService,
+    private customerService: CustomerService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
   }
 
-  @Input() mutualFund;
+  mutualFund;
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
 
   ngOnInit() {
+    this.getMutualFund();
+  }
+
+  calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
@@ -77,6 +97,41 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data = [];
     }
   }
+
+  getMutualFund() {
+    this.isLoading = true;
+    this.customDataSource.data = [{}, {}, {}];
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.customerService.getMutualFund(obj).pipe(map((data) => {
+      return this.doFiltering(data);
+    })).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+
+  doFiltering(data) {
+    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
+
+  getMutualFundResponse(data) {
+    if (data) {
+      this.mfData = data;
+      this.mutualFund = data;
+      this.mfService.changeShowMutualFundDropDown(false);
+      this.calculationOninit();
+    } else {
+      this.isLoading = false;
+    }
+  }
+
   getListForPdf(columns) {
     // this.displayColumnsPDf[0].name=(columns[0] = 'schemeName')?this.displayColumnsPDf.push('Scheme name'):null;
     // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
@@ -273,15 +328,15 @@ export class MutualFundSummaryComponent implements OnInit {
       case (flag == 'addPortfolio'):
         component = AddMutualFundComponent;
         break;
-      case (flag == 'holding'):
+      case (flag == 'addMutualFund'):
         component = MFSchemeLevelHoldingsComponent;
         break;
       default:
         component = MFSchemeLevelTransactionsComponent;
     }
     const fragmentData = {
-      flag: 'editMF',
-      data,
+      flag,
+      data: { flag },
       id: 1,
       state: 'open',
       componentName: component
@@ -292,6 +347,7 @@ export class MutualFundSummaryComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // code to refresh
+            this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -323,7 +379,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
   }
 
-  deleteModal(value) {
+  deleteModal(value, element) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -342,6 +398,15 @@ export class MutualFundSummaryComponent implements OnInit {
         //   error => this.eventService.showErrorMessage(error)
         // );
         // dialogRef.close(listIndex);
+        if (value === 'mutualFund') {
+          const obj = { id: element.id }
+          this.customerService.postMutualFundDelete(obj)
+            .subscribe(res => {
+              if (res) {
+                this.eventService.openSnackBar('Deleted Successfully', "DISMISS");
+              }
+            })
+        }
 
       },
       negativeMethod: () => {
@@ -362,12 +427,12 @@ export class MutualFundSummaryComponent implements OnInit {
     });
   }
 
-  openMutualEditFund(element) {
+  openMutualEditFund(flag, element) {
     this.mfService.getMutualFundData()
       .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: { family_member_list: res['family_member_list'], flag: 'editTransaction', ...element },
+          data: { family_member_list: res['family_member_list'], flag, ...element },
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent
@@ -376,6 +441,9 @@ export class MutualFundSummaryComponent implements OnInit {
           sideBarData => {
             console.log('this is sidebardata in subs subs : ', sideBarData);
             if (UtilService.isDialogClose(sideBarData)) {
+              if (UtilService.isRefreshRequired(sideBarData)) {
+                this.getMutualFund();
+              }
               console.log('this is sidebardata in subs subs 2: ', sideBarData);
               rightSideDataSub.unsubscribe();
             }
@@ -402,6 +470,7 @@ export class MutualFundSummaryComponent implements OnInit {
             if (UtilService.isDialogClose(upperSliderData)) {
               if (UtilService.isRefreshRequired(upperSliderData)) {
                 // code to refresh ...
+                this.getMutualFund();
               }
               // this.getClientSubscriptionList();
               subscription.unsubscribe();

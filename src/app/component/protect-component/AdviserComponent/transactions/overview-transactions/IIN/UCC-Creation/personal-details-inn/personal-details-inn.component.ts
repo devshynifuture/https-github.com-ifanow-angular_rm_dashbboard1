@@ -56,6 +56,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
+    this.obj1 = {...data};
     console.log('all data in per', this.inputData);
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
@@ -88,7 +89,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       }
     }
     this.holdingList = [];
-    this.obj1 = [];
+    // this.obj1 = [];
   }
 
   close() {
@@ -160,7 +161,8 @@ export class PersonalDetailsInnComponent implements OnInit {
       // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
-      dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
+      dob: [!data ? '' : (data.dob)],
+      dateOfBirth: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       gender: [!data ? '1' : data.genderId ? data.genderId + '' : data.gender, [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
@@ -200,38 +202,61 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.doneData = true;
     }
     if (value == 'first') {
+
       this.savePersonalDetails(value);
-      if (this.firstHolder && this.firstHolder.panNumber) {
-        this.holder.type = value;
-        this.personalDetails.setValue(this.firstHolder);
+      if (this.holder.type == 'first') {
       } else {
-        return;
+        if (this.firstHolder && this.firstHolder.panNumber) {
+          this.holder.type = value;
+          this.personalDetails.setValue(this.firstHolder);
+        } else {
+          return;
+        }
       }
+
     } else if (value == 'second') {
-      this.savePersonalDetails(value);
-      if (this.secondHolder && this.secondHolder.panNumber) {
-        this.holder.type = value;
-        this.personalDetails.setValue(this.secondHolder);
+      if (this.holder.type == 'second') {
       } else {
-        this.reset();
+        if (this.savePersonalDetails(value)) {
+          if (this.secondHolder && this.secondHolder.panNumber) {
+            this.holder.type = value;
+            this.personalDetails.setValue(this.secondHolder);
+          } else {
+            this.reset();
+          }
+        } else if (this.holder.type == 'third') {
+          this.reset();
+        }
       }
     } else if (value == 'third') {
-      this.savePersonalDetails(value);
-      if (this.thirdHolder && this.thirdHolder.panNumber) {
-        this.holder.type = value;
-        this.personalDetails.setValue(this.thirdHolder);
+      if (this.holder.type == 'third') {
+        return;
       } else {
-        this.reset();
+        if (this.savePersonalDetails(value)) {
+          if (this.thirdHolder && this.thirdHolder.panNumber) {
+            this.holder.type = value;
+            this.personalDetails.setValue(this.thirdHolder);
+          } else {
+            this.reset();
+          }
+        }
       }
-      ;
     } else {
       this.savePersonalDetails(value);
     }
 
     this.obj1.firstHolder = this.firstHolder;
-    this.obj1.firstHolder.dob = new Date(this.firstHolder.dob).getTime();
+    this.obj1.firstHolder.dob = new Date(this.firstHolder.dateOfBirth).getTime();
     this.obj1.secondHolder = this.secondHolder;
+    if (this.secondHolder) {
+      this.obj1.secondHolder.dob = new Date(this.secondHolder.dateOfBirth).getTime();
+    }
+
     this.obj1.thirdHolder = this.thirdHolder;
+    if (this.thirdHolder) {
+      this.obj1.thirdHolder.dob = new Date(this.thirdHolder.dateOfBirth).getTime();
+    }
+
     this.obj1.generalDetails = this.generalDetails;
     this.obj1.holderList = this.inputData.holderList;
     this.obj1.bankDetailList = this.inputData.bankDetailList;
@@ -252,8 +277,10 @@ export class PersonalDetailsInnComponent implements OnInit {
           this.personalDetails.controls[element].markAsTouched();
         }
       }
+      return false;
     } else {
       this.setEditHolder(this.holder.type, value);
+      return true;
     }
   }
 

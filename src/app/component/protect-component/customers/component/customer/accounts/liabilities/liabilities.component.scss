@@ -21,13 +21,14 @@
     width: 42px;
     height: 36px;
 }
+
 .pdfClass {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: end;
-    margin-right: 10px;
 }
+
 .hide {
     display: none;
 }
@@ -38,4 +39,11 @@
     opacity: 0;
     right: 0;
     top: 0;
-  }
+}
+
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 140px;
+    z-index: 1020;
+}
