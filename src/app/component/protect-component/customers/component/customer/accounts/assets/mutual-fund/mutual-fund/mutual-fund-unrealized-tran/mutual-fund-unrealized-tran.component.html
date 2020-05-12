@@ -301,7 +301,7 @@
                                 <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar"><span appFormatNumber *ngIf="element.gainOrLossAmount">
                                             {{isLoading ? '':((element.gainOrLossAmount || element.gainOrLossAmount ==0)?element.gainOrLossAmount:0)}}</span>
-                                            <span appFormatNumber *ngIf="element.netGain">
+                                            <span appFormatNumber *ngIf="element.netGain" class="f-700">
                                                 {{isLoading ? '':((element.netGain || element.netGain ==0)?element.netGain:0)}}</span>
                                     </div>
                                 </td>
