@@ -288,10 +288,13 @@ img.header-img {
 }
 
 .scorllable {
-    height: 100vh;
-    // height: 100%;
-    overflow-y: scroll;
-    // padding-bottom: 80px;
+    max-height: 515px;
+    overflow-y: auto;
+    padding-bottom: 50px;
+    // height: 100vh;
+    // // height: 100%;
+    // overflow-y: scroll;
+    // // padding-bottom: 80px;
 }
 
 .scorllable::-webkit-scrollbar {

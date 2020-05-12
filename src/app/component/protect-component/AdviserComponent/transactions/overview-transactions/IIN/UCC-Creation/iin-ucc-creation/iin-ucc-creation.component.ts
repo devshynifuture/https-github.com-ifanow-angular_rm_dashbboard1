@@ -11,6 +11,7 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 import {AuthService} from 'src/app/auth-service/authService';
 import {map, startWith} from 'rxjs/operators';
 import {EnumDataService} from 'src/app/services/enum-data.service';
+import {EnumServiceService} from '../../../../../../../../services/enum-service.service';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -26,11 +27,14 @@ export class IinUccCreationComponent implements OnInit {
   advisorId: any;
   clientData: any;
   isLoading: boolean = false;
+  taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}, {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}];
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private processTrasaction: ProcessTransactionService,
               private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
               private peopleService: PeopleService,
-              private onlineTransact: OnlineTransactionService, public eventService: EventService, private enumDataService: EnumDataService) {
+              private onlineTransact: OnlineTransactionService, public eventService: EventService,
+              private enumDataService: EnumDataService, private enumService: EnumServiceService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -176,6 +180,21 @@ export class IinUccCreationComponent implements OnInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
     this.clientData = value;
+    console.log(this.enumService.getTaxStatus());
+    /* if (value.guardianId && value.guardianId > 0) {
+       this.taxStatusList = this.enumService.getMinorTaxList();
+     } else if (value.userType == 2 && value.clientType == 3) {
+       // TODO we are not doing corporate registration for now
+       // this.taxStatusList = this.enumService.getCorporateTaxList();
+       this.taxStatusList = this.enumService.getIndividualTaxList();
+     } else {
+       this.taxStatusList = this.enumService.getIndividualTaxList();
+     }*/
+  }
+
+  displayFn(user) {
+
+    return user && user.name ? user.name : '';
   }
 
   saveGeneralDetails(data) {

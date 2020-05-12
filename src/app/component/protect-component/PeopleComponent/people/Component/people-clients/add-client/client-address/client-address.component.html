@@ -92,7 +92,7 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
                         formControlName="addressLine2" class="form-control">
-                    <mat-error>This field is required</mat-error>
+                    <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
@@ -126,10 +126,10 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city"
-                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="6"
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30"
                         class="form-control">
                     <mat-error>This field is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
+                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                 </mat-form-field>
             </div>
         </div>

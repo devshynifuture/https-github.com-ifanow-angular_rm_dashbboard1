@@ -72,7 +72,7 @@ export class ClientAddressComponent implements OnInit {
       addProofType: [(data.proofType) ? String(data.proofType) : '0'],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
-      addressLine2: [data.address2, [Validators.required]],
+      addressLine2: [data.address2],
       pinCode: [data.pinCode, [Validators.required]],
       city: [data.city, [Validators.required]],
       state: [data.state, [Validators.required]],
@@ -98,6 +98,11 @@ export class ClientAddressComponent implements OnInit {
   }
 
   getPostalPin(value) {
+    if (value.length < 6) {
+      this.addressForm.get('city').enable();
+      this.addressForm.get('state').enable();
+      this.addressForm.get('country').enable();
+    }
     const obj = {
       zipCode: value
     };
@@ -117,6 +122,9 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').setValue(pincodeData[0].District);
     this.addressForm.get('state').setValue(pincodeData[0].State);
     this.addressForm.get('country').setValue(pincodeData[0].Country);
+    this.addressForm.get('city').disable();
+    this.addressForm.get('state').disable();
+    this.addressForm.get('country').disable();
   }
 
   getAddressList(data) {
