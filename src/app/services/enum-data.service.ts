@@ -78,7 +78,7 @@ export class EnumDataService {
     const obj = {
       advisorId: AuthService.getAdvisorId()
     };
-    this.orgSettingService.getUserRoles(obj).subscribe(
+    this.orgSettingService.getClientUserRoles(obj).subscribe(
       data => {
         console.log(data);
         this.enumService.addClientRole(data);

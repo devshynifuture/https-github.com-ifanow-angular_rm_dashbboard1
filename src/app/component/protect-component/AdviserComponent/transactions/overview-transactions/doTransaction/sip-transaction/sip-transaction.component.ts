@@ -9,6 +9,9 @@ import {UtilService, ValidatorType} from '../../../../../../../services/util.ser
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MathUtilService} from '../../../../../../../services/math-util.service';
+import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {MandateCreationComponent} from '../../MandateCreation/mandate-creation/mandate-creation.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -78,7 +81,7 @@ export class SipTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
+              private eventService: EventService, public dialog: MatDialog) {
   }
 
   @Output() changedValue = new EventEmitter();
@@ -91,7 +94,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
-      this.getdataForm('', false);
+      this.getDataForm('', false);
     }
   }
 
@@ -100,7 +103,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData, false);
+    this.getDataForm(this.inputData, false);
     this.childTransactions = [];
     this.transactionSummary = {};
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
@@ -204,7 +207,8 @@ export class SipTransactionComponent implements OnInit {
     console.log('new schemes', responseData);
     this.schemeList = responseData;
     if (this.sipTransaction.controls.schemeSip.value) {
-      this.sipTransaction.controls.schemeSip.setValue(this.sipTransaction.controls.schemeSip.value);
+      this.filterSchemeList = new Observable().pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(inputData + '', this.schemeList)));
     } else {
       this.sipTransaction.controls.schemeSip.setValue('');
     }
@@ -325,38 +329,6 @@ export class SipTransactionComponent implements OnInit {
 
   }
 
-  // getNSEAchmandate() {
-  //   this.showSpinnerMandate = true;
-  //   const obj1 = {
-  //     tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
-  //   };
-  //   this.onlineTransact.getMandateList(obj1).subscribe(
-  //     data => this.getNSEAchmandateRes(data), (error) => {
-  //       this.eventService.openSnackBar(error, 'dismiss');
-  //     }
-  //   );
-  // }
-
-  getMandateDetailsRes(data) {
-    this.showSpinnerMandate = false;
-    console.log('getNSEAchmandateRes', data);
-    if (data.length > 1) {
-      Object.assign(this.transactionSummary, {showUmrnEdit: true});
-    }
-    this.mandateDetails = this.processTransaction.filterMandateData(data);
-    console.log('this.achMandateNSE', this.selectedMandate);
-    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
-    if (this.selectedMandate) {
-      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
-      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
-      if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
-        // max
-        this.sipTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
-        this.sipTransaction.controls.employeeContry.updateValueAndValidity();
-        this.mandateAmountErrorMessage = 'Sip amount connot be greater than mandate amount';
-      }
-    }
-  }
 
   getFrequency() {
     const obj = {
@@ -422,11 +394,93 @@ export class SipTransactionComponent implements OnInit {
     };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
-        this.showSpinnerMandate = false;
-        this.mandateDetails = [];
-        this.selectedMandate = null;
-        this.eventService.openSnackBar('No mandate found', 'dismiss');
-        this.sipTransaction.controls.modeOfPaymentSelection.setValue('1');
+        this.handleMandateFailure();
+      }
+    );
+  }
+
+  handleMandateFailure() {
+    this.showSpinnerMandate = false;
+    this.mandateDetails = [];
+    this.selectedMandate = null;
+    this.eventService.openSnackBar('No mandate found', 'dismiss');
+    this.sipTransaction.controls.modeOfPaymentSelection.setValue('1');
+  }
+
+  getMandateDetailsRes(data) {
+    console.log('mandate res unfiltered : ', data);
+    this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
+    console.log('mandate res filtered : ', this.mandateDetails);
+
+    if (!this.mandateDetails || this.mandateDetails.length == 0) {
+      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+        this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
+        if (!this.mandateDetails || this.mandateDetails.length == 0) {
+
+        }
+      } else {
+        this.handleMandateFailure();
+        return;
+      }
+    }
+    this.showSpinnerMandate = false;
+    if (data.length > 1) {
+      Object.assign(this.transactionSummary, {showUmrnEdit: true});
+    }
+    this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+        // max
+        this.sipTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
+        this.sipTransaction.controls.employeeContry.updateValueAndValidity();
+        this.mandateAmountErrorMessage = 'Sip amount connot be greater than mandate amount';
+      }
+    }
+  }
+
+  alertModal(value, data) {
+    const dialogData = {
+      data: '',
+      header: 'Are you sure ?',
+      body: 'No active or pending mandate found. Please create mandate to continue',
+      body2: 'Are you sure you want to create a mandate ?',
+      btnYes: 'NO',
+      btnNo: 'YES',
+      positiveMethod: () => {
+        this.openMandateCreation();
+        dialogRef.close();
+      },
+      negativeMethod: () => {
+      }
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+  }
+
+  openMandateCreation() {
+    const fragmentData = {
+      flag: 'mandate',
+      data: {},
+      id: 1,
+      state: 'open',
+      componentName: MandateCreationComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+        }
+        rightSideDataSub.unsubscribe();
       }
     );
   }
@@ -450,7 +504,7 @@ export class SipTransactionComponent implements OnInit {
           this.setMinAmount();
         }, (error) => {
           this.showSpinnerFolio = false;
-          this.sipTransaction.get('folioSelection').setValue(2);
+          this.sipTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
@@ -465,7 +519,7 @@ export class SipTransactionComponent implements OnInit {
           this.setMinAmount();
         }, (error) => {
           this.showSpinnerFolio = false;
-          this.sipTransaction.get('folioSelection').setValue(2);
+          this.sipTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
@@ -505,7 +559,7 @@ export class SipTransactionComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
-  getdataForm(data, isEdit) {
+  getDataForm(data, isEdit) {
     if (isEdit == true) {
       this.isEdit = isEdit;
       this.editedId = data.id;
@@ -536,10 +590,10 @@ export class SipTransactionComponent implements OnInit {
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
       isException: true,
     });
-    this.filterSchemeList = this.sipTransaction.controls.schemeSip.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
-    );
+    this.sipTransaction.controls.schemeSip.valueChanges.subscribe((newValue) => {
+      this.filterSchemeList = new Observable().pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
+    });
     this.sipTransaction.controls.tenure.valueChanges.subscribe(newValue => {
       this.checkAndHandleMaxInstallmentValidator();
     });
@@ -643,7 +697,7 @@ export class SipTransactionComponent implements OnInit {
   validateSingleTransaction() {
     if (this.reInvestmentOpt.length > 1 && this.sipTransaction.get('reinvest').invalid) {
       this.sipTransaction.get('reinvest').markAsTouched();
-    } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
+    } else if (this.sipTransaction.get('folioSelection').value == '1' && this.sipTransaction.get('investmentAccountSelection').invalid) {
       this.sipTransaction.get('investmentAccountSelection').markAsTouched();
     } else if (this.sipTransaction.get('employeeContry').invalid) {
       this.sipTransaction.get('employeeContry').markAsTouched();

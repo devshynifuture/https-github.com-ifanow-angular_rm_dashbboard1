@@ -20,7 +20,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="companyName" class="form-control" placeholder="Enter Company name"  maxLength="50" [maxLength]="50" appInputValueValidation>
+                                <input matInput formControlName="companyName" class="form-control" placeholder="Enter Company name" maxLength="50" [maxLength]="50" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('companyName').value.length}}/50
                                 </mat-hint>
                                 <mat-error class="pt-4">
@@ -221,9 +221,17 @@
                     </div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="profileImg" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper1></app-image-cropper>
-                        <div *ngIf="showCropper">
-                            <button (click)="cropper1.zoomIn()">ZoomIn</button>
-                            <button (click)="cropper1.zoomOut()">ZoomIn</button>
+                        <div class="zoomClassPosition" *ngIf="showCropper">
+
+                            <i (click)="cropper1.zoomIn()" class="material-icons mr-12 c-p">
+                                zoom_in
+                            </i>
+
+                            <i (click)="cropper1.zoomOut()" class="material-icons c-p">
+                                zoom_out
+                            </i>
+
+
                         </div>
                     </div>
                     <div class="profile-web-app-img" [hidden]="!showCropper">
@@ -246,7 +254,8 @@
                         <div class="col-md-12 p-0 ">
                             <button mat-stroked-button class="btn-primary" (click)="cropImg(profileImg)">EDIT
                                 IMAGE</button>
-                            <button mat-stroked-button class="btn-primary" (click)="resetWebImage()">SET TO DEFAULT</button>
+                            <button mat-stroked-button class="btn-primary" (click)="resetWebImage()">SET TO
+                                DEFAULT</button>
                         </div>
 
                     </div>
@@ -265,10 +274,17 @@
                         <h5 class="mb-0 f-14 mt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
-                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="reportImg" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper2></app-image-cropper>
-                        <div *ngIf="showCropper">
-                            <button (click)="cropper2.zoomIn()">ZoomIn</button>
-                            <button (click)="cropper2.zoomOut()">ZoomIn</button>
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="reportImg" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper2>
+                        </app-image-cropper>
+                        <div class="zoomClassPosition" *ngIf="showCropper">
+
+                            <i (click)="cropper2.zoomIn()" class="material-icons mr-12 c-p">
+                                zoom_in
+                            </i>
+
+                            <i (click)="cropper2.zoomOut()" class="material-icons c-p">
+                                zoom_out
+                            </i>
                         </div>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">

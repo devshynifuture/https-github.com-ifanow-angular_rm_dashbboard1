@@ -80,6 +80,20 @@
             <p class="f-16">Supported Formats</p>
         </div>
       </div>
+      <div class="row">
+        <div *ngIf="fileName" class="col-md-12 text-left pr-0 pt-12">
+          <p class="f-16"><span style="color:royalblue">File name:</span> {{fileName}}</p>
+        </div>
+        <div *ngIf="fileSize" class="col-md-7 text-left pr-0 pt-12">
+          <p class="f-16"><span style="color:royalblue">File size:</span> {{fileSize}}</p>
+        </div>
+        <div class="col-md-1 text-left pr-0">
+          <mat-spinner *ngIf="!uploadButton && fileSize" [diameter]="30"></mat-spinner>
+        </div>
+        <div class="col-md-12 text-left pr-0 pt-12">
+          <button *ngIf="uploadButton" (click)="uploadTargetFile()" mat-stroked-button class="br-0 btn-bottom">Upload file</button>
+        </div>
+      </div>
     </div>
     <div class="col-md-9 p-0 history-box">
       <router-outlet></router-outlet>

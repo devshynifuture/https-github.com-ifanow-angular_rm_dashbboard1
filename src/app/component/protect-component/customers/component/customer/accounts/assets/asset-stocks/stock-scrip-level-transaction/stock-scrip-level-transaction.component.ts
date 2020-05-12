@@ -361,6 +361,9 @@ addNewNominee(data) {
         let finalStocks = [];
         this.transactionArray.controls.forEach(element => {
           let obj = {
+            "valueAsOn": null,
+            "currentMarketValue": 0,
+            "amountInvested": 0,
             "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
             "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
@@ -385,7 +388,7 @@ addNewNominee(data) {
           "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
           "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
           "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
-          "stocks": finalStocks
+          "stockList": finalStocks
         }
         console.log(obj)
         this.cusService.addAssetStocks(obj).subscribe(

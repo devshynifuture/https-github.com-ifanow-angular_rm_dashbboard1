@@ -71,6 +71,7 @@ export class RetirementAccountComponent implements OnInit {
   file: any;
   isLoadingUpload: boolean = false;
   clientData: any;
+  myFiles: any;
 
   // async ExportTOExcel(value) {
   //   this.excelData = []
@@ -209,7 +210,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
-  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'amt', 'reason', 'desc', 'status', 'icons'];
+  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'amt', 'salary', 'desc', 'status', 'icons'];
   datasource13;
   displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'date', 'desc', 'status', 'icons'];
   datasource14;
@@ -235,16 +236,17 @@ export class RetirementAccountComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-  fetchData(value,fileName) {
+  fetchData(value, fileName) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId:this.clientData.familyMemberId,
+      familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
-    if(this.fileUploadData){
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }

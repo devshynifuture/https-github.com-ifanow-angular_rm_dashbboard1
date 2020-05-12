@@ -58,6 +58,7 @@ export class MutualFundOverviewComponent implements OnInit {
   clientId;
 
   @Output() changeInput = new EventEmitter();
+  total_net_Gain: number;
   constructor(private datePipe: DatePipe,public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
@@ -72,9 +73,11 @@ export class MutualFundOverviewComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getMutualFundData();
-
+    // setTimeout(() => {
+    //  this.getMutualFundResponse(this.mutualFund);
+    //  this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
+    // }, 8000);
     this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
-    // this.getPersonalDetails(this.advisorId);
   }
   getPersonalDetails(data) {
     const obj = {
@@ -130,12 +133,25 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      toDate:null,
+      id:JSON.stringify(null)
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
       data => this.getMutualFundResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.showSummaryBar = false;
+        this.dataSource.data = []
+        this.showFamilyMember = false;
+        this.dataSource2.data = []
+        this.showSchemeWise = false;
+        this.dataSource3.data = []
+        this.showSubCategory = false;
+        this.dataSource4.data = []
+        this.showCategory = false;
+        this.datasource1.data = [];
+        this.showCashFlow = false;
+        this.eventService.openSnackBar(" No Mutual Fund Found", "DISMISS");
       }
     );
   }
@@ -146,6 +162,7 @@ export class MutualFundOverviewComponent implements OnInit {
       let filterData = this.MfServiceService.doFiltering(data);
       this.asyncFilter(filterData.mutualFundList, filterData.mutualFundCategoryMastersList)
       this.mfData = data;
+      this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment)
       console.log(data);
       this.dataSource4 = new MatTableDataSource(data.mutualFundCategoryMastersList); // category wise allocation
       this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
@@ -154,6 +171,17 @@ export class MutualFundOverviewComponent implements OnInit {
       this.isLoading = false;
       this.changeInput.emit(false);
     } else {
+      this.showSummaryBar = false;
+      this.dataSource.data = []
+      this.showFamilyMember = false;
+      this.dataSource2.data = []
+      this.showSchemeWise = false;
+      this.dataSource3.data = []
+      this.showSubCategory = false;
+      this.dataSource4.data = []
+      this.showCategory = false;
+      this.datasource1.data = [];
+      this.showCashFlow = false;
       this.eventService.openSnackBar(" No Mutual Fund Found", "DISMISS");
     }
 
@@ -197,15 +225,15 @@ export class MutualFundOverviewComponent implements OnInit {
     // Used for cashFlow status
     if (this.totalValue) {
       this.datasource1.data = [
-        { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
-        { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
-        { data: 'c. Switch Out', amts: (this.totalValue.withdrawals) ? this.totalValue.withdrawals : 0 },
-        { data: 'd. Redemption', amts: (this.totalValue.redemption) ? this.totalValue.redemption : 0 },
-        { data: 'e. Dividend Payout', amts: (this.totalValue.dividendPayout) ? this.totalValue.dividendPayout : 0 },
-        { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.totalValue.netInvestment) ? this.totalValue.netInvestment : 0 },
-        { data: 'g. Market Value', amts: (this.totalValue.marketValue) ? this.totalValue.marketValue : 0 },
-        { data: 'h. Net Gain (g-f)', amts: (this.totalValue.netGain) ? this.totalValue.netGain : 0 },
-        { data: 'i. Realized XIRR (All Transactions)', amts: (this.totalValue.xirr) ? this.totalValue.xirr : 0 },
+        { data: 'a. Investment', amts: (this.mfData.total_amount_invested) ? this.mfData.total_amount_invested : 0 },
+        { data: 'b. Switch In', amts: (this.mfData.total_switch_in) ? this.mfData.total_switch_in : 0 },
+        { data: 'c. Switch Out', amts: (this.mfData.total_switch_out) ? this.mfData.total_switch_out : 0 },
+        { data: 'd. Redemption', amts: (this.mfData.total_redemption) ?this.mfData.total_redemption : 0 },
+        { data: 'e. Dividend Payout', amts: (this.mfData.total_dividend_payout) ? this.mfData.total_dividend_payout : 0 },
+        { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.mfData.total_net_investment) ? this.mfData.total_net_investment : 0 },
+        { data: 'g. Market Value', amts: (this.mfData.total_market_value) ? this.mfData.total_market_value : 0 },
+        { data: 'h. Net Gain (g-f)', amts: (this.total_net_Gain) ? this.total_net_Gain : 0 },
+        { data: 'i. Realized XIRR (All Transactions)', amts: (this.mfData.total_xirr) ? this.mfData.total_xirr : 0 },
 
       ];
     } else {
@@ -487,11 +515,12 @@ export class MutualFundOverviewComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
-            this.dataSource2 =new MatTableDataSource( this.rightFilterData.schemeWise);
-            this.dataSource4 = new MatTableDataSource(this.rightFilterData.category);
-            this.dataSource = new MatTableDataSource(this.rightFilterData.family_member_list);
-            this.dataSource3 = new MatTableDataSource(this.rightFilterData.subCategoryData);
+            this.getMutualFundResponse(this.rightFilterData.mfData);
+            // this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
+            // this.dataSource2 =new MatTableDataSource( this.rightFilterData.schemeWise);
+            // this.dataSource4 = new MatTableDataSource(this.rightFilterData.category);
+            // this.dataSource = new MatTableDataSource(this.rightFilterData.family_member_list);
+            // this.dataSource3 = new MatTableDataSource(this.rightFilterData.subCategoryData);
             this.showHideTable = this.rightFilterData.overviewFilter;
             (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
             (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false,this.dataSource2.data =[]);
@@ -499,7 +528,6 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false,this.dataSource.data =[]);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false,this.dataSource4.data =[]);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false,this.dataSource3.data =[]);
-
 
             this.isLoading = false;
             this.changeInput.emit(false);

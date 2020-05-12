@@ -3,16 +3,16 @@
         <div class="col-width-18 bg-grey lter">
 
             <ul class="vertical-menu  ">
-                <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
+                <li (click)="Tab='Tab1'" class="c-p" [ngClass]="{'activeColor lt':Tab=='Tab1'}">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
-                <li (click)="Tab='Tab2'" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
+                <li (click)="Tab='Tab2'" class="c-p" [ngClass]="{'activeColor lt':Tab=='Tab2'}">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
-                <li>
+                <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Financial health check
                 </li>
-                <li>
+                <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Preliminary data
                 </li>
 
@@ -80,8 +80,8 @@
                     </div>
                 </div>
                 <!-- *ngIf="clientOverviewData" -->
-                <div class="row">
-                    <div class="col-md-12">
+                <div *ngIf="clientData" class="row">
+                    <div *ngIf="clientData.clientType!=3" class="col-md-12">
                         <div class="primary-border familyMemberBox mt-12">
                             <p class="memberName">Family members</p>
 
@@ -182,7 +182,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span *ngIf="!letsideBarLoader">{{clientOverviewData.displayName}}
+                                                <span
+                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName)?clientOverviewData.displayName:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -195,9 +196,7 @@
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="!letsideBarLoader">
-                                                    <span *ngIf="clientOverviewData.mobileList.length>0">
-                                                        {{clientOverviewData.mobileList[0].mobileNo}}
-                                                    </span>
+                                                    {{(clientOverviewData.mobileList && clientOverviewData.mobileList.length>0)?clientOverviewData.mobileList[0].mobileNo:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -209,7 +208,7 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 "><span *ngIf="!letsideBarLoader">
-                                                    {{clientOverviewData.pan}}
+                                                    {{(clientOverviewData.pan)?clientOverviewData.pan:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -226,24 +225,12 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <span *ngIf="!letsideBarLoader">
-                                                <p *ngIf="clientOverviewData.genderId=='1'"
-                                                    class=" f-14 roboto f-500 m-0 ">
-                                                    Male
+                                                <p class=" f-14 roboto f-500 m-0 ">
+                                                    {{clientOverviewData.gender}}
                                                 </p>
                                             </span>
                                         </div>
                                     </div>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.genderId=='2'" class=" f-14 roboto f-500 m-0 ">
-                                            Female
-                                        </p>
-                                    </span>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.genderId=='3'" class=" f-14 roboto f-500 m-0 ">
-                                            Other
-                                        </p>
-                                    </span>
-
                                 </div>
                             </div>
 
@@ -266,7 +253,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span *ngIf="!letsideBarLoader"> {{clientOverviewData.userName}}
+                                                <span *ngIf="!letsideBarLoader">
+                                                    {{(clientOverviewData.userName)?clientOverviewData.userName:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -278,7 +266,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span *ngIf="!letsideBarLoader">{{clientOverviewData.aadhaarNumber}}
+                                                <span
+                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber)?clientOverviewData.aadhaarNumber:'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -289,17 +278,16 @@
                                     <p class=" text-primitive m-0 f-12 ">TAX STATUS</p>
                                     <div class="relClass">
                                         <div class="bar height23">
-                                            <!-- <p *ngIf="clientOverviewData.taxStatusId=='1'"
-                                                class=" f-14 roboto f-500 m-0 ">
-                                                Resident</p> -->
+                                            <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
+                                                Resident</p>
                                         </div>
                                     </div>
                                     <div class="relClass">
-                                        <div class="bar">
-                                            <!-- <p *ngIf="clientOverviewData.taxStatusId=='2'"
+                                        <!-- <div class="bar"> -->
+                                        <!-- <p *ngIf="!letsideBarLoader"
                                                 class=" f-14 roboto f-500 m-0 ">
                                                 Non-resident</p> -->
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
 
@@ -308,22 +296,11 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <span *ngIf="!letsideBarLoader">
-                                                <p *ngIf="clientOverviewData.martialStatusId=='1'"
-                                                    class=" f-14 roboto f-500 m-0 ">
-                                                    Married</p>
+                                                <p class=" f-14 roboto f-500 m-0 ">
+                                                    {{clientOverviewData.martialStatus}}</p>
                                             </span>
                                         </div>
                                     </div>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.martialStatusId=='2'"
-                                            class=" f-14 roboto f-500 m-0 ">
-                                            Unmarried</p>
-                                    </span>
-                                    <span *ngIf="!letsideBarLoader">
-                                        <p *ngIf="clientOverviewData.martialStatusId=='3'"
-                                            class=" f-14 roboto f-500 m-0 ">
-                                            Other</p>
-                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -379,6 +356,7 @@
                     </div>
 
                     <div class=" col-md-3 pl-20 ">
+                        <h5 *ngIf="bankFlag" class=" headingDetails "> Bank </h5>
                         <div [hidden]="!bankFlag" class="skeletonAnimation" [appSkeletonLoading]="bankFlag"
                             appSkeletonLoading>
                             <div class="relClass mb-12">
@@ -445,6 +423,7 @@
 
                         </div>
                         <hr class=" bb-primitive hrMargin ">
+                        <h5 class=" headingDetails " *ngIf="dematFlag"> Demat </h5>
                         <div [hidden]="!dematFlag " class="skeletonAnimation" [appSkeletonLoading]="dematFlag"
                             appSkeletonLoading>
                             <div class="relClass mb-12">

@@ -47,8 +47,8 @@
                     <mat-select formControlName="confirmRole" class="form-control">
                         <mat-option value="" disabled>Select option</mat-option>
                         <!-- <mat-option value="1">Client - Standard plan</mat-option> -->
-                        <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
-                            {{role.clientRoleName}}</mat-option>
+                        <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                            {{role.roleName}}</mat-option>
                     </mat-select>
                     <mat-error>This Field is required</mat-error>
                 </mat-form-field>

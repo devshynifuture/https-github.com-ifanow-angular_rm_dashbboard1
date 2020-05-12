@@ -14,12 +14,14 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 })
 export class RolesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
-  dataSource: any = new MatTableDataSource([{}, {}, {}]);
+  advisorRoles: any = new MatTableDataSource([{}, {}, {}]);
+  clientRoles: any = new MatTableDataSource([{}, {}, {}]);
   advisorId: any;
   isLoading: boolean;
   globalData: any[] = [];
   counter = 0;
   hasError = false;
+  hasData = false;
 
   constructor(
     private eventService: EventService,
@@ -42,7 +44,11 @@ export class RolesComponent implements OnInit {
     };
 
     this.settingsService.getAllRoles(obj).subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res);
+      if(res && res.length > 0) {
+        this.hasData = true
+        this.advisorRoles = new MatTableDataSource(res.filter(role => [1,2,3].includes(role.advisorOrClientRole)));
+        this.clientRoles = new MatTableDataSource(res.filter(role => ![1,2,3].includes(role.advisorOrClientRole)));
+      }
       this.utilService.loader(-1);
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");

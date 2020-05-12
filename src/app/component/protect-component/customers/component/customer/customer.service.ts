@@ -631,6 +631,7 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
   getMutualFund(data) {
+
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
   getReportWiseCalculations(data) {
@@ -638,6 +639,13 @@ export class CustomerService {
   }
   getMfUnrealizedTransactions(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
+  }
+  getDatedReportWiseCalculations(data) {
+    const obj ={
+      lastDate : data.lastDate,
+      report:data.reportType
+    }
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,obj);
   }
   capitalGainGet(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);

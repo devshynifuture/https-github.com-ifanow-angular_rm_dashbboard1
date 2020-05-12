@@ -44,10 +44,10 @@ export class AddNumberComponent implements OnInit {
   ngOnInit() {
     // listen for search field value changes
     this.filterCtrl.valueChanges
-    .pipe(takeUntil(this._onDestroy))
-    .subscribe(() => {
-      this.filterCodes();
-    });
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCodes();
+      });
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService, private enumService: EnumServiceService) {
@@ -58,27 +58,21 @@ export class AddNumberComponent implements OnInit {
     if (taxStatusId == undefined) {
       return;
     }
-    let taxStatusObj = this.enumService.filterTaxStatusList(taxStatusId);
-    this.getIsdCodesData(taxStatusObj);
+    // let taxStatusObj = this.enumService.filterTaxStatusList(taxStatusId);
+    this.getIsdCodesData(taxStatusId);
   }
 
-  getIsdCodesData(taxStatusObj) {
-    if (taxStatusObj.length == 0) {
-      return;
-    }
+  getIsdCodesData(taxStatusId) {
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          if (taxStatusObj[0].residentFlag == undefined) {
-            return;
-          }
-          if (taxStatusObj[0].residentFlag == 0) {
+          if (taxStatusId == 1) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
           } else {
-            this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
+            this.isdCodes = data
           }
           this.filteredIsdCodes.next(this.isdCodes);
         }

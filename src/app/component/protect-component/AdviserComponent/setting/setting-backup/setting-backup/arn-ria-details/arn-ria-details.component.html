@@ -21,7 +21,8 @@
                     </div>
 
                     <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-                        <button mat-stroked-button class="text-primary mr-12">{{arn.isActive ? 'ACTIVE' : 'INACTIVE'}}</button>
+                        <span class="text-black roboto f-16 mr-12">{{arn.dataUploadTypeId == 1 ? 'AUTO UPLOAD' : 'MANUAL UPLOAD'}}
+                        </span>
                         <ng-container>
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
 
@@ -46,9 +47,9 @@
                             <p class="f-12 m-0 proxima text-primitive">RENEWAL DATE</p>
                             <h5 class="m-0">{{(arn.renewalDate | date : 'dd/MM/yyyy') || 'N/A'}}</h5>
                         </div>
-                        <div class="col-md-3 p-0" *ngIf="arn.euin">
+                        <div class="col-md-3 p-0">
                             <p class="f-12 m-0 proxima text-primitive">PRIMARY EUIN</p>
-                            <h5 class="m-0">{{arn.euin}}</h5>
+                            <h5 class="m-0">{{arn.euin || 'N/A'}}</h5>
                         </div>
                     </div>
                     <div class="row pt-12 pb-28">
@@ -60,16 +61,16 @@
                             <p class="f-12 m-0 proxima text-primitive">GST TREATMENT</p>
                             <h5 class="m-0">{{getGstApplicale(arn.gstApplicableId)}}</h5>
                             <div class="pt-44">
-                                <!-- <p class="f-12 m-0 proxima text-primitive">PHONE </p>
-                                <h5 class="m-0">{{arn.phone}}</h5> -->
+                                <p class="f-12 m-0 proxima text-primitive">PAN </p>
+                                <h5 class="m-0"> {{arn.registeredPan || 'N/A'}} </h5>
                             </div>
                         </div>
-                        <div class="col-md-3 pl-0" *ngIf="arn.gstNumber">
+                        <div class="col-md-3 pl-0">
                             <p class="f-12 m-0 proxima text-primitive">GST</p>
-                            <h5 class="m-0">{{arn.gstNumber}}</h5>
+                            <h5 class="m-0">{{arn.gstNumber || 'N/A'}}</h5>
                             <div class="pt-44">
                                 <p class="f-12 m-0 proxima text-primitive">EMAIL </p>
-                                <h5 class="m-0">{{arn.registeredEmail}}</h5>
+                                <h5 class="m-0">{{arn.registeredEmail || 'N/A'}}</h5>
                             </div>
                         </div>
                     </div>

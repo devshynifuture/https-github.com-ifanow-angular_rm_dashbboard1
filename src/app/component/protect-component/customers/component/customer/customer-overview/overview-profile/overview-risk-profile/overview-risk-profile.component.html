@@ -1,13 +1,37 @@
-<div *ngIf="showLoader==true">
+<!-- <div *ngIf="showLoader==true">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
+</div> -->
+
+
+
 <div class="wrapper-28" *ngIf="showRisk == false">
     <div class="row">
         <div class="col-md-9 pl-0">
             <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can take.
             </h3>
+
+            <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation">
+                <div class="col-md-12 mb-8 realClass">
+                    <div class="bar height23">
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-8 realClass">
+                    <div class="bar height23">
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-8 realClass">
+                    <div class="bar height23">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- page loader -->
+
             <div class="pt-20" *ngFor="let item of riskAssessmentQuestionList">
-                <mat-accordion>
+                <mat-accordion class="riskAccordion">
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -17,10 +41,7 @@
 
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
 
-                            <mat-radio-button class="w-100"
-                                *ngFor="let choice of item.riskAssessmentChoices; let i = index"
-                                [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled"
-                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
+                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index" [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled" (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
                                 {{choice.choice}}<br>
                             </mat-radio-button>
 
@@ -31,19 +52,17 @@
             </div>
             <div *ngIf="showErrorMsg == true" class="errorClass"> Please complete all questions for test result
             </div>
-            <button *ngIf="showButton == true" mat-stroked-button class="btn-primary mt-20 br-0 right"
-                (click)="submitRiskAnalysis(item)">SUBMIT</button>
-            <div *ngIf="isLoading == true">
+            <button *ngIf="showButton == true" mat-stroked-button class="btn-primary mt-20 br-0 right" (click)="submitRiskAnalysis(item)">SUBMIT</button>
+            <!-- <div *ngIf="isLoading == true">
                 <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-            </div>
+            </div> -->
         </div>
         <div class="col-md-3 pr-0">
             <div class="row">
                 <div class="col-md-12 p-0 d-flex justify-content-between">
                     <button mat-flat-button class="b-a-custom text-primary" (click)="reset(true);showRisk = false">Risk
                         assessment</button>
-                    <button mat-flat-button class="b-a-custom text-primary"
-                        (click)="open('riskProfile', null)">History</button>
+                    <button mat-flat-button class="b-a-custom ml-12 text-primary" (click)="open('riskProfile', null)">History</button>
                 </div>
             </div>
 
@@ -83,8 +102,7 @@
                     <h5 class="m-0 f-500 roboto text-black">Your risk {{scoreStatus}}
                     </h5>
                     <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
-                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to
-                        take {{scoreStatus}} risk for {{scoreStatus}} returns</p>
+                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take {{scoreStatus}} risk for {{scoreStatus}} returns</p>
                 </div>
                 <div class="col-md-4">
                 </div>

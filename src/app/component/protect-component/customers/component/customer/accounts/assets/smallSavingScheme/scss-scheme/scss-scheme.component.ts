@@ -43,6 +43,7 @@ export class ScssSchemeComponent implements OnInit {
   file: any;
   isLoadingUpload: boolean = false;
   clientData: any;
+  myFiles: any;
 
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
@@ -60,16 +61,17 @@ export class ScssSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getScssSchemedata();
   }
-  fetchData(value,fileName) {
+  fetchData(value, fileName) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId:this.clientData.familyMemberId,
+      familyMemberId: this.clientData.familyMemberId,
       asset: value
     }
-    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj)
-    if(this.fileUploadData){
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
       this.file = fileName
       this.fileUpload.uploadFile(fileName)
     }

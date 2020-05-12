@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-right-filter',
@@ -74,6 +75,8 @@ export class RightFilterComponent implements OnInit {
   showError: string;
   countFormat: number;
   showGrandfathering = true;
+  advisorId: any;
+  clientId: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
@@ -89,6 +92,8 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     // (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
     this.transactionPeriodCheck = false
     // this.amc = this._data.schemeWise;//amc wise data 
@@ -713,8 +718,36 @@ export class RightFilterComponent implements OnInit {
         }
       );
     } else {
-      this.barButtonOptions.active = false;
-      this.Close(this.finalFilterData);
+      this.obj = {
+        advisorId:this.advisorId,
+        clientId:this.clientId,
+        toDate: this.finalFilterData.reportAsOn,
+        id: JSON.stringify(this.finalFilterData.categoryWiseMfList)
+      }
+      this.custumService.getMutualFund(this.obj).subscribe(
+        data => {
+          console.log(data);
+          this.barButtonOptions.active = false;
+          this.finalFilterData.mfData = data;
+          this.Close(this.finalFilterData);
+        }
+      );
+      // this.obj = {
+      //   advisorId:this.advisorId,
+      //   clientId:this.clientId,
+      //   lastDate: (this.finalFilterData.reportAsOn) ? this.finalFilterData.reportAsOn : this.finalFilterData.toDate,
+      //   reportType:this.finalFilterData.categoryWiseMfList
+      // }
+      // this.custumService.getDatedReportWiseCalculations(this.obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.barButtonOptions.active = false;
+      //     this.finalFilterData.mutualFundList = data;
+      //     this.Close(this.finalFilterData);
+      //   }
+      // );
+      // this.barButtonOptions.active = false;
+      // this.Close(this.finalFilterData);
     }
 
   }

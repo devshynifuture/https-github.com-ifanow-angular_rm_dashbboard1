@@ -7,7 +7,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -196,8 +196,14 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinner = false;
     console.log('new schemes', responseData);
     this.schemeList = responseData;
-    this.purchaseTransaction.controls.schemePurchase.setValue(inputData);
+    this.filterSchemeList = new Observable().pipe(startWith(''),
+      map(value => this.processTransaction.filterScheme(this.purchaseTransaction.controls.schemePurchase.value, this.schemeList)));
 
+    // this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+    // );
+    // this.purchaseTransaction.controls.schemePurchase.setValue({schemeName: });
   }
 
   getExistingSchemesRes(data) {
@@ -315,7 +321,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.getFoliosAmcWiseRes(data);
           this.setMinAmount();
         }, (error) => {
-          this.purchaseTransaction.get('folioSelection').setValue(2);
+          this.purchaseTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
@@ -329,7 +335,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.getFoliosAmcWiseRes(data);
           this.setMinAmount();
         }, (error) => {
-          this.purchaseTransaction.get('folioSelection').setValue(2);
+          this.purchaseTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'dismiss');
           this.setMinAmount();
@@ -374,7 +380,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
       }
     } else {
-      this.purchaseTransaction.get('folioSelection').setValue(2);
+      this.purchaseTransaction.get('folioSelection').setValue('2');
       this.noFolio = 'No existing folios';
       this.ExistingOrNew = 2;
     }
@@ -452,29 +458,37 @@ export class PurchaseTrasactionComponent implements OnInit {
     };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
-        this.purchaseTransaction.get('modeOfPaymentSelection').setValue('1');
-        this.eventService.openSnackBar(error, 'dismiss');
-        this.showSpinnerMandate = false;
-        this.mandateDetails = [];
-        this.selectedMandate = null;
+        this.handleMandateFailure();
       }
     );
   }
 
-  getMandateDetailsRes(data) {
+  handleMandateFailure() {
     this.showSpinnerMandate = false;
-    console.log('getNSEAchmandateRes', data);
+    this.mandateDetails = [];
+    this.selectedMandate = null;
+    this.eventService.openSnackBar('No mandate found', 'dismiss');
+    this.purchaseTransaction.controls.modeOfPaymentSelection.setValue('1');
+  }
+
+  getMandateDetailsRes(data) {
+    console.log('mandate res unfiltered : ', data);
+    this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
+    console.log('mandate res filtered : ', this.mandateDetails);
+    if (!this.mandateDetails || this.mandateDetails.length == 0) {
+      this.handleMandateFailure();
+      return;
+    }
+
+    this.showSpinnerMandate = false;
     if (data.length > 1) {
       Object.assign(this.transactionSummary, {showUmrnEdit: true});
     }
-    this.mandateDetails = this.processTransaction.filterMandateData(data);
-    console.log('this.achMandateNSE', this.selectedMandate);
     this.selectedMandate = this.processTransaction.getMaxAmountMandate(this.mandateDetails);
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
       Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
       if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
-        // max
         this.purchaseTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
         this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
       }
@@ -512,11 +526,14 @@ export class PurchaseTrasactionComponent implements OnInit {
       schemePurchase: [(!data) ? '' : data.schemeName, [Validators.required]],
 
     });
-
-    this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
-      startWith(''),
-      map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
-    );
+    this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
+      this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
+        map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
+    });
+    /* this.filterSchemeList = this.purchaseTransaction.controls.schemePurchase.valueChanges.pipe(
+       startWith(''),
+       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
+     );*/
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
       this.scheme.amcId = data.amcId;

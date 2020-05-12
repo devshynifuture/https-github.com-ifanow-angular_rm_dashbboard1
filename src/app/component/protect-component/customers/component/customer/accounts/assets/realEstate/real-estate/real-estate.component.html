@@ -1,23 +1,5 @@
-<!-- <div *ngIf="isLoading==true">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->
 <div class="wrapper-8 ">
-    <!-- <div class="row">
-        <div class="col-md-12 right text-right pt-28 pb-28 p-0">
-            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-2">
-                Overview Report
-                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Overview Report</button>
-                <button mat-menu-item>Summary</button>
-                <button mat-menu-item>All Transactions</button>
-                <button mat-menu-item>Unrealized Transactions</button>
-                <button mat-menu-item>Capital Gains</button>
-                <button mat-menu-item>Goal Linkage</button>
-            </mat-menu>
-        </div>
-    </div> -->
+
     <div class="row pt-28">
         <div class="col-md-6 p-0">
             <h4 class="m-0 text-black roboto">Real estate </h4>
@@ -72,7 +54,7 @@
     </div>
     <div class="mt-8 p-0 col-md-12 real-estate">
         <div class="overflow-hidden" [ngClass]="{'table-scroll':isLoading==false }">
-            <table #tableEl *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3" id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3" id="tbs" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
                     <td mat-cell *matCellDef="let element; let i = index;" class="br ">
@@ -143,11 +125,14 @@
 
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class=" "></th>
-                    <td mat-cell *matCellDef="let element" class=" ">
+                    <td mat-cell *matCellDef="let element" class=" text-center">
                         <div *ngIf="!isLoading">
-                            <i class="material-icons f-20 c-p text-black" [matMenuTriggerFor]="menu4">
+                            <!-- <i class="material-icons f-20 c-p text-black" [matMenuTriggerFor]="menu4">
                                 more_vert
-                            </i>
+                            </i> -->
+
+                            <img class="c-p" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
+
                             <mat-menu #menu4="matMenu">
                                 <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewRealEstate(element)">Detailed
