@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../../../../../auth-service/authService';
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,6 +9,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -22,6 +24,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     'gain', 'absReturn', 'xirr', 'allocation'];
   // subCategoryData: any[];
   // schemeWise: any[];
+  mfData;
   mutualFundList: any[];
   isLoading = false;
   dataSource = new TableVirtualScrollDataSource([{}, {}, {}]);
@@ -38,23 +41,28 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   displayedColumns: string[];
+  advisorId = AuthService.getAdvisorId();
+  clientId = AuthService.getClientId();
 
-  constructor(private datePipe: DatePipe,private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService,private eventService:EventService) {
+  constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
+    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
-
-  @Input() mutualFund;
+  mutualFund;
 
   ngOnInit() {
-    if(this.mutualFund.viewMode == 'Unrealized Transactions'){
+    this.getMutualFund();
+  }
+
+  initValueOnInit() {
+    if (this.mutualFund.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-      'units','currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
-    }else{
+        'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
+    } else {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-      'units','balanceUnits','days','icons'];
+        'units', 'balanceUnits', 'days', 'icons'];
     }
     console.log('this.mutualFund == ', this.mutualFund);
-    if (this.mutualFund.mutualFundList.length>0) {
+    if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
       this.advisorData = this.mutualFund.advisorData;
@@ -67,12 +75,47 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // for displaying table values as per category
       // this.customDataSource.data = this.subCatArray(this.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
-    }else{
-      this.isLoading=false;
+    } else {
+      this.isLoading = false;
       this.changeInput.emit(false);
-      this.customDataSource.data=[];
+      this.customDataSource.data = [];
     }
+  }
 
+  getMutualFund() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.custumService.getMutualFund(obj).pipe(map((data) => {
+      return this.doFiltering(data);
+    })).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+
+  doFiltering(data) {
+    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
+
+  getMutualFundResponse(data) {
+    if (data) {
+      this.isLoading = false;
+      this.mfData = data;
+      this.mutualFund = data;
+      this.mfService.changeShowMutualFundDropDown(false);
+      this.initValueOnInit();
+      // if (this.mfData) {
+      //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
+      // }
+    }
+    this.isLoading = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -103,7 +146,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     this.mutualFund.mutualFundList.forEach(element => {
       element.navDate = this.datePipe.transform(element.navDate, 'yyyy-MM-dd')
       element.mutualFundTransactions.forEach(element => {
-        element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+        element.transactionDate = this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
       });
     });
     const obj = {
@@ -115,7 +158,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         this.mutualFundList = data;
         this.asyncFilter(this.mutualFundList);
 
-      },(error) => {
+      }, (error) => {
         this.isLoading = false;
         this.dataSource.data = [];
         this.customDataSource.data = [];

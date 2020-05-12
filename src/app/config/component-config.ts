@@ -218,10 +218,17 @@ export const appConfig = {
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',
   BANK_NAME_GET: 'account/asset/client/family-member/bank-detail/list/get',
-  MUFUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
+  MUTUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
   MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
   MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
+
+  MUTUAL_FUND_ADD: 'mutual-fund/mutualFund/add',
+  MUTUAL_FUND_EDIT: 'mutual-fund/mutualFund/edit',
+  FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID: 'family/name/by/clientId/get',
+  MUTUAL_FUND_SCHEME_NAME_LIST_GET: 'mutual-fund/all/schemeName/list/get',
+  MUTUAL_FUND_DELETE: 'mutual-fund/mutualFund/scheme/folio/delete',
   GET_DATED_REPORT_WISE_CALCULATION: 'mutual-fund/getDatedReportWiseCalculations/list/get',
+
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -666,6 +673,7 @@ export const appConfig = {
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
   GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
+  GET_TEAM_MEMBER_INFO: 'user/info/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
