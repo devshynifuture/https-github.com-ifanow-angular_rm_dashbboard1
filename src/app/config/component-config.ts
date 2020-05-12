@@ -664,6 +664,7 @@ export const appConfig = {
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
   GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
+  GET_TEAM_MEMBER_INFO: 'user/info/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',

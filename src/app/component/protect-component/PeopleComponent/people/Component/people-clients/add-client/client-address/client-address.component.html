@@ -40,7 +40,7 @@
                 <mat-form-field>
                     <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType"
                         class="form-control">
-                        <mat-option value="0">Select proof type</mat-option>
+                        <mat-option value="">Select proof type</mat-option>
                         <mat-option value="1">Passport</mat-option>
                         <mat-option value="2">Aadhaar</mat-option>
                         <mat-option value="3">Driving licence</mat-option>
@@ -60,10 +60,13 @@
         <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter ID Proof" (input)="toUpperCase(addressForm.get('proofIdNum'),$event)"
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off"
-                        matInput formControlName="proofIdNum" class="form-control">
-                    <mat-error>This field is required</mat-error>
+                    <input #proofNumber placeholder="Enter ID Proof" [maxLength]="maxLength"
+                        (input)="toUpperCase(addressForm.get('proofIdNum'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
+                        formControlName="proofIdNum" class="form-control">
+                    <mat-error *ngIf="addressForm.get('proofIdNum').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="addressForm.get('proofIdNum').errors?.pattern">Invalid proof number</mat-error>
+                    <mat-hint *ngIf="maxLength" align="end">{{proofNumber.value.length}}/{{maxLength}}</mat-hint>
                 </mat-form-field>
             </div>
         </div>
