@@ -4,6 +4,8 @@ import {FileUploadService} from '../../../../../../services/file-upload.service'
 import {apiConfig} from '../../../../../../config/main-config';
 import {appConfig} from '../../../../../../config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-investor-detail',
@@ -19,7 +21,7 @@ export class InvestorDetailComponent implements OnInit {
 
   statusData = [
     {
-      name: 'Pending', checked: false, status: 0
+      name: 'Request sent', checked: true, status: 0
     },
     {
       name: 'Form uploaded', checked: false, status: 4
@@ -31,12 +33,14 @@ export class InvestorDetailComponent implements OnInit {
   statusDetails: any;
   file: any;
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
     this.details = this.data;
     console.log('investor detail', this.data);
+    this.getFormUploadDetail();
     this.getDataStatus(this.details);
   }
 
@@ -49,12 +53,41 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getDataStatus(data) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.statusDetails = this.statusData;
-    this.statusDetails.forEach(element => {
-      (element.status <= data.status) ? element.checked = true : element.checked = false;
+    if (data.tpUserCredFamilyMappingId && data.tpUserCredFamilyMappingId > 0) {
+      this.statusDetails[2].checked = true;
+    }
+    // this.isLoading = false;
+  }
+
+  getInvestorStatus() {
+    const obj = {id: this.details.id};
+    this.isLoading = true;
+
+    this.onlineTransact.getInvestorStatusCheck(obj).subscribe(resultData => {
+      console.log('Investor is activated');
+      this.statusData[2].checked = true;
+      this.isLoading = false;
+    }, error => {
+      this.isLoading = false;
+      this.eventService.openSnackBar(error, 'discuss');
+      this.statusData[2].checked = false;
     });
-    this.isLoading = false;
+  }
+
+  getFormUploadDetail() {
+    const obj = {id: this.details.id};
+    this.isLoading = true;
+    this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
+      console.log('Investor is activated');
+      this.statusData[1].checked = true;
+      this.isLoading = false;
+    }, error => {
+      this.isLoading = false;
+      this.eventService.openSnackBar(error, 'discuss');
+      this.statusData[1].checked = false;
+    });
   }
 
   refresh(value) {

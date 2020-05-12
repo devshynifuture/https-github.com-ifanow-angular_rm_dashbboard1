@@ -69,7 +69,9 @@
       <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
     </div>
     <div class="col-md-2 p-0 text-right right">
-      <button (click)="refresh(details)" class="primary-sm" mat-stroked-button>REFRESH</button>
+      <button (click)="getInvestorStatus()" *ngIf="!statusDetails[2].checked" class="primary-sm" mat-stroked-button>
+        REFRESH
+      </button>
     </div>
 
   </div>
