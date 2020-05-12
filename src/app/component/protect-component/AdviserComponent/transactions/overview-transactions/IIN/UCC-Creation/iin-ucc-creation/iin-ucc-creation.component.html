@@ -38,9 +38,10 @@
         <mat-form-field appearance="standard" floatLabel="never">
           <input #searchClient [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8"
                  formControlName="ownerName" matInput placeholder="Start typing to see investor names">
-          <mat-autocomplete #auto1="matAutocomplete">
-            <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM | async"
-                        [value]="f.name">
+          <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="ownerDetails($event.option.value)"
+                            [displayWith]="displayFn">
+            <mat-option *ngFor="let f of nomineesListFM | async"
+                        [value]="f">
               <span>{{f.name}}</span>
             </mat-option>
           </mat-autocomplete>
@@ -82,8 +83,9 @@
         <mat-form-field>
           <mat-select class="form-control" formControlName="taxStatus">
             <mat-option disabled value=''>Select tax status</mat-option>
-            <mat-option value="01">Individual</mat-option>
-            <mat-option value="01">Non individual</mat-option>
+            <mat-option *ngFor="let singleTaxStatus of taxStatusList"
+                        [value]="singleTaxStatus.taxStatusCode">{{singleTaxStatus.taxStatusDesc}}
+            </mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>
         </mat-form-field>
