@@ -115,8 +115,9 @@ export class ExcelMisSipService {
                   }
                   ws.addRow([
                       catElement.index,
-                      catElement.categoryName,
-                      catElement.totalAum,
+                      catElement.name,
+                      catElement.sipAmount,
+                      catElement.sipCount,
                       catElement.weightInPerc
                   ]);
 
@@ -133,27 +134,34 @@ export class ExcelMisSipService {
                               ws.addRow([
                                   subCatElement.index,
                                   subCatElement.name,
-                                  subCatElement.totalAum,
+                                  subCatElement.sipAmount,
+                                  subCatElement.sipCount,
                                   subCatElement.weightInPerc
                               ]);
 
-                              if (subCatElement.schemeList.length !== 0) {
+                              if (subCatElement.applicantList.length !== 0) {
                                   if (subCatElement.subCatList !== 0) {
                                       currentRowPos = currentRowPos + catElement.subCatList.length + 1;
                                   } else {
                                       currentRowPos = currentRowPos + 2;
                                   }
 
-                                  subCatElement.schemeList.forEach((schemeElement, index3) => {
+                                  subCatElement.applicantList.forEach((schemeElement, index3) => {
                                       ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                       ws.columns = arrayOfHeaderStyle[2];
                                       headCell = ws.getRow(currentRowPos);
                                       headCell.font = { bold: true };
                                       ws.addRow([
-                                          schemeElement.index,
-                                          schemeElement.name,
-                                          schemeElement.totalAum,
-                                          schemeElement.weightInPerc
+                                        schemeElement.name,
+                                        schemeElement.schemeName,
+                                        schemeElement.folio,
+                                        schemeElement.registeredDate,
+                                        schemeElement.fromDate,
+                                        schemeElement.toDate,
+                                        schemeElement.toTriggerDay,
+                                        schemeElement.frequency,
+                                        schemeElement.amount,
+                                        schemeElement.weightInPerc,
                                       ]);
 
                                       if (schemeElement.applicantList.length !== 0) {
@@ -173,10 +181,15 @@ export class ExcelMisSipService {
 
                                               ws.addRow([
                                                   element.name,
-                                                  element.balanceUnit,
-                                                  element.folioNumber,
-                                                  element.totalAum,
-                                                  element.weightInPerc
+                                                  element.schemeName,
+                                                  element.folio,
+                                                  element.registeredDate,
+                                                  element.fromDate,
+                                                  element.toDate,
+                                                  element.toTriggerDay,
+                                                  element.frequency,
+                                                  element.amount,
+                                                  element.weightInPerc,
                                               ]);
                                           });
                                       }
