@@ -68,7 +68,8 @@ export class TempserviceService {
           }
         const obj = {
           schemeName: singleData.schemeName,
-          nav: singleData.nav
+          nav: singleData.nav,
+          navDate:singleData.navDate
         };
         filteredData.push(obj);
         const obj2 = {

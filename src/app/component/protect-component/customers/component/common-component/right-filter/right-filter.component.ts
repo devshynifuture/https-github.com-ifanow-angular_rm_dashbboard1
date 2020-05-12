@@ -679,7 +679,7 @@ export class RightFilterComponent implements OnInit {
     console.log(this.finalFilterData);
     if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
       let mutualFund = this.finalFilterData.mutualFundList;
-      (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
+      (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate:  JSON.stringify(this.dataToSend.toDate)}) : null;
       this.obj = {
         mutualFundList: mutualFund
       }
