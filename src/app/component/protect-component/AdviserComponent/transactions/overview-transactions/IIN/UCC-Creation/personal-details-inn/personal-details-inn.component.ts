@@ -245,7 +245,7 @@ export class PersonalDetailsInnComponent implements OnInit {
 
   savePersonalDetails(value) {
     if (this.personalDetails.invalid) {
-      for (let element in this.personalDetails.controls) {
+      for (const element in this.personalDetails.controls) {
         console.log(element);
         if (this.personalDetails.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();

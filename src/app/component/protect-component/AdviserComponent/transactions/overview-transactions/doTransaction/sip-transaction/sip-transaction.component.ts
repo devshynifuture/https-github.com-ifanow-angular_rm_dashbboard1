@@ -11,7 +11,7 @@ import {map, startWith} from 'rxjs/operators';
 import {MathUtilService} from '../../../../../../../services/math-util.service';
 import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
-import {MandateCreationComponent} from '../../MandateCreation/mandate-creation/mandate-creation.component';
+import {VerifyMemberComponent} from '../../MandateCreation/verify-member/verify-member.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -256,7 +256,9 @@ export class SipTransactionComponent implements OnInit {
     if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
     }
-    if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+    if (this.platformType == 1) {
+      this.getMandateDetails();
+    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
       this.getMandateDetails();
     }
   }
@@ -414,10 +416,12 @@ export class SipTransactionComponent implements OnInit {
 
     if (!this.mandateDetails || this.mandateDetails.length == 0) {
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
-        if (!this.mandateDetails || this.mandateDetails.length == 0) {
-
-        }
+        /* this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
+         if (!this.mandateDetails || this.mandateDetails.length == 0) {
+         }*/
+        this.alertModal();
+        this.showSpinnerMandate = false;
+        return;
       } else {
         this.handleMandateFailure();
         return;
@@ -440,7 +444,7 @@ export class SipTransactionComponent implements OnInit {
     }
   }
 
-  alertModal(value, data) {
+  alertModal() {
     const dialogData = {
       data: '',
       header: 'Are you sure ?',
@@ -470,7 +474,7 @@ export class SipTransactionComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open',
-      componentName: MandateCreationComponent
+      componentName: VerifyMemberComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
