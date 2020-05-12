@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-3 pl-0 pr-4">
             <div class="relClass">
-                <div class="bar height23">
+                <div [ngClass]="{'height23': StockFeedFlag}" class="bar ">
                     <span *ngIf="!StockFeedFlag">
                         <p class="m-0 f-400 roboto"
                             [ngClass]="{'greenColor-text': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
@@ -75,15 +75,19 @@
         </div>
         <div class="col-md-3  pl-0 pr-4">
             <div class="relClass" *ngIf="nifty500Data">
-                <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
-                    <p [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}"
-                        class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
+                <div [ngClass]="{'height23': nifty500DataFlag}" class="bar">
+                    <span *ngIf="!nifty500DataFlag">
+                        <p [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}"
+                            class="m-0 f-400 roboto">{{nifty500Data.change_in_percentage}}</p>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-4 text-right relClass p-0">
-            <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
-                <p class="m-0 roboto text-black f-500">₹{{nifty500Data.current_value}}</p>
+            <div [ngClass]="{'height23': nifty500DataFlag}" class="bar">
+                <span *ngIf="!nifty500DataFlag">
+                    <p class="m-0 roboto text-black f-500">₹{{nifty500Data.current_value}}</p>
+                </span>
             </div>
         </div>
     </div>
