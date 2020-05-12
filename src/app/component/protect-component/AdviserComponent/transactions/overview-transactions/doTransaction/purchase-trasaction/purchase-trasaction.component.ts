@@ -227,7 +227,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.setMinAmount();
       Object.assign(this.transactionSummary, {folioNumber: ''});
     } else {
-      this.getFolioList();
+      if (this.scheme) {
+        this.getFolioList();
+      }
     }
   }
 
