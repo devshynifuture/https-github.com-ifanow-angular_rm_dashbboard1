@@ -42,6 +42,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   mutualFundList: any[];
   constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
    @Output() reponseToInput = new EventEmitter();
+   @Output() changeInput = new EventEmitter();
    @Input() responseData; 
    @Input() mutualFund;
    @Input() changedData;
@@ -57,13 +58,15 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.toDateYear = this.changedData.toDateYear ;
         this.grandFatheringEffect = this.changedData.grandfatheringEffect;
         this.getDetailedData(this.changedData.mfListData);
+    
       }
       // this.mfList = this.responseData.mfData;
 
-      this.isLoading =false;
+
   });
   }
   getDetailedData(data){
+    let equityData;
     this.total_stGain = 0;
     this.total_ltGain= 0;
     this.total_stLoss= 0;
@@ -73,10 +76,17 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.purchaseAmount= 0;
     this.redeemAmount = 0;
     this.total_stt =0;
+    this.isLoading =false;
+    this.changeInput.emit(false);
     if(data){
 
       let catObj = this.MfServiceService.categoryFilter(data, 'category');
-      this.dataSource =  new MatTableDataSource(this.getFilterData( catObj['EQUITY'],'EQUITY'))
+      Object.keys(catObj).map(key => {
+        if(catObj[key] != 'DEBT'){
+          this.dataSource =  new MatTableDataSource(this.getFilterData(catObj[key], key));
+          // equityData = this.getFilterData(catObj[key], key);
+        }
+      });
       this.dataSource1 =  new MatTableDataSource(this.getFilterData( catObj['DEBT'],'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
       this.objSendToDetailedCapital={

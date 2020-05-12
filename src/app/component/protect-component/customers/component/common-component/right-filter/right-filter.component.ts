@@ -161,7 +161,7 @@ export class RightFilterComponent implements OnInit {
       reportAsOn: [new Date(todayDate), [Validators.required]],
       fromDate: [new Date(fromDate),[Validators.required]],
       toDate: [new Date(todayDate),[Validators.required]],
-      showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
+      showFolios: [(data.showFolio) ? data.showFolio : '1', [Validators.required]],
       grandfathering: [(data.grandfathering) ? data.grandfathering : '', [Validators.required]],
     });
   }
@@ -492,6 +492,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect('', '');
   }
   changeFormatFilter(value) {
+    (this.reportFormatObj.length == 0) ?  this.showError = null :  (this.reportFormatObj.length == 1 && !this.reportFormatObj[0].selected) ? this.showError = 'report format' : this.showError = null; 
     this.reportFormat.forEach(element => {
       if (element.name != value.name) {
         element.selected = false;
@@ -500,6 +501,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect('', '');
   }
   changeFinancialYear(value) {
+    (this.financialYearsObj.length == 0) ?  this.showError = null :  (this.financialYearsObj.length == 1 && !this.financialYearsObj[0].selected) ? this.showError = 'financial year' : this.showError = null; 
     if(value.from <= 2017){
       this.showGrandfathering = false;
       this.summaryFilerForm.get('grandfathering').setValue('2');
@@ -717,12 +719,13 @@ export class RightFilterComponent implements OnInit {
           console.log(data);
         }
       );
-    } else {
+    } else if(this._data.name != 'CAPITAL GAIN REPORT') {
+     
       this.obj = {
         advisorId:this.advisorId,
         clientId:this.clientId,
-        toDate: this.finalFilterData.reportAsOn,
-        id: JSON.stringify(this.finalFilterData.categoryWiseMfList)
+        toDate: JSON.stringify(this.finalFilterData.reportAsOn),
+        id: this.finalFilterData.categoryWiseMfList
       }
       this.custumService.getMutualFund(this.obj).subscribe(
         data => {
@@ -748,6 +751,9 @@ export class RightFilterComponent implements OnInit {
       // );
       // this.barButtonOptions.active = false;
       // this.Close(this.finalFilterData);
+    }else{
+       this.barButtonOptions.active = false;
+       this.Close(this.finalFilterData);
     }
 
   }
