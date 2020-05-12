@@ -60,8 +60,6 @@ export class MutualFundComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      toDate:null,
-      id:JSON.stringify(null)
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
