@@ -7,6 +7,8 @@ import {MatSort, MatTableDataSource} from '@angular/material';
 import {EnumServiceService} from '../../../../../services/enum-service.service';
 import {IinUccCreationComponent} from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {InvestorDetailComponent} from './investor-detail/investor-detail.component';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -20,17 +22,16 @@ export class InvestorsTransactionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   filterData: any;
-  selectedBrokerCode: any;
-  selectedPlatform: any;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
   innUccPendindList: any;
   credentialData: any;
   dontHide: boolean;
+  isPendingData = false;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private enumServiceService: EnumServiceService) {
+              private enumServiceService: EnumServiceService, private subInjectService: SubscriptionInject) {
   }
 
   isLoading = false;
@@ -99,6 +100,7 @@ export class InvestorsTransactionsComponent implements OnInit {
       // tpUserCredentialId: this.selectedBrokerCode.id,
       // aggregatorType: this.selectedPlatform.aggregatorType
     };
+    this.isPendingData = false;
     this.onlineTransact.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
@@ -128,6 +130,8 @@ export class InvestorsTransactionsComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId
     };
+    this.isPendingData = true;
+
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
         this.isLoading = false;
@@ -165,24 +169,29 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   }
 
+  openInvestorDetail(data) {
+    if (this.isLoading || !this.isPendingData) {
+      return;
+    }
+    console.log('this is detailed potd data', data);
+    const fragmentData = {
+      flag: 'investorDetail',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: InvestorDetailComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  bank: string;
-  bankac: string;
-  amt: string;
-  type: string;
-  status: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'NSE', name: 'ARN-83865', weight: 'Rahul Jain', symbol: 'AATPJ1239L', bank: 'Individual', bankac: 'Anyone or survivor',
-    amt: '5011102595', type: '50,000', status: 'Investment ready'
-  },
-
-];
