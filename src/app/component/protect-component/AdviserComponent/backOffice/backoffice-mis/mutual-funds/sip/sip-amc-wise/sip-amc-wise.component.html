@@ -7,6 +7,9 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="text-right">
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('amc-wise', null,null)"><i
+                                class="material-icons">add</i>XLXS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -96,6 +99,14 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="6" class="innerTd one">
+                                    <div class="d-block text-right" *ngIf="category.showCategory==false">
+                                        <button mat-icon-button
+                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)">
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                     <table *ngIf="category.showCategory==false && !isLoading" class=" mt-8 mb-8"
                                         id="table-low">
                                         <thead class="bg-light text-dark">
@@ -157,6 +168,7 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="6" class="innerTd two">
+
                                                     <table class=" mt-8 mb-8" id="table-low"
                                                         *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
@@ -220,6 +232,18 @@
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="6" class="innerTd three">
+                                                                    <div class="d-block text-right"
+                                                                        *ngIf="!scheme.showScheme">
+                                                                        <div class="d-block text-right"
+                                                                            *ngIf="subcategory.showSubCategory==false">
+                                                                            <button mat-icon-button
+                                                                                (click)="exportToExcelSheet('applicant-wise', i, amcIndex)">
+                                                                                <mat-icon>
+                                                                                    save_alt
+                                                                                </mat-icon>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                                     <table class=" mt-8 mb-8" id="table-low"
                                                                         *ngIf="inv.showInvestor==false">
                                                                         <thead>
