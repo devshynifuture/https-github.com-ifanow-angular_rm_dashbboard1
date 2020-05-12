@@ -24,7 +24,7 @@ export class InvestorDetailComponent implements OnInit {
       name: 'Request sent', checked: true, status: 0
     },
     {
-      name: 'Form uploaded', checked: false, status: 4
+      name: 'Form uploaded', checked: false, status: 1
     },
     {
       name: 'Investment Ready', checked: false, status: 2
@@ -106,7 +106,7 @@ export class InvestorDetailComponent implements OnInit {
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
-      tpUserRequestId: 1,
+      tpUserRequestId: this.details.id,
       documentType: 1
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
@@ -119,7 +119,8 @@ export class InvestorDetailComponent implements OnInit {
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
-
+          this.eventService.openSnackBar('File uploaded successfully');
+          this.getFormUploadDetail();
         }
       });
   }
