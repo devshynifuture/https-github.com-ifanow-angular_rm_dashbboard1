@@ -102,9 +102,12 @@
           <h5 *ngIf="BSEValue == '2'">5) Upload forms</h5>
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
-          <button class="btnConfirm bg-primary text-white" mat-button>
+          <button (click)="uploadFileInput.click()"
+                  *ngIf="selectedBrokerBse&&createdBrokerMap[this.selectedBrokerBse.id]"
+                  class="btnConfirm bg-primary text-white"
+                  mat-button>
             Upload AOF
-            <input (change)="getFileDetails($event)" class="uploadInput" id="file-4" type="file">
+            <input #uploadFileInput (change)="getFileDetails($event)" class="uploadInput" id="file-4" type="file">
           </button>
         </div>
 
