@@ -204,7 +204,7 @@
                                 <th class="br text-left" mat-header-cell *matHeaderCellDef>
                                     Transaction amount
                                 </th>
-                                <td class="br text-left" mat-cell *matCellDef="let element">
+                                <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.amount)?element.amount:0)}}</span>
                                         <span appFormatNumber class="f-700" *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                                     </div>

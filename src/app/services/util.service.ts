@@ -1,13 +1,13 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
-import {Subject, BehaviorSubject} from 'rxjs';
+import { ElementRef, Injectable, Input } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -50,7 +50,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -269,9 +269,9 @@ export class UtilService {
       htmlInput: inputData,
       name: pdfName
     };
-    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
+    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
       data => {
-        const file = new Blob([data], {type: 'application/pdf'});
+        const file = new Blob([data], { type: 'application/pdf' });
         const fileURL = URL.createObjectURL(file);
         fragData.isSpinner = false;
         window.open(fileURL);
@@ -314,8 +314,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 
   /**
@@ -382,6 +382,7 @@ export class ValidatorType {
 
   // static NUMBER_ONLY = new RegExp(/^\d{1,6}(\.\d{1,2})?$/);
   static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
+  static NUMBER_ONLY_WITH_FORWARD_SLASH = new RegExp(/^[0-9\.\-\/]+$/);
   static NUMBER_ONLY_WITHOUT_DOT = new RegExp(/^\d+(\\d{0,4})?$/);
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
   static ALPHA_NUMERIC_PARANTHESIS_DOT_SPACE = new RegExp(/^[\w .,(),-]+$/);

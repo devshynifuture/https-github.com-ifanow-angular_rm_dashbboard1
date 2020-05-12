@@ -13,6 +13,8 @@ export class MfServiceService {
   }
 
   private mutualFundDataSource = new BehaviorSubject('');
+  private updateTransactionAfterAdd = new BehaviorSubject('');
+  private showMutualFundDropdown = new BehaviorSubject('');
 
   getPersonalDetails(data) {
     const obj = {
@@ -64,14 +66,14 @@ export class MfServiceService {
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
-        if(element.length > 0){
+        if (element.length > 0) {
           element.forEach(singleData => {
             finalDataSource.push(singleData);
           });
-        }else{
+        } else {
           finalDataSource.push({});
         }
-       
+
       });
     }
     return finalDataSource;
@@ -370,5 +372,21 @@ export class MfServiceService {
 
   getMutualFundData() {
     return this.mutualFundDataSource.asObservable();
+  }
+
+  sendUpdatedTransactionAfterAdd(value) {
+    this.updateTransactionAfterAdd.next(value);
+  }
+
+  getUpdatedTransactionAfterAdd() {
+    return this.updateTransactionAfterAdd.asObservable();
+  }
+
+  changeShowMutualFundDropDown(value) {
+    this.showMutualFundDropdown.next(value);
+  }
+
+  getMutualFundShowDropdown() {
+    return this.showMutualFundDropdown.asObservable();
   }
 }
