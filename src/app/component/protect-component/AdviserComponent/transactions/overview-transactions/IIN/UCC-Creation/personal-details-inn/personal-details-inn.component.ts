@@ -219,7 +219,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       }
 
     } else if (value == 'second') {
-      if (this.holder.type == 'second') {
+      if (this.holder.type == 'second' && !flag) {
       } else {
         if (this.savePersonalDetails(value)) {
           if (this.secondHolder && this.secondHolder.panNumber) {
@@ -233,8 +233,7 @@ export class PersonalDetailsInnComponent implements OnInit {
         }
       }
     } else if (value == 'third') {
-      if (this.holder.type == 'third') {
-        return;
+      if (this.holder.type == 'third' && !flag) {
       } else {
         if (this.savePersonalDetails(value)) {
           this.thirdHolderButtonLabel = 'Third Holder';

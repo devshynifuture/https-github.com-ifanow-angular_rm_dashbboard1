@@ -47,9 +47,10 @@ export class BankDetailsIINComponent implements OnInit {
       this.generalDetails = data.generalDetails;
       this.getdataForm(this.firstHolderBank);
     } else {
-      if (this.clientData && !this.firstHolderBank) {
-        this.getBankList(this.clientData);
-      }
+
+    }
+    if (this.clientData) {
+      this.getBankList(this.clientData, !(!!this.firstHolderBank));
     }
     console.log('#######', this.holdingList);
   }
@@ -125,7 +126,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
 
-  getBankList(data) {
+  getBankList(data, shouldSetValue) {
     const obj = {
       userId: (data.userType == 2) ? data.clientId : (data.userType == 3) ? data.familyMemberId : data.clientId,
       userType: data.userType
@@ -136,12 +137,14 @@ export class BankDetailsIINComponent implements OnInit {
         if (data && data.length > 0) {
           this.bankList = data;
           console.log('bank == ', this.bankList);
-          this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : [];
-          this.getdataForm(this.firstHolderBank);
+          if (shouldSetValue) {
+            this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : [];
+            this.getdataForm(this.firstHolderBank);
+          }
         }
       },
       err => {
-        this.bankList = {};
+        this.bankList = [];
       }
     );
   }
@@ -226,7 +229,7 @@ export class BankDetailsIINComponent implements OnInit {
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       // accountType: [!data ? '1' : (data.accountType == 'SB')?'1':'2', [Validators.required]],
-      accountType: [!data ? 'SB' : data.accountType, [Validators.required]],
+      accountType: [!data ? 'SB' : data.accountType == '2' || data.accountType == 'CA' ? 'CA' : 'SB', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
@@ -339,16 +342,25 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
-    this.bankDetailsForm.controls.accountType.setValue(value.accountType);
+    this.bankDetailsForm.controls.accountType.setValue(value.accountType == '2' || value.accountType == 'CA' ? 'CA' : 'SB');
     this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
-    this.bankDetailsForm.controls.address1.setValue(value.address.address1);
-    this.bankDetailsForm.controls.address2.setValue(value.address.address2);
-    this.bankDetailsForm.controls.pinCode.setValue(value.address.pinCode);
-    this.bankDetailsForm.controls.city.setValue(value.address.city);
-    this.bankDetailsForm.controls.state.setValue(value.address.state);
-    this.bankDetailsForm.controls.country.setValue(value.address.country);
+    if (value.address) {
+      this.bankDetailsForm.controls.address1.setValue(value.address.address1);
+      this.bankDetailsForm.controls.address2.setValue(value.address.address2);
+      this.bankDetailsForm.controls.pinCode.setValue(value.address.pinCode);
+      this.bankDetailsForm.controls.city.setValue(value.address.city);
+      this.bankDetailsForm.controls.state.setValue(value.address.state);
+      this.bankDetailsForm.controls.country.setValue(value.address.country);
+    } else {
+      this.bankDetailsForm.controls.address1.reset();
+      this.bankDetailsForm.controls.address2.reset();
+      this.bankDetailsForm.controls.pinCode.reset();
+      this.bankDetailsForm.controls.city.reset();
+      this.bankDetailsForm.controls.state.reset();
+      this.bankDetailsForm.controls.country.reset();
+    }
     // this.bankDetails.controls.branchProof.setValue(value.address.branchProof);
     //  this.bankDetails.controls.bankMandate.setValue(value.address.bankMandate);
     //  this.bankDetails.controls.mandateDate.setValue(value.address.mandateDate);
@@ -368,18 +380,22 @@ export class BankDetailsIINComponent implements OnInit {
       }
     } else if (value == 'second') {
       this.saveBankDetails(value);
-      if (this.secondHolderBank) {
+      if (this.secondHolderBank && this.secondHolderBank.bankName) {
         this.holder.type = value;
-        this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : [];
+        this.setValueFun(this.secondHolderBank);
+      } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
+        this.secondHolderBank = this.bankList[1];
         this.setValueFun(this.secondHolderBank);
       } else {
         this.reset();
       }
     } else if (value == 'third') {
       this.saveBankDetails(value);
-      if (this.thirdHolderBank) {
+      if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
         this.holder.type = value;
-        this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : [];
+        this.setValueFun(this.thirdHolderBank);
+      } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
+        this.thirdHolderBank = this.bankList[2];
         this.setValueFun(this.thirdHolderBank);
       } else {
         this.reset();
@@ -398,16 +414,18 @@ export class BankDetailsIINComponent implements OnInit {
     if (flag == true) {
       this.doneData = true;
       console.log('contact details', this.obj1);
-      const value = {};
+      value = 'first';
       this.obj1.forEach(element => {
         if (!element.address) {
           this.getObj = this.setObj(element, value);
           this.bank.push(this.getObj);
         } else {
-          // element.accountType = (element.accountType == '1') ? 'SB' : (element.accountType == '2') ? 'CA' : 'SB';
           element.paymentMode = this.bankDetailsForm.controls.paymentMode.value,
             this.bank.push(element);
         }
+        element.defaultFlag = value == 'first' ? 1 : 0;
+        value = '';
+
       });
       const temp1 = this.holdingList.generalDetails;
       this.sendObj = {
@@ -441,7 +459,6 @@ export class BankDetailsIINComponent implements OnInit {
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
       paymentMode: this.bankDetailsForm.controls.paymentMode.value,
-      defaultFlag: 1
     };
     value.address = {
       address1: holder.address1,
@@ -463,7 +480,7 @@ export class BankDetailsIINComponent implements OnInit {
       for (const element in this.bankDetailsForm.controls) {
         console.log(element);
         if (this.bankDetailsForm.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
+          // this.inputs.find(input => !input.ngControl.valid).focus();
           this.bankDetailsForm.controls[element].markAsTouched();
         }
       }
