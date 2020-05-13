@@ -305,7 +305,7 @@ export class SipSchemeWiseComponent implements OnInit {
         break;
       case 'applicant':
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp].applicantList.push({
+          this.arrayOfExcelData[this.selectedCategory].subCatList[index].applicantList.push({
             name: element.investorName,
             schemeName: element.schemeName,
             folio: element.folioNumber,
@@ -383,20 +383,19 @@ export class SipSchemeWiseComponent implements OnInit {
 
   schemeWiseExcelReport(index) {
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
-      categoryList: false,
+      categoryList: true,
       subCatList: false,
       schemeList: false,
       applicantList: false
     });
   }
   investorWiseExcelSheet(index) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData[this.selectedCategory].subCatList));
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
-      element.subCatList = []
       if (index1 === index) {
         return;
       } else {
-        element.investorList = [];
+        element.subCatList = [];
       }
     });
 
@@ -408,10 +407,9 @@ export class SipSchemeWiseComponent implements OnInit {
     });
   }
   applicantWiseExcelReport(index, amcIndex) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp].applicantList));
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === index) {
-        element.subCatList = []
         return;
       } else {
         element.applicantList = [];
