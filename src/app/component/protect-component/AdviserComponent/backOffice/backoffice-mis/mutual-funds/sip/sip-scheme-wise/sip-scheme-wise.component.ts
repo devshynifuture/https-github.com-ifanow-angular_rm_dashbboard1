@@ -383,9 +383,8 @@ export class SipSchemeWiseComponent implements OnInit {
 
   schemeWiseExcelReport(index) {
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
-      categoryList: true,
+      categoryList: false,
       subCatList: false,
-      schemeList: false,
       applicantList: false
     });
   }
@@ -400,9 +399,8 @@ export class SipSchemeWiseComponent implements OnInit {
     });
 
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
-      categoryList: true,
-      subCatList: true,
-      schemeList: false,
+      clientList: true,
+      subCatList: false,
       applicantList: false
     });
   }
@@ -417,9 +415,8 @@ export class SipSchemeWiseComponent implements OnInit {
     });
 
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
-      categoryList: true,
+      clientList: true,
       subCatList: true,
-      schemeList: true,
       applicantList: false
     });
   }
