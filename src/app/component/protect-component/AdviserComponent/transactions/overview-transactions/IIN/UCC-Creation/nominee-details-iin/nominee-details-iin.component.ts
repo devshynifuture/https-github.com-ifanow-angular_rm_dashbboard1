@@ -136,11 +136,11 @@ export class NomineeDetailsIinComponent implements OnInit {
 
   getNomineeList(data) {
     const obj = {
-      userId: data.clientId,
-      userType: 2
+      userId: data.userType == 2 ? data.clientId : data.familyMemberId,
+      userType: data.userType
     };
     this.peopleService.getClientFamilyMembers(obj).subscribe(
-      data => this.getListOfFamilyByClientRes(data)
+      responseData => this.getListOfFamilyByClientRes(responseData)
     );
   }
 
@@ -159,8 +159,8 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.addressList = data;
     this.addressList.address = {};
     const obj = {
-      userId: data.clientId,//to do,
-      userType: 2//to do
+      userId: data.userType == 2 ? data.clientId : data.familyMemberId,
+      userType: data.userType
     };
     this.custumService.getAddressList(obj).subscribe(
       data => {
