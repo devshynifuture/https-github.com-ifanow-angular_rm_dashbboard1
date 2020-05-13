@@ -19,31 +19,22 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 export class ContactDetailsInnComponent implements OnInit {
 
   validatorType = ValidatorType;
-  holder = {
-    type: 'first',
-    data: ''
-  };
   isLoading = false;
   pinInvalid = false;
   contactDetails: any;
   inputData: any;
   holdingList: any;
-  listHolders: any;
   list: any;
   firstHolderContact: any;
-  secondHolderContact: any;
-  thirdHolderContact: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
               private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService, private ProcessTransactionService: ProcessTransactionService,
+              public eventService: EventService, private processTransactionService: ProcessTransactionService,
               private peopleService: PeopleService) {
   }
 
   obj1: any;
   sendObj: any;
-  getObj: void;
-  contacts: any[];
   changedValue: string;
   generalDetails: any;
   doneData: any;
@@ -73,13 +64,8 @@ export class ContactDetailsInnComponent implements OnInit {
       this.doneData.personal = true;
       this.doneData.contact = false;
       this.firstHolderContact = data.firstHolder;
-      this.secondHolderContact = data.secondHolder;
-      this.thirdHolderContact = data.thirdHolder;
-      // this.getdataForm(this.firstHolderContact)
     } else if (data.holderList) {
       this.firstHolderContact = data.holderList[0];
-      this.secondHolderContact = data.holderList[1];
-      this.thirdHolderContact = data.holderList[2];
     }
     if (!this.firstHolderContact.address1) {
       this.getAddressList(this.clientData);
@@ -92,19 +78,17 @@ export class ContactDetailsInnComponent implements OnInit {
     this.getIsdCodesData();
     const value = {};
     if (this.firstHolderContact) {
-      if (this.firstHolderContact.address) {
-        this.firstHolderContact.address = undefined;
-      }
+      /* if (this.firstHolderContact.address) {
+         this.firstHolderContact.address = undefined;
+       }*/
       this.getdataForm(this.firstHolderContact);
     } else {
-      this.getdataForm('');
+      this.getdataForm(null);
       if (this.clientData) {
         this.getAddressList(this.clientData);
       }
     }
-    this.obj1 = [];
-    this.sendObj = [];
-    this.contacts = [];
+    this.sendObj = {};
     console.log('holding list', this.holdingList);
   }
 
@@ -140,11 +124,11 @@ export class ContactDetailsInnComponent implements OnInit {
       userType: 2
     };
     this.custumService.getAddressList(obj).subscribe(
-      data => {
-        console.log(data);
-        console.log('address stored', data);
+      responseData => {
+        console.log(responseData);
+        console.log('address stored', responseData);
         this.addressList = this.firstHolderContact;
-        this.addressList.address = data[0];
+        this.addressList.address = responseData[0];
         this.getdataForm(this.addressList);
       },
       err => {
@@ -163,8 +147,10 @@ export class ContactDetailsInnComponent implements OnInit {
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
-      address1: [!data.address ? data.address1 : (data.address.address1) ? data.address.address1 : data.address.address1, [Validators.required]],
-      address2: [!data.address ? data.address2 : (data.address.address2) ? data.address.address2 : data.address.address2, [Validators.required]],
+      address1: [!data.address ? data.address1 : (data.address.address1) ?
+        data.address.address1 : data.address.address1, [Validators.required]],
+      address2: [!data.address ? data.address2 : (data.address.address2) ?
+        data.address.address2 : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
       city: [!data.address ? data.city : data.address.city, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
@@ -178,7 +164,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   openBankDetails(data) {
-    const subscription = this.ProcessTransactionService.openBank(data).subscribe(
+    const subscription = this.processTransactionService.openBank(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -188,7 +174,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   openPersonalDetails() {
-    const subscription = this.ProcessTransactionService.openPersonal(this.inputData).subscribe(
+    const subscription = this.processTransactionService.openPersonal(this.inputData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -236,58 +222,26 @@ export class ContactDetailsInnComponent implements OnInit {
     this.contactDetails.reset();
   }
 
-  SendToForm(value, flag) {
+  SendToForm(flag) {
     if (flag == true) {
       this.doneData = true;
     }
-    if (value == 'first') {
-      this.saveContactDetails(value);
-      if (this.firstHolderContact && this.firstHolderContact.email) {
-        this.holder.type = value;
-        this.contactDetails.setValue(this.getObjForForm(this.firstHolderContact));
-      } else {
-        return;
-      }
-    } else if (value == 'second') {
-      this.saveContactDetails(value);
-      if (this.secondHolderContact && this.secondHolderContact.email) {
-        this.holder.type = value;
-        this.contactDetails.setValue(this.getObjForForm(this.secondHolderContact));
-      } else {
-        this.reset();
-      }
-    } else if (value == 'third') {
-      this.saveContactDetails(value);
-      if (this.thirdHolderContact && this.thirdHolderContact.email) {
-        this.holder.type = value;
-        this.contactDetails.setValue(this.thirdHolderContact);
-      } else {
-        this.reset();
-      }
+    this.saveContactDetails();
+    if (this.firstHolderContact && this.firstHolderContact.email) {
+      this.contactDetails.setValue(this.getObjForForm(this.firstHolderContact));
     } else {
-      this.saveContactDetails(value);
     }
 
     this.obj1 = [];
     this.firstHolderContact = (this.firstHolderContact) ? this.firstHolderContact : [];
-    this.secondHolderContact = (this.secondHolderContact) ? this.secondHolderContact : [];
-    this.thirdHolderContact = (this.thirdHolderContact) ? this.thirdHolderContact : [];
     this.obj1.push(this.firstHolderContact);
-    this.obj1.push(this.secondHolderContact);
-    this.obj1.push(this.thirdHolderContact);
+    // this.obj1.push(this.secondHolderContact);
+    // this.obj1.push(this.thirdHolderContact);
     if (flag == true) {
-      const value = {};
-      this.obj1.forEach(element => {
-        if (!element.address) {
-          this.getObj = this.setObj(element, value);
-          this.contacts.push(this.getObj);
-        } else {
-          this.contacts.push(element);
-        }
-      });
-      this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);
-      this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
-      this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
+      if (!this.firstHolderContact.address) {
+        this.firstHolderContact = this.setObj(this.firstHolderContact);
+      }
+      this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
       this.sendObj.holderList = this.inputData.holderList;
       this.sendObj.bankDetailList = this.inputData.bankDetailList;
       this.sendObj.nomineeList = this.inputData.nomineeList;
@@ -313,13 +267,14 @@ export class ContactDetailsInnComponent implements OnInit {
     };
   }
 
-  setObj(holder, value) {
+  setObj(holder) {
 
-    value = {
+    const value = {
       email: holder.email,
       aadharNumber: holder.aadharNumber,
       mobileNo: holder.mobileNo,
       phoneNo: holder.phoneNo,
+      address: null
     };
     value.address = {
 
@@ -333,7 +288,7 @@ export class ContactDetailsInnComponent implements OnInit {
     return value;
   }
 
-  saveContactDetails(value) {
+  saveContactDetails() {
     if (this.contactDetails.invalid) {
       for (const element in this.contactDetails.controls) {
         console.log(element);
@@ -343,30 +298,9 @@ export class ContactDetailsInnComponent implements OnInit {
         }
       }
     } else {
-      this.setEditHolder(this.holder.type, value);
+      Object.assign(this.firstHolderContact, this.contactDetails.value);
     }
   }
 
-  setEditHolder(type, value) {
-    switch (type) {
-      case 'first':
-        Object.assign(this.firstHolderContact, this.contactDetails.value);
-        // this.firstHolderContact = this.contactDetails.value;
-        this.holder.type = value;
-        break;
 
-      case 'second':
-        Object.assign(this.secondHolderContact, this.contactDetails.value);
-        // this.secondHolderContact = this.contactDetails.value;
-        this.holder.type = value;
-        break;
-
-      case 'third':
-        Object.assign(this.thirdHolderContact, this.contactDetails.value);
-        // this.thirdHolderContact = this.contactDetails.value;
-        this.holder.type = value;
-        break;
-
-    }
-  }
 }
