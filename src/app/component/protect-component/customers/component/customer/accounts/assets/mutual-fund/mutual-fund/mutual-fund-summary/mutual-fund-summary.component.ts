@@ -50,6 +50,8 @@ export class MutualFundSummaryComponent implements OnInit {
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', { static: false }) tableEl;
   @Output() changeInput = new EventEmitter();
+  viewMode: string;
+  reponseData: any;
 
 
   constructor(
@@ -69,6 +71,10 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
 
   ngOnInit() {
+    this.mfService.getViewMode()
+    .subscribe(res => {
+      this.viewMode = res;
+    })
     this.getMutualFund();
   }
 
@@ -269,7 +275,8 @@ export class MutualFundSummaryComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.asyncFilter(this.rightFilterData.mutualFundList);
+            this.reponseData= this.doFiltering(this.rightFilterData.mfData)
+            this.asyncFilter(this.reponseData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
           rightSideDataSub.unsubscribe();

@@ -60,6 +60,9 @@ export class MutualFundOverviewComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   total_net_Gain: number;
   cashFlowXirr: any;
+  filterData: any;
+  viewMode: string;
+  mutualFund: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
@@ -67,8 +70,6 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
-  @Input() mutualFund;
-  @Input() viewMode;
   ngOnInit() {
     this.MfServiceService.getViewMode()
     .subscribe(res => {
@@ -160,12 +161,13 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getMutualFundResponse(data) {
     if (data) {
-      this.mutualFund = data;
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
-
-      let filterData = this.MfServiceService.doFiltering(data);
-      this.asyncFilter(filterData.mutualFundList, filterData.mutualFundCategoryMastersList)
+      this.filterData = this.MfServiceService.doFiltering(data);
+      if(!this.rightFilterData){
+        this.mutualFund = this.filterData;
+      }
+      this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.mfData = data;
       this.cashFlowXirr=(this.mfData.mutualFundCategoryMastersList.length > 0) ? this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr : 0;
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment)
