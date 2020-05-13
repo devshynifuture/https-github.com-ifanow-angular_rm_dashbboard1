@@ -1,8 +1,8 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button mat-button [ngClass]="orgProfile == false ? 'active-btn'  : ''" (click)="openOrg(false)">
+        <button class="settingBtnHme" mat-button [ngClass]="orgProfile == false ? 'active-btn'  : ''" (click)="openOrg(false)">
             Personal profile</button>
-        <button mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''" (click)="openOrg(true)">
+        <button class="settingBtnHme" mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''" (click)="openOrg(true)">
             Organization profile</button>
     </div>
 </div>

@@ -1,55 +1,53 @@
 <div class="row">
-  <div class="col-md-6 d-flex align-items-center">
-    <h4 *ngIf="!hideLabel" class="m-0 text-black">Team members</h4>
-  </div>
-  <div class="col-md-6 text-right">
-    <button (click)="addEditTeamMember(null, true)" *ngIf="userList" class="btn-primary" mat-stroked-button>
+    <div class="col-md-6 d-flex align-items-center">
+        <h4 *ngIf="!hideLabel" class="m-0 text-black">Team members</h4>
+    </div>
+    <div class="col-md-6 text-right">
+        <button (click)="addEditTeamMember(null, true)" *ngIf="userList" class="btn-primary" mat-stroked-button>
       ADD NEW
     </button>
-  </div>
+    </div>
 </div>
 <div class="row pt-20">
-  <div *ngFor="let user of userList" class="col-md-3 mb-16 pl-0">
-    <mat-card [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}"
-              class="b-a p-9 br-4">
-      <div class="row">
-        <div class="col-md-4 p-0">
-          <img [src]="user.profilePicUrl" class="w-100 h-80">
-        </div>
-        <div class="col-md-8 pr-0">
-          <div class="row">
-            <div class="col-md-10 p-0">
-              <h5 class="m-0 text-black">{{user.fullName}}</h5>
-              <p class="text-custom roboto m-0">{{user.role.roleName}}</p>
-            </div>
-            <div class="col-md-1 p-0">
-              <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                more_vert
-              </i>
-              <mat-menu #menu="matMenu">
-                <button (click)="addEditTeamMember(user, false)" mat-menu-item>Edit</button>
-                <button (click)="suspendUser(user)" *ngIf="user.isSuspended == 0" mat-menu-item>Suspend</button>
-                <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1" mat-menu-item>Reactivate</button>
-                <button (click)="deleteUser(user)" mat-menu-item>Delete</button>
-              </mat-menu>
-            </div>
+    <div *ngFor="let user of userList" class="col-md-3 mb-12 pl-0">
+        <mat-card [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}" class="b-a p-8 pr-0 br-4">
+            <div class="row">
+                <div class="col-md-4 p-0">
+                    <img [src]="user.profilePicUrl" class="w-100 h-80">
+                </div>
+                <div class="col-md-8 pl-10 pr-0">
+                    <div class="row">
+                        <div class="col-md-11 p-0">
+                            <h5 class="m-0 text-black">{{user.fullName}}</h5>
+                            <p class="text-custom roboto m-0">{{user.role.roleName}}</p>
+                        </div>
+                        <div class="col-md-1 p-0">
+                            <img [matMenuTriggerFor]="menu" class="c-p userMenuDots" src="/assets/images/svg/dot-menu.svg">
 
-          </div>
+                            <mat-menu #menu="matMenu">
+                                <button (click)="addEditTeamMember(user, false)" mat-menu-item>Edit</button>
+                                <button (click)="suspendUser(user)" *ngIf="user.isSuspended == 0" mat-menu-item>Suspend</button>
+                                <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1" mat-menu-item>Reactivate</button>
+                                <button (click)="deleteUser(user)" mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
 
-          <h3 class="m-0 f-400 text-primary f-18 pt-16">{{user.clientCount}} client(s)</h3>
-        </div>
-      </div>
-    </mat-card>
-  </div>
+                    </div>
+
+                    <h3 class="m-0 f-400 text-primary f-18 pt-16">{{user.clientCount}} client(s)</h3>
+                </div>
+            </div>
+        </mat-card>
+    </div>
 </div>
 <div *ngIf="userList==undefined && !isLoading && !hasError" class="d-flex flex-column align-items-center">
-  <img class="width300" src="assets/images/svg/noDataFound.svg">
-  <h4 class="pt-12">No Team members found</h4>
-  <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="pt-12">No Team members found</h4>
+    <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
     ADD NEW
   </button>
 </div>
 <div *ngIf="userList==undefined && !isLoading && hasError" class="d-flex flex-column align-items-center">
-  <img class="width300" src="assets/images/svg/noDataFound.svg">
-  <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
