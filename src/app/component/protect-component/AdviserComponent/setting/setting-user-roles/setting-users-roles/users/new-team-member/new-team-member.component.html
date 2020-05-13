@@ -92,6 +92,32 @@
             </div>
         </div>
     </div>
+    <div class="row pt-28">
+        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
+            <h5 class="m-0 pt-20">Your logo</h5>
+        </div>
+        <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
+            <!-- <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select class="form-control" formControlName="roleId">
+                        <mat-option value="">Select Role</mat-option>
+                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div> -->
+            <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
+            <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
+                <i class="material-icons c-p" style="font-size: 100px;">
+                    insert_photo
+                </i>
+            </div>
+            <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12 ml-12" mat-stroked-button>CANCEL
+            </button>
+            <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url"
+                type="file">
+        </div>
+    </div>
 </div>
 <div class="pt-90 pl-28 pr-28" *ngIf="isLoading">Loading data...</div>
 <div class="bottom-fixed wrapper-12 w-35">
