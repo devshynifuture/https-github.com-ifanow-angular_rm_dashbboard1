@@ -49,6 +49,7 @@ export class NewTeamMemberComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   imageData: any;
   uploadedImage;
+  imageLoader: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -69,6 +70,7 @@ export class NewTeamMemberComponent implements OnInit {
       .subscribe(() => {
         this.filterCodes();
       });
+    this.createForm();
   }
   capitalise(event) {
     if (event.target.value != '') {
@@ -121,6 +123,7 @@ export class NewTeamMemberComponent implements OnInit {
     });
   }
   onChange(event) {
+    this.imageLoader = true;
     console.log('Biller profile logo Onchange event : ', event);
     if (event && event.target && event.target.files) {
       const fileList = event.target.files;
@@ -145,6 +148,7 @@ export class NewTeamMemberComponent implements OnInit {
         PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
           (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
             if (status == 200) {
+              this.imageLoader = false;
               const responseObject = JSON.parse(response);
               console.log('onChange file upload success response url : ', responseObject.url);
               this.logoImg = responseObject.url;
