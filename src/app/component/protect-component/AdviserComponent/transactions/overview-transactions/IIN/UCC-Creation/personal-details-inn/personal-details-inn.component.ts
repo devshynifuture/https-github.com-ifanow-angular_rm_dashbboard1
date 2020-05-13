@@ -18,29 +18,6 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 })
 export class PersonalDetailsInnComponent implements OnInit {
 
-  personalDetails: any;
-  holdingList: any;
-  inputData: any;
-  generalDetails: any;
-  obj1: any;
-  firstHolder: any;
-  secondHolder: any;
-  thirdHolder: any;
-  holder = {
-    type: 'first',
-    data: ''
-  };
-  validatorType = ValidatorType;
-  changedValue: string;
-  doneData: any;
-  advisorId: any;
-  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  addressList: any;
-  clientId: any;
-  clientData: any;
-  sendObj: any;
-  maxDate = new Date();
-
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private processTransaction: ProcessTransactionService,
@@ -76,18 +53,46 @@ export class PersonalDetailsInnComponent implements OnInit {
     return this.inputData;
   }
 
+  thirdHolderButtonLabel = '+ Add Holder';
+  personalDetails: any;
+  holdingList: any;
+  inputData: any;
+  generalDetails: any;
+  obj1: any;
+  firstHolder: any = {};
+  secondHolder: any = {};
+  thirdHolder: any = {};
+  holder = {
+    type: 'first',
+    data: ''
+  };
+  validatorType = ValidatorType;
+  changedValue: string;
+  doneData: any;
+  advisorId: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  addressList: any;
+  clientId: any;
+  clientData: any;
+  sendObj: any;
+  maxDate = new Date();
+  familyClientList;
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.doneData = false;
-    if (this.firstHolder) {
+    if (this.firstHolder && this.firstHolder.panNumber) {
       this.getdataForm(this.firstHolder);
     } else {
       this.getdataForm('');
       if (this.clientData) {
-        this.getAddressList(this.clientData);
+        this.getClientOrFamilyDetails(this.clientData);
       }
     }
     this.holdingList = [];
+    if (this.inputData.holdingNature != 'SI') {
+      this.getNomineeList(this.clientData);
+    }
     // this.obj1 = [];
   }
 
@@ -101,7 +106,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
 
-  getAddressList(data) {
+  getClientOrFamilyDetails(data) {
     if (data.userType == 2) {
       this.sendObj = {
         clientId: data.clientId,
@@ -202,7 +207,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
     if (value == 'first') {
 
-      this.savePersonalDetails(value);
+      this.savePersonalDetails(this.holder.type);
       if (this.holder.type == 'first') {
       } else {
         if (this.firstHolder && this.firstHolder.panNumber) {
@@ -214,30 +219,33 @@ export class PersonalDetailsInnComponent implements OnInit {
       }
 
     } else if (value == 'second') {
-      if (this.holder.type == 'second') {
+      if (this.holder.type == 'second' && !flag) {
       } else {
-        if (this.savePersonalDetails(value)) {
+        if (this.savePersonalDetails(this.holder.type)) {
           if (this.secondHolder && this.secondHolder.panNumber) {
             this.holder.type = value;
             this.personalDetails.setValue(this.secondHolder);
           } else {
             this.reset();
           }
+          this.holder.type = value;
         } else if (this.holder.type == 'third') {
           this.reset();
+          this.thirdHolderButtonLabel = '+ Add Holder';
+          this.holder.type = value;
         }
       }
     } else if (value == 'third') {
-      if (this.holder.type == 'third') {
-        return;
+      if (this.holder.type == 'third' && !flag) {
       } else {
-        if (this.savePersonalDetails(value)) {
+        if (this.savePersonalDetails(this.holder.type)) {
+          this.thirdHolderButtonLabel = 'Third Holder';
           if (this.thirdHolder && this.thirdHolder.panNumber) {
-            this.holder.type = value;
             this.personalDetails.setValue(this.thirdHolder);
           } else {
             this.reset();
           }
+          this.holder.type = value;
         }
       }
     } else {
@@ -245,19 +253,30 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
 
     this.obj1.firstHolder = this.firstHolder;
+    const holderList: any = [];
+    holderList.push(this.firstHolder);
+
     this.obj1.firstHolder.dob = new Date(this.firstHolder.dateOfBirth).getTime();
     this.obj1.secondHolder = this.secondHolder;
-    if (this.secondHolder) {
+    if (this.secondHolder && this.secondHolder.clientName) {
       this.obj1.secondHolder.dob = new Date(this.secondHolder.dateOfBirth).getTime();
+      holderList.push(this.secondHolder);
+
     }
 
     this.obj1.thirdHolder = this.thirdHolder;
-    if (this.thirdHolder) {
+    if (this.thirdHolder && this.thirdHolder.clientName) {
       this.obj1.thirdHolder.dob = new Date(this.thirdHolder.dateOfBirth).getTime();
+      holderList.push(this.thirdHolder);
+    }
+
+    if (this.inputData.holdingNature != 'SI' && holderList.length < 2 && flag) {
+      this.eventService.openSnackBar('Please enter atleast two holders.');
+      return;
     }
 
     this.obj1.generalDetails = this.generalDetails;
-    this.obj1.holderList = this.inputData.holderList;
+    this.obj1.holderList = holderList;
     this.obj1.bankDetailList = this.inputData.bankDetailList;
     this.obj1.nomineeList = this.inputData.nomineeList;
     this.obj1.fatcaDetail = this.inputData.fatcaDetail;
@@ -301,5 +320,25 @@ export class PersonalDetailsInnComponent implements OnInit {
         break;
 
     }
+  }
+
+  getNomineeList(data) {
+    const obj = {
+      userId: data.userType == 2 ? data.clientId : data.familyMemberId,
+      userType: data.userType
+    };
+    this.peopleService.getClientFamilyMembers(obj).subscribe(
+      responseData => this.getListOfFamilyByClientRes(responseData)
+    );
+  }
+
+  getListOfFamilyByClientRes(data) {
+    console.log('getListOfFamilyByClientRes', data);
+    this.familyClientList = data;
+    console.log('nomineeList', this.familyClientList);
+  }
+
+  selectedFamily(data) {
+    this.getClientOrFamilyDetails(data);
   }
 }

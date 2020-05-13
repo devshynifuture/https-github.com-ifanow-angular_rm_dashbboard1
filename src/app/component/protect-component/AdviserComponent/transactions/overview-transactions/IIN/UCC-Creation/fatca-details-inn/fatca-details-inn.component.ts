@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { SubmitReviewInnComponent } from '../submit-review-inn/submit-review-inn.component';
-import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
-import { MatInput } from '@angular/material';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {DatePipe} from '@angular/common';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {SubmitReviewInnComponent} from '../submit-review-inn/submit-review-inn.component';
+import {MatInput} from '@angular/material';
 
 @Component({
   selector: 'app-fatca-details-inn',
@@ -23,42 +22,46 @@ export class FatcaDetailsInnComponent implements OnInit {
   changedValue: string;
   doneData: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  validatorType = ValidatorType
+  validatorType = ValidatorType;
   clientData: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-    public eventService: EventService) { }
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
+              public eventService: EventService) {
+  }
+
   @Input()
   set data(data) {
     this.inputData = data;
-    this.clientData = data.clientData
-    console.log('all data in fatca', this.inputData)
-    this.allData = data
-    this.doneData = {}
-    this.doneData.nominee = true
-    this.doneData.bank = true
-    this.doneData.contact = true
-    this.doneData.personal = true
-    this.doneData.fatca = false
-    this.allData.clientData = this.clientData
-    this.getdataForm(data.fatcaDetail)
+    this.clientData = data.clientData;
+    console.log('all data in fatca', this.inputData);
+    this.allData = data;
+    this.doneData = {};
+    this.doneData.nominee = true;
+    this.doneData.bank = true;
+    this.doneData.contact = true;
+    this.doneData.personal = true;
+    this.doneData.fatca = false;
+    this.allData.clientData = this.clientData;
+    this.getdataForm(data.fatcaDetail);
   }
 
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
     if (this.allData.fatcaDetail) {
-      this.getdataForm(this.allData.fatcaDetail)
+      this.getdataForm(this.allData.fatcaDetail);
     } else {
-      this.getdataForm('')
+      this.getdataForm('');
     }
   }
+
   close() {
-    this.changedValue = 'close'
+    this.changedValue = 'close';
     const fragmentData = {
       direction: 'top',
       state: 'close'
@@ -66,6 +69,7 @@ export class FatcaDetailsInnComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+
   openNomineeDetails() {
     const subscription = this.processTransaction.openNominee(this.allData).subscribe(
       upperSliderData => {
@@ -75,17 +79,18 @@ export class FatcaDetailsInnComponent implements OnInit {
       }
     );
   }
+
   getdataForm(data) {
 
     this.fatcaDetails = this.fb.group({
-      nationality: [(!data) ? '1' : (data.nationality) ? data.nationality +'' : '1', [Validators.required]],
+      nationality: [(!data) ? '1' : (data.nationality) ? data.nationality + '' : '1', [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
       cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
-      politically: [!data ? '1' : (data.politically) ? data.politically +'' : '1', [Validators.required]],
-      taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency +'' : '1', [Validators.required]],
+      politically: [!data ? '1' : (data.politically) ? data.politically + '' : '1', [Validators.required]],
+      taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
 
     });
     // if(!data){
@@ -94,15 +99,17 @@ export class FatcaDetailsInnComponent implements OnInit {
     //   this.fatcaDetails.controls.taxResidency.setValue('1')
     // }
   }
+
   getFormControl(): any {
     return this.fatcaDetails.controls;
   }
+
   SendToForm() {
     if (this.fatcaDetails.invalid) {
       for (let element in this.fatcaDetails.controls) {
-        console.log(element)
+        console.log(element);
         if (this.fatcaDetails.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
+          // this.inputs.find(input => !input.ngControl.valid).focus();
           this.fatcaDetails.controls[element].markAsTouched();
         }
       }
@@ -117,29 +124,18 @@ export class FatcaDetailsInnComponent implements OnInit {
         occupationCode: this.fatcaDetails.controls.occupationCode.value,
         politically: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' : (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
         taxResidency: this.fatcaDetails.controls.taxResidency.value,
-      }
+      };
 
-      let obj1 = {
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingType,
-        taxStatus: this.allData.taxStatus,
-        holderList: this.allData.holderList,
-        bankDetailList: this.allData.bankDetailList,
-        nomineeList: this.allData.nomineeList,
-        generalDetails: this.allData.generalDetails,
+      const obj1 = {
+        ...this.inputData,
         fatcaDetail: obj,
-        id: 2,
-        aggregatorType: 1,
-        familyMemberId: this.allData.familyMemberId,
-        clientId: this.allData.clientId,
-        advisorId: this.allData.advisorId,
         commMode: 1,
         confirmationFlag: 1,
-        tpUserSubRequestClientId1: 2,
-      }
+      };
       this.openReviwSubmit(obj1);
     }
   }
+
   openReviwSubmit(data) {
     var temp = {
       flag: 'app-upper-customer',
@@ -148,7 +144,7 @@ export class FatcaDetailsInnComponent implements OnInit {
       direction: 'top',
       componentName: SubmitReviewInnComponent,
       state: 'open'
-    }
+    };
     const subscription = this.eventService.changeUpperSliderState(temp).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
@@ -157,6 +153,7 @@ export class FatcaDetailsInnComponent implements OnInit {
       }
     );
   }
+
   // this.onlineTransact.createIINUCC(obj).subscribe(
   //   data => this.createIINUCCRes(data), (error) => {
   //     this.eventService.showErrorMessage(error);

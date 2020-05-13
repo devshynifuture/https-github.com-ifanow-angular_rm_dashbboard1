@@ -178,8 +178,7 @@ export class OverviewProfileComponent implements OnInit {
         if (data && data.length > 0) {
           this.bankList = data;
           this.bankList.forEach(singleBank => {
-            singleBank.accountTypeName = singleBank.accountType ?
-              singleBank.accountType == '1' ? 'Current A/c' : 'Saving A/c' : 'Saving A/c';
+            singleBank.accountTypeName = (singleBank.accountType == '1') ? 'Saving A/c' : (singleBank.accountType == '2') ? 'Current A/c' : 'Cash credit A/c';
             singleBank.shortAddress = singleBank.address ? singleBank.address.city ? singleBank.address.city : '' : '';
           });
           this.selectedBankData = data[0];

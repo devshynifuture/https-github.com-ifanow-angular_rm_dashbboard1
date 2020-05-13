@@ -79,7 +79,7 @@ export class AuthService {
   }
 
   static getAdvisorDetails() {
-    const advisorDetail =  localStorage.getItem('advisorDetail')
+    const advisorDetail = localStorage.getItem('advisorDetail')
     return advisorDetail ? JSON.parse(advisorDetail) : '';
   }
 
@@ -111,7 +111,7 @@ export class AuthService {
   isAdvisor() {
     if (AuthService.getUserInfo()) {
       // console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
-      return AuthService.getUserInfo().userType ? AuthService.getUserInfo().userType === 1 : false;
+      return AuthService.getUserInfo().userType ? AuthService.getUserInfo().userType === 1 || AuthService.getUserInfo().userType === 8 : false;
     } else {
       return false;
     }
@@ -132,17 +132,17 @@ export class AuthService {
   setUserInfo(info) {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
-  selectedClient:any;
+  selectedClient: any;
 
   setClientData(clientData) {
     sessionStorage.setItem('clientData', JSON.stringify(clientData));
-    if(clientData.familyMemberId){
+    if (clientData.familyMemberId) {
       this.familyMemberId = clientData.familyMemberId
     }
-    console.log('this.family',this.familyMemberId)
+    console.log('this.family', this.familyMemberId)
     clientData.familyMemberId = this.familyMemberId
     localStorage.setItem('clientData', JSON.stringify(clientData));
-  
+
     // if(clientData){
     //   this.selectedClient = clientData;
     // }
@@ -152,7 +152,7 @@ export class AuthService {
   setProfileDetails(profileData) {
     sessionStorage.setItem('profileData', JSON.stringify(profileData));
     localStorage.setItem('profileData', JSON.stringify(profileData));
-    
+
     console.log('setClientData : ', profileData);
   }
 
