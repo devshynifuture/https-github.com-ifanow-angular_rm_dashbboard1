@@ -392,6 +392,7 @@ export class SipSchemeWiseComponent implements OnInit {
   investorWiseExcelSheet(index) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData[this.selectedCategory].subCatList));
     copyOfExcelData.forEach((element, index1) => {
+      element.subCatList = []
       if (index1 === index) {
         return;
       } else {
@@ -399,7 +400,7 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
       clientList: true,
       subCatList: true,
       schemeList: false,
@@ -410,13 +411,14 @@ export class SipSchemeWiseComponent implements OnInit {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp].applicantList));
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === index) {
+        element.subCatList = []
         return;
       } else {
         element.applicantList = [];
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
       clientList: true,
       subCatList: true,
       schemeList: true,
