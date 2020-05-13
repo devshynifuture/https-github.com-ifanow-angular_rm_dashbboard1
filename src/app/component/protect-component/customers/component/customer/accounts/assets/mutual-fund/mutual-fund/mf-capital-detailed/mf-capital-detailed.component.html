@@ -569,44 +569,39 @@
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
             </div>
         </div>
-    </div>
-    <table>
-        <tr>
-            <td class="br f-600 p-8 amt text-left">GRAND TOTAL</td>
-            <td class="br f-600 p-8 amt text-right"></td>
-            <td class="br f-600 p-8 amt text-right" appFormatNumber [value]="redeemAmount"></td>
-            <td class="br f-600 p-8 amt text-right">{{(total_stt) ? (total_stt) : '0'}}</td>
-            <td class="br f-600 p-8 amt text-right"></td>
-            <td class="br f-600 p-8 amt text-right"></td>
-            <td class="br f-600 p-8 amt text-right"></td>
-            <td class="br f-600 p-8 amt text-right" appFormatNumber [value]="purchaseAmount"></td>
-            <td class="br f-600 p-8 amt text-right"></td>
-            <td class="br f-600 p-8 amt text-right"></td>
-            <td class="br f-600 p-8 amt text-right">
-                {{(total_stGain) ? ((total_stGain == 0 ) ? 0 : (total_stGain | number:'1.2-2')) : '0'}}</td>
-            <td class="br f-600 p-8 amt text-right">
-                {{(total_stLoss) ? ((total_stLoss == 0 ) ? 0 : (total_stLoss | number:'1.2-2')) : '0'}}</td>
-            <td class="br f-600 p-8 amt text-right">
-                {{(total_ltGain) ? ((total_ltGain == 0 ) ? 0 : (total_ltGain | number:'1.2-2')) : '0'}}</td>
-            <td class="br f-600 p-8 amt text-right">
-                {{(total_ltLoss) ? ((total_ltLoss == 0 ) ? 0 : (total_ltLoss | number:'1.2-2')) : '0'}} </td>
-            <td class="br f-600 p-8 amt text-right">
-                {{(total_indexGain) ? ((total_indexGain == 0 ) ? 0 : (total_indexGain | number:'1.2-2')) : '0'}}</td>
-            <td class="br f-600 p-8 amt text-right">
-                {{(total_indexLoss) ? ((total_indexLoss == 0 ) ? 0 : (total_indexLoss | number:'1.2-2')) : '0'}}</td>
-        </tr>
-
-    </table>
-    <div class="row">
-        <div class="col-md-12 pl-0 mb-8">
-            <div class="b-a bb-0">
-                <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
-                    DIVIDEND SUMMARY
-                </h5>
-            </div>
-            <table mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
-
-                <!--- Note that these columns can be defined in any order.
+        <table>
+            <tr *ngIf="dataSource.data.length>0 || dataSource1.data.length>0">
+                    <td  class="br f-600 p-8 amt text-left">GRAND TOTAL</td>
+                    <td  class="br f-600 p-8 amt text-right"></td>
+                    <td  class="br f-600 p-8 amt text-right" appFormatNumber [value]="redeemAmount"></td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_stt) ? (total_stt | number:'1.2-2') : '0'}}</td>
+                    <td  class="br f-600 p-8 amt text-right"></td>
+                    <td  class="br f-600 p-8 amt text-right"></td>
+                    <td  class="br f-600 p-8 amt text-right"></td>
+                    <td  class="br f-600 p-8 amt text-right" appFormatNumber [value]="purchaseAmount"></td>
+                    <td  class="br f-600 p-8 amt text-right"></td>
+                    <td  class="br f-600 p-8 amt text-right"></td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_stGain) ? ((total_stGain == 0 ) ? 0 : (total_stGain | number:'1.2-2')) : '0'}}</td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_stLoss) ? ((total_stLoss == 0 ) ? 0 : (total_stLoss | number:'1.2-2')) : '0'}}</td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_ltGain) ? ((total_ltGain == 0 ) ? 0 : (total_ltGain | number:'1.2-2')) : '0'}}</td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_ltLoss) ? ((total_ltLoss == 0 ) ? 0 : (total_ltLoss | number:'1.2-2')) : '0'}} </td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_indexGain) ? ((total_indexGain == 0 ) ? 0 : (total_indexGain | number:'1.2-2')) : '0'}}</td>
+                    <td  class="br f-600 p-8 amt text-right">{{(total_indexLoss) ? ((total_indexLoss == 0 ) ? 0 : (total_indexLoss | number:'1.2-2')) : '0'}}</td>
+            </tr>
+         
+        </table>
+        <div class="row">
+                <div class="col-md-12 pl-0 mb-8">
+                    <div class="b-a bb-0">
+                        <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
+                            DIVIDEND SUMMARY
+                        </h5>
+                    </div>
+                    <table mat-table [dataSource]="dataSource2" id="table-low"
+                        class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
+    
+                        <!--- Note that these columns can be defined in any order.
                                           The actual rendered columns are set as a property on the row definition" -->
 
                 <!-- Position Column -->

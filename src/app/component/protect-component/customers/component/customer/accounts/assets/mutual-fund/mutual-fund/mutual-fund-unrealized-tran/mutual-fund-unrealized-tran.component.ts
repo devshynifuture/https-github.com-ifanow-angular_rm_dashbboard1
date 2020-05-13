@@ -18,8 +18,8 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
 })
 export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
-  // displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-  //   'units','balanceUnits','days','currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr','icons'];
+  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+    'units','balanceUnits','days','currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr','icons'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
     'gain', 'absReturn', 'xirr', 'allocation'];
   // subCategoryData: any[];
@@ -40,7 +40,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   fragmentData = { isSpinner: false };
   @Output() changeInput = new EventEmitter();
   advisorData: any;
-  displayedColumns: string[];
+  // displayedColumns: string[];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
   viewMode: string;
@@ -56,6 +56,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     .subscribe(res => {
       this.viewMode = res;
     })
+    this.mfService.getMfData()
+    .subscribe(res => {
+      this.mutualFund = res;
+    })
     if (this.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
@@ -63,8 +67,17 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
     }
-    console.log(this.mutualFund)  
-     this.getMutualFund();
+    console.log(this.mutualFund)
+    if (this.viewMode == 'Unrealized Transactions'){
+      this.isLoading = true;
+      this.getUnrealizedData();
+    } else if(this.viewMode != 'Unrealized Transactions' || this.mutualFund){
+      this.isLoading = true;
+      this.changeInput.emit(true);
+      this.getMutualFundResponse(this.mutualFund) 
+    }else{
+      this.getMutualFund();
+    }
   }
 
   initValueOnInit() {
@@ -114,16 +127,17 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   getMutualFundResponse(data) {
     if (data) {
-      this.isLoading = false;
       this.mfData = data;
       this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
-      this.initValueOnInit();
+      this.mutualFundList = this.mutualFund.mutualFundList
+      this.asyncFilter(this.mutualFundList);
+
+      // this.initValueOnInit();
       // if (this.mfData) {
       //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
       // }
     }
-    this.isLoading = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -164,8 +178,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     this.custumService.getMfUnrealizedTransactions(obj).subscribe(
       data => {
         console.log(data);
-        this.mutualFundList = data;
-        this.asyncFilter(this.mutualFundList);
+        this.mutualFund.mutualFundList = data;
+        this.asyncFilter(this.mutualFund.mutualFundList);
 
       }, (error) => {
         this.isLoading = false;
@@ -184,6 +198,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const input = {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
+        nav:this.mutualFund.nav
         // mfService: this.mfService
       };
       // Create a new
@@ -231,7 +246,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
-      name: (this.mutualFund.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
+      name: (this.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
       mfData: this.mutualFund,
       folioWise: this.mutualFund.mutualFundList,
       schemeWise: this.mutualFund.schemeWise,
@@ -274,7 +289,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   //   return item.nav;
   // }
 
-  isGroup3 = (index, item) => item.pan;// for grouping family member name
+  isGroup3 = (index, item) => item.name;// for grouping family member name
   //   return item.name;
   //   return item.pan;
   //   return item.folio;

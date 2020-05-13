@@ -48,7 +48,7 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type) {
+  getSubCategoryArrayForTransaction(mutualFundList, type,nav) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
@@ -66,10 +66,19 @@ export class TempserviceService {
           if(reportType != 'schemeName'){
             filteredData.push({groupName: key});
           }
+          if(nav){
+            nav.forEach(element => {
+              if(element.schemeCode == singleData.schemeCode){
+                singleData.avgCostNav = element.nav;
+              }
+            }); 
+          }
+       
         const obj = {
           schemeName: singleData.schemeName,
           nav: singleData.nav,
-          navDate:singleData.navDate
+          navDate:singleData.navDate,
+          avgNav:singleData.avgCostNav
         };
         filteredData.push(obj);
         const obj2 = {
