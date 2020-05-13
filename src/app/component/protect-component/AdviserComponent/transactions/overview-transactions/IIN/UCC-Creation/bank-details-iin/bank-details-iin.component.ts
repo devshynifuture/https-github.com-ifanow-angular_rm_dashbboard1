@@ -433,14 +433,15 @@ export class BankDetailsIINComponent implements OnInit {
           this.getObj = this.setObj(element, value);
           this.bank.push(this.getObj);
         } else {
-          element.paymentMode = this.bankDetailsForm.controls.paymentMode.value,
-            this.bank.push(element);
+          element.paymentMode = this.bankDetailsForm.controls.paymentMode.value;
+          this.bank.push(element);
         }
         element.defaultFlag = value == 'first' ? 1 : 0;
         value = '';
 
       });
       this.sendObj = {
+        ...this.inputData,
         ownerName: this.generalDetails.ownerName,
         holdingType: this.generalDetails.holdingNature,
         taxStatus: this.generalDetails.taxStatus,
@@ -515,7 +516,7 @@ export class BankDetailsIINComponent implements OnInit {
       case 'second':
         this.getObj = this.setObj(this.bankDetailsForm.value, value);
         this.secondHolderBank = this.getObj;
-        this.secondHolderBank.validated = false;
+        this.secondHolderBank.validated = true;
         this.formId = value;
         break;
 
