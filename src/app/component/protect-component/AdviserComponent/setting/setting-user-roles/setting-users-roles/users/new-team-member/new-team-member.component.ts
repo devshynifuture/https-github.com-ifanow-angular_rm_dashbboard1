@@ -9,6 +9,8 @@ import { MatProgressButtonOptions } from '../../../../../../../../common/progres
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-new-team-member',
@@ -39,12 +41,14 @@ export class NewTeamMemberComponent implements OnInit {
     // }
   };
   isdCodes: Array<any> = [];
-
+  logoImg;
   /** control for the MatSelect filter keyword */
   filterCtrl: FormControl = new FormControl();
   filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  imageData: any;
+  uploadedImage;
 
   constructor(
     private fb: FormBuilder,
@@ -113,13 +117,62 @@ export class NewTeamMemberComponent implements OnInit {
       mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       isdCodeId: [this.data.mainData.isdCodeId || 73, [Validators.required]],
       roleId: [roleId, [Validators.required]],
+      url: []
     });
   }
+  onChange(event) {
+    console.log('Biller profile logo Onchange event : ', event);
+    if (event && event.target && event.target.files) {
+      const fileList = event.target.files;
+      if (fileList.length == 0) {
+        console.log('Biller profile logo Onchange fileList : ', fileList);
 
+        return;
+      }
+      this.imageData = fileList[0];
+
+      console.log(this.imageData);
+      this.teamMemberFG.controls.url.reset();
+      this.logoImg = this.imageData;
+      // this.logoImg=
+      const reader = new FileReader();
+      reader.onload = e => this.logoImg = reader.result;
+      // reader.
+      reader.readAsDataURL(this.imageData);
+      if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
+        const files = [this.imageData];
+        const tags = this.advisorId + ',biller_profile_logo,';
+        PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
+          (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+            if (status == 200) {
+              const responseObject = JSON.parse(response);
+              console.log('onChange file upload success response url : ', responseObject.url);
+              this.logoImg = responseObject.url;
+              console.log('uploadImage success this.imageData : ', this.imageData);
+              // this.logUrl.controls.url.setValue(this.imageData);
+              this.uploadedImage = JSON.stringify(responseObject);
+              this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+            }
+
+          });
+
+      }
+    }
+  }
+  cancelImageUpload() {
+    this.logoImg = undefined;
+    this.teamMemberFG.controls.url.reset();
+  }
   save() {
     if (this.teamMemberFG.invalid) {
       this.teamMemberFG.markAllAsTouched();
-    } else {
+      return;
+    }
+    else if (this.logoImg == undefined) {
+      this.eventService.openSnackBar("Please upload logo", "Dismiss")
+      return;
+    }
+    else {
       if (this.barButtonOptions.active) {
       } else {
         this.barButtonOptions.active = true;
@@ -133,14 +186,15 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
+    this.teamMemberFG.value['profile_pic'] = this.logoImg;
     const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
       this.close(true);
-      this.eventService.openSnackBar('Invitation sent successfully');
+      this.eventService.openSnackBar('Invitation sent successfully', "Dismiss");
     }, (err) => {
       console.error(err);
       this.barButtonOptions.active = false;
-      this.eventService.openSnackBar('Error occured.');
+      this.eventService.openSnackBar('Error occured.', "Dismiss");
     });
   }
 
@@ -148,6 +202,7 @@ export class NewTeamMemberComponent implements OnInit {
     const dataObj = {
       id: this.data.mainData.id,
       roleId: this.teamMemberFG.controls.roleId.value,
+      profile_pic: this.logoImg
     };
 
     this.settingsService.editTeamMember(dataObj).subscribe((res) => {

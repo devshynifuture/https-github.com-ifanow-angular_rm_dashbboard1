@@ -299,21 +299,21 @@ export class SipSchemeWiseComponent implements OnInit {
             sipAmount: element.sipAmount,
             sipCount: element.sipCount,
             weightInPerc: element.weightInPercentage,
-            schemeList :[]
+            schemeList: []
           });
         });
         break;
       case 'applicant':
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedCategory].subCatList[index].applicantList.push({
-            name: element.investorName,	
-            schemeName: element.schemeName,	
-            folio	: element.folioNumber,
-            registeredDate: new Date(element.registeredDate),	
-            fromDate: new Date(element.from_date),	
-            toDate: new Date(element.to_date),	
-            toTriggerDay: element.sipTriggerDay,	
-            frequency	: element.frequency,
+            name: element.investorName,
+            schemeName: element.schemeName,
+            folio: element.folioNumber,
+            registeredDate: new Date(element.registeredDate),
+            fromDate: new Date(element.from_date),
+            toDate: new Date(element.to_date),
+            toTriggerDay: element.sipTriggerDay,
+            frequency: element.frequency,
             amount: element.sipAmount,
             weightInPerc: element.weightInPercentage,
             applicantList: []
@@ -383,7 +383,7 @@ export class SipSchemeWiseComponent implements OnInit {
 
   schemeWiseExcelReport(index) {
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
-      categoryList: false,
+      categoryList: true,
       subCatList: false,
       schemeList: false,
       applicantList: false
@@ -395,30 +395,32 @@ export class SipSchemeWiseComponent implements OnInit {
       if (index1 === index) {
         return;
       } else {
-        element.investorList = [];
+        element.subCatList = [];
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
       clientList: true,
-      subCatList: false,
+      subCatList: true,
       schemeList: false,
-      schemeFolioList: false
+      applicantList: false
     });
   }
   applicantWiseExcelReport(index, amcIndex) {
-    let applicantList = this.arrayOfExcelData[amcIndex].schemeList[index].applicantList;
-    let newArray = [];
-    applicantList.forEach(element => {
-      newArray.push({
-        field1: element.name,
-        field2: element.balanceUnit,
-        field3: element.folioNumber,
-        field4: element.totalAum,
-        field5: element.weightInPerc
-      })
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.applicantList = [];
+      }
     });
 
-    ExcelMisSipService.exportExcel(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData,[], 'Category wise MIS Report');
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+      clientList: true,
+      subCatList: true,
+      schemeList: true,
+      applicantList: false
+    });
   }
 }

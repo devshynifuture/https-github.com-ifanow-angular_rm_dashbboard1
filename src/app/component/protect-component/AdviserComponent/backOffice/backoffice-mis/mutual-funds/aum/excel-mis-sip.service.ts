@@ -463,20 +463,20 @@ export class ExcelMisSipService {
                         });
                     } else {
                         amcElement.schemeList.forEach((schemeElement, index2) => {
-                            if (schemeElement.applicantList.length !== 0) {
-                                if (!excluded.applicantList) {
-                                    schemeElement.applicantList.forEach(applicantElement => {
-                                        currentRowPos = currentRowPos + schemeElement.applicantList.length + 1;
+                            if (schemeElement.investorList.length !== 0) {
+                                if (!excluded.investorList) {
+                                    schemeElement.investorList.forEach(applicantElement => {
+                                        currentRowPos = currentRowPos + schemeElement.investorList.length + 1;
 
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
                                         headCell = ws.getRow(currentRowPos);
                                         headCell.font = { bold: true };
                                         ws.addRow([
+                                            applicantElement.index,
                                             applicantElement.name,
-                                            applicantElement.balanceUnit,
-                                            applicantElement.folioNumber,
-                                            applicantElement.totalAum,
+                                            applicantElement.sipAmount,
+                                            applicantElement.sipCount,
                                             applicantElement.weightInPerc
                                         ]);
                                     });
