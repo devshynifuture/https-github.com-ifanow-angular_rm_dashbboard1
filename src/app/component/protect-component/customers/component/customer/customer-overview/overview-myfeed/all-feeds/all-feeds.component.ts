@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {AppConstants} from 'src/app/services/app-constants';
 import {CustomerService} from '../../../customer.service';
 import {LoaderFunction} from 'src/app/services/util.service';
@@ -9,6 +9,9 @@ import {PlanService} from '../../../plan/plan.service';
 import {Router} from '@angular/router';
 import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MfServiceService } from '../../../accounts/assets/mutual-fund/mf-service.service';
+import { MatTableDataSource } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-all-feeds',
@@ -16,11 +19,13 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./all-feeds.component.scss'],
   providers: [LoaderFunction]
 })
-export class AllFeedsComponent implements OnInit {
+export class AllFeedsComponent implements OnInit, OnDestroy {
   clientData: any;
   advisorId: any;
   orgDetails: any;
-  chart: Chart;
+  assetAllocationPieConfig: Chart;
+  mfAllocationPieConfig: Chart;
+  mfSubCategoryPieConfig: Chart;
   cashflowColumns = ['bankName', 'inflow', 'outflow', 'netflow'];
   displayedColumns: string[] = ['description', 'date', 'amount'];
   cashFlowViewDataSource = [];
@@ -64,16 +69,8 @@ export class AllFeedsComponent implements OnInit {
     }
   ]
 
-  portfolioConfig = {
+  sliderConfig = {
     slidesToShow: 1.5,
-    infinite: false,
-    variableWidth: true,
-    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
-  }
-
-  recentTnxConfig = {
-    slidesToShow: 1.4,
     infinite: false,
     variableWidth: true,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
@@ -87,6 +84,12 @@ export class AllFeedsComponent implements OnInit {
   advisorInfo: any;
   advisorImg: string = '';
 
+  totalValue: any = {};
+  filterData: any;
+  mfAllocationData:any[] = [];
+  mfSubCatAllocationData:any[] = [];
+  worker:Worker;
+
   constructor(
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
@@ -96,6 +99,8 @@ export class AllFeedsComponent implements OnInit {
     private router: Router,
     private orgSetting: OrgSettingServiceService,
     private enumSerice: EnumServiceService,
+    private datePipe: DatePipe,
+    private mfServiceService: MfServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -112,7 +117,6 @@ export class AllFeedsComponent implements OnInit {
     portfolioData: {
       dataLoaded: false,
       hasData: false,
-      displaySection: false,
     },
     rtaFeeds: {
       dataLoaded: false,
@@ -147,7 +151,12 @@ export class AllFeedsComponent implements OnInit {
       dataLoaded: false,
       hasData: false,
     },
-    portfolioSummaryData: {
+    mfPortfolioSummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      displaySection: false,
+    },
+    mfSubCategorySummaryData: {
       dataLoaded: false,
       hasData: false,
       displaySection: false,
@@ -169,6 +178,7 @@ export class AllFeedsComponent implements OnInit {
     completenessStatus: 0,
   };
   portfolioSummaryData: any[] = [];
+  familyWiseAllocation: any[] = [];
   appearancePortfolio:any = {};
 
   ngOnInit() {
@@ -176,14 +186,16 @@ export class AllFeedsComponent implements OnInit {
     this.loadCustomerProfile();
     this.getAppearanceSettings();
     this.initializePieChart();
-    this.loadPortfolioData();
+    this.loadAssetAlocationData();
     this.loadRTAFeedsTransactions();
     this.loadRecentTransactions();
     this.loadDocumentValutData();
     this.loadRiskProfile();
     this.loadGlobalRiskProfile();
     // this.loadGoalsData(); // Not to be implemented for demo purpose
-    this.loadCashFlowSummary(); //To be implemented later
+    this.loadCashFlowSummary(); // needs better implementation
+    this.getMFPortfolioData();
+
   }
 
   // logic to decide which apis to load and not load
@@ -198,12 +210,12 @@ export class AllFeedsComponent implements OnInit {
       case 6:
         this.tabsLoaded.goalsData.displaySection = true;
       case 5:
-        this.tabsLoaded.portfolioData.displaySection = true;
       case 4:
-        this.tabsLoaded.portfolioSummaryData.displaySection = true;
+        this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
         break;
       default:
-        console.error("Unidentified role master id found", this.clientData.roleId);
+        this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
+        // console.error("Unidentified role master id found", this.clientData.roleId);
         break;
     }
   }
@@ -255,7 +267,7 @@ export class AllFeedsComponent implements OnInit {
   }
 
   initializePieChart() {
-    this.chart = new Chart({
+    let chartConfig:any = {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -292,72 +304,73 @@ export class AllFeedsComponent implements OnInit {
         innerSize: '60%',
         data: this.chartData
       }]
-    });
+    }
+    this.assetAllocationPieConfig = new Chart(chartConfig);
+    this.mfAllocationPieConfig = new Chart(chartConfig);
+    this.mfSubCategoryPieConfig = new Chart(chartConfig);
   }
 
-  loadPortfolioData() {
+  loadAssetAlocationData() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
 
-    if(this.tabsLoaded.portfolioData.displaySection) {
-      this.loaderFn.increaseCounter();
-      this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
-        if (res == null) {
-          this.portFolioData = [];
-        } else {
-          this.tabsLoaded.portfolioData.hasData = true;
-          this.portFolioData = res;
-  
-          let chartData = [];
-          let counter = 0;
-          let othersData = {
-            y: 0,
-            name: 'Others',
-            color: AppConstants.DONUT_CHART_COLORS[4],
-            dataLabels: {
-              enabled: false
-            }
-          }
-          let chartTotal = 1;
-          res.forEach(element => {
-            if (element.investedAmount > 0) {
-              chartTotal += element.investedAmount;
-              if (counter < 4) {
-                chartData.push({
-                  y: element.investedAmount,
-                  name: element.assetTypeString,
-                  color: AppConstants.DONUT_CHART_COLORS[counter],
-                  dataLabels: {
-                    enabled: false
-                  }
-                })
-              } else {
-                othersData.y += element.investedAmount;
-              }
-              counter++;
-            }
-          });
-          chartTotal -= 1;
-          if (counter > 4) {
-            chartData.push(othersData);
-          }
-          if(counter > 0) {
-            this.chartTotal = chartTotal;
-            this.chartData = chartData;
-            this.pieChart(this.chartData);
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if (res == null) {
+        this.portFolioData = [];
+      } else {
+        this.tabsLoaded.portfolioData.hasData = true;
+        this.portFolioData = res;
+
+        let chartData = [];
+        let counter = 0;
+        let othersData = {
+          y: 0,
+          name: 'Others',
+          color: AppConstants.DONUT_CHART_COLORS[4],
+          dataLabels: {
+            enabled: false
           }
         }
-        this.tabsLoaded.portfolioData.dataLoaded = true;
-        this.loaderFn.decreaseCounter();
-      }, err => {
-        this.hasError = true;
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.loaderFn.decreaseCounter();
-      })
-    }
+        let chartTotal = 1;
+        res.forEach(element => {
+          if (element.investedAmount > 0) {
+            chartTotal += element.investedAmount;
+            if (counter < 4) {
+              chartData.push({
+                y: element.investedAmount,
+                name: element.assetTypeString,
+                color: AppConstants.DONUT_CHART_COLORS[counter],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            } else {
+              othersData.y += element.investedAmount;
+            }
+            counter++;
+          }
+        });
+        chartTotal -= 1;
+        if (counter > 4) {
+          chartData.push(othersData);
+        }
+        if(counter > 0) {
+          this.chartTotal = chartTotal;
+          this.chartData = chartData;
+          this.assetAllocationPieChartDataMgnt(this.chartData);
+        }
+      }
+      this.tabsLoaded.portfolioData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
 
   loadRTAFeedsTransactions() {
@@ -445,10 +458,6 @@ export class AllFeedsComponent implements OnInit {
   }
 
   loadRecentTransactions() {
-    const startDate = new Date();
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() - 30);
-
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
@@ -598,9 +607,9 @@ export class AllFeedsComponent implements OnInit {
     }
   }
 
-  pieChart(data) {
-    this.chart.removeSeries(0);
-    this.chart.addSeries({
+  assetAllocationPieChartDataMgnt(data) {
+    this.assetAllocationPieConfig.removeSeries(0);
+    this.assetAllocationPieConfig.addSeries({
       type: 'pie',
       name: 'Asset allocation',
       innerSize: '60%',
@@ -666,5 +675,156 @@ export class AllFeedsComponent implements OnInit {
     } else {
       carousel.slickPrev();
     }
+  }
+
+  getMFPortfolioData() {
+    const obj = {
+      clientId: 25054,//this.clientData.clientId,
+      advisorId: 2775//this.advisorId
+    }
+
+    if(this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
+      this.loaderFn.increaseCounter();
+  
+      this.customerService.getMutualFund(obj).subscribe(
+        data => this.getMutualFundResponse(data), (error) => {
+          this.eventService.openSnackBar(error, "DISMISS");
+        }
+      );
+    }
+  }
+
+
+  // copied from MF overview
+  asyncFilter(mutualFund, categoryList) {
+    if (typeof Worker !== 'undefined') {
+      const input = {
+        mutualFundList: mutualFund,
+        type: '',
+        // mfService: this.mfService
+      };
+      // Create a new
+      this.worker = new Worker('src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund.worker.ts', { type: 'module' });
+      this.worker.onmessage = ({ data }) => {
+        this.totalValue = data.totalValue;
+        this.generateMFallocationChartData(categoryList); // for Calculating MF categories percentage
+        this.mfPieChartDataMgnt(); // pie chart data after calculating percentage
+      };
+      this.worker.postMessage(input);
+    } else {
+      // Web workers are not supported in this environment.
+      // You should add a fallback so that your program still executes correctly.
+    }
+  }
+
+  getMutualFundResponse(data) {
+    if (data) {
+      this.filterData = this.mfServiceService.doFiltering(data);
+      this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
+      this.generateSubCategorywiseAllocationData(data); // For subCategoryWiseAllocation
+      this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
+    } else {
+      this.eventService.openSnackBar(" No Mutual Fund Found", "DISMISS");
+    }
+  }
+
+
+  generateMFallocationChartData(data) {// function for calculating percentage
+    this.mfAllocationData = [];
+    let counter = 0;
+    data.forEach(element => {
+      switch(element.category) {
+        case 'DEBT':
+        case 'EQUITY':
+        case 'HYBRID':
+        case 'SOLUTION ORIENTED':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[counter],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter ++;
+          break;
+        default:
+          this.mfAllocationData.push({
+            name: 'Others',
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[counter],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter ++;
+          break;
+      }
+    });
+    this.mfAllocationData.forEach(e => {
+      if(e.name == 'SOLUTION ORIENTED') {
+        e.name = 'Solutions oriented'
+      } else {
+        e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
+      }
+    })
+  }
+
+
+  mfPieChartDataMgnt() {
+    this.mfAllocationPieConfig.removeSeries(0);
+    this.mfAllocationPieConfig.addSeries({
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '60%',
+        data: this.mfAllocationData,
+      }, true, true)
+  }
+
+
+  generateSubCategorywiseAllocationData(data) {
+    let subCatChartData = this.mfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    subCatChartData = subCatChartData.sort((a,b) => a.allocatedPercentage - b.allocatedPercentage)
+    let counter = 0;
+    this.mfSubCatAllocationData = [];
+    let othersData = {
+      name: 'Others',
+      y:0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {enabled:false}
+    }
+    subCatChartData.forEach(data => {
+      if(counter < 4) {
+        this.mfSubCatAllocationData.push({
+          name: data.subCategory,
+          y: parseFloat((data.allocatedPercentage).toFixed(2)),
+          color: AppConstants.DONUT_CHART_COLORS[counter],
+          dataLabels: {
+            enabled: false
+          }
+        })
+        counter ++;
+      } else {
+        othersData.y += data.allocatedPercentage
+      }
+    })
+    this.mfSubCatAllocationData.push(othersData);
+
+    this.mfSubCategoryPieConfig.removeSeries[0];
+    this.mfSubCategoryPieConfig.addSeries({
+      type: 'pie',
+      name: 'Browser share',
+      innerSize: '60%',
+      data: this.mfSubCatAllocationData,
+    }, true, true)
+
+  }
+
+  getFamilyMemberWiseAllocation(data) {
+    this.familyWiseAllocation = data.family_member_list;
+  }
+
+  ngOnDestroy(){
+    if(this.worker) this.worker.terminate();
   }
 }

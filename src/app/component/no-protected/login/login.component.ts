@@ -134,9 +134,6 @@ export class LoginComponent implements OnInit {
       this.loginService.getUsernameData(obj).subscribe(
         data => {
           if (data) {
-            if (this.resendOtpFlag) {
-              this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
-            }
             this.userName.disable();
             console.log(data);
             this.userData = data;
@@ -153,6 +150,9 @@ export class LoginComponent implements OnInit {
           this.eventService.openSnackBar(err, 'Dismiss')
         }
       );
+      if (this.resendOtpFlag) {
+        this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
+      }
     }
   }
 
@@ -223,7 +223,7 @@ export class LoginComponent implements OnInit {
         };
         this.saveAfterVerifyCredential(obj);
 
-        this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+        this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
         this.loginService.handleUserData(this.authService, this.router, this.userData);
       } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
         const obj = {
@@ -236,16 +236,16 @@ export class LoginComponent implements OnInit {
         this.loginService.saveAfterVerification(obj).subscribe(
           data => {
             if (data) {
-              this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+              this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
               this.loginService.handleUserData(this.authService, this.router, this.userData);
             } else {
               this.barButtonOptions.active = false;
             }
           },
           err => {
-            console.error(err);
-            // this.eventService.openSnackBar(err, 'Dismiss');
-            (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
+            // console.error(err);
+            this.eventService.openSnackBar(err, 'Dismiss');
+            // (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
             this.barButtonOptions.active = false;
           }
         );

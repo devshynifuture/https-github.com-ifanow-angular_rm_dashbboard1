@@ -49,10 +49,21 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input #clientName class="form-control" formControlName="clientName" matInput placeholder="Enter Name"
-                     type="text">
-              <mat-error>This field is required</mat-error>
+              <input [matAutocomplete]="auto1" placeholder="Start typing to see nominee name" matInput maxlength="30"
+                     appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                     formControlName="clientName"
+                     type="text" class="form-control">
+              <mat-autocomplete #auto1="matAutocomplete">
+                <mat-option [value]="fm.name" (click)="selectedFamily(fm)"
+                            *ngFor="let fm of familyClientList"> {{fm.name}} </mat-option>
+              </mat-autocomplete>
+              <mat-error class="f-12">This field is required</mat-error>
             </mat-form-field>
+            <!--            <mat-form-field appearance="standard" floatLabel="never">-->
+            <!--              <input #clientName class="form-control" formControlName="clientName" matInput placeholder="Enter Name"-->
+            <!--                     type="text">-->
+            <!--              <mat-error>This field is required</mat-error>-->
+            <!--            </mat-form-field>-->
           </div>
         </div>
 
@@ -196,8 +207,8 @@
     <a (click)="SendToForm('first',false);" class="activeLink c-p"> First holder </a>
     <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Second
       holder </a>
-    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Third
-      holder </a>
+    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'"
+       class="activeLink c-p"> {{thirdHolderButtonLabel}}</a>
   </div>
 
   <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">

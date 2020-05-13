@@ -158,15 +158,15 @@
                     <h5 class="m-0 pt-8 mob-pb-5">Gender</h5>
                 </div>
                 <div class="col-md-7 p-0 mob-text-center">
-                    <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block clientmobs">
+                    <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block clientmobs f-14">
                         <mat-radio-button value="1" [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1','text-primary':basicDetails.get('gender').value=='1','text-custom':basicDetails.get('gender').value!='1'}"
                             class="bu-primary">Male
                         </mat-radio-button>
                         <mat-radio-button value="2" [ngClass]="{'bu-primary': basicDetails.get('gender').value=='2','borderRadio':basicDetails.get('gender').value!='2','text-primary':basicDetails.get('gender').value=='2','text-custom':basicDetails.get('gender').value!='2'}"
-                            class="borderRadio">Female
+                            class="borderRadio f-14">Female
                         </mat-radio-button>
                         <mat-radio-button value="3" [ngClass]="{'bu-primary': basicDetails.get('gender').value=='3','borderRadio':basicDetails.get('gender').value!='3','text-primary':basicDetails.get('gender').value=='3','text-custom':basicDetails.get('gender').value!='3'}"
-                            class="borderRadio">Other
+                            class="borderRadio f-14">Other
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
