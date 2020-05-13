@@ -41,13 +41,21 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
+    let arnNumber = this.data.mainData.number;
+    if(arnNumber) {
+      arnNumber = arnNumber.slice(4);
+    }
+    let euinNumber = this.data.mainData.euin;
+    if(euinNumber) {
+      euinNumber = euinNumber.slice(1)
+    }
     this.arnRiaFG = this.fb.group({
       advisorId: [this.advisorId, []],
       arnOrRia: [this.data.mainData.arnOrRia || '', [Validators.required]],
       typeId: [this.data.mainData.typeId, [Validators.required]],
-      number: [this.data.mainData.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      number: [arnNumber, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
-      euin: [this.data.mainData.euin],
+      euin: [euinNumber],
       commencementDate: [this.data.mainData.commencementDate],
       renewalDate: [this.data.mainData.renewalDate],
       registeredEmail: [this.data.mainData.registeredEmail, [Validators.pattern(ValidatorType.EMAIL)]],
@@ -107,6 +115,12 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         ...this.data.mainData,
         ...this.arnRiaFG.getRawValue()
       };
+      if(this.arnRiaFG.get('arnOrRia').value == 1) {
+        jsonObj.number = 'ARN-' + jsonObj.number;
+        jsonObj.euin = 'E' + jsonObj.euin;
+      } else {
+        jsonObj.number = 'INA-' + jsonObj.number;
+      }
 
       if (jsonObj.commencementDate) {
         if (jsonObj.commencementDate instanceof Date) {

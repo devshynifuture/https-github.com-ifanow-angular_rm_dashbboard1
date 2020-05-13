@@ -14,7 +14,7 @@
         </div>
     </div>
     <div *ngIf="mfRTAlist.length > 0">
-        <div class="row">
+        <div class="row" *ngIf="camsDS.data.length > 0">
             <div class="col-md-7 p-0 camsTable">
                 <h5 class="m-0 pt-24">CAMS</h5>
                 <table mat-table [dataSource]="camsDS" class="mt-8 skeletonAnimation" appSkeletonLoading
@@ -71,7 +71,7 @@
                 </table>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="karvyDS.data.length > 0">
             <div class="col-md-12 p-0 camsTable">
                 <h5 class="m-0 pt-24">Karvy (KFintech)</h5>
                 <table mat-table [dataSource]="karvyDS" class="mt-8 skeletonAnimation" appSkeletonLoading
@@ -160,7 +160,7 @@
             </div>
         </div>
         
-        <div class="row">
+        <div class="row" *ngIf="frankDS.data.length > 0">
             <div class="col-md-10 p-0 camsTable">
                 <h5 class="m-0 pt-24">Franklin Templeton</h5>
                 <table mat-table [dataSource]="frankDS" class="mt-8 skeletonAnimation" appSkeletonLoading
@@ -235,7 +235,7 @@
             </div>
         </div>
         
-        <div class="row">
+        <div class="row" *ngIf="fundsDS.data.length > 0">
             <div class="col-md-11 p-0 camsTable pb-44">
                 <h5 class="m-0 pt-24">CAMS Fundsnet</h5>
                 <table mat-table [dataSource]="fundsDS" class="mt-8 skeletonAnimation" appSkeletonLoading
