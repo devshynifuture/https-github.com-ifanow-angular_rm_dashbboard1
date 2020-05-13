@@ -43,14 +43,20 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   displayedColumns: string[];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  viewMode: string;
+  reponseData: any;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
- @Input() mutualFund;
+  mutualFund;
 
   ngOnInit() {
-    if (this.mutualFund.viewMode == 'Unrealized Transactions') {
+    this.mfService.getViewMode()
+    .subscribe(res => {
+      this.viewMode = res;
+    })
+    if (this.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
     } else {
@@ -58,7 +64,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         'units', 'balanceUnits', 'days', 'icons'];
     }
     console.log(this.mutualFund)  
-    // this.getMutualFund();
+     this.getMutualFund();
   }
 
   initValueOnInit() {
@@ -245,7 +251,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             this.type = this.rightFilterData.reportType[0];
-            this.asyncFilter(this.rightFilterData.mutualFundList);
+            this.reponseData= this.doFiltering(this.rightFilterData.mfData)
+            this.asyncFilter(this.reponseData.mutualFundList);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
             // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,

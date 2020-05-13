@@ -18,29 +18,6 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 })
 export class PersonalDetailsInnComponent implements OnInit {
 
-  personalDetails: any;
-  holdingList: any;
-  inputData: any;
-  generalDetails: any;
-  obj1: any;
-  firstHolder: any;
-  secondHolder: any;
-  thirdHolder: any;
-  holder = {
-    type: 'first',
-    data: ''
-  };
-  validatorType = ValidatorType;
-  changedValue: string;
-  doneData: any;
-  advisorId: any;
-  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  addressList: any;
-  clientId: any;
-  clientData: any;
-  sendObj: any;
-  maxDate = new Date();
-
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private processTransaction: ProcessTransactionService,
@@ -76,6 +53,31 @@ export class PersonalDetailsInnComponent implements OnInit {
     return this.inputData;
   }
 
+  thirdHolderButtonLabel = '+ Add Holder';
+  personalDetails: any;
+  holdingList: any;
+  inputData: any;
+  generalDetails: any;
+  obj1: any;
+  firstHolder: any;
+  secondHolder: any;
+  thirdHolder: any;
+  holder = {
+    type: 'first',
+    data: ''
+  };
+  validatorType = ValidatorType;
+  changedValue: string;
+  doneData: any;
+  advisorId: any;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  addressList: any;
+  clientId: any;
+  clientData: any;
+  sendObj: any;
+  maxDate = new Date();
+  familyClientList;
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.doneData = false;
@@ -84,10 +86,13 @@ export class PersonalDetailsInnComponent implements OnInit {
     } else {
       this.getdataForm('');
       if (this.clientData) {
-        this.getAddressList(this.clientData);
+        this.getClientOrFamilyDetails(this.clientData);
       }
     }
     this.holdingList = [];
+    if (this.inputData.holdingNature != 'SI') {
+      this.getNomineeList(this.clientData);
+    }
     // this.obj1 = [];
   }
 
@@ -101,7 +106,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
 
-  getAddressList(data) {
+  getClientOrFamilyDetails(data) {
     if (data.userType == 2) {
       this.sendObj = {
         clientId: data.clientId,
@@ -232,6 +237,7 @@ export class PersonalDetailsInnComponent implements OnInit {
         return;
       } else {
         if (this.savePersonalDetails(value)) {
+          this.thirdHolderButtonLabel = 'Third Holder';
           if (this.thirdHolder && this.thirdHolder.panNumber) {
             this.holder.type = value;
             this.personalDetails.setValue(this.thirdHolder);
@@ -301,5 +307,25 @@ export class PersonalDetailsInnComponent implements OnInit {
         break;
 
     }
+  }
+
+  getNomineeList(data) {
+    const obj = {
+      userId: data.userType == 2 ? data.clientId : data.familyMemberId,
+      userType: data.userType
+    };
+    this.peopleService.getClientFamilyMembers(obj).subscribe(
+      responseData => this.getListOfFamilyByClientRes(responseData)
+    );
+  }
+
+  getListOfFamilyByClientRes(data) {
+    console.log('getListOfFamilyByClientRes', data);
+    this.familyClientList = data;
+    console.log('nomineeList', this.familyClientList);
+  }
+
+  selectedFamily(data) {
+    this.getClientOrFamilyDetails(data);
   }
 }
