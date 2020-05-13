@@ -49,7 +49,7 @@
             <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
               aria-label="schemeName" [matAutocomplete]="auto" [formControl]="schemeNameControl">
 
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn(scheme)">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
               <ng-container *ngIf="!isLoadingForDropDown">
                 <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme.schemeName"
