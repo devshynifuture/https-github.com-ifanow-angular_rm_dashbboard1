@@ -92,7 +92,8 @@
           <h5 *ngIf="BSEValue == '1'">3) Confirm & submit</h5>
           <h5 *ngIf="BSEValue == '2'">4) Confirm & submit</h5>
           <p class="f-12 text-primitive">This will send request for UCC creation</p>
-          <button (click)="submit()" class="btnConfirm bg-primary text-white" mat-button>Create
+          <button (click)="submit()" *ngIf="selectedBrokerBse&&!createdBrokerMap[selectedBrokerBse.id]"
+                  class="btnConfirm bg-primary text-white" mat-button>Create
             account
           </button>
         </div>
@@ -103,7 +104,7 @@
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
           <button (click)="uploadFileInput.click()"
-                  *ngIf="selectedBrokerBse&&createdBrokerMap[this.selectedBrokerBse.id]"
+                  *ngIf="selectedBrokerBse&&createdBrokerMap[selectedBrokerBse.id]"
                   class="btnConfirm bg-primary text-white"
                   mat-button>
             Upload AOF
