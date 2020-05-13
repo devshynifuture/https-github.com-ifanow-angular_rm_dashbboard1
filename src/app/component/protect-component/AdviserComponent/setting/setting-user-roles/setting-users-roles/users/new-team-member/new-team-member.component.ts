@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators, FormArray} from '@angular/forms';
-import {SettingsService} from '../../../../settings.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType, UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { SettingsService } from '../../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatProgressButtonOptions } from '../../../../../../../../common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -66,7 +66,11 @@ export class NewTeamMemberComponent implements OnInit {
         this.filterCodes();
       });
   }
-
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   getIsdCodesData() {
     this.loader(1);
     this.peopleService.getIsdCode({}).subscribe(
@@ -104,7 +108,7 @@ export class NewTeamMemberComponent implements OnInit {
       adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
       parentId: this.advisorId,
       fullName: [this.data.mainData.fullName || '',
-        [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
+      [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       isdCodeId: [this.data.mainData.isdCodeId || 73, [Validators.required]],
@@ -157,7 +161,7 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   close(status = false) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: status });
   }
 
   loader(countAdder) {
