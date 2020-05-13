@@ -82,7 +82,7 @@ export class ClientAddressComponent implements OnInit {
     });
     this.changeAddrProofNumber({ value: String(data.proofType) }, data);
   }
-  changeAddrProofNumber(data, addressData) {
+  changeAddrProofNumber(data, addressData = null) {
     let regexPattern;
     (addressData) ? this.proofTypeData = addressData : ''
     if (data.value == '1') {

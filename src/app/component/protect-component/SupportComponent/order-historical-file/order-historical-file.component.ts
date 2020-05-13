@@ -129,6 +129,10 @@ export class OrderHistoricalFileComponent implements OnInit {
     this.setArnRiaId(0);
   }
 
+  getArnRiaArray() {
+    return this.orderHistoryFileForm.controls.selectArnRia as FormArray;
+  }
+
   setArnRiaId(index) {
     if (index === 0) {
       this.arnRiaDetails = this.arnRiaDetailsList[index].id;
