@@ -11,17 +11,7 @@
             <button (click)="getfixedIncomeData('3')" [ngClass]="{'mat-stroked-button': showRecurring == '3','text-primary':showRecurring == '3'}" class="br-0 text-custom" mat-button>
                 Gratuity
             </button>
-            <!-- <button (click)="getfixedIncomeData('4')"
-                [ngClass]="{'mat-stroked-button': showRecurring == '4','text-primary':showRecurring == '4'}"
-                class="br-0 text-custom" mat-button>
-                Superannuation
-            </button> -->
-            <!-- <button (click)="getfixedIncomeData('5')"
-                [ngClass]="{'mat-stroked-button': showRecurring == '5','text-primary':showRecurring == '5'}"
-                class="br-0 text-custom" mat-button>
-                EPS
-            </button> -->
-
+            
         </div>
     </div>
 
@@ -211,8 +201,6 @@
 
     </div>
 
-
-
     <div *ngIf="showRecurring == '2'">
         <div class="row">
             <div class="col-md-4 p-0">
@@ -326,7 +314,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="cvalue">
-                <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell *matHeaderCellDef class="br textRight text-right  "> Current value
+                <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell *matHeaderCellDef class="br rightText text-right  "> Current value
                 </th>
                 <td mat-cell *matCellDef="let element" class="br text-right amt  ">
                     <div class="bar">
@@ -338,7 +326,7 @@
                     {{isLoading ?'':'₹'}} <span [value]="totalCurrentValue" appFormatNumber>{{totalCurrentValue}}</span></td>
             </ng-container>
             <ng-container matColumnDef="total">
-                <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br  textRight textRight">
+                <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br  rightText textRight">
                     Total contribution
                 </th>
                 <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -486,11 +474,10 @@
 </div>
 </div>
 
-</div>
+    </div>
 
 
-
-<div *ngIf="showRecurring === '3'">
+    <div *ngIf="showRecurring === '3'">
     <div class="row">
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
@@ -546,7 +533,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                <th *matHeaderCellDef class="br w-15" mat-header-cell mat-sort-header="ownerName"> Owner</th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar"></div>
                     <div *ngFor="let owner of element.ownerList; let i = index">
@@ -558,7 +545,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th *matHeaderCellDef class="br text-right " mat-header-cell mat-sort-header="organizationName">
+                <th *matHeaderCellDef class="br textLeft w-12" mat-header-cell mat-sort-header="organizationName">
                     Name of the organization
                 </th>
                 <td *matCellDef="let element" class="br text-left  " mat-cell>
@@ -567,7 +554,7 @@
                 <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="joint">
-                <th *matHeaderCellDef class="br text-right " mat-header-cell mat-sort-header="yearOfJoining">
+                <th *matHeaderCellDef class="br textLeft " mat-header-cell mat-sort-header="yearOfJoining">
                     Date of joining
                 </th>
                 <td *matCellDef="let element" class="br text-left  " mat-cell>
@@ -576,7 +563,7 @@
                 <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
             </ng-container>
             <ng-container matColumnDef="number">
-                <th *matHeaderCellDef class="br text-right  textRight " mat-header-cell mat-sort-header="yearsCompleted">
+                <th *matHeaderCellDef class="br text-right  rightText w-13 " mat-header-cell mat-sort-header="yearsCompleted">
                     Completed years
                 </th>
                 <td *matCellDef="let element" class="br text-right amt " mat-cell>
@@ -586,7 +573,7 @@
             </ng-container>
 
             <ng-container matColumnDef="amt">
-                <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell mat-sort-header="amountReceived">
+                <th *matHeaderCellDef class="br w-15 text-right  rightText " mat-header-cell mat-sort-header="amountReceived">
                     Amount accumulated
 
                 </th>
@@ -600,7 +587,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="salary">
-                <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell mat-sort-header="amountReceived">
+                <th *matHeaderCellDef class="br   text-right  rightTextHide " mat-header-cell mat-sort-header="amountReceived">
                     'Last drawn Salary<br /> (Basic + DA)
 
                 </th>

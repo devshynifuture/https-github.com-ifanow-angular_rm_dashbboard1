@@ -8,8 +8,15 @@
 }
 
 ::ng-deep .rightText .mat-sort-header-container {
-    -webkit-box-pack: end;
-    justify-content: flex-end;
+    display: block !important;
+}
+
+ ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
+    float: right;
+}
+
+ ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
+    float: right;
 }
 
 // ------------- new changes
