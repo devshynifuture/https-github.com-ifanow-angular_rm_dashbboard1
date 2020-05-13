@@ -51,6 +51,7 @@ export class SubmitReviewInnComponent implements OnInit {
   set data(data) {
     this.doneData = {};
     this.inputData = data;
+    console.log('submit and review component inputData : ', this.inputData);
     this.allData = data;
     this.clientData = this.clientData;
     this.doneData.nominee = true;

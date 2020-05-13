@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +17,11 @@ export class PeopleService {
 
 
   getClientList(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1)
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1);
   }
 
   addClient(data) {
-    return this.http.postEncoded(apiConfig.USER + appConfig.ADD_CLIENT, data)
+    return this.http.postEncoded(apiConfig.USER + appConfig.ADD_CLIENT, data);
   }
 
   editClient(data) {
@@ -91,7 +91,7 @@ export class PeopleService {
   }
 
   updateClientStatus(data) {
-    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_STATUS, data)
+    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_STATUS, data);
   }
 
   getAdvisorFromEmailAndMobileData(data) {
@@ -101,6 +101,7 @@ export class PeopleService {
   getIsdCode(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_ISD_CODES, data, 1);
   }
+
   getClientFamilyMembers(data) {
     const httpParams = new HttpParams().set('userId', data.userId).set('userType', data.userType);
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBERS, httpParams);
