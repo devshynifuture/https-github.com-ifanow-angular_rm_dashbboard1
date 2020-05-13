@@ -8,7 +8,7 @@
         </i>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28 mob-pl-0 mob-pr-0" [formGroup]="teamMemberFG" *ngIf="!isLoading">
+<div class="pt-90 pl-28 pb-90 pr-28 mob-pl-0 mob-pr-0" [formGroup]="teamMemberFG" *ngIf="!isLoading">
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0 mob-pl-10 mob-pr-10 mob-text-left">
             <h5 class="m-0 pt-20">Full name</h5>
@@ -16,9 +16,7 @@
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput (input)="capitalise($event)" placeholder="Enter Full name"
-                        formControlName="fullName" class="form-control" [readonly]="!data.is_add_call"
-                        [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
+                    <input matInput (input)="capitalise($event)" placeholder="Enter Full name" formControlName="fullName" class="form-control" [readonly]="!data.is_add_call" [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
                     <mat-hint align="end">{{teamMemberFG.get('fullName').value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -33,8 +31,7 @@
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input placeholder="Enter Email Id" matInput formControlName="emailId" class="form-control"
-                        [readonly]="!data.is_add_call">
+                    <input placeholder="Enter Email Id" matInput formControlName="emailId" class="form-control" [readonly]="!data.is_add_call">
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.pattern">Email is invalid</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.required">This field is required</mat-error>
                 </mat-form-field>
@@ -65,9 +62,7 @@
         <div class="col-md-4 col-8 pr-0 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation
-                        #mobileNo formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control"
-                        [readonly]="!data.is_add_call">
+                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation #mobileNo formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control" [readonly]="!data.is_add_call">
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.pattern">
                         Enter Valid Mobile number</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
@@ -98,25 +93,19 @@
             <h5 class="m-0 pt-20">Your logo</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
-            <!-- <div class="form-group">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select class="form-control" formControlName="roleId">
-                        <mat-option value="">Select Role</mat-option>
-                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
-                    </mat-select>
-                    <mat-error>This field is required</mat-error>
-                </mat-form-field>
-            </div> -->
-            <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
-            <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
-                <i class="material-icons c-p" style="font-size: 100px;">
-                    insert_photo
+            <div class="photView b-a">
+                <img *ngIf="logoImg" src="{{logoImg}}">
+                <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
+                    <i class="material-icons c-p" style="font-size: 100px;">
+                        insert_photo
+                    </i>
+                </div>
+                <i class="material-icons cancel_btn_icon" *ngIf="logoImg" (click)="cancelImageUpload()">
+                    cancel
                 </i>
             </div>
-            <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12 ml-12" mat-stroked-button>CANCEL
-            </button>
-            <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url"
-                type="file">
+
+            <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url" type="file">
         </div>
     </div>
 </div>
@@ -129,7 +118,7 @@
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit"
                 (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button> -->
-            <app-progress-button (btnClick)="save()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            <app-progress-button (btnClick)="save()" class="br-0 text-inherit  " [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>
