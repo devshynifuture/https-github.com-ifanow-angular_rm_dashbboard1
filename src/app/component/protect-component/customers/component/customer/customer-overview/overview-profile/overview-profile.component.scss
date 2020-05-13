@@ -246,7 +246,7 @@
 
 .profileOverview {
     .vertical-menu {
-        height: 100vh;
+        // height: 100vh;
         display: block !important;
         width: 100%;
         text-align: left;
@@ -344,4 +344,11 @@
 .familyLoaderBox {
     width: 148px;
     height: 57px;
+}
+
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 140px;
+    z-index: 1020;
 }

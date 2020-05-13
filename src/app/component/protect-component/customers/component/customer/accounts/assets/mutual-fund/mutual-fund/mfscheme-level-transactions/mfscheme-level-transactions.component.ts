@@ -37,8 +37,11 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
     private cusService: CustomerService,
   ) { }
   @Input() set data(data) {
-    this.clientId = AuthService.getClientId();
+    // this.clientId = AuthService.getClientId();
+    this.clientId = 15545;
+
     this.advisorId = AuthService.getAdvisorId();
+
     this.getFormData(data);
   }
   ngOnInit() {

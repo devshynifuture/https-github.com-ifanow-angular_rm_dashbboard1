@@ -161,7 +161,7 @@ export class RightFilterComponent implements OnInit {
       reportAsOn: [new Date(todayDate), [Validators.required]],
       fromDate: [new Date(fromDate),[Validators.required]],
       toDate: [new Date(todayDate),[Validators.required]],
-      showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
+      showFolios: [(data.showFolio) ? data.showFolio : '1', [Validators.required]],
       grandfathering: [(data.grandfathering) ? data.grandfathering : '', [Validators.required]],
     });
   }
@@ -367,7 +367,7 @@ export class RightFilterComponent implements OnInit {
     });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    this.folio = filterData2;
+    this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     this.changeSelect('', '');
   }
@@ -411,7 +411,7 @@ export class RightFilterComponent implements OnInit {
     });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    this.folio = filterData2;
+    this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()]
     this.familyMember = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
     this.changeSelect('', '');
   }
@@ -465,7 +465,7 @@ export class RightFilterComponent implements OnInit {
   changeFilterAmc() {
     (this.amcObj.length == 0) ?  this.showError = null: (this.amcObj.length == 1 && !this.amcObj[0].selected) ? this.showError = 'amc' : this.showError = null;
     this.obj = this.mfService.filterScheme(this.amc);
-    this.folio = this.obj.filterData;
+    this.folio = [...new Map(this.obj.filterData.map(item => [item.folioNumber, item])).values()];
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.scheme = [...new Map(this.obj.filterData4.map(item => [item.id, item])).values()];
@@ -476,7 +476,7 @@ export class RightFilterComponent implements OnInit {
   changeFilterScheme() {
     (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
     this.obj = this.mfService.filterScheme(this.scheme);
-    this.folio = this.obj.filterData;
+    this.folio = [...new Map(this.obj.filterData.map(item => [item.folioNumber, item])).values()];
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];
@@ -492,6 +492,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect('', '');
   }
   changeFormatFilter(value) {
+    (this.reportFormatObj.length == 0) ?  this.showError = null :  (this.reportFormatObj.length == 1 && !this.reportFormatObj[0].selected) ? this.showError = 'report format' : this.showError = null; 
     this.reportFormat.forEach(element => {
       if (element.name != value.name) {
         element.selected = false;
@@ -500,6 +501,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect('', '');
   }
   changeFinancialYear(value) {
+    (this.financialYearsObj.length == 0) ?  this.showError = null :  (this.financialYearsObj.length == 1 && !this.financialYearsObj[0].selected) ? this.showError = 'financial year' : this.showError = null; 
     if(value.from <= 2017){
       this.showGrandfathering = false;
       this.summaryFilerForm.get('grandfathering').setValue('2');
@@ -675,63 +677,64 @@ export class RightFilterComponent implements OnInit {
     this.finalFilterData.transactionView = this.sendTransactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
     console.log(this.finalFilterData);
-    if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
-      let mutualFund = this.finalFilterData.mutualFundList;
-      (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
-      this.obj = {
-        mutualFundList: mutualFund
-      }
-      this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
-        data => {
-          console.log(data);
-          this.barButtonOptions.active = false;
-          this.finalFilterData.mutualFundList = data;
-          this.Close(this.finalFilterData);
-        }
-      );
+    // if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
+    //   let mutualFund = this.finalFilterData.mutualFundList;
+    //   (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
+    //   this.obj = {
+    //     mutualFundList: mutualFund
+    //   }
+    //   this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
+    //     data => {
+    //       console.log(data);
+    //       this.barButtonOptions.active = false;
+    //       this.finalFilterData.mutualFundList = data;
+    //       this.Close(this.finalFilterData);
+    //     }
+    //   );
 
-    } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate && this.dataToSend.toDate != todayDate) {
-      let catObj: any;
-      catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
-      Object.keys(catObj).map(key => {
-        catObj[key].forEach((singleData) => {
-          let singleDataTransaction = singleData;
-          singleData = {};
-          catObj[key] = [];
-          singleDataTransaction.mutualFundTransactions.forEach((ele) => {
-            const singleData = {
-              unit: ele.unit,
-              transactionDate: ele.transactionDate,
-              schemeCode: singleDataTransaction.schemeCode,
-              effect: ele.effect,
-            }
-            catObj[key].push(singleData);
-          });
-        });
+    // } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate && this.dataToSend.toDate != todayDate) {
+    //   let catObj: any;
+    //   catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
+    //   Object.keys(catObj).map(key => {
+    //     catObj[key].forEach((singleData) => {
+    //       let singleDataTransaction = singleData;
+    //       singleData = {};
+    //       catObj[key] = [];
+    //       singleDataTransaction.mutualFundTransactions.forEach((ele) => {
+    //         const singleData = {
+    //           unit: ele.unit,
+    //           transactionDate: ele.transactionDate,
+    //           schemeCode: singleDataTransaction.schemeCode,
+    //           effect: ele.effect,
+    //         }
+    //         catObj[key].push(singleData);
+    //       });
+    //     });
 
-      });
-      catObj.toDate = this.dataToSend.toDate;
-      console.log(catObj.toDate);
-      this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
-        data => {
-          console.log(data);
-        }
-      );
-    } else {
-      this.obj = {
-        advisorId:this.advisorId,
-        clientId:this.clientId,
-        toDate: this.finalFilterData.reportAsOn,
-        id: JSON.stringify(this.finalFilterData.categoryWiseMfList)
-      }
-      this.custumService.getMutualFund(this.obj).subscribe(
-        data => {
-          console.log(data);
-          this.barButtonOptions.active = false;
-          this.finalFilterData.mfData = data;
-          this.Close(this.finalFilterData);
-        }
-      );
+    //   });
+    //   catObj.toDate = this.dataToSend.toDate;
+    //   console.log(catObj.toDate);
+    //   this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
+    //     data => {
+    //       console.log(data);
+    //     }
+    //   );
+    // } else if(this._data.name != 'CAPITAL GAIN REPORT') {
+     
+    //   this.obj = {
+    //     advisorId:this.advisorId,
+    //     clientId:this.clientId,
+    //     toDate: JSON.stringify(this.finalFilterData.reportAsOn),
+    //     id: this.finalFilterData.categoryWiseMfList
+    //   }
+    //   this.custumService.getMutualFund(this.obj).subscribe(
+    //     data => {
+    //       console.log(data);
+    //       this.barButtonOptions.active = false;
+    //       this.finalFilterData.mfData = data;
+    //       this.Close(this.finalFilterData);
+    //     }
+    //   );
       // this.obj = {
       //   advisorId:this.advisorId,
       //   clientId:this.clientId,
@@ -748,6 +751,25 @@ export class RightFilterComponent implements OnInit {
       // );
       // this.barButtonOptions.active = false;
       // this.Close(this.finalFilterData);
+    // }
+    if(this._data.name != 'CAPITAL GAIN REPORT'){
+        this.obj = {
+        advisorId:this.advisorId,
+        clientId:this.clientId,
+        toDate:(this.finalFilterData.reportAsOn) ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
+        id: this.finalFilterData.categoryWiseMfList
+      }
+      this.custumService.getMutualFund(this.obj).subscribe(
+        data => {
+          console.log(data);
+          this.barButtonOptions.active = false;
+          this.finalFilterData.mfData = data;
+          this.Close(this.finalFilterData);
+        }
+      );
+    } else{
+       this.barButtonOptions.active = false;
+       this.Close(this.finalFilterData);
     }
 
   }

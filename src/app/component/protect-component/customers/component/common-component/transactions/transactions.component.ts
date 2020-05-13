@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../auth-service/authService';
 import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -5,6 +6,7 @@ import { MFSchemeLevelHoldingsComponent } from '../../customer/accounts/assets/m
 import { MatTableDataSource } from '@angular/material';
 import { CustomerService } from '../../customer/customer.service';
 import { EventService } from '../../../../../../Data-service/event.service';
+import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-transactions',
@@ -15,22 +17,44 @@ export class TransactionsComponent implements OnInit {
   displayedColumns = ['srno', 'type', 'date', 'amt', 'nav', 'unit', 'bunit', 'days', 'icons'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @Input() data;
+  transactionTypeList = [];
+  advisorId = AuthService.getAdvisorId();
+  clientId = 15545;
 
   constructor(
     private UtilService: UtilService,
     private subInjectService: SubscriptionInject,
     private cusService: CustomerService,
-    private eventService: EventService
+    private eventService: EventService,
+    private mfService: MfServiceService
   ) { }
 
   mutualFundTransactions = [];
 
   ngOnInit() {
     console.log("this is data what we got::", this.data);
+    this.initPoint();
+    this.getTransactionTypeList()
+  }
+
+  getTransactionTypeList() {
+    this.cusService.getTransactionTypeData({})
+      .subscribe(res => {
+        if (res) {
+          this.transactionTypeList = res;
+        }
+      })
+  }
+
+  initPoint() {
     this.dataSource.data = this.data.mutualFundTransactions;
     this.mutualFundTransactions = this.data.mutualFundTransactions;
-
   }
+
+  getTransactionTypeName(id) {
+    return this.transactionTypeList.find(c => c.id === id).transactionType;
+  }
+
   openMutualFund(flag, element) {
     let fragmentData;
     if (flag === 'editTransaction') {
@@ -58,7 +82,13 @@ export class TransactionsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // after closing code here...
-
+            //  mutualfund get call  
+            this.cusService.getMutualFund({ advisorId: this.advisorId, clientId: this.clientId })
+              .subscribe(res => {
+                if (res) {
+                  console.log("again re hitting mutual fund get:::", res)
+                }
+              });
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();

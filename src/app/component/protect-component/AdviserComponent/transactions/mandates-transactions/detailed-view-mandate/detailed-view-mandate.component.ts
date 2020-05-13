@@ -51,24 +51,24 @@ export class DetailedViewMandateComponent implements OnInit {
   }
 
   getDataStatus(data) {
-    this.isLoading = true
+    this.isLoading = true;
     this.statusDetails = this.statusData;
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
-    this.isLoading = false
+    this.isLoading = false;
   }
 
   refresh(value) {
     console.log(value);
-    this.getDataStatus(value)
+    this.getDataStatus(value);
   }
 
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
-  getFileDetails(e,flag) {
+  getFileDetails(e, flag) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
@@ -76,7 +76,7 @@ export class DetailedViewMandateComponent implements OnInit {
     const requestMap = {
       tpUserRequestId: 1,
       documentType: flag,
-      tpMandateDetailId:this.details.id
+      tpMandateDetailId: this.details.id
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {

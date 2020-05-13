@@ -26,7 +26,7 @@
         <h3 class="f-18 mb-28 f-600">Personal details</h3>
         <div class="row pt-20">
           <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0"> PAN </h3>
+            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? 'PAN' : 'GUARDIAN PAN'}} </h3>
           </div>
           <div class="col-md-3 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
@@ -45,7 +45,7 @@
 
         <div class="row pt-20">
           <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0"> Name as per PAN</h3>
+            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? ' Name as per PAN' : 'Name'}}</h3>
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
@@ -70,7 +70,8 @@
         </div> -->
         <div class="row pt-20">
           <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0">Father/Spouse name</h3>
+            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? 'Father/Spouse' : 'Guardian name as per PAN'}}
+              name</h3>
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
@@ -100,7 +101,8 @@
           </div>
           <div class="col-md-3 form-group">
             <mat-form-field class="ba-date">
-              <input [matDatepicker]="picker" [max]="maxDate" class="form-control b-0" formControlName="dob" matInput>
+              <input [matDatepicker]="picker" [max]="maxDate" class="form-control b-0" formControlName="dateOfBirth"
+                     matInput>
               <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error>This field is required</mat-error>
@@ -192,8 +194,10 @@
 
   <div class="col-md-5 center_menu">
     <a (click)="SendToForm('first',false);" class="activeLink c-p"> First holder </a>
-    <a (click)="SendToForm('second',false);" class="activeLink c-p"> Second holder </a>
-    <a (click)="SendToForm('third',false);" class="activeLink c-p"> Third holder </a>
+    <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Second
+      holder </a>
+    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Third
+      holder </a>
   </div>
 
   <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">

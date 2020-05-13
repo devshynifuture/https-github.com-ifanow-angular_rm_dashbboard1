@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -25,7 +25,7 @@ export class MutualFundComponent implements OnInit {
   isLoading = true;
 
   dataHolder: any = {};
-  isShow = true;
+  isShow;
   capitalGainData: any;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
@@ -34,14 +34,20 @@ export class MutualFundComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfService.getMutualFundShowDropdown()
+      .subscribe(res => {
+        this.isShow = res;
+      })
+
     this.viewMode = 'Overview Report';
-
+    this.mfService.changeViewMode(this.viewMode);
     this.advisorId = AuthService.getAdvisorId();
-    // this.advisorId = 2929;
+    // // this.advisorId = 2929;
 
-   this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    // this.clientId = this.clientId;
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getMutualFund();
+
+
 
   }
   // getPersonalDetails(data){
@@ -60,8 +66,6 @@ export class MutualFundComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      toDate:null,
-      id:JSON.stringify(null)
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -71,15 +75,12 @@ export class MutualFundComponent implements OnInit {
       }
     );
   }
-
   doFiltering(data) {
     data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
     return data;
   }
-
-
   getMutualFundResponse(data) {
     if (data) {
       this.isLoading = false;
@@ -91,19 +92,23 @@ export class MutualFundComponent implements OnInit {
     }
     this.isLoading = false;
   }
-
   unrealiseTransaction() {
     this.mfDataUnrealised = this.mfData;
   }
 
   changeViewMode(data) {
-    if (this.mfData) {
-      this.mfData.viewMode = data;
-      this.viewMode = data;
-    }
+    this.viewMode = data;
+    this.mfService.changeViewMode(this.viewMode);
+    this.mfData.viewMode = data;
   }
+
   changeInput(value) {
     this.isShow = value;
+  }
+
+  refreshMFData(value) {
+    if (value) {
+    }
   }
 }
 

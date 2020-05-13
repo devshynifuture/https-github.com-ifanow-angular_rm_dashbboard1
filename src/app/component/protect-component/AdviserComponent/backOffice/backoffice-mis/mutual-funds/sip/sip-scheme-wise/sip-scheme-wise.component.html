@@ -8,6 +8,9 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('scheme-wise', null,null)"><i
+                                class="material-icons">add</i>XLXS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -92,13 +95,21 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="6" class="innerTd one">
+                                    <div class="d-block text-right">
+                                        <button (click)="exportToExcelSheet('investor-wise', i)"
+                                            mat-icon-button>
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                     <table *ngIf="data.showCategory==false && !isLoading" class=" mb-8 mt-8 "
                                         id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
                                                 <th class="c-p"
-                                                    (click)="sortByInvestor(data.InvestorList,'investorName')">
+                                                    (click)="sortByInvestor(data.subCatList,'investorName')">
                                                     <span class="d-flex align-items-center"> Investor Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='investorName' && !reverse2">
@@ -107,7 +118,7 @@
                                                             *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByInvestor(data.InvestorList,'sipAmount')" class="c-p">
+                                                <th (click)="sortByInvestor(data.subCatList,'sipAmount')" class="c-p">
                                                     <span class="d-flex align-items-center">SIP
                                                         Amount
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -118,7 +129,7 @@
                                                     </span>
                                                 </th>
 
-                                                <th (click)="sortByInvestor(data.InvestorList,'sipCount')" class="c-p">
+                                                <th (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p">
                                                     <span class="d-flex align-items-center"> SIP Count
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipCount' && !reverse2">
@@ -132,7 +143,7 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let subInvList of data.InvestorList; let i = index">
+                                        <tbody *ngFor="let subInvList of data.subCatList; let i = index">
                                             <tr>
                                                 <td>{{i+1}}</td>
                                                 <td>
@@ -151,6 +162,14 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="6" class="innerTd two">
+                                                    <div class="d-block text-right">
+                                                        <button (click)="exportToExcelSheet('applicant-wise', i)"
+                                                            mat-icon-button>
+                                                            <mat-icon>
+                                                                save_alt
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
                                                     <table class=" mb-8 mt-8 " id="table-low"
                                                         *ngIf="subInvList.showSubCategory==false">
                                                         <thead>

@@ -6,10 +6,23 @@
 .width300 {
     width: 300px;
 }
+
 .uploadInput {
     position: absolute;
     font-size: 50px;
     opacity: 0;
     right: 0;
     top: 0;
-  }
+}
+
+ ::ng-deep .rightText .mat-sort-header-container {
+    display: block !important;
+}
+
+ ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
+    float: right;
+}
+
+ ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
+    float: right;
+}

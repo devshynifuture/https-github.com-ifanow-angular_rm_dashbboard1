@@ -65,6 +65,11 @@ export class AddFamilyMemberComponent implements OnInit {
   addFamilyType(value) {
     this.typeOfFamilyMemberAdd = value;
   }
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
@@ -175,6 +180,9 @@ export class AddFamilyMemberComponent implements OnInit {
   }
   selectFamilyMembersCount() {
     this.next();
+  }
+  previous() {
+    this.step--;
   }
   familyMemberNameList = [];
   createFamilyMember() {

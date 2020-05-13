@@ -154,7 +154,9 @@ export class ClientBankComponent implements OnInit {
       address1 = adderessData.substring(0, addressMidLength);
       address2 = adderessData.substring(addressMidLength, adderessData.length);
       address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
-      address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length))
+      address1 = address1.replace(/,\s*$/, "");
+      address2 = address2.substr(address2.indexOf(' '), address2.length);
+      address2 = address2.replace(/[0-9]/g, '')
       // pincode = pincode.join("");
     }
     (data == undefined) ? data = {} : '';
@@ -164,7 +166,7 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchState').setValue(data.state);
     this.bankForm.get('branchName').setValue(data.centre);
     this.bankForm.get('branchCountry').setValue('India');
-    this.bankForm.get('branchAddressLine1').setValue(adderessData);
+    this.bankForm.get('branchAddressLine1').setValue(address1);
     this.bankForm.get('branchAddressLine2').setValue(address2);
     this.bankForm.get('branchPinCode').setValue(pincode)
 

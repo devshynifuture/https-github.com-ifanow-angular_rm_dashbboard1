@@ -12,6 +12,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { Key } from 'protractor';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -44,7 +45,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   purchaseTransaction: any[];
   redemptiontransaction: any[];
   isLoading: Boolean;
-  @Input() mutualFund;
+  mutualFund;
   @Output() changeInput = new EventEmitter();
   purchaseAgainstRedemption: any[];
   total_stGain = 0;
@@ -60,16 +61,16 @@ export class MutualFundsCapitalComponent implements OnInit {
   debtObj: any;
   equityObj: any;
   rightFilterData: any;
-  fromDateYear:any;
-  toDateYear:any;
+  fromDateYear: any;
+  toDateYear: any;
   grandFatheringEffect: boolean;
-  objSendToDetailedCapital:any;
+  objSendToDetailedCapital: any;
   redemption: any[];
   mutualFundList: any[];
   dataToSend: { mfListData: any; grandfatheringEffect: any; fromDateYear: any; toDateYear: any; };
   capitalGainData: any;
   // capitalGainData: any;
-  constructor(private pdfGen:PdfGenService,private excel: ExcelGenService,private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
+  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
@@ -79,11 +80,11 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getUserInfo().parentId
     this.fromDateYear = 2019;
-    this.toDateYear = 2020 ;
+    this.toDateYear = 2020;
     this.grandFatheringEffect = true;
     // this.getAdvisorData();
     this.getCapitalgain();
-    this.summaryView =true
+    this.summaryView = true
     // this.calculateCapitalGain(this.capitalGainData)
 
   }
@@ -103,7 +104,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       familyMember: this.mutualFund.family_member_list,
       category: this.mutualFund.mutualFundCategoryMastersList,
       transactionView: this.displayedColumns,
-      capitalGainData:this.objSendToDetailedCapital,
+      capitalGainData: this.objSendToDetailedCapital,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -120,20 +121,20 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.dataSource1 = new MatTableDataSource([{}, {}, {}]);
             this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
-            this.changeInput.emit(true);
+            // this.changeInput.emit(true);
             this.dataToSend = {
-              mfListData : this.rightFilterData.capitalGainData.responseData,
-              grandfatheringEffect : this.rightFilterData.grandfathering,
-              fromDateYear : (this.rightFilterData.financialYear.length >0) ? this.rightFilterData.financialYear[0].from : 2019,
-              toDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
+              mfListData: this.rightFilterData.capitalGainData.responseData,
+              grandfatheringEffect: this.rightFilterData.grandfathering,
+              fromDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
+              toDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
             }
-            if(this.rightFilterData.reportFormat[0].name == 'Detailed'){
+            if (this.rightFilterData.reportFormat[0].name == 'Detailed') {
               this.summaryView = false
-            }else{
+            } else {
               this.summaryView = true;
               this.calculateCapitalGain(this.rightFilterData.capitalGainData.responseData);
             }
-            
+
             // this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
@@ -171,37 +172,43 @@ export class MutualFundsCapitalComponent implements OnInit {
         this.capitalGainData = data;
         // this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
         // this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
-         this.calculateCapitalGain( this.capitalGainData)
-      },(error) => {
+        this.calculateCapitalGain(this.capitalGainData)
+      }, (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
-  calculateCapitalGain(data){
+  calculateCapitalGain(data) {
     this.isLoading = false;
+    let equityData;
     this.changeInput.emit(false);
     if (data) {
       this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
-       this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
+      this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       this.categoryData = data;
       let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
+      Object.keys(catObj).map(key => {
+        if (catObj[key] != 'DEBT') {
+          equityData = this.filterCategoryWise(catObj[key], key);
+        }
+      });
       let debtData = this.filterCategoryWise(catObj['DEBT'], 'DEBT');
-      let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
-      this.dataSource = new MatTableDataSource(debtData);
-      this.dataSource1 = new MatTableDataSource(equityData);
+      // let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
+      this.dataSource = new MatTableDataSource(equityData);
+      this.dataSource1 = new MatTableDataSource(debtData);
       let dividenedSummaryData = this.getDividendSummaryData(this.categoryData);
       this.dataSource2 = new MatTableDataSource(dividenedSummaryData);
-      this.objSendToDetailedCapital={
-        mfData:this.mutualFund,
-        responseData :this.capitalGainData ,
-        debtData : debtData,
-        equityData : equityData,
-        dividenedSummaryData :dividenedSummaryData,
-        grandFatheringEffect:this.grandFatheringEffect,
-        redemptionList:this.redemption,
-        mutualFundList:this.mutualFundList,
-        fromDateYear:this.fromDateYear,
-        toDateYear:this.toDateYear,
+      this.objSendToDetailedCapital = {
+        mfData: this.mutualFund,
+        responseData: this.capitalGainData,
+        debtData: debtData,
+        equityData: equityData,
+        dividenedSummaryData: dividenedSummaryData,
+        grandFatheringEffect: this.grandFatheringEffect,
+        redemptionList: this.redemption,
+        mutualFundList: this.mutualFundList,
+        fromDateYear: this.fromDateYear,
+        toDateYear: this.toDateYear,
       }
     } else {
       this.dataSource.data = [];
@@ -210,15 +217,15 @@ export class MutualFundsCapitalComponent implements OnInit {
     }
   }
   getDividendSummaryData(data) {
-    if(data){
+    if (data) {
       let filterObj = []
       this.totalReinvesment = 0;
       let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
       mutualFund.forEach(element => {
-        if(element.redemptionTransactions){
+        if (element.redemptionTransactions) {
           element.redemptionTransactions.forEach(ele => {
             let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
-            if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
+            if (financialyear >= this.fromDateYear && financialyear <= this.toDateYear) {
               if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
                 element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
                 this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
@@ -228,7 +235,7 @@ export class MutualFundsCapitalComponent implements OnInit {
               }
             }
           });
-        } else{
+        } else {
           filterObj = [];
         }
       });
@@ -236,35 +243,35 @@ export class MutualFundsCapitalComponent implements OnInit {
     }
   }
   filterCategoryWise(data, category) {
-    if(data){
-      let finalValue ={};
+    if (data) {
+      let finalValue = {};
       this.mfList = this.MfServiceService.filter(data, 'mutualFund');
       this.mfList.forEach(element => {
-        if(element.redemptionTransactions){
+        if (element.redemptionTransactions) {
           element.redemptionTransactions.forEach(ele => {
             let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
-             if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
-               if (ele.purchaceAgainstRedemptionTransactions) {
-                 let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
-                 finalValue = this.MfServiceService.addTwoObjectValues(totalValue, finalValue, {totalAmt: true});
-                 // this.getFinalTotalValue(totalValue);
-                 element.stGain = totalValue.stGain;
-                 element.ltGain = totalValue.ltGain;
-                 element.stLoss = totalValue.stLoss;
-                 element.ltLoss = totalValue.ltLoss;
-                 element.indexGain = totalValue.indexGain;
-                 element.indexLoss = totalValue.indexLoss;
-               } else {
-                 ele.purchaceAgainstRedemptionTransactions = []
-               }
-             }
-           });
-        }else{
+            if (financialyear >= this.fromDateYear && financialyear <= this.toDateYear) {
+              if (ele.purchaceAgainstRedemptionTransactions) {
+                let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
+                finalValue = this.MfServiceService.addTwoObjectValues(totalValue, finalValue, { totalAmt: true });
+                // this.getFinalTotalValue(totalValue);
+                element.stGain = totalValue.stGain;
+                element.ltGain = totalValue.ltGain;
+                element.stLoss = totalValue.stLoss;
+                element.ltLoss = totalValue.ltLoss;
+                element.indexGain = totalValue.indexGain;
+                element.indexLoss = totalValue.indexLoss;
+              } else {
+                ele.purchaceAgainstRedemptionTransactions = []
+              }
+            }
+          });
+        } else {
           this.mfList = [];
         }
       });
-      (category == 'DEBT') ? this.debtObj =finalValue : this.equityObj =finalValue;
-      finalValue={};
+      (category == 'DEBT') ? this.debtObj = finalValue : this.equityObj = finalValue;
+      finalValue = {};
       return this.mfList;
     }
   }
@@ -272,7 +279,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     let days;
     let gainLossBasedOnGrandfathering;
     (category == 'DEBT') ? days = 1095 : days = 365;
-    (this.grandFatheringEffect) ? gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount' : gainLossBasedOnGrandfathering ='gainOrLossAmount' ;
+    (this.grandFatheringEffect) ? gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount' : gainLossBasedOnGrandfathering = 'gainOrLossAmount';
     let stGain = 0;
     let ltGain = 0;
     let stLoss = 0;
@@ -313,16 +320,16 @@ export class MutualFundsCapitalComponent implements OnInit {
   ExportTOExcel(data) {
     console.log(data);
   }
-  outputResponse(data){
-    this.isLoading =false;
+  outputResponse(data) {
+    this.isLoading = false;
     this.changeInput.emit(false);
     this.fromDateYear = data.fromDateYear;
     this.toDateYear = data.toDateYear;
     this.grandFatheringEffect = data.grandfatheringEffect
-    if(data.summaryView == true){
+    if (data.summaryView == true) {
       this.summaryView = true;
       this.calculateCapitalGain(data.data);
-    }else{
+    } else {
       this.summaryView = false
     }
 
@@ -337,7 +344,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
-       let rows2 = this.tableEl._elementRef.nativeElement.rows;
+    let rows2 = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
     let rows3 = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)

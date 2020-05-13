@@ -1,135 +1,143 @@
 <div class="pt-150 investoers">
-    <div [ngClass]="{'pe-none': isLoading}" class="row">
-        <div class="col-md-4  d-flex align-items-center">
-<!--            <h3 class="m-0 pt-6">Investors</h3>-->
-        </div>
-        <!-- <div class="col-md-4 pr-0 text-right">
+  <div [ngClass]="{'pe-none': isLoading}" class="row">
+    <div class="col-md-4  d-flex align-items-center">
+      <!--            <h3 class="m-0 pt-6">Investors</h3>-->
+    </div>
+    <!-- <div class="col-md-4 pr-0 text-right">
 
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data" class="form-control br-0">
-                </mat-form-field>
-            </div>
-        </div> -->
-
-        <div class="col-md-8 text-right pt-4" *ngIf="credentialData">
-            <mat-form-field class=" searchInputWidth" floatLabel="never" appearance="standard">
-                <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data"
-                    class="form-control br-0">
+        <div class="form-group mb-0">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data" class="form-control br-0">
             </mat-form-field>
-
-
-            <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
-            <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="refresh(true)">
-            <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"
-                [matMenuTriggerFor]="IINUCCMenu"><i class="material-icons">filter_list</i>FILTERS</button>
-            <mat-menu #IINUCCMenu>
-                <button mat-menu-item (click)="getIINUCC()">
-                    PENDING
-                </button>
-                <button mat-menu-item (click)="getMappedData()">
-                    INVESTMENT READY
-                </button>
-            </mat-menu>
-            <button *ngIf="dataSource.filteredData.length > 0" mat-stroked-button class="btn-primary addon v-middle"
-                (click)="openNewCustomerIIN()"> ADD
-                NEW</button>
-
         </div>
+    </div> -->
+
+    <div *ngIf="credentialData" class="col-md-8 text-right pt-4">
+      <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
+        <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
+               placeholder="type to filter data">
+      </mat-form-field>
+
+
+      <img class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg">
+      <img (click)="refresh(true)" class="b-a p-8 c-p" src="/assets/images/svg/reload.svg">
+      <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle"
+              mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+      </button>
+      <mat-menu #IINUCCMenu>
+        <button (click)="getIINUCC()" mat-menu-item>
+          PENDING
+        </button>
+        <button (click)="getMappedData()" mat-menu-item>
+          INVESTMENT READY
+        </button>
+      </mat-menu>
+      <button (click)="openNewCustomerIIN()" *ngIf="dataSource.filteredData.length > 0"
+              class="btn-primary addon v-middle"
+              mat-stroked-button> ADD
+        NEW
+      </button>
+
     </div>
+  </div>
 
-    <div class="row">
-        <div class="col-md-12 ">
-            <table mat-table [dataSource]="dataSource" matSort [appSkeletonLoading]="isLoading" appSkeletonLoading
-                class="skeletonAnimation" class="mt-8" id="table-low" *ngIf="dataSource.filteredData.length > 0">
-                <ng-container matColumnDef="position">
-                    <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar">
-                            {{isLoading ? '' :(element.aggregatorType == 1)?'NSE':(element.aggregatorType == 2)?'BSE':'-'}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="name">
-                    <th mat-sort-header="brokerCode" mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{isLoading ? '' :(element.brokerCode)?element.brokerCode:'-'}} </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="weight">
-                    <th mat-sort-header="firstApplicantName" mat-header-cell *matHeaderCellDef class="br"> Investor name
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar">
-                            {{(element.firstApplicantName)? element.firstApplicantName:element.clientName}} </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="symbol">
-                    <th mat-sort-header="firstApplicantPan" mat-header-cell *matHeaderCellDef class="br"> PAN </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{(element.firstApplicantPan)? element.firstApplicantPan:element.pan}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="bank">
-                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxDesc"> Tax status</th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{isLoading ? '' : (element.taxDesc) ? element.taxDesc : element.taxStatus}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="bankac">
-                    <th mat-sort-header="holdingType" mat-header-cell *matHeaderCellDef class="br"> Holding nature </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar">
-                            {{isLoading ? '' :(element.holdingType=='SI')?'SINGLE':(element.holdingType=='AS')?'ANYONE OR SURVIVOR':(element.holdingType=='ES')?'EITHER OR SURVIVOR':(element.holdingType=='JS')?'JOINT':'-'}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="amt">
-                    <th mat-sort-header="accountNo" mat-header-cell *matHeaderCellDef class="br"> Account number </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{isLoading ? '' :(element.accountNo)?element.accountNo:'-'}} </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="status">
-                    <th mat-sort-header="activationStatus" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar">
-                            <span *ngIf="element.activationStatus=='YES'"
-                                class="text-success t-10 f-500 c-p">{{'INVESTMENT READY'}}</span>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef>Actions </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar" *ngIf="isLoading==true">
-                            {{''}}
-                        </div>
-                        <div *ngIf="isLoading==false"> <i class="material-icons c-p">
-                                more_vert
-                            </i></div>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-                class="d-flex flex-column align-items-center pt-44">
-                <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="pt-12">{{noData}}</h4>
-                <button *ngIf="noData=='No investors found'" mat-stroked-button class="btn-primary addon v-middle  "
-                    >
-                    <!-- (click)="openTransaction()"for prod build -->
-
-                    ADD NEW</button>
-                <button *ngIf="noData=='No credentials found'" mat-stroked-button class="btn-primary addon v-middle"
-                    [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']">
-                    ADD NEW</button>
+  <div class="row">
+    <div class="col-md-12 ">
+      <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+             appSkeletonLoading class="mt-8"
+             class="skeletonAnimation" id="table-low" mat-table matSort>
+        <ng-container matColumnDef="aggregatorType">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              {{isLoading ? '' : (element.aggregatorType == 1) ? 'NSE' : (element.aggregatorType == 2) ? 'BSE' : '-'}}
             </div>
-        </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="brokerCode">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="brokerCode"> ARN/RIA</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar"> {{isLoading ? '' : (element.brokerCode) ? element.brokerCode : '-'}} </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantName"> Investor name
+          </th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              {{(element.firstApplicantName) ? element.firstApplicantName : element.clientName}} </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="panNo">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantPan"> PAN</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar"> {{(element.firstApplicantPan) ? element.firstApplicantPan : element.pan}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="taxStatus">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxDesc"> Tax status</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar"> {{isLoading ? '' : (element.taxDesc) ? element.taxDesc : element.taxStatus}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="holdingType">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="holdingType"> Holding nature</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ? 'ANYONE OR SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ? 'JOINT' : '-'}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="clientCode">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="accountNo"> Account number</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar"> {{isLoading ? '' : (element.clientCode) ? element.clientCode : '-'}} </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="activationStatus"> Status</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+                            <span *ngIf="element.activationStatus=='YES'"
+                                  class="text-success t-10 f-500 c-p">{{'INVESTMENT READY'}}</span>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th *matHeaderCellDef mat-header-cell>Actions</th>
+          <td *matCellDef="let element" mat-cell>
+            <div *ngIf="isLoading==true" class="bar">
+              {{''}}
+            </div>
+            <div *ngIf="isLoading==false"><i class="material-icons c-p">
+              more_vert
+            </i></div>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
+      <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
+           class="d-flex flex-column align-items-center pt-44">
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="pt-12">{{noData}}</h4>
+        <button *ngIf="noData=='No investors found'" class="btn-primary addon v-middle  " mat-stroked-button
+        >
+          <!-- (click)="openTransaction()"for prod build -->
+
+          ADD NEW
+        </button>
+        <button *ngIf="noData=='No credentials found'"
+                [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
+                class="btn-primary addon v-middle"
+                mat-stroked-button>
+          ADD NEW
+        </button>
+      </div>
     </div>
+  </div>
 
 </div>

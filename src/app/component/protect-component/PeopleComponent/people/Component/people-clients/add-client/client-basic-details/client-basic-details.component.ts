@@ -1,14 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 const moment = require('moment');
 
@@ -68,9 +68,9 @@ export class ClientBasicDetailsComponent implements OnInit {
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService, private datePipe: DatePipe,
-              private utilService: UtilService, private enumDataService: EnumDataService) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService, private datePipe: DatePipe,
+    private utilService: UtilService, private enumDataService: EnumDataService) {
   }
 
   @Input() set data(data) {
@@ -79,15 +79,15 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.fieldFlag == 'familyMember') {
       (data.relationshipId == 2 || data.relationshipId == 4 || data.relationshipId == 5) ?
         data.genderId = 2 : (data.relationshipId == 3 || data.relationshipId == 6) ?
-        data.genderId = 1 : data.genderId = 3;
+          data.genderId = 1 : data.genderId = 3;
       this.basicDetailsData = data;
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 6
         || this.basicDetailsData.relationshipId == 5 || this.basicDetailsData.relationshipId == 7) {
-        this.familyMemberType = {name: 'Individual', value: '1'};
+        this.familyMemberType = { name: 'Individual', value: '1' };
         this.invTypeCategory = '1';
         this.createIndividualForm(this.basicDetailsData);
       } else {
-        this.familyMemberType = {name: 'Minor', value: '2'};
+        this.familyMemberType = { name: 'Minor', value: '2' };
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData);
       }
@@ -137,7 +137,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         value: data.pan,
         disabled: this.basicDetailsData.userId ? true : false
       }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      username: [{value: data.userName, disabled: true}],
+      username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
       leadSource: [(data.leadSource) ? data.leadSource : ''],
@@ -160,7 +160,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       gGender: [(data.guardianData) ? String(data.genderId) : '1'],
       relationWithMinor: [(data.guardianData) ? String(data.guardianData.relationshipId) : ''],
       gEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
+      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
+      clientOwner: [''],
+      role: [(data.roleId) ? data.roleId : '', Validators.required],
     });
   }
 
@@ -179,7 +181,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         disabled: this.basicDetailsData.userId ? true : false
       }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
-      username: [{value: data.userName, disabled: true}],
+      username: [{ value: data.userName, disabled: true }],
       leadSource: [data.leadSource ? data.leadSource : ''],
       leadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
@@ -233,19 +235,19 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (event.value == '1') {
       this.invTaxStatus = '';
       this.mobileNumberFlag = 'Mobile number';
-      this.invTaxStatusList = this.enumService.getIndividualTaxList();
+      // this.invTaxStatusList = this.enumService.getIndividualTaxList();
       console.log(this.invTaxStatusList);
     } else if (event.value == '2' && (this.fieldFlag == 'familyMember' || this.fieldFlag == 'client')) {
       this.invTaxStatus = '';
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
-      this.invTaxStatusList = this.enumService.getMinorTaxList();
+      // this.invTaxStatusList = this.enumService.getMinorTaxList();
       console.log(this.invTaxStatusList);
     } else {
       this.invTaxStatus = '';
       this.createNonIndividualForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Company mobile number';
-      this.invTaxStatusList = this.enumService.getCorporateTaxList();
+      // this.invTaxStatusList = this.enumService.getCorporateTaxList();
       console.log(this.invTaxStatusList);
     }
     this.invTypeCategory = event.value;
@@ -348,7 +350,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.pan.value : this.nonIndividualForm.controls.comPan.value,
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
-        roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.role,
+        roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.role.value : this.nonIndividualForm.value.role,
         advisorOrClientRole: (this.sendRole) ? this.sendRole.advisorOrClientRole : this.basicDetailsData.advisorOrClientRole,
         genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.gender.value : null,
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ?
@@ -367,7 +369,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadRating != '') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadRating != '') ? this.nonIndividualForm.value.leadRating : null,
         companyStatus: ((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) ? this.nonIndividualForm.value.comStatus : null,
         leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leaadStatus != '') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadStatus != '') ? this.nonIndividualForm.value.leadStatus : null,
-        occupationId: (this.fieldFlag == 'client' && this.invTypeCategory != '3') ? this.basicDetailsData.occupationId : (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetailsData.occupationId : this.nonIndividualForm.controls.comOccupation.value,
+        occupationId: (this.fieldFlag == 'client' && this.invTypeCategory != '3') ? this.basicDetailsData.occupationId : (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetailsData.occupationId : (this.nonIndividualForm.controls.comOccupation.value != '') ? this.nonIndividualForm.controls.comOccupation.value : null,
         guardianData: gardianObj.name ? gardianObj : null
       };
       if (this.basicDetailsData.userId == null) {
@@ -385,6 +387,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
           (err) => {
+            this.disableBtn = false;
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar(err, 'Dismiss');
           }
@@ -555,6 +558,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         }
       },
       err => {
+        this.disableBtn = false;
         this.barButtonOptions.active = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
@@ -563,7 +567,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({state: 'close'}) : this.subInjectService.changeNewRightSliderState({
+    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({
       state: 'close',
       clientData: data
     });

@@ -125,6 +125,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     enableTracing: false,
+    onSameUrlNavigation: "reload",
     preloadingStrategy: SelectivePreloadingStrategyService  /*preloadingStrategy: PreloadAllModules*/
   })],
   exports: [RouterModule]
