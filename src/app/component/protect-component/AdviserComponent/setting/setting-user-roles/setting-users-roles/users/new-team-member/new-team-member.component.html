@@ -85,7 +85,8 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="roleId">
                         <mat-option value="">Select Role</mat-option>
-                        <mat-option *ngFor="let role of roles" [value]="role.roleMasterId">{{role.roleName}}</mat-option>
+                        <mat-option *ngFor="let role of roles" [value]="role.roleMasterId">{{role.roleName}}
+                        </mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -126,7 +127,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit"
-                (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button>
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit"
+                (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button> -->
+            <app-progress-button (btnClick)="save()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>

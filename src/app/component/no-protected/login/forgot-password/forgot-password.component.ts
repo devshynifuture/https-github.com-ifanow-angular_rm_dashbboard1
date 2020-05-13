@@ -136,6 +136,9 @@ export class ForgotPasswordComponent implements OnInit {
             this.eventService.openSnackBar('Please contact your advisor for more details');
           }
         }
+        else {
+          this.userName.setErrors({ incorrect: true });
+        }
       }
       ,
       err => {
@@ -144,7 +147,12 @@ export class ForgotPasswordComponent implements OnInit {
           this.userName.setErrors({ incorrect: true });
         }
         else {
-          this.eventService.openSnackBar(err.type, 'Dismiss');
+          if (err.type == undefined) {
+            this.userName.setErrors({ incorrect: true });
+          }
+          else {
+            this.eventService.openSnackBar(err.type, 'Dismiss');
+          }
         }
       }
     );

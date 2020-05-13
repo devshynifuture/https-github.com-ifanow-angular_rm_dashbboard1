@@ -27,7 +27,7 @@ export class NewTeamMemberComponent implements OnInit {
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Login to your account',
+    text: 'SEND INVITE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -186,9 +186,11 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
-    this.teamMemberFG.value['profile_pic'] = this.logoImg;
+    this.barButtonOptions.active = true;
+    this.teamMemberFG.value['profilePic'] = this.logoImg;
     const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
+      this.barButtonOptions.active = false;
       this.close(true);
       this.eventService.openSnackBar('Invitation sent successfully', "Dismiss");
     }, (err) => {
@@ -202,15 +204,16 @@ export class NewTeamMemberComponent implements OnInit {
     const dataObj = {
       id: this.data.mainData.id,
       roleId: this.teamMemberFG.controls.roleId.value,
-      profile_pic: this.logoImg
+      profilePic: this.logoImg
     };
-
+    this.barButtonOptions.active = true;
     this.settingsService.editTeamMember(dataObj).subscribe((res) => {
       this.close(true);
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar('Member data updated');
     }, (err) => {
       console.error(err);
-      this.barButtonOptions.active = true;
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar('Error occured.');
     });
   }
@@ -224,6 +227,8 @@ export class NewTeamMemberComponent implements OnInit {
     if (this.counter == 0) {
       this.isLoading = false;
       this.createForm();
+      (this.data.mainData.profilePicUrl) ? this.barButtonOptions.text = "SAVE" : this.barButtonOptions.text = "SEND INVITE";
+      this.logoImg = this.data.mainData.profilePicUrl;
       this.checkIfRoleExists();
     } else {
       this.isLoading = true;
@@ -233,7 +238,7 @@ export class NewTeamMemberComponent implements OnInit {
   checkIfRoleExists() {
     const teamMemberRoleId = this.teamMemberFG.get('roleId') as FormControl;
     const roleExist = this.roles.find((role) => {
-      if (role.id == teamMemberRoleId.value) {
+      if (role.roleMasterId == teamMemberRoleId.value) {
         return true;
       } else {
         return false;
