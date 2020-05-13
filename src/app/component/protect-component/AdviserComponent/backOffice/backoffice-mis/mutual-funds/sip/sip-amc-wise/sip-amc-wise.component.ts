@@ -467,7 +467,7 @@ export class SipAmcWiseComponent implements OnInit {
         this.investorWiseExcelSheet(index);
         break;
       case 'applicant-wise':
-        this.applicantWiseExcelReport(index, amcIndex);
+        this.applicantWiseExcelReport(index);
         break;
     }
 
@@ -481,7 +481,23 @@ export class SipAmcWiseComponent implements OnInit {
       applicantList: false
     });
   }
+  schemeWiseExcelReport(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.schemeList = [];
+      }
+    });
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: true,
+      schemeList: false,
+      investorList: false,
+      applicantList: false
+    });
+  }
   investorWiseExcelSheet(index) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
@@ -500,37 +516,21 @@ export class SipAmcWiseComponent implements OnInit {
     });
   }
 
-  schemeWiseExcelReport(index) {
+  applicantWiseExcelReport(index) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === index) {
         return;
       } else {
-        element.schemeList = [];
+        element.applicantList = [];
       }
     });
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
       amcList: true,
-      schemeList: false,
-      investorList: false,
+      schemeList: true,
+      investorList: true,
       applicantList: false
     });
-  }
-
-  applicantWiseExcelReport(index, amcIndex) {
-    let applicantList = this.arrayOfExcelData[amcIndex].schemeList[index].applicantList;
-    let newArray = [];
-    applicantList.forEach(element => {
-      newArray.push({
-        field1: element.name,
-        field2: element.balanceUnit,
-        field3: element.folioNumber,
-        field4: element.totalAum,
-        field5: element.weightInPerc
-      })
-    });
-
-    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'AMC wise MIS report');
   }
 }
