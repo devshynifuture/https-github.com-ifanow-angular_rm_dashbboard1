@@ -4,10 +4,10 @@
             <div class="col-md-6 pl-0">
                 <h4 class="m-0 text-black roboto pt-8">
                     <mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
-                    Mutual fund {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}
+                    Mutual fund {{(this.viewMode) ? this.viewMode :'Transactions'}}
                 </h4>
             </div>
-            <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (customDataSource.data.length > 0 || dataSource.data.length > 0)">
+            <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)">
                 <div class="pdfClass">
                     <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
                     <mat-menu #menu5="matMenu">
