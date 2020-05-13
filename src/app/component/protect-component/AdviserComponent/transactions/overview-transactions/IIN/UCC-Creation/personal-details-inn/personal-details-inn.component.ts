@@ -30,7 +30,6 @@ export class PersonalDetailsInnComponent implements OnInit {
     type: 'first',
     data: ''
   };
-  replaceObj: { panNumber: any; clientName: any; maidenName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType;
   changedValue: string;
   doneData: any;
@@ -160,7 +159,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
       // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
-      motherName: [!data ? '' : data.motherName, [Validators.required]],
+      motherName: [!data ? '' : data.motherName],
       dob: [!data ? '' : (data.dob)],
       dateOfBirth: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       gender: [!data ? '1' : data.genderId ? data.genderId + '' : data.gender, [Validators.required]],

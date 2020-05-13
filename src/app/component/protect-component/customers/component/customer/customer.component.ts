@@ -12,8 +12,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-    //templateUrl: './profile-mobile.html',
-   //templateUrl: './transact-mob.html',
+  //templateUrl: './profile-mobile.html',
+  //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
@@ -28,16 +28,16 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   secondFormGroup: FormGroup;
   status = false;
   loading: boolean;
-  user:any;
+  user: any;
 
   constructor(
-    private router: Router, 
-    protected eventService: EventService, 
+    private router: Router,
+    protected eventService: EventService,
     protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService, 
+    protected dynamicComponentService: DynamicComponentService,
     private route: ActivatedRoute,
-    private authService: AuthService, 
-    private peopleService: PeopleService, 
+    private authService: AuthService,
+    private peopleService: PeopleService,
     private _formBuilder: FormBuilder
   ) {
     super(eventService, subinject, dynamicComponentService);

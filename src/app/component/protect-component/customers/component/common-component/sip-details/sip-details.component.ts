@@ -10,12 +10,14 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class SipDetailsComponent implements OnInit {
   inputData: any;
-  sipDetails=[];
+  isLoading: boolean;
+  sipDetails: any[];
 
   constructor(private subInjectService:SubscriptionInject,private custumService:CustomerService,private eventService:EventService) { }
   @Input()
   set data(data) {
     this.inputData = data;
+    this.isLoading = true;
     this.getSipDetails(this.inputData)
   }
 
@@ -31,11 +33,18 @@ export class SipDetailsComponent implements OnInit {
     this.custumService.getMfSipDetails(obj).subscribe(
       data => this.getSipDetailsResponse(data), (error) => {
         this.sipDetails = [];
+        this.isLoading = false;
       }
     );
   }
   getSipDetailsResponse(data){
-    this.sipDetails=data.sipMFList;
+    this.isLoading = false;
+    if(data){
+      this.sipDetails=data.sipMFList;
+    }else{
+      this.isLoading = false;
+      this.sipDetails = [];
+    }
   }
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });

@@ -480,7 +480,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="cvalue">
-                        <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br   textRight text-right  ">
+                        <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br rightText w-11 text-right  ">
                             Current value
                         </th>
                         <!-- <td mat-cell *matCellDef="let element" class="br text-right amt  ">
@@ -499,8 +499,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="camt">
-                        <th mat-sort-header="couponAmount" mat-header-cell *matHeaderCellDef class="br textRight text-right">
-                            Coupon <br> amount
+                        <th mat-sort-header="couponAmount" mat-header-cell *matHeaderCellDef class="br rightText w-11 text-right">
+                            Coupon amount
                         </th>
                         <!-- <td mat-cell *matCellDef="let element" class="br amt text-right">
                             <div class="bar" appFormatNumber> {{ element.couponAmount }} </div>
@@ -518,8 +518,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="amt">
-                        <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br textRight">
-                            Amount <br> invested
+                        <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br rightText w-11">
+                            Amount invested
                         </th>
                         <!-- <td mat-cell *matCellDef="let element" class="br amt text-right">
                             <div class="bar" appFormatNumber> {{ element.amountInvested }} </div>
@@ -544,7 +544,7 @@
                         <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                     </ng-container>
                     <ng-container matColumnDef="rate">
-                        <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right">
+                        <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br  ">
                             Coupon rate</th>
                         <td mat-cell *matCellDef="let element" class="br amt text-right ">
                             <div class="bar"> {{element.couponRate}} {{!isLoading? "%" : ""}}</div>
@@ -552,7 +552,7 @@
                         <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                     </ng-container>
                     <ng-container matColumnDef="mvalue">
-                        <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                        <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br   text-right">
                             Maturity value
                         </th>
                         <td mat-cell *matCellDef="let element" class="br  text-right amt">
@@ -564,7 +564,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="tenure">
-                        <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br textRight text-right">
+                        <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br textLeft text-right">
                             Maturity date
                         </th>
                         <td mat-cell *matCellDef="let element" class="br amt text-right">

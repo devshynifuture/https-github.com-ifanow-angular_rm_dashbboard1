@@ -20,6 +20,7 @@ import { SignupTeamMemberComponent } from './signup-team-member/signup-team-memb
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { SignupProgressBarComponent } from './signup-progress-bar/signup-progress-bar.component';
 import { SupportLoginComponent } from './support-login/support-login.component';
+import { SetTeamMemberPasswordComponent } from './set-team-member-password/set-team-member-password.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { SupportLoginComponent } from './support-login/support-login.component';
     TermsConditionsComponent,
     SignupProgressBarComponent,
     SupportLoginComponent,
+    SetTeamMemberPasswordComponent,
     // OtpInputComponent,
   ],
   imports: [

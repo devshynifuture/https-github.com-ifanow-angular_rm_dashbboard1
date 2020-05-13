@@ -4,6 +4,7 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { AuthService } from '../../../auth-service/authService';
 import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,10 @@ export class LoginService {
     return this.http.putEncoded(apiConfig.USER + appConfig.CREATE_TEAM_MEMBER, data);
   }
 
+  getTeamMemberInfo(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_TEAM_MEMBER_INFO, data, 1);
+  }
+
   verifyOtp(data) {
     const url = 'https://api.msg91.com/api/v5/otp/verify?mobile=' + data.mobileNo +
       '&otp=' + data.otp + '&authkey=' + '299688ARWCWf9dMo5daa04d8';
@@ -61,7 +66,7 @@ export class LoginService {
 
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
-    if (userData.userType == 1) {
+    if (userData.userType == 1 || userData.userType == 8) {
       authService.setUserInfo(userData);
       router.navigate(['admin', 'subscription', 'dashboard']);
     } else if (userData.isRmLogin) {
