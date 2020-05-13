@@ -4,6 +4,7 @@ import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
 @Component({
   selector: 'app-mf-capital-detailed',
@@ -43,10 +44,9 @@ export class MfCapitalDetailedComponent implements OnInit {
   constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
-   responseData:any;
-   changedData:any;
-  //  @Input() responseData; 
-  //  @Input() changedData;
+   @Input() responseData; 
+   @Input() changedData;
+   @Input() mutualFund;
   ngOnInit() {
     this.isLoading =true;
     setTimeout(() => {
@@ -84,7 +84,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       let catObj = this.MfServiceService.categoryFilter(data, 'category');
       Object.keys(catObj).map(key => {
         if(catObj[key] != 'DEBT'){
-          this.dataSource =  new MatTableDataSource(this.getFilterData(catObj[key], key));
+          this.dataSource =  new MatTableDataSource(this.getFilterData(catObj[key], 'EQUITY'));
           // equityData = this.getFilterData(catObj[key], key);
         }
       });
@@ -110,14 +110,14 @@ export class MfCapitalDetailedComponent implements OnInit {
       componentName: RightFilterComponent
     };
   fragmentData.data = {
-    // name: 'CAPITAL GAIN REPORT',
-    // mfData: this.mutualFund,
-    // folioWise: this.mutualFund.mutualFundList,
-    // schemeWise: this.mutualFund.schemeWise,
-    // familyMember: this.mutualFund.family_member_list,
-    // category: this.mutualFund.mutualFundCategoryMastersList,
-    // transactionView: this.displayedColumns,
-    // capitalGainData:this.objSendToDetailedCapital,
+    name: 'CAPITAL GAIN REPORT',
+    mfData: this.mutualFund,
+    folioWise: this.mutualFund.mutualFundList,
+    schemeWise: this.mutualFund.schemeWise,
+    familyMember: this.mutualFund.family_member_list,
+    category: this.mutualFund.mutualFundCategoryMastersList,
+    transactionView: this.displayedColumns,
+    capitalGainData:this.objSendToDetailedCapital,
   };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -152,22 +152,22 @@ export class MfCapitalDetailedComponent implements OnInit {
     if(data){
 
       let filteredArray = [];    
-      let totalValue: any = {};
+      let totalValue: any ={};
       let categoryWiseTotal:any ={};
       let mfList = this.MfServiceService.filter(data, 'mutualFund');
       mfList.forEach(element => {
-        const obj={
+        const startObj={
           schemeName:element.schemeName,
           folioNumber:element.folioNumber,
           ownerName:element.ownerName,
         }
-        filteredArray.push(obj);
         let totalObj: any = {};
-        if(element.redemptionTransactions){
+        if((element.redemptionTransactions) ? (element.redemptionTransactions.length > 0) : element.redemptionTransactions){
           element.redemptionTransactions.forEach(obj => {
             let financialyear = this.MfServiceService.getYearFromDate(obj.transactionDate)
             if(financialyear >= this.fromDateYear && financialyear<= this.toDateYear){
               if(obj.purchaceAgainstRedemptionTransactions || (obj.purchaceAgainstRedemptionTransactions) ? obj.purchaceAgainstRedemptionTransactions.length > 0 :obj.purchaceAgainstRedemptionTransactions){
+                filteredArray.push(startObj);
                 obj.purchaceAgainstRedemptionTransactions.forEach((ele,ind) => {
                   totalObj = this.getFilteredValues(ele,category);
                   ele.stGain = totalObj.stGain;
@@ -190,51 +190,53 @@ export class MfCapitalDetailedComponent implements OnInit {
                   totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(ele), totalValue, {totalAmt: true});
       
               });
-              }else{
-                obj.purchaceAgainstRedemptionTransactions =[];
-                const array={
-                  redeemTransactionDate : (obj.transactionDate) ? obj.transactionDate : 0,
-                  transactionType : (obj.fwTransactionType) ? obj.fwTransactionType : 0,
-                  redeemAmount : (obj.amount) ? obj.amount : 0,
-                  redeemStt :  (obj.stt) ? obj.stt:0,
-                  redeemUnit :(obj.unit) ? obj.unit : 0,
-                  redeemRate : (obj.purchasePrice) ? obj.purchasePrice :0,
-                  stGain :0,
-                  ltGain :0,
-                  stLoss :0,
-                  ltLoss :0,
-                  indexGain :0,
-                  indexLoss :0,
-                  transactionDate:'',
-                  amount:0,
-                  unit:0,
-                  purchasePrice:0,
-                  days:0
-                }
-                filteredArray.push(array)
-                totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(array), totalValue, {totalAmt: true});
               }
+              // }else{
+              //   obj.purchaceAgainstRedemptionTransactions =[];
+              //   const array={
+              //     redeemTransactionDate : (obj.transactionDate) ? obj.transactionDate : 0,
+              //     transactionType : (obj.fwTransactionType) ? obj.fwTransactionType : 0,
+              //     redeemAmount : (obj.amount) ? obj.amount : 0,
+              //     redeemStt :  (obj.stt) ? obj.stt:0,
+              //     redeemUnit :(obj.unit) ? obj.unit : 0,
+              //     redeemRate : (obj.purchasePrice) ? obj.purchasePrice :0,
+              //     stGain :0,
+              //     ltGain :0,
+              //     stLoss :0,
+              //     ltLoss :0,
+              //     indexGain :0,
+              //     indexLoss :0,
+              //     transactionDate:'',
+              //     amount:0,
+              //     unit:0,
+              //     purchasePrice:0,
+              //     days:0
+              //   }
+              //   filteredArray.push(array)
+              //   totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(array), totalValue, {totalAmt: true});
+              // }
             }
     
           });
-            this.getFinalTotalValue(totalValue);
-            filteredArray.push(totalValue)
-            let filterr ={
-              totalAmt:'Total',
-              totalAmount :totalValue.totalAmount,
-              totalStt: totalValue.totalStt,
-              purchaseAmount:totalValue.purchaseAmount,
-              totalStGain  :totalValue.totalStGain,
-              totalLtGain :totalValue.totalLtGain,
-              totalStLoss  :totalValue.totalStLoss,
-              totalLtLoss  :totalValue.totalLtLoss,
-              totalIndexGain :totalValue.totalIndexGain,
-              totalIndexLoss :totalValue.totalIndexLoss
+            if(Object.keys(totalValue).length != 0){
+              this.getFinalTotalValue(totalValue);
+              filteredArray.push(totalValue)
+              let filterr ={
+                totalAmt:'Total',
+                totalAmount :totalValue.totalAmount,
+                totalStt: totalValue.totalStt,
+                purchaseAmount:totalValue.purchaseAmount,
+                totalStGain  :totalValue.totalStGain,
+                totalLtGain :totalValue.totalLtGain,
+                totalStLoss  :totalValue.totalStLoss,
+                totalLtLoss  :totalValue.totalLtLoss,
+                totalIndexGain :totalValue.totalIndexGain,
+                totalIndexLoss :totalValue.totalIndexLoss
+              }
+              categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
+              totalValue = {};
             }
-           categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
-            totalValue= {};
-        } else{
-          filteredArray =[];
+
         }
       });
       (category == 'DEBT') ? this.debtObj =categoryWiseTotal : this.equityObj =categoryWiseTotal;
@@ -271,8 +273,8 @@ export class MfCapitalDetailedComponent implements OnInit {
     
     let obj = {
       stGain: (stGain) ? stGain : 0,
-      ltGain: (stLoss) ? stLoss : 0,
-      stLoss: (ltGain) ? ltGain :0,
+      ltGain: (ltGain) ? ltGain : 0,
+      stLoss: (stLoss) ? stLoss :0,
       ltLoss: (ltLoss) ? ltLoss : 0,
       indexGain: (indexGain) ? indexGain :0,
       indexLoss: (indexLoss) ? indexLoss :0
@@ -315,15 +317,15 @@ export class MfCapitalDetailedComponent implements OnInit {
   }
   getFinalTotalValue(data) {
 
-    this.total_stGain += (data.totalStGain) ? data.totalStGain : 0;
-    this.total_ltGain += (data.totalLtGain) ? data.totalLtGain : 0;
-    this.total_stLoss += (data.totalStLoss) ? data.totalStLoss : 0;
-    this.total_ltLoss += (data.totalLtLoss) ? data.totalLtLoss : 0;
-    this.total_indexGain += (data.totalIndexGain) ? data.totalIndexGain : 0;
-    this.total_indexLoss += (data.totalIndexLoss) ? data.totalIndexLoss : 0;
-    this.purchaseAmount += (data.purchaseAmount) ? data.purchaseAmount : 0;
-    this.redeemAmount += (data.totalAmount) ? data.totalAmount : 0;
-    this.total_stt +=(data.totalStt) ? data.totalStt : 0;
+    this.total_stGain += (data) ? data.totalStGain : 0;
+    this.total_ltGain += (data) ? data.totalLtGain : 0;
+    this.total_stLoss += (data) ? data.totalStLoss : 0;
+    this.total_ltLoss += (data) ? data.totalLtLoss : 0;
+    this.total_indexGain += (data) ? data.totalIndexGain : 0;
+    this.total_indexLoss += (data) ? data.totalIndexLoss : 0;
+    this.purchaseAmount += (data) ? data.purchaseAmount : 0;
+    this.redeemAmount += (data) ? data.totalAmount : 0;
+    this.total_stt +=(data) ? data.totalStt : 0;
   }
   getDividendSummaryData(data) {
     if(data){
