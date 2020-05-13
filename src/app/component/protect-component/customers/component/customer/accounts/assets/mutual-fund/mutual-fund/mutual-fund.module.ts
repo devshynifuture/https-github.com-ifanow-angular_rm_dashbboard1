@@ -18,6 +18,13 @@ import { MutualFundRoutingModule } from './mutual-fund-routing.module';
 
 @NgModule({
     declarations: [
+        MutualFundComponent,
+        MutualFundsCapitalComponent,
+        MutualFundOverviewComponent,
+        MutualFundSummaryComponent,
+        MutualFundAllTransactionComponent,
+        MutualFundUnrealizedTranComponent,
+        MutualFundGoalLinkageComponent,
     ],
     imports: [
         CommonModule,
