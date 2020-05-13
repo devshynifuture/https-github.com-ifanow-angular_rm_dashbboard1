@@ -15,6 +15,28 @@
     float: right;
 }
 
+// ------------- new changes
+::ng-deep .rightTextHide .mat-sort-header-container {
+    display: block !important;
+    position: relative;
+}
+
+ ::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-arrow {
+    float: right;
+    opacity: 0 !important;
+    position: absolute;
+    right: 2px;
+    width: 100%;
+    height: auto;
+    min-width: 100%;
+    color: transparent;
+}
+
+ ::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-button {
+    float: right;
+    text-align: right;
+}
+
 // ------ new changes----
 ::ng-deep .rightTextHide .mat-sort-header-container {
     display: block !important;
