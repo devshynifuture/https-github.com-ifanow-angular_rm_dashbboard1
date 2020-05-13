@@ -27,8 +27,8 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoadingForDropDown">
                             <mat-option (onSelectionChange)="setAdvisorId(advisor)"
-                                *ngFor="let advisor of arrayOfAdvisorName" (click)="setAdvisorId(advisor)"
-                                [value]="advisor.name" [matTooltip]="advisor.name" matTooltipPosition="after">
+                                *ngFor="let advisor of arrayOfAdvisorName" [value]="advisor.name"
+                                [matTooltip]="advisor.name" matTooltipPosition="after">
                                 <span>
                                     <b>
                                         {{advisor.name}}
@@ -137,9 +137,9 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd243Active">243 Active
+                            <mat-checkbox class="d-block" formControlName="mfsd243">243 Active
                             </mat-checkbox>
-                            <mat-checkbox class="d-block" formControlName="mfsd231Ceased">231 Ceased
+                            <mat-checkbox class="d-block" formControlName="mfsd231">231 Ceased
                             </mat-checkbox>
                         </div>
                     </div>
