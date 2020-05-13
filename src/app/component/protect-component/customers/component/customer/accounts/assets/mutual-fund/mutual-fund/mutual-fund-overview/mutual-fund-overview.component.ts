@@ -155,6 +155,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getMutualFundResponse(data) {
     if (data) {
+      this.mutualFund = data;
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
 
