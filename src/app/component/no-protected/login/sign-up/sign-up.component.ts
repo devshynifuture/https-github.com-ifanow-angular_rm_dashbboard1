@@ -66,6 +66,11 @@ export class SignUpComponent implements OnInit {
   resetForm() {
     this.signUpForm.reset();
   }
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   createAccount() {
     if (this.typeOfRegister == '2') {
       this.signUpForm.get('companyName').setValidators([Validators.required]);
