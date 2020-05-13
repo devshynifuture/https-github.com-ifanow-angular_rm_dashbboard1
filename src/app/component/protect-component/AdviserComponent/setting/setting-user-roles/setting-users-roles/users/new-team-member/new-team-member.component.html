@@ -85,7 +85,7 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="roleId">
                         <mat-option value="">Select Role</mat-option>
-                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
+                        <mat-option *ngFor="let role of roles" [value]="role.roleMasterId">{{role.roleName}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
