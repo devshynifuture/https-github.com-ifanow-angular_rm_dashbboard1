@@ -370,9 +370,9 @@
                                             more_vert
                                         </i>
                                         <mat-menu #menu25="matMenu">
-                                            <button mat-menu-item >Edit
+                                            <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
                                                 Transaction</button>
-                                            <button mat-menu-item >Delete Transaction</button>
+                                            <button mat-menu-item (click)="deleteModal('TRANSACTION', null)">Delete Transaction</button>
             
                                         </mat-menu>
                                     </div>

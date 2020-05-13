@@ -2,7 +2,7 @@ import { AuthService } from './../../../../../../../../../../auth-service/authSe
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
@@ -11,6 +11,8 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -46,7 +48,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   viewMode: string;
   reponseData: any;
 
-  constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
+  constructor( public dialog: MatDialog,private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
   mutualFund;
@@ -237,6 +239,78 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
   }
 
+  openMutualEditFund(flag, element) {
+    this.mfService.getMutualFundData()
+      .subscribe(res => {
+        const fragmentData = {
+          flag: 'editTransaction',
+          data: { family_member_list: res['family_member_list'], flag, ...element },
+          id: 1,
+          state: 'open',
+          componentName: MFSchemeLevelHoldingsComponent
+        };
+        const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+          sideBarData => {
+            console.log('this is sidebardata in subs subs : ', sideBarData);
+            if (UtilService.isDialogClose(sideBarData)) {
+              if (UtilService.isRefreshRequired(sideBarData)) {
+                this.getMutualFund();
+              }
+              console.log('this is sidebardata in subs subs 2: ', sideBarData);
+              rightSideDataSub.unsubscribe();
+            }
+          }
+        );
+      })
+
+  }
+  deleteModal(value, element) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        // this.subService.deleteInvoices(this.list).subscribe(
+        //   data => {
+        //     this.dataCount = 0;
+        //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
+        //     dialogRef.close(this.list);
+
+        //   },
+        //   error => this.eventService.showErrorMessage(error)
+        // );
+        // dialogRef.close(listIndex);
+        if (value === 'mutualFund') {
+          const obj = { id: element.id }
+          this.custumService.postMutualFundDelete(obj)
+            .subscribe(res => {
+              if (res) {
+                this.eventService.openSnackBar('Deleted Successfully', "DISMISS");
+              }
+            })
+        }
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',
