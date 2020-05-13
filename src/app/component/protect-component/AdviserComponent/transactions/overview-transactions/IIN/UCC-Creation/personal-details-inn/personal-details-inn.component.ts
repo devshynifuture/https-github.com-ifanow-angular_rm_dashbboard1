@@ -18,6 +18,7 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 })
 export class PersonalDetailsInnComponent implements OnInit {
 
+  thirdHolderButtonLabel = '+ Add Holder';
   personalDetails: any;
   holdingList: any;
   inputData: any;
@@ -232,6 +233,7 @@ export class PersonalDetailsInnComponent implements OnInit {
         return;
       } else {
         if (this.savePersonalDetails(value)) {
+          this.thirdHolderButtonLabel = 'Third Holder';
           if (this.thirdHolder && this.thirdHolder.panNumber) {
             this.holder.type = value;
             this.personalDetails.setValue(this.thirdHolder);

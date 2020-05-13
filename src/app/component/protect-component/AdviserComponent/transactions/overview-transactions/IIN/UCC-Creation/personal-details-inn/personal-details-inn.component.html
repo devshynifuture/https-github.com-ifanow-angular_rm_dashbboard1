@@ -196,8 +196,8 @@
     <a (click)="SendToForm('first',false);" class="activeLink c-p"> First holder </a>
     <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Second
       holder </a>
-    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Third
-      holder </a>
+    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'"
+       class="activeLink c-p"> {{thirdHolderButtonLabel}}</a>
   </div>
 
   <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
