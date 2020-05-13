@@ -100,16 +100,6 @@ export class BankDetailsIINComponent implements OnInit {
     this.changedValue = '';
     this.bank = [];
     this.sendObj = [];
-    this.temp = [];
-    if (this.holdingList.firstHolder) {
-      this.temp.push(this.holdingList.firstHolder);
-      this.temp.push(this.holdingList.secondHolder);
-      this.temp.push(this.holdingList.thirdHolder);
-    } else {
-      this.temp.push(this.holdingList.holderList[0]);
-      this.temp.push(this.holdingList.holderList[1]);
-      this.temp.push(this.holdingList.holderList[2]);
-    }
   }
 
   close() {
@@ -449,10 +439,7 @@ export class BankDetailsIINComponent implements OnInit {
         clientId: this.generalDetails.clientId,
         advisorId: this.generalDetails.advisorId,
         paymentMode: this.bankDetailsForm.controls.paymentMode.value,
-        holderList: this.temp,
         bankDetailList: this.bank,
-        nomineeList: this.inputData.nomineeList,
-        fatcaDetail: this.inputData.fatcaDetail,
         generalDetails: this.generalDetails,
         clientData: this.clientData
       };
