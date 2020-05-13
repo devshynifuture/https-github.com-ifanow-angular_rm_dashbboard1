@@ -194,9 +194,8 @@ export class MutualFundsCapitalComponent implements OnInit {
       });
       let debtData = this.filterCategoryWise(catObj['DEBT'], 'DEBT');
       // let equityData = this.filterCategoryWise(catObj['EQUITY'], 'EQUITY');
-
-      this.dataSource = new MatTableDataSource(debtData);
-      this.dataSource1 = new MatTableDataSource(equityData);
+      this.dataSource = new MatTableDataSource(equityData);
+      this.dataSource1 = new MatTableDataSource(debtData);
       let dividenedSummaryData = this.getDividendSummaryData(this.categoryData);
       this.dataSource2 = new MatTableDataSource(dividenedSummaryData);
       this.objSendToDetailedCapital = {

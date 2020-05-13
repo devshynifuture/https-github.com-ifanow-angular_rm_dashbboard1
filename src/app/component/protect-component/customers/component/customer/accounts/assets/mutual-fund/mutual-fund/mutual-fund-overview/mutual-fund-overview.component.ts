@@ -59,6 +59,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   @Output() changeInput = new EventEmitter();
   total_net_Gain: number;
+  cashFlowXirr: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
@@ -66,10 +67,14 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
-
-  mutualFund;
-
+  @Input() mutualFund;
+  @Input() viewMode;
   ngOnInit() {
+    this.MfServiceService.getViewMode()
+    .subscribe(res => {
+      this.viewMode = res;
+    })
+    console.log(this.viewMode)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getMutualFundData();
@@ -162,6 +167,7 @@ export class MutualFundOverviewComponent implements OnInit {
       let filterData = this.MfServiceService.doFiltering(data);
       this.asyncFilter(filterData.mutualFundList, filterData.mutualFundCategoryMastersList)
       this.mfData = data;
+      this.cashFlowXirr=(this.mfData.mutualFundCategoryMastersList.length > 0) ? this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr : 0;
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment)
       console.log(data);
       this.dataSource4 = new MatTableDataSource(data.mutualFundCategoryMastersList); // category wise allocation
@@ -233,7 +239,7 @@ export class MutualFundOverviewComponent implements OnInit {
         { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.mfData.total_net_investment) ? this.mfData.total_net_investment : 0 },
         { data: 'g. Market Value', amts: (this.mfData.total_market_value) ? this.mfData.total_market_value : 0 },
         { data: 'h. Net Gain (g-f)', amts: (this.total_net_Gain) ? this.total_net_Gain : 0 },
-        { data: 'i. Realized XIRR (All Transactions)', amts: (this.mfData.total_xirr) ? this.mfData.total_xirr : 0 },
+        { data: 'i. Realized XIRR (All Transactions)', amts: (this.cashFlowXirr) ? this.cashFlowXirr : 0 },
 
       ];
     } else {

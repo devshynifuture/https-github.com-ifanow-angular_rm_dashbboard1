@@ -15,6 +15,7 @@ export class MfServiceService {
   private mutualFundDataSource = new BehaviorSubject('');
   private updateTransactionAfterAdd = new BehaviorSubject('');
   private showMutualFundDropdown = new BehaviorSubject('');
+  private viewMode = new BehaviorSubject('');
 
   getPersonalDetails(data) {
     const obj = {
@@ -388,5 +389,12 @@ export class MfServiceService {
 
   getMutualFundShowDropdown() {
     return this.showMutualFundDropdown.asObservable();
+  }
+  changeViewMode(value) {
+    this.viewMode.next(value);
+  }
+
+  getViewMode() {
+    return this.viewMode.asObservable();
   }
 }
