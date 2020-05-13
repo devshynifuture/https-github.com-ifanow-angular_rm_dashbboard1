@@ -47,9 +47,10 @@ export class BankDetailsIINComponent implements OnInit {
       this.generalDetails = data.generalDetails;
       this.getdataForm(this.firstHolderBank);
     } else {
-      if (this.clientData) {
-        this.getBankList(this.clientData, !(!!this.firstHolderBank));
-      }
+
+    }
+    if (this.clientData) {
+      this.getBankList(this.clientData, !(!!this.firstHolderBank));
     }
     console.log('#######', this.holdingList);
   }
@@ -341,7 +342,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
-    this.bankDetailsForm.controls.accountType.setValue(value.accountType);
+    this.bankDetailsForm.controls.accountType.setValue(value.accountType == '2' || value.accountType == 'CA' ? 'CA' : 'SB');
     this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
