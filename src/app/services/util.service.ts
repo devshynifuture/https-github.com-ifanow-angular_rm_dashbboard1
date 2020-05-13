@@ -401,6 +401,9 @@ export class ValidatorType {
   static PAN = new RegExp(/[A-Za-z]{5}\d{4}[A-Za-z]{1}/);
   static ADHAAR = new RegExp(/^[0-9]{12,}$/);
   static ALPHA_NUMERIC_WITH_SPEC_CHAR = new RegExp(/^[ A-Za-z0-9_@./#&+-]*$/);
+  static PASSPORT = new RegExp(/^[A-Z]{1}[0-9]{7}$/);
+  // static DRIVING_LICENCE = new RegExp(/^(?[A-Z]{2})(?\d{2})(?\d{4})(?\d{7})$/);
+  static VOTER_ID = new RegExp(/^([a-zA-Z]){3}([0-9]){7}?$/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions

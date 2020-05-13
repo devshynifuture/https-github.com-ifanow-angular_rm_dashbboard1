@@ -31,7 +31,6 @@ export class SubmitReviewInnComponent implements OnInit {
   tokenRes: any;
   fileName: string;
   file: any;
-  uploadSttus: any;
   toSendObjHolderList: any;
   toSendObjBankList: any;
   toSendObjNomineeList: any;
@@ -197,10 +196,18 @@ export class SubmitReviewInnComponent implements OnInit {
     this.allData.bankDetailList = this.toSendObjBankList;
     this.allData.nomineeList = this.toSendObjNomineeList;
     this.inputData.clientData = this.clientData;
+
+    const firstHolder = this.allData.holderList[0];
+    if (this.allData.taxStatus == '02') {
+      firstHolder.guardianName = firstHolder.fatherName;
+      firstHolder.guardianPan = firstHolder.panNumber;
+      firstHolder.panNumber = '';
+      firstHolder.fatherName = '';
+    }
     const obj1 = {
       ownerName: this.allData.ownerName,
       holdingType: this.allData.holdingType,
-      taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
+      taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : '01',
       holderList: this.toSendObjHolderList,
       bankDetailList: this.toSendObjBankList,
       nomineeList: this.toSendObjNomineeList,

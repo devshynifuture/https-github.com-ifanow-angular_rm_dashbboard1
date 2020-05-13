@@ -40,7 +40,7 @@ export class IinUccCreationComponent implements OnInit {
 
   ngOnInit() {
     this.getIINUCCRegistration();
-    this.getdataForm('');
+    this.getDataForm('');
     this.getClients();
     this.nomineesListFM = this.generalDetails.controls.ownerName.valueChanges
       .pipe(
@@ -73,12 +73,23 @@ export class IinUccCreationComponent implements OnInit {
     this.closeRightSlider('');
   }
 
-  getdataForm(data) {
+  getDataForm(data) {
 
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
       taxStatus: [(!data) ? '' : data.ownerName, [Validators.required]],
+    });
+    this.generalDetails.controls.holdingNature.valueChanges.subscribe((newValue) => {
+      if (newValue != 'SI') {
+        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}];
+        this.generalDetails.controls.taxStatus.setValue('01');
+      } else {
+        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}, {
+          taxStatusDesc: 'On behalf of minor',
+          taxStatusCode: '02'
+        }];
+      }
     });
   }
 
