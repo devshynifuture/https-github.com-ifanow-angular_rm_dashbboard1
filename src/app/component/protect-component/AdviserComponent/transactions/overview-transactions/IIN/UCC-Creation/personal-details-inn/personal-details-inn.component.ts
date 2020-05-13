@@ -30,7 +30,6 @@ export class PersonalDetailsInnComponent implements OnInit {
     type: 'first',
     data: ''
   };
-  replaceObj: { panNumber: any; clientName: any; maidenName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType;
   changedValue: string;
   doneData: any;
