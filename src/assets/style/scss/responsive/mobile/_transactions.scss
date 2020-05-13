@@ -7,6 +7,16 @@
     color: #FFFFFF;
     height: 40px !important;
   }
+   .upload-pan-mob{
+      height: 48px !important;
+      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 
+      0px 3px 4px rgba(0, 0, 0, 0.12), 
+      0px 2px 4px rgba(0, 0, 0, 0.14) !important;
+
+    }
+   // .upload-pan-mob.mat-stroked-button:not([class*=mat-elevation-z]){
+   //  box-shadow: none;
+   // }
   .mob-kyc-active{
    width: 18px;
     height: 18px;
@@ -416,13 +426,7 @@
     input.mat-input-element{
       background-color:#fff;
     }
-    .upload-pan-mob{
-      height: 48px !important;
-      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 
-      0px 3px 4px rgba(0, 0, 0, 0.12), 
-      0px 2px 4px rgba(0, 0, 0, 0.14);
-
-    }
+   
     .mob-proccess-fixed{
       background: #FAFAFA;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 
