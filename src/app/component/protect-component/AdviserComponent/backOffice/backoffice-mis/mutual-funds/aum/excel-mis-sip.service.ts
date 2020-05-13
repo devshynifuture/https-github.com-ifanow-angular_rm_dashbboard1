@@ -124,7 +124,7 @@ export class ExcelMisSipService {
                     if (catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
-                                currentRowPos = currentRowPos + arrayOfExcelData.length + 1;
+                                currentRowPos = currentRowPos + index1 + 2;
 
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];

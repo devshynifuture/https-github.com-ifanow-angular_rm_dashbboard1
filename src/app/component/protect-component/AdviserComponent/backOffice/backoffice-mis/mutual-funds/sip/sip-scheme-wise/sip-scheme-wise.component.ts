@@ -320,22 +320,6 @@ export class SipSchemeWiseComponent implements OnInit {
           });
         });
         break;
-        // iterable.forEach((element, index1) => {
-        //   this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp]
-        //     .schemeList[index].applicantList.push({
-        //       name: element.name,	
-        //       schemeName: element.schemeName,	
-        //       folio	: element.folioNumber,
-        //       registeredDate: element.registeredDate,	
-        //       fromDate: element.from_date,	
-        //       toDate: element.to_date,	
-        //       toTriggerDay: element.toTriggerDay,	
-        //       frequency	: element.frequency,
-        //       amount: element.sipAmount,
-        //       weightInPerc: element.weightInPercentage
-        //     });
-        // });
-        // break;
     }
     console.log(this.arrayOfExcelData);
   }
