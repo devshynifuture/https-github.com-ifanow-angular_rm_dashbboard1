@@ -66,10 +66,6 @@ export class BankDetailsIINComponent implements OnInit {
   inputData: any;
   holdingList: any;
   bankDetailList: any;
-  holder = {
-    type: 'first',
-    data: ''
-  };
   obj1: any[];
   sendObj: any;
   contacts: any;
@@ -90,7 +86,7 @@ export class BankDetailsIINComponent implements OnInit {
   isIfsc = false;
   clientData: any;
   holderList: any;
-  formId: any;
+  formId: any = 'first';
   maxDate = new Date();
 
   pinInvalid = false;
@@ -369,48 +365,65 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
-    this.formId = value;
     if (value == 'first') {
-      this.saveBankDetails(value);
-      if (this.firstHolderBank) {
-        this.holder.type = value;
-        this.setValueFun(this.firstHolderBank);
-      } else {
+      if (this.saveBankDetails(this.formId)) {
+        this.formId = value;
+        if (this.firstHolderBank) {
+          this.setValueFun(this.firstHolderBank);
+        } else {
+          return;
+        }
+        this.formId = value;
+      } else if (this.formId == 'first') {
         return;
       }
     } else if (value == 'second') {
-      this.saveBankDetails(value);
-      if (this.secondHolderBank && this.secondHolderBank.bankName) {
-        this.holder.type = value;
-        this.setValueFun(this.secondHolderBank);
-      } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
-        this.secondHolderBank = this.bankList[1];
-        this.setValueFun(this.secondHolderBank);
+      if (this.saveBankDetails(this.formId)) {
+        if (this.secondHolderBank && this.secondHolderBank.bankName) {
+          this.setValueFun(this.secondHolderBank);
+        } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
+          this.secondHolderBank = this.bankList[1];
+          this.setValueFun(this.secondHolderBank);
+        } else {
+          this.reset();
+        }
+        this.formId = value;
+      } else if (this.formId == 'first') {
+        return;
       } else {
-        this.reset();
+        this.secondHolderBank.validated = false;
+        this.formId = value;
       }
     } else if (value == 'third') {
-      this.saveBankDetails(value);
-      if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
-        this.holder.type = value;
-        this.setValueFun(this.thirdHolderBank);
-      } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
-        this.thirdHolderBank = this.bankList[2];
-        this.setValueFun(this.thirdHolderBank);
+      if (this.saveBankDetails(this.formId)) {
+        if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
+          this.formId = value;
+          this.setValueFun(this.thirdHolderBank);
+        } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
+          this.thirdHolderBank = this.bankList[2];
+          this.setValueFun(this.thirdHolderBank);
+        } else {
+          this.reset();
+        }
+        this.formId = value;
+      } else if (this.formId == 'first') {
+        return;
       } else {
-        this.reset();
+        this.thirdHolderBank.validated = false;
+        this.formId = value;
       }
 
     } else {
       this.saveBankDetails(value);
     }
     this.obj1 = [];
-    this.firstHolderBank = (this.firstHolderBank) ? this.firstHolderBank : [];
-    this.secondHolderBank = (this.secondHolderBank) ? this.secondHolderBank : [];
-    this.thirdHolderBank = (this.thirdHolderBank) ? this.thirdHolderBank : [];
     this.obj1.push(this.firstHolderBank);
-    this.obj1.push(this.secondHolderBank);
-    this.obj1.push(this.thirdHolderBank);
+    if (this.secondHolderBank && this.secondHolderBank.validated) {
+      this.obj1.push(this.secondHolderBank);
+    }
+    if (this.thirdHolderBank && this.thirdHolderBank.validated) {
+      this.obj1.push(this.thirdHolderBank);
+    }
     if (flag == true) {
       this.doneData = true;
       console.log('contact details', this.obj1);
@@ -427,7 +440,6 @@ export class BankDetailsIINComponent implements OnInit {
         value = '';
 
       });
-      const temp1 = this.holdingList.generalDetails;
       this.sendObj = {
         ownerName: this.generalDetails.ownerName,
         holdingType: this.generalDetails.holdingNature,
@@ -484,8 +496,10 @@ export class BankDetailsIINComponent implements OnInit {
           this.bankDetailsForm.controls[element].markAsTouched();
         }
       }
+      return false;
     } else {
-      this.setEditHolder(this.holder.type, value);
+      this.setEditHolder(this.formId, value);
+      return true;
     }
   }
 
@@ -494,21 +508,23 @@ export class BankDetailsIINComponent implements OnInit {
       case 'first':
         this.getObj = this.setObj(this.bankDetailsForm.value, value);
         this.firstHolderBank = this.getObj;
-        this.holder.type = value;
+        this.firstHolderBank.validated = true;
+        this.formId = value;
         break;
 
       case 'second':
         this.getObj = this.setObj(this.bankDetailsForm.value, value);
         this.secondHolderBank = this.getObj;
-        this.holder.type = value;
+        this.secondHolderBank.validated = false;
+        this.formId = value;
         break;
 
       case 'third':
         this.getObj = this.setObj(this.bankDetailsForm.value, value);
         this.thirdHolderBank = this.getObj;
-        this.holder.type = value;
+        this.thirdHolderBank.validated = true;
+        this.formId = value;
         break;
-
     }
   }
 }
