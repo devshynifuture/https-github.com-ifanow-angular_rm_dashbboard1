@@ -188,9 +188,9 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
-      currentMarketValue: [!data.stocks ? '' : data.stocks[0].currentMarketValue, [Validators.required]],
-      valueAsOn: [!data.stocks ? '' : new Date(data.stocks[0].valueAsOn), [Validators.required]],
-      amtInvested: [!data.stocks ? '' : data.stocks[0].amountInvested, [Validators.required]],
+      currentMarketValue: [!data.stockList ? '' : data.stockList[0].currentMarketValue, [Validators.required]],
+      valueAsOn: [!data.stockList ? '' : new Date(data.stockList[0].valueAsOn), [Validators.required]],
+      amtInvested: [!data.stockList ? '' : data.stockList[0].amountInvested, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -252,7 +252,7 @@ addNewNominee(data) {
           "portfolioName": this.assetForm.get('portfolioName').value,
           "id": this.editApiData.id,
           "ownerList": this.assetForm.value.getCoOwnerName,
-          "stocks": [
+          "stockList": [
             {
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
@@ -275,7 +275,7 @@ addNewNominee(data) {
           "familyMemberId": this.familyMemberId,
           "ownerList": this.assetForm.value.getCoOwnerName,
           "portfolioName": this.assetForm.get("portfolioName").value,
-          "stocks": [
+          "stockList": [
             {
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,

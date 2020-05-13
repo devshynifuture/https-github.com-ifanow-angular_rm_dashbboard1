@@ -75,6 +75,13 @@ disabledMember(value, type) {
     ParamValue : value,
   //  disControl : type
   }
+
+  setTimeout(() => {
+    this.portfolioFieldData = {
+      familyMemberId: this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId
+    }
+  }, 500);
+
 }
 
 displayControler(con) {
@@ -238,9 +245,7 @@ addNewNominee(data) {
       });
     }
     this.familyMemberId = data.familyMemberId;
-    this.portfolioFieldData = {
-      familyMemberId: this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId
-    }
+    
     // this.ownerData = this.scipLevelTransactionForm.controls;
     this.scriptForm = { formData: this.scipLevelTransactionForm }
 
@@ -327,45 +332,45 @@ addNewNominee(data) {
       })
     }
     else {
-      if (this.editApiData) {
-        let finalStocks = [];
-        this.transactionArray.controls.forEach(element => {
-          let singleList =
-          {
-            "id": element.get('id').value,
-            "stockId": this.editApiData.id,
-            "holdingOrTransaction": 2,
-            "transactionTypeOrScripNameId": element.get('transactionType').value,
-            "quantity": element.get('quantity').value,
-            "holdingOrTransactionDate": element.get('date').value,
-            "investedOrTransactionAmount": element.get('transactionAmount').value
-          }
-          finalStocks.push(singleList);
-        })
-        let obj = {
-          "stocks": [
-            {
-              "transactionorHoldingSummaryList": finalStocks
-            }
-          ]
-        }
-        this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
-          data => {
-            console.log(data);
-            this.Close();
-          },
-          error => this.eventService.showErrorMessage(error)
-        )
-      }
-      else {
+      // if (this.editApiData) {
+      //   let finalStocks = [];
+      //   this.transactionArray.controls.forEach(element => {
+      //     let singleList =
+      //     {
+      //       "id": element.get('id').value,
+      //       "stockId": this.editApiData.id,
+      //       "holdingOrTransaction": 2,
+      //       "transactionTypeOrScripNameId": element.get('transactionType').value,
+      //       "quantity": element.get('quantity').value,
+      //       "holdingOrTransactionDate": element.get('date').value,
+      //       "investedOrTransactionAmount": element.get('transactionAmount').value
+      //     }
+      //     finalStocks.push(singleList);
+      //   })
+      //   let obj = {
+      //     "stocks": [
+      //       {
+      //         "transactionorHoldingSummaryList": finalStocks
+      //       }
+      //     ]
+      //   }
+      //   this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+      //     data => {
+      //       console.log(data);
+      //       this.Close();
+      //     },
+      //     error => this.eventService.showErrorMessage(error)
+      //   )
+      // }
+      // else {
         let finalStocks = [];
         this.transactionArray.controls.forEach(element => {
           let obj = {
             "valueAsOn": null,
             "currentMarketValue": 0,
             "amountInvested": 0,
-            "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
-            "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
+            "scripNameId": this.scripData.id,
+            // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
             "transactionorHoldingSummaryList": [
               {
@@ -387,10 +392,19 @@ addNewNominee(data) {
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
           "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
-          "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
+          "portfolioName": this.portfolioData.portfolioName,
           "stockList": finalStocks
         }
         console.log(obj)
+      if (this.editApiData) {
+        this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+          data => {
+            console.log(data);
+            this.Close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      }else{
         this.cusService.addAssetStocks(obj).subscribe(
           data => {
             console.log(data);
@@ -399,7 +413,13 @@ addNewNominee(data) {
           error => this.eventService.showErrorMessage(error)
         )
       }
+
+      // }
     }
+  }
+  scripData:any;
+  getScript(data){
+    this.scripData = data;
   }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

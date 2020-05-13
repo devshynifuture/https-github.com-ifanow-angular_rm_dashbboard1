@@ -65,7 +65,7 @@ export class PortfolioFieldComponent implements OnInit {
     let checkOwnerId = false;
     this.familyWisePortfolio = [];
     data.forEach(element => {
-      if (element.familyMemberId == this.ownerIdData.familyMemberId) {
+      if (element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId) {
         checkOwnerId = true;
         this.familyWisePortfolio.push(element)
       }

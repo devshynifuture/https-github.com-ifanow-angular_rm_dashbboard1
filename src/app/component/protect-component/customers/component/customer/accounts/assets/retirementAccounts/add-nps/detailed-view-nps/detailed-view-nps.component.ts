@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-detailed-view-nps',
@@ -9,11 +10,17 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 export class DetailedViewNpsComponent implements OnInit {
   npsData: any;
   isLoading = false;
+  bankList:any =[];
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, private enumService: EnumServiceService) {
   }
 
   ngOnInit() {
+    this.npsData
+
+    //link bank
+    this.bankList = this.enumService.getBank();
+    //link bank
   }
 
   @Input()
