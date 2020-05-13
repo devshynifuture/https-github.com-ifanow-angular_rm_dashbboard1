@@ -101,7 +101,7 @@
                                 <td colspan="6" class="innerTd one">
                                     <div class="d-block text-right" *ngIf="category.showCategory==false">
                                         <button mat-icon-button
-                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)">
+                                            (click)="exportToExcelSheet('scheme-wise', i, null)">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -232,18 +232,15 @@
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="6" class="innerTd three">
-                                                                    <div class="d-block text-right"
-                                                                        *ngIf="!scheme.showScheme">
                                                                         <div class="d-block text-right"
                                                                             *ngIf="subcategory.showSubCategory==false">
                                                                             <button mat-icon-button
-                                                                                (click)="exportToExcelSheet('applicant-wise', i, amcIndex)">
+                                                                                (click)="exportToExcelSheet('applicant-wise', i, null)">
                                                                                 <mat-icon>
                                                                                     save_alt
                                                                                 </mat-icon>
                                                                             </button>
                                                                         </div>
-                                                                    </div>
                                                                     <table class=" mt-8 mb-8" id="table-low"
                                                                         *ngIf="inv.showInvestor==false">
                                                                         <thead>
