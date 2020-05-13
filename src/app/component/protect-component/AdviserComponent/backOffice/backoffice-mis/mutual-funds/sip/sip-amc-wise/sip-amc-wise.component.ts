@@ -274,14 +274,14 @@ export class SipAmcWiseComponent implements OnInit {
 
     switch (whichList) {
       case 'schemes':
-        this.arrayOfExcelData[this.selectedAmc].schemeList = [];
+        this.arrayOfExcelData[this.selectedCategory].schemeList = [];
         break;
       case 'investor':
-        this.arrayOfExcelData[this.selectedAmc].schemeList[clientIndex].investorList = [];
+        this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList = [];
         break;
-      // case 'applicant':
-      //   this.arrayOfExcelData[this.selectedAmc].schemeList[clientIndex].investorList[].applicantList = [];
-      //   break;
+      case 'applicant':
+        this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList[this.selectedClientIndex].applicantList = [];
+        break;
     }
   }
 
