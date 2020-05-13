@@ -201,6 +201,8 @@ export class NomineeDetailsIinComponent implements OnInit {
       data = {
         address: {}
       };
+    } else if (!data.address) {
+      data.address = {};
     }
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
