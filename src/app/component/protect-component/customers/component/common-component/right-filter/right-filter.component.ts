@@ -367,7 +367,7 @@ export class RightFilterComponent implements OnInit {
     });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    this.folio = filterData2;
+    this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     this.changeSelect('', '');
   }
@@ -411,7 +411,7 @@ export class RightFilterComponent implements OnInit {
     });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    this.folio = filterData2;
+    this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()]
     this.familyMember = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
     this.changeSelect('', '');
   }
@@ -465,7 +465,7 @@ export class RightFilterComponent implements OnInit {
   changeFilterAmc() {
     (this.amcObj.length == 0) ?  this.showError = null: (this.amcObj.length == 1 && !this.amcObj[0].selected) ? this.showError = 'amc' : this.showError = null;
     this.obj = this.mfService.filterScheme(this.amc);
-    this.folio = this.obj.filterData;
+    this.folio = [...new Map(this.obj.filterData.map(item => [item.folioNumber, item])).values()];
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.scheme = [...new Map(this.obj.filterData4.map(item => [item.id, item])).values()];
@@ -476,7 +476,7 @@ export class RightFilterComponent implements OnInit {
   changeFilterScheme() {
     (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
     this.obj = this.mfService.filterScheme(this.scheme);
-    this.folio = this.obj.filterData;
+    this.folio = [...new Map(this.obj.filterData.map(item => [item.folioNumber, item])).values()];
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];

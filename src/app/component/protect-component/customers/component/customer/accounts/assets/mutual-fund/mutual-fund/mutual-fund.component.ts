@@ -38,14 +38,16 @@ export class MutualFundComponent implements OnInit {
       .subscribe(res => {
         this.isShow = res;
       })
+
     this.viewMode = 'Overview Report';
-
-    this.getMutualFund();
-
+    this.mfService.changeViewMode(this.viewMode);
     this.advisorId = AuthService.getAdvisorId();
     // // this.advisorId = 2929;
 
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    this.getMutualFund();
+
+
 
   }
   // getPersonalDetails(data){
@@ -96,6 +98,8 @@ export class MutualFundComponent implements OnInit {
 
   changeViewMode(data) {
     this.viewMode = data;
+    this.mfService.changeViewMode(this.viewMode);
+    this.mfData.viewMode = data;
   }
 
   changeInput(value) {

@@ -47,13 +47,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
-  mutualFund;
+ @Input() mutualFund;
 
   ngOnInit() {
-    this.getMutualFund();
-  }
-
-  initValueOnInit() {
     if (this.mutualFund.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
@@ -61,6 +57,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
     }
+    console.log(this.mutualFund)  
+    // this.getMutualFund();
+  }
+
+  initValueOnInit() {
+
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
