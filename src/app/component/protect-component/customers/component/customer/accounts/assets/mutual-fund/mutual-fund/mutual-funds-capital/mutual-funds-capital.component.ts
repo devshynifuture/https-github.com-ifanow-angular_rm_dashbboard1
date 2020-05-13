@@ -79,6 +79,10 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getUserInfo().parentId
+    this.MfServiceService.getMfData()
+    .subscribe(res => {
+      this.mutualFund = res;
+    })
     this.fromDateYear = 2019;
     this.toDateYear = 2020;
     this.grandFatheringEffect = true;
@@ -127,7 +131,10 @@ export class MutualFundsCapitalComponent implements OnInit {
               grandfatheringEffect: this.rightFilterData.grandfathering,
               fromDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
               toDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
-            }
+            };
+            (this.rightFilterData.grandfathering == 1) ? this.grandFatheringEffect = true : this.grandFatheringEffect = false;
+            this.fromDateYear = (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019;
+            this.toDateYear =(this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020;
             if (this.rightFilterData.reportFormat[0].name == 'Detailed') {
               this.summaryView = false
             } else {
@@ -189,7 +196,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
       Object.keys(catObj).map(key => {
         if (catObj[key] != 'DEBT') {
-          equityData = this.filterCategoryWise(catObj[key], key);
+          equityData = this.filterCategoryWise(catObj[key], 'EQUITY');
         }
       });
       let debtData = this.filterCategoryWise(catObj['DEBT'], 'DEBT');
@@ -245,13 +252,14 @@ export class MutualFundsCapitalComponent implements OnInit {
   filterCategoryWise(data, category) {
     if (data) {
       let finalValue = {};
+      let fiterArray=[];
       this.mfList = this.MfServiceService.filter(data, 'mutualFund');
       this.mfList.forEach(element => {
         if (element.redemptionTransactions) {
           element.redemptionTransactions.forEach(ele => {
             let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
             if (financialyear >= this.fromDateYear && financialyear <= this.toDateYear) {
-              if (ele.purchaceAgainstRedemptionTransactions) {
+              if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 :ele.purchaceAgainstRedemptionTransactions) {
                 let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
                 finalValue = this.MfServiceService.addTwoObjectValues(totalValue, finalValue, { totalAmt: true });
                 // this.getFinalTotalValue(totalValue);
@@ -261,18 +269,19 @@ export class MutualFundsCapitalComponent implements OnInit {
                 element.ltLoss = totalValue.ltLoss;
                 element.indexGain = totalValue.indexGain;
                 element.indexLoss = totalValue.indexLoss;
+                fiterArray.push(element);
               } else {
                 ele.purchaceAgainstRedemptionTransactions = []
               }
             }
           });
         } else {
-          this.mfList = [];
+          element.redemptionTransactions = [];
         }
       });
       (category == 'DEBT') ? this.debtObj = finalValue : this.equityObj = finalValue;
       finalValue = {};
-      return this.mfList;
+      return fiterArray;
     }
   }
   getCalculatedValues(data, category) {
@@ -300,8 +309,8 @@ export class MutualFundsCapitalComponent implements OnInit {
     });
     let obj = {
       stGain: stGain,
-      ltGain: stLoss,
-      stLoss: ltGain,
+      ltGain: ltGain,
+      stLoss: stLoss,
       ltLoss: ltLoss,
       indexGain: indexGain,
       indexLoss: indexLoss

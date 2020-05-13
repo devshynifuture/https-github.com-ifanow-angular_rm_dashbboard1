@@ -101,6 +101,18 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
+  getNav(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId:this.clientId,
+    }
+    this.custumService.getNav(obj).subscribe(
+      data => {
+        console.log(data)
+        this.mutualFund.nav =data;
+      }
+    );
+  }
   asyncFilter(mutualFund, categoryList) {
     if (typeof Worker !== 'undefined') {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
@@ -160,12 +172,14 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   getMutualFundResponse(data) {
+    this.getNav();
     if (data) {
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
       if(!this.rightFilterData){
         this.mutualFund = this.filterData;
+        this.MfServiceService.setMfData(this.mutualFund);
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.mfData = data;
