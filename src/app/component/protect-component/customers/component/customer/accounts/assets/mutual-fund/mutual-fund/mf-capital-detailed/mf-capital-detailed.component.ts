@@ -43,9 +43,10 @@ export class MfCapitalDetailedComponent implements OnInit {
   constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
-   @Input() responseData; 
-   @Input() mutualFund;
-   @Input() changedData;
+   responseData:any;
+   changedData:any;
+  //  @Input() responseData; 
+  //  @Input() changedData;
   ngOnInit() {
     this.isLoading =true;
     setTimeout(() => {
@@ -90,7 +91,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.dataSource1 =  new MatTableDataSource(this.getFilterData( catObj['DEBT'],'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
       this.objSendToDetailedCapital={
-        mfData:this.mutualFund,
+        // mfData:this.mutualFund,
         responseData :this.responseData ,
         grandFatheringEffect:this.grandFatheringEffect,
         redemptionList:this.redemption,
@@ -109,14 +110,14 @@ export class MfCapitalDetailedComponent implements OnInit {
       componentName: RightFilterComponent
     };
   fragmentData.data = {
-    name: 'CAPITAL GAIN REPORT',
-    mfData: this.mutualFund,
-    folioWise: this.mutualFund.mutualFundList,
-    schemeWise: this.mutualFund.schemeWise,
-    familyMember: this.mutualFund.family_member_list,
-    category: this.mutualFund.mutualFundCategoryMastersList,
-    transactionView: this.displayedColumns,
-    capitalGainData:this.objSendToDetailedCapital,
+    // name: 'CAPITAL GAIN REPORT',
+    // mfData: this.mutualFund,
+    // folioWise: this.mutualFund.mutualFundList,
+    // schemeWise: this.mutualFund.schemeWise,
+    // familyMember: this.mutualFund.family_member_list,
+    // category: this.mutualFund.mutualFundCategoryMastersList,
+    // transactionView: this.displayedColumns,
+    // capitalGainData:this.objSendToDetailedCapital,
   };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

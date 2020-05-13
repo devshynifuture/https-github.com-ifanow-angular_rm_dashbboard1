@@ -1,6 +1,6 @@
 <div id="ui-assets-account" class="bg-grey lter">
   <div class="row">
-    <div class="col-md-2 p-0 pt-8 pb-20 z-100">
+    <div class="col-md-2 p-0 pt-8 pb-20">
       <ul class="vertical-menu sticky-top">
         <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode"
           [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">

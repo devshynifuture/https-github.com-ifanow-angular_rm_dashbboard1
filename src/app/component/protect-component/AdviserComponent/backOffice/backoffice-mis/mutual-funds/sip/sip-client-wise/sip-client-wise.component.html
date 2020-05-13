@@ -79,13 +79,12 @@
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
                                     <div class="d-block text-right">
-                                        <button (click)="exportToExcelSheet('investor-wise', i)"
-                                                mat-icon-button>
-                                          <mat-icon>
-                                            save_alt
-                                          </mat-icon>
+                                        <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
                                         </button>
-                                      </div>
+                                    </div>
                                     <table *ngIf="category.showCategory==false && !isLoading" class="table-low mt-8 "
                                         id="table-high">
                                         <thead class="bg-light text-dark">
