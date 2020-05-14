@@ -265,6 +265,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   }
   deleteModal(value, element) {
+    let deletedId;
+    this.mutualFund.mutualFundList.forEach(obj => {
+      element.mutualFundTransactions.forEach(ele => {
+        if(ele.id == element.id){
+          deletedId=obj.id
+        }
+      });
+    });
     console.log("this is what im sending:::", element);
     const dialogData = {
       data: value,
@@ -285,7 +293,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         // );
         // dialogRef.close(listIndex);
         if (value === 'mutualFund') {
-          const obj = { id: element.id }
+          const obj = { id: deletedId }
           this.custumService.postMutualFundDelete(obj)
             .subscribe(res => {
               if (res) {
