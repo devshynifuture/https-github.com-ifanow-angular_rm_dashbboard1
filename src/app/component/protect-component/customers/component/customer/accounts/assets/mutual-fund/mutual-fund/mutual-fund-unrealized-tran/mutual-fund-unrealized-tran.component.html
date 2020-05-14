@@ -51,9 +51,7 @@
                                     <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                                     </div>
                                 </td>
-                                <td *matFooterCellDef appFormatNumber
-                                    [value]="(mfData) ? (mfData.total_amount_invested) : 0"
-                                    class="br p-8 f-600 text-left" mat-footer-cell>
+                                <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_amount_invested) : 0" class="br p-8 f-600 text-left" mat-footer-cell>
                                     <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                                 </td>
 
@@ -67,9 +65,7 @@
                                     <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span>
                                     </div>
                                 </td>
-                                <td *matFooterCellDef appFormatNumber
-                                    [value]="(mfData) ? (mfData.total_current_value) : 0"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_current_value) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
                                     <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                                 </td>
 
@@ -82,9 +78,7 @@
                                     <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
                                     </div>
                                 </td>
-                                <td *matFooterCellDef appFormatNumber
-                                    [value]="(mfData) ? (mfData.total_dividend_payout) : 0"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_dividend_payout) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
                                     <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                                 </td>
 
@@ -432,9 +426,9 @@
 
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td colspan="9"
-                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Mutual fund {{(this.viewMode == 'All Transactions') ? 'all transactions' : 'unrealized transactions'}}</td>
+            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                Mutual fund {{(this.viewMode == 'All Transactions') ? 'all transactions' : 'unrealized transactions'}}
+            </td>
         </tr>
 
         <tr>
