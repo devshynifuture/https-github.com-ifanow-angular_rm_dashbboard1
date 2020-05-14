@@ -20,3 +20,7 @@
     width: 34%;
     margin-bottom: 0px;
 }
+
+::ng-deep #table-low tr td:not(:first-child):not(:last-child) {
+    cursor: pointer !important;
+}

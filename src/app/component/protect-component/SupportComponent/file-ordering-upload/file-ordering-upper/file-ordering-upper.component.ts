@@ -68,11 +68,6 @@ export class FileOrderingUpperComponent implements OnInit {
 
   ngOnInit() {
     this.fileTypeName();
-    if (this.data.flag === 'historical') {
-      this.fileOrderingListData();
-    } else if (this.data.flag === 'bulk') {
-      this.fileOrderBulkListData();
-    }
   }
 
   fileTypeName() {
@@ -80,6 +75,11 @@ export class FileOrderingUpperComponent implements OnInit {
       .subscribe(res => {
         if (res && res.length !== 0) {
           this.fileTypeList = res;
+          if (this.data.flag === 'historical') {
+            this.fileOrderingListData();
+          } else if (this.data.flag === 'bulk') {
+            this.fileOrderBulkListData();
+          }
         }
         console.log(res);
       })
