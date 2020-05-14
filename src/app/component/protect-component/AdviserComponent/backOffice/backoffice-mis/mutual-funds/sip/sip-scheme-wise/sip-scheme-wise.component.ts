@@ -261,6 +261,10 @@ export class SipSchemeWiseComponent implements OnInit {
               this.removeValuesFromExcel('investor', index);
             }
             console.log(data)
+          }else{
+            this.subCatList = []
+            schemeData.subCatList = []
+            this.isLoadingCategory = false
           }
         },
         err => {
@@ -365,6 +369,10 @@ export class SipSchemeWiseComponent implements OnInit {
               this.removeValuesFromExcel('applicant', index);
             }
             console.log(data)
+          }else{
+            this.applicantListArr = []
+            ApplicantData.applicantList = [];
+            this.isLoadingSubCategory = false
           }
         },
         err => {

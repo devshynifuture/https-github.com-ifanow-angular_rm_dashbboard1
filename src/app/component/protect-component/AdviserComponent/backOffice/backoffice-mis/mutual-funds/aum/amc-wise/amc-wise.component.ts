@@ -75,6 +75,9 @@ export class AmcWiseComponent implements OnInit {
   schemeIndex: any;
   copyOfSchemeList: any;
   copyOfExcelData: any;
+  isLoadingCategory: boolean;
+  isLoadingApplicant: boolean;
+  applicationList: any[];
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService) { }
 
@@ -328,6 +331,7 @@ export class AmcWiseComponent implements OnInit {
     //this.showLoader = false;
   }
   showScheme(amcData, amcIndex) {
+    this.isLoadingCategory = true
     this.selectedAmc = amcIndex;
     amcData.showAmc = !amcData.showAmc
     amcData.schemes.forEach(o => {
@@ -342,8 +346,11 @@ export class AmcWiseComponent implements OnInit {
   }
   showApplicant(schemeData, index, amcIndex) {
     this.schemeIndex = index;
+    this.isLoadingApplicant = true
     schemeData.showScheme = !schemeData.showScheme
+    this.applicationList = []
     schemeData.applicantList = []
+    schemeData.applicantList = [{}, {}, {}];
     if (schemeData.showScheme == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -355,10 +362,21 @@ export class AmcWiseComponent implements OnInit {
       this.backoffice.amcWiseApplicantGet(obj).subscribe(
         data => {
           if (data) {
+            this.isLoadingApplicant = false
             schemeData.applicantList = data
+            this.applicationList = data
             console.log(amcIndex, data);
             this.appendingOfValuesInExcel(data, index, 'applicant');
+          }else{
+            this.applicationList = []
+            schemeData.applicantList = []
+            this.isLoadingApplicant = false
           }
+        },
+        err => {
+          this.applicationList = []
+          schemeData.applicantList = []
+          this.isLoadingApplicant = false
         }
       )
     } else {
