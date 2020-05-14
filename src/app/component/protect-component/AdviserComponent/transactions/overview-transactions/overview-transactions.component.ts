@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { KnowYourCustomerComponent } from './know-your-customer/know-your-customer.component';
 import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { VerifyMemberComponent } from './MandateCreation/verify-member/verify-member.component';
+import { AddMandateComponent } from './MandateCreation/add-mandate/add-mandate.component';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpService } from 'src/app/http-service/http-service';
 import { TransactionMobileViewComponent } from '../transaction-mobile-view/transaction-mobile-view.component';
@@ -126,7 +126,7 @@ export class OverviewTransactionsComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: VerifyMemberComponent
+      componentName: AddMandateComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

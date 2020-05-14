@@ -3,10 +3,6 @@ p {
     font-weight: normal;
 }
 
-.z-100{
-    z-index: 100 !important;
-}
-
 .center-img {
     margin: 0 auto;
     display: block;
@@ -16,6 +12,10 @@ p {
 .example-container {
     height: 280px;
     overflow: auto;
+}
+
+.z-0{
+    z-index: 0 !important;
 }
 
 table {

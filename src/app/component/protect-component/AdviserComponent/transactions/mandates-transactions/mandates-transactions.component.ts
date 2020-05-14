@@ -7,7 +7,7 @@ import {DetailedViewMandateComponent} from './detailed-view-mandate/detailed-vie
 import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MandateCreationComponent} from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
-import {VerifyMemberComponent} from '../overview-transactions/MandateCreation/verify-member/verify-member.component';
+import {AddMandateComponent} from '../overview-transactions/MandateCreation/add-mandate/add-mandate.component';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -168,7 +168,7 @@ export class MandatesTransactionsComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: VerifyMemberComponent
+      componentName: AddMandateComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
