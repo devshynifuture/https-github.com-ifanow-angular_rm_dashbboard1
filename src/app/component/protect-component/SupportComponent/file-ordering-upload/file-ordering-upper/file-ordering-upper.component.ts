@@ -114,7 +114,7 @@ export class FileOrderingUpperComponent implements OnInit {
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
               referenceId: element.referenceId ? element.referenceId : '-',
-              inFileOrAdded: element.totalFiles + "/" + element.transactionAdded,
+              inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
               fileName: element.fileName ? element.fileName : '-',
               failedReason: element.failedReason ? element.failedReason : '-',
               action: '',
@@ -130,6 +130,10 @@ export class FileOrderingUpperComponent implements OnInit {
       }, err => {
         this.eventService.openSnackBar("Something went wrong", "DISMISS");
       })
+  }
+
+  consoleData(element) {
+    console.log("this is element:::", element);
   }
 
   fileOrderRetry(value) {
@@ -198,7 +202,7 @@ export class FileOrderingUpperComponent implements OnInit {
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
               referenceId: element.referenceId ? element.referenceId : '-',
-              inFileOrAdded: element.totalFiles + "/" + element.transactionAdded,
+              inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
               fileName: element.fileName ? element.fileName : '-',
               failedReason: element.failedReason ? element.failedReason : '-',
               action: '',
