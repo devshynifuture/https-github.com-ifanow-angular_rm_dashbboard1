@@ -19,11 +19,11 @@ import {EnumDataService} from 'src/app/services/enum-data.service';
 const moment = require('moment');
 
 @Component({
-  selector: 'app-verify-member',
-  templateUrl: './verify-member.component.html',
-  styleUrls: ['./verify-member.component.scss']
+  selector: 'app-add-mandate',
+  templateUrl: './add-mandate.component.html',
+  styleUrls: ['./add-mandate.component.scss']
 })
-export class VerifyMemberComponent implements OnInit {
+export class AddMandateComponent implements OnInit {
   inputData: any;
   displayedColumns: string[] = ['position', 'bankName', 'accountNo', 'ifsc', 'branchName', 'accountType'];
   dataSource = [];
