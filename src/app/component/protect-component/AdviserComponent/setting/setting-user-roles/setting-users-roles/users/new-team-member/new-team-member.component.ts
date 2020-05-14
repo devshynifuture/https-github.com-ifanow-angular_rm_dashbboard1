@@ -173,8 +173,8 @@ export class NewTeamMemberComponent implements OnInit {
       this.teamMemberFG.markAllAsTouched();
       return;
     }
-    else if (this.logoImg == undefined) {
-      this.eventService.openSnackBar("Please upload logo", "Dismiss")
+    if (this.imageLoader) {
+      this.eventService.openSnackBar("Image is uplaoding", "Dismiss");
       return;
     }
     else {
@@ -216,11 +216,11 @@ export class NewTeamMemberComponent implements OnInit {
     this.settingsService.editTeamMember(dataObj).subscribe((res) => {
       this.close(true);
       this.barButtonOptions.active = false;
-      this.eventService.openSnackBar('Member data updated');
+      this.eventService.openSnackBar('Member data updated', "Dismiss");
     }, (err) => {
       console.error(err);
       this.barButtonOptions.active = false;
-      this.eventService.openSnackBar('Error occured.');
+      this.eventService.openSnackBar('Error occured.', "Dismiss");
     });
   }
 
@@ -232,6 +232,7 @@ export class NewTeamMemberComponent implements OnInit {
     this.counter += countAdder;
     if (this.counter == 0) {
       this.isLoading = false;
+      this.imageLoader = false;
       this.createForm();
       (this.data.mainData.profilePicUrl) ? this.barButtonOptions.text = "SAVE" : this.barButtonOptions.text = "SEND INVITE";
       this.logoImg = this.data.mainData.profilePicUrl;

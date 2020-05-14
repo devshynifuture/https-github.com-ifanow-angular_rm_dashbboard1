@@ -113,7 +113,8 @@
                     cancel
                 </i>
             </div>
-
+            <button mat-button *ngIf="imageLoader==false" class="btn-bottom br-0 text-inherit"
+                (click)="file.click()">UPLOAD</button>
             <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url"
                 type="file">
         </div>
@@ -128,8 +129,8 @@
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit"
                 (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button> -->
-            <app-progress-button *ngIf="teamMemberFG.valid && logoImg && !imageLoader" (btnClick)="save()"
-                class="br-0 text-inherit  " [options]="barButtonOptions">
+            <app-progress-button *ngIf="!isLoading" (btnClick)="save()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

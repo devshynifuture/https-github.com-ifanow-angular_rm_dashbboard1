@@ -74,7 +74,8 @@ export class AddNumberComponent implements OnInit {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
             this.selectedISD = this.isdCodes[0].id
           } else {
-            this.isdCodes = data
+            this.isdCodes = data;
+            this.selectedISD = undefined;
           }
           this.filteredIsdCodes.next(this.isdCodes);
         }
