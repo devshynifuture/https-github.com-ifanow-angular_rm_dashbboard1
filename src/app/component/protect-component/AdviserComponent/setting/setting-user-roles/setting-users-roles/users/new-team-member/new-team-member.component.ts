@@ -165,6 +165,7 @@ export class NewTeamMemberComponent implements OnInit {
   }
   cancelImageUpload() {
     this.logoImg = undefined;
+    this.imageLoader = false;
     this.teamMemberFG.controls.url.reset();
   }
   save() {
