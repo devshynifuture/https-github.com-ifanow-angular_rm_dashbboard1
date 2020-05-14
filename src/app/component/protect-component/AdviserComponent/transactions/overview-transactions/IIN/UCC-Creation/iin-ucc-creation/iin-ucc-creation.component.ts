@@ -59,6 +59,14 @@ export class IinUccCreationComponent implements OnInit {
           }
         }),
       );
+
+
+    this.processTrasaction.getCountryCodeList().subscribe((responseData) => {
+      console.log('country code list : ', responseData);
+    }, error => {
+      console.error('country code error : ', error);
+
+    });
   }
 
   closeRightSlider(flag) {

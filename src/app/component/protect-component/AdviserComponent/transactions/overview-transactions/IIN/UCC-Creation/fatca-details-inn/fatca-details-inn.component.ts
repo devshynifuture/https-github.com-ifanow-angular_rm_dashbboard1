@@ -96,7 +96,7 @@ export class FatcaDetailsInnComponent implements OnInit {
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
       politically: [!data ? '1' : (data.politically) ? data.politically + '' : '1', [Validators.required]],
-      taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
+      // taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
 
     });
     // if(!data){
@@ -130,7 +130,7 @@ export class FatcaDetailsInnComponent implements OnInit {
         occupationCode: this.fatcaDetails.controls.occupationCode.value,
         politicallyExposedFlag: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' :
           (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
-        taxResidency: this.fatcaDetails.controls.taxResidency.value,
+        // taxResidency: this.fatcaDetails.controls.taxResidency.value,
       };
 
       const obj1 = {

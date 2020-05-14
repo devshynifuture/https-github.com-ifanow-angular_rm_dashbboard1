@@ -454,7 +454,7 @@ export class ProcessTransactionService {
     if (this.countryCodeList) {
       return of(this.countryCodeList);
     } else {
-      this.onlineTransactService.getCountryCodeList({});
+      this.onlineTransactService.getCountryCodeList({id: 0});
     }
   }
 }
