@@ -174,7 +174,7 @@ export class NewTeamMemberComponent implements OnInit {
       return;
     }
     if (this.imageLoader) {
-      this.eventService.openSnackBar("Image is uplaoding", "Dismiss");
+      this.eventService.openSnackBar("Please wait image is uplaoding", "Dismiss");
       return;
     }
     else {
