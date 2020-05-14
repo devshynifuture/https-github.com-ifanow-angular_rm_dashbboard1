@@ -11,7 +11,7 @@ addEventListener('message', ({data}) => {
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
-  const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList, data.type);
+  const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList,data.type,data.mutualFund);
   const output = {customDataSourceData ,totalValue};
   // console.log('Mutual fund script output: ', output);
   postMessage(output);

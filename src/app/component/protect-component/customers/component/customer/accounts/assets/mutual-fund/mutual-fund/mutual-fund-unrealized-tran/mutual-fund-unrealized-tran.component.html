@@ -4,7 +4,7 @@
             <div class="col-md-6 pl-0">
                 <h4 class="m-0 text-black roboto pt-8">
                     <mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
-                    Mutual fund {{(this.viewMode) ? this.viewMode :'Transactions'}}
+                    Mutual fund {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
                 </h4>
             </div>
             <div class="col-md-6 p-0 justify-content-end d-flex align-items-center"
@@ -55,7 +55,7 @@
                                     </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber
-                                    [value]="(mutualFund) ? (mutualFund.total_amount_invested) : 0"
+                                    [value]="(mfData) ? (mfData.total_amount_invested) : 0"
                                     class="br p-8 f-600 text-left" mat-footer-cell>
                                     <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                                 </td>
@@ -72,7 +72,7 @@
                                     </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber
-                                    [value]="(mutualFund) ? (mutualFund.total_current_value) : 0"
+                                    [value]="(mfData) ? (mfData.total_current_value) : 0"
                                     class="br p-8 f-600 text-right" mat-footer-cell>
                                     <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                                 </td>
@@ -88,7 +88,7 @@
                                     </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber
-                                    [value]="(mutualFund) ? (mutualFund.total_dividend_payout) : 0"
+                                    [value]="(mfData) ? (mfData.total_dividend_payout) : 0"
                                     class="br p-8 f-600 text-right" mat-footer-cell>
                                     <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                                 </td>
@@ -141,7 +141,7 @@
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                     <div class="bar">
-                                        {{(mutualFund) ? (mutualFund.total_absolute_return | number:'1.2-2') : 0}}
+                                        {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
 
                                     </div>
                                 </td>
@@ -158,7 +158,7 @@
                                     </div>
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">{{(mutualFund) ? (mutualFund.total_xirr | number:'1.2-2') : 0}}
+                                    <div class="bar">{{(mfData) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
@@ -357,7 +357,7 @@
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar"><span *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{isLoading ? '':((element.absoluteReturn) ? (element.absoluteReturn  | number:'1.2-2'):0)}}</span>
-                                        <span *ngIf="element.trnAbsoluteReturn || element.trnAbsoluteReturn==0">{{isLoading ? '':((element.trnAbsoluteReturn )?(element.trnAbsoluteReturn  | number:'1.2-2'):0)}}</span>
+                                        <span class="f-700" *ngIf="element.trnAbsoluteReturn || element.trnAbsoluteReturn==0">{{isLoading ? '':((element.trnAbsoluteReturn )?(element.trnAbsoluteReturn  | number:'1.2-2'):0)}}</span>
 
                                     </div>
                                 </td>
@@ -372,7 +372,7 @@
                                 <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar">
                                         <span *ngIf="element.cagr || element.cagr == 0">{{isLoading ? '':((element.cagr)?(element.cagr | number:'1.2-2' ):0)}}</span>
-                                        <span *ngIf="element.totalCagr || element.totalCagr ==0">{{isLoading ? '':((element.totalCagr)?(element.totalCagr  | number:'1.2-2' ):0)}}</span>
+                                        <span *ngIf="element.totalCagr || element.totalCagr ==0" class="f-700">{{isLoading ? '':((element.totalCagr)?(element.totalCagr  | number:'1.2-2' ):0)}}</span>
 
                                     </div>
                                 </td>
@@ -381,14 +381,14 @@
                             <ng-container matColumnDef="groupHeader">
                                 <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                                     class="text-center text-primary">
-                                    <div class="bar">{{group.groupName}}
+                                    <div class="bar">{{group.groupName}}{{(group.pan) ? (' (PAN : '+group.pan+')') : ''}}
                                     </div>
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="groupHeader2">
                                 <td *matCellDef="let group" [attr.colspan]="displayedColumns.length">
-                                    <div class="bar">{{group.schemeName}}
+                                    <div class="bar">{{group.schemeName}}{{(group.folioNumber) ? (' | Folio No :'+group.folioNumber) : ''}}
                                         <p class="text-right">Avg Cost NAV: {{group.avgNav}} | Current NAV:
                                             {{group.nav}} | NAV as on {{group.navDate |  date:'dd/MM/yyyy'}}</p>
                                     </div>
@@ -450,7 +450,7 @@
         <tr>
             <td colspan="9"
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Mutual fund {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</td>
+                Mutual fund {{(this.viewMode == 'All Transactions') ? 'all transactions' : 'unrealized transactions'}}</td>
         </tr>
 
         <tr>

@@ -104,10 +104,13 @@
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Returns</p>
-                                    <h5 class="m-0 text-success relClass height24">
+                                    <h5 class="m-0 relClass height24">
                                         <div class="bar height24">
-                                            <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}</span> {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700" *ngIf="!isLoading">
+                                            <span *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0" class="text-success">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{(!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0) ? '%' : ''}}</span>  <i class="material-icons f-14 f-700 text-success" *ngIf="!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0">
                                                 arrow_upward
+                                            </i>
+                                            <span  *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0" class="text-danger">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{(!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0) ? '%' : ''}}</span> <i class="material-icons f-14 f-700 text-danger" *ngIf="!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0">
+                                                arrow_downward
                                             </i>
                                         </div>
                                     </h5>
