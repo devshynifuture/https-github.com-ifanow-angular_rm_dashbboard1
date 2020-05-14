@@ -194,7 +194,8 @@
       <div class="col-md-2 pl-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput autocomplete="off" #totalNetContribution formControlName="Units" type="number"
+            <input matInput autocomplete="off" #totalNetContribution  appInputValueValidation
+            [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" formControlName="Units" type="number"
               maxlength="20" class="form-control br-0 rupess">
             <mat-error>
               This field is required
