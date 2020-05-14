@@ -1,13 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {NewTeamMemberComponent} from './new-team-member/new-team-member.component';
-import {SettingsService} from '../../../settings.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {ReplaceUserComponent} from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { NewTeamMemberComponent } from './new-team-member/new-team-member.component';
+import { SettingsService } from '../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { ReplaceUserComponent } from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
 
 @Component({
   selector: 'app-users',
@@ -37,6 +37,11 @@ export class UsersComponent implements OnInit {
 
   loadUsers() {
     this.loader(1);
+    this.userList = [
+      { fullName: '', role: { roleName: '' } },
+      { fullName: '', role: { roleName: '' } },
+      { fullName: '', role: { roleName: '' } }
+    ]
     const dataObj = {
       advisorId: this.advisorId
     };
@@ -44,7 +49,7 @@ export class UsersComponent implements OnInit {
       this.loader(-1);
       console.log('team member details', res);
       this.userList = res;
-    }, err=> {
+    }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.hasError = true;
     });
