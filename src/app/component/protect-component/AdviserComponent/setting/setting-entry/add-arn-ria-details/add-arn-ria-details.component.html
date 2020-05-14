@@ -221,10 +221,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="gstNumber" class="form-control br-0">
+                    <input matInput type="text" formControlName="gstNumber" class="form-control br-0" maxlength="15">
                     <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.maxlength || arnRiaFG.get('gstNumber').errors?.minlength">
                         Valid GST required</mat-error>
+                    <mat-hint>{{arnRiaFG.get('gstNumber').value.length}}/15</mat-hint>
                 </mat-form-field>
             </div>
         </div>
