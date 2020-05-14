@@ -24,6 +24,25 @@
     <div class="col-md-7 offset-2 p-0 bl-1 ">
       <div class="p-20">
         <h3 class="f-18 mb-28 f-600">Personal details</h3>
+
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? ' Name as per PAN' : 'Name'}}</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input [matAutocomplete]="auto1" placeholder="Start typing to see nominee name" matInput maxlength="30"
+                     appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                     formControlName="clientName"
+                     type="text" class="form-control">
+              <mat-autocomplete #auto1="matAutocomplete">
+                <mat-option [value]="fm.name" (click)="selectedFamily(fm)"
+                            *ngFor="let fm of familyClientList"> {{fm.name}} </mat-option>
+              </mat-autocomplete>
+              <mat-error class="f-12">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
         <div class="row pt-20">
           <div class="col-md-4 text-right pr-0">
             <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? 'PAN' : 'GUARDIAN PAN'}} </h3>
@@ -42,30 +61,6 @@
           </div>
         </div>
 
-
-        <div class="row pt-20">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? ' Name as per PAN' : 'Name'}}</h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input [matAutocomplete]="auto1" placeholder="Start typing to see nominee name" matInput maxlength="30"
-                     appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
-                     formControlName="clientName"
-                     type="text" class="form-control">
-              <mat-autocomplete #auto1="matAutocomplete">
-                <mat-option [value]="fm.name" (click)="selectedFamily(fm)"
-                            *ngFor="let fm of familyClientList"> {{fm.name}} </mat-option>
-              </mat-autocomplete>
-              <mat-error class="f-12">This field is required</mat-error>
-            </mat-form-field>
-            <!--            <mat-form-field appearance="standard" floatLabel="never">-->
-            <!--              <input #clientName class="form-control" formControlName="clientName" matInput placeholder="Enter Name"-->
-            <!--                     type="text">-->
-            <!--              <mat-error>This field is required</mat-error>-->
-            <!--            </mat-form-field>-->
-          </div>
-        </div>
 
         <!-- <div class="row pt-20">
             <div class="col-md-4 text-right pr-0">

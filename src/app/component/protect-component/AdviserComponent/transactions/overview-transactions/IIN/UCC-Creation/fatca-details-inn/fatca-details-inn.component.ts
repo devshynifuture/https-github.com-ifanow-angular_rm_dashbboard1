@@ -92,7 +92,7 @@ export class FatcaDetailsInnComponent implements OnInit {
       nationality: [(!data) ? '1' : (data.nationality) ? data.nationality + '' : '1', [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
       cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
-      countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
+      countryOfBirthId: [!data ? '' : data.countryOfBirthId, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
       politically: [!data ? '1' : (data.politically) ? data.politically + '' : '1', [Validators.required]],
@@ -124,8 +124,8 @@ export class FatcaDetailsInnComponent implements OnInit {
       const obj = {
         nationality: this.fatcaDetails.controls.nationality.value,
         income: this.fatcaDetails.controls.annualIncome.value,
-        cityOfBirth: this.fatcaDetails.controls.cityOfBirth.value,
-        countryOfBirth: this.fatcaDetails.controls.countryOfBirth.value,
+        placeOfBirth: this.fatcaDetails.controls.placeOfBirth.value,
+        countryOfBirthId: this.fatcaDetails.controls.countryOfBirthId.value,
         sourceOfWealth: this.fatcaDetails.controls.sourceOfWealth.value,
         occupationCode: this.fatcaDetails.controls.occupationCode.value,
         politicallyExposedFlag: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' :

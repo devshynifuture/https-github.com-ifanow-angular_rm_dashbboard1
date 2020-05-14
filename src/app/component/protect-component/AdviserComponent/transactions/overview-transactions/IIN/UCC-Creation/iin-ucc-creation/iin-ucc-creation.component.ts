@@ -87,10 +87,8 @@ export class IinUccCreationComponent implements OnInit {
         this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}];
         this.generalDetails.controls.taxStatus.setValue('01');
       } else {
-        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}, {
-          taxStatusDesc: 'On behalf of minor',
-          taxStatusCode: '02'
-        }];
+        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
+          {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
       }
     });
   }
