@@ -165,6 +165,7 @@ export class NewTeamMemberComponent implements OnInit {
   }
   cancelImageUpload() {
     this.logoImg = undefined;
+    this.imageLoader = false;
     this.teamMemberFG.controls.url.reset();
   }
   save() {
@@ -206,6 +207,7 @@ export class NewTeamMemberComponent implements OnInit {
 
   editTeamMember() {
     const dataObj = {
+      adminAdvisorId: this.advisorId,
       id: this.data.mainData.id,
       roleId: this.teamMemberFG.controls.roleId.value,
       profilePic: this.logoImg
