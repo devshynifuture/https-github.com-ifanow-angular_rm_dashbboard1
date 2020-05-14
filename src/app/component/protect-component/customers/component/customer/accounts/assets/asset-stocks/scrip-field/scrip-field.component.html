@@ -3,7 +3,7 @@
         <input matInput autocomplete="off" aria-label="State" formControlName="scripName" [matAutocomplete]="auto"
             class="form-control br-0 pl-8">
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let singleScrip of scripList" [hidden]="!singleScrip.name" [value]="singleScrip.name">
+            <mat-option *ngFor="let singleScrip of scripList" [hidden]="!singleScrip.name" (click)="selectedScript(singleScrip)" [value]="singleScrip.name">
                 {{singleScrip.name}}
             </mat-option>
             <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
@@ -17,7 +17,7 @@
         <input matInput autocomplete="off" aria-label="State" formControlName="scripName" [matAutocomplete]="auto"
             class="form-control br-0 pl-8">
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let singleScrip of scripList" [value]="singleScrip.name">
+            <mat-option *ngFor="let singleScrip of scripList" [value]="singleScrip.name" (click)="selectedScript(singleScrip)">
                 {{ singleScrip.name}}
             </mat-option>
             <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>

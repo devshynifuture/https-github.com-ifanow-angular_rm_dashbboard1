@@ -106,9 +106,109 @@
                         {{libility.principalOutStandingAmount}}
                     </div>
                 </div>
+                <div class="row bb p-8 b-l br cp">
+                    <div class="col-md-8 text-right f-14 roboto p-0 " (click)="openLoanAmorts()">
+                        <span style="color: royalblue; text-decoration: underline;"> View loan amortization table</span>
+                    </div>
+                    <div class="col-md-4 text-left  p-0 " > 
+                        <mat-spinner class="ml-8" [hidden]="!tableLoader" [diameter]="30"></mat-spinner>
+                    </div>
+                </div>
             </div>
 
         </div>
 
     </div>
 </div>
+
+<!-- <div>
+    <table *ngIf="dataSource.filteredData.length > 0" matSort #holdingsTableSort="matSort" mat-table
+        [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading
+        >
+        
+    <ng-container matColumnDef="no">
+        <th mat-sort-header="no" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            PmtNo.
+        </th>
+        <td mat-cell *matCellDef="let element; let i = index;" class="br w-15 ">
+            <div class="bar">{{isLoading ? '' : i + 1 }}</div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <th mat-sort-header="date" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Date
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 ">
+            <div class="bar" >{{element.date | date:'dd/MM/yyyy'}}</div>
+        </td>
+        
+    </ng-container>
+    <ng-container matColumnDef="bal">
+        <th mat-sort-header="bal" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Beginning Balance 
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.beginningBalance}}</span> </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="pay-time">
+        <th mat-sort-header="pay-time" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Scheduled Payment 
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.scheduledPayment}}</span> </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="pre-pay">
+        <th mat-sort-header="pre-pay" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Pre Payment 
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.extraPayment}}</span> </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="total-pay">
+        <th mat-sort-header="total-pay" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Total Payment 
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.totalPayment}}</span> </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="interest">
+        <th mat-sort-header="interest" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Interest 
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.interest}}</span> </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="principal">
+        <th mat-sort-header="principal" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Principal 
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.principal}}</span> </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="end-bal">
+        <th mat-sort-header="end-bal" mat-header-cell *matHeaderCellDef
+            class="br w-15 rightText text-right">
+            Ending Balance
+        </th>
+        <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.endingBalance}}</span> </div>
+        </td>
+    </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div> -->

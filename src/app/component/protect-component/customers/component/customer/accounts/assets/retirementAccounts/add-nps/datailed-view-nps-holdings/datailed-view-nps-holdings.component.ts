@@ -3,6 +3,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {MatSort} from '@angular/material';
 import {MatTableDataSource} from '@angular/material/table';
 import {CustomerService} from '../../../../../customer.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-datailed-view-nps-holdings',
@@ -18,9 +19,12 @@ export class DatailedViewNpsHoldingsComponent implements OnInit {
   @ViewChild('epfListTable', {static: false}) holdingsTableSort: MatSort;
   displayedColumns = ['name', 'units', 'amount', 'value'];
   name: any;
-
+  bankList:any =[];
   ngOnInit() {
     this.getGlobalList();
+    //link bank
+    this.bankList = this.enumService.getBank();
+    //link bank
   }
 
   getGlobalList() {
@@ -29,7 +33,7 @@ export class DatailedViewNpsHoldingsComponent implements OnInit {
     );
   }
 
-  constructor(private custumService: CustomerService, private subInjectService: SubscriptionInject) {
+  constructor(private custumService: CustomerService,private enumService: EnumServiceService, private subInjectService: SubscriptionInject) {
   }
 
   getGlobalRes(data) {

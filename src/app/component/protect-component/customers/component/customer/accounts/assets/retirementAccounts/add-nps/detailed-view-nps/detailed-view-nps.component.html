@@ -13,6 +13,7 @@
 <div class="pl-20 pr-20 mt-44 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
+            <h4 class="mb-10" >Basic details</h4>
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0" >
@@ -23,11 +24,12 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        PRAN
+                    <div class="col-md-6 text-left f-14 roboto p-0">
+                        Scheme choice
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{npsData.pran ? npsData.pran:'-'}}
+                    <div class="col-md-6 text-right f-14 roboto p-0">
+                        <span *ngIf="npsData.schemeChoice=='1'">Active-choice investment</span>
+                        <span *ngIf="npsData.schemeChoice=='2'">Auto-choice investment</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -56,17 +58,26 @@
                         {{npsData.valueAsOn | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-                
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-6 text-left f-14 roboto p-0">
-                        Scheme choice
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        PRAN
                     </div>
-                    <div class="col-md-6 text-right f-14 roboto p-0">
-                        <span *ngIf="npsData.schemeChoice=='1'">Active-choice investment</span>
-                        <span *ngIf="npsData.schemeChoice=='2'">Auto-choice investment</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{npsData.pran ? npsData.pran:'-'}}
                     </div>
                 </div>
-                
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-6 text-left f-14 roboto p-0">
+                        Linked bank account
+                    </div>
+                    <div class="col-md-6 text-right f-14 roboto p-0">
+                        <div [ngSwitch]="npsData.userBankMappingId">
+                            <div class="bar" *ngFor="let b of bankList"> 
+                                <span *ngSwitchCase="b.id"> {{npsData.userBankMappingId ? b.name:'-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-6 text-left f-14 roboto p-0">
                         Description
@@ -75,7 +86,11 @@
                         {{npsData.description ? npsData.description:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="!npsData.nomineeList">
+            </div>
+
+            <h4 class="mt-32 mb-10" >Nominees details</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngIf="npsData.nomineeList.length <= 0">
                     <div class="col-md-8 text-left f-14 roboto p-0" >
                         Nominee
                     </div>
@@ -92,6 +107,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
 </div>
