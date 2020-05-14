@@ -27,7 +27,9 @@ export class IinUccCreationComponent implements OnInit {
   advisorId: any;
   clientData: any;
   isLoading: boolean = false;
-  taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}, {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}];
+  taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
+    {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'},
+    {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private processTrasaction: ProcessTransactionService,
