@@ -1,39 +1,24 @@
-import { EntryComponentsModule } from '../../../../entry.components.module';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TransactionsComponent } from './transactions/transactions.component';
-import { TransactionRoutingModule } from './transaction-routing.module';
-import { OverviewTransactionsComponent } from './overview-transactions/overview-transactions.component';
-import { TransactionsListComponent } from './transactions-list/transactions-list.component';
-import { InvestorsTransactionsComponent } from './investors-transactions/investors-transactions.component';
-import { MandatesTransactionsComponent } from './mandates-transactions/mandates-transactions.component';
-import { KycTransactionsComponent } from './kyc-transactions/kyc-transactions.component';
-import { SettingsTransactionsComponent } from './settings-transactions/settings-transactions.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule } from 'src/app/material/material';
-import { SettingsTransactionsModule } from './settings-transactions/settings-transactions.module';
-import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { PhotoSigntureComponent } from './overview-transactions/know-your-customer/photo-signture/photo-signture.component';
-import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
-import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
-import { ClientSearchDirective } from './client-search.directive';
-import { CustomCommonModule } from 'src/app/common/custom.common.module';
-import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
-import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
-import { LifeInsuranceComponent } from '../../customers/component/customer/plan/insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
-import { TransactionMobileViewComponent } from './transaction-mobile-view/transaction-mobile-view.component';
-import { TransactionBottomButtonComponent } from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
-//import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
-//import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
-//import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
-//import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
-//import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
-//import { KnowYourCustomerComponent } from './overview-transactions/know-your-customer/know-your-customer.component';
-// import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
-
-// import { TransactionsComponent } from './t/transactions.component';
-
-
+import {EntryComponentsModule} from '../../../../entry.components.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {TransactionsComponent} from './transactions/transactions.component';
+import {TransactionRoutingModule} from './transaction-routing.module';
+import {OverviewTransactionsComponent} from './overview-transactions/overview-transactions.component';
+import {TransactionsListComponent} from './transactions-list/transactions-list.component';
+import {InvestorsTransactionsComponent} from './investors-transactions/investors-transactions.component';
+import {MandatesTransactionsComponent} from './mandates-transactions/mandates-transactions.component';
+import {KycTransactionsComponent} from './kyc-transactions/kyc-transactions.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MaterialModule} from 'src/app/material/material';
+import {SettingsTransactionsModule} from './settings-transactions/settings-transactions.module';
+import {CustomDirectiveModule} from 'src/app/common/directives/common-directive.module';
+import {PhotoSigntureComponent} from './overview-transactions/know-your-customer/photo-signture/photo-signture.component';
+import {VideoKycComponent} from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
+import {CustomCommonModule} from 'src/app/common/custom.common.module';
+import {ScrollDispatchModule, ScrollingModule} from '@angular/cdk/scrolling';
+import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
+import {TransactionMobileViewComponent} from './transaction-mobile-view/transaction-mobile-view.component';
+import {TransactionBottomButtonComponent} from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
 
 
 @NgModule({
@@ -45,7 +30,6 @@ import { TransactionBottomButtonComponent } from './transaction-mobile-view/tran
     MandatesTransactionsComponent,
     KycTransactionsComponent,
     PhotoSigntureComponent,
-    // FatcaDetailsComponent,
     VideoKycComponent,
     TransactionMobileViewComponent,
     TransactionBottomButtonComponent
@@ -69,7 +53,8 @@ import { TransactionBottomButtonComponent } from './transaction-mobile-view/tran
     ScrollDispatchModule,
     ScrollingModule
   ],
-  entryComponents: [TransactionMobileViewComponent, TransactionBottomButtonComponent]
+  entryComponents: [TransactionMobileViewComponent,
+    TransactionBottomButtonComponent]
 })
 export class TransactionsModule {
 

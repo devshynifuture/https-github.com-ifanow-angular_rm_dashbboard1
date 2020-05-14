@@ -40,14 +40,14 @@
     <table #tableEl class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no" sticky>
-            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
+            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar"><span *ngIf="isLoading==false">{{i+1}}</span> </div>
             </td>
             <td mat-footer-cell class="br text-left " *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
-            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner </th>
+            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-16"> Owner </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> </div>
                 <div *ngFor="let owner of element.ownerList; let i = index">
@@ -59,7 +59,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-right">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br rightText w-11">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
@@ -70,7 +70,7 @@
         </ng-container>
 
         <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br t-right"> Rate </th>
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br rightText w-6 "> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{element.rate}} {{isLoading ? ' ' : '%'}} </div>
             </td>
@@ -78,7 +78,7 @@
         </ng-container>
 
         <ng-container matColumnDef="deposit">
-            <th mat-sort-header="deposit" mat-header-cell *matHeaderCellDef class="br t-right">
+            <th mat-sort-header="deposit" mat-header-cell *matHeaderCellDef class="br rightText w-12">
                 Monthly deposit
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
@@ -90,7 +90,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br t-right">
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br rightText w-12">
                 Maturity value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue}}</span> </div>
@@ -130,11 +130,9 @@
         </ng-container>
         <ng-container matColumnDef="icons" sticky>
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2">
+            <td mat-cell *matCellDef="let element" class="t-2 text-center">
                 <div *ngIf="!isLoading">
-                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                        more_vert
-                    </i>
+                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="openAddPORD(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailedPoRd(element)">Detailed view</button>

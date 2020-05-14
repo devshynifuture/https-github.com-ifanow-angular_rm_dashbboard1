@@ -167,7 +167,7 @@ export class AmcWiseComponent implements OnInit {
       })
     });
 
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'AMC wise MIS report');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'category-wise-aum-mis');
   }
 
   schemeWiseExcelReport(index) {
@@ -180,7 +180,7 @@ export class AmcWiseComponent implements OnInit {
         element.schemeList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       applicantList: false
@@ -188,7 +188,7 @@ export class AmcWiseComponent implements OnInit {
   }
 
   amcWiseExcelReport() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
       amcList: false,
       schemeList: false,
       applicantList: false

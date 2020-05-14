@@ -13,6 +13,12 @@ export class MfServiceService {
   }
 
   private mutualFundDataSource = new BehaviorSubject('');
+  private updateTransactionAfterAdd = new BehaviorSubject('');
+  private showMutualFundDropdown = new BehaviorSubject('');
+  private viewMode = new BehaviorSubject('');
+  private mfData = new BehaviorSubject('');
+  private navValue = new BehaviorSubject('');
+
 
   getPersonalDetails(data) {
     const obj = {
@@ -58,20 +64,20 @@ export class MfServiceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      if(element[key]){
+      if((element[key]) ? element[key].length> 0 : element[key]){
         filterData.push(element[key]);
       }
     });
     if (filterData.length > 0) {
       filterData.forEach(element => {
-        if(element.length > 0){
+        if (element.length > 0) {
           element.forEach(singleData => {
             finalDataSource.push(singleData);
           });
-        }else{
+        } else {
           finalDataSource.push({});
         }
-       
+
       });
     }
     return finalDataSource;
@@ -162,6 +168,7 @@ export class MfServiceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
+    let netGain =0;
     data.mutualFundTransactions.forEach(ele => {
       totalTransactionAmt += (ele.amount) ? ele.amount : 0;
       totalUnit += (ele.unit) ? ele.unit : 0;
@@ -171,7 +178,8 @@ export class MfServiceService {
       dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
       dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
       totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-      totalGain += (ele.gain) ? ele.gain : 0;
+      totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
+      netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0;
       absReturn += (ele.absReturn) ? ele.absReturn : 0;
       xirr += (ele.xirr) ? ele.xirr : 0;
       allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
@@ -368,5 +376,42 @@ export class MfServiceService {
 
   getMutualFundData() {
     return this.mutualFundDataSource.asObservable();
+  }
+
+  sendUpdatedTransactionAfterAdd(value) {
+    this.updateTransactionAfterAdd.next(value);
+  }
+
+  getUpdatedTransactionAfterAdd() {
+    return this.updateTransactionAfterAdd.asObservable();
+  }
+
+  changeShowMutualFundDropDown(value) {
+    this.showMutualFundDropdown.next(value);
+  }
+
+  getMutualFundShowDropdown() {
+    return this.showMutualFundDropdown.asObservable();
+  }
+  changeViewMode(value) {
+    this.viewMode.next(value);
+  }
+
+  getViewMode() {
+    return this.viewMode.asObservable();
+  }
+  setMfData(value) {
+    this.mfData.next(value);
+  }
+
+  getMfData() {
+    return this.mfData.asObservable();
+  }
+  setNavValue(value) {
+    this.navValue.next(value);
+  }
+
+  getNavValue() {
+    return this.navValue.asObservable();
   }
 }

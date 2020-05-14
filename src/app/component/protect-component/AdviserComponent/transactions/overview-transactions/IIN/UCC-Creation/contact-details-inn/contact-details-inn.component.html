@@ -1,237 +1,249 @@
 <div class="dialogclose">
-    <div class="row popup-header-fix-100">
-        <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-        </div>
-        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-
-            <p class="f-16 mb-0">
-                Investment onboarding - IIN/UCC
-            </p>
-        </div>
-        <!-- (click)="dialogClose()" for prod build  -->
-        <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16" (click)="close();">
-                clear
-            </i>
-        </div>
+  <div class="row popup-header-fix-100">
+    <div class="col-md-2 border-right-1 p-0">
+      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
+    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+
+      <p class="f-16 mb-0">
+        Investment onboarding - IIN/UCC
+      </p>
+    </div>
+    <!-- (click)="dialogClose()" for prod build  -->
+    <div class="col-md-2 text-right">
+      <i (click)="close();" class="material-icons pt-16 c-p pr-16">
+        clear
+      </i>
+    </div>
+  </div>
 </div>
 
 <div class="pt-60 mb-100" [formGroup]="contactDetails">
-    <div class="row">
-        <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
-        <div class="col-md-7 offset-2 p-0 bl-1 ">
-            <div class="p-20">
-                <h3 class="f-18 mb-12 f-600"> Contact person details </h3>
+  <div class="row">
+    <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
+    <div class="col-md-7 offset-2 p-0 bl-1 ">
+      <div class="p-20">
+        <h3 class="f-18 mb-12 f-600"> Contact person details </h3>
 
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Email </h3>
-                    </div>
-                    <div class="col-md-5 form-group">
+        <div class="row pt-32">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0"> Email </h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input class="form-control" formControlName="email" matInput maxlength="30" placeholder="Enter Email"
+                     type="text">
+              <mat-error class="">This field is required</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0"> Aadhar number </h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #aadharNumber [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12"
+                     appInputValueValidation class="form-control" formControlName="aadharNumber"
+                     matInput placeholder="Enter Aadhar number" type="number">
+              <mat-error class="f-12">This field is required</mat-error>
+              <mat-hint align="end" class="f-12 text-custom">
+                {{aadharNumber.value.length}} / 12
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0"> Mobile number </h3>
+          </div>
+          <div class="col-md-5">
+
+            <!-- <div class="col-md-5 pr-0">
+                    <div class="form-group">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Enter Email" matInput maxlength="30" formControlName="email" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Aadhar number </h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Enter Aadhar number" #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12" appInputValueValidation formControlName="aadharNumber" type="number" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
-                            <mat-hint align="end" class="f-12 text-custom">
-                                {{aadharNumber.value.length}} / 12
-                            </mat-hint>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Mobile number </h3>
-                    </div>
-                    <div class="col-md-5">
-
-                        <!-- <div class="col-md-5 pr-0">
-                                <div class="form-group">
-                                    <mat-form-field appearance="standard" floatLabel="never">
-                                        <mat-select class="form-control">
-                                            <mat-option value="" formControlName="isdCodeId" selected disabled>Select Country Code</mat-option>
-                                            <mat-option [value]="code.id" *ngFor="let code of isdCodes">
-                                                {{code.code}}({{code.countryName}})
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error>This field is required</mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div> -->
-
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-                            <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
-                        </mat-form-field>
-
-
-                    </div>
-                </div>
-
-
-
-                <h3 class="f-18 mb-12 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
-
-
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">Address line 1</h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Flat/building/street" matInput formControlName="address1" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">Address line 2</h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Block/locality" matInput formControlName="address2" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">Pin code </h3>
-                    </div>
-                    <div class="col-md-3 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Enter Pin code" #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation formControlName="pinCode" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-                            <mat-hint align="end" class=" text-custom">
-                                {{pincode.value.length}} / 6
-                            </mat-hint>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-1 p-0 mt-12">
-                        <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">City</h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input matInput placeholder="Enter City" formControlName="city" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <!-- <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">District</h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input matInput placeholder="Enter District" formControlName="district" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-
+                            <mat-select class="form-control">
+                                <mat-option value="" formControlName="isdCodeId" selected disabled>Select Country Code</mat-option>
+                                <mat-option [value]="code.id" *ngFor="let code of isdCodes">
+                                    {{code.code}}({{code.countryName}})
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div> -->
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">State</h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Enter State" matInput formControlName="state" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
 
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">Country</h3>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input matInput placeholder="Enter Country" formControlName="country" type="text" class="form-control">
-                            <mat-error class="">This field is required</mat-error>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 p-0">
-                        <h3 class="f-18 mb-12 mt-44 f-600">(ii) Corresponence/Local address details </h3>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <mat-checkbox checked="true">
-                            Same as above
-                        </mat-checkbox>
-                    </div>
-                </div>
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #mobileNo [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
+                     class="form-control" formControlName="mobileNo" matInput maxlength="10"
+                     placeholder="Enter Mobile number" type="number">
+              <mat-error class="">This field is required</mat-error>
+              <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
+            </mat-form-field>
 
 
-                <!-- <h3 class="f-16 pt-8 m-0">Same as above</h3> -->
-            </div>
-
+          </div>
         </div>
 
 
-        <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
-            <div class="row ">
-                <div class="col-md-12">
-                    <h3 class="f-16 mt-4 mb-10">Upload address proof</h3>
-                    <div class="dragDropCLass">
-                        Drag & drop file here <br> or <br> Browse
-                    </div>
-                </div>
+        <h3 class="f-18 mb-12 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
+
+
+        <div class="row pt-32">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">Address line 1</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input class="form-control" formControlName="address1" matInput placeholder="Flat/building/street"
+                     type="text">
+              <mat-error class="">This field is required</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">Address line 2</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input class="form-control" formControlName="address2" matInput placeholder="Block/locality" type="text">
+              <mat-error class="">This field is required</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">Pin code </h3>
+          </div>
+          <div class="col-md-3 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #pincode (focusout)="getPostalPin($event.target.value)"
+                     [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
+                     appInputValueValidation class="form-control" formControlName="pinCode"
+                     matInput placeholder="Enter Pin code" type="text">
+              <mat-error class="">This field is required</mat-error>
+              <mat-hint align="end" class=" text-custom">
+                {{pincode.value.length}} / 6
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-1 p-0 mt-12">
+            <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mt-4"></mat-spinner>
+          </div>
+        </div>
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">City</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input class="form-control" formControlName="city" matInput placeholder="Enter City" type="text">
+              <mat-error class="">This field is required</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- <div class="row pt-20">
+            <div class="col-md-4 text-right pr-0">
+                <h3 class="f-16 pt-20 m-0">District</h3>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input matInput placeholder="Enter District" formControlName="district" type="text" class="form-control">
+                    <mat-error class="">This field is required</mat-error>
+
+                </mat-form-field>
             </div>
         </div> -->
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">State</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input class="form-control" formControlName="state" matInput placeholder="Enter State" type="text">
+              <mat-error class="">This field is required</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row pt-20">
+          <div class="col-md-4 text-right pr-0">
+            <h3 class="f-16 pt-20 m-0">Country</h3>
+          </div>
+          <div class="col-md-5 form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input class="form-control" formControlName="country" matInput placeholder="Enter Country" type="text">
+              <mat-error class="">This field is required</mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <h3 class="f-18 mb-12 mt-44 f-600">(ii) Corresponence/Local address details </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 p-0 text-left">
+            <mat-checkbox checked="true">
+              Same as above
+            </mat-checkbox>
+          </div>
+        </div>
+
+
+        <!-- <h3 class="f-16 pt-8 m-0">Same as above</h3> -->
+      </div>
 
     </div>
+
+
+    <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+        <div class="row ">
+            <div class="col-md-12">
+                <h3 class="f-16 mt-4 mb-10">Upload address proof</h3>
+                <div class="dragDropCLass">
+                    Drag & drop file here <br> or <br> Browse
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+  </div>
 </div>
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-    <div class="col-md-3 p-0 d-flex align-items-center ">
-        <!-- <a class="text-white f-300" (click)="saveContactDetails('skip')"> Skip this step </a> -->
-    </div>
+  <div class="col-md-3 p-0 d-flex align-items-center ">
+    <!-- <a class="text-white f-300" (click)="saveContactDetails('skip')"> Skip this step </a> -->
+  </div>
 
-    <div class="col-md-5 center_menu">
-        <a class="activeLink" (click)="SendToForm('first',false);"> First holder </a>
-        <a class="activeLink" (click)="SendToForm('second',false);"> Second holder </a>
-        <a class="activeLink" (click)="SendToForm('third',false);"> Third holder </a>
-    </div>
+  <div class="col-md-5 center_menu">
+<!--    <a class="activeLink"> First holder </a>-->
+    <!--    <a (click)="SendToForm('first',false);" class="activeLink"> First holder </a>-->
+    <!--    <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink"> Second-->
+    <!--      holder </a>-->
+    <!--    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink"> Third-->
+    <!--      holder </a>-->
+  </div>
 
-    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+  <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button (click)="openPersonalDetails()">
-            PREVIOUS
-        </button>
+    <button (click)="openPersonalDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+      PREVIOUS
+    </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">NEXT</button>
-      
+    <button (click)="SendToForm(true);" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
+            mat-button>NEXT
+    </button>
 
 
-    </div>
+  </div>
 
 </div>

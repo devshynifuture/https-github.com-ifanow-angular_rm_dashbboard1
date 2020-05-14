@@ -48,7 +48,7 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type) {
+  getSubCategoryArrayForTransaction(mutualFundList, type,nav) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
@@ -66,9 +66,19 @@ export class TempserviceService {
           if(reportType != 'schemeName'){
             filteredData.push({groupName: key});
           }
+          if(nav){
+            nav.forEach(element => {
+              if(element.schemeCode == singleData.schemeCode){
+                singleData.avgCostNav = element.nav;
+              }
+            }); 
+          }
+       
         const obj = {
           schemeName: singleData.schemeName,
-          nav: singleData.nav
+          nav: singleData.nav,
+          navDate:singleData.navDate,
+          avgNav:singleData.avgCostNav
         };
         filteredData.push(obj);
         const obj2 = {
@@ -77,7 +87,8 @@ export class TempserviceService {
           folio: singleData.folioNumber
         };
         filteredData.push(obj2);
-        singleData.mutualFundTransactions.forEach((ele) => {
+        singleData.mutualFundTransactions.forEach((ele,ind) => {
+          ele.indexId = (ind+1);
           filteredData.push(ele);
         });
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
@@ -212,8 +223,9 @@ export class TempserviceService {
         dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
         dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
         totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-        totalGain += (ele.gain) ? ele.gain : 0;
+        totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
         absReturn += (ele.absReturn) ? ele.absReturn : 0;
+        netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
         xirr += (ele.xirr) ? ele.xirr : 0;
         allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
       });

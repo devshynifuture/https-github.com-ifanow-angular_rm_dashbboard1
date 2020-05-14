@@ -5,6 +5,11 @@
       background:#fff;
     }
   }
+  .commom-btn-mob{
+    height: 20px !important;
+    line-height: 20px !important;
+    padding: 0 5px !important;
+  }
   .profile-save-bottom {
     background: #FAFAFA;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14);
@@ -101,6 +106,22 @@
           background: #008FFF;
         }
       }
+    }
+  }
+  .mob-scroll{
+        white-space: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+  }
+  .mode-holding{
+    .mw-97{
+      min-width: 97px !important;
+    }
+    .mw-89{
+      min-width: 89px !important;
     }
   }
 }

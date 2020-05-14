@@ -77,7 +77,10 @@ export class OverviewProfileComponent implements OnInit {
         } else {
           this.letsideBarLoader = false;
           // this.authService.setClientData(data);
+          (data.martialStatusId == 1) ? data['martialStatus'] = "Married" : (data.martialStatusId == 2) ? data['martialStatus'] = "Unmarried" : (data.martialStatusId == 0) ? data['martialStatus'] = "N/A" : data['martialStatus'] = "Other";
+          (data.genderId == 1) ? data['gender'] = "Male" : (data.genderId == 2) ? data['gender'] = "Female" : data['gender'] = "Other"
           this.clientOverviewData = data;
+
           this.calculateAge(this.clientOverviewData.dateOfBirth);
         }
       },
@@ -175,8 +178,7 @@ export class OverviewProfileComponent implements OnInit {
         if (data && data.length > 0) {
           this.bankList = data;
           this.bankList.forEach(singleBank => {
-            singleBank.accountTypeName = singleBank.accountType ?
-              singleBank.accountType == '1' ? 'Current A/c' : 'Saving A/c' : 'Saving A/c';
+            singleBank.accountTypeName = (singleBank.accountType == '1') ? 'Saving A/c' : (singleBank.accountType == '2') ? 'Current A/c' : 'Cash credit A/c';
             singleBank.shortAddress = singleBank.address ? singleBank.address.city ? singleBank.address.city : '' : '';
           });
           this.selectedBankData = data[0];

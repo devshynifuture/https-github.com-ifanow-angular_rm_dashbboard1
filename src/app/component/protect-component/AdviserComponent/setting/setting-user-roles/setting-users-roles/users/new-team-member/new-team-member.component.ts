@@ -1,14 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators, FormArray} from '@angular/forms';
-import {SettingsService} from '../../../../settings.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType, UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { SettingsService } from '../../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatProgressButtonOptions } from '../../../../../../../../common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-new-team-member',
@@ -25,7 +27,7 @@ export class NewTeamMemberComponent implements OnInit {
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Login to your account',
+    text: 'SEND INVITE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -39,12 +41,15 @@ export class NewTeamMemberComponent implements OnInit {
     // }
   };
   isdCodes: Array<any> = [];
-
+  logoImg;
   /** control for the MatSelect filter keyword */
   filterCtrl: FormControl = new FormControl();
   filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  imageData: any;
+  uploadedImage;
+  imageLoader: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -65,8 +70,13 @@ export class NewTeamMemberComponent implements OnInit {
       .subscribe(() => {
         this.filterCodes();
       });
+    this.createForm();
   }
-
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   getIsdCodesData() {
     this.loader(1);
     this.peopleService.getIsdCode({}).subscribe(
@@ -89,7 +99,7 @@ export class NewTeamMemberComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId
     };
-    this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
+    this.settingsService.getAdvisorRoles(obj).subscribe((res) => {
       this.roles = res;
       this.loader(-1);
     }, err => {
@@ -104,18 +114,69 @@ export class NewTeamMemberComponent implements OnInit {
       adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
       parentId: this.advisorId,
       fullName: [this.data.mainData.fullName || '',
-        [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
+      [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       isdCodeId: [this.data.mainData.isdCodeId || 73, [Validators.required]],
       roleId: [roleId, [Validators.required]],
+      url: []
     });
   }
+  onChange(event) {
+    this.imageLoader = true;
+    console.log('Biller profile logo Onchange event : ', event);
+    if (event && event.target && event.target.files) {
+      const fileList = event.target.files;
+      if (fileList.length == 0) {
+        console.log('Biller profile logo Onchange fileList : ', fileList);
 
+        return;
+      }
+      this.imageData = fileList[0];
+
+      console.log(this.imageData);
+      this.teamMemberFG.controls.url.reset();
+      this.logoImg = this.imageData;
+      // this.logoImg=
+      const reader = new FileReader();
+      reader.onload = e => this.logoImg = reader.result;
+      // reader.
+      reader.readAsDataURL(this.imageData);
+      if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
+        const files = [this.imageData];
+        const tags = this.advisorId + ',biller_profile_logo,';
+        PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
+          (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+            if (status == 200) {
+              this.imageLoader = false;
+              const responseObject = JSON.parse(response);
+              console.log('onChange file upload success response url : ', responseObject.url);
+              this.logoImg = responseObject.url;
+              console.log('uploadImage success this.imageData : ', this.imageData);
+              // this.logUrl.controls.url.setValue(this.imageData);
+              this.uploadedImage = JSON.stringify(responseObject);
+              this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+            }
+
+          });
+
+      }
+    }
+  }
+  cancelImageUpload() {
+    this.logoImg = undefined;
+    this.teamMemberFG.controls.url.reset();
+  }
   save() {
     if (this.teamMemberFG.invalid) {
       this.teamMemberFG.markAllAsTouched();
-    } else {
+      return;
+    }
+    else if (this.logoImg == undefined) {
+      this.eventService.openSnackBar("Please upload logo", "Dismiss")
+      return;
+    }
+    else {
       if (this.barButtonOptions.active) {
       } else {
         this.barButtonOptions.active = true;
@@ -129,14 +190,17 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
+    this.barButtonOptions.active = true;
+    this.teamMemberFG.value['profilePic'] = this.logoImg;
     const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
+      this.barButtonOptions.active = false;
       this.close(true);
-      this.eventService.openSnackBar('Invitation sent successfully');
+      this.eventService.openSnackBar('Invitation sent successfully', "Dismiss");
     }, (err) => {
       console.error(err);
       this.barButtonOptions.active = false;
-      this.eventService.openSnackBar('Error occured.');
+      this.eventService.openSnackBar('Error occured.', "Dismiss");
     });
   }
 
@@ -144,20 +208,22 @@ export class NewTeamMemberComponent implements OnInit {
     const dataObj = {
       id: this.data.mainData.id,
       roleId: this.teamMemberFG.controls.roleId.value,
+      profilePic: this.logoImg
     };
-
+    this.barButtonOptions.active = true;
     this.settingsService.editTeamMember(dataObj).subscribe((res) => {
       this.close(true);
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar('Member data updated');
     }, (err) => {
       console.error(err);
-      this.barButtonOptions.active = true;
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar('Error occured.');
     });
   }
 
   close(status = false) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: status });
   }
 
   loader(countAdder) {
@@ -165,6 +231,8 @@ export class NewTeamMemberComponent implements OnInit {
     if (this.counter == 0) {
       this.isLoading = false;
       this.createForm();
+      (this.data.mainData.profilePicUrl) ? this.barButtonOptions.text = "SAVE" : this.barButtonOptions.text = "SEND INVITE";
+      this.logoImg = this.data.mainData.profilePicUrl;
       this.checkIfRoleExists();
     } else {
       this.isLoading = true;
@@ -174,7 +242,7 @@ export class NewTeamMemberComponent implements OnInit {
   checkIfRoleExists() {
     const teamMemberRoleId = this.teamMemberFG.get('roleId') as FormControl;
     const roleExist = this.roles.find((role) => {
-      if (role.id == teamMemberRoleId.value) {
+      if (role.roleMasterId == teamMemberRoleId.value) {
         return true;
       } else {
         return false;

@@ -86,7 +86,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BONDS, data);
   }
   geCalculatedEmi(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, {request :JSON.stringify(data)});
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, { request: JSON.stringify(data) });
   }
 
   addRecurringDeposit(data) {
@@ -422,7 +422,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams);
   }
   getCompanyNames(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET,{query:data});
+    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET, { query: data });
   }
 
 
@@ -631,11 +631,12 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
   getMutualFund(data) {
-    const obj ={
-      toDate : data.toDate,
-      id:data.id
-    }
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
+
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
+  }
+  getNav(data) {
+
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NAV, data);
   }
   getReportWiseCalculations(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{report:data.request});
@@ -648,7 +649,7 @@ export class CustomerService {
       lastDate : data.lastDate,
       report:data.reportType
     }
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{reportType:obj});
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,obj);
   }
   capitalGainGet(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);
@@ -839,13 +840,28 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST, data)
   }
   postAddTransactionMutualFund(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUFUAL_FUND_TRANSACTION_ADD, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_ADD, data);
   }
   postEditTransactionMutualFund(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_EDIT, data);
   }
-  postDeleteTransactionMutualFund(data){
+  postDeleteTransactionMutualFund(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_DELETE, data);
+  }
+  getFamilyMemberListByClientId(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID, data);
+  }
+  getSchemeNameList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_SCHEME_NAME_LIST_GET, data);
+  }
+  postMutualFundAdd(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_ADD, data);
+  }
+  postMutualFundEdit(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_EDIT, data);
+  }
+  postMutualFundDelete(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_DELETE, data);
   }
 }
 

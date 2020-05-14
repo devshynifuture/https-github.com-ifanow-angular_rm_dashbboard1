@@ -35,6 +35,10 @@ export class OnlineTransactionService {
     return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_SUB_BROKER, data, 1);
   }
 
+  getInvestorStatusCheck(data) {
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.INVESTOR_STATUS_CHECK, data, 1);
+  }
+
   getBSESubBrokerCredentials(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_BSE_SUB_BROKER_CREDENTIALS, data, 1);
   }
@@ -196,7 +200,13 @@ export class OnlineTransactionService {
     return this.http.get(apiConfig.TRANSACT + appConfig.TAX_MASTER, data);
   }
 
+  getInvestorFormUploadDetail(data) {
+    return this.http.getEncodedBasic(apiConfig.TRANSACT + appConfig.INVESTOR_FORM_UPLOAD_DETAIL, data, 1);
+  }
+
+//
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }
 }
+

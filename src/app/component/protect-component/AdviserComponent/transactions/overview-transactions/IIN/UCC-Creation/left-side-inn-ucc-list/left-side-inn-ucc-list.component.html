@@ -1,76 +1,76 @@
 <div class="col-md-2 col-2 fixed-top">
-    <div class="details_ui">
-        <ul>
-            <li [ngClass]="inputData.personal == true ? 'text-success' : 'text-primary'">
+  <div class="details_ui">
+    <ul>
+      <li [ngClass]="inputData.personal == true ? 'text-success' : 'text-primary'">
                 <span [ngClass]="inputData.personal == true ? 'bg-success' : 'bg-primary text-white'"> <i
-                        *ngIf="inputData.personal == true" class="material-icons text-white">
+                  *ngIf="inputData.personal == true" class="material-icons text-white">
                         done
                     </i><i *ngIf="!inputData">1
                     </i></span> Personal details
-            </li>
-            <li *ngIf="inputData.contact == undefined">
-                <span class="bg-grey lt"> 2 </span> Contact details
-            </li>
-            <li *ngIf="inputData.contact == true || inputData.contact == false"
-                [ngClass]="inputData.contact == true ? 'text-success' : 'text-primary'">
+      </li>
+      <li *ngIf="inputData.contact == undefined">
+        <span class="bg-grey lt"> 2 </span> Contact details
+      </li>
+      <li *ngIf="inputData.contact == true || inputData.contact == false"
+          [ngClass]="inputData.contact == true ? 'text-success' : 'text-primary'">
                 <span [ngClass]="inputData.contact == true ? 'bg-success' : 'bg-primary text-white'"> <i
-                        *ngIf="inputData.contact == true" class="material-icons text-white">
+                  *ngIf="inputData.contact == true" class="material-icons text-white">
                         done
                     </i><i *ngIf="inputData.contact == false">2
                     </i> </span> Contact details
-            </li>
-            <li *ngIf="inputData.bank == undefined">
-                <span class="bg-grey lt"> 3 </span> Bank details
-            </li>
-            <li *ngIf="inputData.bank == false || inputData.bank == true"
-                [ngClass]="inputData.bank == true ? 'text-success' : 'text-primary'">
+      </li>
+      <li *ngIf="inputData.bank == undefined">
+        <span class="bg-grey lt"> 3 </span> Bank details
+      </li>
+      <li *ngIf="inputData.bank == false || inputData.bank == true"
+          [ngClass]="inputData.bank == true ? 'text-success' : 'text-primary'">
                 <span [ngClass]="inputData.bank == true ? 'bg-success' : 'bg-primary  text-white'">
                     <i *ngIf="inputData.bank == true" class="material-icons text-white">
                         done
                     </i> <i *ngIf="inputData.bank == false">3
                     </i></span> Bank
-                details
-            </li>
-            <li *ngIf="inputData.nominee == undefined">
-                <span class="bg-grey lt"> 4 </span> Nominee details
-            </li>
-            <li *ngIf="inputData.nominee == false || inputData.nominee == true"
-                [ngClass]="inputData.nominee == true ? 'text-success' : 'text-primary'">
+        details
+      </li>
+      <li *ngIf="inputData.nominee == undefined">
+        <span class="bg-grey lt"> 4 </span> Nominee details
+      </li>
+      <li *ngIf="inputData.nominee == false || inputData.nominee == true"
+          [ngClass]="inputData.nominee == true ? 'text-success' : 'text-primary'">
                 <span [ngClass]="inputData.nominee == true ? 'bg-success' : 'bg-primary  text-white'"> <i
-                        *ngIf="inputData.nominee == true" class="material-icons text-white">
+                  *ngIf="inputData.nominee == true" class="material-icons text-white">
                         done
                     </i>
                     <i *ngIf="inputData.nominee == false">4
                     </i></span> Nominee details
-            </li>
-            <li *ngIf="inputData.fatca == undefined">
-                <span class="bg-grey lt"> 5 </span> FATCA details
-            </li>
-            <li *ngIf="inputData.fatca == false || inputData.fatca == true"
-                [ngClass]="inputData.fatca == true ? 'text-success' : 'text-primary'">
+      </li>
+      <li *ngIf="inputData.fatca == undefined">
+        <span class="bg-grey lt"> 5 </span> FATCA details
+      </li>
+      <li *ngIf="inputData.fatca == false || inputData.fatca == true"
+          [ngClass]="inputData.fatca == true ? 'text-success' : 'text-primary'">
                 <span [ngClass]="inputData.fatca == true ? 'bg-success' : 'bg-primary  text-white'"> <i
-                        *ngIf="inputData.fatca == true" class="material-icons text-white">
+                  *ngIf="inputData.fatca == true" class="material-icons text-white">
                         done
                     </i>
                     <i *ngIf="inputData.fatca == false">5
                     </i>
                 </span> FATCA details
-            </li>
-            <li *ngIf="inputData.submit == undefined">
-                <span class="bg-grey lt"> 6 </span> Review & submit
-            </li>
-            <li *ngIf="inputData.submit == false || inputData.submit == true"
-                [ngClass]="inputData.submit == true ? 'text-success' : 'text-primary'">
+      </li>
+      <li *ngIf="inputData.submit == undefined">
+        <span class="bg-grey lt"> 6 </span> Review & submit
+      </li>
+      <li *ngIf="inputData.submit == false || inputData.submit == true"
+          [ngClass]="inputData.submit == true ? 'text-success' : 'text-primary'">
                 <span [ngClass]="inputData.submit == true ? 'bg-success' : 'bg-primary  text-white'"> <i
-                        *ngIf="inputData.submit == true" class="material-icons text-white">
+                  *ngIf="inputData.submit == true" class="material-icons text-white">
                         done
                     </i>
                     <i *ngIf="inputData.fatca == false">6
                     </i>
                 </span> Review & submit
-            </li>
+      </li>
 
-        </ul>
-    </div>
+    </ul>
+  </div>
 
 </div>

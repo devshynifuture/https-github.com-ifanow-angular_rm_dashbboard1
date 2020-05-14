@@ -4,10 +4,8 @@
             <div class="row justify-content-right" [formGroup]="selectBrokerForm">
                 <div class="col-md-6"></div>
                 <div class="col-md-4">
-                    <div matTooltip="Kindly, Select the broker code" [matTooltipDisabled]="isBrokerSelected"
-                        matTooltipPosition="below">
-                        <button [disabled]="!isBrokerSelected" class="btn-primary addon" mat-stroked-button
-                            color="primary" (click)="openAumReconciliation('startReconciliation','')">
+                    <div matTooltip="Kindly, Select the broker code" [matTooltipDisabled]="isBrokerSelected" matTooltipPosition="below">
+                        <button [disabled]="!isBrokerSelected" class="btn-primary addon" mat-stroked-button color="primary" (click)="openAumReconciliation('startReconciliation','')">
                             START RECONCILIATION
                         </button>
 
@@ -15,24 +13,21 @@
                 </div>
                 <div class="col-md-2">
                     <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
-                    <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker">
+                    <mat-select class="b-a text-left form-control" formControlName="selectBrokerId" placeholder="Select broker">
                         <mat-option>
                             Select Option
                         </mat-option>
-                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id"
-                                    (click)="getAumReconHistoryData()">
-                          {{ broker.brokerCode }}
+                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id" (click)="getAumReconHistoryData()">
+                            {{ broker.brokerCode }}
                         </mat-option>
                     </mat-select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row"
-        *ngIf="selectBrokerForm.get('selectBrokerId').valid && selectBrokerForm.get('selectBrokerId').touched">
+    <div class="row" *ngIf="selectBrokerForm.get('selectBrokerId').valid && selectBrokerForm.get('selectBrokerId').touched">
         <div class="col-md-12">
-            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low" appSkeletonLoading
-                [appSkeletonLoading]="isLoading">
+            <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="doneOn">
                     <th mat-header-cell *matHeaderCellDef class="w-20"> Last Done On </th>
                     <td mat-cell *matCellDef="let element">
@@ -129,8 +124,7 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-stroked-button class="btn-primary addon" color="primary"
-                            (click)="openAumReconciliation('report',element)">
+                        <button mat-stroked-button class="btn-primary addon" color="primary" (click)="openAumReconciliation('report',element)">
                             Report
                         </button>
                     </td>
@@ -146,8 +140,7 @@
         </div>
     </div>
 
-    <div class="row text-center"
-        *ngIf="selectBrokerForm.get('selectBrokerId').invalid && selectBrokerForm.get('selectBrokerId').untouched">
+    <div class="row text-center" *ngIf="selectBrokerForm.get('selectBrokerId').invalid && selectBrokerForm.get('selectBrokerId').untouched">
         <div class="col-md-12 b-a p-44 mt-12 text-primitive">
             Please Select Broker From the Drop down
         </div>

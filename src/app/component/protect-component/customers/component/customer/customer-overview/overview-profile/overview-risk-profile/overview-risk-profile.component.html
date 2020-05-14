@@ -1,13 +1,37 @@
-<div *ngIf="showLoader==true">
+<!-- <div *ngIf="showLoader==true">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
+</div> -->
+
+
+
 <div class="wrapper-28" *ngIf="showRisk == false">
     <div class="row">
         <div class="col-md-9 pl-0">
             <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can take.
             </h3>
+
+            <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation">
+                <div class="col-md-12 mb-8 realClass">
+                    <div class="bar height23">
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-8 realClass">
+                    <div class="bar height23">
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-8 realClass">
+                    <div class="bar height23">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- page loader -->
+
             <div class="pt-20" *ngFor="let item of riskAssessmentQuestionList">
-                <mat-accordion>
+                <mat-accordion class="riskAccordion">
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -42,7 +66,7 @@
                 <div class="col-md-12 p-0 d-flex justify-content-between">
                     <button mat-flat-button class="b-a-custom text-primary" (click)="reset(true);showRisk = false">Risk
                         assessment</button>
-                    <button mat-flat-button class="b-a-custom text-primary"
+                    <button mat-flat-button class="b-a-custom ml-12 text-primary"
                         (click)="open('riskProfile', null)">History</button>
                 </div>
             </div>

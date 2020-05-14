@@ -257,11 +257,22 @@ export class FileOrderingBulkComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
           if (UtilService.isRefreshRequired(upperSliderData)) {
-            this.fileOrderBulkHistoryListGet({
-              days: this.filterForm.get("filterByPeriod").value.value,
-              rtId: this.filterForm.get("filterByRta").value.value,
-              rmId: this.filterForm.get("filterByRmName").value.id,
-            });
+            let days = this.filterForm.get("filterByPeriod").value ? this.filterForm.get("filterByPeriod").value.value : null;
+            let rtId = this.filterForm.get("filterByRta").value ? this.filterForm.get("filterByRta").value.value : null;
+            let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
+
+            if (days && rtId && rmId) {
+              this.fileOrderBulkHistoryListGet({
+                days,
+                rtId,
+                rmId,
+              });
+            } else {
+              this.fileOrderBulkHistoryListGet({
+                days: 2,
+                rmId: 2
+              })
+            }
           }
           subscription.unsubscribe();
         }
@@ -283,11 +294,21 @@ export class FileOrderingBulkComponent implements OnInit {
         console.log("this is sidebardata in subs subs : ", sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.fileOrderBulkHistoryListGet({
-              days: this.filterForm.get("filterByPeriod").value.value,
-              rtId: this.filterForm.get("filterByRta").value.value,
-              rmId: this.filterForm.get("filterByRmName").value.id,
-            });
+            let days = this.filterForm.get("filterByPeriod").value ? this.filterForm.get("filterByPeriod").value.value : null;
+            let rtId = this.filterForm.get("filterByRta").value ? this.filterForm.get("filterByRta").value.value : null;
+            let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
+            if (days && rtId && rmId) {
+              this.fileOrderBulkHistoryListGet({
+                days: this.filterForm.get("filterByPeriod").value.value,
+                rtId: this.filterForm.get("filterByRta").value.value,
+                rmId: this.filterForm.get("filterByRmName").value.id,
+              });
+            } else {
+              this.fileOrderBulkHistoryListGet({
+                days: 2,
+                rmId: 2,
+              });
+            }
             console.log(
               "this is sidebardata in subs subs 3 ani: ",
               sideBarData
@@ -360,6 +381,10 @@ export class FileOrderingBulkComponent implements OnInit {
     }
     if (index >= 0) {
       this.filterBy.splice(index, 1);
+      this.fileOrderBulkHistoryListGet({
+        days: 2,
+        rmId: 2
+      })
     }
   }
 }

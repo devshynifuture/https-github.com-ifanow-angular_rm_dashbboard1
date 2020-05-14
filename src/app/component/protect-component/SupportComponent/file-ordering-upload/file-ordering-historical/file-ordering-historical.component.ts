@@ -107,8 +107,11 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	}
 
 	getRtName(id) {
-		let obj = this.rtaList.find(c => c.value === id);
-		return obj.name;
+		return this.rtaList.find(c => c.value === id).name
+	}
+
+	getRtIdOfName(name) {
+		return this.rtaList.find(c => c.name === name).id;
 	}
 
 	ngOnInit() {
@@ -173,7 +176,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	refreshFileOrder() {
 		this.fileOrderHistoryListGet({
 			days: this.days,
-			rtId: this.rtId,
+			rtId: this.rtId
 		});
 	}
 
@@ -293,7 +296,16 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
 		if (index >= 0) {
 			this.filterBy.splice(index, 1);
+
+			if (index == 0) {
+				console.log("no filter items present:: calling default days 2 rmId 2")
+				this.fileOrderHistoryListGet({
+					days: 2,
+					rmId: this.rmId
+				})
+			}
 		}
+
 	}
 
 	openHistoricalFileOrderingSlider(data) {
@@ -311,11 +323,22 @@ export class FileOrderingHistoricalComponent implements OnInit {
 				if (UtilService.isDialogClose(sideBarData)) {
 					if (UtilService.isRefreshRequired(sideBarData)) {
 						this.dataSource.data = ELEMENT_DATA;
-						this.fileOrderHistoryListGet({
-							days: this.filterForm.get("filterByPeriod").value.value,
-							rtId: this.filterForm.get("filterByRta").value.value,
-							rmId: this.filterForm.get("filterByRmName").value.id,
-						});
+						let days = this.filterForm.get("filterByPeriod").value ? this.filterForm.get("filterByPeriod").value.value : null;
+						let rtId = this.filterForm.get("filterByRta").value ? this.filterForm.get("filterByRta").value.value : null;
+						let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
+
+						if (days && rtId && rmId) {
+							this.fileOrderHistoryListGet({
+								days: this.filterForm.get("filterByPeriod").value.value,
+								rtId: this.filterForm.get("filterByRta").value.value,
+								rmId: this.filterForm.get("filterByRmName").value.id,
+							});
+						} else {
+							this.fileOrderHistoryListGet({
+								days: 2,
+								rmId: this.rmId,
+							});
+						}
 					}
 					console.log("this is sidebardata in subs subs 2: ", sideBarData);
 					rightSideDataSub.unsubscribe();
@@ -342,12 +365,22 @@ export class FileOrderingHistoricalComponent implements OnInit {
 				if (UtilService.isDialogClose(upperSliderData)) {
 					if (UtilService.isRefreshRequired(upperSliderData)) {
 						this.dataSource.data = ELEMENT_DATA;
+						let days = this.filterForm.get("filterByPeriod").value ? this.filterForm.get("filterByPeriod").value.value : null;
+						let rtId = this.filterForm.get("filterByRta").value ? this.filterForm.get("filterByRta").value.value : null;
+						let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
 
-						this.fileOrderHistoryListGet({
-							days: this.filterForm.get("filterByPeriod").value.value,
-							rtId: this.filterForm.get("filterByRta").value.value,
-							rmId: this.filterForm.get("filterByRmName").value.id,
-						});
+						if (days && rtId && rmId) {
+							this.fileOrderHistoryListGet({
+								days: this.filterForm.get("filterByPeriod").value.value,
+								rtId: this.filterForm.get("filterByRta").value.value,
+								rmId: this.filterForm.get("filterByRmName").value.id,
+							});
+						} else {
+							this.fileOrderHistoryListGet({
+								days: 2,
+								rmId: this.rmId,
+							});
+						}
 					}
 					// this.getClientSubscriptionList();
 					subscription.unsubscribe();

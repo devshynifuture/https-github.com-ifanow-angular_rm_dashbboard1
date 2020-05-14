@@ -1,11 +1,14 @@
 <div class="popup-header-fix-60">
   <div class="row bb-1">
     <div class="col-md-8 p-0">
-      <h4 class="mb-0 wrapper-20">{{ data.flag === 'addTransaction' ? 'Add': 'Edit' }} scheme level transactions</h4>
+      <h4 class="mb-0 wrapper-20">
+        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': 'Add Mutual Fund and' }}
+        scheme level transactions
+      </h4>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
-        <i class="material-icons c-p pt-8 v-middle" (click)="Close(true)"> clear</i>
+        <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
       </div>
     </div>
   </div>
@@ -23,7 +26,7 @@
             <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
               [data]='ownerData' formControlName="ownerName" class="form-control br-0">
               <mat-option value=''>Select family members</mat-option>
-              <mat-option *ngFor="let f of data.family_member_list" [value]="f.name">
+              <mat-option *ngFor="let f of familyMemberList" [value]="f.name">
                 <span>{{f.name}}</span>
               </mat-option>
             </mat-select>
@@ -43,12 +46,25 @@
       <div class="col-md-5">
         <div class="form-group">
           <mat-form-field floatLabel="never" appearance="standard">
-            <input matInput #schemeName type="text" class="form-control br-0" formControlName="schemeName"
-              placeholder="Start typing to see scheme names">
-            <mat-error class="f-12">
-              This field is required
-            </mat-error>
+            <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
+              aria-label="schemeName" [matAutocomplete]="auto" [formControl]="schemeNameControl">
+
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
+              <ng-container *ngIf="!isLoadingForDropDown">
+                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme.schemeName"
+                  (click)="mapSchemeWithForm(scheme)" [matTooltip]="scheme.schemeName" matTooltipPosition="after">
+                  <span><b>{{scheme.schemeName}}</b> </span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
           </mat-form-field>
+          <br>
+          <ng-container *ngIf="filteredSchemeError">
+            <span class="f-12">
+              {{errorMsg}}
+            </span>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -60,7 +76,9 @@
       <div class="col-md-3">
         <div class="form-group">
           <mat-form-field>
-            <input matInput #folioNumber type="text" class="form-control br-0" formControlName="folioNumber">
+            <input matInput #folioNumber appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FORWARD_SLASH" type="text" class="form-control br-0"
+              formControlName="folioNumber">
             <mat-error class="f-12">
               This field is required
             </mat-error>
@@ -152,8 +170,8 @@
       <div class="col-md-2 p-0">
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input (click)="picker.open()" matInput autocomplete="off" formControlName="date" [matDatepicker]="picker"
-              class="form-control br-0 b-0">
+            <input (click)="picker.open()" matInput (dateChange)="setDateChange($event)" autocomplete="off"
+              formControlName="date" [matDatepicker]="picker" class="form-control br-0 b-0">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>

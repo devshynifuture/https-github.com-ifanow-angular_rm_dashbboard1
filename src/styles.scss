@@ -975,8 +975,8 @@
                 #ui-liabilities {
                   .vertical-menu {
                     // height: 100vh;
-                    position: relative;
-                    height: calc(100vh - 147px);
+                    // position: relative;
+                    // height: calc(100vh - 147px);
                     display: block !important;
                     width: 100%;
                     text-align: left;
@@ -1621,12 +1621,14 @@
                 }
 
                 .textRight .mat-sort-header-container {
-                  justify-content: flex-end;
+                  display: block;
                 }
 
                 .textRight .mat-sort-header-container button {
                   text-align: right;
                 }
+
+                 
 
                 .example-container {
                   height: auto;
@@ -2005,8 +2007,6 @@
                   }
                 }
 
-
-
                 #ui-plan-secondhead {
                   position: fixed !important;
                   margin-right: 0px !important;
@@ -2112,3 +2112,6 @@ ngx-slick-carousel > .slick-disabled {
   border-left: transparent;
   border-right: transparent;
 }
+
+
+

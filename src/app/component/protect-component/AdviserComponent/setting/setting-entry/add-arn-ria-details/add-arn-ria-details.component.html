@@ -84,10 +84,11 @@
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-20">EUIN</h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-5">
             <div class="form-group p-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input matInput type="text" placeholder="Enter EUIN" formControlName="euin" class="form-control br-0">
+                    <button mat-stroked-button class="b-0 borderBtn h-40   bg-grey lter min-80 text-custom">E</button>
+                    <input matInput type="text" placeholder="Enter EUIN" formControlName="euin" class="form-control br-0" maxlength="6" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                     <mat-error *ngIf="arnRiaFG.get('euin').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="arnRiaFG.get('euin').errors?.pattern">Valid EUIN required</mat-error>
                 </mat-form-field>
@@ -113,11 +114,10 @@
 
             </div>
         </div>
-        <div class="col-md-2 d-flex align-items-center">
+        <div class="col-md-2 d-flex align-items-center" *ngIf="arnRiaFG.get('commencementDate').value">
             <i (click)="clearDate('commencementDate')" class="material-icons c-p">
-                cancel
+                clear
             </i>
-            <!-- <button (click)="clearDate('commencementDate')">clear</button> -->
         </div>
     </div>
     <div class="row pt-40">
@@ -139,9 +139,9 @@
 
             </div>
         </div>
-        <div class="col-md-2 d-flex align-items-center">
+        <div class="col-md-2 d-flex align-items-center" *ngIf="arnRiaFG.get('renewalDate').value">
             <i (click)="clearDate('renewalDate')" class="material-icons c-p">
-                cancel
+                clear
             </i>
             <!-- <button (click)="clearDate('commencementDate')">clear</button> -->
         </div>

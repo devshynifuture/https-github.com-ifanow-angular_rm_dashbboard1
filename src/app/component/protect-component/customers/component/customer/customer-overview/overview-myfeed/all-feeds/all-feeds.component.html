@@ -43,7 +43,7 @@
                             <div class="borderChatBox bg-white">
                                 <div class="row">
                                     <div class="col-md-6 p-0">
-                                        <div id="piechartMutualFund" [chart]="chart"></div>
+                                        <div class="piechartMutualFund" [chart]="assetAllocationPieConfig"></div>
                                     </div>
                                     <div class="col-md-6 pr-0">
                                         <ul class="pointUl">
@@ -61,7 +61,7 @@
                 </div>
 
                 <!-- portfolio section -->
-                <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.displaySection">
+                <div class="wrapperBox">
                     <div class="row">
                         <div class="col-md-8 pl-0 d-flex align-items-center">
                             <h5 class="roboto mb-8">Portfolio</h5>
@@ -74,7 +74,7 @@
 
                     <div class="scrollingDiv d-flex row">
                         <!-- portfolio data present -->
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="assetAllocationPieConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
                             <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
                                 <div class="row">
                                     <div class="col-md-9  pr-0">
@@ -442,7 +442,7 @@
 
                     <div class="scrollingDiv d-flex">
 
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig" #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
                             <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -488,7 +488,7 @@
 
                     <div class="scrollingDiv d-flex">
 
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="recentTnxConfig" #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
                             <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of recentTransactions">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -700,6 +700,59 @@
                             <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
                         </table>
                     </ng-container>
+                </div>
+
+                <!-- MF allocation overview -->
+
+
+                <!-- Portfolio Asset allocation chart -->
+                <div class="wrapperBox">
+                    <div class="row">
+                        <div class="col-md-12 pl-0">
+                            <h5 class="roboto m-0">Portfolio Summary Mutual funds</h5>
+                            <div class="borderChatBox bg-white">
+                                <div class="row">
+                                    <div class="col-md-6 p-0">
+                                        <div class="piechartMutualFund" [chart]="mfAllocationPieConfig"></div>
+                                    </div>
+                                    <div class="col-md-6 pr-0">
+                                        <ul class="pointUl">
+                                            <li *ngFor="let data of mfAllocationData">
+                                                <span class="pointNumber" [style.background-color]="data.color"> </span>
+                                                <span class="f-14 mr-8" appFormatNumber>{{(data.y | number : '0.0-2')}}</span>
+                                                <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Asset allocation chart -->
+                <div class="wrapperBox">
+                    <div class="row">
+                        <div class="col-md-12 pl-0">
+                            <h5 class="roboto m-0">Sub category wise summary - mutual funds</h5>
+                            <div class="borderChatBox bg-white">
+                                <div class="row">
+                                    <div class="col-md-6 p-0">
+                                        <div class="piechartMutualFund" [chart]="mfSubCategoryPieConfig"></div>
+                                    </div>
+                                    <div class="col-md-6 pr-0">
+                                        <ul class="pointUl">
+                                            <li *ngFor="let data of mfSubCatAllocationData">
+                                                <span class="pointNumber" [style.background-color]="data.color"> </span>
+                                                <span class="f-14 mr-8" appFormatNumber>{{(data.y | number : '0.0-2')}}</span>
+                                                <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

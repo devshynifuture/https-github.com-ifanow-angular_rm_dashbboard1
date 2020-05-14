@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 d-flex align-items-center p-0">
-        <h4 class="m-0 text-black">Roles</h4>
+        <h4 class="mb-8 text-black">Roles Types</h4>
     </div>
     <div class="col-md-6 text-right p-0" *ngIf="!hasError">
         <button [matMenuTriggerFor]="menu" class="btn-primary" mat-stroked-button>
@@ -22,9 +22,9 @@
 
 <div class="row pb-20" *ngIf="hasData && !hasError">
     <!-- advisor roles table -->
-    <div class="col-md-12 overflow-hidden roleSetting-table p-0">
+    <div class="col-md-12 overflow-hidden roleSetting-table mb-20 p-0">
         Advisor roles
-        <table mat-table [dataSource]="advisorRoles" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+        <table mat-table [dataSource]="advisorRoles" class="mt-4 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br w-20"> Role</th>
                 <td mat-cell *matCellDef="let element" class="br">
@@ -75,7 +75,7 @@
     <!-- client roles table -->
     <div class="col-md-12 overflow-hidden roleSetting-table p-0">
         Client roles
-        <table mat-table [dataSource]="clientRoles" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+        <table mat-table [dataSource]="clientRoles" class="mt-4 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br w-20"> Role</th>
                 <td mat-cell *matCellDef="let element" class="br">

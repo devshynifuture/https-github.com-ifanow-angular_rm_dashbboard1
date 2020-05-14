@@ -3,6 +3,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -27,11 +28,92 @@ export class SipAmcWiseComponent implements OnInit {
   reverse4 = true;
   filteredArray: any[];
   amcFilter: any;
+  selectedCategory: any;
+  schemeData: any;
+  selectedSubCategory: any;
+  selectedClientIndex: any;
+  selectedAmc: any;
+  schemeDataList: any;
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
 
   @ViewChildren(FormatNumberDirective) formatNumber;
+
+  arrayOfHeaders: any[][] = [
+    [
+      'Sr. No.',
+      'AMC Name',
+      'SIP Amount',
+      'SIP Count',
+      '% Weight'
+    ],
+    [
+      'Sr. No.',
+      'Scheme Name',
+      'SIP Amount',
+      'SIP Count',
+      '% Weight'
+    ],
+    [
+      'Sr. No.',
+      'Investor Name',
+      'SIP Amount',
+      'SIP Count',
+      '% Weight'
+    ],
+    [
+      'Sr. No.',
+      'Applicant Name',
+      'Scheme Name',
+      'Folio',
+      'Registered Date',
+      'From Date',
+      'To Date',
+      'Trigger Day',
+      'Frequency',
+      'Amount',
+      '% Weight',
+    ]
+  ];
+  arrayOfHeaderStyles: { width: number; key: string; }[][] = [
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'AMC Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 30, key: 'SIP Count' },
+      { width: 10, key: '% Weight' }
+    ],
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 30, key: 'SIP Count' },
+      { width: 10, key: '% Weight' }
+    ],
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Investor Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 30, key: 'SIP Count' },
+      { width: 10, key: '% Weight' }
+    ],
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 40, key: 'Applicant Name' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 40, key: 'Folio Number' },
+      { width: 45, key: 'Registered Date' },
+      { width: 45, key: 'From Date' },
+      { width: 45, key: 'To Date' },
+      { width: 30, key: 'Trigger Day' },
+      { width: 30, key: 'Frequency' },
+      { width: 30, key: 'Amount' },
+      { width: 10, key: '% Weight' },
+    ]
+  ];
+  arrayOfExcelData: any[] = [];
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -136,11 +218,13 @@ export class SipAmcWiseComponent implements OnInit {
         this.isLoading = false;
         if (data) {
           this.amcList = data;
+          this.excelInitAmcList();
           this.amcList.forEach(o => {
             o.showCategory = true;
             this.totalOfSipAmount += o.sipAmount;
             this.totalOfSipCount += o.sipCount;
             this.totalWeight += o.weightInPercentage;
+
           });
           this.filteredArray = [...this.amcList];
         } else {
@@ -154,6 +238,7 @@ export class SipAmcWiseComponent implements OnInit {
     )
   }
   showSubTableList(index, category, schemeData) {
+    this.selectedCategory = index;
     schemeData.showCategory = !schemeData.showCategory
     schemeData.schemeList = []
     if (schemeData.showCategory == false) {
@@ -164,6 +249,7 @@ export class SipAmcWiseComponent implements OnInit {
         parentId: -1,
         sipAmount: schemeData.sipAmount,
       }
+
       this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
         data => {
           if (data) {
@@ -172,12 +258,102 @@ export class SipAmcWiseComponent implements OnInit {
             });
             schemeData.schemeList = data
             console.log(data)
+            this.schemeDataList = data
+            if (schemeData.showCategory == false) {
+              this.appendingOfValuesInExcel(this.amcList[this.selectedCategory].schemeList, index, 'schemes');
+            } else {
+              this.removeValuesFromExcel('schemes', index);
+            }
           }
         }
       )
     }
   }
+  removeValuesFromExcel(whichList, clientIndex) {
+    console.log(clientIndex, this.arrayOfExcelData);
+
+    switch (whichList) {
+      case 'schemes':
+        this.arrayOfExcelData[this.selectedCategory].schemeList = [];
+        break;
+      case 'investor':
+        this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList = [];
+        break;
+      case 'applicant':
+        this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList[this.selectedClientIndex].applicantList = [];
+        break;
+    }
+  }
+
+  appendingOfValuesInExcel(iterable, index, choice) {
+    switch (choice) {
+      case 'schemes':
+        // scheme
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[index].schemeList.push({
+            index: index1 + 1,
+            name: element.schemeName,
+            sipAmount: element.sipAmount,
+            sipCount: element.sipCount,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage,
+            investorList: []
+          });
+        });
+        break;
+      case 'investor':
+        // investor
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList.push({
+            index: index1 + 1,
+            name: element.investorName,
+            sipAmount: element.sipAmount,
+            sipCount: element.sipCount,
+            weightInPerc: element.weightInPercentage,
+            applicantList: []
+          });
+        });
+        break;
+      case 'applicant':
+        // applicant
+        iterable.forEach((element, index1) => {
+          console.log(index, iterable, this.arrayOfExcelData);
+          this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList[this.selectedClientIndex].applicantList.push({
+            index: index1 + 1,
+            name: element.investorName,
+            schemeName: element.schemeName,
+            folio: element.folioNumber,
+            registeredDate: new Date(element.registeredDate),
+            fromDate: new Date(element.from_date),
+            toDate: new Date(element.to_date),
+            triggerDay: element.sipTriggerDay,
+            frequency: element.frequency,
+            amount: element.sipAmount,
+            weightInPerc: element.weightInPercentage
+          });
+        });
+        break;
+    }
+    console.log(this.arrayOfExcelData);
+  }
+
+  excelInitAmcList() {
+    this.amcList.forEach((element, index1) => {
+      this.arrayOfExcelData.push({
+        index: index1 + 1,
+        name: element.amcName,
+        sipAmount: element.sipAmount,
+        sipCount: element.sipCount,
+        totalAum: element.totalAum,
+        weightInPerc: element.weightInPercentage,
+        schemeList: [],
+      });
+    });
+
+  }
+
   showSchemeName(index, subcashowSubcat, investorData) {
+    this.selectedAmc = index;
     investorData.showSubCategory = !investorData.showSubCategory
     investorData.investorList = [];
     if (investorData.showSubCategory == false) {
@@ -197,12 +373,19 @@ export class SipAmcWiseComponent implements OnInit {
             });
             investorData.investorList = data;
             console.log(data)
+            if (investorData.showSubCategory == false) {
+              this.appendingOfValuesInExcel(this.amcList[this.selectedCategory].schemeList[this.selectedAmc].investorList, index, 'investor');
+            } else {
+              this.removeValuesFromExcel('investor', index);
+            }
           }
         }
       )
     }
   }
   showApplicantName(index, subcashowSubcat, applicantData) {
+    this.selectedClientIndex = index;
+    this.selectedSubCategory = subcashowSubcat
     applicantData.showInvestor = !applicantData.showInvestor
     applicantData.applicantList = [];
     if (applicantData.showInvestor == false) {
@@ -220,10 +403,13 @@ export class SipAmcWiseComponent implements OnInit {
             applicantData.applicantList = data;
             console.log(data)
           }
+          if (applicantData.showInvestor == false) {
+            this.appendingOfValuesInExcel(this.amcList[this.selectedCategory].schemeList[this.selectedAmc].investorList[this.selectedClientIndex].applicantList, index, 'applicant');
+          } else {
+            this.removeValuesFromExcel('applicant', index);
+          }
         }
       )
-
-
     }
   }
   schemeInvestorGet() {
@@ -268,5 +454,83 @@ export class SipAmcWiseComponent implements OnInit {
         console.log(data);
       }
     )
+  }
+  exportToExcelSheet(choice, index, amcIndex) {
+    switch (choice) {
+      case 'amc-wise':
+        this.amcWiseExcelReport();
+        break;
+      case 'scheme-wise':
+        this.schemeWiseExcelReport(index);
+        break;
+      case 'investor-wise':
+        this.investorWiseExcelSheet(index);
+        break;
+      case 'applicant-wise':
+        this.applicantWiseExcelReport(index);
+        break;
+    }
+
+    console.log(this.arrayOfExcelData);
+  }
+  amcWiseExcelReport() {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: false,
+      schemeList: false,
+      investorList: false,
+      applicantList: false
+    });
+  }
+  schemeWiseExcelReport(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.schemeList = [];
+      }
+    });
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: true,
+      schemeList: false,
+      investorList: false,
+      applicantList: false
+    });
+  }
+  investorWiseExcelSheet(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.investorList = [];
+      }
+    });
+
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: true,
+      schemeList: true,
+      investorList: false,
+      applicantList: false
+    });
+  }
+
+  applicantWiseExcelReport(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.applicantList = [];
+      }
+    });
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: true,
+      schemeList: true,
+      investorList: true,
+      applicantList: false
+    });
   }
 }

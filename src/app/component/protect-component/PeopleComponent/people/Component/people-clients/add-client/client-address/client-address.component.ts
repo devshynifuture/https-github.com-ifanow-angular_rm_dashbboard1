@@ -37,7 +37,9 @@ export class ClientAddressComponent implements OnInit {
   };
   permanentAddFlag: boolean;
   userMappingIdFlag: boolean;
-
+  disableBtn = false;
+  maxLength: number;
+  proofTypeData: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService) {
@@ -69,28 +71,46 @@ export class ClientAddressComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       addressType: [(data.addressType) ? String(data.addressType) : '1'],
-      addProofType: [(data.proofType) ? String(data.proofType) : '0'],
+      addProofType: [(data.proofType) ? String(data.proofType) : ''],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
-      addressLine2: [data.address2, [Validators.required]],
+      addressLine2: [data.address2],
       pinCode: [data.pinCode, [Validators.required]],
       city: [data.city, [Validators.required]],
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-    if (data.proofIdNumber) {
-
-    } else {
-      this.changeAddrProofNumber({ value: String(data.proofType) });
-    }
+    this.changeAddrProofNumber({ value: String(data.proofType) }, data);
   }
-
-  changeAddrProofNumber(data) {
-    if (data.value == '2') {
-      this.addressForm.get('proofIdNum').setValue(this.userData.aadhaarNumber);
-    } else {
-      this.addressForm.get('proofIdNum').setValue('');
+  changeAddrProofNumber(data, addressData = null) {
+    let regexPattern;
+    (addressData) ? this.proofTypeData = addressData : ''
+    if (data.value == '1') {
+      regexPattern = this.validatorType.PASSPORT;
+      this.maxLength = 8;
+      this.addressForm.get('proofIdNum').setValue((this.proofTypeData.proofType == '1') ? this.proofTypeData.proofIdNumber : '');
     }
+    else if (data.value == '2') {
+      regexPattern = this.validatorType.ADHAAR;
+      this.addressForm.get('proofIdNum').setValue((addressData) ? addressData.proofIdNumber : this.userData.aadhaarNumber);
+      this.maxLength = 12;
+    }
+    else if (data.value == '3') {
+      this.maxLength = 15;
+      // regexPattern = this.validatorType.DRIVING_LICENCE
+      this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == '3' ? this.proofTypeData.proofIdNumber : '');
+    }
+    else if (data.value == '4') {
+      regexPattern = this.validatorType.VOTER_ID;
+      this.maxLength = 10;
+      this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == '4' ? this.proofTypeData.proofIdNumber : '');
+    }
+    else {
+      this.maxLength = undefined
+      this.addressForm.get('proofIdNum').setValue(addressData ? this.proofTypeData.proofIdNumber : '');
+    }
+    this.addressForm.get('proofIdNum').setValidators([(regexPattern) ? Validators.pattern(regexPattern) : Validators.required]);
+    this.addressForm.get('proofIdNum').updateValueAndValidity();
   }
 
   toUpperCase(formControl, event) {
@@ -98,6 +118,11 @@ export class ClientAddressComponent implements OnInit {
   }
 
   getPostalPin(value) {
+    if (value.length < 6) {
+      this.addressForm.get('city').enable();
+      this.addressForm.get('state').enable();
+      this.addressForm.get('country').enable();
+    }
     const obj = {
       zipCode: value
     };
@@ -117,6 +142,9 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').setValue(pincodeData[0].District);
     this.addressForm.get('state').setValue(pincodeData[0].State);
     this.addressForm.get('country').setValue(pincodeData[0].Country);
+    this.addressForm.get('city').disable();
+    this.addressForm.get('state').disable();
+    this.addressForm.get('country').disable();
   }
 
   getAddressList(data) {
@@ -166,7 +194,7 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     } else {
-      (flag == 'Save') ? this.barButtonOptions.active = true : '';
+      (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,
@@ -187,6 +215,7 @@ export class ClientAddressComponent implements OnInit {
 
       this.peopleService.addEditClientAddress(obj).subscribe(
         data => {
+          this.disableBtn = false
           console.log(data);
           this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
@@ -194,6 +223,7 @@ export class ClientAddressComponent implements OnInit {
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
+          this.disableBtn = false
         }
       );
     }

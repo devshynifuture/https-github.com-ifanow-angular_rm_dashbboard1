@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FileUploadService } from '../../../../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../../../../config/main-config';
-import { appConfig } from '../../../../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import {Component, Input, OnInit} from '@angular/core';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FileUploadService} from '../../../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../../../config/main-config';
+import {appConfig} from '../../../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -24,23 +24,19 @@ export class SubmitReviewInnComponent implements OnInit {
   nse: any;
   bse: any;
   allData: any;
+  createdBrokerMap: any = {};
   selectedBrokerBse: any;
-  selectedBrokerNse: any;
   matValue: any;
-  addedNse = false;
-  addedBse = false;
   doneData: any;
   tokenRes: any;
   fileName: string;
   file: any;
-  byte: any;
-  uploadSttus: any;
   toSendObjHolderList: any;
   toSendObjBankList: any;
   toSendObjNomineeList: any;
   clientData: any;
-  validatorType = ValidatorType
-  paltform = '2';
+  validatorType = ValidatorType;
+  platform = '2';
   BSEValue = '2';
   responseMessage: any;
   statusString: any;
@@ -48,15 +44,16 @@ export class SubmitReviewInnComponent implements OnInit {
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-    private eventService: EventService) {
+              private eventService: EventService) {
   }
 
   @Input()
   set data(data) {
     this.doneData = {};
     this.inputData = data;
+    console.log('submit and review component inputData : ', this.inputData);
     this.allData = data;
-    this.clientData = this.clientData
+    this.clientData = this.clientData;
     this.doneData.nominee = true;
     this.doneData.bank = true;
     this.doneData.contact = true;
@@ -96,25 +93,8 @@ export class SubmitReviewInnComponent implements OnInit {
     this.matValue = false;
   }
 
-  uploadFormImageUpload(file) {
-    const obj = {
-      tpUserCredentialId: this.selectedBrokerBse.id,
-      file: file.target.files[0],
-      documentType: 1,
-    };
-    this.onlineTransact.imageFileUpload(obj).subscribe(
-      data => {
-        this.uploadSttus = data;
-        console.log('uploadSttus', this.uploadSttus);
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
-  }
-
   getBSECredentials() {
-    this.isLoading = true
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
@@ -126,10 +106,10 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   getBSECredentialsRes(data) {
-    this.isLoading = false
+    this.isLoading = false;
     console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
     console.log('nse', this.nse);
     console.log('bse', this.bse);
   }
@@ -137,7 +117,7 @@ export class SubmitReviewInnComponent implements OnInit {
   getdataForm(data) {
 
     this.reviewSubmit = this.fb.group({
-      bseBroker: [!(data.bseBroker) ? data.bseBroker:'', [Validators.required]],
+      bseBroker: [!(data.bseBroker) ? data.bseBroker : '', [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
       platform: [!data ? '2' : '2', [Validators.required]],
@@ -184,116 +164,85 @@ export class SubmitReviewInnComponent implements OnInit {
 
   selectPlatform(value) {
     console.log('mat check', value);
-    this.paltform = value.value;
-    this.BSEValue = value.value
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
+    this.platform = value.value;
+    this.BSEValue = value.value;
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
   }
-
 
 
   submit() {
     this.doneData = true;
-    this.toSendObjHolderList = []
-    this.toSendObjBankList = []
-    this.toSendObjNomineeList = []
+    this.toSendObjHolderList = [];
+    this.toSendObjBankList = [];
+    this.toSendObjNomineeList = [];
     this.allData.holderList.forEach(element => {
-      if (element.address && element.email) {
-        this.toSendObjHolderList.push(element)
+      if (element.email) {
+        this.toSendObjHolderList.push(element);
       }
-
     });
     this.allData.bankDetailList.forEach(element => {
       if (element.address && element.ifscCode) {
-        this.toSendObjBankList.push(element)
+        this.toSendObjBankList.push(element);
       }
 
     });
     this.allData.nomineeList.forEach(element => {
       if (element.address && element.nomineeName) {
-        this.toSendObjNomineeList.push(element)
+        this.toSendObjNomineeList.push(element);
       }
 
     });
-    this.allData.holderList = this.toSendObjHolderList
-    this.allData.bankDetailList = this.toSendObjBankList
-    this.allData.nomineeList = this.toSendObjNomineeList
-    this.inputData.clientData = this.clientData
-    if (this.paltform == '2') {
-      const obj1 = {
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingType,
-        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
-        holderList: this.toSendObjHolderList,
-        bankDetailList: this.toSendObjBankList,
-        nomineeList: this.toSendObjNomineeList,
-        fatcaDetail: this.allData.fatcaDetail,
-        id: 2,
-        divPayMode: this.allData.bankDetailList[0].paymentMode,
-        occupationCode: this.allData.fatcaDetail.occupationCode,
-        clientCode: this.reviewSubmit.controls.accountNumber.value,
-        aggregatorType: this.selectedBrokerBse.aggregatorType,
-        familyMemberId: this.allData.familyMemberId,
-        clientId: this.allData.clientId,
-        advisorId: this.allData.advisorId,
-        tpUserCredentialId: this.selectedBrokerBse.id,
-        commMode: 1,
-        confirmationFlag: 1,
-        tpUserSubRequestClientId1: 2,
+    this.allData.holderList = this.toSendObjHolderList;
+    this.allData.bankDetailList = this.toSendObjBankList;
+    this.allData.nomineeList = this.toSendObjNomineeList;
+    this.inputData.clientData = this.clientData;
 
-      };
-      this.onlineTransact.createIINUCC(obj1).subscribe(
-        data => this.createIINUCCRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
-    } else if (this.paltform == '1') {
-      const obj1 = {
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingType,
-        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
-        holderList: this.toSendObjHolderList,
-        bankDetailList: this.toSendObjBankList,
-        nomineeList: this.toSendObjNomineeList,
-        fatcaDetail: this.allData.fatcaDetail,
-        id: 2,
-        divPayMode: this.allData.bankDetailList[0].paymentMode,
-        occupationCode: this.allData.fatcaDetail.occupationCode,
-        clientCode: this.reviewSubmit.controls.accountNumber.value,
-        aggregatorType: this.selectedBrokerBse.aggregatorType,
-        familyMemberId: this.allData.familyMemberId,
-        clientId: this.allData.clientId,
-        advisorId: this.allData.advisorId,
-        tpUserCredentialId: this.selectedBrokerBse.id,
-        commMode: 1,
-        confirmationFlag: 1,
-        tpUserSubRequestClientId1: 2,
-
-      };
-      this.onlineTransact.createIINUCC(obj1).subscribe(
-        data => this.createIINUCCRes(data), (error) => {
-          this.eventService.showErrorMessage(error);
-        }
-      );
+    const firstHolder = this.allData.holderList[0];
+    if (this.allData.taxStatus == '02') {
+      firstHolder.guardianName = firstHolder.fatherName;
+      firstHolder.guardianPan = firstHolder.panNumber;
+      firstHolder.panNumber = '';
+      firstHolder.fatherName = '';
     }
+    const obj1 = {
+      ownerName: this.allData.ownerName,
+      holdingType: this.allData.holdingType,
+      taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : '01',
+      holderList: this.toSendObjHolderList,
+      bankDetailList: this.toSendObjBankList,
+      nomineeList: this.toSendObjNomineeList,
+      fatcaDetail: this.allData.fatcaDetail,
+      id: 2,
+      divPayMode: this.allData.bankDetailList[0].paymentMode,
+      occupationCode: this.allData.fatcaDetail.occupationCode,
+      clientCode: this.reviewSubmit.controls.accountNumber.value,
+      aggregatorType: this.selectedBrokerBse.aggregatorType,
+      familyMemberId: this.allData.familyMemberId,
+      clientId: this.allData.clientId,
+      advisorId: this.allData.advisorId,
+      tpUserCredentialId: this.selectedBrokerBse.id,
+      commMode: 1,
+      confirmationFlag: 1,
+      tpUserSubRequestClientId1: 2,
 
+    };
+    this.onlineTransact.createIINUCC(obj1).subscribe(
+      data => this.createIINUCCRes(data), (error) => {
+        this.eventService.openSnackBar(error, 'dismiss');
+      }
+    );
   }
 
   createIINUCCRes(data) {
     console.log('data respose =', data);
-    this.responseMessage = data.responseMessage
-    this.statusString = data.statusString
-    this.eventService.showErrorMessage(data.statusString);
-    this.eventService.showErrorMessage(data.responseMessage);
-  }
-
-  uploadForm() {
-    const obj1 = {
-      tpUserCredentialId: this.selectedBrokerBse.id
+    this.createdBrokerMap[this.selectedBrokerBse.id] = {
+      tpUserRequestId: data.id, tpUserRequest: data,
+      brokerData: this.selectedBrokerBse
     };
-    this.onlineTransact.getToken(obj1).subscribe(
-      data => this.getTokenRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      });
+    this.responseMessage = data.responseMessage;
+    this.statusString = data.statusString;
+    // this.eventService.showErrorMessage(data.statusString);
+    // this.eventService.showErrorMessage(data.responseMessage);
   }
 
   getTokenRes(data) {
@@ -306,8 +255,13 @@ export class SubmitReviewInnComponent implements OnInit {
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
+    const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
+    if (!requestMapObject) {
+      this.eventService.openSnackBar('Please create account first', 'dismiss');
+      return;
+    }
     const requestMap = {
-      tpUserRequestId: 1,
+      tpUserRequestId: requestMapObject.tpUserRequestId,
       documentType: 1
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
@@ -316,7 +270,6 @@ export class SubmitReviewInnComponent implements OnInit {
         console.log('getFileDetails uploadFileToServer callback status : ', status);
         console.log('getFileDetails uploadFileToServer callback headers : ', headers);
         console.log('getFileDetails uploadFileToServer callback response : ', response);
-
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);

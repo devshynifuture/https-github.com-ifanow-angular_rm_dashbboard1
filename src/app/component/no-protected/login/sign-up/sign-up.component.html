@@ -62,7 +62,8 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Full name</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input #fullName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40"
+                                    <input #fullName (input)="capitalise($event)"
+                                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40"
                                         appInputValueValidation class="form-control" formControlName="fullName" matInput
                                         placeholder="Enter your name" tabindex="1">
                                     <mat-hint align="end" class="f-12 mobileNone">{{fullName.value.length}}/40
@@ -75,10 +76,10 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Company name</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input #comName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
-                                        [maxLength]="40" appInputValueValidation class="form-control"
-                                        formControlName="companyName" matInput placeholder="Enter company name"
-                                        tabindex="1">
+                                    <input #comName (input)="capitalise($event)"
+                                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="40"
+                                        appInputValueValidation class="form-control" formControlName="companyName"
+                                        matInput placeholder="Enter company name" tabindex="1">
                                     <mat-hint align="end" class="f-12 mobileNone">{{comName.value.length}}/40
                                     </mat-hint>
                                     <mat-error align="end">Company name required</mat-error>

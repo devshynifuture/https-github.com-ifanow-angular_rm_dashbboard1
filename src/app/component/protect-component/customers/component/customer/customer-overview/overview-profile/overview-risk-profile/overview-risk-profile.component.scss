@@ -69,3 +69,13 @@ p {
     margin: 0px auto;
     text-align: left;
 }
+
+::ng-deep .riskAccordion .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+    background: #F5F7F7;
+    border-radius: 0px !important;
+}
+
+::ng-deep .riskAccordion .mat-expansion-panel-content {
+    background: #ffffff;
+}

@@ -40,7 +40,7 @@
                 <mat-form-field>
                     <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType"
                         class="form-control">
-                        <mat-option value="0">Select proof type</mat-option>
+                        <mat-option value="">Select proof type</mat-option>
                         <mat-option value="1">Passport</mat-option>
                         <mat-option value="2">Aadhaar</mat-option>
                         <mat-option value="3">Driving licence</mat-option>
@@ -60,10 +60,13 @@
         <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter ID Proof" (input)="toUpperCase(addressForm.get('proofIdNum'),$event)"
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off"
-                        matInput formControlName="proofIdNum" class="form-control">
-                    <mat-error>This field is required</mat-error>
+                    <input #proofNumber placeholder="Enter ID Proof" [maxLength]="maxLength"
+                        (input)="toUpperCase(addressForm.get('proofIdNum'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
+                        formControlName="proofIdNum" class="form-control">
+                    <mat-error *ngIf="addressForm.get('proofIdNum').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="addressForm.get('proofIdNum').errors?.pattern">Invalid proof number</mat-error>
+                    <mat-hint *ngIf="maxLength" align="end">{{proofNumber.value.length}}/{{maxLength}}</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -92,7 +95,7 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
                         formControlName="addressLine2" class="form-control">
-                    <mat-error>This field is required</mat-error>
+                    <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
@@ -126,10 +129,10 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city"
-                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="6"
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30"
                         class="form-control">
                     <mat-error>This field is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
+                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -167,7 +170,7 @@
         </div>
     </div>
     <div class="bottom-fixed wrapper-12 w-50">
-        <div class="row">
+        <div class="row" [ngClass]="{'event-none': barButtonOptions.active || disableBtn}">
             <div class="col-md-4">
                 <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
