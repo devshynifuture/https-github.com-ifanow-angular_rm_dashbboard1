@@ -207,6 +207,9 @@ export class SipAmcWiseComponent implements OnInit {
   }
   aumReport() {
     this.changedValue.emit(true);
+    this.filteredArray.forEach(element => {
+      element.showCategory = true
+    });
     //  this.sip.sipComponent=true;
   }
   amcGet() {

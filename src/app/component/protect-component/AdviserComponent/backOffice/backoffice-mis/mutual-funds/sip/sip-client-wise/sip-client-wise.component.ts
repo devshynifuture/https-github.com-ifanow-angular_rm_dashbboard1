@@ -113,7 +113,9 @@ export class SipClientWiseComponent implements OnInit {
   aumReport() {
     this.changedValue.emit(true);
 
-    // this.sip.sipComponent = true;
+    this.filteredArray.forEach(element => {
+      element.showCategory = true
+    });
   }
   exportToExcelSheet(choice, index) {
     switch (choice) {
