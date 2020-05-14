@@ -110,6 +110,8 @@ export class SipSchemeWiseComponent implements OnInit {
   arrayOfExcelData: any[] = [];
   selectedSubCategory: any;
   selectedCategoryApp: any;
+  isLoadingSubCategory: boolean;
+  isLoadingCategory: boolean;
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
@@ -228,9 +230,11 @@ export class SipSchemeWiseComponent implements OnInit {
 
   }
   showSubTableList(index, category, schemeData) {
+    this.isLoadingCategory = true
     this.selectedCategory = index
     schemeData.showCategory = !schemeData.showCategory
     schemeData.subCatList = []
+    schemeData.subCatList = [{}, {}, {}];
     if (schemeData.showCategory == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -240,6 +244,7 @@ export class SipSchemeWiseComponent implements OnInit {
       }
       this.backoffice.Scheme_Wise_Investor_Get(obj).subscribe(
         data => {
+          this.isLoadingCategory = false
           if (data) {
             data.forEach(element => {
               element.showSubCategory = true;
@@ -253,6 +258,10 @@ export class SipSchemeWiseComponent implements OnInit {
             }
             console.log(data)
           }
+        },
+        err => {
+          schemeData.subCatList = []
+          this.isLoadingCategory = false
         }
       )
     }
@@ -324,9 +333,11 @@ export class SipSchemeWiseComponent implements OnInit {
     console.log(this.arrayOfExcelData);
   }
   showSchemeName(index, subcashowSubcat, ApplicantData) {
+    this.isLoadingSubCategory = true
     this.selectedCategoryApp = index
     ApplicantData.showSubCategory = !ApplicantData.showSubCategory
     ApplicantData.applicantList = [];
+    ApplicantData.applicantList = [{}, {}, {}];
     if (ApplicantData.showSubCategory == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -338,6 +349,7 @@ export class SipSchemeWiseComponent implements OnInit {
       }
       this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
         data => {
+          this.isLoadingSubCategory = false
           if (data) {
             ApplicantData.applicantList = data;
             if (ApplicantData.showSubCategory == false) {
@@ -347,6 +359,10 @@ export class SipSchemeWiseComponent implements OnInit {
             }
             console.log(data)
           }
+        },
+        err => {
+          ApplicantData.applicantList = [];
+          this.isLoadingSubCategory = false
         }
       )
     }

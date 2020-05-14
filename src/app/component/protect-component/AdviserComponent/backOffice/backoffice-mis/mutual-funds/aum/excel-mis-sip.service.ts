@@ -434,7 +434,7 @@ export class ExcelMisSipService {
                             if (schemeElement.investorList.length !== 0) {
                                 if (!excluded.investorList) {
                                     schemeElement.investorList.forEach((investorElement, index2) => {
-                                        currentRowPos = currentRowPos + arrayOfExcelData.length + 1;
+                                        currentRowPos = currentRowPos + arrayOfExcelData.length + 2;
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
                                         headCell = ws.getRow(currentRowPos);
@@ -450,7 +450,7 @@ export class ExcelMisSipService {
                                         if (investorElement.applicantList.length !== 0) {
                                             if (!excluded.applicantList) {
                                                 investorElement.applicantList.forEach(applicantElement => {
-                                                    currentRowPos = currentRowPos + investorElement.applicantList.length + 1;
+                                                    currentRowPos = currentRowPos + investorElement.applicantList.length + 2;
 
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
