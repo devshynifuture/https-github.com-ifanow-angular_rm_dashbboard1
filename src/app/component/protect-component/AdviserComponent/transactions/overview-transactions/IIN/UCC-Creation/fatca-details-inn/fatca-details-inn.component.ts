@@ -52,12 +52,18 @@ export class FatcaDetailsInnComponent implements OnInit {
     return this.inputData;
   }
 
+  countryCodeList;
+
   ngOnInit() {
     if (this.allData.fatcaDetail) {
       this.getdataForm(this.allData.fatcaDetail);
     } else {
       this.getdataForm('');
     }
+
+    this.processTransaction.getCountryCodeList().subscribe((responseData) => {
+      this.countryCodeList = responseData;
+    });
   }
 
   close() {

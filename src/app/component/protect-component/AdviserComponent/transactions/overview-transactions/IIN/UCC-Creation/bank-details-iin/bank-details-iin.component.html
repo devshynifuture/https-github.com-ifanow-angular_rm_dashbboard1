@@ -103,13 +103,21 @@
           <div class="col-md-8">
 
             <mat-radio-group aria-label="Select an option" formControlName="accountType">
-              <mat-radio-button value="SB"
-                                [ngClass]="bankDetailsForm.get('accountType').value === 'SB' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+              <mat-radio-button [value]="'1'"
+                                [ngClass]="bankDetailsForm.get('accountType').value == '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                 Savings
               </mat-radio-button>
-              <mat-radio-button value="CA"
-                                [ngClass]="bankDetailsForm.get('accountType').value === 'CA' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+              <mat-radio-button value="'2'"
+                                [ngClass]="bankDetailsForm.get('accountType').value == '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                 Current
+              </mat-radio-button>
+              <mat-radio-button value="'3'"
+                                [ngClass]="bankDetailsForm.get('accountType').value =='3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+                NRE
+              </mat-radio-button>
+              <mat-radio-button value="'4'"
+                                [ngClass]="bankDetailsForm.get('accountType').value =='4' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+                NRO
               </mat-radio-button>
             </mat-radio-group>
 
