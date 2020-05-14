@@ -164,8 +164,10 @@ export class SipSchemeWiseComponent implements OnInit {
   }
   aumReport() {
     this.changedValue.emit(true);
-
     //  this.sip.sipComponent=true;
+    this.filteredArray.forEach(element => {
+      element.showCategory = true
+    });
   }
   getSchemeWiseGet() {
     this.isLoading = true;

@@ -263,6 +263,9 @@ export class CategoryWiseComponent implements OnInit {
 
   aumReport() {
     this.changedValue.emit(true);
+    this.category.forEach(element => {
+      element.showCategory = true
+    });
   }
 
   getFilerrorResponse(err) {

@@ -501,6 +501,9 @@ export class ClientWiseComponent implements OnInit {
   }
   aumReport() {
     this.changedValue.emit(true);
+    this.clientList.forEach(element => {
+      element.show = true
+    });
   }
 
 }

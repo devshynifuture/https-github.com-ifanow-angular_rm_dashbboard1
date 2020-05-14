@@ -604,6 +604,9 @@ export class ApplicantWiseComponent implements OnInit {
   }
   aumReport() {
     this.changedValue.emit(true);
+    this.applicantName.forEach(element => {
+      element.show = true
+    });
   }
 
 }
