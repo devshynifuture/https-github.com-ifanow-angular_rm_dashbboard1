@@ -206,6 +206,7 @@ export class NewTeamMemberComponent implements OnInit {
 
   editTeamMember() {
     const dataObj = {
+      adminAdvisorId: this.advisorId,
       id: this.data.mainData.id,
       roleId: this.teamMemberFG.controls.roleId.value,
       profilePic: this.logoImg
