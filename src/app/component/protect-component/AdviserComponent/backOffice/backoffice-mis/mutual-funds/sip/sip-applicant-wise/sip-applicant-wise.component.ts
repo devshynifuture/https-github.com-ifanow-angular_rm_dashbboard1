@@ -69,6 +69,7 @@ export class SipApplicantWiseComponent implements OnInit {
     ]
   ];
   selectedClient: any;
+  isLoadingApplicant: boolean;
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
@@ -142,8 +143,10 @@ export class SipApplicantWiseComponent implements OnInit {
     )
   }
   showSubTableList(index, applicantData) {
+    this.isLoadingApplicant = true
     applicantData.showScheme = !applicantData.showScheme
     applicantData.schemeList = [];
+    applicantData.schemeList = [{}, {}, {}];
     if (applicantData.showScheme == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -155,6 +158,7 @@ export class SipApplicantWiseComponent implements OnInit {
       this.backoffice.sipApplicantFolioList(obj).subscribe(
         data => {
           if (data) {
+            this.isLoadingApplicant = false
             data.forEach(element => {
               element.name = applicantData.name
             });
@@ -166,6 +170,10 @@ export class SipApplicantWiseComponent implements OnInit {
             }
             console.log(data)
           }
+        },
+        err => {
+          applicantData.schemeList = [];
+          this.isLoadingApplicant = false
         }
       )
     }

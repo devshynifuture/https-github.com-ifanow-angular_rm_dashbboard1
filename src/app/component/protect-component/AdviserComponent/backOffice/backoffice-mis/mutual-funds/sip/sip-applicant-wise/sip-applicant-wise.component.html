@@ -78,7 +78,8 @@
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="!data.showScheme && !isLoading" class=" mt-8 mb-8" id="table-low">
+                                    <table *ngIf="!data.showScheme" class="skeletonAnimation mt-8 mb-8"
+                                        appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">
                                                 <th class="w-11 c-p" (click)="sortByApplicant( data.schemeList,'name')">
@@ -173,17 +174,59 @@
                                         </thead>
                                         <tbody *ngFor="let scheme of data.schemeList; let i = index">
                                             <tr>
-                                                <td>{{scheme.name}}</td>
-                                                <td>{{scheme.schemeName}} </td>
-                                                <td>{{scheme.folioNumber}} </td>
-                                                <td>{{scheme.registeredDate | date:'dd/MM/yyyy'}} </td>
-                                                <td>{{scheme.from_date | date:'dd/MM/yyyy'}} </td>
-                                                <td>{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
-                                                <td>{{scheme.sipTriggerDay}} </td>
-                                                <td>{{scheme.frequency}} </td>
-                                                <td><span appFormatNumber>{{scheme.amount}}</span></td>
-                                                <td>{{scheme.weightInPercentage}}%</td>
-                                                <td>add cease date </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.name}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.schemeName}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.folioNumber}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.registeredDate | date:'dd/MM/yyyy'}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.from_date | date:'dd/MM/yyyy'}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.to_date | date:'dd/MM/yyyy'}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.sipTriggerDay}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.frequency}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        <span appFormatNumber>{{scheme.amount}}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{scheme.weightInPercentage}}{{(isLoadingApplicant?'':'%') }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {{(isLoadingApplicant?'':'add cease date') }}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
