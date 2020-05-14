@@ -363,7 +363,7 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <div *ngIf="!isLoadingApplicant && subInvList.showSubCategory==false">
+                                                    <div *ngIf="!isLoadingSubCategory && subInvList.showSubCategory==false">
                                                         <div *ngIf="applicantListArr.length == 0"
                                                             class="d-flex flex-column align-items-center">
                                                             <h4 class="text-center pt-12">No data Found
@@ -374,7 +374,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div *ngIf="!isLoadingApplicant && data.showCategory==false">
+                                    <div *ngIf="!isLoadingCategory && data.showCategory==false">
                                         <div *ngIf="subCatList.length == 0"
                                             class="d-flex flex-column align-items-center">
                                             <h4 class="text-center pt-12">No data Found
