@@ -53,3 +53,5 @@
 .nonesticky {
     position: relative !important;
 }
+
+::ng-deep .secoundTable #table-low th {}
