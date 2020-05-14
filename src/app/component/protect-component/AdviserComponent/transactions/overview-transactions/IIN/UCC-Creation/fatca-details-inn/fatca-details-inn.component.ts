@@ -91,7 +91,7 @@ export class FatcaDetailsInnComponent implements OnInit {
     this.fatcaDetails = this.fb.group({
       nationality: [(!data) ? '1' : (data.nationality) ? data.nationality + '' : '1', [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
-      cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
+      placeOfBirth: [(!data) ? '' : data.placeOfBirth, [Validators.required]],
       countryOfBirthId: [!data ? '' : data.countryOfBirthId, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
