@@ -112,6 +112,8 @@ export class SipSchemeWiseComponent implements OnInit {
   selectedCategoryApp: any;
   isLoadingSubCategory: boolean;
   isLoadingCategory: boolean;
+  applicantListArr: any[];
+  subCatList: any[];
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
@@ -234,6 +236,7 @@ export class SipSchemeWiseComponent implements OnInit {
     this.selectedCategory = index
     schemeData.showCategory = !schemeData.showCategory
     schemeData.subCatList = []
+    this.subCatList = []
     schemeData.subCatList = [{}, {}, {}];
     if (schemeData.showCategory == false) {
       const obj = {
@@ -251,6 +254,7 @@ export class SipSchemeWiseComponent implements OnInit {
               element.mutualFundSchemeMasterId = schemeData.mutualFundSchemeMasterId;
             });
             schemeData.subCatList = data
+            this.subCatList = data
             if (schemeData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'investor');
             } else {
@@ -260,6 +264,7 @@ export class SipSchemeWiseComponent implements OnInit {
           }
         },
         err => {
+          this.subCatList = []
           schemeData.subCatList = []
           this.isLoadingCategory = false
         }
@@ -337,6 +342,7 @@ export class SipSchemeWiseComponent implements OnInit {
     this.selectedCategoryApp = index
     ApplicantData.showSubCategory = !ApplicantData.showSubCategory
     ApplicantData.applicantList = [];
+    this.applicantListArr = []
     ApplicantData.applicantList = [{}, {}, {}];
     if (ApplicantData.showSubCategory == false) {
       const obj = {
@@ -352,6 +358,7 @@ export class SipSchemeWiseComponent implements OnInit {
           this.isLoadingSubCategory = false
           if (data) {
             ApplicantData.applicantList = data;
+            this.applicantListArr = data
             if (ApplicantData.showSubCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
             } else {
@@ -361,6 +368,7 @@ export class SipSchemeWiseComponent implements OnInit {
           }
         },
         err => {
+          this.applicantListArr = []
           ApplicantData.applicantList = [];
           this.isLoadingSubCategory = false
         }

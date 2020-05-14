@@ -21,7 +21,7 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-3 pr-0">
-                <div class="form-group">
+                <div class="form-group mb-8">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input matInput class="form-control m-0" placeholder="Search by advisor" formControlName="filterByName" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="maniputateEventObjForName($event)"
                             #inputAdvisorNameRef>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-3 pr-0">
-                <div class="form-group ">
+                <div class="form-group mb-8">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <mat-select class="form-control br-0" placeholder="Ordered By" formControlName="filterByRmName" (selectionChange)="add($event, 'rm')">
                             <mat-option>None</mat-option>
@@ -182,9 +182,7 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <mat-icon *ngIf="!isLoading">
-                            more_vert
-                        </mat-icon>
+                        <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
                     </div>
                 </td>
             </ng-container>
