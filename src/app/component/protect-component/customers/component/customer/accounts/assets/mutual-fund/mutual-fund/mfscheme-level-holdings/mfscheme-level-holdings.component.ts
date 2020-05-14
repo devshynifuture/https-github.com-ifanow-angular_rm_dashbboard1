@@ -122,7 +122,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       })
   }
 
-  displayFn(scheme: Scheme): string | undefined {
+  displayWith(scheme: Scheme) {
     return scheme ? scheme.schemeName : undefined;
   }
 
