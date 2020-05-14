@@ -93,11 +93,10 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm(this.firstHolderNominee);
     } else {
       this.getdataForm('');
-      if (this.clientData) {
-        this.getFamilyMembersList(this.clientData);
-      }
     }
-
+    if (this.clientData) {
+      this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
+    }
     this.holdingList = [];
     this.nominee = [];
   }
@@ -176,7 +175,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     );
   }
 
-  getFamilyMembersList(data) {
+  getFamilyMembersList(data, shouldSelectData) {
     const obj = {
       clientId: data.clientId,
       id: 0

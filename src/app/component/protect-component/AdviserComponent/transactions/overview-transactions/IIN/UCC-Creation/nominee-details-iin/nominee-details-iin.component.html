@@ -114,11 +114,12 @@
           </div>
           <div class="col-md-3 form-group iconPetage">
             <mat-form-field floatLabel="never" appearance="standard">
-              <input disabled placeholder="Enter Nominee percentage" matInput [inputValidator]="validatorType.NUMBER_ONLY"
+              <input [disabled]="true" [inputValidator]="validatorType.NUMBER_ONLY" matInput
+                     placeholder="Enter Nominee percentage"
                      [maxLength]="6" appInputValueValidation maxlength="3" formControlName="percent" type="number"
                      class="form-control percentage">
               <mat-error *ngIf="(nomineeDetails.get('percent').errors)" class="f-12 ml-8">
-                Should be between than 0.01 to 99
+                Should be between than 0.0 to 100
               </mat-error>
             </mat-form-field>
           </div>
