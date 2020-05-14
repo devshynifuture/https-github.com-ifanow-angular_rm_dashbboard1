@@ -100,8 +100,7 @@
                             <tr style="border: transparent !important">
                                 <td colspan="6" class="innerTd one">
                                     <div class="d-block text-right" *ngIf="category.showCategory==false">
-                                        <button mat-icon-button
-                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)">
+                                        <button mat-icon-button (click)="exportToExcelSheet('scheme-wise', i, null)">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -168,7 +167,12 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="6" class="innerTd two">
-
+                                                    <button mat-icon-button
+                                                        (click)="exportToExcelSheet('investor-wise', i, null)">
+                                                        <mat-icon>
+                                                            save_alt
+                                                        </mat-icon>
+                                                    </button>
                                                     <table class=" mt-8 mb-8" id="table-low"
                                                         *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
@@ -233,16 +237,13 @@
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="6" class="innerTd three">
                                                                     <div class="d-block text-right"
-                                                                        *ngIf="!scheme.showScheme">
-                                                                        <div class="d-block text-right"
-                                                                            *ngIf="subcategory.showSubCategory==false">
-                                                                            <button mat-icon-button
-                                                                                (click)="exportToExcelSheet('applicant-wise', i, amcIndex)">
-                                                                                <mat-icon>
-                                                                                    save_alt
-                                                                                </mat-icon>
-                                                                            </button>
-                                                                        </div>
+                                                                        *ngIf="subcategory.showSubCategory==false">
+                                                                        <button mat-icon-button
+                                                                            (click)="exportToExcelSheet('applicant-wise', i, null)">
+                                                                            <mat-icon>
+                                                                                save_alt
+                                                                            </mat-icon>
+                                                                        </button>
                                                                     </div>
                                                                     <table class=" mt-8 mb-8" id="table-low"
                                                                         *ngIf="inv.showInvestor==false">

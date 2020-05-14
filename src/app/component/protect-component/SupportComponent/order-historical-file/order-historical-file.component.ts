@@ -68,6 +68,8 @@ export class OrderHistoricalFileComponent implements OnInit {
   camsRtId;
   karvyRtId;
   franklinRtId;
+  filteredReqObj = [];
+  changedArnRiaList = [];
 
   constructor(
     private supportService: SupportService,
@@ -119,7 +121,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   }
 
   addArnRia() {
-    const arnRia = this.orderHistoryFileForm.controls.selectArnRia as FormArray;
+    let arnRia = this.orderHistoryFileForm.controls.selectArnRia as FormArray;
     this.arnRiaDetailsList.forEach(element => {
       arnRia.push(this.fb.group({
         selection: [element.form,]
@@ -127,6 +129,10 @@ export class OrderHistoricalFileComponent implements OnInit {
     });
 
     this.setArnRiaId(0);
+  }
+
+  getArnRiaArray() {
+    return this.orderHistoryFileForm.controls.selectArnRia as FormArray;
   }
 
   setArnRiaId(index) {
@@ -184,8 +190,8 @@ export class OrderHistoricalFileComponent implements OnInit {
       }),
       "karvy": this.fb.group({
         "mfsd201": [false,],
-        "mfsd243Active": [false,],
-        "mfsd231Ceased": [false,],
+        "mfsd243": [false,],
+        "mfsd231": [false,],
         "mfsd211": [false,],
         "mfsd203": [false,]
       }),
@@ -333,9 +339,9 @@ export class OrderHistoricalFileComponent implements OnInit {
     this.karvyValueChangeSubscription = this.orderHistoryFileForm.get('selectFilesToOrder.karvy').valueChanges.subscribe(val => {
       if (val['mfsd201']) {
         this.changesDueToCamsSelection(1)
-      } else if (val['mfsd243Active']) {
+      } else if (val['mfsd243']) {
         this.changesDueToCamsSelection(1)
-      } else if (val['mfsd231Ceased']) {
+      } else if (val['mfsd231']) {
         this.changesDueToCamsSelection(1)
       } else if (val['mfsd211']) {
         this.changesDueToCamsSelection(1)
@@ -1340,10 +1346,24 @@ export class OrderHistoricalFileComponent implements OnInit {
             });
           }
         });
+
         requestObj = [...requestObj, ...this.moreArnRiaObj];
+
+        this.orderHistoryFileForm.get('selectArnRia').value.forEach((item, index) => {
+          if (!item.selection) {
+            let id = this.arnRiaDetailsList[index].id;
+            requestObj.forEach((item, index1) => {
+              if (item.arnRiaDetailId === id) {
+                requestObj.splice(index1, 1);
+              }
+            })
+          }
+        });
         this.requestJsonForOrderingFiles = requestObj;
       }
+
     }
+    console.log("this is request Obj", requestObj);
     this.postFileOrderingData();
   }
 

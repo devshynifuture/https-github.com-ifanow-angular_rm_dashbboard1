@@ -41,8 +41,8 @@ export class ClientDematComponent implements OnInit {
   clientData: any;
   disableBtn = false;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService) {
+              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+              private eventService: EventService) {
   }
 
   validatorType = ValidatorType;
@@ -52,17 +52,16 @@ export class ClientDematComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
-    this.idData = (this.fieldFlag != "familyMember") ? this.userData.clientId : this.userData.familyMemberId;
+    this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
       this.holdingMode = '1';
       this.createDematForm(null);
       this.getDematList(data);
-    }
-    else {
+    } else {
       this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
       (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
-      this.barButtonOptions.text = "SAVE & CLOSE";
+      this.barButtonOptions.text = 'SAVE & CLOSE';
       this.createDematForm(this.userData.dematData);
     }
   }
@@ -70,14 +69,14 @@ export class ClientDematComponent implements OnInit {
 
   ownerName: any;
   familyMemberId: any;
-  ownerData: any
+  ownerData: any;
   callMethod: any;
   nomineesListFM: any = [];
   // ===================owner-nominee directive=====================//
   display(value) {
-    console.log('value selected', value)
+    console.log('value selected', value);
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.id;
   }
 
   lisNominee(value) {
@@ -87,10 +86,10 @@ export class ClientDematComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName: "disabledMember",
+      methodName: 'disabledMember',
       ParamValue: value,
       disControl: type
-    }
+    };
   }
   changeHoldingType(data) {
     (data.value == '1') ? this.dematForm.get('holderName').setValue('') : '';
@@ -111,9 +110,9 @@ export class ClientDematComponent implements OnInit {
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName: "onChangeJointOwnership",
+      methodName: 'onChangeJointOwnership',
       ParamValue: data
-    }
+    };
   }
 
   /***owner***/
@@ -135,12 +134,11 @@ export class ClientDematComponent implements OnInit {
     }
 
     if (this.getCoOwner.value.length > 1 && !data) {
-      let share = 100 / this.getCoOwner.value.length;
-      for (let e in this.getCoOwner.controls) {
-        if (!Number.isInteger(share) && e == "0") {
+      const share = 100 / this.getCoOwner.value.length;
+      for (const e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == '0') {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-        }
-        else {
+        } else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
@@ -154,12 +152,11 @@ export class ClientDematComponent implements OnInit {
       if (this.dematForm.value.getCoOwnerName.length == 1) {
         this.getCoOwner.controls['0'].get('share').setValue('100');
       } else {
-        let share = 100 / this.getCoOwner.value.length;
-        for (let e in this.getCoOwner.controls) {
-          if (!Number.isInteger(share) && e == "0") {
+        const share = 100 / this.getCoOwner.value.length;
+        for (const e in this.getCoOwner.controls) {
+          if (!Number.isInteger(share) && e == '0') {
             this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-          }
-          else {
+          } else {
             this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
           }
         }
@@ -181,12 +178,11 @@ export class ClientDematComponent implements OnInit {
     if (this.dematForm.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
-      let share = 100 / this.getNominee.value.length;
-      for (let e in this.getNominee.controls) {
-        if (!Number.isInteger(share) && e == "0") {
+      const share = 100 / this.getNominee.value.length;
+      for (const e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == '0') {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-        }
-        else {
+        } else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
@@ -200,18 +196,17 @@ export class ClientDematComponent implements OnInit {
       name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
-      for (let e in this.getNominee.controls) {
+      for (const e in this.getNominee.controls) {
         this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
     }
 
     if (this.getNominee.value.length > 1 && !data) {
-      let share = 100 / this.getNominee.value.length;
-      for (let e in this.getNominee.controls) {
-        if (!Number.isInteger(share) && e == "0") {
+      const share = 100 / this.getNominee.value.length;
+      for (const e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == '0') {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-        }
-        else {
+        } else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
@@ -270,24 +265,22 @@ export class ClientDematComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.dematForm }
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.dematForm };
     // ==============owner-nominee Data ========================\\
   }
   getDematList(data) {
-    let obj =
-    {
-      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    }
+    const obj = {
+      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+    };
     this.cusService.getDematList(obj).subscribe(
       data => {
         console.log(data);
         if (data && data.length > 0) {
           this.dematList = data[0];
-          this.createDematForm(this.dematList)
+          this.createDematForm(this.dematList);
           this.holdingMode = (this.dematList.modeOfHolding) ? String(this.dematList.modeOfHolding) : '1';
-        }
-        else {
+        } else {
           this.holdingMode = '1';
           this.dematList = {};
         }
@@ -295,7 +288,7 @@ export class ClientDematComponent implements OnInit {
         this.holdingMode = '1';
         this.dematList = {};
       }
-    )
+    );
   }
   ngOnInit() {
   }
@@ -314,22 +307,19 @@ export class ClientDematComponent implements OnInit {
     if (this.dematForm.invalid) {
       this.dematForm.markAllAsTouched();
       return;
-    }
-    else if (this.dematForm.value.modeOfHolding == '2' && this.holderList.invalid) {
+    } else if (this.dematForm.value.modeOfHolding == '2' && this.holderList.invalid) {
       this.holderList.markAllAsTouched();
-    }
-    else if (this.mobileData.invalid) {
+    } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
-    }
-    else {
+    } else {
       const mobileList = [];
       const holderList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
           console.log(element);
           mobileList.push({
-            "id": 0,
-            "mobileNo": element.get('number').value,
+            id: 0,
+            mobileNo: element.get('number').value,
             isdCodeId: element.get('code').value
           });
         });
@@ -343,8 +333,7 @@ export class ClientDematComponent implements OnInit {
             dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
           });
         });
-      }
-      else {
+      } else {
         holderList.push({
           // fMDetailTypeId: 1,
           name: this.dematForm.get('holderName').value,
@@ -352,13 +341,13 @@ export class ClientDematComponent implements OnInit {
           dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
         });
       }
-      for (let element in this.dematForm.controls) {
-        console.log(element)
+      for (const element in this.dematForm.controls) {
+        console.log(element);
         this.dematForm.controls[element].markAsTouched();
         if (element == 'getCoOwnerName') {
-          for (let e in this.getCoOwner.controls) {
+          for (const e in this.getCoOwner.controls) {
             const arrayCon: any = this.getCoOwner.controls[e];
-            for (let i in arrayCon.controls) {
+            for (const i in arrayCon.controls) {
               arrayCon.controls[i].markAsTouched();
             }
           }
@@ -368,24 +357,23 @@ export class ClientDematComponent implements OnInit {
         // }
       }
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
-      let obj =
-      {
-        "depositoryParticipantName": this.dematForm.get('depositoryPartName').value,
-        "powerOfAttorneyMasterId": this.dematForm.get('depositoryPartId').value,
-        "holderNameList": holderList,
-        "modeOfHolding": this.dematForm.get('modeOfHolding').value,
-        "mobileDataList": mobileList,
-        "dematId": (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null,
-        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-        "brokerAddress": this.dematForm.get('brokerAddress').value,
-        "depositoryParticipantId": this.dematForm.get('depositoryPartId').value,
-        "linkedBankAccount": this.dematForm.get('linkedBankAccount').value,
-        "powerOfAttorneyName": this.dematForm.get('powerOfAttName').value,
-        "nomineeList": this.dematForm.value.getNomineeName,
-        "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
-        "brokerName": this.dematForm.get('brekerName').value,
-        "dematClientId": this.dematForm.get('dematClientId').value
-      }
+      const obj = {
+        depositoryParticipantName: this.dematForm.get('depositoryPartName').value,
+        powerOfAttorneyMasterId: this.dematForm.get('depositoryPartId').value,
+        holderNameList: holderList,
+        modeOfHolding: this.dematForm.get('modeOfHolding').value,
+        mobileDataList: mobileList,
+        dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null,
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        brokerAddress: this.dematForm.get('brokerAddress').value,
+        depositoryParticipantId: this.dematForm.get('depositoryPartId').value,
+        linkedBankAccount: this.dematForm.get('linkedBankAccount').value,
+        powerOfAttorneyName: this.dematForm.get('powerOfAttName').value,
+        nomineeList: this.dematForm.value.getNomineeName,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
+        brokerName: this.dematForm.get('brekerName').value,
+        dematClientId: this.dematForm.get('dematClientId').value
+      };
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
           console.log(data);
@@ -394,9 +382,9 @@ export class ClientDematComponent implements OnInit {
           (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
         },
         err => {
-          this.eventService.openSnackBar(err, 'Dismiss')
+          this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
-          this.disableBtn = false
+          this.disableBtn = false;
         }
       );
 

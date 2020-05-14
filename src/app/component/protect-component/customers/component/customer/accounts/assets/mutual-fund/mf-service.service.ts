@@ -16,6 +16,9 @@ export class MfServiceService {
   private updateTransactionAfterAdd = new BehaviorSubject('');
   private showMutualFundDropdown = new BehaviorSubject('');
   private viewMode = new BehaviorSubject('');
+  private mfData = new BehaviorSubject('');
+  private navValue = new BehaviorSubject('');
+
 
   getPersonalDetails(data) {
     const obj = {
@@ -61,7 +64,7 @@ export class MfServiceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      if(element[key]){
+      if((element[key]) ? element[key].length> 0 : element[key]){
         filterData.push(element[key]);
       }
     });
@@ -396,5 +399,19 @@ export class MfServiceService {
 
   getViewMode() {
     return this.viewMode.asObservable();
+  }
+  setMfData(value) {
+    this.mfData.next(value);
+  }
+
+  getMfData() {
+    return this.mfData.asObservable();
+  }
+  setNavValue(value) {
+    this.navValue.next(value);
+  }
+
+  getNavValue() {
+    return this.navValue.asObservable();
   }
 }

@@ -136,12 +136,24 @@ export class ForgotPasswordComponent implements OnInit {
             this.eventService.openSnackBar('Please contact your advisor for more details');
           }
         }
+        else {
+          this.userName.setErrors({ incorrect: true });
+        }
       }
       ,
       err => {
-        // this.eventService.openSnackBar(err, 'Dismiss');
-        this.userName.setErrors({ incorrect: true });
         this.barButtonOptions.active = false;
+        if (err == "Username not found.") {
+          this.userName.setErrors({ incorrect: true });
+        }
+        else {
+          if (err.type == undefined) {
+            this.userName.setErrors({ incorrect: true });
+          }
+          else {
+            this.eventService.openSnackBar(err.type, 'Dismiss');
+          }
+        }
       }
     );
   }

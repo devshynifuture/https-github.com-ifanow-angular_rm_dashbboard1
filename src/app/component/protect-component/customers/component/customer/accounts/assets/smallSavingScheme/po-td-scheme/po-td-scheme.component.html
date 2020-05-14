@@ -76,24 +76,24 @@
 <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden mt-8 real-estate">
     <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no" sticky>
-            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
+            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
             <td mat-footer-cell class="" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
-            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-20">
+            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br W-18"> Owner </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> </div>
                 <div *ngFor="let owner of element.ownerList; let i = index">
                     <span *ngIf="i == 0">{{owner.name}}</span>
                 </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="  text-right f-600 pr-20  "> Total </td>
+            <td mat-footer-cell *matFooterCellDef class="  text-right br f-600 pr-20 "> Total </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 textRight text-right">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-11 rightText  ">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
@@ -104,14 +104,14 @@
         </ng-container>
 
         <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-6 rightText"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{element.rate}}{{!isLoading? "%" : ""}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10">
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br rightText w-13">
                 Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
@@ -129,7 +129,7 @@
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity value </th>
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br rightText w-11">Maturity value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
             </td>
@@ -138,15 +138,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left t-10">Maturity date
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  textLeft">Maturity <br> date
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-left t-10">
+            <td mat-cell *matCellDef="let element" class="br text-left ">
                 <div class="bar"> {{element.maturityDate |date:'dd/MM/yyyy'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="number">
-            <th mat-sort-header="tdNumber" mat-header-cell *matHeaderCellDef class="br textRight text-right">TD number
+            <th mat-sort-header="tdNumber" mat-header-cell *matHeaderCellDef class="br textLeft text-right">TD <br> number
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right ">
                 <div class="bar"> {{isLoading ? '' : element.tdNumber || '-'}} </div>

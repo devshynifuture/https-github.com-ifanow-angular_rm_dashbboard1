@@ -168,7 +168,7 @@ export class FixedIncomeComponent implements OnInit {
     if (data == undefined) {
       this.noData = "No scheme found";
       this.dataSource.data = [];
-      this.hideFilter = true;
+      this.hideFilter = false;
     } else if (data.assetList) {
       this.dataList = data.assetList;
       this.dataSource.data = data.assetList;
@@ -219,7 +219,7 @@ export class FixedIncomeComponent implements OnInit {
       if (data.assetList) {
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
         this.dataList = data.assetList;
-
+        this.hideFilter = false;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.recurringDepositTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
@@ -231,6 +231,7 @@ export class FixedIncomeComponent implements OnInit {
     else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
+      this.hideFilter = true;
     }
   }
 
@@ -258,7 +259,7 @@ export class FixedIncomeComponent implements OnInit {
       if (data.assetList) {
         console.log('getBondsRes ******** ', data);
         this.dataList = data.assetList;
-
+        this.hideFilter = false;
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.bondListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
@@ -270,6 +271,7 @@ export class FixedIncomeComponent implements OnInit {
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
+      this.hideFilter = true;
     }
   }
 

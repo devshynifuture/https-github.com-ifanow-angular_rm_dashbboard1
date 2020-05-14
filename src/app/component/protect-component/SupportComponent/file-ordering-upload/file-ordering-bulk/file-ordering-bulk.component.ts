@@ -294,9 +294,9 @@ export class FileOrderingBulkComponent implements OnInit {
         console.log("this is sidebardata in subs subs : ", sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            let days = this.filterForm.get("filterByPeriod").value.value;
-            let rtId = this.filterForm.get("filterByRta").value.value;
-            let rmId = this.filterForm.get("filterByRmName").value.value;
+            let days = this.filterForm.get("filterByPeriod").value ? this.filterForm.get("filterByPeriod").value.value : null;
+            let rtId = this.filterForm.get("filterByRta").value ? this.filterForm.get("filterByRta").value.value : null;
+            let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
             if (days && rtId && rmId) {
               this.fileOrderBulkHistoryListGet({
                 days: this.filterForm.get("filterByPeriod").value.value,

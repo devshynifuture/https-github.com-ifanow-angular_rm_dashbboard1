@@ -51,6 +51,7 @@ export class SubmitReviewInnComponent implements OnInit {
   set data(data) {
     this.doneData = {};
     this.inputData = data;
+    console.log('submit and review component inputData : ', this.inputData);
     this.allData = data;
     this.clientData = this.clientData;
     this.doneData.nominee = true;
@@ -175,10 +176,9 @@ export class SubmitReviewInnComponent implements OnInit {
     this.toSendObjBankList = [];
     this.toSendObjNomineeList = [];
     this.allData.holderList.forEach(element => {
-      if (element.address && element.email) {
+      if (element.email) {
         this.toSendObjHolderList.push(element);
       }
-
     });
     this.allData.bankDetailList.forEach(element => {
       if (element.address && element.ifscCode) {
@@ -228,7 +228,7 @@ export class SubmitReviewInnComponent implements OnInit {
     };
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.openSnackBar(error, 'dismiss');
       }
     );
   }
