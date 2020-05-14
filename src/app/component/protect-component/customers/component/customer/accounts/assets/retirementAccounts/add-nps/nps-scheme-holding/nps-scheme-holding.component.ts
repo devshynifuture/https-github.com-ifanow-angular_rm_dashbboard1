@@ -4,15 +4,17 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { Observable } from 'rxjs';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
 import {map, startWith} from 'rxjs/operators';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 @Component({
   selector: 'app-nps-scheme-holding',
   templateUrl: './nps-scheme-holding.component.html',
@@ -62,7 +64,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   myControl = new FormControl();
   filteredOptions: Observable<any[]>;
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { 
+  constructor(private event: EventService,  public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { 
     
   }
   @Input()
@@ -86,6 +88,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
     this.getGlobalList();
+
+    //link bank
+    this.bankList = this.enumService.getBank();
+    //link bank
   }
 
   private _filter(name: any): any[] {
@@ -186,8 +192,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
       })]),
       futureContributionList: this.fb.array([this.fb.group({
         frequencyId: [null, [Validators.required]],
-        accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
+        accountPreferenceId: [null], approxContribution: [null, [Validators.required]]
       })]),
+      bankACNo: [(!data) ? '' : data.userBankMappingId],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -230,7 +237,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
       data.futureContributionList.forEach(element => {
         this.schemeHoldingsNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
-          accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
+          accountPreferenceId: [(element.accountPreferenceId + "")],
           approxContribution: [(element.approxContribution), Validators.required],
           id: [element.id, [Validators.required]]
         }))
@@ -312,7 +319,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
   addFutureContry() {
     this.futureContry.push(this.fb.group({
       frequencyId: [null, [Validators.required]],
-      accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
+      accountPreferenceId: [null], approxContribution: [null, [Validators.required]]
     }));
 
   }
@@ -525,12 +532,15 @@ addNewNominee(data) {
         // ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
         ownerList: this.schemeHoldingsNPS.value.getCoOwnerName,
         pran: this.schemeHoldingsNPS.controls.pran.value,
+        schemeChoice: this.schemeHoldingsNPS.controls.schemeChoice.value,
         holdingList: this.schemeHoldingsNPS.controls.holdingList.value,
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
         // nominees: this.schemeHoldingsNPS.controls.nominees.value,
         nomineeList: this.schemeHoldingsNPS.value.getNomineeName,
         description: this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value,
+        userBankMappingId: this.schemeHoldingsNPS.controls.bankACNo.value,
+
         // currentValuation: 0,
         // realOrFictitious: 1,
         // totalAmountInvested: 0
@@ -588,4 +598,21 @@ addNewNominee(data) {
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
+  bankList:any = [];
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

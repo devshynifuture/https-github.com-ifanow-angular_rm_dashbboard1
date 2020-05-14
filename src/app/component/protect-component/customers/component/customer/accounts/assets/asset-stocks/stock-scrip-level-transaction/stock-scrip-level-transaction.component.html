@@ -66,7 +66,7 @@
         </div>
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Scrip name</h5>
-            <app-scrip-field [data]="scipLevelTransactionForm"></app-scrip-field>
+            <app-scrip-field (valueChange1)="getScript($event)" [data]="scipLevelTransactionForm"></app-scrip-field>
         </div>
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>

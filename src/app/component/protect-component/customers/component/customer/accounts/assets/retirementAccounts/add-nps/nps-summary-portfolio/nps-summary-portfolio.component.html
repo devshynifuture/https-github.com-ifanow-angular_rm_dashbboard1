@@ -263,7 +263,26 @@
                 </div>
             </div>
         </div>
-
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Linked bank account</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="bankACNo" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankName}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div  class="col-md-1 p-0 pt-8 d-flex">
+                <!-- prod build -->
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+            </div>
+        </div>
         <div formArrayName="getNomineeName">
             <div class="row pt-44"
                 *ngFor="let obj of summaryNPS.controls['getNomineeName'].controls; let pointIndex=index"
@@ -315,6 +334,7 @@
 
             </div>
         </div>
+        
         <div class="row pt-36">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>

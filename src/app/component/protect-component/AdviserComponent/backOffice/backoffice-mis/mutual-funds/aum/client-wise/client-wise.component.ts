@@ -78,6 +78,11 @@ export class ClientWiseComponent implements OnInit {
   scheme2List: any;
   @Output() changedValue = new EventEmitter();
   selectedScheme: any;
+  isLoadingInvestor: boolean;
+  investorListArr: any[];
+  isLoadingScheme: boolean;
+  scheme1ListArr: any;
+  isLoadingFolio: boolean;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
 
@@ -92,63 +97,63 @@ export class ClientWiseComponent implements OnInit {
   propertyName2: any;
   propertyName3: any;
   propertyName4: any;
-  reverse=true;
-  reverse2=true;
-  reverse3=true;
-  reverse4=true;
+  reverse = true;
+  reverse2 = true;
+  reverse3 = true;
+  reverse4 = true;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getClientTotalAum();
   }
-  sortBy(applicant,propertyName){
+  sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
-    if (this.reverse === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByInvestor(applicant,propertyName){
+  sortByInvestor(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
-    if (this.reverse2 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse2 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByScheme(applicant,propertyName){
+  sortByScheme(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
-    if (this.reverse3 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse3 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByFolio(applicant,propertyName){
+  sortByFolio(applicant, propertyName) {
     this.propertyName4 = propertyName;
     this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
-    if (this.reverse4 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse4 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
@@ -183,10 +188,13 @@ export class ClientWiseComponent implements OnInit {
 
   }
   getInvestorName(clientData, index) {
+    this.isLoadingInvestor = true
     this.selectedClient = index;
-
     clientData.show = !clientData.show
     clientData.investorList = []
+    this.investorList = []
+    clientData.investorList = [{}, {}, {}];
+
     if (clientData.show == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -197,16 +205,26 @@ export class ClientWiseComponent implements OnInit {
       }
       this.backoffice.getAumFamilyMember(obj).subscribe(
         data => {
+          this.isLoadingInvestor = false
           if (data) {
             data.forEach(element => {
-              element.showInvestor=true;
+              element.showInvestor = true;
             });
             clientData.investorList = data
             this.investorList = data;
             console.log(data);
 
             this.appendingOfValuesInExcel(data, index, 'investor');
+          } else {
+            this.investorList = []
+            clientData.investorList = []
+            this.isLoadingInvestor = false
           }
+        },
+        err => {
+          this.investorList = []
+          clientData.investorList = []
+          this.isLoadingInvestor = false
         }
       )
     } else {
@@ -381,7 +399,7 @@ export class ClientWiseComponent implements OnInit {
         this.totalWeight += o.weightInPercentage;
       });
       this.showLoader = false;
-    }else{
+    } else {
       this.clientList = [];
     }
   }
@@ -392,10 +410,14 @@ export class ClientWiseComponent implements OnInit {
     this.clientList[index].show = (show) ? show = false : show = true;
   }
   getSchemeName(investorData, index, clientIndex) {
+    this.isLoadingScheme = true
     this.selectedInvestor = index;
     this.selectedClient = clientIndex;
     investorData.showInvestor = !investorData.showInvestor
     investorData.schemeList = [];
+    this.scheme1ListArr = []
+    investorData.schemeList = [{}, {}, {}];
+
     if (investorData.showInvestor == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -406,15 +428,22 @@ export class ClientWiseComponent implements OnInit {
       }
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         data => {
+          this.isLoadingScheme = false
           if (data) {
             data.forEach(element => {
-              element.showScheme=true;
-              element.familyMemberId=investorData.familyMemberId;
+              element.showScheme = true;
+              element.familyMemberId = investorData.familyMemberId;
             });
             investorData.schemeList = data;
+            this.scheme1ListArr = data
             console.log(data);
             this.appendingOfValuesInExcel(data, index, 'schemes');
           }
+        },
+        err => {
+          this.scheme1ListArr = []
+          investorData.schemeList = []
+          this.isLoadingScheme = false
         }
       )
     } else {
@@ -423,11 +452,14 @@ export class ClientWiseComponent implements OnInit {
 
   }
   getFolio(schemeData, index, investorIndex, clientIndex) {
+    this.isLoadingFolio = true
     this.selectedScheme = index;
     this.selectedInvestor = investorIndex;
     this.selectedClient = clientIndex;
     schemeData.showScheme = !schemeData.showScheme
+    this.scheme2List = []
     schemeData.folioList = []
+    schemeData.folioList = [{}, {}, {}];
     if (schemeData.showScheme == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -439,6 +471,7 @@ export class ClientWiseComponent implements OnInit {
       }
       this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
         data => {
+          this.isLoadingFolio = false
           if (data) {
             schemeData.folioList = data;
             this.scheme2List = data;
@@ -446,7 +479,16 @@ export class ClientWiseComponent implements OnInit {
             console.log(data);
             this.appendingOfValuesInExcel(data, index, 'scheme-folio');
 
+          }else{
+            this.scheme2List = []
+          schemeData.folioList = []
+          this.isLoadingFolio = false
           }
+        },
+        err => {
+          this.scheme2List = []
+          schemeData.folioList = []
+          this.isLoadingFolio = false
         }
       )
     } else {
@@ -459,6 +501,9 @@ export class ClientWiseComponent implements OnInit {
   }
   aumReport() {
     this.changedValue.emit(true);
+    this.clientList.forEach(element => {
+      element.show = true
+    });
   }
 
 }

@@ -14,6 +14,7 @@ import { ExcelService } from '../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
+import { LoanAmortsComponent } from './loan-amorts/loan-amorts.component';
 
 
 @Component({
@@ -371,6 +372,8 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+
+  
   getLiability(data) {
     this.isLoading = true;
 

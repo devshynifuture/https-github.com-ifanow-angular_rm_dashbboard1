@@ -6,7 +6,15 @@
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund transactions</h4>
             </div>
             <div class="col-md-8 p-0 d-flex justify-content-end">
-                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+
+                <!-- <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p"> -->
+
+
+                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                    <img src="assets/images/svg/download-bordered.svg">
+                </a>
+
+
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund transactions')" mat-menu-item>XLS</button>
@@ -21,8 +29,7 @@
 
         <div class="row" #allTranTemplate id="template">
             <div class="col-md-12 p-0 mb-8">
-                <table #tableEl matSort mat-table [dataSource]="customDataSource" id="table-low"
-                    class="mutualfunds-capital-equity">
+                <table #tableEl matSort mat-table [dataSource]="customDataSource" id="table-low" class="mutualfunds-capital-equity">
                     <ng-container matColumnDef="no">
                         <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
                         <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -32,8 +39,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="transactionType">
-                        <th class="br" mat-sort-header="transactionType" mat-header-cell *matHeaderCellDef> Transaction
-                            Type </th>
+                        <th class="br" mat-sort-header="transactionType" mat-header-cell *matHeaderCellDef> Transaction Type </th>
                         <td class="br" mat-cell *matCellDef="let element">
                             <span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
                             <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
@@ -50,7 +56,6 @@
                             {{element.transactionDate}} </td>
                         <td *matFooterCellDef appFormatNumber class="br p-8 text-right" mat-footer-cell>
                         </td>
-
                     </ng-container>
 
                     <ng-container matColumnDef="transactionAmount">
@@ -59,8 +64,7 @@
                         <td class="br text-left" mat-cell *matCellDef="let element">
                             {{element.amount}}
                             <span appFormatNumber *ngIf="element.amount">{{element.amount}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalTransactionAmt">{{element.totalTransactionAmt}}</span>
+                            <span appFormatNumber class="f-700" *ngIf="element.totalTransactionAmt">{{element.totalTransactionAmt}}</span>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br p-8 f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
@@ -94,8 +98,7 @@
                             Balance units </th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
                             <span appFormatNumber *ngIf="element.balanceUnits">{{element.balanceUnits}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalBalanceUnit">{{element.totalBalanceUnit}}</span>
+                            <span appFormatNumber class="f-700" *ngIf="element.totalBalanceUnit">{{element.totalBalanceUnit}}</span>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalBalanceUnit:'0'}}</td>
@@ -113,8 +116,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="groupHeader">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="text-center text-primary">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">
                             {{group.groupName}}</td>
                     </ng-container>
 
@@ -126,8 +128,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="groupHeader3">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="text-center text-primary">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">
                             {{group.name}}(PAN:{{group.pan}})|{{group.folio}}</td>
                     </ng-container>
 
@@ -139,13 +140,11 @@
 
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="" mat-header-cell></th>
-                        <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
-                                class="material-icons c-p text-black">
+                        <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25" class="material-icons c-p text-black">
                                 more_vert
                             </i>
                             <mat-menu #menu25="matMenu">
-                                <button mat-menu-item
-                                    (click)="editTransaction('editTransaction', element)">Edit</button>
+                                <button mat-menu-item (click)="editTransaction('editTransaction', element)">Edit</button>
                                 <button mat-menu-item>Delete</button>
                             </mat-menu>
                         </td>
