@@ -369,11 +369,12 @@ addNewNominee(data) {
             "valueAsOn": null,
             "currentMarketValue": 0,
             "amountInvested": 0,
-            "scripNameId": this.scripData.id,
+            "scripNameId": this.scripData?this.scripData.id:this.scipLevelTransactionForm.get('scripName').value,
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
             "transactionorHoldingSummaryList": [
               {
+                "id": element.get('id').value,
                 "holdingOrTransaction": 2,
                 "quantity": element.get('quantity').value,
                 "holdingOrTransactionDate": element.get('date').value,
@@ -387,7 +388,7 @@ addNewNominee(data) {
         console.log(finalStocks)
         const obj =
         {
-          "id": this.scipLevelTransactionForm.get('portfolioName').value.id,
+          "id": this.editApiData?this.editApiData.id:null,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
