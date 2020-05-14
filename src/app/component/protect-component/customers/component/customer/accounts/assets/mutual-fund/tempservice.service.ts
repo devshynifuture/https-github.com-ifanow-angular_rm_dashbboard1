@@ -87,7 +87,8 @@ export class TempserviceService {
           folio: singleData.folioNumber
         };
         filteredData.push(obj2);
-        singleData.mutualFundTransactions.forEach((ele) => {
+        singleData.mutualFundTransactions.forEach((ele,ind) => {
+          ele.indexId = (ind+1);
           filteredData.push(ele);
         });
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});

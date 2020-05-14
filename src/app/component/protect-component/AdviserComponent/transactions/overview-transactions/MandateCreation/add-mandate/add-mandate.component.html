@@ -20,8 +20,8 @@
       <div class="col-md-5  form-group">
         <mat-form-field appearance="standard" floatLabel="never">
           <input #searchClient (valueChange1)='lisNominee($event)' [matAutocomplete]="auto1" aria-label="client"
-            class="form-control pl-8" formControlName="ownerName" matInput
-            placeholder="Start typing to see investor names">
+                 class="form-control pl-8" formControlName="ownerName" matInput
+                 placeholder="Start typing to see investor names">
           <mat-autocomplete #auto1="matAutocomplete">
             <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM | async" [value]="f.name">
               <span>{{f.name}}</span>
@@ -46,7 +46,7 @@
           <mat-select class="form-control" formControlName="holdingNature">
             <mat-option disabled value=''>Select IIN/UCC</mat-option>
             <mat-option (click)="selectIINUCC(clientCode)" *ngFor="let clientCode of clientCodeData"
-              [value]="clientCode.clientCode">
+                        [value]="clientCode.clientCode">
               {{clientCode.clientCode}} </mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>
@@ -116,7 +116,7 @@
       <div class="col-md-3 form-group">
         <mat-form-field appearance="standard" class="ba-date" floatLabel="never">
           <input (click)="picker1.open()" [matDatepicker]="picker1" autocomplete="off" class="form-control b-0"
-            formControlName="toDate" matInput placeholder="Enter date" readonly>
+                 formControlName="toDate" matInput placeholder="Enter date" readonly>
           <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
           <mat-error class="f-12 pt-4">
@@ -132,7 +132,7 @@
       <div class="col-md-5 form-group">
         <mat-form-field appearance="standard" floatLabel="never">
           <input #mandateAmount class="form-control br-0" formControlName="mandateAmount" matInput
-            placeholder="Enter mandate amount" type="number">
+                 placeholder="Enter mandate amount" type="number">
           <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.required" class="f-12 pt-4">
             This field is required
           </mat-error>
@@ -159,14 +159,14 @@
         <h3 class="f-16 mt-4 mb-10">Upload mandate form</h3>
         <div class="dragDropCLass text-center">
           <input (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl" multiple
-            type="file"> Drag & drop file here <br> or <br> Browse
+                 type="file"> Drag & drop file here <br> or <br> Browse
         </div>
       </div>
       <div class="col-md-6 bl-1  fixed-top-right ">
         <h3 class="f-16 mt-4 mb-10">Upload cheque</h3>
         <div class="dragDropCLass">
           <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl" multiple
-            type="file"> Drag & drop file here <br> or <br> Browse
+                 type="file"> Drag & drop file here <br> or <br> Browse
         </div>
       </div>
     </div>
@@ -174,7 +174,7 @@
   <div *ngIf="showMandateTable == true && showUploadSection ==false" class="row">
     <div class="col-md-12">
       <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-        class="mt-16 skeletonAnimation" id="table-low" mat-table matSort>
+             class="mt-16 skeletonAnimation" id="table-low" mat-table matSort>
 
         <ng-container matColumnDef="position">
           <th *matHeaderCellDef class="br" mat-header-cell> Investor name</th>
@@ -245,7 +245,7 @@
       <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-10 right text-right">
-      <h6>{{errorMsg}}</h6>
+<!--      <h6>{{errorMsg}}</h6>-->
       <!-- (click)="createMandate()" removed for prod build -->
       <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
     </div>
