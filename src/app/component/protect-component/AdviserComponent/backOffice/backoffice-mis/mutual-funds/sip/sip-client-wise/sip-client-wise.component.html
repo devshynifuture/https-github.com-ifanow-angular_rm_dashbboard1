@@ -241,9 +241,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div *ngIf="category.applicantList.length==0"
-                                        class="d-flex flex-column align-items-center">
-                                        <h4 class="text-center pt-12">No data Found</h4>
+                                    <div *ngIf="!isLoadingApplicant && category.showCategory==false">
+                                        <div *ngIf="applicantList.length == 0"
+                                            class="d-flex flex-column align-items-center">
+                                            <h4 class="text-center pt-12">No data Found
+                                            </h4>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

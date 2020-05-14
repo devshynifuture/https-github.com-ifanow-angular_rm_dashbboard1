@@ -78,7 +78,7 @@
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="!data.showScheme" class="skeletonAnimation mt-8 mb-8"
+                                    <table *ngIf="data.showScheme == false" class="skeletonAnimation mt-8 mb-8"
                                         appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">
@@ -230,9 +230,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div *ngIf="data.schemeList.length==0"
-                                        class="d-flex flex-column align-items-center">
-                                        <h4 class="text-center pt-12">No data Found</h4>
+                                    <div *ngIf="!isLoadingApplicant && data.showScheme == false">
+                                        <div *ngIf="applicantListArr.length == 0"
+                                            class="d-flex flex-column align-items-center">
+                                            <h4 class="text-center pt-12">No data Found
+                                            </h4>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

@@ -72,6 +72,7 @@ export class SipClientWiseComponent implements OnInit {
   ];
   selectedClient: any;
   isLoadingApplicant: boolean;
+  applicantList: any;
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
@@ -275,6 +276,7 @@ export class SipClientWiseComponent implements OnInit {
     this.isLoadingApplicant = true
     applicantData.showCategory = !applicantData.showCategory
     applicantData.applicantList = []
+    this.applicantList = []
     applicantData.applicantList = [{}, {}, {}];
     if (applicantData.showCategory == false) {
       const obj = {
@@ -291,6 +293,7 @@ export class SipClientWiseComponent implements OnInit {
               o.showSubCategory = true;
             });
             applicantData.applicantList = data
+            this.applicantList = data
             console.log(data)
             if (applicantData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
@@ -301,6 +304,7 @@ export class SipClientWiseComponent implements OnInit {
         },
         err => {
           applicantData.applicantList = [];
+          this.applicantList = []
           this.isLoadingApplicant = false
         }
       )

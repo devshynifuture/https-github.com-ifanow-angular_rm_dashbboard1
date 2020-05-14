@@ -69,7 +69,8 @@ export class SipApplicantWiseComponent implements OnInit {
     ]
   ];
   selectedClient: any;
-  isLoadingApplicant: boolean;
+  isLoadingApplicant: boolean = false;
+  applicantListArr: any[];
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
@@ -146,6 +147,7 @@ export class SipApplicantWiseComponent implements OnInit {
     this.isLoadingApplicant = true
     applicantData.showScheme = !applicantData.showScheme
     applicantData.schemeList = [];
+    this.applicantListArr = []
     applicantData.schemeList = [{}, {}, {}];
     if (applicantData.showScheme == false) {
       const obj = {
@@ -163,16 +165,22 @@ export class SipApplicantWiseComponent implements OnInit {
               element.name = applicantData.name
             });
             applicantData.schemeList = data
+            this.applicantListArr = data
             if (applicantData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
             } else {
               this.removeValuesFromExcel('applicant', index);
             }
             console.log(data)
+          }else{
+            applicantData.schemeList = [];
+            this.applicantListArr = []
+            this.isLoadingApplicant = false
           }
         },
         err => {
           applicantData.schemeList = [];
+          this.applicantListArr = []
           this.isLoadingApplicant = false
         }
       )

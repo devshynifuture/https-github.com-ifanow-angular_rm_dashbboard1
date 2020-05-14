@@ -74,7 +74,8 @@
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="!amc.showAmc" class=" mb-8 mt-8 " id="table-low">
+                                    <table *ngIf="amc.showAmc == false" class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                        [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
@@ -124,8 +125,9 @@
                                                             </mat-icon>
                                                         </button>
                                                     </div>
-                                                    <table id="table-low" class=" mb-8 mt-8 "
-                                                        *ngIf="!scheme.showScheme">
+                                                    <table id="table-low" class="skeletonAnimation mt-8 mb-8"
+                                                        appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant"
+                                                        *ngIf="scheme.showScheme == false">
                                                         <thead>
                                                             <tr class="h-40">
                                                                 <th class="w-25 c-p"
@@ -178,18 +180,44 @@
                                                         <tbody
                                                             *ngFor="let applicant of scheme.applicantList;let i = index">
                                                             <tr>
-                                                                <td>{{applicant.investorName}}</td>
-                                                                <td><span
-                                                                        appFormatNumber>{{applicant.balanceUnit}}</span>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{applicant.investorName}}
+                                                                    </div>
                                                                 </td>
-                                                                <td>{{applicant.folioNumber}} </td>
-                                                                <td><span appFormatNumber>{{applicant.totalAum}}</span>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        <span
+                                                                            appFormatNumber>{{applicant.balanceUnit}}</span>
+                                                                    </div>
                                                                 </td>
-                                                                <td>{{applicant.weightInPercentage}}% </td>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{applicant.folioNumber}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        <span
+                                                                            appFormatNumber>{{applicant.totalAum}}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{applicant.weightInPercentage}}{{(isLoadingApplicant?'':'%') }}
+                                                                    </div>
+                                                                </td>
                                                                 <td></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                    <div *ngIf="!isLoadingCategory && !scheme.showScheme">
+                                                        <div *ngIf="applicationList.length == 0"
+                                                            class="d-flex flex-column align-items-center">
+                                                            <h4 class="text-center pt-12">No data Found
+                                                            </h4>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>

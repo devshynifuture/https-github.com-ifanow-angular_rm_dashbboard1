@@ -98,17 +98,22 @@ export class UsersComponent implements OnInit {
     });
     dialog.afterClosed().subscribe(result => {
       if (result) {
+        this.userList = [
+          { fullName: '', role: { roleName: '' } },
+          { fullName: '', role: { roleName: '' } },
+          { fullName: '', role: { roleName: '' } }
+        ]
         this.loader(1);
         const replaceUser = {
           deleteUserId: user.adminAdvisorId,
           replaceUserId: result,
         };
         this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
-          this.eventService.openSnackBar('User deleted successfully');
+          this.eventService.openSnackBar('User deleted successfully', "Dismiss");
           this.loadUsers();
           this.loader(-1);
         }, err => {
-          this.eventService.openSnackBar('Error occured');
+          this.eventService.openSnackBar('Error occured', "Dismiss");
         });
       }
     });

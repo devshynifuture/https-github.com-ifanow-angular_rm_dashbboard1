@@ -47,7 +47,10 @@
 
                     </div>
 
-                    <h3 *ngIf="!isLoading" class="m-0 f-400 text-primary f-18 pt-16">{{user.clientCount}} client(s)</h3>
+                    <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']"
+                        routerLinkActive="router-link-active"
+                        class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
+                        {{user.clientCount}} client<span *ngIf="user.clientCount>1">(s)</span></h3>
                 </div>
             </div>
         </mat-card>
