@@ -9,7 +9,9 @@
         <div class="col-md-6 col-10 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter holder name" autocomplete="off" #name appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="name" matInput class="form-control">
+                    <input (input)="capitalise($event)" placeholder="Enter holder name" autocomplete="off" #name
+                        appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50"
+                        formControlName="name" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -20,7 +22,8 @@
             <i *ngIf="i+1==holderNameList.length && i<2" (click)="addHolders(null)" class="material-icons c-p f-20">
                 add </i>
 
-            <i *ngIf="i+1!=holderNameList.length || i==2" (click)="removeHolders(i)" class="material-icons ml-8 c-p f-20">
+            <i *ngIf="i+1!=holderNameList.length || i==2" (click)="removeHolders(i)"
+                class="material-icons ml-8 c-p f-20">
                 remove </i>
 
         </div>

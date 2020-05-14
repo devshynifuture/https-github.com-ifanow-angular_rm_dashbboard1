@@ -41,8 +41,8 @@ export class ClientDematComponent implements OnInit {
   clientData: any;
   disableBtn = false;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService) {
   }
 
   validatorType = ValidatorType;
@@ -390,7 +390,11 @@ export class ClientDematComponent implements OnInit {
 
     }
   }
-
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   close(data) {
     (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
       this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
