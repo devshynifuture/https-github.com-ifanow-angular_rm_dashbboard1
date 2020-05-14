@@ -66,4 +66,10 @@ export class AddHolderNamesComponent implements OnInit {
     }
     this.holderNamesForm.controls.holderNameList.removeAt(index);
   }
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
+
 }

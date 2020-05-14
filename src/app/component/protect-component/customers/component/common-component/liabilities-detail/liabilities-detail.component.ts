@@ -1,5 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material';
+import { LoanAmortsComponent } from '../../customer/accounts/liabilities/loan-amorts/loan-amorts.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-liabilities-detail',
@@ -7,12 +11,15 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
   styleUrls: ['./liabilities-detail.component.scss']
 })
 export class LiabilitiesDetailComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'position'];
+  // displayedColumns: string[] = ['name', 'position'];
   _data: any;
   dataSourceDetail = ELEMENT_DATA;
   ownerName: any;
   libility: any;
 
+  // dataSource: any = new MatTableDataSource();
+  // @ViewChild('epfListTable', {static: false}) holdingsTableSort: MatSort;
+  // displayedColumns = ['no', 'date', 'bal', 'pay-time', 'pre-pay', 'total-pay', 'interest', 'principal', 'end-bal'];
   constructor(private subInjectService: SubscriptionInject) {
   }
 
@@ -29,10 +36,35 @@ export class LiabilitiesDetailComponent implements OnInit {
   }
   ngOnInit() {
     console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
+    // this.dataSource.data = this._data.loanAmorts;
+    // this.dataSource.sort = this.holdingsTableSort;
   }
 
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
+  }
+  tableLoader:boolean=false;
+  openLoanAmorts() {
+    this.tableLoader=true;
+    const fragmentData = {
+      flag: "addLiabilitiesDetail",
+      id: 1,
+      data: this._data,
+      state: 'open70',
+      componentName: LoanAmortsComponent,
+    };
+    setTimeout(() => {
+      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      );
+    }, 500);
+    
   }
 
 }

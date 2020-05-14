@@ -18,7 +18,7 @@ export class AddNewRoleComponent implements OnInit {
   rolesFG: FormGroup;
   editDetails: any;
   advisorId: any;
-  isLoading:boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +35,11 @@ export class AddNewRoleComponent implements OnInit {
       this.getTemplate();
     } else {
       this.getRoleDetails();
+    }
+  }
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
 
@@ -83,7 +88,7 @@ export class AddNewRoleComponent implements OnInit {
       delete: data.find((permission) => permission.capabilityName == 'Delete'),
     }
     for (let k in permissions_json) {
-      if(permissions_json[k]) {
+      if (permissions_json[k]) {
         permissions_json[k].featureId = featureId;
       } else {
         delete permissions_json[k];
@@ -180,7 +185,7 @@ export class AddNewRoleComponent implements OnInit {
         console.log(dataObj)
         this.settingsService.editRole(dataObj).subscribe((res) => {
           this.eventService.openSnackBar("Role Modified Successfully");
-          this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+          this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
         }, err => {
           this.eventService.openSnackBar("Error Occured");
         })
