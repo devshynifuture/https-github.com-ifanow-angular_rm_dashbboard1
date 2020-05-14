@@ -48,7 +48,7 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type) {
+  getSubCategoryArrayForTransaction(mutualFundList, type,nav) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
@@ -66,10 +66,19 @@ export class TempserviceService {
           if(reportType != 'schemeName'){
             filteredData.push({groupName: key});
           }
+          if(nav){
+            nav.forEach(element => {
+              if(element.schemeCode == singleData.schemeCode){
+                singleData.avgCostNav = element.nav;
+              }
+            }); 
+          }
+       
         const obj = {
           schemeName: singleData.schemeName,
           nav: singleData.nav,
-          navDate:singleData.navDate
+          navDate:singleData.navDate,
+          avgNav:singleData.avgCostNav
         };
         filteredData.push(obj);
         const obj2 = {
@@ -78,7 +87,8 @@ export class TempserviceService {
           folio: singleData.folioNumber
         };
         filteredData.push(obj2);
-        singleData.mutualFundTransactions.forEach((ele) => {
+        singleData.mutualFundTransactions.forEach((ele,ind) => {
+          ele.indexId = (ind+1);
           filteredData.push(ele);
         });
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
@@ -203,6 +213,9 @@ export class TempserviceService {
     let netInvestment = 0;
     let redemption = 0;
     let switchIn = 0;
+    let totalCagr = 0;
+    let trnAbsoluteReturn = 0;
+    let totalCurrentValue = 0;
     if(!isSummaryTabValues){
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
@@ -218,6 +231,9 @@ export class TempserviceService {
         netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
         xirr += (ele.xirr) ? ele.xirr : 0;
         allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
+        totalCagr += (ele.cagr) ? ele.cagr : 0;
+        trnAbsoluteReturn += (ele.absoluteReturn) ? ele.absoluteReturn : 0;
+        totalCurrentValue  += (ele.currentAmount) ? ele.currentAmount : 0;
       });
     }else{
       totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
@@ -261,7 +277,10 @@ export class TempserviceService {
       marketValue,
       netInvestment,
       redemption,
-      switchIn
+      switchIn,
+      totalCagr,
+      trnAbsoluteReturn,
+      totalCurrentValue
     };
     // this.totalObj = obj;
     return obj;

@@ -41,21 +41,29 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
+    let arnNumber = this.data.mainData.number;
+    if(arnNumber) {
+      arnNumber = arnNumber.slice(4);
+    }
+    let euinNumber = this.data.mainData.euin;
+    if(euinNumber) {
+      euinNumber = euinNumber.slice(1)
+    }
     this.arnRiaFG = this.fb.group({
       advisorId: [this.advisorId, []],
       arnOrRia: [this.data.mainData.arnOrRia || '', [Validators.required]],
-      typeId: [this.data.mainData.typeId, [Validators.required]],
-      number: [this.data.mainData.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      typeId: [this.data.mainData.typeId || '', [Validators.required]],
+      number: [arnNumber, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
-      euin: [this.data.mainData.euin],
+      euin: [euinNumber || ''],
       commencementDate: [this.data.mainData.commencementDate],
       renewalDate: [this.data.mainData.renewalDate],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.pattern(ValidatorType.EMAIL)]],
-      registeredPan: [this.data.mainData.registeredPan, [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.PAN)]],
-      registeredAddress: [this.data.mainData.registeredAddress, [Validators.maxLength(150)]],
-      gstApplicableId: [this.data.mainData.gstApplicableId, [Validators.required]],
-      gstNumber: [this.data.mainData.gstNumber, []],
-      dataUploadTypeId: [this.data.mainData.dataUploadTypeId, [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.pattern(ValidatorType.EMAIL)]],
+      registeredPan: [this.data.mainData.registeredPan || '', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.PAN)]],
+      registeredAddress: [this.data.mainData.registeredAddress || '', [Validators.maxLength(150)]],
+      gstApplicableId: [this.data.mainData.gstApplicableId || '', [Validators.required]],
+      gstNumber: [this.data.mainData.gstNumber || '', []],
+      dataUploadTypeId: [this.data.mainData.dataUploadTypeId || '', [Validators.required]],
     });
 
     if (this.data.mainData.gstApplicableId == 1) {
@@ -68,7 +76,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       this.arnRiaFG.controls.renewalDate.setValue(new Date(this.data.mainData.renewalDate));
     }
     if (this.data.mainData.arnOrRia == 1) {
-      this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/[eE]\d{6}/)]);
+      this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
     }
     this.arnRiaFG.updateValueAndValidity();
   }
@@ -91,7 +99,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           this.arnRiaFG.controls.euin.clearValidators();
           this.arnRiaFG.controls.euin.setValue('');
         } else {
-          this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/[eE]\d{6}/)]);
+          this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
         }
         this.arnRiaFG.updateValueAndValidity();
       })
@@ -107,6 +115,12 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         ...this.data.mainData,
         ...this.arnRiaFG.getRawValue()
       };
+      if(this.arnRiaFG.get('arnOrRia').value == 1) {
+        jsonObj.number = 'ARN-' + jsonObj.number;
+        jsonObj.euin = 'E' + jsonObj.euin;
+      } else {
+        jsonObj.number = 'INA-' + jsonObj.number;
+      }
 
       if (jsonObj.commencementDate) {
         if (jsonObj.commencementDate instanceof Date) {
@@ -131,12 +145,12 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           ...jsonObj
         }
         this.settingService.editArn(editJson).subscribe((res) => {
-          this.eventService.openSnackBar("ARN-RIA Added successfully");
+          this.eventService.openSnackBar("ARN-RIA Modified successfully");
           this.Close(true);
         })
       } else {
         this.settingService.addArn(jsonObj).subscribe((res) => {
-          this.eventService.openSnackBar("ARN-RIA Modified successfully");
+          this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);
         })
       }

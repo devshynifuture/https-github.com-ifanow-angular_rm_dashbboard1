@@ -11,7 +11,7 @@ import {map, startWith} from 'rxjs/operators';
 import {MathUtilService} from '../../../../../../../services/math-util.service';
 import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
-import {VerifyMemberComponent} from '../../MandateCreation/verify-member/verify-member.component';
+import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -474,7 +474,7 @@ export class SipTransactionComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open',
-      componentName: VerifyMemberComponent
+      componentName: AddMandateComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

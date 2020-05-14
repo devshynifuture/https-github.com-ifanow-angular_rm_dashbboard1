@@ -106,7 +106,7 @@ export class FatcaDetailsInnComponent implements OnInit {
 
   SendToForm() {
     if (this.fatcaDetails.invalid) {
-      for (let element in this.fatcaDetails.controls) {
+      for (const element in this.fatcaDetails.controls) {
         console.log(element);
         if (this.fatcaDetails.get(element).invalid) {
           // this.inputs.find(input => !input.ngControl.valid).focus();
@@ -115,14 +115,15 @@ export class FatcaDetailsInnComponent implements OnInit {
       }
     } else {
 
-      let obj = {
+      const obj = {
         nationality: this.fatcaDetails.controls.nationality.value,
-        annualIncome: this.fatcaDetails.controls.annualIncome.value,
+        income: this.fatcaDetails.controls.annualIncome.value,
         cityOfBirth: this.fatcaDetails.controls.cityOfBirth.value,
         countryOfBirth: this.fatcaDetails.controls.countryOfBirth.value,
         sourceOfWealth: this.fatcaDetails.controls.sourceOfWealth.value,
         occupationCode: this.fatcaDetails.controls.occupationCode.value,
-        politically: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' : (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
+        politicallyExposedFlag: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' :
+          (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
         taxResidency: this.fatcaDetails.controls.taxResidency.value,
       };
 
@@ -137,7 +138,7 @@ export class FatcaDetailsInnComponent implements OnInit {
   }
 
   openReviwSubmit(data) {
-    var temp = {
+    const temp = {
       flag: 'app-upper-customer',
       id: 1,
       data,

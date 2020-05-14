@@ -74,7 +74,7 @@
 
                     <div class="scrollingDiv d-flex row">
                         <!-- portfolio data present -->
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="portfolioConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
                             <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
                                 <div class="row">
                                     <div class="col-md-9  pr-0">
@@ -731,7 +731,7 @@
                 </div>
 
                 <!-- Portfolio Asset allocation chart -->
-                <div class="wrapperBox">
+                <div class="wrapperBox" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
                     <div class="row">
                         <div class="col-md-12 pl-0">
                             <h5 class="roboto m-0">Sub category wise summary - mutual funds</h5>
