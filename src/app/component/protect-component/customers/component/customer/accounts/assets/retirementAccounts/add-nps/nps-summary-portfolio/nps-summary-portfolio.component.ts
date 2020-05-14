@@ -4,12 +4,15 @@ import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { CustomerService } from '../../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+
 @Component({
   selector: 'app-nps-summary-portfolio',
   templateUrl: './nps-summary-portfolio.component.html',
@@ -64,7 +67,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   showHide = false;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+  constructor(private event: EventService,public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
     this.summaryNPS = this.fb.group({
       published: true,
       futureContry: this.fb.array([]),
@@ -92,6 +95,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     this.getSchemeList();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+     //link bank
+     this.bankList = this.enumService.getBank();
+     //link bank
   }
  
   nomineesList() {
@@ -300,6 +306,7 @@ addNewNominee(data) {
       totalContry: [(data == undefined) ? '' : data.totalAmountInvested, [Validators.required]],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
+      bankACNo: [(!data) ? '' : data.userBankMappingId],
       futureContributionList: this.fb.array([this.fb.group({
         frequencyId: [null, [Validators.required]],
         accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
@@ -459,6 +466,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
         // nominees: this.summaryNPS.controls.nominees.value,
         description: this.summaryNPS.controls.description.value,
         nomineeList: this.summaryNPS.value.getNomineeName,
+        userBankMappingId: this.summaryNPS.controls.bankACNo.value,
         realOrFictitious: 1,
         holdingList:[],
         id: this.summaryNPS.controls.id.value
@@ -530,4 +538,22 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
+
+  bankList:any = [];
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: this.bankList
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    })
+
+  }
+//link bank
 }

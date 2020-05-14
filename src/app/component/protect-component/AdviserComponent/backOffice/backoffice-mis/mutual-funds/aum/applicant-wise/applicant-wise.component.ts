@@ -34,6 +34,11 @@ export class ApplicantWiseComponent implements OnInit {
   selectedFolio: any;
   selectedClient: any;
   selectedCat: any;
+  isLoadingCategory: boolean = false;
+  categoryListArr: any[];
+  isLoadingSubCategory: boolean = false;
+  isLoadingScheme: boolean = false;
+  schemeListArr: any[];
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
   applicantName;
@@ -424,9 +429,12 @@ export class ApplicantWiseComponent implements OnInit {
 
 
   category(applicantData, index) {
+    this.isLoadingCategory = true
     this.selectedApplicant = index;
     applicantData.show = !applicantData.show
-    applicantData.categoryList = []
+    applicantData.categoryList = [];
+    applicantData.categoryList = [{}, {}, {}];
+    this.categoryListArr = []
     if (applicantData.show == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -437,16 +445,28 @@ export class ApplicantWiseComponent implements OnInit {
       }
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
+          this.isLoadingCategory = false
           if (data) {
             data.forEach(element => {
               element.showCategory = true;
               element.familyMemberId = applicantData.id
             });
+            this.isLoadingCategory = false
             applicantData.categoryList = data
+            this.categoryListArr = data
             console.log(data);
             this.categoryList = data;
             this.appendingOfValuesInExcel(data, index, 'category');
+          } else {
+            this.categoryListArr = []
+            applicantData.categoryList = []
+            this.isLoadingCategory = false
           }
+        },
+        err => {
+          this.categoryListArr = []
+          applicantData.categoryList = []
+          this.isLoadingCategory = false
         }
       )
     } else {
@@ -461,13 +481,14 @@ export class ApplicantWiseComponent implements OnInit {
   }
   subCategory(catData, index, applicantIndex) {
     console.log(applicantIndex);
-
+    this.isLoadingSubCategory = true
 
     this.selectedCat = index;
     this.selectedApplicant = applicantIndex;
     catData.showCategory = !catData.showCategory
     catData.subCatList = [];
-
+    catData.subCatList = [{}, {}, {}];
+    this.subCategoryList = []
     if (catData.showCategory == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -479,16 +500,27 @@ export class ApplicantWiseComponent implements OnInit {
       }
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
+          this.isLoadingSubCategory = false
           if (data) {
             data.forEach(element => {
               element.showSubCategory = true;
               element.familyMemberId = catData.familyMemberId;;
             });
             catData.subCatList = data;
+            this.subCategoryList = data
             console.log(data);
             this.subCategoryList = data;
             this.appendingOfValuesInExcel(data, index, 'sub-category');
+          } else {
+            this.subCategoryList = []
+            catData.subCatList = [];
+            this.isLoadingSubCategory = false
           }
+        },
+        err => {
+          this.subCategoryList = []
+          catData.subCatList = [];
+          this.isLoadingSubCategory = false
         }
       )
     } else {
@@ -502,13 +534,16 @@ export class ApplicantWiseComponent implements OnInit {
     category.subCategoryList = data;
   }
   getScheme(subCatData, index, catIndex, applicantIndex) {
+    this.isLoadingScheme = true
     console.log(applicantIndex);
     this.selectedScheme = index;
     this.selectedCat = catIndex;
+    this.schemeListArr = []
     this.selectedApplicant = applicantIndex;
 
     subCatData.showSubCategory = !subCatData.showSubCategory
     subCatData.schemeList = []
+    subCatData.schemeList = [{}, {}, {}];
     if (subCatData.showSubCategory == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -520,15 +555,26 @@ export class ApplicantWiseComponent implements OnInit {
       }
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {
+          this.isLoadingScheme = false
           if (data) {
             data.forEach(element => {
               element.showFolio = true;
             });
             subCatData.schemeList = data
+            this.schemeListArr = data
             console.log(data);
             this.schemeList = data;
             this.appendingOfValuesInExcel(data, index, 'schemes');
+          }else{
+            this.schemeListArr = []
+            subCatData.schemeList = []
+            this.isLoadingScheme = false
           }
+        },
+        err => {
+          this.schemeListArr = []
+          subCatData.schemeList = []
+          this.isLoadingScheme = false
         }
       )
     } else {

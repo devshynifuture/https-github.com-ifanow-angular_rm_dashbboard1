@@ -4,7 +4,7 @@
             <div class="col-md-4 pl-0 c-p">
                 <h4 class="m-0 text-black roboto">Mutual fund overview</h4>
             </div>
-            <div class="col-md-8 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
+            <div class="col-md-8 p-0 justify-content-end d-flex align-items-center vaibhav " *ngIf="!isLoading">
                 <div class="pdfClass">
                     <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                         <img src="assets/images/svg/download-bordered.svg" *ngIf="!fragmentData.isSpinner"> </a>
@@ -77,7 +77,7 @@
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-20 pl-8">Current value</p>
                             <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass">
-                                <div class="bar height24">
+                                <div class="bar" [ngClass]="{'height24': isLoading}">
                                     <span appFormatNumber *ngIf="!isLoading" [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
                                     <span *ngIf="isLoading">{{''}}</span>
                                 </div>
@@ -106,7 +106,7 @@
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24">
-                                            <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}</span> {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700" *ngIf="!isLoading">
+                                            <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}</span>                                            {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700" *ngIf="!isLoading">
                                                 arrow_upward
                                             </i>
                                         </div>
@@ -232,8 +232,7 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
-                *ngIf="showSchemeWise || dataSource2.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
@@ -242,7 +241,7 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br"> Scheme name</th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar" ><span> {{(isLoading) ? '' : element.schemeName}}</span></div>
+                                <div class="bar"><span> {{(isLoading) ? '' : element.schemeName}}</span></div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
                         </ng-container>
@@ -277,14 +276,16 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                        <span *ngIf="!isLoading">    {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
-                                <span *ngIf="isLoading"> {{''}} </span>
-                                    </div>
+                                    <span *ngIf="!isLoading">
+                                        {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                    <span *ngIf="isLoading"> {{''}} </span>
+                                </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                        <span *ngIf="!isLoading">   {{(mfData.total_absolute_return == 0) ? 0 : (mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}</span>
-                                        </div>
+                                    <span *ngIf="!isLoading">
+                                        {{(mfData.total_absolute_return == 0) ? 0 : (mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}</span>
+                                </div>
                             </td>
                             <!-- <td *matFooterCellDef  appFormatNumber [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
@@ -293,9 +294,10 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                        <span *ngIf="!isLoading">  {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
-                                            <span *ngIf="isLoading"> {{''}}</span>
-                                        </div>
+                                    <span *ngIf="!isLoading">
+                                        {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                    <span *ngIf="isLoading"> {{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0}}</div>
@@ -329,7 +331,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow"  *ngIf="showCashFlow || datasource1.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow" *ngIf="showCashFlow || datasource1.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
@@ -339,7 +341,7 @@
                             <th mat-header-cell *matHeaderCellDef class="t-55"> Scheme name </th>
                             <td mat-cell *matCellDef="let element" class="t-55">
                                 <div class="bar"><span *ngIf="!isLoading">{{element.data}}</span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                         </ng-container>
@@ -358,8 +360,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
-                *ngIf="showSubCategory || dataSource3.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSubCategory || dataSource3.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
@@ -394,7 +395,7 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.currentValue"></span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -408,10 +409,11 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                    <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                    <span *ngIf="!isLoading">
+                                        {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
 
-                                    </div>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">{{(mfData.absReturn)?(mfData.absReturn | number:'1.2-2'):0}}
@@ -428,11 +430,12 @@
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> 
-                                        <span *ngIf="!isLoading">  {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
-                                        <span *ngIf="isLoading">{{''}}</span>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading">
+                                        {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
 
-                                        </div>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(mfData.xirr)?(mfData.xirr | number:'1.2-2'):0.00}}
@@ -450,7 +453,7 @@
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
                                 <div class="bar"><span *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2' }}</span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -474,8 +477,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise"
-                *ngIf="showFamilyMember || dataSource.data.length > 0">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise" *ngIf="showFamilyMember || dataSource.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
@@ -493,7 +495,7 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.amountInv"></span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -507,7 +509,7 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.currentValue"></span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -521,9 +523,10 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                        <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
-                                        <span *ngIf="isLoading">{{''}}</span>
-                                 </div>
+                                    <span *ngIf="!isLoading">
+                                        {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
+                                </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">{{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
@@ -538,9 +541,10 @@
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> 
-                                        <span *ngIf="!isLoading">   {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
-                                        <span *ngIf="isLoading">{{''}}</span>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading">
+                                        {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -558,8 +562,9 @@
                         <ng-container matColumnDef="alloc">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <div class="bar"><span *ngIf="!isLoading"> {{element.allocatedPercentage | number:'1.2-2'}}</span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                <div class="bar"><span *ngIf="!isLoading">
+                                        {{element.allocatedPercentage | number:'1.2-2'}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -582,8 +587,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise"
-                *ngIf="showCategory || dataSource4.data.length >0">
+            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise" *ngIf="showCategory || dataSource4.data.length >0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
@@ -592,17 +596,17 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br"> Category name </th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar"><span *ngIf="!isLoading" >{{element.category}}</span>
+                                <div class="bar"><span *ngIf="!isLoading">{{element.category}}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
-                                    </div>
+                                </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"><span appFormatNumber  *ngIf="!isLoading" [value]="element.amountInvested"></span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                <div class="bar"><span appFormatNumber *ngIf="!isLoading" [value]="element.amountInvested"></span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -616,7 +620,7 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar"><span appFormatNumber [value]='element.currentValue' *ngIf="!isLoading"></span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -630,8 +634,9 @@
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
-                                   <span *ngIf="!isLoading"> {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
-                                   <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="!isLoading">
+                                        {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
@@ -649,9 +654,10 @@
                         <ng-container matColumnDef="xirr">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                <div class="bar"> 
-                                   <span *ngIf="!isLoading"> {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
-                                   <span *ngIf="isLoading">{{''}}</span>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading">
+                                        {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
@@ -670,7 +676,7 @@
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
                                 <div class="bar"> <span *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2'}}</span>
-                                <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}}</span>
                                 </div>
                             </td>
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
@@ -678,7 +684,7 @@
                             </td> -->
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                                 <div class="bar">
-                                    {{(totalValue.allocationPer ) ? (totalValue.allocationPer  | number:'1.2-2') : 0}}
+                                    {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
@@ -916,15 +922,14 @@
                     <tr *ngFor="let item of dataSource2.data">
                         <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.schemeName) ? item.schemeName : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;" appFormatNumber>
+                            {{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}
+                        </td>
+                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                        </td>
+                        <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}} </td>
                         <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -943,7 +948,7 @@
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{mfData.total_xirr | number:'1.2-2'}}</td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
-                            {{(totalValue.allocationPer ) ? (totalValue.allocationPer  | number:'1.2-2') : 0}}</td>
+                            {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
                 </table>
@@ -1062,15 +1067,14 @@
                     <tr *ngFor="let item of dataSource3.data">
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.subCategory) ? item.subCategory : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            {{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}
+                        </td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                        </td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -1085,11 +1089,12 @@
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
-                            {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}</td>
+                            {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                        </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
-                            {{(totalValue.allocationPer ) ? (totalValue.allocationPer  | number:'1.2-2') : 0}}</td>
+                            {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
 
@@ -1129,15 +1134,12 @@
                     <tr *ngFor="let item of dataSource.data">
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.name) ? item.name : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.amountInv) ? item.amountInv : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInv) ? item.amountInv : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                        </td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -1152,7 +1154,8 @@
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
-                            {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}</td>
+                            {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                        </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
@@ -1195,15 +1198,12 @@
                     <tr *ngFor="let item of dataSource4.data">
                         <td style="font-size: 13px; padding: 5px; border-left: 1px solid #dee5e7;  border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.category) ? item.category : 'N.A'}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn  == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                        </td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
@@ -1218,11 +1218,12 @@
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
-                            {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}</td>
+                            {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                        </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
-                            {{(totalValue.allocationPer ) ? (totalValue.allocationPer  | number:'1.2-2') : 0}}</td>
+                            {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
 
