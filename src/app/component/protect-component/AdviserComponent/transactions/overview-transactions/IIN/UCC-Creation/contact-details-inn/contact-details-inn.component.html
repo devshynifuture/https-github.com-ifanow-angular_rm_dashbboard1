@@ -75,11 +75,12 @@
           </div>
           <div class="col-md-5">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input #mobileNo [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="14" appInputValueValidation
+              <input #foreignMobileNo [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="14"
+                     appInputValueValidation
                      class="form-control" formControlName="foreignMobileNo" matInput maxlength="14"
                      placeholder="Enter Mobile number" type="number">
               <mat-error class="">This field is required</mat-error>
-              <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
+              <mat-hint align="end">{{foreignMobileNo.value.length}}/14</mat-hint>
             </mat-form-field>
           </div>
         </div>
@@ -174,9 +175,18 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="country" matInput placeholder="Enter Country" type="text">
-              <mat-error class="">This field is required</mat-error>
-
+              <input [matAutocomplete]="auto" appCustomAutoComplete
+                     aria-label="Number" class="form-control" formControlName="country" matInput
+                     placeholder="Start typing to see country names" type="text">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let scheme of filterCountryName | async" [value]="scheme.name">
+                  {{scheme.name}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error class="f-12">
+                This field is required
+              </mat-error>
             </mat-form-field>
           </div>
         </div>

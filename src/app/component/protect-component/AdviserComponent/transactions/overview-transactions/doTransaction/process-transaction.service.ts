@@ -324,6 +324,18 @@ export class ProcessTransactionService {
     }
   }
 
+  public filterCountryName(value: any, countryList): any[] {
+    const filterValue = this.normalizeValue(value + '');
+    console.log('_filter value : ', value);
+    console.log('_filter countryList : ', countryList);
+
+    if (countryList) {
+      return countryList.filter(singleScheme => this.normalizeValue(singleScheme.name).includes(filterValue));
+    } else {
+      return [];
+    }
+  }
+
   public normalizeValue(value: string): string {
     return value.toLowerCase().replace(/\s/g, '');
   }
@@ -450,11 +462,15 @@ export class ProcessTransactionService {
     return scheme && scheme.schemeName ? scheme.schemeName : '';
   }
 
+  displayCountryName(scheme) {
+    return scheme && scheme.name ? scheme.name : '';
+  }
+
   getCountryCodeList() {
     if (this.countryCodeList) {
       return of(this.countryCodeList);
     } else {
-      this.onlineTransactService.getCountryCodeList({id: 0});
+      return this.onlineTransactService.getCountryCodeList({});
     }
   }
 }

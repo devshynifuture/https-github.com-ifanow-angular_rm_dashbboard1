@@ -244,9 +244,15 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-              <input matInput formControlName="country" type="text" placeholder="Enter Country" class="form-control">
-              <mat-error class="f-12">This field is required</mat-error>
-
+              <input [matAutocomplete]="auto" appCustomAutoComplete
+                     aria-label="Number" class="form-control" formControlName="country" matInput
+                     placeholder="Start typing to see country names" type="text">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let scheme of filterCountryName | async" [value]="scheme.name">
+                  {{scheme.name}}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
         </div>

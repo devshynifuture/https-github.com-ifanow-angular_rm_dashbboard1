@@ -73,9 +73,15 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="countryOfBirthId" matInput maxlength="10"
-                     placeholder="Enter Country of birth" type="text">
-              <mat-error class="f-12">This field is required</mat-error>
+              <input [matAutocomplete]="auto" appCustomAutoComplete
+                     aria-label="Number" class="form-control" formControlName="countryOfBirth" matInput
+                     placeholder="Start typing to see country names" type="text">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let scheme of filterCountryName | async" [value]="scheme.name">
+                  {{scheme.name}}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
         </div>

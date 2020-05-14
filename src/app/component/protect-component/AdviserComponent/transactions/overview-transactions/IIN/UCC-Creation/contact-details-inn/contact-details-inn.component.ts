@@ -9,6 +9,8 @@ import {ProcessTransactionService} from '../../../doTransaction/process-transact
 import {PostalService} from 'src/app/services/postal.service';
 import {MatInput} from '@angular/material';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -17,6 +19,18 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 })
 
 export class ContactDetailsInnComponent implements OnInit {
+
+  // overseasHolderContact: any;
+
+  countryList;
+  filterCountryName: Observable<any[]>;
+
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              public eventService: EventService, public processTransaction: ProcessTransactionService,
+              private peopleService: PeopleService) {
+  }
+
   addressTypeLabel = 'Permanent Address Details';
   validatorType = ValidatorType;
   isLoading = false;
@@ -28,33 +42,9 @@ export class ContactDetailsInnComponent implements OnInit {
   list: any;
   firstHolderContact: any;
 
-  // overseasHolderContact: any;
-
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService, private processTransactionService: ProcessTransactionService,
-              private peopleService: PeopleService) {
-  }
-
-  obj1: any;
-  sendObj: any;
-  changedValue: string;
-  generalDetails: any;
-  doneData: any;
-  isdCodes: Array<any> = [];
-
   get data() {
     return this.inputData;
   }
-
-  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  clientData: any;
-  addressList: any;
-
-  @ViewChild('dynamic', {
-    read: ViewContainerRef,
-    static: true
-  }) viewContainerRef: ViewContainerRef;
 
   @Input()
   set data(data) {
@@ -77,9 +67,28 @@ export class ContactDetailsInnComponent implements OnInit {
     console.log('################## = ', this.list);
   }
 
+  obj1: any;
+  sendObj: any;
+  changedValue: string;
+  generalDetails: any;
+  doneData: any;
+  isdCodes: Array<any> = [];
+
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  clientData: any;
+  addressList: any;
+
+  @ViewChild('dynamic', {
+    read: ViewContainerRef,
+    static: true
+  }) viewContainerRef: ViewContainerRef;
+
   ngOnInit() {
     this.getIsdCodesData();
     const value = {};
+    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
+      this.countryList = responseValue;
+    });
     if (this.firstHolderContact) {
       /* if (this.firstHolderContact.address) {
          this.firstHolderContact.address = undefined;
@@ -170,6 +179,12 @@ export class ContactDetailsInnComponent implements OnInit {
       country: [!data.address ? data.country : address.country, [Validators.required]],
       address: [address],
     });
+
+    this.contactDetails.controls.country.valueChanges.subscribe(newValue => {
+      this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
+        return this.processTransaction.filterCountryName(newValue, this.countryList);
+      }));
+    });
   }
 
   getFormControl(): any {
@@ -177,7 +192,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   openBankDetails(data) {
-    const subscription = this.processTransactionService.openBank(data).subscribe(
+    const subscription = this.processTransaction.openBank(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -187,7 +202,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   openPersonalDetails() {
-    const subscription = this.processTransactionService.openPersonal(this.inputData).subscribe(
+    const subscription = this.processTransaction.openPersonal(this.inputData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
