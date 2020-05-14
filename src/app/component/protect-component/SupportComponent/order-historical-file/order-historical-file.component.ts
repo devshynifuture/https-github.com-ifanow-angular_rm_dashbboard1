@@ -37,8 +37,8 @@ export class OrderHistoricalFileComponent implements OnInit {
   formValidationFalseCount: number = 0;
   mainFormValidationValue: boolean = false;
   fromToSameError: boolean = false;
-  camsAsOnDatePastMaxDate: Date = new Date("1 January, 1993");
-  karvyOrFranklinPastMaxDate = new Date("1 January, 1990");
+  camsAsOnDatePastMaxDate: Date = new Date("1 January, 1990");
+  karvyOrFranklinPastMaxDate = new Date("1 January, 1993");
   dateToday: Date = new Date();
   dateYesterday: Date = new Date(new Date().setDate(new Date().getDate() - 1));
   orderingFreq: {}[] = [{ id: '1', name: 'Yearly' }, { id: '2', name: 'Monthly' }, { id: '3', name: 'All at once' }];
@@ -51,7 +51,6 @@ export class OrderHistoricalFileComponent implements OnInit {
   isArnOrRiaSelected: boolean = false;
   dateObject = new Date();
   advisorId: any = AuthService.getAdvisorId();
-  camsValueChangeSubscription1: Subscription;
   currentDate: string = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
   advisorNameInput = '';
   requestJsonForOrderingFiles: any[] = [];
@@ -70,6 +69,8 @@ export class OrderHistoricalFileComponent implements OnInit {
   franklinRtId;
   filteredReqObj = [];
   changedArnRiaList = [];
+  minFromDate;
+  minToDate;
 
   constructor(
     private supportService: SupportService,
@@ -82,7 +83,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   ) { }
 
   resetDateAsOnDateAndFormCheckbox() {
-    if (this.orderHistoryFileForm.get('selectRta').value !== '1') {
+    if (this.orderHistoryFileForm.get('selectRta').value !== this.camsRtId) {
       this.asOnDate = false;
       this.orderHistoryFileForm.get('orderingFreq').reset();
       this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
@@ -209,7 +210,15 @@ export class OrderHistoricalFileComponent implements OnInit {
     console.log("this is yesterday's date::::   ", this.dateYesterday);
     // this.isOnlyAumSelected()
     this.getRtaList();
+  }
+  ngOnDestroy(): void {
+    this.camsValueChangeSubscription.unsubscribe();
+    this.karvyValueChangeSubscription.unsubscribe();
+    this.franklinValueChangeSubscription.unsubscribe();
+  }
 
+  getMinDateAsPerRtId() {
+    return ((this.orderHistoryFileForm.get('selectRta').value === this.karvyRtId) || (this.orderHistoryFileForm.get('selectRta').value === this.franklinRtId)) ? this.karvyOrFranklinPastMaxDate : this.camsAsOnDatePastMaxDate
   }
 
   getRtaList() {
@@ -246,8 +255,13 @@ export class OrderHistoricalFileComponent implements OnInit {
           this.searchAdvisorCredentials();
           this.conditionalRenderingOfForm();
           this.getFileTypeOrderValues();
+          // this.setValueChangeForRta();
         }
       })
+  }
+
+  getPaddingTop(index) {
+    return (index !== this.rtList.length) ? '10px' : '';
   }
 
   displayFn(value): string | undefined {

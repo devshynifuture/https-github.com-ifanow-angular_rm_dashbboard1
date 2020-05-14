@@ -19,7 +19,7 @@
 
 
 <div class="row pt-90">
-    <div class="col-lg-3 pl-0">
+    <div class="col-lg-3 pl-15">
         <div class="form-group">
             <button mat-stroked-button (click)="fileOrderRetry(null)">
                 Retry Selected Files
@@ -61,7 +61,7 @@
             <!-- Name Column -->
             <ng-container matColumnDef="advisorName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Advisor Name </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{element.advisorName}} </div>
                 </td>
             </ng-container>
@@ -69,7 +69,7 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="arnRia">
                 <th mat-header-cell *matHeaderCellDef> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{element.arnRia}} </div>
                 </td>
             </ng-container>
@@ -77,49 +77,49 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="fileType">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> File Type </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{element.fileType}} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="fileOrderTime">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> File Order Time </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{element.fileOrderTime | date:'short'}} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Status </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{ element.status }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="referenceId">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Reference Id </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{ element.referenceId }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="inFileOrAdded">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> In File/Added </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{ element.inFileOrAdded }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="fileName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> File name </th>
-                <td class="b-a brrakAll" mat-cell *matCellDef="let element">
+                <td class="b-a brrakAll" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar  "> {{ element.fileName }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="errorMsg">
                 <th mat-header-cell *matHeaderCellDef> Failed Reason </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
                     <div class="bar"> {{ element.errorMsg }} </div>
                 </td>
             </ng-container>
@@ -149,8 +149,8 @@
             </ng-container>
 
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDetailedView(row)"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="c-p"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="c-p"></tr>
         </table>
         <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
             <h5 class="text-center b-a p-44">
