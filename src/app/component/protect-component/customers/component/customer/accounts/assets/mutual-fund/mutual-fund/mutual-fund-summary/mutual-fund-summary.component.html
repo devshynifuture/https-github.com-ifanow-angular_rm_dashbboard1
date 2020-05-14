@@ -6,7 +6,10 @@
         </div>
         <div class="col-md-8 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (customDataSource.data.length > 0)">
             <div class="pdfClass">
-                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
+                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
+                    <img src="assets/images/svg/download-bordered.svg">
+                </a>
+
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF</button>
                     <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
@@ -221,9 +224,10 @@
                         <div class="bar"> {{(mutualFund || mutualFund.balanceUnit)?mutualFund.balanceUnit:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef  class="br p-8 f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
-                        <div class="bar">{{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}}</div>
+                        <div class="bar">
+                            {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}}</div>
                     </td>
                 </ng-container>
 
@@ -300,15 +304,25 @@
                                 <!-- <button mat-menu-item>Transaction slip</button> -->
                                 <button mat-menu-item class="bt-1" (click)="openUpperFragment('addTransaction', element)">View
                                     transactions</button>
-                                <button mat-menu-item (click)="openUpperFragment('addTransaction', element)">Add
-                                    transaction</button>
-                                <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
-                                    Transaction</button>
-                                <button mat-menu-item (click)="openMutualEditFund('editMutualFund',element)">Edit
-                                    Mutual Fund</button>
+                                <div [matTooltip]="'To Add Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openUpperFragment('addTransaction', element)">Add
+                                        transaction</button>
+                                </div>
+                                <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editTransaction',element)">Edit
+                                        Transaction</button>
+                                </div>
+                                <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+
+                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editMutualFund',element)">Edit
+                                        Mutual Fund</button>
+                                </div>
                                 <button mat-menu-item (click)="deleteModal('TRANSACTION', null)">Delete scheme</button>
-                                <button mat-menu-item (click)="deleteModal('mutualFund', element)">Delete Mutual
-                                    Fund</button>
+                                <div [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+
+                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="deleteModal('mutualFund', element)">Delete Mutual
+                                        Fund</button>
+                                </div>
 
                             </mat-menu>
                         </div>
@@ -553,7 +567,7 @@
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.dividendPayout"></td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.withdrawals"></td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
+                            {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
                         </td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.totalNav"></td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.sip"></td>

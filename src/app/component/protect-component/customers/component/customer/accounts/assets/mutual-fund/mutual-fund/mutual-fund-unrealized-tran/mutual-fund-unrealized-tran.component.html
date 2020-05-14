@@ -9,7 +9,10 @@
             </div>
             <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)">
                 <div class="pdfClass">
-                    <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
+                    <a *ngIf="!fragmentData.isSpinner" class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu5">
+                        <img src="assets/images/svg/download-bordered.svg">
+                    </a>
+
                     <mat-menu #menu5="matMenu">
                         <button (click)="generatePdf()" mat-menu-item>PDF
                         </button>
@@ -23,9 +26,9 @@
             </div>
         </div>
 
-        <div>
+        <div class="mb-40">
             <div class="row">
-                <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 overflow-hidden">
+                <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0  overflow-hidden">
                     <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="dataSource.data.length>0">
                         <table #tableEl1 mat-table [dataSource]="dataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="categoryName" sticky>
@@ -48,8 +51,8 @@
                                     <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                                     </div>
                                 </td>
-                                <td *matFooterCellDef appFormatNumber  [value]="(mutualFund) ? (mutualFund.total_amount_invested) : 0" class="br p-8 f-600 text-left" mat-footer-cell>
-                                    <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
+                                <td *matFooterCellDef appFormatNumber [value]="(mutualFund) ? (mutualFund.total_amount_invested) : 0" class="br p-8 f-600 text-left" mat-footer-cell>
+
                                 </td>
 
                             </ng-container>
@@ -63,7 +66,7 @@
                                     </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber [value]="(mutualFund) ? (mutualFund.total_current_value) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
-                                    <!--                  <div>{{ grandTotal.currentValue }}</div>-->
+
                                 </td>
 
                             </ng-container>
@@ -76,7 +79,7 @@
                                     </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber [value]="(mutualFund) ? (mutualFund.total_dividend_payout) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
-                                    <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+
                                 </td>
 
                             </ng-container>
@@ -90,7 +93,7 @@
                                     </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br p-8 f-600 text-right" mat-footer-cell>
-                                    <!--                  <div> {{ grandTotal.dividendReinvest}}</div>-->
+
                                 </td>
 
                             </ng-container>
@@ -103,8 +106,8 @@
                                     <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalGain)?(element.totalGain | number:'1.2-2'):0)}}</span>
                                     </div>
                                 </td>
-                                <td *matFooterCellDef  class="br p-8 f-600 text-right" mat-footer-cell>
-                                    <!--                  <div>{{ grandTotal.totalGain}}</div>-->
+                                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+
                                     <div class="bar">
                                         {{(grandTotal) ? (grandTotal.totalGain| number:'1.2-2') : 0}}
 
@@ -171,233 +174,247 @@
                     </cdk-virtual-scroll-viewport>
                 </div>
             </div>
-
-            <div class="row">
-                <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 overflow-hidden">
-                    <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="customDataSource.data.length>0">
-                        <table #tableEl matSort mat-table [dataSource]="customDataSource" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
-                            <ng-container matColumnDef="no" sticky>
-                                <th mat-header-cell *matHeaderCellDef class="br">Sr no.</th>
-                                <td mat-cell *matCellDef="let element;index as i" class="br">
-                                    <div class="bar"><span *ngIf="element.indexId">{{element.indexId}}</span></div>
-                                </td>
-                                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="transactionType">
-                                <th class="br" mat-header-cell *matHeaderCellDef> Transaction Type
-                                </th>
-                                <td class="br" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
-                                        <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="transactionDate">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Transaction date
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar">
-                                        {{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}}
-                                    </div>
-                                </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="transactionAmount">
-                                <th class="br text-left" mat-header-cell *matHeaderCellDef>
-                                    Transaction amount
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.amount)?element.amount:0)}}</span>
-                                        <span appFormatNumber class="f-700" *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
+        </div>
 
 
-                            <ng-container matColumnDef="transactionNav">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Transaction NAV
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber *ngIf="!element.totalNav">{{isLoading ? '':((element.transactionNav) ? element.transactionNav : '0')}}</span>
-                                        <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
+        <div class="row">
+            <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 overflow-hidden">
+                <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="customDataSource.data.length>0">
+                    <table #tableEl matSort mat-table [dataSource]="customDataSource" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
+                        <ng-container matColumnDef="no" sticky>
+                            <th mat-header-cell *matHeaderCellDef class="br">Sr no.</th>
+                            <td mat-cell *matCellDef="let element;index as i" class="br zIndex">
+                                <div class="bar"><span *ngIf="element.indexId">{{element.indexId}}</span></div>
+                            </td>
+                            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                        </ng-container>
 
-                            <ng-container matColumnDef="units">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>Units</th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span  *ngIf="element.unit">{{isLoading ? '':((element.unit)?(element.unit | number:'1.2-3'):0)}}</span>
-                                        <span  class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?(element.totalUnit | number:'1.2-3'):0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="balanceUnits">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Balance units </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                        <div class="bar">
-                                    <span  *ngIf="element.balanceUnits">{{isLoading ? '': (element.balanceUnits | number:'1.2-3')}}</span>
-                                    <span  class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  (element.totalBalanceUnit | number:'1.2-3')}}</span>
+                        <ng-container matColumnDef="transactionType">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Transaction Type
+                            </th>
+                            <td class="br zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
+                                    <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
                                 </div>
-                                </td>
-                                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                                    {{(grandTotal)?(grandTotal.totalBalanceUnit | number:'1.2-3'):'0'}}</td>
-        
-                            </ng-container>
-        
-                            <ng-container matColumnDef="days" >
-                                <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
-                                    Days</th>
-                                <td class="br text-right" mat-cell *matCellDef="let element" >
-                                    
-                                        <div class="bar">
-                                                {{isLoading ? '': element.days}}
-                                            </div> </td>
-                                <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                                </td>
-        
-                            </ng-container>
-                            <ng-container matColumnDef="currentValue" >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Current value
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber *ngIf="element.currentValue">{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span>
-                                        <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
+                            </td>
+                        </ng-container>
 
-                            <ng-container matColumnDef="dividendPayout"  >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Dividend payout
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
+                        <ng-container matColumnDef="transactionDate">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Transaction date
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}}
+                                </div>
+                            </td>
+                        </ng-container>
 
-                            <ng-container matColumnDef="dividendReinvest" >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Dividend reinvestment
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '' :((element.dividendReinvest) ? element.dividendReinvest : 0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="totalAmount"  >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Total amount
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalAmount)?element.totalAmount:0)}}</span>
-                                    </div>
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="gain"  >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Gain
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber *ngIf="element.gainOrLossAmount || element.gainOrLossAmount ==0">
-                                            {{isLoading ? '':((element.gainOrLossAmount || element.gainOrLossAmount == 0) ? element.gainOrLossAmount : 0)}}</span>
-                                            <span appFormatNumber *ngIf="element.netGain || element.netGain == 0" class="f-700">
-                                                {{isLoading ? '':(( element.netGain || element.netGain ==0) ? element.netGain : 0)}}</span>
-                                    </div>
-                                </td>
+                        <ng-container matColumnDef="transactionAmount">
+                            <th class="br text-left" mat-header-cell *matHeaderCellDef>
+                                Transaction amount
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.amount)?element.amount:0)}}</span>
+                                    <span appFormatNumber class="f-700" *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
 
 
-                            </ng-container>
+                        <ng-container matColumnDef="transactionNav">
+                            <th class="br   text-right" mat-header-cell *matHeaderCellDef>
+                                Transaction NAV
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber *ngIf="!element.totalNav">{{isLoading ? '':((element.transactionNav) ? element.transactionNav : '0')}}</span>
+                                    <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
 
-                            <ng-container matColumnDef="absReturn"  >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Absolute Return%
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span>
-                                    </div>
-                                </td>
+                        <ng-container matColumnDef="units">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>Units</th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar"><span *ngIf="element.unit">{{isLoading ? '':((element.unit)?(element.unit | number:'1.2-3'):0)}}</span>
+                                    <span class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?(element.totalUnit | number:'1.2-3'):0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="balanceUnits">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Balance units </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span *ngIf="element.balanceUnits">{{isLoading ? '': (element.balanceUnits | number:'1.2-3')}}</span>
+                                    <span class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  (element.totalBalanceUnit | number:'1.2-3')}}</span>
+                                </div>
+                            </td>
+                            <td *matFooterCellDef appFormatNumber class="br f-600 text-right zIndex" mat-footer-cell>
+                                {{(grandTotal)?(grandTotal.totalBalanceUnit | number:'1.2-3'):'0'}}</td>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="days">
+                            <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
+                                Days</th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+
+                                <div class="bar">
+                                    {{isLoading ? '': element.days}}
+                                </div>
+                            </td>
+                            <td *matFooterCellDef appFormatNumber class="br text-right zIndex" mat-footer-cell>
+                            </td>
+
+                        </ng-container>
+                        <ng-container matColumnDef="currentValue">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Current value
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount == 0 ">{{isLoading ? '':((element.currentAmount)?element.currentAmount:0)}}</span>
+                                    <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dividendPayout">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Dividend payout
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dividendReinvest">
+                            <th class="br text-right zIndex" mat-header-cell *matHeaderCellDef>
+                                Dividend reinvestment
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span appFormatNumber>{{isLoading ? '' :((element.dividendReinvest) ? element.dividendReinvest : 0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="totalAmount">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Total amount
+                            </th>
+                            <td class="br text-right zIndex nonesticky" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount == 0">{{isLoading ? '':((element.currentAmount)?element.currentAmount:0)}}</span>
+                                    <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
+                                </div>
+                            </td>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="gain">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Gain
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount ==0 || element.amount || element.amount == 0">
+                                        {{isLoading ? '':((element.currentAmount  || element.amount) ? (element.currentAmount - element.amount) : 0)}}</span>
+                                    <span appFormatNumber *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0 || element.totalTransactionAmt || element.totalTransactionAmt ==0" class="f-700">
+                                        {{isLoading ? '':((element.totalCurrentValue ||  element.totalTransactionAmt ==0) ? (element.totalCurrentValue -  element.totalTransactionAmt) : 0)}}</span>
+                                </div>
+                            </td>
 
 
-                            </ng-container>
+                        </ng-container>
 
-                            <ng-container matColumnDef="xirr" >
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Xirr%
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar">
-                                        <span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span>
-                                    </div>
-                                </td>
-                            </ng-container>
+                        <ng-container matColumnDef="absReturn">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Absolute Return%
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar"><span *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{isLoading ? '':((element.absoluteReturn) ? (element.absoluteReturn  | number:'1.2-2'):0)}}</span>
+                                    <span *ngIf="element.trnAbsoluteReturn || element.trnAbsoluteReturn==0">{{isLoading ? '':((element.trnAbsoluteReturn )?(element.trnAbsoluteReturn  | number:'1.2-2'):0)}}</span>
+                                </div>
+                            </td>
 
-                            <ng-container matColumnDef="groupHeader">
-                                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">
-                                    <div class="bar">{{group.groupName}}
-                                    </div>
-                                </td>
-                            </ng-container>
 
-                            <ng-container matColumnDef="groupHeader2">
-                                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length">
-                                    <div class="bar">{{group.schemeName}}
-                                        <p class="text-right">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate |  date:'dd/MM/yyyy'}}</p>
-                                    </div>
-                                </td>
-                            </ng-container>
+                        </ng-container>
 
-                            <ng-container matColumnDef="groupHeader3">
-                                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">
-                                    <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="icons" sticky >
-                                <th *matHeaderCellDef class="" mat-header-cell></th>
-                                <td *matCellDef="let element" class="" mat-cell>
-                                    <div *ngIf="!isLoading">
-                                        <i [matMenuTriggerFor]="menu25" class="material-icons c-p text-black">
-                                            more_vert
-                                        </i>
-                                        <mat-menu #menu25="matMenu">
-                                            <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
-                                                Transaction</button>
-                                            <button mat-menu-item (click)="deleteModal('TRANSACTION', null)">Delete Transaction</button>
-            
-                                        </mat-menu>
-                                    </div>
-                                </td>
-            
-                                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                            <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                            <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
-                            <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-                            <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
-                            <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
+                        <ng-container matColumnDef="xirr">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Xirr%
+                            </th>
+                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span *ngIf="element.cagr || element.cagr == 0">{{isLoading ? '':((element.cagr)?(element.cagr | number:'1.2-2' ):0)}}</span>
+                                    <span *ngIf="element.totalCagr || element.totalCagr ==0">{{isLoading ? '':((element.totalCagr)?(element.totalCagr  | number:'1.2-2' ):0)}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
 
-                        </table>
-                    </cdk-virtual-scroll-viewport>
+                        <ng-container matColumnDef="groupHeader">
+                            <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center zIndex text-primary">
+                                <div class="bar">{{group.groupName}}
+                                </div>
+                            </td>
+                        </ng-container>
 
-                    <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
-                        <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12"> No data found</h4>
-                    </div>
+                        <ng-container matColumnDef="groupHeader2">
+                            <td class="zIndex" *matCellDef="let group" [attr.colspan]="displayedColumns.length">
+                                <div class="bar">{{group.schemeName}}
+                                    <p class="text-right">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="groupHeader3">
+                            <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center zIndex text-primary">
+                                <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="icons" sticky>
+                            <th *matHeaderCellDef class="" mat-header-cell></th>
+                            <td *matCellDef="let element" class="zIndex" mat-cell>
+                                <div *ngIf="!isLoading">
+                                    <i [matMenuTriggerFor]="menu25" class="material-icons c-p text-black">
+                                        more_vert
+                                    </i>
+                                    <mat-menu #menu25="matMenu">
+                                        <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
+                                            Transaction</button>
+                                        <button mat-menu-item (click)="deleteModal('TRANSACTION', element)">Delete
+                                            Transaction</button>
+
+                                    </mat-menu>
+                                </div>
+                            </td>
+
+                            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
+                        <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
+                        <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
+                        <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
+                        <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
+
+                    </table>
+                </cdk-virtual-scroll-viewport>
+
+                <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 
@@ -463,7 +480,7 @@
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.categoryName}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>{{(item.totalTransactionAmt)?item.totalTransactionAmt:0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.currentValue)?item.currentValue:0}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.currentAmount)?item.currentAmount:0}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.dividendPayout)?item.dividendPayout:0}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.dividendReinvest)?item.dividendReinvest:0}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -559,12 +576,12 @@
                     <span appFormatNumber *ngIf="item.transactionNav">{{(item.transactionNav)?item.transactionNav:'0'}}</span></td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     <span appFormatNumber *ngIf="item.unit">{{(item.unit) ? (item.unit | number:'1.2-3'):0}}</span></td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber> {{(item.currentValue)?item.currentValue:0}} </td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber> {{(item.currentAmount)?item.currentAmount:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber> {{(item.dividendPayout)?item.dividendPayout:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber> {{(item.dividendReinvest)?item.dividendReinvest:0}} </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber> {{(item.totalAmount)?item.totalAmount:0}} </td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber> {{(item.currentAmount)?item.currentAmount:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    {{(item.gainOrLossAmount)?item.gainOrLossAmount:0}} </td>
+                    {{(item)?(item.currentAmount - item.amount):0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{(item.absReturn)?item.absReturn:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
@@ -578,12 +595,13 @@
                     {{(item.totalTransactionAmt)?item.totalTransactionAmt:0}}</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;" class="f-700"></td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;" class="f-700" *ngIf="item.totalNav">{{(item.totalNav)?item.totalNav:0}}</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700" *ngIf="item.totalUnit">{{(item.totalUnit) ? (item.totalUnit | number:'1.2-3'):0}}</td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700"> {{(item.currentValue)?item.currentValue:0}} </td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700" *ngIf="item.totalUnit">
+                    {{(item.totalUnit) ? (item.totalUnit | number:'1.2-3'):0}}</td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700"> {{(item.totalCurrentValue)?item.totalCurrentValue:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700"> {{(item.dividendPayout)?item.dividendPayout:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700"> {{(item.dividendReinvest)?item.dividendReinvest:0}} </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700"> {{(item.totalAmount)?item.totalAmount:0}} </td>
-                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" class="f-700"> {{(item.totalGain)?item.totalGain:0}} </td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700"> {{(item.totalCurrentValue)?item.totalCurrentValue:0}} </td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" class="f-700"> {{(item)?(item.totalCurrentValue - item.totalTransactionAmt):0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" class="f-700"> {{(item.absReturn)?item.absReturn:0}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;" class="f-700"> {{(item.xirr)?item.xirr:0}} </td>
             </tr>

@@ -40,6 +40,7 @@ export class AddNumberComponent implements OnInit {
   filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  selectedISD: any;
 
   ngOnInit() {
     // listen for search field value changes
@@ -71,8 +72,10 @@ export class AddNumberComponent implements OnInit {
           this.isdCodes = data;
           if (taxStatusId == 1) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
+            this.selectedISD = this.isdCodes[0].id
           } else {
-            this.isdCodes = data
+            this.isdCodes = data;
+            this.selectedISD = undefined;
           }
           this.filteredIsdCodes.next(this.isdCodes);
         }

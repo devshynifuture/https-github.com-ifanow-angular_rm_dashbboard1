@@ -19,11 +19,11 @@ import {EnumDataService} from 'src/app/services/enum-data.service';
 const moment = require('moment');
 
 @Component({
-  selector: 'app-verify-member',
-  templateUrl: './verify-member.component.html',
-  styleUrls: ['./verify-member.component.scss']
+  selector: 'app-add-mandate',
+  templateUrl: './add-mandate.component.html',
+  styleUrls: ['./add-mandate.component.scss']
 })
-export class VerifyMemberComponent implements OnInit {
+export class AddMandateComponent implements OnInit {
   inputData: any;
   displayedColumns: string[] = ['position', 'bankName', 'accountNo', 'ifsc', 'branchName', 'accountType'];
   dataSource = [];
@@ -122,6 +122,7 @@ export class VerifyMemberComponent implements OnInit {
     this.bankDetails = data;
     if (this.bankDetails && this.bankDetails.length == 1) {
       this.generalDetails.controls.bank.setValue(this.bankDetails[0].id);
+      this.selectBank(this.bankDetails[0]);
     }
   }
 
@@ -289,6 +290,7 @@ export class VerifyMemberComponent implements OnInit {
   createMandates() {
     if (!this.selectedMandate) {
       this.selectedMandate = {};
+      return;
     }
     if (this.generalDetails.invalid) {
       this.generalDetails.markAllAsTouched();
@@ -306,7 +308,7 @@ export class VerifyMemberComponent implements OnInit {
     console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
-        this.eventService.showErrorMessage(error.message);
+        this.eventService.openSnackBar(error, 'dismiss');
         console.log('err', error);
         this.errorMsg = error;
       }

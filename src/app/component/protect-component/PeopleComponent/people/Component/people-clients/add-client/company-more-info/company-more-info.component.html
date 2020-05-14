@@ -7,8 +7,9 @@
         <div class="col-md-6 p-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="name" #Name appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" matInput [maxLength]="50" class="form-control">
+                    <input (input)="capitalise($event)" autocomplete="off" formControlName="name" #Name
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" matInput [maxLength]="50"
+                        class="form-control">
                     <mat-hint align="end">{{Name.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>

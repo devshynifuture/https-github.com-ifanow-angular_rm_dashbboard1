@@ -41,7 +41,7 @@ import {NomineeDetailsIinComponent} from './overview-transactions/IIN/UCC-Creati
 import {FatcaDetailsInnComponent} from './overview-transactions/IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
 import {SubmitReviewInnComponent} from './overview-transactions/IIN/UCC-Creation/submit-review-inn/submit-review-inn.component';
 import {MandateCreationComponent} from './overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
-import {VerifyMemberComponent} from './overview-transactions/MandateCreation/verify-member/verify-member.component';
+import {AddMandateComponent} from './overview-transactions/MandateCreation/add-mandate/add-mandate.component';
 import {DetailedViewMandateComponent} from './mandates-transactions/detailed-view-mandate/detailed-view-mandate.component';
 import {PeopleEntryModule} from '../../PeopleComponent/people/people-entry-module';
 import {NoCredFoundComponent} from './noCredFound/no-cred-found/no-cred-found.component';
@@ -86,7 +86,7 @@ export const componentList = [
   FatcaDetailsInnComponent,
   SubmitReviewInnComponent,
   MandateCreationComponent,
-  VerifyMemberComponent,
+  AddMandateComponent,
   DetailedViewMandateComponent,
   InvestorDetailComponent
   // VideoKycComponent
