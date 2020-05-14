@@ -213,6 +213,9 @@ export class TempserviceService {
     let netInvestment = 0;
     let redemption = 0;
     let switchIn = 0;
+    let totalCagr = 0;
+    let trnAbsoluteReturn = 0;
+    let totalCurrentValue = 0;
     if(!isSummaryTabValues){
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
@@ -228,6 +231,9 @@ export class TempserviceService {
         netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
         xirr += (ele.xirr) ? ele.xirr : 0;
         allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
+        totalCagr += (ele.cagr) ? ele.cagr : 0;
+        trnAbsoluteReturn += (ele.absoluteReturn) ? ele.absoluteReturn : 0;
+        totalCurrentValue  += (ele.currentAmount) ? ele.currentAmount : 0;
       });
     }else{
       totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
@@ -271,7 +277,10 @@ export class TempserviceService {
       marketValue,
       netInvestment,
       redemption,
-      switchIn
+      switchIn,
+      totalCagr,
+      trnAbsoluteReturn,
+      totalCurrentValue
     };
     // this.totalObj = obj;
     return obj;

@@ -157,6 +157,7 @@ export class FileOrderingUpperComponent implements OnInit {
           if (res) {
             console.log("this is retry files res:::", res);
             this.dataSource.data = ELEMENT_DATA;
+
             this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
 
           }

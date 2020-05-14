@@ -19,31 +19,28 @@
 
 
 <div class="row pt-90">
-    <div class="col-lg-8">
-        <div class="row">
-            <div class="col-lg-3 pl-0">
-                <div class="form-group">
-                    <button mat-stroked-button (click)="fileOrderRetry(null)">
-                        Retry Selected Files
-                    </button>
-                </div>
-            </div>
-            <div class="col-lg-5"></div>
-            <div class="col-lg-4 text-right pr-0">
-                <button mat-button class="bg-grey" (click)="refreshList()">
-                    <mat-icon>
-                        refresh
-                    </mat-icon>
-                    Refresh
-                </button>
-            </div>
+    <div class="col-lg-3 pl-0">
+        <div class="form-group">
+            <button mat-stroked-button (click)="fileOrderRetry(null)">
+                Retry Selected Files
+            </button>
         </div>
     </div>
-    <div class="col-lg-4"></div>
+    <div class="col-lg-9 text-right">
+        <button mat-button class="bg-grey" (click)="refreshList()">
+            <mat-icon>
+                refresh
+            </mat-icon>
+            Refresh
+        </button>
+    </div>
+
+
+
 </div>
 
 <div class="row pt-8">
-    <div class="col-lg-8">
+    <div class="col-md-12">
         <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonLoading" appSkeletonLoading
             [appSkeletonLoading]="isLoading">
 
@@ -93,30 +90,30 @@
             </ng-container>
 
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let element">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Status </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar"> {{ element.status }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="referenceId">
-                <th mat-header-cell *matHeaderCellDef> Reference Id </th>
-                <td mat-cell *matCellDef="let element">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> Reference Id </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar"> {{ element.referenceId }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="inFileOrAdded">
-                <th mat-header-cell *matHeaderCellDef> In File/Added </th>
-                <td mat-cell *matCellDef="let element">
+                <th class="b-a" mat-header-cell *matHeaderCellDef> In File/Added </th>
+                <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar"> {{ element.inFileOrAdded }} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="fileName">
-                <th mat-header-cell *matHeaderCellDef> File name </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar"> {{ element.fileName }} </div>
+                <th class="b-a" mat-header-cell *matHeaderCellDef> File name </th>
+                <td class="b-a brrakAll" mat-cell *matCellDef="let element">
+                    <div class="bar  "> {{ element.fileName }} </div>
                 </td>
             </ng-container>
 
@@ -131,9 +128,11 @@
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <mat-icon [matMenuTriggerFor]="appMenu" class="c-p" *ngIf="!isLoading">
-                            more_vert
-                        </mat-icon>
+
+                        <img *ngIf="!isLoading" class="c-p" [matMenuTriggerFor]="appMenu"
+                            src="/assets/images/svg/dot-menu.svg">
+
+
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item class="c-p" (click)="openDetailedView(element)">
                                 Detailed View
@@ -159,5 +158,5 @@
             </h5>
         </div>
     </div>
-    <div class="col-lg-4"></div>
+
 </div>
