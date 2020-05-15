@@ -40,6 +40,9 @@ export class CompanyMoreInfoComponent implements OnInit {
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
+  @Output() cancelTab = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
+
   companyIndividualData: any;
   maxDate = new Date();
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
@@ -179,7 +182,13 @@ export class CompanyMoreInfoComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+          if (flag == 'Next') {
+            this.tabChange.emit(1);
+            this.saveNextData.emit(true);
+          }
+          else {
+            this.close(data);
+          }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -190,7 +199,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
   // ngOnChanges(changes: SimpleChanges): void {

@@ -15,6 +15,7 @@ import { ClientBankComponent } from 'src/app/component/protect-component/PeopleC
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { ActivatedRoute } from '@angular/router';
+import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-overview-profile',
@@ -40,7 +41,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute) {
+    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute, private cancelFlagService: CancelFlagService) {
   }
 
   ngOnInit() {
@@ -271,8 +272,11 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getFamilyMembersList(this.clientData);
-          this.familyMemberList = undefined;
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.getFamilyMembersList(this.clientData);
+            this.cancelFlagService.setCancelFlag(undefined)
+            this.familyMemberList = undefined;
+          }
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
           rightSideDataSub.unsubscribe();
@@ -295,17 +299,19 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getClientData(this.clientOverviewData);
-          this.clientOverviewData = undefined
-          this.getAddressList(this.clientData);
-          this.getBankList(this.clientData);
-          this.getDematList(this.clientData);
-          this.addressList = undefined;
-          this.bankList = undefined;
-          this.dematList = undefined;
-          // this.authService.setClientData(sideBarData.clientData);
-          // this.clientOverviewData = sideBarData.clientData;
-          this.getFamilyMembersList(this.clientData);
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.getClientData(this.clientOverviewData);
+            this.clientOverviewData = undefined
+            this.getAddressList(this.clientData);
+            this.getBankList(this.clientData);
+            this.getDematList(this.clientData);
+            this.addressList = undefined;
+            this.bankList = undefined;
+            this.dematList = undefined;
+            // this.authService.setClientData(sideBarData.clientData);
+            // this.clientOverviewData = sideBarData.clientData;
+            // this.getFamilyMembersList(this.clientData);
+          }
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
           rightSideDataSub.unsubscribe();
@@ -340,7 +346,7 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (sideBarData.clientData) {
+          if (sideBarData.refreshRequired) {
             if (flag == 'Address') {
               this.addressList = undefined;
               this.getAddressList(this.clientData);

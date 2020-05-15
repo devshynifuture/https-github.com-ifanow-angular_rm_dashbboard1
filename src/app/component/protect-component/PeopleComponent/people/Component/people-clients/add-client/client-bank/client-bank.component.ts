@@ -46,6 +46,9 @@ export class ClientBankComponent implements OnInit {
   isPostal;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
+  @Output() cancelTab = new EventEmitter();
+
   @Input() fieldFlag;
 
   @Input() set data(data) {
@@ -258,7 +261,12 @@ export class ClientBankComponent implements OnInit {
           console.log(data);
           this.disableBtn = false;
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
+          if (flag == 'Next') {
+            this.tabChange.emit(1);
+            this.saveNextData.emit(true);
+          } else {
+            this.close('save');
+          }
         },
         err => {
           this.disableBtn = false;
@@ -270,7 +278,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }
