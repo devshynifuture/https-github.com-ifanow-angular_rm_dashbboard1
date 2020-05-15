@@ -70,8 +70,8 @@
                     <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
                         STATUS - LIVE
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'PENDING')">
-                        STATUS - PENDING
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'MATURED')">
+                        STATUS - Matured
                     </button>
                 </mat-menu>
 
@@ -500,7 +500,12 @@
                         </th>
 
                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.couponAmount}}</span> </div>
+                            <div class="bar">
+                                <div *ngIf="element.couponPayoutFrequencyId == 1">-</div>
+                                <div *ngIf="element.couponPayoutFrequencyId != 1">
+                                    {{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.couponAmount}}</span> 
+                                </div>
+                            </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
                             <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCouponAmount" appFormatNumber>{{sumCouponAmount}}</span></div>

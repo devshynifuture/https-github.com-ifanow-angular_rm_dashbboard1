@@ -137,7 +137,7 @@ disabledMember(value, type) {
     disControl : type
   }
   setTimeout(() => {
-    this.selectOwner = this.nomineesListFM.filter((m)=> m.familyMemberId == this.ssySchemeForm.value.getCoOwnerName[0].familyMemberId)
+    this.selectOwner = this.nomineesListFM.filter((m)=> m.id == this.ssySchemeForm.value.getCoOwnerName[0].familyMemberId)
    }, 1000);
   if(value == "owner"){
     this.ssySchemeForm.get('commDate').reset();

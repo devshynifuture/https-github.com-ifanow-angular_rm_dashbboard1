@@ -387,6 +387,7 @@ export class ValidatorType {
   static NUMBER_ONLY_WITHOUT_DOT = new RegExp(/^\d+(\\d{0,4})?$/);
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
   static ALPHA_NUMERIC_PARANTHESIS_DOT_SPACE = new RegExp(/^[\w .,(),-]+$/);
+  static NO_SPACE = new RegExp(/^\S*$/);
   // static PERSON_NAME = new RegExp(/^[a-zA-Z0-9]*[ a-zA-Z]+[a-zA-Z0-9]*$/);/*With Number*/
   static NUMBER_KEY_ONLY = new RegExp(/[^0-9.]+/g);
   // static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
