@@ -48,6 +48,8 @@ export class ClientAddressComponent implements OnInit {
   addressForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
+  @Output() cancelTab = new EventEmitter();
   @Input() fieldFlag;
 
   @Input() set data(data) {
@@ -218,7 +220,13 @@ export class ClientAddressComponent implements OnInit {
           this.disableBtn = false
           console.log(data);
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
+          if (flag == 'Next') {
+            this.saveNextData.emit(true);
+            this.tabChange.emit(1)
+          }
+          else {
+            this.closeAndSave();
+          }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -230,7 +238,10 @@ export class ClientAddressComponent implements OnInit {
   }
 
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+  }
+  closeAndSave() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }

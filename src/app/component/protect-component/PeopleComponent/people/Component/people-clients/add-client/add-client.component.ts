@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PeopleService } from '../../../../people.service';
+import { CancelFlagService } from '../../people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-add-client',
@@ -10,8 +11,9 @@ import { PeopleService } from '../../../../people.service';
 export class AddClientComponent implements OnInit {
   headingData: any;
   tabData: any = {};
+  isRefreshFlag: any;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject, private cancelFlagService: CancelFlagService) { }
   ngOnInit() {
   }
   @Input() set data(data) {
@@ -21,7 +23,7 @@ export class AddClientComponent implements OnInit {
   }
   selected = 0;
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (this.isRefreshFlag) ? this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true }) : (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
   getTabData(data) {
     console.log(data);
@@ -30,5 +32,8 @@ export class AddClientComponent implements OnInit {
   changeTab(flag) {
     (flag == 1) ? this.selected++ : '';
   }
-
+  refreshFlagData(flag) {
+    this.isRefreshFlag = flag;
+    this.cancelFlagService.setCancelFlag(flag);
+  }
 }

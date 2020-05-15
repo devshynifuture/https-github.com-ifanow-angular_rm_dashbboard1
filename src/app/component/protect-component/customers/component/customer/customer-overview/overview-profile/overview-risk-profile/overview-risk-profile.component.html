@@ -30,21 +30,33 @@
 
             <!-- page loader -->
 
-            <div class="pt-20" *ngFor="let item of riskAssessmentQuestionList">
-                <mat-accordion class="riskAccordion">
-                    <mat-expansion-panel>
+            <div class="pt-20" *ngFor="let item of riskAssessmentQuestionList;  let i = index">
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="item.done">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                {{item.question || item.riskAssessmentQuestion}}
+                                {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
+
                             </mat-panel-title>
+                            <div class="circle1" *ngIf="item.selectedChoiceId">
+                                <i class="material-icons text-success text-right">
+                                    check_circle_outline
+                                </i>
+                            </div>
+                            <div class="circle1" *ngIf="!item.selectedChoiceId">
+                                <i class="material-icons text-primary">
+                                    query_builder
+                                </i>
+                            </div>
                         </mat-expansion-panel-header>
+
 
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
 
                             <mat-radio-button class="w-100"
                                 *ngFor="let choice of item.riskAssessmentChoices; let i = index"
                                 [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled"
-                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
+                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;item.done = false;item.choice = choice.choice;checkState(item,i)">
                                 {{choice.choice}}<br>
                             </mat-radio-button>
 
@@ -52,6 +64,9 @@
 
                     </mat-expansion-panel>
                 </mat-accordion>
+                <div class="pt-10">
+                    {{item.choice}}
+                </div>
             </div>
             <div *ngIf="showErrorMsg == true" class="errorClass"> Please complete all questions for test result
             </div>
@@ -83,7 +98,8 @@
         <div class="col-md-12 mb-16 d-flex justify-content-end">
             <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="reset(true);showRisk = false">Risk
                 assessment</button>
-            <button mat-flat-button class="b-a-custom text-primary" (click)="open('riskProfile', null)">History</button>
+            <button mat-flat-button class="b-a-custom text-primary c-p"
+                (click)="open('riskProfile', null)">History</button>
         </div>
 
     </div>

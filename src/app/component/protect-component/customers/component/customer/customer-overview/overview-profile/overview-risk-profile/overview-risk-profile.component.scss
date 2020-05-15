@@ -79,3 +79,66 @@ p {
 ::ng-deep .riskAccordion .mat-expansion-panel-content {
     background: #ffffff;
 }
+.circle1 {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 1px solid #83959D;
+    position: relative;
+    background: #ffffff;
+    margin-right: 10px;
+    i {
+        position: absolute;
+        top: -3px;
+        left: -3px;
+    }
+}
+
+.circle {
+    // height: 45px;
+    //width: 150px;
+    // border-radius: 50%;
+    // border: 2px solid;
+    position: relative;
+    height: 42px;
+    // border-color: #889EB7;
+}
+
+.circle:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 20px;
+    left: 9px;
+    border: 1px solid #83959D;
+    border-width: 0 0 0 1px;
+    width: 1px;
+    height: 22px;
+}
+
+.circleGreen:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 20px;
+    left: 9px;
+    border: 1px solid #02B875;
+    border-width: 0 0 0 1px;
+    width: 1px;
+    height: 22px;
+}
+
+.circleGreen {
+    position: relative;
+    height: 42px;
+}
+
+.noneBefore:before {
+    display: none;
+}
+
+.rejectedRadio .mat-radio-outer-circle {
+    border-color: #FF6823 !important
+}
