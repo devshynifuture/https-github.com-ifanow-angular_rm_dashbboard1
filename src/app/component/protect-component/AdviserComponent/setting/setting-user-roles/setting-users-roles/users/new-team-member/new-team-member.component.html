@@ -93,7 +93,6 @@
             <h5 class="m-0 pt-20">Profile Photo</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
-            <button (click)="file.click()" *ngIf="logoImg==undefined" mat-flat-button  color="primary">Upload Image</button>
             <div class="photView " *ngIf="imageLoader || logoImg">
                 <mat-spinner class="positionLoader" *ngIf="imageLoader==true" [diameter]="30"></mat-spinner>
                 <img *ngIf="logoImg" src="{{logoImg}}">
