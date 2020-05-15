@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { TransactionsHistoryComponent } from './transactions-history/transactions-history.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { TransactionEnumService } from '../transaction-enum.service';
-import { OnlineTrasactionComponent } from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {TransactionsHistoryComponent} from './transactions-history/transactions-history.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {TransactionEnumService} from '../transaction-enum.service';
+import {OnlineTrasactionComponent} from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
+import {MatSort, MatTableDataSource} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-transactions-list',
@@ -26,22 +27,33 @@ export class TransactionsListComponent implements OnInit {
   finalStartDate;
   finalEndDate;
   errMessage: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
   maxDate = new Date();
   dontHide: boolean;
   credentialData: any;
-  constructor(private onlineTransact: OnlineTransactionService,
-    private eventService: EventService, private utilService: UtilService,
-    private subInjectService: SubscriptionInject,
-    private tranService: OnlineTransactionService) {
-  }
+  isAdvisorSection = true;
 
   isLoading = false;
 
+  constructor(private onlineTransact: OnlineTransactionService,
+              private eventService: EventService, private utilService: UtilService,
+              private subInjectService: SubscriptionInject,
+              private tranService: OnlineTransactionService,
+              private router: Router) {
+  }
+
   ngOnInit() {
+    const routeName = this.router.url.split('/')[1];
+    if (routeName == 'customer') {
+      this.isAdvisorSection = false;
+    }
     this.advisorId = AuthService.getAdvisorId();
-    this.getFilterOptionData();
+    if (this.isAdvisorSection) {
+      this.getFilterOptionData();
+    } else {
+      this.getAllTransactionList();
+    }
   }
 
   getFilterOptionData() {
@@ -61,10 +73,12 @@ export class TransactionsListComponent implements OnInit {
       }
     );
   }
-  refresh(flag){
-    this.dontHide = true
-    this.getAllTransactionList()
+
+  refresh(flag) {
+    this.dontHide = true;
+    this.getAllTransactionList();
   }
+
   getFilterOptionDataRes(data) {
     if (data) {
       this.isLoading = false;
@@ -85,28 +99,32 @@ export class TransactionsListComponent implements OnInit {
   }
 
   getAllTransactionList() {
-    this.dontHide = true
+    this.dontHide = true;
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    const obj = {
+    const obj: any = {
       advisorId: this.advisorId,
-      tpUserCredentialId: this.selectedBroker.id,
       startDate: this.finalStartDate,
       endDate: this.finalEndDate
     };
+    if (this.isAdvisorSection) {
+      obj.tpUserCredentialId = this.selectedBroker.id;
+    } else {
+      obj.clientId = AuthService.getClientId();
+    }
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
         if (data) {
-          this.dontHide = true
+          this.dontHide = true;
           this.isLoading = false;
           this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
           this.dataSource.data = TransactionEnumService.setTransactionStatus(data);
           this.dataSource.sort = this.sort;
           console.log(this.dataSource.data);
         } else {
-          this.dontHide = true
+          this.dontHide = true;
           this.isLoading = false;
-          this.noData = "No transactions found";
+          this.noData = 'No transactions found';
           // this.eventService.openSnackBar('no transaction found', 'Dismiss');
           this.dataSource.data = [];
         }
@@ -121,7 +139,7 @@ export class TransactionsListComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
   applyFilter(event: Event) {
@@ -166,7 +184,7 @@ export class TransactionsListComponent implements OnInit {
   openTransaction() {
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: null,
+      data: {isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction'},
       id: 1,
       state: 'open65',
       componentName: OnlineTrasactionComponent,
