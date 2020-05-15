@@ -60,7 +60,7 @@
         <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input #proofNumber placeholder="Enter ID Proof" [maxLength]="maxLength"
+                    <input #proofNumber placeholder="Enter id proof" [maxLength]="maxLength"
                         (input)="toUpperCase(addressForm.get('proofIdNum'),$event)" appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
                         formControlName="proofIdNum" class="form-control">
@@ -108,7 +108,7 @@
         <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Pin Code" [maxLength]="6" #pinCode
+                    <input autocomplete="off" placeholder="Enter pin code" [maxLength]="6" #pinCode
                         (focusout)="getPostalPin($event.target.value)" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode"
                         class="form-control">
@@ -128,7 +128,7 @@
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city"
+                    <input placeholder="Enter your city" autocomplete="off" #city matInput formControlName="city"
                         appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30"
                         class="form-control">
                     <mat-error>This field is required</mat-error>
@@ -144,7 +144,7 @@
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Your State" autocomplete="off" #state matInput appInputValueValidation
+                    <input placeholder="Enter your state" autocomplete="off" #state matInput appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state"
                         class="form-control">
                     <mat-error>This field is required</mat-error>
@@ -160,7 +160,7 @@
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Your Country" #country matInput
+                    <input autocomplete="off" placeholder="Enter your country" #country matInput
                         formControlName="country" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
                         maxlength="30" class="form-control">
                     <mat-error>This field is required</mat-error>

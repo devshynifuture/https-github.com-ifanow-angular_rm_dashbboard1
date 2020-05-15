@@ -123,7 +123,7 @@
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Name" #displayName appInputValueValidation
+                    <input autocomplete="off" placeholder="Enter name" #displayName appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput
                         [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{displayName.value.length}}/50</mat-hint>
@@ -139,8 +139,8 @@
         <div class="col-md-3 pr-7 pl-0">
             <p class="m-0 roboto">Minor</p>
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" placeholder="Enter Adhaar Number" #adhaarMinor appInputValueValidation
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter adhaar number" #adhaarMinor appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhaarNo" matInput
                         [maxLength]="12" class="form-control">
                     <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
@@ -152,8 +152,8 @@
         <div class="col-md-3 pl-7 pr-0">
             <p class="m-0 roboto">Guardian</p>
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" placeholder="Enter Adhaar Number" #adhharGuardian appInputValueValidation
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter adhaar number" #adhharGuardian appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhharGuardian" matInput
                         [maxLength]="12" class="form-control">
                     <mat-hint align="end">{{adhharGuardian.value.length}}/12</mat-hint>
@@ -171,7 +171,7 @@
         <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Aadhaar number" maxlength="12" appInputValueValidation
+                    <input autocomplete="off" placeholder="Enter aadhaar number" maxlength="12" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" #adharNum formControlName="adhaarNo" matInput
                         class="form-control">
                     <mat-hint>Optional</mat-hint>

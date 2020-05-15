@@ -1,32 +1,29 @@
 @media(max-width: 767px) {
   .btn-search {
     background: #939393 !important;
-    border-radius: 35px !important;
+    border-radius: 4px !important;
     font-size: 16px;
     line-height: 19px;
     color: #FFFFFF;
     height: 40px !important;
   }
-   .upload-pan-mob{
-      height: 48px !important;
-      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 
-      0px 3px 4px rgba(0, 0, 0, 0.12), 
-      0px 2px 4px rgba(0, 0, 0, 0.14) !important;
-
-    }
-   // .upload-pan-mob.mat-stroked-button:not([class*=mat-elevation-z]){
-   //  box-shadow: none;
-   // }
-  .mob-kyc-active{
-   width: 18px;
+  .upload-pan-mob {
+    height: 48px !important;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14) !important;
+  }
+  // .upload-pan-mob.mat-stroked-button:not([class*=mat-elevation-z]){
+  //  box-shadow: none;
+  // }
+  .mob-kyc-active {
+    width: 18px;
     height: 18px;
     padding: 2px !important;
     text-align: center;
     color: #fff;
     font-size: 14px;
-    border-radius:50%;
+    border-radius: 50%;
   }
-  .mob-shadow{
+  .mob-shadow {
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
   }
   .mob-active {
@@ -240,7 +237,7 @@
         line-height: 1.2;
         height: 35px !important;
         font-size: 16px;
-        font-family: CircularStd;
+        font-family: Roboto;
       }
     }
     .mat-form-field-infix {
@@ -256,7 +253,7 @@
     .view-all {
       padding: 6px 10px !important;
       height: 25px !important;
-      font-family: CircularStd;
+      font-family: Roboto;
     }
   }
   #mob-transaction-profile {
@@ -299,7 +296,7 @@
       border: 0px;
     }
     .mat-button-toggle {
-      font-family: CircularStd;
+      font-family: Roboto;
       font-size: 14px;
       line-height: 22px;
     }
@@ -342,7 +339,7 @@
   #mob-existing-folio-selected {
     .mob-input {
       color: #1A303E !important;
-      font-family: CircularStd;
+      font-family: Roboto;
       font-size: 16px !important;
       padding-left: 16px !important;
     }
@@ -377,10 +374,14 @@
       color: #939393;
       font-size: 16px !important;
     }
+    p {
+      font-weight: 400;
+      font-family: Roboto !important;
+    }
   }
   #transactions-searchresult {
     .view-all {
-      border-radius: 35px !important
+      border-radius: 4px !important
     }
   }
   #mob-quick-invest .mat-button-toggle-group-appearance-standard {
@@ -415,78 +416,74 @@
   #mob-payment-gateway,
   #mob-existing-investor {
     .mat-button-toggle-group-appearance-standard {
-      font-family: CircularStd !important;
+      font-family: Roboto;
       font-size: 14px !important;
       line-height: 22px !important;
     }
   }
-  #mob-transact{
-    background-color:#f2f2f2;
+  #mob-transact {
+    background-color: #f2f2f2;
     height: 100vh;
-    input.mat-input-element{
-      background-color:#fff;
+    input.mat-input-element {
+      background-color: #fff;
     }
-   
-    .mob-proccess-fixed{
+    .mob-proccess-fixed {
       background: #FAFAFA;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 
-    0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14);
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14);
     }
-    .otp-mob{
-      input.mat-input-element{
+    .otp-mob {
+      input.mat-input-element {
         font-weight: 500 !important;
         font-size: 16px !important;
       }
     }
-    .record-mob{
+    .record-mob {
       background: #F44336;
       border-radius: 1px !important;
       font-size: 16px !important;
-      color:#fff;
-      border:0px !important;
+      color: #fff;
+      border: 0px !important;
     }
-    .retake-mob{
+    .retake-mob {
       color: #EA5970;
       border-radius: 1px !important;
-      background:transparent;
+      background: transparent;
       border: 1px solid #F44336 !important;
       font-size: 16px;
       padding: 0 36px !important;
       height: 40px !important;
     }
   }
-  .nomineedetails-mob{
-    .mat-radio-button{
-        min-width: 116px !important;
+  .nomineedetails-mob {
+    .mat-radio-button {
+      min-width: 116px !important;
     }
   }
-  .add-nominee-mob{
-    position:fixed;
-    bottom:80px;
+  .add-nominee-mob {
+    position: fixed;
+    bottom: 80px;
     width: 100%;
-    .btn-nominee{
+    .btn-nominee {
       color: #008FFF !important;
       letter-spacing: 0.64px;
       font-size: 16px;
       border: 1px solid #008FFF;
       border-radius: 4px !important;
       background: #fff !important;
-
     }
   }
-  .add-bank-mob{
+  .add-bank-mob {
     margin-top: 40px !important;
-   .btn-bank{
+    .btn-bank {
       color: #008FFF !important;
       letter-spacing: 0.64px;
       font-size: 16px;
       border: 1px solid #008FFF;
       border-radius: 4px !important;
       background: #fff !important;
-
-    } 
+    }
   }
-  .btn-id{
+  .btn-id {
     border: 1px dashed #83959D !important;
     color: #83959D;
     font-size: 12px;
@@ -494,82 +491,81 @@
     line-height: 12px !important;
     padding: 5px !important;
   }
-  .mob-points{
-    li{
+  .mob-points {
+    li {
       text-align: left !important;
       font-size: 14px;
     }
-    li span{
-      border-radius:50%;
-      background-color:#D9DEE1;
+    li span {
+      border-radius: 50%;
+      background-color: #D9DEE1;
       font-size: 14px;
       color: #212121;
-      padding:4px 8px;
+      padding: 4px 8px;
       margin-right: 10px !important;
     }
   }
-  .mob-timeline{
+  .mob-timeline {
     ul.timeline {
-    list-style-type: none;
-    position: relative;
-    display: grid;
-}
-ul.timeline:before {
-    content: ' ';
-    background: #d4d9df;
-    display: inline-block;
-    position: absolute;
-    left: 29px;
-    top: 22px;
-    width: 2px;
-    height: 90%;
-    z-index: 400;
-}
-ul.timeline > li {
-    margin: 20px 0;
-    padding-left: 50px;
-    text-align: left;
-}
-ul.timeline > li:before {
-    content: ' ';
-    background: white;
-    display: inline-block;
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid #22c0e8;
-    left: 20px;
-    width: 20px;
-    height: 20px;
-    z-index: 400;
-}
-span{
-  font-family: "Roboto", sans-serif !important;
-}
-ul.timeline> li:nth-child(1):before{
-     // font-family: "Material Icons";
-    content: url(assets/images/svg/mob-right.svg);
-    line-height: 14px;
-    text-align:center;
-}
-
- ul.timeline > li.non-mob:before{
-  border-color:#83959D;
- }
-  ul.timeline > li.selected-mob:before{
-  border-color:#83959D;
- }
- ul.timeline > li.selected-mob:before{
-  background-color: #02B875;
-  color: #fff;
-  border-color:#02B875;
- }
- button{
-  height: 24px !important;
-   line-height: 22px !important;
-   font-size: 12px;
-   width: 50px !important;
-   padding:0 10px;
-   border-radius:2px !important;
- }
+      list-style-type: none;
+      position: relative;
+      display: grid;
+    }
+    ul.timeline:before {
+      content: ' ';
+      background: #d4d9df;
+      display: inline-block;
+      position: absolute;
+      left: 29px;
+      top: 22px;
+      width: 2px;
+      height: 90%;
+      z-index: 400;
+    }
+    ul.timeline>li {
+      margin: 20px 0;
+      padding-left: 50px;
+      text-align: left;
+    }
+    ul.timeline>li:before {
+      content: ' ';
+      background: white;
+      display: inline-block;
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid #22c0e8;
+      left: 20px;
+      width: 20px;
+      height: 20px;
+      z-index: 400;
+    }
+    span {
+      font-family: "Roboto", sans-serif !important;
+    }
+    ul.timeline>li:nth-child(1):before {
+      // font-family: "Material Icons";
+      content: url(assets/images/svg/mob-right.svg);
+      line-height: 14px;
+      text-align: center;
+    }
+    ul.timeline>li.non-mob:before {
+      border-color: #83959D;
+    }
+    ul.timeline>li.selected-mob:before {
+      border-color: #83959D;
+    }
+    ul.timeline>li.selected-mob:before {
+      background-color: #02B875;
+      color: #fff;
+      border-color: #02B875;
+    }
+    button {
+      height: 24px !important;
+      line-height: 22px !important;
+      font-size: 12px;
+      width: 50px !important;
+      padding: 0 10px;
+      border-radius: 2px !important;
+    }
   }
 }
