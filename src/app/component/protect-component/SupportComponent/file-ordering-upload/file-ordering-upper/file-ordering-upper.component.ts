@@ -22,7 +22,7 @@ export class FileOrderingUpperComponent implements OnInit {
     private fileOrderingService: FileOrderingUploadService,
     private supportService: SupportService
   ) { }
-  displayedColumns: string[] = ['checkbox', 'advisorName', 'arnRia', 'fileType', 'fileOrderTime', 'status', 'referenceId', 'inFileOrAdded', 'fileName', 'failedReason', 'action'];
+  displayedColumns: string[] = ['checkbox', 'advisorName', 'arnRia', 'fileType', 'fileOrderTime', 'status', 'referenceId', 'inFileOrAdded', 'fileName', 'errorMsg', 'action'];
 
   dataSource = new MatTableDataSource<fileOrderingUpperI>(ELEMENT_DATA);
   data;
@@ -71,6 +71,7 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   fileTypeName() {
+    this.isLoading = true;
     this.supportService.getFileTypeOrder({})
       .subscribe(res => {
         if (res && res.length !== 0) {
@@ -116,7 +117,7 @@ export class FileOrderingUpperComponent implements OnInit {
               referenceId: element.referenceId ? element.referenceId : '-',
               inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
               fileName: element.fileName ? element.fileName : '-',
-              failedReason: element.failedReason ? element.failedReason : '-',
+              errorMsg: element.errorMsg ? element.errorMsg : '-',
               action: '',
               fromDate: element.fromDate,
               toDate: element.toDate
@@ -157,7 +158,7 @@ export class FileOrderingUpperComponent implements OnInit {
           if (res) {
             console.log("this is retry files res:::", res);
             this.dataSource.data = ELEMENT_DATA;
-
+            this.selection.clear();
             this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
 
           }
@@ -205,7 +206,7 @@ export class FileOrderingUpperComponent implements OnInit {
               referenceId: element.referenceId ? element.referenceId : '-',
               inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
               fileName: element.fileName ? element.fileName : '-',
-              failedReason: element.failedReason ? element.failedReason : '-',
+              errorMsg: element.errorMsg ? element.errorMsg : '-',
               action: '',
               fromDate: element.fromDate,
               toDate: element.toDate

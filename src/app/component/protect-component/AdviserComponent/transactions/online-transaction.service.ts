@@ -204,6 +204,9 @@ export class OnlineTransactionService {
     return this.http.getEncodedBasic(apiConfig.TRANSACT + appConfig.INVESTOR_FORM_UPLOAD_DETAIL, data, 1);
   }
 
+  getCountryCodeList(data) {
+    return this.http.get(apiConfig.TRANSACT + appConfig.COUNTRY_MASTER, data);
+  }
 //
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)

@@ -214,8 +214,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: [!data ? '' : data.bankName, [Validators.required]],
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      // accountType: [!data ? '1' : (data.accountType == 'SB')?'1':'2', [Validators.required]],
-      accountType: [!data ? 'SB' : data.accountType == '2' || data.accountType == 'CA' ? 'CA' : 'SB', [Validators.required]],
+      accountType: [!data ? '1' : data.accountType + '', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
@@ -225,16 +224,7 @@ export class BankDetailsIINComponent implements OnInit {
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
-      // branchProof: [(!data.address) ? '' : (data.address.branchProof) ? data.address.branchProof : '', [Validators.required]],
-      // bankMandate: [!data.address ? '1' :( data.address.bankMandate) ?  data.address.bankMandate + '' : '1', [Validators.required]],
-      // mandateDate: [!data.address ? '' : data.address.mandateDate, [Validators.required]],
-      // mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
     });
-    // if (data.bankMandate == undefined && data.accountType == undefined) {
-
-    //   this.bankDetails.controls.accountType.setValue('1')
-    //   this.bankDetails.controls.bankMandate.setValue('1')
-    // }
   }
 
   getFormControl(): any {
@@ -328,7 +318,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
-    this.bankDetailsForm.controls.accountType.setValue(value.accountType == '2' || value.accountType == 'CA' ? 'CA' : 'SB');
+    this.bankDetailsForm.controls.accountType.setValue(value.accountType);
     this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
