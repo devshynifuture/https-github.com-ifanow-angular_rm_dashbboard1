@@ -160,14 +160,19 @@ export class CompanyMoreInfoComponent implements OnInit {
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
     };
-    this.barButtonOptions.active = true;
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
         data => {
           this.barButtonOptions.active = false;
           console.log(data);
           if (data) {
-            (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+            if (flag == 'Next') {
+              this.saveNextData.emit(true);
+              this.tabChange.emit(1)
+            }
+            else {
+              this.close(data);
+            }
           } else {
             this.eventService.openSnackBar('Unknown error', 'Dismiss');
           }
@@ -199,7 +204,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
   // ngOnChanges(changes: SimpleChanges): void {

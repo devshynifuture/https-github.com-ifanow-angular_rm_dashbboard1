@@ -19,24 +19,11 @@ export class SubscriptionInject {
   private openCloseupperSlider = new BehaviorSubject('');
   rightslider = this.openCloseupperSlider.asObservable();
 
-  private openContent = new BehaviorSubject('');
-  closeRightSlider = this.openContent.asObservable();
-
-  // document-clients
-
-  private openDocument = new BehaviorSubject('');
-  rightSliderDocument = this.openDocument.asObservable();
-
   // billerProfileData
 
   private billerData = new BehaviorSubject('');
   singleProfileData = this.billerData.asObservable();
 
-  private upper = new BehaviorSubject('');
-  upperData = this.upper.asObservable();
-
-  private specialEvent = new BehaviorSubject<any>('');
-  event = this.specialEvent.asObservable();
 
   private refreshObservable = new BehaviorSubject<boolean>(false);
 
@@ -49,19 +36,18 @@ export class SubscriptionInject {
     this.openCloseupperSlider.next(msg);
   }
 
-  closeSlider(msg: string) {
-    this.openContent.next(msg);
-  }
-
   addSingleProfile(obj) {
     this.billerData.next(obj);
     return this.singleProfileData;
   }
 
-  pushUpperData(data) {
-    this.upper.next(data);
+  changeUpperRightSliderState(sliderState: object) {
+    this.upperRightSliderData.next(sliderState);
+    return this.upperRightSliderDataObs;
   }
 
+
+  // methods for opening compoennts in slider
   changeNewRightSliderState(sliderState: object) {
     this.newRightSliderData.next(sliderState);
     return this.newRightSliderDataObs;
@@ -84,13 +70,5 @@ export class SubscriptionInject {
     this.refreshObservable.next(false);
     this.newRightSliderData.next(sliderCloseObj);
   }
-
-  changeUpperRightSliderState(sliderState: object) {
-    this.upperRightSliderData.next(sliderState);
-    return this.upperRightSliderDataObs;
-  }
-
-  addEvent(data: object) {
-    this.specialEvent.next(data)
-  }
+  // ending of methods for opening components in slider
 }

@@ -16,11 +16,11 @@
             <button (click)="Excel('Client')" mat-menu-item>XLS</button>
         </mat-menu>
 
-        <a class="c-p downloadPdfIcon iconBorderNone">
+        <!-- <a class="c-p downloadPdfIcon iconBorderNone">
             <img src="assets/images/svg/up-down.svg">
-        </a>
+        </a> -->
 
-        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
+        <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8"> -->
 
         <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle">
             <i class="material-icons">filter_list</i>FILTERS</button> -->
@@ -81,7 +81,8 @@
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
-                        <div class="bar"> {{element.login}}</div>
+                        <div class="bar"> {{element.lastLoginString}} <span
+                                *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">

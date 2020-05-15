@@ -100,7 +100,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.getAddressList(this.clientData);
       }
     }
-    this.sendObj = {};
+    this.sendObj = {...this.inputData};
     console.log('holding list', this.holdingList);
   }
 

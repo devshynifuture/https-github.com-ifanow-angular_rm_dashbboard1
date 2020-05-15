@@ -19,11 +19,6 @@ import {map, startWith} from 'rxjs/operators';
 export class OnlineTrasactionComponent implements OnInit {
 
   formStep = 'step-1';
-  investorsArray: string[] = [
-    'Rahul Jain',
-    'ajdbvkja'
-  ];
-
   isSaveAndAddClicked = false;
 
   transactionAddForm: FormGroup = this.fb.group({
@@ -67,8 +62,8 @@ export class OnlineTrasactionComponent implements OnInit {
   selectedClientOrFamily: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private eventService: EventService, private fb: FormBuilder,
-    private processTransaction: ProcessTransactionService, private router: Router, private enumDataService: EnumDataService) {
+              private eventService: EventService, private fb: FormBuilder,
+              private processTransaction: ProcessTransactionService, private router: Router, private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId();
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
@@ -77,17 +72,19 @@ export class OnlineTrasactionComponent implements OnInit {
           if (state) {
             let list = this.enumDataService.getSearchData(state);
             if (list.length == 0) {
-              this.stateCtrl.setErrors({ invalid: true })
+              this.stateCtrl.setErrors({invalid: true});
             }
-            return this.enumDataService.getSearchData(state)
+            return this.enumDataService.getSearchData(state);
           } else {
             return this.enumDataService.getEmptySearchStateData();
           }
         }),
-      )
+      );
   }
+
   stateCtrl = new FormControl('', [Validators.required]);
   familyMemberList;
+
   @Input()
   set data(data) {
     this.familyMemberList = this.enumDataService.getEmptySearchStateData();
@@ -108,9 +105,11 @@ export class OnlineTrasactionComponent implements OnInit {
     this.getdataForm(this.inputData);
     // this.getDefaultDetails(null)
   }
+
   checkOwnerList(event) {
-    console.log(this.filteredStates)
+    console.log(this.filteredStates);
   }
+
   getDefaultDetails(platform) {
     console.log('onlineTransactionComponent platform: ', platform);
     this.selectedClientOrFamily = platform.name;
@@ -166,19 +165,19 @@ export class OnlineTrasactionComponent implements OnInit {
   }
 
   noMapFunction() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.router.navigate(['/admin/transactions/investors']);
   }
 
   noBroakerFun() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds']);
 
   }
 
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   ownerList(value) {
@@ -218,7 +217,7 @@ export class OnlineTrasactionComponent implements OnInit {
   lisNominee(value) {
     this.showSpinnerOwner = false;
     if (value == null) {
-      this.stateCtrl.setErrors({ setValue: 'family member does not exist' });
+      this.stateCtrl.setErrors({setValue: 'family member does not exist'});
       this.transactionAddForm.get('ownerName').markAsTouched();
     }
     console.log(value);
