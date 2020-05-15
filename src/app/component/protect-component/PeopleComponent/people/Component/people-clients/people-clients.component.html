@@ -29,7 +29,7 @@
         </button>
     </div>
 </div>
-<div class="row">
+<div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients">
         <div [ngClass]="{'table-scroll':isLoading==false }">
             <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
