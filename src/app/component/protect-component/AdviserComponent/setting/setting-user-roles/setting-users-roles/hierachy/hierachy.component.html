@@ -46,19 +46,23 @@
         <ng-container matColumnDef="report">
             <th mat-header-cell *matHeaderCellDef class="br"> Access to </th>
             <td mat-cell *matCellDef="let element" class="br c-p">
-                <div class="bar"><span *ngIf="element.parentName && !utilService.isLoading" (click)="assignTeamMember(null, element)">{{element.parentName}}</span></div>
+                <div class="bar d-flex align-items-center justify-content-between">
+                    <span *ngIf="element.parentName && !utilService.isLoading" (click)="assignTeamMember(null, element)">{{element.parentName}}</span>
+                    <button mat-button class="btn-primary changeBtn"> change</button>
+                </div>
                 <button mat-stroked-button class="btn-primary-outline  btn-sm" *ngIf="!element.parentName && !utilService.isLoading && element.canReport == 1" (click)="assignTeamMember(null, element)"> ADD TEAM
                     MEMBER</button>
             </td>
         </ng-container>
-        <ng-container matColumnDef="icons">
+
+        <!-- <ng-container matColumnDef="icons">
             <th mat-header-cell class="w-3" *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
                 <i class="material-icons c-p">
                     more_vert
                 </i>
             </td>
-        </ng-container>
+        </ng-container> -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
