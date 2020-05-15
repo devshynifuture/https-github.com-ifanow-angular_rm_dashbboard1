@@ -217,10 +217,6 @@ export class OrderHistoricalFileComponent implements OnInit {
     this.franklinValueChangeSubscription.unsubscribe();
   }
 
-  getMinDateAsPerRtId() {
-    return ((this.orderHistoryFileForm.get('selectRta').value === this.karvyRtId) || (this.orderHistoryFileForm.get('selectRta').value === this.franklinRtId)) ? this.karvyOrFranklinPastMaxDate : this.camsAsOnDatePastMaxDate
-  }
-
   getRtaList() {
     this.reconService.getRTListValues({})
       .subscribe(res => {
@@ -303,10 +299,14 @@ export class OrderHistoricalFileComponent implements OnInit {
   }
 
   getAdvisorNameList(value) {
-    const data = {
-      name: value
+    if (value !== '') {
+      const data = {
+        name: value
+      }
+      return this.supportService.getBackofficeAdvisorSearchByName(data);
+    } else {
+      this.eventService.openSnackBar("Advisor Name must not be empty!", "DISMISS");
     }
-    return this.supportService.getBackofficeAdvisorSearchByName(data);
   }
 
   getFileTypeOrderValues() {
