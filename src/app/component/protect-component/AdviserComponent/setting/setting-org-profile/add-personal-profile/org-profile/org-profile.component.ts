@@ -11,6 +11,8 @@ import { PostalService } from 'src/app/services/postal.service';
 import { Subscription, Subject, ReplaySubject } from 'rxjs';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { takeUntil } from 'rxjs/operators';
+import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-org-profile',
@@ -44,6 +46,19 @@ export class OrgProfileComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   dataLoaded:boolean = false;
   imgData:string = '';
+  formPlaceHolder:any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     public utils: UtilService, 
@@ -56,7 +71,9 @@ export class OrgProfileComponent implements OnInit {
     private authService: AuthService
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
+  
   @Input()
   set data(data) {
     this.inputData = data;
@@ -68,7 +85,7 @@ export class OrgProfileComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    this.selectedTab = this.inputData.openTab;
+    this.switchToTab(this.inputData.openTab);
     this.profileImg = this.data.logoUrl;
     this.reportImg = this.data.reportLogoUrl;
     this.getIsdCodesData();
@@ -196,10 +213,11 @@ export class OrgProfileComponent implements OnInit {
   }
 
   updateOrgProfile(){
-    if(this.orgProfile.invalid) {
+    if(this.orgProfile.invalid || this.barButtonOptions.active) {
       this.orgProfile.markAllAsTouched();
       return;
     }
+    this.barButtonOptions.active = true;
     let obj = {
       advisorId:this.advisorId,
       companyName: this.orgProfile.controls.companyName.value || '',
@@ -218,9 +236,13 @@ export class OrgProfileComponent implements OnInit {
     this.settingsService.editOrgProfile(obj).subscribe(
       data => {
         this.anyDetailsChanged = true;
+        this.barButtonOptions.active = false;
         this.switchToTab(++this.selectedTab);
       },
-      err => this.event.openSnackBar(err, "Dismiss")
+      err => {
+        this.event.openSnackBar(err, "Dismiss")
+        this.barButtonOptions.active = false;
+      }
     );
   }
 
@@ -232,6 +254,8 @@ export class OrgProfileComponent implements OnInit {
 
   saveImageInCloud(tag_folder) {
     if (this.showCropper) {
+      if(this.barButtonOptions.active) return;
+      this.barButtonOptions.active = false;
       const tags = this.advisorId + ',' + tag_folder + ',';
       const file = this.utils.convertB64toImageFile(this.finalImage);
       PhotoCloudinaryUploadService.uploadFileToCloudinary([file], tag_folder, tags,
@@ -258,6 +282,11 @@ export class OrgProfileComponent implements OnInit {
     if(nextIndex > 2) {
       this.Close(this.anyDetailsChanged);
     } else {
+      if(nextIndex == 2) {
+        this.barButtonOptions.text = 'SAVE & CLOSE'
+      } else {
+        this.barButtonOptions.text = 'SAVE & NEXT'
+      }
       this.selectedTab = nextIndex;
     }
   }
@@ -277,6 +306,10 @@ export class OrgProfileComponent implements OnInit {
         orgDetails.logoUrl = jsonDataObj.logoUrl;
         AuthService.setOrgDetails(orgDetails);
         this.switchToTab(++this.selectedTab);
+        this.barButtonOptions.active = false;
+      }, err => {
+        this.event.openSnackBar("Error occured while uploading image", "Dismiss");
+        this.barButtonOptions.active = false;
       });
     } else {
         const jsonDataObj = {
@@ -288,6 +321,10 @@ export class OrgProfileComponent implements OnInit {
           this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
           this.reportImg = jsonDataObj.reportLogoUrl;
           this.switchToTab(++this.selectedTab);
+          this.barButtonOptions.active = false;
+        }, err => {
+          this.event.openSnackBar("Error occured while uploading image", "Dismiss");
+          this.barButtonOptions.active = false;
         });
     }
   }
@@ -320,8 +357,12 @@ export class OrgProfileComponent implements OnInit {
     this.showCropper = false;
     this.cropImage = false;
     this.imageUploadEvent = '';
-    this.finalImage =
-     '';
+    this.finalImage = '';
+    if(this.selectedTab == 2) {
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+    } else {
+      this.barButtonOptions.text = 'SAVE & NEXT';
+    }
   }
   protected filterCodes() {
     if (!this.isdCodes) {

@@ -7,6 +7,8 @@ import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { OrgSettingServiceService } from '../../../../org-setting-service.service';
+import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-team-member',
@@ -25,7 +27,21 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   teamMembers: any[];
   selectedMember: any;
   showSpinner = false;
+  formPlaceHolder:any;
 
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SEND INVITE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
+  
   constructor(
     private settingsService: SettingsService,
     private eventService: EventService,
@@ -34,6 +50,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     private orgSetting: OrgSettingServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -87,6 +104,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       this.eventService.openSnackBar("Please assign a team member", "Dismiss");
       return
     }
+    if(this.barButtonOptions.active) return;
+
+    this.barButtonOptions.active = true;
     let obj = {
       id: this.data.id,
       ChildId: this.data.childId,
@@ -103,6 +123,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       this.close(true);
     }, (err) => {
       console.error(err);
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar("Error occured.");
     });
   }

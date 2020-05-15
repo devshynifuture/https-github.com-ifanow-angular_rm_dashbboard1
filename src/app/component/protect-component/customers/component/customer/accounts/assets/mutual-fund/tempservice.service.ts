@@ -2,6 +2,8 @@ export class TempserviceService {
 
   subCatArrayForSummary = (mutualFundList,type,allData) => {
     let reportType;
+    let array = [];
+    let sortedData = [];
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
@@ -16,16 +18,27 @@ export class TempserviceService {
         (reportType == 'ownerName') ? filteredArray.push({groupName: key,pan: catObj[key][0].pan}) :  filteredArray.push({groupName: key});
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
-          filteredArray.push(singleData);
+          array.push(singleData);
           totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
           let obj = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
           totalObj.totalXirr=obj.xirr;
           totalObj.totalAbsoluteReturn=obj.absoluteReturn;
         });
+        sortedData = this.sorting(array,'schemeName')
+        filteredArray.push(...sortedData)
+        array =[];
         filteredArray.push(totalObj);
       });
       return filteredArray;
     }
+  }
+  sorting(data, filterId) {
+    if(data){
+      data.sort((a, b) =>
+      a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+    );
+    }
+    return data
   }
   getAbsAndxirrCategoryWise(mainData,allData,reportType){
     let array;
@@ -64,7 +77,7 @@ export class TempserviceService {
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
       reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'ownerName';
     let catObj = {};
-    const newArray = [];
+    let newArray = [];
 
     if(reportType != 'ownerName'){
       catObj = this.categoryFilter(mutualFundList, reportType);
@@ -82,6 +95,8 @@ export class TempserviceService {
         Object.assign(totalObj, {categoryName: key});
       });
       newArray.push(totalObj);
+      newArray = this.sorting(newArray,'categoryName')
+
     });
     // this.dataSource = newArray;
     // const output = {
@@ -346,6 +361,7 @@ export class TempserviceService {
   }
 
    categoryFilter(data, type) {
+     data = this.sorting(data,type)
     const catObj = {};
     const categoryArray = [];
     data.forEach(ele => {

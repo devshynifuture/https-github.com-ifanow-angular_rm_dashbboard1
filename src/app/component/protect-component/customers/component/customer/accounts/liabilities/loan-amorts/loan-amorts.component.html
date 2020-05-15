@@ -21,7 +21,9 @@
           PmtNo.
       </th>
       <td mat-cell *matCellDef="let element; let i = index;" class="br">
-          <div class="bar">{{isLoading ? '' : i + 1 }}</div>
+          <div class="bar">
+            <!-- {{isLoading ? '' : i + 1 }} prod build -->
+          </div>
       </td>
   </ng-container>
   <ng-container matColumnDef="date">
