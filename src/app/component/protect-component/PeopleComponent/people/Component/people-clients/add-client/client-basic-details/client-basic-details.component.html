@@ -69,7 +69,7 @@
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input #fullName [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)"
                                 [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
-                                formControlName="fullName" matInput placeholder="Enter Name">
+                                formControlName="fullName" matInput placeholder="Enter name">
                             <mat-error>This field is required</mat-error>
                             <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
                         </mat-form-field>
@@ -84,7 +84,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input autocomplete="off" class="form-control" formControlName="email" matInput
-                                placeholder="Enter Email">
+                                placeholder="Enter email">
                             <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
                             <mat-error *ngIf="basicDetails.get('email').errors?.required">This field is required
                             </mat-error>
@@ -103,7 +103,7 @@
                 <div class="col-md-3 pl-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input #pan placeholder="Enter PAN" (input)="toUpperCase(basicDetails.get('pan'),$event)"
+                            <input #pan placeholder="Enter pan" (input)="toUpperCase(basicDetails.get('pan'),$event)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10">
                             <mat-error *ngIf="basicDetails.get('pan').errors?.required">This field is required
@@ -333,7 +333,7 @@
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input matInput appInputValueValidation (input)="capitalise($event)" [maxLength]="50"
                                 #mFullName [inputValidator]="validatorType.PERSON_NAME" class="form-control"
-                                formControlName="minorFullName" placeholder="Enter Name">
+                                formControlName="minorFullName" placeholder="Enter name">
                             <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
@@ -403,7 +403,7 @@
                 <div class="col-md-5 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input (input)="capitalise($event)" #gFullName matInput placeholder="Enter Name"
+                            <input (input)="capitalise($event)" #gFullName matInput placeholder="Enter name"
                                 appInputValueValidation [maxLength]="50" [inputValidator]="validatorType.PERSON_NAME"
                                 class="form-control" formControlName="gFullName">
                             <mat-error>This field is required</mat-error>
@@ -496,7 +496,7 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
+                            <input matInput placeholder="Enter name" formControlName="gEmail" class="form-control">
                             <mat-hint>Optional</mat-hint>
                             <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email invalid
                             </mat-error>
@@ -513,7 +513,7 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group ">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input [maxLength]="10" placeholder="Enter PAN"
+                            <input [maxLength]="10" placeholder="Enter pan"
                                 (input)="toUpperCase(minorForm.get('pan'),$event)" formControlName="pan" #pan matInput
                                 class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
                                 appInputValueValidation>
@@ -642,7 +642,7 @@
                 <div class="col-md-6 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input (input)="capitalise($event)" #cname placeholder="Enter Company name"
+                            <input (input)="capitalise($event)" #cname placeholder="Enter company name"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50"
                                 appInputValueValidation class="form-control" formControlName="comName" matInput>
                             <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
@@ -700,8 +700,9 @@
                 </div>
                 <div class="col-md-5 p-0">
                     <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput formControlName="comEmail" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input matInput placeholder="Enter company email" formControlName="comEmail"
+                                class="form-control">
                             <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid
                             </mat-error>
                             <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.required">This field is required
@@ -720,10 +721,11 @@
                 </div>
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                                formControlName="comPan" (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
-                                #cpan maxlength="10" matInput class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [inputValidator]="validatorType.ALPHA_NUMERIC" placeholder="Enter company pan"
+                                appInputValueValidation formControlName="comPan"
+                                (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)" #cpan maxlength="10"
+                                matInput class="form-control">
                             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
                             </mat-error>
                             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
