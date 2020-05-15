@@ -6,6 +6,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-cams-details',
@@ -18,6 +20,19 @@ export class AddCamsDetailsComponent implements OnInit {
   advisorId: any;
 
   camsFG:FormGroup;
+  formPlaceHolders:any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -26,6 +41,7 @@ export class AddCamsDetailsComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -38,16 +54,17 @@ export class AddCamsDetailsComponent implements OnInit {
       rtTypeMasterid: [this.data.rtType],
       arnOrRia: [this.data.mainData.arnOrRia],
       rtExtTypeId: [2], // dbf file extension
-      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId || '', [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
     });
   }
 
   save(){
-    if(this.camsFG.invalid) {
+    if(this.camsFG.invalid || this.barButtonOptions.active) {
       this.camsFG.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       let jsonObj:any = {
         ...this.data.mainData,
         ...this.camsFG.getRawValue()
@@ -63,11 +80,17 @@ export class AddCamsDetailsComponent implements OnInit {
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Modified successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       } else {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Added successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       }
     }

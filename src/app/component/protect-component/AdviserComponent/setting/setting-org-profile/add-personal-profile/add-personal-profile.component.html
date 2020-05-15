@@ -20,7 +20,7 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="name" class="form-control" placeholder="Enter Name" maxLength="40" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
+                                <input matInput formControlName="name" class="form-control" [placeholder]="formPlaceHolder.ENTER_FULL_NAME" maxLength="40" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
                                 <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40</mat-hint>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required
                                 </mat-error>
@@ -36,7 +36,7 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="emailId" class="form-control" placeholder="Enter Email ID">
+                                <input matInput formControlName="emailId" class="form-control" [placeholder]="formPlaceHolder.ENTER_EMAIL_ID">
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
                             </mat-form-field>
@@ -65,7 +65,7 @@
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter Mobile No" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input matInput formControlName="mobileNo" class="form-control" [placeholder]="formPlaceHolder.ENTER_MOBILE_NUMBER" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{personalProfile.get('mobileNo').value.length}}/10
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
@@ -143,9 +143,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
-                {{selectedTab == 1 ? 'CLOSE' : 'NEXT'}}
-            </button>
+            <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

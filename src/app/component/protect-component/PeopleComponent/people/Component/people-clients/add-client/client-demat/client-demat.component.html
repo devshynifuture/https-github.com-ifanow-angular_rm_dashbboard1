@@ -35,7 +35,7 @@
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input (input)="capitalise($event)" placeholder="Enter Holder name" autocomplete="off"
+          <input (input)="capitalise($event)" placeholder="Enter holder name" autocomplete="off"
             formControlName="holderName" #holderName appInputValueValidation
             [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
           <mat-hint align="end" class="f-12">{{holderName.value.length}}/50</mat-hint>
@@ -54,7 +54,7 @@
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input placeholder="Enter Depository participant name" autocomplete="off" formControlName="depositoryPartName"
+          <input placeholder="Enter depository participant name" autocomplete="off" formControlName="depositoryPartName"
             #nadNameme appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput
             class="form-control">
           <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
@@ -70,7 +70,7 @@
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input placeholder="Enter Depository ID" autocomplete="off" appInputValueValidation
+          <input placeholder="Enter depository id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
             class="form-control">
           <mat-error>This field is required</mat-error>
@@ -85,7 +85,7 @@
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input placeholder="Enter Demat client ID" autocomplete="off" appInputValueValidation
+          <input placeholder="Enter demat client id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
             class="form-control">
           <mat-error>This field is required</mat-error>
@@ -100,7 +100,7 @@
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input autocomplete="off" placeholder="Enter Broker name " #brokerName appInputValueValidation
+          <input autocomplete="off" placeholder="Enter broker name " #brokerName appInputValueValidation
             [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput class="form-control">
           <mat-hint align="end" class="f-12">{{brokerName.value.length}}/50</mat-hint>
           <mat-hint>Optional</mat-hint>
@@ -115,7 +115,7 @@
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input placeholder="Enter Broker address" autocomplete="off" #bAddres formControlName="brokerAddress" matInput
+          <input placeholder="Enter broker address" autocomplete="off" #bAddres formControlName="brokerAddress" matInput
             maxlength="200" class="form-control">
           <mat-hint align="end" class="f-12">{{bAddres.value.length}}/20</mat-hint>
           <mat-hint>Optional</mat-hint>
@@ -162,7 +162,7 @@
             <mat-select appDematOwnerNominee matInput formControlName="name" [userTypeFlag]="fieldFlag"
               [clientIdData]="idData" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')"
               (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
-              <mat-option value='' disabled>Select family members</mat-option>
+              <mat-option value='' disabled>Select family member</mat-option>
               <mat-option *ngIf="nomineesListFM==undefined" value='clientData.name'>{{clientData.name}}
               </mat-option>
               <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
@@ -205,7 +205,7 @@
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input placeholder="Enter Linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
+          <input placeholder="Enter linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
             appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount"
             matInput class="form-control">
           <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
@@ -221,7 +221,7 @@
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input placeholder="Enter Power of attorney name" autocomplete="off" #paName appInputValueValidation
+          <input placeholder="Enter power of attorney name" autocomplete="off" #paName appInputValueValidation
             [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName" matInput
             class="form-control">
           <mat-hint>Optional</mat-hint>
@@ -237,7 +237,7 @@
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
-          <input autocomplete="off" placeholder="Enter Power of attorney master ID" #powerOfAttMasId
+          <input autocomplete="off" placeholder="Enter power of attorney master ID" #powerOfAttMasId
             formControlName="powerOfAttMasId" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
             matInput class="form-control">
           <mat-hint>Optional</mat-hint>
