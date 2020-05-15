@@ -45,10 +45,12 @@
         </ng-container>
         <ng-container matColumnDef="report">
             <th mat-header-cell *matHeaderCellDef class="br"> Access to </th>
-            <td mat-cell *matCellDef="let element" class="br c-p">
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar d-flex align-items-center justify-content-between">
-                    <span *ngIf="element.parentName && !utilService.isLoading" (click)="assignTeamMember(null, element)">{{element.parentName}}</span>
-                    <button mat-button class="btn-primary changeBtn"> change</button>
+                    <div *ngIf="element.parentName && !utilService.isLoading && element.canReport == 1" (click)="assignTeamMember(null, element)">
+                        {{element.parentName}}
+                        <button mat-button class="btn-primary changeBtn"> change</button>
+                    </div>
                 </div>
                 <button mat-stroked-button class="btn-primary-outline  btn-sm" *ngIf="!element.parentName && !utilService.isLoading && element.canReport == 1" (click)="assignTeamMember(null, element)"> ADD TEAM
                     MEMBER</button>
