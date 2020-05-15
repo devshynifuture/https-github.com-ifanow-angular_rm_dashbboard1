@@ -1,9 +1,8 @@
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormArray, FormBuilder } from '@angular/forms';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { element } from 'protractor';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormArray, FormBuilder} from '@angular/forms';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Directive({
   selector: '[appOwnerNominee]'
@@ -19,7 +18,8 @@ export class OwnerNomineeDirective {
   ownerPer: any;
   NomineePer: any;
   showErrorOwner = false;
-  emitedNOminee:any = [];
+  emitedNOminee: any = [];
+
   constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
   }
 
@@ -43,6 +43,7 @@ export class OwnerNomineeDirective {
       }
     }
   }
+
   @Input() clientIdData;
   @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
@@ -74,9 +75,10 @@ export class OwnerNomineeDirective {
       this.getListFamilyMem();
     }
   }
+
   getListFamilyMem(): any {
     const obj = {
-      userId: this.clientId,
+      clientId: this.clientId,
     };
 
     if (this.sendData.length <= 0) {
@@ -114,18 +116,18 @@ export class OwnerNomineeDirective {
     const controlsArr: any = [];
     if (this.getCoOwner) {
       for (const e in this.getCoOwner.controls) {
-        controlsArr.push({ type: 'owner', index: e, data: this.getCoOwner.controls[e].value });
+        controlsArr.push({type: 'owner', index: e, data: this.getCoOwner.controls[e].value});
       }
     }
 
     if (this.getNominee) {
       for (const e in this.getNominee.controls) {
-        controlsArr.push({ type: 'nominee', index: e, data: this.getNominee.controls[e].value });
+        controlsArr.push({type: 'nominee', index: e, data: this.getNominee.controls[e].value});
       }
     }
 
     console.log(controlsArr, 'controlsArr 123');
-    if(this.sendData.length <= 0){
+    if (this.sendData.length <= 0) {
       this.sendData = this.emitedNOminee;
     }
     this.sendData.forEach(element => {
@@ -137,7 +139,7 @@ export class OwnerNomineeDirective {
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 0 ? 1 : 0);
             } else {
               this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id);
-              if(this.getNominee.controls[e.index].get('relationshipId')){
+              if (this.getNominee.controls[e.index].get('relationshipId')) {
                 this.getNominee.controls[e.index].get('relationshipId').setValue(element.relationshipId);
               }
             }
@@ -171,14 +173,14 @@ export class OwnerNomineeDirective {
         if (parseInt(e) == this.ownerData.value.getCoOwnerName.length - 1) {
           if (this.ownerPer > 100 || this.ownerPer < 100) {
             this.showErrorOwner = true;
-            arrayCon.get('share').setErrors({ incorrect: true });
+            arrayCon.get('share').setErrors({incorrect: true});
             arrayCon.get('share').markAsTouched();
             // arrayCon.get('share').updateValueAndValidity();
             console.log('show error Percent cannot be more than 100%', arrayCon);
           } else {
             this.showErrorOwner = false;
             // this.showErrorCoOwner = false;
-            arrayCon.controls.share.setErrors({ incorrect: false });
+            arrayCon.controls.share.setErrors({incorrect: false});
             arrayCon.get('share').updateValueAndValidity();
           }
         }
@@ -197,7 +199,7 @@ export class OwnerNomineeDirective {
         if (this.NomineePer > 100 || this.NomineePer < 100) {
           this.showErrorOwner = true;
           if (parseInt(e) == this.ownerData.value.getNomineeName.length - 1) {
-            arrayCon.controls.sharePercentage.setErrors({ incorrect: true });
+            arrayCon.controls.sharePercentage.setErrors({incorrect: true});
             arrayCon.get('sharePercentage').markAsTouched();
             // arrayCon.get('sharePercentage').updateValueAndValidity();
           }
@@ -205,7 +207,7 @@ export class OwnerNomineeDirective {
         } else {
           this.showErrorOwner = false;
           // this.showErrorCoOwner = false;
-          arrayCon.controls.sharePercentage.setErrors({ incorrect: false });
+          arrayCon.controls.sharePercentage.setErrors({incorrect: false});
           arrayCon.get('sharePercentage').updateValueAndValidity();
         }
 

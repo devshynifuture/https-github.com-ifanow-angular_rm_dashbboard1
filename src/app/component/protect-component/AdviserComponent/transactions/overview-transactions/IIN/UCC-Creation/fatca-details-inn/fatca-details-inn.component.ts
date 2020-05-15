@@ -103,7 +103,7 @@ export class FatcaDetailsInnComponent implements OnInit {
     });
     this.fatcaDetails.controls.countryOfBirth.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
-        return this.processTransaction.filterCountryName(newValue, this.countryList);
+        return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
     // if(!data){

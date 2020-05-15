@@ -228,7 +228,7 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     this.nomineeDetails.controls.country.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
-        return this.processTransaction.filterCountryName(newValue, this.countryList);
+        return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
     // if (data.nomineeType == undefined) {

@@ -323,7 +323,7 @@ export class ProcessTransactionService {
     }
   }
 
-  public filterCountryName(value: any, countryList): any[] {
+  public filterName(value: any, countryList): any[] {
     const filterValue = this.normalizeValue(value + '');
     console.log('_filter value : ', value);
     console.log('_filter countryList : ', countryList);
@@ -461,7 +461,7 @@ export class ProcessTransactionService {
     return scheme && scheme.schemeName ? scheme.schemeName : '';
   }
 
-  displayCountryName(scheme) {
+  displayName(scheme) {
     return scheme && scheme.name ? scheme.name : '';
   }
 
