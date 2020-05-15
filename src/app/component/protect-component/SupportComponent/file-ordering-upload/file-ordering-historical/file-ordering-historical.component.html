@@ -10,7 +10,8 @@
     <div class="col-md-4 d-flex align-items-center">
         <div class="example-chip-list">
             <mat-chip-list #chipList aria-label="Filtering Table">
-                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable" (removed)="remove(filter)">
+                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(filter)">
                     {{filter.name}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -23,15 +24,18 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-8">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input matInput class="form-control m-0" placeholder="Search by advisor" formControlName="filterByName" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="maniputateEventObjForName($event)"
-                            #inputAdvisorNameRef>
+                        <input matInput class="form-control m-0" placeholder="Search by advisor"
+                            formControlName="filterByName" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="maniputateEventObjForName($event)" #inputAdvisorNameRef>
                     </mat-form-field>
                 </div>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-8">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <mat-select class="form-control br-0" placeholder="Ordered By" formControlName="filterByRmName" (selectionChange)="add($event, 'rm')">
+                        <mat-select class="form-control br-0" placeholder="Ordered By" formControlName="filterByRmName"
+                            (selectionChange)="add($event, 'rm')">
                             <mat-option>None</mat-option>
                             <mat-option [value]="rmUser" *ngFor="let rmUser of rmList">
                                 {{ rmUser.name }}
@@ -42,7 +46,8 @@
             </div>
             <div class="col-lg-3 pr-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select class="form-control br-0" formControlName="filterByPeriod" (selectionChange)="add($event, 'period')">
+                    <mat-select class="form-control br-0" formControlName="filterByPeriod"
+                        (selectionChange)="add($event, 'period')">
                         <mat-option>None</mat-option>
                         <mat-option [value]="period" *ngFor="let period of periodList">
                             {{ period.name }}
@@ -52,7 +57,8 @@
             </div>
             <div class="col-lg-3 pr-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select class="form-control br-0" formControlName="filterByRta" (selectionChange)="add($event, 'rta')">
+                    <mat-select class="form-control br-0" formControlName="filterByRta"
+                        (selectionChange)="add($event, 'rta')">
                         <mat-option>
                             None
                         </mat-option>
@@ -68,7 +74,8 @@
 
 <div class="row pt-12">
     <div class="col-md-12 back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading"
+            [appSkeletonLoading]="isLoading" appSkeletonLoading>
             <ng-container matColumnDef="advisorName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
                 <td class="br" mat-cell *matCellDef="let element">
@@ -100,14 +107,15 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.startedOn|date:'short'}}
+                        {{element.startedOn|date:'d/M/y, h:mm a'}}
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="totalFiles">
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
-                <td class="c-p br" mat-cell *matCellDef="let element" (click)="openUpperFileOrdering('historical', element)">
+                <td class="c-p br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('historical', 'total',  element)">
                     <div class="bar">
                         <a href="javascript:void(0)">
                             {{element.totalFiles}}
@@ -118,9 +126,12 @@
 
             <ng-container matColumnDef="queue">
                 <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('historical', 'inqueue', element)">
                     <div class="bar">
-                        {{element.queue}}
+                        <a href="javascript:void(0)">
+                            {{element.queue}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -136,9 +147,12 @@
 
             <ng-container matColumnDef="ordered">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('historical','ordered' ,element)">
                     <div class="bar">
-                        {{element.ordered}}
+                        <a href="javascript:void(0)">
+                            {{element.ordered}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -146,9 +160,12 @@
 
             <ng-container matColumnDef="failed">
                 <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('historical', 'skipped',element)">
                     <div class="bar">
-                        {{element.failed}}
+                        <a href="javascript:void(0)">
+                            {{element.failed}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -156,9 +173,12 @@
 
             <ng-container matColumnDef="uploaded">
                 <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('historical', 'uploaded', element)">
                     <div class="bar">
-                        {{element.uploaded}}
+                        <a href="javascript:void(0)">
+                            {{element.uploaded}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -168,21 +188,13 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs" (click)="refreshFileOrder()">
+                        <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs"
+                            (click)="refreshFileOrder()">
                             <mat-icon>
                                 refresh
                             </mat-icon>
                             Refresh
                         </button>
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="empty">
-                <th class="br" mat-header-cell *matHeaderCellDef> </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
                     </div>
                 </td>
             </ng-container>

@@ -45,7 +45,7 @@
                         File order time
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.fileOrderTime | date: 'short' }}
+                        {{ data.fileOrderTime | date: 'd/M/y, h:mm a' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -93,7 +93,7 @@
                         Date Range
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.fromDate | date:'short' }} - {{ data.toDate | date:'short' }}
+                        {{ data.fromDate | date:'d/M/y, h:mm a' }} - {{ data.toDate | date:'d/M/y, h:mm a' }}
                     </div>
                 </div>
             </div>
