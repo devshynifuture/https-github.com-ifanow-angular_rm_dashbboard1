@@ -8,12 +8,10 @@
         <div class="col-md-6 col-sm-12 p-0 bg-white mobileLoginUi flexLogin">
             <div *ngIf="!otpNumber" class="loginBox">
                 <p class="f-16 mb-12 mobileNone">
-                    <img class="advisorLogo"
-                        src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
-                <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details
-                    to access your account.</p>
+                <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details to access your account.</p>
 
                 <div class="imgLogin">
                     <img src="assets/images/svg/mobile-login-img.svg">
@@ -33,10 +31,8 @@
                             <div class="col-md-12 form-group  p-0">
                                 <h5 class="pt-12 mb-4 mobileNone">User Name</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input (keypress)="enterEvent($event)" class="form-control br-0"
-                                        formControlName="name" matInput placeholder="Enter username" tabindex="1">
-                                    <mat-error *ngIf="loginForm.controls.name.touched" class="mobilerightText">Username
-                                        required
+                                    <input (keypress)="enterEvent($event)" class="form-control br-0" formControlName="name" matInput placeholder="Enter username" tabindex="1">
+                                    <mat-error *ngIf="loginForm.controls.name.touched" class="mobilerightText">Username required
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -45,23 +41,18 @@
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="left mb-4 mobileNone">Password</h5>
-                                <a [routerLink]="[ '/login/forgotpassword']"
-                                    class="right f-12 mb-4 c-p   text-primitive">
+                                <a [routerLink]="[ '/login/forgotpassword']" class="right f-12 mb-4 c-p   text-primitive">
                                     Forgot
                                     password? </a>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input (keypress)="enterEvent($event)" [type]="hide ? 'password' : 'text'"
-                                        class="form-control br-0" formControlName="password" matInput
-                                        placeholder="Enter password" tabindex="2" type="password">
+                                    <input (keypress)="enterEvent($event)" [type]="hide ? 'password' : 'text'" class="form-control br-0" formControlName="password" matInput placeholder="Enter password" tabindex="2" type="password">
                                     <!-- <mat-icon class="eyesPassword c-p text-primitive" matSuffix (click)="hide = !hide">
                           {{hide ? 'visibility_off' : 'visibility'}}
                       </mat-icon> -->
-                                    <i (click)="hide = !hide" *ngIf="hide"
-                                        class="material-icons eyesPassword c-p text-primitive">
+                                    <i (click)="hide = !hide" *ngIf="hide" class="material-icons eyesPassword c-p text-primitive">
                                         visibility
                                     </i>
-                                    <i (click)="hide = !hide" *ngIf="hide==false"
-                                        class="material-icons eyesPassword c-p text-primitive">
+                                    <i (click)="hide = !hide" *ngIf="hide==false" class="material-icons eyesPassword c-p text-primitive">
                                         visibility_off
                                     </i>
                                     <mat-error *ngIf="loginForm.controls.password.touched" class="mobilerightText">
@@ -79,8 +70,7 @@
                             <div class="submitBtnMobile">
                                 <div class="row">
                                     <div class="col-md-12 mt-4 p-0 namebtn">
-                                        <app-progress-button (btnClick)="progressButtonClick($event)"
-                                            [logEvent]="passEvent" [options]="barButtonOptions" class="">
+                                        <app-progress-button (btnClick)="progressButtonClick($event)" [logEvent]="passEvent" [options]="barButtonOptions" class="">
                                         </app-progress-button>
                                     </div>
                                 </div>
@@ -89,8 +79,7 @@
 
                         <div class="row ds-none">
                             <div class="col-md-12 text-center">
-                                <h5 class="mt-32">Don’t have an account? <span [routerLink]="[ '/login/signup']"
-                                        class="text-primary c-p"> Sign up </span>
+                                <h5 class="mt-32">Don’t have an account? <span [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span>
                                 </h5>
                             </div>
                         </div>
@@ -100,10 +89,8 @@
 
                     <!--          [queryParams]="{'advisorId':2808}"-->
 
-                    <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="[ '/login/signup']"
-                            class="text-primary c-p"> Sign up </span></h5>
-                    <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span
-                            [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
+                    <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span></h5>
+                    <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
                         </span>
                     </h5>
                 </div>
@@ -112,8 +99,7 @@
 
             <div *ngIf="otpNumber" class="loginBox">
                 <p class="f-16 mobileNone mb-12">
-                    <img class="advisorLogo"
-                        src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">
@@ -133,10 +119,8 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone">User Name</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input (keyup)="getOtpOnEnter($event)" [formControl]="userName" autocomplete="off"
-                                        class="form-control br-0" matInput placeholder="Enter username" tabindex="1">
-                                    <mat-error *ngIf="userName.hasError('required')" class="mobilerightText">Username
-                                        required
+                                    <input (keyup)="getOtpOnEnter($event)" [formControl]="userName" autocomplete="off" class="form-control br-0" matInput placeholder="Enter username" tabindex="1">
+                                    <mat-error *ngIf="userName.hasError('required')" class="mobilerightText">Username required
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -159,24 +143,20 @@
 
 
                             <div class="mobileCenter ds-none">
-                                <h5 class="mt-12 ">Don’t have an account? <span [routerLink]="['/login/signup']"
-                                        class="text-primary c-p"> Sign up </span></h5>
+                                <h5 class="mt-12 ">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                             </div>
 
 
                             <h5 (click)="otpClick()" class="mt-20 mobileNone text-primary c-p f-600">Login with password
                             </h5>
 
-                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span
-                                    [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
+                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
                             </h5>
                         </div>
 
                         <div *ngIf="getOtpFlag" class="row">
-                            <p *ngIf="verifyFlag=='Email'" class="text-danger mb-0 f-12">4 digit OTP has been sent to
-                                your email {{verifyResponseData.email}}</p>
-                            <p *ngIf="verifyFlag=='Mobile'" class="text-danger mb-0 f-12">4 digit OTP has been sent to
-                                your mobile {{verifyResponseData.mobileNo}}</p>
+                            <p *ngIf="verifyFlag=='Email'" class="text-danger mb-0 f-12">4 digit OTP has been sent to your email {{verifyResponseData.email}}</p>
+                            <p *ngIf="verifyFlag=='Mobile'" class="text-danger mb-0 f-12">4 digit OTP has been sent to your mobile {{verifyResponseData.mobileNo}}</p>
                             <div class="col-md-12 p-0">
                                 <h5 class="pt-12">Verify OTP</h5>
                                 <div class="form-group d-flex">
@@ -185,12 +165,10 @@
                                 </div>
                                 <!-- <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
                                     </span></h5> -->
-                                <h5 class="mb-24">Didn’t receive? <span (click)="getOtp(true)"
-                                        [ngClass]="{'disbleResend': showTimeRemaing>0,'lightRead':showTimeRemaing==0}"
-                                        class="c-p">Resend OTP</span>
+                                <h5 class="mb-24 posRelative">Didn’t receive? <span (click)="getOtp(true)" [ngClass]="{'disbleResend': showTimeRemaing>0,'lightRead':showTimeRemaing==0}" class="c-p">Resend OTP</span>
                                     <span *ngIf="showTimeRemaing>0">0.<span
                                             *ngIf="showTimeRemaing<10">0</span>{{showTimeRemaing}}</span>
-                                    <span *ngIf="showTimeRemaing>0" class="hourglass">
+                                    <span *ngIf="showTimeRemaing>0" class="timeGlass">
                                         <span class="two"> </span>
                                     </span>
                                 </h5>
@@ -203,8 +181,7 @@
                   Login to your
                   account
                 </button> -->
-                                <app-progress-button (btnClick)="verifyWithOtpResponse()" [logEvent]="passEvent"
-                                    [options]="barButtonOptions" class="">
+                                <app-progress-button (btnClick)="verifyWithOtpResponse()" [logEvent]="passEvent" [options]="barButtonOptions" class="">
                                 </app-progress-button>
                             </div>
 
@@ -212,20 +189,16 @@
                                 <button [routerLink]="['/login']" class="f-15 mt-8 mb-8" mat-button>Login with
                                     password
                                 </button>
-                                <h5 class="mt-10 mb-16">Don’t have an account? <span [routerLink]="['/login/signup']"
-                                        class="text-primary c-p"> Sign up </span></h5>
+                                <h5 class="mt-10 mb-16">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                             </div>
 
 
-                            <h5 [routerLink]="['/login']" class="mt-20 mobileNone text-primary c-p f-600">Login with
-                                password
+                            <h5 [routerLink]="['/login']" class="mt-20 mobileNone text-primary c-p f-600">Login with password
                             </h5>
 
-                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span
-                                    [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
+                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span>
                             </h5>
-                            <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span
-                                    [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
+                            <h5 class="mt-32 mobileNone mb-24">Login into Support section? <span [routerLink]="['/login/support-login']" class="text-primary c-p"> Support Login
                                 </span>
                             </h5>
                         </div>
@@ -236,16 +209,13 @@
               </button> -->
                             <h5 [routerLink]="['/login']" class="mt-20 text-primary c-p f-600">Login with password</h5>
 
-                            <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"
-                                    class="text-primary c-p"> Sign up </span></h5>
+                            <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span></h5>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <p class="f-12 l-18 ml-24 mb-0 mobileNone text-primitive">Before logging in, please ensure that the URL on
-                the address bar starts with “https” or has a padlock icon. The communication of your private information
-                from any address beginning with "https" is encrypted and secured using SSL.</p>
+            <p class="f-12 l-18 ml-24 mb-0 mobileNone text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
     </div>
 </div>
