@@ -11,6 +11,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -36,6 +37,18 @@ export class AddPersonalProfileComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   dataLoaded:boolean = false;
   formPlaceHolder:any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -65,6 +78,7 @@ export class AddPersonalProfileComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTab = this.inputData.openTab;
+    if(this.selectedTab == 1) this.barButtonOptions.text = 'SAVE & CLOSE'; 
     this.getdataForm(this.inputData);
     this.getPersonalInfo();
     this.getIsdCodesData();
@@ -105,6 +119,7 @@ export class AddPersonalProfileComponent implements OnInit {
 
   saveImage() {
     if (this.showCropper) {
+      if(this.barButtonOptions.active) return;
       const tags = this.advisorId + ',advisor_profile_logo,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
       PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
@@ -153,6 +168,11 @@ export class AddPersonalProfileComponent implements OnInit {
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
+    if(this.selectedTab == 0) {
+      this.barButtonOptions.text = 'SAVE & NEXT';
+    } else {
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+    }
   }
   getdataForm(data) {
     this.personalProfile = this.fb.group({
@@ -169,7 +189,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   updatePersonalProfile() {
-    if (this.personalProfile.invalid) {
+    if (this.personalProfile.invalid || this.barButtonOptions.active) {
       this.personalProfile.markAllAsTouched();
       return;
     }
@@ -177,17 +197,21 @@ export class AddPersonalProfileComponent implements OnInit {
       adminAdvisorId: this.advisorId,
       fullName: this.personalProfile.controls.name.value,
       emailId: this.personalProfile.controls.emailId.value,
-      // userName: this.personalProfile.controls.userName.value,
       isdCodeId: this.personalProfile.controls.isdCodeId.value,
       mobileNo: this.personalProfile.controls.mobileNo.value,
-      // roleId: 0,
     };
+    this.barButtonOptions.active = true;
     this.settingsService.editPersonalProfile(obj).subscribe(
       data => {
+        this.barButtonOptions.active = false;
+        this.barButtonOptions.text = 'SAVE & CLOSE';
         this.selectedTab = 2; // switch tab to profile pic
         this.anyDetailsChanged = true;
       },
-      err => this.event.openSnackBar(err, 'Dismiss')
+      err => {
+        this.event.openSnackBar(err, 'Dismiss');
+        this.barButtonOptions.active = false;
+      }
     );
   }
 

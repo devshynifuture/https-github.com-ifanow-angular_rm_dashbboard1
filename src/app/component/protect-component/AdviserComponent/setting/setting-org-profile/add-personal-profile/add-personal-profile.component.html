@@ -143,9 +143,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
-                {{selectedTab == 1 ? 'CLOSE' : 'NEXT'}}
-            </button>
+            <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

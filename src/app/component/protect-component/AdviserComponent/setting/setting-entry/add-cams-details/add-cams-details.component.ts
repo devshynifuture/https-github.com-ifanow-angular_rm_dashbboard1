@@ -7,6 +7,7 @@ import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-cams-details',
@@ -20,6 +21,18 @@ export class AddCamsDetailsComponent implements OnInit {
 
   camsFG:FormGroup;
   formPlaceHolders:any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -48,9 +61,10 @@ export class AddCamsDetailsComponent implements OnInit {
   }
 
   save(){
-    if(this.camsFG.invalid) {
+    if(this.camsFG.invalid || this.barButtonOptions.active) {
       this.camsFG.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       let jsonObj:any = {
         ...this.data.mainData,
         ...this.camsFG.getRawValue()
@@ -66,11 +80,17 @@ export class AddCamsDetailsComponent implements OnInit {
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Modified successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       } else {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Added successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       }
     }
