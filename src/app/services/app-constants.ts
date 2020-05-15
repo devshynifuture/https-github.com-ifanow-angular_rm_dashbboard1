@@ -27,5 +27,9 @@ export class AppConstants {
     ENTER_ANSWER: 'Enter answer',
     SEARCH_USER: 'Search user',
     ADD_SUB_TASK_DESCRIPTION: 'Add sub task description',
+    ENTER_COMPANY_NAME: 'Enter company name',
+    ENTER_WEBSITE: 'Enter website',
+    ENTER_COMPANY_ADDRESS: 'Enter office address',
+    ENTER_PIN_CODE: 'Enter pin code',
   }
 }
