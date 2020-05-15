@@ -32,3 +32,15 @@
         border-radius: 50%;
     }
 }
+
+.image-cropper {
+    position: relative;
+}
+
+.zoomClassPosition {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+}
