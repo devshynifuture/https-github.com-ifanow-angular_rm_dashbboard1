@@ -6,7 +6,7 @@
   <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
     <div class="row"> -->
 
-  <div *ngIf="credentialData " class="col-md-9">
+  <div *ngIf="credentialData||!isAdvisorSection " class="col-md-9">
     <div [ngClass]="{'pe-none': isLoading}" class="row">
       <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
         <mat-chip-list>

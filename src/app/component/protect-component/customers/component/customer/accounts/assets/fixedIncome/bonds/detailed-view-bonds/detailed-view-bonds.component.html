@@ -83,29 +83,29 @@
                         Coupon option
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.interestPayoutOption==1?'Cumulative':'Non-cumulative'}}
+                        {{bonds.couponPayoutFrequencyId==1?'Cumulative':'Non-cumulative'}}
                     </div>
                 </div>
-                <div *ngIf="bonds.interestPayoutOption==1" class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId==1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Compounding frequency
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{bonds.compounding==1?"Half yearly":"Yearly"}}
+                        {{bonds.compounding==4?"Half yearly":"Yearly"}}
                     </div>
                 </div>
 
                 
-                <div *ngIf="bonds.interestPayoutOption==2" class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId==2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Frequency of coupon payouts
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{bonds.compounding==1?"Half yearly":"Yearly"}}
+                        {{bonds.compounding==4?"Half yearly":"Yearly"}}
                     </div>
                 </div>
 
-                <div *ngIf="bonds.interestPayoutOption == 2" class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         {{bonds.compounding==1?"Half yearly":"Yearly"}} payout
                     </div>
@@ -113,7 +113,7 @@
                         ₹{{bonds.couponAmount?utils.formatter(bonds.couponAmount):'-'}}
                     </div>
                 </div>
-                <div *ngIf="bonds.interestPayoutOption == 2" class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout received till date
                     </div>
@@ -121,7 +121,7 @@
                         ₹{{bonds.totalAmountReceivedTillToday?utils.formatter(bonds.totalAmountReceivedTillToday):'-'}}
                     </div>
                 </div>
-                <div *ngIf="bonds.interestPayoutOption == 2"F class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId == 2"F class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout received till maturity
                     </div>
@@ -147,9 +147,9 @@
                     </div>
                 </div>
                 
-                <div *ngIf="bonds.interestPayoutOption == 1" class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total Interest earned 
+                        Total interest earned till date  
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->

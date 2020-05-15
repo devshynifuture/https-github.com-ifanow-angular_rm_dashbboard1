@@ -214,16 +214,6 @@ export class OnlineTrasactionComponent implements OnInit {
     );
   }
 
-  lisNominee(value) {
-    this.showSpinnerOwner = false;
-    if (value == null) {
-      this.stateCtrl.setErrors({setValue: 'family member does not exist'});
-      this.transactionAddForm.get('ownerName').markAsTouched();
-    }
-    console.log(value);
-    this.nomineesListFM = Object.assign([], value);
-  }
-
   getdataForm(data) {
     // this.formStep = data
     if (!data) {

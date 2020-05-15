@@ -83,7 +83,7 @@
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
                     <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br w-18 rightText text-right">
-                        current value-EPF
+                        Current value-EPF
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
                         <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentEpfValue }}</span> </div>
@@ -127,16 +127,16 @@
                 </ng-container>
                 <ng-container matColumnDef="rate">
                     <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef class="br w-13 rightText text-right">
-                        interest rate
+                        Interest rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{element.salaryGrowthRate}}{{!isLoading? "%" : ""}} </div>
+                        <div class="bar"> {{element.rate}}{{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
                     <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br w-12 rightTextHide text-right">
-                        current value -EPS
+                        Current value -EPS
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right amt">
                         <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.currentEpsValue }}
