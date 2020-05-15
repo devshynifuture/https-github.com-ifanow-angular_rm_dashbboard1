@@ -139,7 +139,7 @@
           <div class="form-group matFormPadding">
             <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
               <input class="form-control br-0 rupess" formControlName="description" matInput
-                     placeholder="Sub Task Description" type="text">
+                     [placeholder]="formPlaceHolder.ADD_SUB_TASK_DESCRIPTION" type="text">
               <mat-error class="f-12">
                 This field is required
               </mat-error>

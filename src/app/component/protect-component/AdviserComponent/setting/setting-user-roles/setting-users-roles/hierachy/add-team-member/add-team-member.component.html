@@ -19,7 +19,7 @@
             <h5 class="m-0">Select a team member from the search box below...</h5>
             <div class="from-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" formControlName="userInput" matInput>
+                    <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" formControlName="userInput" matInput [placeholder]="formPlaceHolder.SEARCH_USER">
                     <mat-autocomplete #auto1="matAutocomplete">
                         <mat-option *ngFor="let c of teamMembers" (click)="selectTeamMember(c)" [value]="c.fullName">
                             <span>{{c.fullName}}</span>

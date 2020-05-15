@@ -7,6 +7,7 @@ import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Subscription} from 'rxjs';
 import {AuthService} from 'src/app/auth-service/authService';
 import {DatePipe} from '@angular/common';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-arn-ria-details',
@@ -23,6 +24,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   advisorId: any;
   @ViewChild('arnForm', {static: true}) arnForm: ElementRef;
   validatorType = ValidatorType;
+  formPlaceHolders:any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -33,6 +35,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     public utils: UtilService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {

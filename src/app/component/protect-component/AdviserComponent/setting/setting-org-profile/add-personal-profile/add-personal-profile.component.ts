@@ -10,6 +10,7 @@ import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.ser
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -34,6 +35,7 @@ export class AddPersonalProfileComponent implements OnInit {
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
   dataLoaded:boolean = false;
+  formPlaceHolder:any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -44,6 +46,7 @@ export class AddPersonalProfileComponent implements OnInit {
     private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
 
   personalProfile: FormGroup;

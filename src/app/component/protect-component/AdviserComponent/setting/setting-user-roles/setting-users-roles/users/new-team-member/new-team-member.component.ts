@@ -11,6 +11,7 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-new-team-member',
@@ -25,6 +26,7 @@ export class NewTeamMemberComponent implements OnInit {
   counter = 0;
   isLoading = true;
   validatorType = ValidatorType;
+  formPlaceHolders = AppConstants.formPlaceHolders;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SEND INVITE',

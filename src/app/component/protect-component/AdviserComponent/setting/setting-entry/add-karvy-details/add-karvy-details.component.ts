@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-karvy-details',
@@ -18,6 +19,7 @@ export class AddKarvyDetailsComponent implements OnInit {
 
   karvyFG:FormGroup;
   advisorId: any;
+  formPlaceHolder:any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -26,6 +28,7 @@ export class AddKarvyDetailsComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -35,15 +38,15 @@ export class AddKarvyDetailsComponent implements OnInit {
   createForm() {
     this.karvyFG = this.fb.group({
       advisorId: [this.advisorId],
-      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId || '', [Validators.required]],
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
-      loginId: [this.data.mainData.loginId, [Validators.required]],
-      loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
+      loginId: [this.data.mainData.loginId || '', [Validators.required]],
+      loginPassword: [this.data.mainData.loginPassword || '', [Validators.required]],
       rtExtTypeId: [2], // dbf file extension
-      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      fileOrderingUseabilityStatusId: [this.data.mainData.fileOrderingUseabilityStatusId, [Validators.required]],
+      mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      fileOrderingUseabilityStatusId: [this.data.mainData.fileOrderingUseabilityStatusId || '', [Validators.required]],
     });
   }
 

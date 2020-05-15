@@ -24,7 +24,7 @@
         <p class="m-0 text-custom roboto f-12 pb-4">E.g. para planner, relationship manager</p>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input (input)="capitalise($event)" matInput formControlName="roleName" class="form-control">
+                <input matInput (input)="capitalise($event)" formControlName="roleName" class="form-control" [placeholder]="formPlaceHolders.ENTER_ROLE_NAME">
                 <mat-hint align="end">{{rolesFG.get('roleName').value.length}}/ 30</mat-hint>
                 <mat-error *ngIf="rolesFG.get('roleName').errors?.required">This field is required</mat-error>
                 <mat-error *ngIf="rolesFG.get('roleName').errors?.maxlength">Max length exceeded</mat-error>
@@ -34,7 +34,7 @@
         <p class="m-0 text-custom roboto f-12 pb-4">E.g. write something descriptive for easy recall.</p>
         <div class="form-group mb-0">
             <mat-form-field hintLabel="Optional">
-                <textarea matInput formControlName="roleDescription" class="form-control" rows="5"></textarea>
+                <textarea matInput formControlName="roleDescription" class="form-control" rows="5" [placeholder]="formPlaceHolders.enter_description"></textarea>
                 <mat-hint align="end">{{rolesFG.get('roleDescription').value.length}}/ 250</mat-hint>
                 <mat-error *ngIf="rolesFG.get('roleDescription').errors?.required">This field is required</mat-error>
                 <mat-error *ngIf="rolesFG.get('roleDescription').errors?.maxlength">Max length exceeded</mat-error>

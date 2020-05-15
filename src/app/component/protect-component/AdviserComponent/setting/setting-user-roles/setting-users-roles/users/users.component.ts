@@ -80,29 +80,9 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user) {
-    const newUserList = this.userList.filter(nUser => nUser.id != user.id);
-    const dialogData = {
-      header: 'DELETE',
-      body: 'Are you sure you want to delete this user?',
-      body2: 'This cannot be undone.',
-      userList: newUserList,
-      selectKey: 'adminAdvisorId',
-      optionKey: 'fullName',
-      btnNo: 'CANCEL',
-      btnYes: 'DELETE',
-    };
-    const dialog = this.dialog.open(ReplaceUserComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-    });
+    const dialog = this.deleteUserWithClients(user);
     dialog.afterClosed().subscribe(result => {
-      if (result) {
-        this.userList = [
-          { fullName: '', role: { roleName: '' } },
-          { fullName: '', role: { roleName: '' } },
-          { fullName: '', role: { roleName: '' } }
-        ]
+      if (result || result === 0) {
         this.loader(1);
         const replaceUser = {
           deleteUserId: user.adminAdvisorId,
@@ -117,6 +97,50 @@ export class UsersComponent implements OnInit {
         });
       }
     });
+  }
+
+  deleteUserWithClients(user) {
+    if(user.clientCount > 0) {
+      const newUserList = this.userList.filter(nUser => nUser.id != user.id);
+      const dialogData = {
+        header: 'Delete',
+        body: 'Are you sure you want to delete this user?',
+        body2: 'This cannot be undone.',
+        userList: newUserList,
+        selectKey: 'adminAdvisorId',
+        optionKey: 'fullName',
+        btnNo: 'CANCEL',
+        btnYes: 'DELETE',
+      };
+      const dialog = this.dialog.open(ReplaceUserComponent, {
+        width: '400px',
+        data: dialogData,
+        autoFocus: false,
+      });
+      return dialog;
+    } else {
+
+      const dialogData = {
+        header: 'Delete',
+        body: 'Are you sure you want to delete this user?',
+        body2: 'This cannot be undone.',
+        btnYes: 'CANCEL',
+        btnNo: 'DELETE',
+        positiveMethod: () => {
+          dialogRef.close(0);
+        },
+        negativeMethod: () => {
+          dialogRef.close();
+        }
+      };
+
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: dialogData,
+        autoFocus: false,
+      });
+      return dialogRef;
+    }
   }
 
   suspendUser(user) {

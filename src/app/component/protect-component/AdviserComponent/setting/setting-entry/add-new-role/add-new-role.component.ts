@@ -4,6 +4,7 @@ import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-new-role',
@@ -18,14 +19,16 @@ export class AddNewRoleComponent implements OnInit {
   rolesFG: FormGroup;
   editDetails: any;
   advisorId: any;
-  isLoading: boolean = false;
-
+  isLoading:boolean = false;
+  formPlaceHolders:any;
+  
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {

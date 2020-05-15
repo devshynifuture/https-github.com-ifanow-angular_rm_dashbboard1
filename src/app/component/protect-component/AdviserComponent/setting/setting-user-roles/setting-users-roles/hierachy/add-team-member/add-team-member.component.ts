@@ -7,6 +7,7 @@ import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { OrgSettingServiceService } from '../../../../org-setting-service.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-team-member',
@@ -25,6 +26,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   teamMembers: any[];
   selectedMember: any;
   showSpinner = false;
+  formPlaceHolder:any;
 
   constructor(
     private settingsService: SettingsService,
@@ -34,6 +36,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     private orgSetting: OrgSettingServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {

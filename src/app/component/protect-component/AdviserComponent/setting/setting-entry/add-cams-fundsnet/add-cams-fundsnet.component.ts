@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-cams-fundsnet',
@@ -19,6 +20,7 @@ export class AddCamsFundsnetComponent implements OnInit {
   is_add: boolean;
   advisorId: any;
   showAddMoreQuestionBtn = true;
+  formPlaceHolders:any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -27,6 +29,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -37,12 +40,12 @@ export class AddCamsFundsnetComponent implements OnInit {
   createForm() {
     this.camsFundFG = this.fb.group({
       advisorId: [this.advisorId],
-      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId || '', [Validators.required]],
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
       rtExtTypeId: [2], // dbf file extension
-      loginId: [this.data.mainData.loginId, [Validators.required]],
-      loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
+      loginId: [this.data.mainData.loginId || '', [Validators.required]],
+      loginPassword: [this.data.mainData.loginPassword || '', [Validators.required]],
       rtaCamsFundNetSecurityQuestionsList: this.fb.array([]),
     });
 

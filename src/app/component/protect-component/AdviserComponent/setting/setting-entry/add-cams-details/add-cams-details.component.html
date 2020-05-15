@@ -34,7 +34,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" matInput formControlName="registeredEmail" class="form-control" placeholder="Enter Registered email">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control" [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL">
                     <mat-error *ngIf="camsFG.get('registeredEmail').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="camsFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
@@ -48,7 +48,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" placeholder="Enter password" matInput formControlName="mailbackPassword" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolders.ENTER_PASSWORD" matInput formControlName="mailbackPassword" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>

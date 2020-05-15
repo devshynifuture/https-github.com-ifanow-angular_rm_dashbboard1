@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-cams-details',
@@ -18,6 +19,7 @@ export class AddCamsDetailsComponent implements OnInit {
   advisorId: any;
 
   camsFG:FormGroup;
+  formPlaceHolders:any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -26,6 +28,7 @@ export class AddCamsDetailsComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -38,9 +41,9 @@ export class AddCamsDetailsComponent implements OnInit {
       rtTypeMasterid: [this.data.rtType],
       arnOrRia: [this.data.mainData.arnOrRia],
       rtExtTypeId: [2], // dbf file extension
-      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId || '', [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
     });
   }
 

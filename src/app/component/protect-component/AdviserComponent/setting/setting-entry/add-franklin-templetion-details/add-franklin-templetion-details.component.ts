@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-franklin-templetion-details',
@@ -18,6 +19,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
 
   franklinFG:FormGroup;
   advisorId:any;
+  formPlaceHolder:any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -26,6 +28,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -35,14 +38,14 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
   createForm() {
     this.franklinFG = this.fb.group({
       advisorId: [this.advisorId],
-      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId || '', [Validators.required]],
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
       rtExtTypeId: [2], // dbf file extension
-      loginId: [this.data.mainData.loginId, [Validators.required]],
-      loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
-      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      loginId: [this.data.mainData.loginId || '', [Validators.required]],
+      loginPassword: [this.data.mainData.loginPassword || '', [Validators.required]],
+      mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
     });
   }
 

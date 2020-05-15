@@ -11,6 +11,7 @@ import { PostalService } from 'src/app/services/postal.service';
 import { Subscription, Subject, ReplaySubject } from 'rxjs';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { takeUntil } from 'rxjs/operators';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-org-profile',
@@ -44,6 +45,7 @@ export class OrgProfileComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   dataLoaded:boolean = false;
   imgData:string = '';
+  formPlaceHolder:any;
 
   constructor(
     public utils: UtilService, 
@@ -56,7 +58,9 @@ export class OrgProfileComponent implements OnInit {
     private authService: AuthService
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
+  
   @Input()
   set data(data) {
     this.inputData = data;
