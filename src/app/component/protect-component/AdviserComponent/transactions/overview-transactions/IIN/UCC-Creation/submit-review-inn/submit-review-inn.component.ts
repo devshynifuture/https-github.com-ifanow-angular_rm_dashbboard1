@@ -250,7 +250,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.tokenRes = data;
   }
 
-  getFileDetails(e) {
+  getFileDetails(documentType, e) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
@@ -262,7 +262,7 @@ export class SubmitReviewInnComponent implements OnInit {
     }
     const requestMap = {
       tpUserRequestId: requestMapObject.tpUserRequestId,
-      documentType: 1
+      documentType
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
