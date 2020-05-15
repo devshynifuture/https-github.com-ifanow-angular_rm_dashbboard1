@@ -38,12 +38,12 @@
                                 {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
 
                             </mat-panel-title>
-                            <div class="circle1" *ngIf="item.selectedChoiceId">
+                            <div class="circle1" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
                                 <i class="material-icons text-success text-right">
                                     check_circle_outline
                                 </i>
                             </div>
-                            <div class="circle1" *ngIf="!item.selectedChoiceId">
+                            <div class="circle1" *ngIf="!item.selectedChoiceId && !item.riskAssessmentChoice">
                                 <i class="material-icons text-primary">
                                     query_builder
                                 </i>
@@ -62,7 +62,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
                 <div class="mt-10 pl-20 pr-20">
-                    {{item.choice}}
+                    {{item.choice}}{{item.riskAssessmentChoice}}
                 </div>
             </div>
             <div *ngIf="showErrorMsg == true" class="errorClass"> Please complete all questions for test result
