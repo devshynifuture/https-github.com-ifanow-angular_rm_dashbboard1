@@ -135,6 +135,7 @@ export class AddPersonalProfileComponent implements OnInit {
               profilePic: responseObject.url
             };
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+              this.subInjectService.setRefreshRequired();
               this.anyDetailsChanged = true;
               this.imgURL = jsonDataObj.profilePic;
               AuthService.setProfilePic(jsonDataObj.profilePic);
@@ -210,6 +211,7 @@ export class AddPersonalProfileComponent implements OnInit {
         this.barButtonOptions.active = false;
         this.barButtonOptions.text = 'SAVE & CLOSE';
         this.selectedTab = 2; // switch tab to profile pic
+        this.subInjectService.setRefreshRequired();
         this.anyDetailsChanged = true;
       },
       err => {
@@ -220,7 +222,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   Close(flag: boolean) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.closeNewRightSlider({ state: 'close'});
   }
 
   protected filterCodes() {
