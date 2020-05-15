@@ -22,6 +22,7 @@ export class AddNewRoleComponent implements OnInit {
   advisorId: any;
   isLoading:boolean = false;
   formPlaceHolders:any;
+  changesMade = false;
   
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -64,7 +65,6 @@ export class AddNewRoleComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getTemplateRole({ optionId: this.data.roleType }).subscribe((res) => {
       if (res) {
-        console.log(res);
         this.isLoading = false;
         this.constructAdminDataSource(res.modules);
       }
@@ -78,7 +78,6 @@ export class AddNewRoleComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getDetailedRole({ id: this.data.mainData.id }).subscribe((res) => {
       if (res) {
-        console.log(res);
         this.editDetails = res.roleDetail;
         this.isLoading = false;
         this.constructAdminDataSource(res.modules);
@@ -92,9 +91,13 @@ export class AddNewRoleComponent implements OnInit {
   createFormGroup() {
     this.rolesFG = this.fb.group({
       advisorId: [this.advisorId],
-      roleName: [this.data.mainData.roleName || '', [Validators.required, Validators.maxLength(30)]],
+      roleName: [this.data.mainData.roleName || '', [Validators.required, Validators.maxLength(50)]],
       roleDescription: [this.data.mainData.roleDesc || '', [Validators.maxLength(250)]]
     });
+  }
+
+  setChangesMade() {
+    this.changesMade = true;
   }
 
   segregateNormalAndAdvancedPermissions(data: any[], featureId) {
@@ -176,10 +179,30 @@ export class AddNewRoleComponent implements OnInit {
     return segregatedPermissions;
   }
 
+  switchAllModelPermissions(module, value) {
+    this.changesMade = true;
+    module.subModules.forEach(permissionSet => {
+      for(let permission in permissionSet.permissions) {
+        if(Object.prototype.hasOwnProperty.call(permissionSet.permissions, permission)) {
+          permissionSet.permissions[permission].enabledOrDisabled = value;
+        }
+      }
+    });
+    module.subModules.forEach(permissionSet => {
+      permissionSet.advanced_permissions.forEach(advPermission => {
+        advPermission.enabledOrDisabled = value;
+      });
+    });
+  }
+
   save() {
     if (this.rolesFG.invalid || this.barButtonOptions.active) {
       this.rolesFG.markAllAsTouched();
     } else {
+      if(this.data.is_add_flag && !this.changesMade) {
+        this.eventService.openSnackBar("Please make changes to permissions to create new role");
+        return;
+      }
       this.barButtonOptions.active = true;
       if (this.data.is_add_flag) {
         let dataObj = {
