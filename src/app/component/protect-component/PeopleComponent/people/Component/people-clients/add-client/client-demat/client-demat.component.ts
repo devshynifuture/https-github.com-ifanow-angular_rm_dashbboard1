@@ -40,6 +40,7 @@ export class ClientDematComponent implements OnInit {
   };
   clientData: any;
   disableBtn = false;
+  saveAndNextFlag: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService) {
@@ -47,6 +48,8 @@ export class ClientDematComponent implements OnInit {
 
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
+  @Output() cancelTab = new EventEmitter();
   @Input() fieldFlag;
   idData;
   @Input() set data(data) {
@@ -379,7 +382,12 @@ export class ClientDematComponent implements OnInit {
           console.log(data);
           this.disableBtn = false;
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
+          if (flag == 'Next') {
+            this.tabChange.emit(1);
+            this.saveNextData.emit(true);
+          } else {
+            this.close('save');
+          }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -396,7 +404,7 @@ export class ClientDematComponent implements OnInit {
     }
   }
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }

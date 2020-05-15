@@ -14,32 +14,37 @@
             <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding"
                 id="ui-add-client">
                 <mat-tab label="Basic details">
-                    <app-client-basic-details (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
-                        [data]="headingData" [fieldFlag]="headingData.fieldFlag">
+                    <app-client-basic-details (clientData)="getTabData($event)" (saveNextData)="refreshFlagData($event)"
+                        (cancelTab)="close($event)" (tabChange)="changeTab($event)" [data]="headingData"
+                        [fieldFlag]="headingData.fieldFlag">
                     </app-client-basic-details>
                 </mat-tab>
                 <!-- [disabled]="tabData.id==undefined" -->
                 <mat-tab [disabled]="tabData.clientId==undefined&&tabData.familyMemberId==undefined" label=" More info">
-                    <app-client-more-info (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
+                    <app-client-more-info (clientData)="getTabData($event)" (saveNextData)="refreshFlagData($event)"
+                        (cancelTab)="close($event)" (tabChange)="changeTab($event)"
                         *ngIf="(headingData.fieldFlag=='client' && (tabData.clientType=='1' || tabData.clientType=='2')) || (headingData.fieldFlag=='lead' && tabData.clientType=='1') || !tabData.clientType"
                         [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-more-info>
-                    <app-company-more-info (tabChange)="changeTab($event)"
+                    <app-company-more-info (saveNextData)="refreshFlagData($event)" (tabChange)="changeTab($event)"
                         *ngIf="tabData.clientType && ((headingData.fieldFlag=='lead' && tabData.clientType=='2') || (headingData.fieldFlag=='client' && tabData.clientType=='3'))"
                         [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-company-more-info>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Address">
-                    <app-client-address (tabChange)="changeTab($event)" [data]="tabData"
-                        [fieldFlag]="headingData.fieldFlag"></app-client-address>
+                    <app-client-address (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    </app-client-address>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-                    <app-client-bank (tabChange)="changeTab($event)" [data]="tabData"
-                        [fieldFlag]="headingData.fieldFlag"></app-client-bank>
+                    <app-client-bank (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    </app-client-bank>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Demat">
-                    <app-client-demat (tabChange)="changeTab($event)" [data]="tabData"
-                        [fieldFlag]="headingData.fieldFlag"></app-client-demat>
+                    <app-client-demat (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    </app-client-demat>
                 </mat-tab>
                 <!-- [disabled]="tabData.userId==undefined" -->
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">

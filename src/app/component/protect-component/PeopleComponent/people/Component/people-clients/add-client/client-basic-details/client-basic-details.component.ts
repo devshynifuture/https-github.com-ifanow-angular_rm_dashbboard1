@@ -50,7 +50,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   @Input() fieldFlag;
   @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
-
+  @Output() cancelTab = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
@@ -457,6 +458,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTabAndSendData(data) {
     this.clientData.emit(data);
     this.tabChange.emit(1);
+    this.saveNextData.emit(true);
   }
 
   saveNextFamilyMember(flag) {
@@ -568,9 +570,9 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({
+    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({
       state: 'close',
-      clientData: data
+      refreshRequired: true
     });
   }
 

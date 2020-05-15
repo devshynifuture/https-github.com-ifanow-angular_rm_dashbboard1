@@ -10,6 +10,7 @@ import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { CancelFlagService } from '../people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-people-leads',
@@ -24,7 +25,7 @@ export class PeopleLeadsComponent implements OnInit {
   advisorId: any;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('leadTableSort', { static: false }) leadTableSort: MatSort;
-  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
+  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private cancelFlagService: CancelFlagService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -94,7 +95,10 @@ export class PeopleLeadsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getLeadList();
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.cancelFlagService.setCancelFlag(undefined)
+            this.getLeadList();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
