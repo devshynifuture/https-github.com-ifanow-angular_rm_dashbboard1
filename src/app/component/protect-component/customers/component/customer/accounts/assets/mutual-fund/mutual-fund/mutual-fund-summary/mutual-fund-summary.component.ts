@@ -179,7 +179,7 @@ export class MutualFundSummaryComponent implements OnInit {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
         mutualFundList: mutualFund,
-        mutualFund:this.mutualFund,
+        mutualFund:this.mfData,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         // mfService: this.mfService
       };

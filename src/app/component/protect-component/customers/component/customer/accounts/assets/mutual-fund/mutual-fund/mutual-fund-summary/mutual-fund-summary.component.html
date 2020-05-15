@@ -152,7 +152,7 @@
                         <div class="bar">
                             <span
                                 *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{(isLoading) ? '' : ((element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0)}}</span>
-                            <span appFormatNumber class="f-700"
+                            <span  class="f-700"
                                 *ngIf="element.totalAbsoluteReturn || element.totalAbsoluteReturn ==0">{{(element.totalAbsoluteReturn == 0 || element.totalAbsoluteReturn  == 'Infinity' || element.totalAbsoluteReturn  == '-Infinity' || element.totalAbsoluteReturn  == 'NaN') ? 0 : (element.totalAbsoluteReturn) ? (element.totalAbsoluteReturn | number:'1.2-2') : 0}}</span>
                         </div>
                     </td>
@@ -327,7 +327,7 @@
                                     <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editMutualFund',element)">Edit
                                         Mutual Fund</button>
                                 </div>
-                                <button mat-menu-item (click)="deleteModal('TRANSACTION', null)">Delete scheme</button>
+                                <!-- <button mat-menu-item (click)="deleteModal('TRANSACTION', null)">Delete scheme</button> -->
                                 <div [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
                                     <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="deleteModal('mutualFund', element)">Delete Mutual
