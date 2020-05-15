@@ -19,9 +19,6 @@ export class SubscriptionInject {
   private openCloseupperSlider = new BehaviorSubject('');
   rightslider = this.openCloseupperSlider.asObservable();
 
-  private openContent = new BehaviorSubject('');
-  closeRightSlider = this.openContent.asObservable();
-
   // document-clients
 
   private openDocument = new BehaviorSubject('');
@@ -47,10 +44,6 @@ export class SubscriptionInject {
 
   rightSliderData(msg: string) {
     this.openCloseupperSlider.next(msg);
-  }
-
-  closeSlider(msg: string) {
-    this.openContent.next(msg);
   }
 
   /*

@@ -225,7 +225,7 @@ export class ClientAddressComponent implements OnInit {
             this.tabChange.emit(1)
           }
           else {
-            this.close('save');
+            this.closeAndSave();
           }
         },
         err => {
@@ -240,5 +240,8 @@ export class ClientAddressComponent implements OnInit {
   close(data) {
     (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+  }
+  closeAndSave() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }

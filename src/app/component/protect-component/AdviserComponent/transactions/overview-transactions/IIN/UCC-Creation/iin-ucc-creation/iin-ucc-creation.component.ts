@@ -41,7 +41,7 @@ export class IinUccCreationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getIINUCCRegistration();
+    // this.getIINUCCRegistration();
     this.getDataForm('');
     this.getClients();
     this.nomineesListFM = this.generalDetails.controls.ownerName.valueChanges

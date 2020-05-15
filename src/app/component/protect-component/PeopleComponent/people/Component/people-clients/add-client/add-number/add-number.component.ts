@@ -74,10 +74,12 @@ export class AddNumberComponent implements OnInit {
           this.isdCodes = data;
           if (taxStatusId == 1) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
-            this.selectedISD = this.isdCodes[0].id
+            // this.selectedISD = this.isdCodes[0].id
+            this.getMobileNumList.controls.forEach(element => {
+              element.get('code').setValue(73);
+            });
           } else {
             this.isdCodes = data;
-            this.selectedISD = undefined;
           }
           this.filteredIsdCodes.next(this.isdCodes);
         }
@@ -128,6 +130,9 @@ export class AddNumberComponent implements OnInit {
           number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
         }));
       } else {
+        if (this.taxstatusId == 1) {
+          data.isdCodeId = 73;
+        }
         this.getMobileNumList.push(this.fb.group({
           code: [data.isdCodeId],
           number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]

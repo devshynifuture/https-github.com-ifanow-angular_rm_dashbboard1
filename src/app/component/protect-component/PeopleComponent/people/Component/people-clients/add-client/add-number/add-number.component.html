@@ -8,8 +8,7 @@
         <div [ngClass]="classObj.code">
             <div [ngClass]="{'event-none': taxstatusId==1}" class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select placeholder="Select country code" [(ngModel)]="selectedISD" formControlName="code"
-                        class="form-control">
+                    <mat-select placeholder="Select country code" formControlName="code" class="form-control">
                         <mat-option>
                             <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code...">
                             </ngx-mat-select-search>
