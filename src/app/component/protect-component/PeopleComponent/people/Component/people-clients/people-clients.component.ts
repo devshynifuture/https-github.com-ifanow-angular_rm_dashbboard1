@@ -67,10 +67,12 @@ export class PeopleClientsComponent implements OnInit {
           this.clientDatasource.sort = this.clientTableSort;
         }
         else {
+          this.isLoading = false;
           this.clientDatasource.data = [];
         }
       },
       err => {
+        this.isLoading = false;
         this.clientDatasource.data = [];
       }
     );
