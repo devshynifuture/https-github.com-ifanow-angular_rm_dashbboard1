@@ -291,6 +291,10 @@ export class RiskProfileComponent implements OnInit {
     if (flag == false) {
       this.reset(false)
     }
+     this.riskAssessmentQuestionList.forEach(element => {
+      element.done = false
+    });
+
   }
 
   submitRiskAnalysis(data) {
@@ -384,6 +388,11 @@ export class RiskProfileComponent implements OnInit {
         this.showButton = false
       }
     }
+    // if(data.refreshRequired){
+    //   this.riskAssessmentQuestionList.forEach(element => {
+    //     element.done = true
+    //   });
+    // }
   }
   reset(flag) {
     this.statusArray = []

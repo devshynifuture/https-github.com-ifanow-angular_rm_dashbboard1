@@ -69,6 +69,7 @@ p {
     margin: 0px auto;
     text-align: left;
 }
+
 ::ng-deep .radio-danger {
     .mat-radio-outer-circle {
         border-color: #FF6823 !important;
@@ -137,4 +138,12 @@ p {
 
 .rejectedRadio .mat-radio-outer-circle {
     border-color: #FF6823 !important
+}
+
+::ng-deep .riskProfileBox .mat-expansion-indicator::after {
+    content: none;
+}
+
+::ng-deep .riskProfileBox .mat-expansion-panel-header {
+    padding: 0px 20px;
 }

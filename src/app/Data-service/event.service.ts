@@ -27,6 +27,8 @@ export class EventService {
   private overlayVisibleValue = new BehaviorSubject(false);
   overlayVisibleData = this.overlayVisibleValue.asObservable();
 
+  private sliderRefreshState = new BehaviorSubject(false);
+
   private upperSliderData = new BehaviorSubject<object>({
     state: 'close',
     fragmentData: {},
@@ -40,6 +42,24 @@ export class EventService {
   changeUpperSliderState(sliderState: object) {
     this.upperSliderData.next(sliderState);
     return this.upperSliderDataObs;
+  }
+
+  openUpperSlider(sliderData:any) {
+    this.upperSliderData.next(sliderData);
+    return this.upperSliderDataObs;
+  }
+
+  setRefreshRequired(){
+    this.sliderRefreshState.next(true);
+  }
+
+  closeUpperSlider(sliderData) {
+    const sliderCloseState = {
+      refreshRequired: this.sliderRefreshState.getValue(),
+      ...sliderData
+    }
+    this.upperSliderData.next(sliderCloseState);
+    this.sliderRefreshState.next(false);
   }
 
   changeOverlayVisible(isVisible: boolean) {

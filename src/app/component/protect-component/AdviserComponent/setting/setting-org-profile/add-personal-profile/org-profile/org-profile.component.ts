@@ -31,7 +31,6 @@ export class OrgProfileComponent implements OnInit {
   cropImage: boolean = false;
   selectedTab:number = 0;
 
-  anyDetailsChanged:boolean;
   inputData: any;
   pinInvalid: boolean;
   validatorType = ValidatorType
@@ -77,9 +76,7 @@ export class OrgProfileComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-   
-    console.log('This is Input data', data);
-      this.getdataForm(data);
+    this.getdataForm(data);
   }
   get data() {
     return this.inputData;
@@ -120,7 +117,7 @@ export class OrgProfileComponent implements OnInit {
 
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.closeNewRightSlider({ state: 'close'});
   }
 
   getPostalPin(value) {
@@ -235,7 +232,7 @@ export class OrgProfileComponent implements OnInit {
     }
     this.settingsService.editOrgProfile(obj).subscribe(
       data => {
-        this.anyDetailsChanged = true;
+        this.subInjectService.setRefreshRequired();
         this.barButtonOptions.active = false;
         this.switchToTab(++this.selectedTab);
       },
@@ -280,7 +277,7 @@ export class OrgProfileComponent implements OnInit {
 
   switchToTab(nextIndex) {
     if(nextIndex > 2) {
-      this.Close(this.anyDetailsChanged);
+      this.Close(false);
     } else {
       if(nextIndex == 2) {
         this.barButtonOptions.text = 'SAVE & CLOSE'
@@ -300,7 +297,7 @@ export class OrgProfileComponent implements OnInit {
       }
       this.settingsService.editOrgProfileLogo(jsonDataObj).subscribe((res) => {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-        this.anyDetailsChanged = true;
+        this.subInjectService.setRefreshRequired();
         this.profileImg = jsonDataObj.logoUrl;
         const orgDetails = this.authService.orgData;
         orgDetails.logoUrl = jsonDataObj.logoUrl;
@@ -321,6 +318,7 @@ export class OrgProfileComponent implements OnInit {
           this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
           this.reportImg = jsonDataObj.reportLogoUrl;
           this.switchToTab(++this.selectedTab);
+          this.subInjectService.setRefreshRequired();
           this.barButtonOptions.active = false;
         }, err => {
           this.event.openSnackBar("Error occured while uploading image", "Dismiss");

@@ -46,28 +46,13 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   upperSliderDataObsSubscription: Subscription;
   newRightSliderDataObsSubscription: Subscription;
 
-  constructor(protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService) {
-    // this.eventService.overlayVisibleData.subscribe(
-    //   data => {
-    //     this.isOverlayVisible = data;
-    //   }
-    // );
-    // this.subinject.rightSideBarData.subscribe(
-    //   data => {
-    //     this.getRightSliderData(data);
-    //   }
-    // );
-    // this.eventService.sidebarSubscribeData.subscribe(
-    //   data => this.getFileResponseDataAum(data)
-    // );
-
-    // this.eventService.tabChangeData.subscribe(
-    //   data => this.getSubscriptionTabChangeData(data)
-    // );
+  constructor(
+    protected eventService: EventService, 
+    protected subinject: SubscriptionInject,
+    protected dynamicComponentService: DynamicComponentService
+  ) {
     this.upperSliderDataObsSubscription = this.eventService.upperSliderDataObs.subscribe(
       data => {
-
         const tempData: any = data;
         if (tempData.state == 'close') {
           this.closeUpperDynamicElement();
@@ -78,7 +63,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
         }
 
         this.upperSliderData = data;
-        // this.fragmentData = data;
       }
     );
     this.newRightSliderDataObsSubscription = this.subinject.newRightSliderDataObs.subscribe((data) => {
@@ -90,12 +74,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
       this.getFileResponseDataAum(this.fragmentData.flag);
       this.inputData = this.fragmentData.data;
       this.handleChangeOfState(this.fragmentData.state);
-      // this.getRightSliderData(this.fragmentData.state);
     });
-    // this.subinject.singleProfileData.subscribe(
-    //   data =>this.getInvoiceHistoryData(data)
-    // );
-    // this.eventService.changeUpperSliderState()
   }
 
 
@@ -112,7 +91,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
 
   getFileResponseDataAum(data) {
     this.subscriptionTab = data;
-    // this.subscriptionTab = CreateSubscriptionComponent;
   }
 
   getSubscriptionTabChangeData(data) {
@@ -138,19 +116,14 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   }
 
   addDynamicComponentService(viewContainerRef, inputData) {
-
     if (viewContainerRef) {
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data, inputData.popupHeaderText);
-      // this.handleChangeOfState(this.tempState);
     }
   }
 
   addUpperDynamicComponentService(viewContainerRef, inputData) {
-
     if (viewContainerRef) {
-
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data);
-      // this._upperSliderCase = this.tempState;
     }
   }
 
@@ -163,9 +136,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
         if (this.viewContainerRef) {
           this.viewContainerRef.clear();
         }
-
       }, 300);
-      // this.eventService.changeOverlayVisible(false);
     } else {
       this.currentState = value;
       setTimeout(() => {
@@ -177,12 +148,10 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.upperSliderDataObsSubscription.unsubscribe();
-
     this.newRightSliderDataObsSubscription.unsubscribe();
-    // throw new Error("Method not implemented.");
   }
 
   close() {
-    this.subinject.changeNewRightSliderState({state: 'close'});
+    this.subinject.closeNewRightSlider({state: 'close'});
   }
 }
