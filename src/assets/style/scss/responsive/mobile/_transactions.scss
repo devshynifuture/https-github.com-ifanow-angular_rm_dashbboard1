@@ -118,7 +118,7 @@
   }
   .mob-input {
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
-    border-radius: 30px !important;
+    border-radius: 4px !important;
     background-color: #fff !important;
     height: 46px !important;
     color: #939393 !important;
@@ -133,7 +133,7 @@
       color: #1A303E;
       border: 1px solid #1A303E;
       font-size: 16px;
-      border-radius: 35px !important;
+      border-radius: 4px !important;
       height: 40px !important;
       width: 86px !important;
     }
@@ -161,7 +161,7 @@
   }
   .mob-realinace {
     button {
-      border-radius: 35px !important;
+      border-radius: 4px !important;
       border-color: #1A303E;
       height: 25px !important;
       line-height: 24px !important;
@@ -279,7 +279,7 @@
     background-color: #f2f2f2;
     .bg-white {
       box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
-      border-radius: 10px;
+      border-radius: 4px;
     }
   }
   #mob-quick-invest,
@@ -288,8 +288,10 @@
   #mob-existing-investor,
   #mob-existing-folio-selected {
     .mat-button-toggle-group-appearance-standard {
-      height: 46px;
-      border-radius: 25px;
+          padding-top: 2px;
+    padding-bottom: 2px;
+    height: 50px !important;
+      border-radius: 4px !important;
       width: 100%;
       background-color: #fff;
       box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
@@ -308,7 +310,7 @@
       .bg-white {
         background: #FFFFFF;
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
-        border-radius: 9.5px;
+        border-radius: 4px;
       }
     }
   }
@@ -323,7 +325,7 @@
     .mat-select {
       background: #FFFFFF;
       border: 1px solid #1A303E !important;
-      border-radius: 35px !important;
+      border-radius: 4px !important;
       .mat-select-arrow-wrapper {
         display: block;
       }

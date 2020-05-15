@@ -47,6 +47,7 @@ $text-header-bg:#006297;
 $text-header-lter:#0083CA;
 $light:#757575;
 $greenColor: #02B875;
+$mob-common:#1A303E;
 body {
     font-family: 'Roboto', sans-serif;
 }
@@ -58,7 +59,9 @@ body {
 .text-custom {
     color: $light !important;
 }
-
+.text-mob-common{
+    color: $mob-common !important;
+}
 .text-lighter {
     color: #3F3F3F !important;
 }

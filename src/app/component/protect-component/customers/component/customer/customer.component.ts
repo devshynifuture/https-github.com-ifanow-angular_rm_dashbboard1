@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  //templateUrl: './transactions-mob.component.html',
+  //templateUrl: './goal.mobile.component.html',
   //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
