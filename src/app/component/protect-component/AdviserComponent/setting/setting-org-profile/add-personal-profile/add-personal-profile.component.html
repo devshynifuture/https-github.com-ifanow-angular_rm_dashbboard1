@@ -103,7 +103,7 @@
                             <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                         </div>
                         <div class="image-cropper">
-                            <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
+                            <app-image-cropper [imageURL]="imgURL" [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
                             <div *ngIf="showCropper">
                                 <button (click)="imageCropper.zoomIn()">ZoomIn</button>
                                 <button (click)="imageCropper.zoomOut()">ZoomIn</button>
@@ -126,7 +126,7 @@
                             <img [src]="imgURL">
                         </div>
                         <div class="row pt-24">
-                            <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
+                            <button mat-stroked-button class="btn-primary" (click)="cropImg(imgURL)">EDIT IMAGE</button>
                         </div>
                     </div>
                 </div>
