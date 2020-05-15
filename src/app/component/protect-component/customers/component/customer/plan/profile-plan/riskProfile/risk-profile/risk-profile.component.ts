@@ -291,6 +291,10 @@ export class RiskProfileComponent implements OnInit {
     if (flag == false) {
       this.reset(false)
     }
+    this.riskAssessmentQuestionList.forEach(element => {
+      element.done = false
+    });
+
   }
 
   submitRiskAnalysis(data) {
