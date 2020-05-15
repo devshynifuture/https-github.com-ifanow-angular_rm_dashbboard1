@@ -38,9 +38,9 @@ export class SubscriptionInject {
   private specialEvent = new BehaviorSubject<any>('');
   event = this.specialEvent.asObservable();
 
-  rightSideData(msg) {
-    console.log('dialog-container rightSideData: ', msg);
+  private refreshObservable = new BehaviorSubject<boolean>(false);
 
+  rightSideData(msg) {
     this.openCloseRightSlider.next(msg);
     return this.rightSideBarData;
   }
@@ -53,13 +53,7 @@ export class SubscriptionInject {
     this.openContent.next(msg);
   }
 
-  /*
-    rightDocumentSlider(msg: string) {
-      this.openDocument.next(msg);
-    }*/
-
   addSingleProfile(obj) {
-    /**/
     this.billerData.next(obj);
     return this.singleProfileData;
   }
@@ -71,6 +65,24 @@ export class SubscriptionInject {
   changeNewRightSliderState(sliderState: object) {
     this.newRightSliderData.next(sliderState);
     return this.newRightSliderDataObs;
+  }
+
+  setRefreshRequired(){
+    this.refreshObservable.next(true);
+  }
+
+  openNewRightSlider(sliderData: any) {
+    this.newRightSliderData.next(sliderData);
+    return this.newRightSliderDataObs;
+  }
+
+  closeNewRightSlider(sliderObj:any) {
+    const sliderCloseObj = {
+      refreshRequired: this.refreshObservable.getValue(),
+      ...sliderObj
+    }
+    this.refreshObservable.next(false);
+    this.newRightSliderData.next(sliderCloseObj);
   }
 
   changeUpperRightSliderState(sliderState: object) {
