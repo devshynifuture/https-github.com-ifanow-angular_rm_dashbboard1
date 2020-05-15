@@ -14,12 +14,12 @@
                                 {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
 
                             </mat-panel-title>
-                            <div class="circle1" *ngIf="item.selectedChoiceId">
+                            <div class="circle1" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
                                 <i class="material-icons text-success text-right">
                                     check_circle_outline
                                 </i>
                             </div>
-                            <div class="circle1" *ngIf="!item.selectedChoiceId">
+                            <div class="circle1" *ngIf="!item.selectedChoiceId && !item.riskAssessmentChoice">
                                 <i class="material-icons text-primary">
                                     query_builder
                                 </i>
