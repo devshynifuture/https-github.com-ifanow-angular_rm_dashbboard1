@@ -75,8 +75,8 @@
                             <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
                         </div>
                         <div class="col-md-12 p-0">
-                            <p class="m-0 text-custom pt-20 pl-8">Current value</p>
-                            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass">
+                            <p class="m-0 text-custom pt-24 pl-8">Current value</p>
+                            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-20 relClass">
                                 <div class="bar" [ngClass]="{'height24': isLoading}">
                                     <span appFormatNumber *ngIf="!isLoading" [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
                                     <span *ngIf="isLoading">{{''}}</span>
@@ -104,10 +104,13 @@
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Returns</p>
-                                    <h5 class="m-0 text-success relClass height24">
+                                    <h5 class="m-0 relClass height24">
                                         <div class="bar height24">
-                                            <span>{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}</span>                                            {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700" *ngIf="!isLoading">
+                                            <span *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0" class="text-success">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{(!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0) ? '%' : ''}}</span>  <i class="material-icons f-14 f-700 text-success" *ngIf="!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0">
                                                 arrow_upward
+                                            </i>
+                                            <span  *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0" class="text-danger">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{(!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0) ? '%' : ''}}</span> <i class="material-icons f-14 f-700 text-danger" *ngIf="!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0">
+                                                arrow_downward
                                             </i>
                                         </div>
                                     </h5>
@@ -234,7 +237,7 @@
         <div class="row pt-12 pb-12 pb-md-20">
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
-                    <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
+                    <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
                 <div class="example-container" id="table-low">
                     <table mat-table [dataSource]="dataSource2" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="showSchemeWise">
@@ -333,7 +336,7 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow" *ngIf="showCashFlow || datasource1.data.length > 0">
                 <div class="bg-grey lter">
-                    <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
+                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
                 <div class="example-container" id="table-low">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -362,7 +365,7 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSubCategory || dataSource3.data.length > 0">
                 <div class="bg-grey lter">
-                    <h5 class="m-0 wrapper-8 b-a pb-10 pt-10 bb-0">Sub category wise allocation
+                    <h5 class="m-0 wrapper-8 b-a f-500 roboto pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
                 </div>
                 <div class="example-container" id="table-low">
@@ -479,7 +482,7 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise" *ngIf="showFamilyMember || dataSource.data.length > 0">
                 <div class="bg-grey lter">
-                    <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
+                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
                 <div class="example-container" id="table-low">
                     <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="showFamilyMember">
@@ -589,7 +592,7 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise" *ngIf="showCategory || dataSource4.data.length >0">
                 <div class="bg-grey lter">
-                    <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
+                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
                 <div class="example-container" id="table-low">
                     <table mat-table [dataSource]="dataSource4" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="showCategory">

@@ -73,6 +73,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     if (this.viewMode == 'Unrealized Transactions') {
       this.isLoading = true;
       this.getUnrealizedData();
+      this.mfData =this.mutualFund;
     } else if (this.viewMode != 'Unrealized Transactions' || this.mutualFund) {
       this.isLoading = true;
       this.changeInput.emit(true);
@@ -200,7 +201,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const input = {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
-        nav: this.mutualFund.nav
+        nav: this.mutualFund.nav,
+        mutualFund:this.mutualFund,
         // mfService: this.mfService
       };
       // Create a new
@@ -373,6 +375,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
             this.rightFilterData = sideBarData.data;
             this.type = this.rightFilterData.reportType[0];
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
+            this.mfData = this.reponseData;
             this.asyncFilter(this.reponseData.mutualFundList);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);

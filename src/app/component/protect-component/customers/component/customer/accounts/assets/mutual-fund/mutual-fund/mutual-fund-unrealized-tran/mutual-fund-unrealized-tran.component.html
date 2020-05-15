@@ -1,317 +1,98 @@
-<div>
-    <div class="wrapper-8" *ngIf="viewMode">
-        <div class="row pb-12">
-            <div class="col-md-6 pl-0">
-                <h4 class="m-0 text-black roboto pt-8">
-                    <mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
-                    Mutual fund {{(this.viewMode) ? this.viewMode :'Transactions'}}
-                </h4>
-            </div>
-            <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)">
-                <div class="pdfClass">
-                    <a *ngIf="!fragmentData.isSpinner" class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu5">
-                        <img src="assets/images/svg/download-bordered.svg">
-                    </a>
-
-                    <mat-menu #menu5="matMenu">
-                        <button (click)="generatePdf()" mat-menu-item>PDF
-                        </button>
-                        <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
-                    </mat-menu>
-                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                </div>
-                <button class="btn-default addon v-middle" mat-stroked-button (click)="openFilter()">
-                    <i class="material-icons">filter_list</i>FILTERS
-                </button>
-            </div>
+<div class="wrapper-8" *ngIf="viewMode">
+    <div class="row pb-12">
+        <div class="col-md-6 pl-0">
+            <h4 class="m-0 text-black roboto pt-8">
+                <mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
+                Mutual fund {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
+            </h4>
         </div>
+        <div class="col-md-6 p-0 justify-content-end d-flex align-items-center" *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)">
+            <div class="pdfClass">
+                <a *ngIf="!fragmentData.isSpinner" class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu5">
+                    <img src="assets/images/svg/download-bordered.svg">
+                </a>
 
-        <div class="mb-40">
-            <div class="row">
-                <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0  overflow-hidden">
-                    <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="dataSource.data.length>0">
-                        <table #tableEl1 mat-table [dataSource]="dataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                            <ng-container matColumnDef="categoryName" sticky>
-                                <th class="br" mat-header-cell *matHeaderCellDef>
-                                    {{(type.name=='Sub Category wise' || type.name=='')?'Sub category name':(type.name=='Category wise')?'Category name':(type.name=='Investor wise')?'Family member name': (type.name=='Scheme wise') ? 'Scheme name' : 'Sub Category wise'}}
-                                </th>
-                                <td class="br" mat-cell *matCellDef="let element">
-                                    <div class="bar">{{element.categoryName}}</div>
-                                </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="amtInvested">
-                                <th class="br text-left" mat-header-cell *matHeaderCellDef>
-                                    Amount invested
-                                </th>
-                                <td class="br text-left" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
-                                    </div>
-                                </td>
-                                <td *matFooterCellDef appFormatNumber [value]="(mutualFund) ? (mutualFund.total_amount_invested) : 0" class="br p-8 f-600 text-left" mat-footer-cell>
-
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="currentValue">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Current value
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span>
-                                    </div>
-                                </td>
-                                <td *matFooterCellDef appFormatNumber [value]="(mutualFund) ? (mutualFund.total_current_value) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
-
-                                </td>
-
-                            </ng-container>
-                            <ng-container matColumnDef="dividendPayout">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Dividend payout
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
-                                    </div>
-                                </td>
-                                <td *matFooterCellDef appFormatNumber [value]="(mutualFund) ? (mutualFund.total_dividend_payout) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
-
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="dividendReinvest">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Dividend reinvestment
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendReinvest)?element.dividendReinvest:0)}}</span>
-                                    </div>
-                                </td>
-                                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br p-8 f-600 text-right" mat-footer-cell>
-
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="gain">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Gain
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalGain)?(element.totalGain | number:'1.2-2'):0)}}</span>
-                                    </div>
-                                </td>
-                                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-
-                                    <div class="bar">
-                                        {{(grandTotal) ? (grandTotal.totalGain| number:'1.2-2') : 0}}
-
-                                    </div>
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="absReturn">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Absolute Return%
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar">
-                                        <span>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span>
-                                    </div>
-                                </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">
-                                        {{(mutualFund) ? (mutualFund.total_absolute_return | number:'1.2-2') : 0}}
-
-                                    </div>
-                                </td>
-
-                            </ng-container>
-
-                            <ng-container matColumnDef="xirr">
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Xirr%
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar">
-                                        <span>{{isLoading ? '':((element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2'):0)}}</span>
-                                    </div>
-                                </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">{{(mutualFund) ? (mutualFund.total_xirr | number:'1.2-2') : 0}}
-                                    </div>
-                                </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="allocation" sticky>
-                                <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                    Allocation%
-                                </th>
-                                <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar">
-                                        <span>{{isLoading ? '':((element.allocationPer)?(element.allocationPer | number:'1.2-2'):0)}}</span>
-                                    </div>
-                                </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">
-                                        {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
-                                    </div>
-                                </td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                            <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading">
-                            </tr>
-
-
-                        </table>
-                    </cdk-virtual-scroll-viewport>
-                </div>
+                <mat-menu #menu5="matMenu">
+                    <button (click)="generatePdf()" mat-menu-item>PDF
+                    </button>
+                    <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+                </mat-menu>
+                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
+            <button class="btn-default addon v-middle" mat-stroked-button (click)="openFilter()">
+                <i class="material-icons">filter_list</i>FILTERS
+            </button>
         </div>
+    </div>
 
-
+    <div class="mb-40">
         <div class="row">
-            <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 overflow-hidden">
-                <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="customDataSource.data.length>0">
-                    <table #tableEl matSort mat-table [dataSource]="customDataSource" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
-                        <ng-container matColumnDef="no" sticky>
-                            <th mat-header-cell *matHeaderCellDef class="br">Sr no.</th>
-                            <td mat-cell *matCellDef="let element;index as i" class="br zIndex">
-                                <div class="bar"><span *ngIf="element.indexId">{{element.indexId}}</span></div>
-                            </td>
-                            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="transactionType">
-                            <th class="br" mat-header-cell *matHeaderCellDef> Transaction Type
+            <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0  overflow-hidden">
+                <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="dataSource.data.length>0">
+                    <table #tableEl1 mat-table [dataSource]="dataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <ng-container matColumnDef="categoryName" sticky>
+                            <th class="br" mat-header-cell *matHeaderCellDef>
+                                {{(type.name=='Sub Category wise' || type.name=='')?'Sub category name':(type.name=='Category wise')?'Category name':(type.name=='Investor wise')?'Family member name': (type.name=='Scheme wise') ? 'Scheme name' : 'Sub Category wise'}}
                             </th>
-                            <td class="br zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
-                                    <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
-                                </div>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.categoryName}}</div>
                             </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
+                            </td>
+
                         </ng-container>
 
-                        <ng-container matColumnDef="transactionDate">
-                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Transaction date
-                            </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    {{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}}
-                                </div>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="transactionAmount">
+                        <ng-container matColumnDef="amtInvested">
                             <th class="br text-left" mat-header-cell *matHeaderCellDef>
-                                Transaction amount
+                                Amount invested
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.amount)?element.amount:0)}}</span>
-                                    <span appFormatNumber class="f-700" *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
+                            <td class="br text-left" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                                 </div>
                             </td>
-                        </ng-container>
-
-
-                        <ng-container matColumnDef="transactionNav">
-                            <th class="br   text-right" mat-header-cell *matHeaderCellDef>
-                                Transaction NAV
-                            </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar"><span appFormatNumber *ngIf="!element.totalNav">{{isLoading ? '':((element.transactionNav) ? element.transactionNav : '0')}}</span>
-                                    <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
-                                </div>
+                            <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_amount_invested) : 0" class="br p-8 f-600 text-left" mat-footer-cell>
+                                <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                             </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="units">
-                            <th class="br text-right" mat-header-cell *matHeaderCellDef>Units</th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar"><span *ngIf="element.unit">{{isLoading ? '':((element.unit)?(element.unit | number:'1.2-3'):0)}}</span>
-                                    <span class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?(element.totalUnit | number:'1.2-3'):0)}}</span>
-                                </div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="balanceUnits">
-                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Balance units </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span *ngIf="element.balanceUnits">{{isLoading ? '': (element.balanceUnits | number:'1.2-3')}}</span>
-                                    <span class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  (element.totalBalanceUnit | number:'1.2-3')}}</span>
-                                </div>
-                            </td>
-                            <td *matFooterCellDef appFormatNumber class="br f-600 text-right zIndex" mat-footer-cell>
-                                {{(grandTotal)?(grandTotal.totalBalanceUnit | number:'1.2-3'):'0'}}</td>
 
                         </ng-container>
 
-                        <ng-container matColumnDef="days">
-                            <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
-                                Days</th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-
-                                <div class="bar">
-                                    {{isLoading ? '': element.days}}
-                                </div>
-                            </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right zIndex" mat-footer-cell>
-                            </td>
-
-                        </ng-container>
                         <ng-container matColumnDef="currentValue">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Current value
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount == 0 ">{{isLoading ? '':((element.currentAmount)?element.currentAmount:0)}}</span>
-                                    <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span>
                                 </div>
                             </td>
-                        </ng-container>
+                            <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_current_value) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
+                                <!--                  <div>{{ grandTotal.currentValue }}</div>-->
+                            </td>
 
+                        </ng-container>
                         <ng-container matColumnDef="dividendPayout">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Dividend payout
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
                                 </div>
                             </td>
+                            <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_dividend_payout) : 0" class="br p-8 f-600 text-right" mat-footer-cell>
+                                <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                            </td>
+
                         </ng-container>
 
                         <ng-container matColumnDef="dividendReinvest">
-                            <th class="br text-right zIndex" mat-header-cell *matHeaderCellDef>
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Dividend reinvestment
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span appFormatNumber>{{isLoading ? '' :((element.dividendReinvest) ? element.dividendReinvest : 0)}}</span>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendReinvest)?element.dividendReinvest:0)}}</span>
                                 </div>
                             </td>
-                        </ng-container>
+                            <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br p-8 f-600 text-right" mat-footer-cell>
 
-                        <ng-container matColumnDef="totalAmount">
-                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Total amount
-                            </th>
-                            <td class="br text-right zIndex nonesticky" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount == 0">{{isLoading ? '':((element.currentAmount)?element.currentAmount:0)}}</span>
-                                    <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
-                                </div>
                             </td>
 
                         </ng-container>
@@ -320,15 +101,17 @@
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Gain
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar">
-                                    <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount ==0 || element.amount || element.amount == 0">
-                                        {{isLoading ? '':((element.currentAmount  || element.amount) ? (element.currentAmount - element.amount) : 0)}}</span>
-                                    <span appFormatNumber *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0 || element.totalTransactionAmt || element.totalTransactionAmt ==0" class="f-700">
-                                        {{isLoading ? '':((element.totalCurrentValue ||  element.totalTransactionAmt ==0) ? (element.totalCurrentValue -  element.totalTransactionAmt) : 0)}}</span>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalGain)?(element.totalGain | number:'1.2-2'):0)}}</span>
                                 </div>
                             </td>
+                            <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
 
+                                <div class="bar">
+                                    {{(grandTotal) ? (grandTotal.totalGain| number:'1.2-2') : 0}}
+
+                                </div>
+                            </td>
 
                         </ng-container>
 
@@ -336,12 +119,17 @@
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Absolute Return%
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                                <div class="bar"><span *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{isLoading ? '':((element.absoluteReturn) ? (element.absoluteReturn  | number:'1.2-2'):0)}}</span>
-                                    <span *ngIf="element.trnAbsoluteReturn || element.trnAbsoluteReturn==0">{{isLoading ? '':((element.trnAbsoluteReturn )?(element.trnAbsoluteReturn  | number:'1.2-2'):0)}}</span>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span>
                                 </div>
                             </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">
+                                    {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
 
+                                </div>
+                            </td>
 
                         </ng-container>
 
@@ -349,74 +137,284 @@
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Xirr%
                             </th>
-                            <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span *ngIf="element.cagr || element.cagr == 0">{{isLoading ? '':((element.cagr)?(element.cagr | number:'1.2-2' ):0)}}</span>
-                                    <span *ngIf="element.totalCagr || element.totalCagr ==0">{{isLoading ? '':((element.totalCagr)?(element.totalCagr  | number:'1.2-2' ):0)}}</span>
+                                    <span>{{isLoading ? '':((element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2'):0)}}</span>
+                                </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="groupHeader">
-                            <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center zIndex text-primary">
-                                <div class="bar">{{group.groupName}}
+                        <ng-container matColumnDef="allocation" sticky>
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                                Allocation%
+                            </th>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span>{{isLoading ? '':((element.allocationPer)?(element.allocationPer | number:'1.2-2'):0)}}</span>
+                                </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">
+                                    {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
                                 </div>
                             </td>
                         </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading">
+                        </tr>
 
-                        <ng-container matColumnDef="groupHeader2">
-                            <td class="zIndex" *matCellDef="let group" [attr.colspan]="displayedColumns.length">
-                                <div class="bar">{{group.schemeName}}
-                                    <p class="text-right">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
-                                </div>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="groupHeader3">
-                            <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center zIndex text-primary">
-                                <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="icons" sticky>
-                            <th *matHeaderCellDef class="" mat-header-cell></th>
-                            <td *matCellDef="let element" class="zIndex" mat-cell>
-                                <div *ngIf="!isLoading">
-                                    <i [matMenuTriggerFor]="menu25" class="material-icons c-p text-black">
-                                        more_vert
-                                    </i>
-                                    <mat-menu #menu25="matMenu">
-                                        <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
-                                            Transaction</button>
-                                        <button mat-menu-item (click)="deleteModal('TRANSACTION', element)">Delete
-                                            Transaction</button>
-
-                                    </mat-menu>
-                                </div>
-                            </td>
-
-                            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                        <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
-                        <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-                        <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
-                        <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
 
                     </table>
                 </cdk-virtual-scroll-viewport>
-
-                <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
-                    <img class="width300" src="assets/images/svg/noDataFound.svg">
-                    <h4 class="text-center pt-12"> No data found</h4>
-                </div>
             </div>
         </div>
-
-
     </div>
+
+
+    <div class="row secoundTable">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 overflow-hidden">
+            <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="customDataSource.data.length>0">
+                <table #tableEl matSort mat-table [dataSource]="customDataSource" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
+                    <ng-container matColumnDef="no" sticky>
+                        <th mat-header-cell *matHeaderCellDef class="br">Sr no.</th>
+                        <td mat-cell *matCellDef="let element;index as i" class="br zIndex">
+                            <div class="bar"><span *ngIf="element.indexId">{{element.indexId}}</span></div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="transactionType">
+                        <th class="br" mat-header-cell *matHeaderCellDef> Transaction Type
+                        </th>
+                        <td class="br zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
+                                <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="transactionDate">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Transaction date
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="transactionAmount">
+                        <th class="br text-left" mat-header-cell *matHeaderCellDef>
+                            Transaction amount
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.amount)?element.amount:0)}}</span>
+                                <span appFormatNumber class="f-700" *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="transactionNav">
+                        <th class="br   text-right" mat-header-cell *matHeaderCellDef>
+                            Transaction NAV
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar"><span appFormatNumber *ngIf="!element.totalNav">{{isLoading ? '':((element.transactionNav) ? element.transactionNav : '0')}}</span>
+                                <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="units">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>Units</th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar"><span *ngIf="element.unit">{{isLoading ? '':((element.unit)?(element.unit | number:'1.2-3'):0)}}</span>
+                                <span class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?(element.totalUnit | number:'1.2-3'):0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="balanceUnits">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Balance units </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span *ngIf="element.balanceUnits">{{isLoading ? '': (element.balanceUnits | number:'1.2-3')}}</span>
+                                <span class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  (element.totalBalanceUnit | number:'1.2-3')}}</span>
+                            </div>
+                        </td>
+                        <td *matFooterCellDef appFormatNumber class="br f-600 text-right zIndex" mat-footer-cell>
+                            {{(grandTotal)?(grandTotal.totalBalanceUnit | number:'1.2-3'):'0'}}</td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="days">
+                        <th class="br text-right" mat-sort-header="days" mat-header-cell *matHeaderCellDef>
+                            Days</th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+
+                            <div class="bar">
+                                {{isLoading ? '': element.days}}
+                            </div>
+                        </td>
+                        <td *matFooterCellDef appFormatNumber class="br text-right zIndex" mat-footer-cell>
+                        </td>
+
+                    </ng-container>
+                    <ng-container matColumnDef="currentValue">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Current value
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount == 0 ">{{isLoading ? '':((element.currentAmount)?element.currentAmount:0)}}</span>
+                                <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dividendPayout">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Dividend payout
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dividendReinvest">
+                        <th class="br text-right zIndex" mat-header-cell *matHeaderCellDef>
+                            Dividend reinvestment
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span appFormatNumber>{{isLoading ? '' :((element.dividendReinvest) ? element.dividendReinvest : 0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="totalAmount">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Total amount
+                        </th>
+                        <td class="br text-right zIndex nonesticky" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount == 0">{{isLoading ? '':((element.currentAmount)?element.currentAmount:0)}}</span>
+                                <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{isLoading ? '':((element.totalCurrentValue)?element.totalCurrentValue:0)}}</span>
+                            </div>
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="gain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Gain
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span appFormatNumber *ngIf="element.currentAmount || element.currentAmount ==0 || element.amount || element.amount == 0">
+                                    {{isLoading ? '':((element.currentAmount  || element.amount) ? (element.currentAmount - element.amount) : 0)}}</span>
+                                <span appFormatNumber *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0 || element.totalTransactionAmt || element.totalTransactionAmt ==0" class="f-700">
+                                    {{isLoading ? '':((element.totalCurrentValue ||  element.totalTransactionAmt ==0) ? (element.totalCurrentValue -  element.totalTransactionAmt) : 0)}}</span>
+                            </div>
+                        </td>
+
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="absReturn">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Absolute Return%
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar"><span *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{isLoading ? '':((element.absoluteReturn) ? (element.absoluteReturn  | number:'1.2-2'):0)}}</span>
+                                <span *ngIf="element.trnAbsoluteReturn || element.trnAbsoluteReturn==0">{{isLoading ? '':((element.trnAbsoluteReturn )?(element.trnAbsoluteReturn  | number:'1.2-2'):0)}}</span>
+                            </div>
+                        </td>
+
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="xirr">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                            Xirr%
+                        </th>
+                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span *ngIf="element.cagr || element.cagr == 0">{{isLoading ? '':((element.cagr)?(element.cagr | number:'1.2-2' ):0)}}</span>
+                                <span *ngIf="element.totalCagr || element.totalCagr ==0">{{isLoading ? '':((element.totalCagr)?(element.totalCagr  | number:'1.2-2' ):0)}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center zIndex text-primary">
+                            <div class="bar">{{group.groupName}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader2">
+                        <td class="zIndex" *matCellDef="let group" [attr.colspan]="displayedColumns.length">
+                            <div class="bar">{{group.schemeName}}
+                                <p class="text-right">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="groupHeader3">
+                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center zIndex text-primary">
+                            <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons" sticky>
+                        <th *matHeaderCellDef class="" mat-header-cell></th>
+                        <td *matCellDef="let element" class="zIndex" mat-cell>
+                            <div *ngIf="!isLoading">
+
+                                <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                <mat-menu #menu25="matMenu">
+                                    <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
+                                        Transaction</button>
+                                    <button mat-menu-item (click)="deleteModal('TRANSACTION', element)">Delete
+                                        Transaction</button>
+
+                                </mat-menu>
+                            </div>
+                        </td>
+
+                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
+                    <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
+                    <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
+                    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
+
+                </table>
+            </cdk-virtual-scroll-viewport>
+
+            <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12"> No data found</h4>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
 
 
 
@@ -427,7 +425,8 @@
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
             <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Mutual fund {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</td>
+                Mutual fund {{(this.viewMode == 'All Transactions') ? 'all transactions' : 'unrealized transactions'}}
+            </td>
         </tr>
 
         <tr>

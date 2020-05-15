@@ -13,6 +13,8 @@ import {MatInput} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 import * as moment from 'moment';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -50,6 +52,8 @@ export class NomineeDetailsIinComponent implements OnInit {
   isLoading = false;
   maxDate = new Date();
   maxDateForAdultDob;
+  countryList;
+  filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private onlineTransact: OnlineTransactionService, private postalService: PostalService,
@@ -76,9 +80,9 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.thirdHolderNominee = data.nomineeList[2];
       this.getdataForm(this.firstHolderNominee);
     } else {
-      if (this.clientData) {
-        this.getNomineeList(this.clientData);
-      }
+    }
+    if (this.clientData) {
+      this.getNomineeList(this.clientData, !this.firstHolderNominee);
     }
   }
 
@@ -93,13 +97,15 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm(this.firstHolderNominee);
     } else {
       this.getdataForm('');
-      if (this.clientData) {
-        this.getFamilyMembersList(this.clientData);
-      }
     }
-
+    if (this.clientData) {
+      this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
+    }
     this.holdingList = [];
     this.nominee = [];
+    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
+      this.countryList = responseValue;
+    });
   }
 
   close() {
@@ -134,17 +140,17 @@ export class NomineeDetailsIinComponent implements OnInit {
     }
   }
 
-  getNomineeList(data) {
+  getNomineeList(data, shouldSetValue) {
     const obj = {
       userId: data.userType == 2 ? data.clientId : data.familyMemberId,
       userType: data.userType
     };
     this.peopleService.getClientFamilyMembers(obj).subscribe(
-      responseData => this.getListOfFamilyByClientRes(responseData)
+      responseData => this.getListOfFamilyByClientRes(responseData, shouldSetValue)
     );
   }
 
-  getListOfFamilyByClientRes(data) {
+  getListOfFamilyByClientRes(data, shouldSetValue) {
     console.log('getListOfFamilyByClientRes', data);
     this.nomineeFmList = data;
     this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.clientData.familyMemberId);
@@ -176,7 +182,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     );
   }
 
-  getFamilyMembersList(data) {
+  getFamilyMembersList(data, shouldSelectData) {
     const obj = {
       clientId: data.clientId,
       id: 0
@@ -218,6 +224,12 @@ export class NomineeDetailsIinComponent implements OnInit {
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
+    });
+
+    this.nomineeDetails.controls.country.valueChanges.subscribe(newValue => {
+      this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
+        return this.processTransaction.filterCountryName(newValue, this.countryList);
+      }));
     });
     // if (data.nomineeType == undefined) {
     //   this.nomineeDetails.controls.nomineeType.setValue('1')

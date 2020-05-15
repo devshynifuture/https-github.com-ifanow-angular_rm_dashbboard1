@@ -9,6 +9,8 @@ import {OnlineTransactionService} from '../../../../online-transaction.service';
 import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
 import {SubmitReviewInnComponent} from '../submit-review-inn/submit-review-inn.component';
 import {MatInput} from '@angular/material';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-fatca-details-inn',
@@ -24,6 +26,8 @@ export class FatcaDetailsInnComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   validatorType = ValidatorType;
   clientData: any;
+  countryList;
+  filterCountryName: Observable<any[]>;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -58,6 +62,10 @@ export class FatcaDetailsInnComponent implements OnInit {
     } else {
       this.getdataForm('');
     }
+
+    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
+      this.countryList = responseValue;
+    });
   }
 
   close() {
@@ -85,13 +93,18 @@ export class FatcaDetailsInnComponent implements OnInit {
     this.fatcaDetails = this.fb.group({
       nationality: [(!data) ? '1' : (data.nationality) ? data.nationality + '' : '1', [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
-      cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
+      placeOfBirth: [(!data) ? '' : data.placeOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
       politically: [!data ? '1' : (data.politically) ? data.politically + '' : '1', [Validators.required]],
-      taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
+      // taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
 
+    });
+    this.fatcaDetails.controls.countryOfBirth.valueChanges.subscribe(newValue => {
+      this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
+        return this.processTransaction.filterCountryName(newValue, this.countryList);
+      }));
     });
     // if(!data){
     //   this.fatcaDetails.controls.nationality.setValue('1')
@@ -118,13 +131,13 @@ export class FatcaDetailsInnComponent implements OnInit {
       const obj = {
         nationality: this.fatcaDetails.controls.nationality.value,
         income: this.fatcaDetails.controls.annualIncome.value,
-        cityOfBirth: this.fatcaDetails.controls.cityOfBirth.value,
+        placeOfBirth: this.fatcaDetails.controls.placeOfBirth.value,
         countryOfBirth: this.fatcaDetails.controls.countryOfBirth.value,
         sourceOfWealth: this.fatcaDetails.controls.sourceOfWealth.value,
         occupationCode: this.fatcaDetails.controls.occupationCode.value,
         politicallyExposedFlag: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' :
           (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
-        taxResidency: this.fatcaDetails.controls.taxResidency.value,
+        // taxResidency: this.fatcaDetails.controls.taxResidency.value,
       };
 
       const obj1 = {

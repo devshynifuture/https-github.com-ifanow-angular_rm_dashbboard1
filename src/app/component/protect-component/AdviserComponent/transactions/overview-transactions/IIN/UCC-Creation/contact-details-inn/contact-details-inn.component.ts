@@ -9,6 +9,8 @@ import {ProcessTransactionService} from '../../../doTransaction/process-transact
 import {PostalService} from 'src/app/services/postal.service';
 import {MatInput} from '@angular/material';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -18,40 +20,31 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 
 export class ContactDetailsInnComponent implements OnInit {
 
+  // overseasHolderContact: any;
+
+  countryList;
+  filterCountryName: Observable<any[]>;
+
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              public eventService: EventService, public processTransaction: ProcessTransactionService,
+              private peopleService: PeopleService) {
+  }
+
+  addressTypeLabel = 'Permanent Address Details';
   validatorType = ValidatorType;
   isLoading = false;
   pinInvalid = false;
   contactDetails: any;
+  formId = 'indian';
   inputData: any;
   holdingList: any;
   list: any;
   firstHolderContact: any;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService, private processTransactionService: ProcessTransactionService,
-              private peopleService: PeopleService) {
-  }
-
-  obj1: any;
-  sendObj: any;
-  changedValue: string;
-  generalDetails: any;
-  doneData: any;
-  isdCodes: Array<any> = [];
-
   get data() {
     return this.inputData;
   }
-
-  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  clientData: any;
-  addressList: any;
-
-  @ViewChild('dynamic', {
-    read: ViewContainerRef,
-    static: true
-  }) viewContainerRef: ViewContainerRef;
 
   @Input()
   set data(data) {
@@ -74,16 +67,35 @@ export class ContactDetailsInnComponent implements OnInit {
     console.log('################## = ', this.list);
   }
 
+  obj1: any;
+  sendObj: any;
+  changedValue: string;
+  generalDetails: any;
+  doneData: any;
+  isdCodes: Array<any> = [];
+
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  clientData: any;
+  addressList: any;
+
+  @ViewChild('dynamic', {
+    read: ViewContainerRef,
+    static: true
+  }) viewContainerRef: ViewContainerRef;
+
   ngOnInit() {
     this.getIsdCodesData();
     const value = {};
+    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
+      this.countryList = responseValue;
+    });
     if (this.firstHolderContact) {
       /* if (this.firstHolderContact.address) {
          this.firstHolderContact.address = undefined;
        }*/
-      this.getdataForm(this.firstHolderContact);
+      this.setDataForm(this.formId, this.firstHolderContact);
     } else {
-      this.getdataForm(null);
+      this.setDataForm(this.formId, null);
       if (this.clientData) {
         this.getAddressList(this.clientData);
       }
@@ -129,7 +141,7 @@ export class ContactDetailsInnComponent implements OnInit {
         console.log('address stored', responseData);
         this.addressList = this.firstHolderContact;
         this.addressList.address = responseData[0];
-        this.getdataForm(this.addressList);
+        this.setDataForm('indian', this.addressList);
       },
       err => {
         this.addressList = {};
@@ -137,25 +149,41 @@ export class ContactDetailsInnComponent implements OnInit {
     );
   }
 
-  getdataForm(data) {
+  setDataForm(formId, data) {
     if (!data) {
       data = {
-        address: {}
+        address: {},
+        foreignAddress: {}
       };
+    }
+    let address;
+    if (formId == 'indian') {
+      address = data.address;
+    } else {
+      address = data.foreignAddress;
+    }
+    if (!address) {
+      address = {};
     }
     this.contactDetails = this.fb.group({
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
-      address1: [!data.address ? data.address1 : (data.address.address1) ?
-        data.address.address1 : data.address.address1, [Validators.required]],
-      address2: [!data.address ? data.address2 : (data.address.address2) ?
-        data.address.address2 : data.address.address2, [Validators.required]],
-      pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
-      city: [!data.address ? data.city : data.address.city, [Validators.required]],
-      state: [!data.address ? data.state : data.address.state, [Validators.required]],
-      country: [!data.address ? data.country : data.address.country, [Validators.required]],
-      address: [!data.address ? data.address : data.address],
+      foreignMobileNo: [!data ? '' : data.foreignMobileNo,
+        this.inputData.taxStatus == '21' ? [Validators.required] : []],
+      address1: [!data.address ? data.address1 : (address.address1), [Validators.required]],
+      address2: [!data.address ? data.address2 : (address.address2), [Validators.required]],
+      pinCode: [!data.address ? data.pinCode : address.pinCode, [Validators.required]],
+      city: [!data.address ? data.city : address.city, [Validators.required]],
+      state: [!data.address ? data.state : address.state, [Validators.required]],
+      country: [!data.address ? data.country : address.country, [Validators.required]],
+      address: [address],
+    });
+
+    this.contactDetails.controls.country.valueChanges.subscribe(newValue => {
+      this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
+        return this.processTransaction.filterCountryName(newValue, this.countryList);
+      }));
     });
   }
 
@@ -164,7 +192,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   openBankDetails(data) {
-    const subscription = this.processTransactionService.openBank(data).subscribe(
+    const subscription = this.processTransaction.openBank(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -174,7 +202,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   openPersonalDetails() {
-    const subscription = this.processTransactionService.openPersonal(this.inputData).subscribe(
+    const subscription = this.processTransaction.openPersonal(this.inputData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           subscription.unsubscribe();
@@ -222,14 +250,16 @@ export class ContactDetailsInnComponent implements OnInit {
     this.contactDetails.reset();
   }
 
-  SendToForm(flag) {
+  SendToForm(formId, flag) {
     if (flag == true) {
       this.doneData = true;
     }
-    this.saveContactDetails();
-    if (this.firstHolderContact && this.firstHolderContact.email) {
-      this.contactDetails.setValue(this.getObjForForm(this.firstHolderContact));
+
+    if (this.saveContactDetails(this.formId)) {
+      this.formId = formId;
+      this.setDataForm(formId, this.firstHolderContact);
     } else {
+      return;
     }
 
     this.obj1 = [];
@@ -238,11 +268,17 @@ export class ContactDetailsInnComponent implements OnInit {
     // this.obj1.push(this.secondHolderContact);
     // this.obj1.push(this.thirdHolderContact);
     if (flag == true) {
-      if (!this.firstHolderContact.address) {
-        this.firstHolderContact = this.setObj(this.firstHolderContact);
+      if (this.inputData.taxStatus == '21') {
+        if (!this.firstHolderContact || !this.firstHolderContact.address ||
+          !this.firstHolderContact.address.address1 || !this.firstHolderContact.foreignAddress ||
+          !this.firstHolderContact.foreignAddress.address1) {
+          this.eventService.openSnackBar('Both address are compulsory');
+          return;
+        }
       }
       this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
       this.sendObj.holderList = this.inputData.holderList;
+      Object.assign(this.sendObj.holderList[0], this.firstHolderContact);
       this.sendObj.bankDetailList = this.inputData.bankDetailList;
       this.sendObj.nomineeList = this.inputData.nomineeList;
       this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
@@ -252,43 +288,40 @@ export class ContactDetailsInnComponent implements OnInit {
     }
   }
 
-  getObjForForm(holderValue) {
-    return {
-      email: holderValue.email,
-      aadharNumber: holderValue.aadharNumber,
-      mobileNo: holderValue.mobileNo,
-      address1: holderValue.address1,
-      address2: holderValue.address2,
-      pinCode: holderValue.pinCode,
-      city: holderValue.city,
-      state: holderValue.state,
-      country: holderValue.country,
-      address: holderValue.address
+  setObj(formId, holder, formValue) {
+
+    holder = {
+      ...holder,
+      email: formValue.email,
+      aadharNumber: formValue.aadharNumber,
+      mobileNo: formValue.mobileNo,
+      foreignMobileNo: formValue.foreignMobileNo,
+      phoneNo: formValue.phoneNo,
     };
+    if (formId == 'indian') {
+      holder.address = {
+
+        address1: formValue.address1,
+        address2: formValue.address2,
+        pinCode: formValue.pinCode,
+        city: formValue.city,
+        state: formValue.state,
+        country: formValue.country,
+      };
+    } else {
+      holder.foreignAddress = {
+        address1: formValue.address1,
+        address2: formValue.address2,
+        pinCode: formValue.pinCode,
+        city: formValue.city,
+        state: formValue.state,
+        country: formValue.country,
+      };
+    }
+    return holder;
   }
 
-  setObj(holder) {
-
-    const value = {
-      email: holder.email,
-      aadharNumber: holder.aadharNumber,
-      mobileNo: holder.mobileNo,
-      phoneNo: holder.phoneNo,
-      address: null
-    };
-    value.address = {
-
-      address1: holder.address1,
-      address2: holder.address2,
-      pinCode: holder.pinCode,
-      city: holder.city,
-      state: holder.state,
-      country: holder.country,
-    };
-    return value;
-  }
-
-  saveContactDetails() {
+  saveContactDetails(formId) {
     if (this.contactDetails.invalid) {
       for (const element in this.contactDetails.controls) {
         console.log(element);
@@ -297,8 +330,10 @@ export class ContactDetailsInnComponent implements OnInit {
           this.contactDetails.controls[element].markAsTouched();
         }
       }
+      return false;
     } else {
-      Object.assign(this.firstHolderContact, this.contactDetails.value);
+      this.firstHolderContact = this.setObj(formId, this.firstHolderContact, this.contactDetails.value);
+      return true;
     }
   }
 
