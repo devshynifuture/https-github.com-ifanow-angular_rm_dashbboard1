@@ -52,6 +52,8 @@ export class UsersComponent implements OnInit {
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.hasError = true;
+      this.userList = undefined;
+      this.loader(-1);
     });
   }
 
