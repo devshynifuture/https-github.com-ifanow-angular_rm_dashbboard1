@@ -30,7 +30,7 @@ export class AddNumberComponent implements OnInit {
     mobile: 'col-md-3 p-0 col-6',
     addRemove: 'col-md-1 col-2 mob-pr-10',
   }
-  placeHolderObj = ['Enter Primary Number', 'Enter Secondary Number']
+  placeHolderObj = ['Enter primary number', 'Enter secondary number']
   isdCodes: any;
   countryCode: any;
   lengthControl: number;
