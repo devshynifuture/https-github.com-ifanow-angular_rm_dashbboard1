@@ -1775,7 +1775,7 @@ export class OrderHistoricalFileComponent implements OnInit {
 
     }
     console.log("this is request Obj", requestObj);
-    // this.postFileOrderingData();
+    this.postFileOrderingData();
   }
 
   postFileOrderingData() {
