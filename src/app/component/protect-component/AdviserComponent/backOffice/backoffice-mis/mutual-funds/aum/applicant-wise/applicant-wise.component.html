@@ -331,10 +331,10 @@
                                                                                                 </mat-icon>
                                                                                             </button>
                                                                                         </div>
+                                                                                        <!-- [appSkeletonLoading]="isLoadingApplicant" prod build -->
                                                                                         <table *ngIf="client.showFolio == false"
                                                                                             class="skeletonAnimation mt-8 mb-8"
                                                                                             appSkeletonLoading
-                                                                                            [appSkeletonLoading]="isLoadingApplicant"
                                                                                             id="table-low">
                                                                                             <thead>
                                                                                                 <tr class="h-40">
@@ -406,7 +406,7 @@
                                                                                                     <td>
                                                                                                         <div
                                                                                                             class="bar">
-                                                                                                            {{isLoadingApplicant?'':i+1}}
+                                                                                                            <!-- {{isLoadingApplicant?'':i+1}} prod build-->
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
@@ -444,9 +444,11 @@
                                                                                                 </tr>
                                                                                             </tbody>
                                                                                         </table>
+                                                                                        <!-- !isLoadingApplicant && brod build -->
+                                                                                        <!-- *ngIf="subCatList.length == 0" brod build -->
                                                                                         <div
-                                                                                            *ngIf="!isLoadingApplicant && client.showFolio == false">
-                                                                                            <div *ngIf="subCatList.length == 0"
+                                                                                            *ngIf=" client.showFolio == false">
+                                                                                            <div 
                                                                                                 class="d-flex flex-column align-items-center">
                                                                                                 <h4
                                                                                                     class="text-center pt-12">
