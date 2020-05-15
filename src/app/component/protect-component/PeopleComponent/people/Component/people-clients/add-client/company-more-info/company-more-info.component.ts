@@ -40,6 +40,9 @@ export class CompanyMoreInfoComponent implements OnInit {
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
+  @Output() cancelTab = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
+
   companyIndividualData: any;
   maxDate = new Date();
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
@@ -157,14 +160,19 @@ export class CompanyMoreInfoComponent implements OnInit {
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
     };
-    this.barButtonOptions.active = true;
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
         data => {
           this.barButtonOptions.active = false;
           console.log(data);
           if (data) {
-            (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+            if (flag == 'Next') {
+              this.saveNextData.emit(true);
+              this.tabChange.emit(1)
+            }
+            else {
+              this.close(data);
+            }
           } else {
             this.eventService.openSnackBar('Unknown error', 'Dismiss');
           }
@@ -179,7 +187,13 @@ export class CompanyMoreInfoComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+          if (flag == 'Next') {
+            this.tabChange.emit(1);
+            this.saveNextData.emit(true);
+          }
+          else {
+            this.close(data);
+          }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -190,7 +204,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
   // ngOnChanges(changes: SimpleChanges): void {

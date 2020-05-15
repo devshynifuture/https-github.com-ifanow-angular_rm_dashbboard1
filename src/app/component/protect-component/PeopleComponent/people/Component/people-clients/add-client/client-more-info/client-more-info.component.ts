@@ -48,7 +48,8 @@ export class ClientMoreInfoComponent implements OnInit {
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
   @Output() clientData = new EventEmitter();
-
+  @Output() cancelTab = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -191,7 +192,8 @@ export class ClientMoreInfoComponent implements OnInit {
           console.log(data);
           this.clientData.emit(data);
           if (flag == 'Next') {
-            this.tabChange.emit(1)
+            this.tabChange.emit(1);
+            this.saveNextData.emit(true);
           }
           else {
             this.barButtonOptions.active = false;
@@ -269,7 +271,8 @@ export class ClientMoreInfoComponent implements OnInit {
         this.clientData.emit(data);
         this.barButtonOptions.active = false;
         if (flag == 'Next') {
-          this.tabChange.emit(1)
+          this.tabChange.emit(1);
+          this.saveNextData.emit(true);
         }
         else {
           this.barButtonOptions.active = false;
@@ -285,8 +288,8 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (data == 'close') ? this.cancelTab.emit('close') :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
 }

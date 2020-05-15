@@ -187,7 +187,8 @@ export class MutualFundOverviewComponent implements OnInit {
       this.cashFlowXirr=(this.mfData.mutualFundCategoryMastersList.length > 0) ? this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr : 0;
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment)
       console.log(data);
-      this.dataSource4 = new MatTableDataSource(data.mutualFundCategoryMastersList); // category wise allocation
+      let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList,'category')
+      this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
       this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
       this.schemeWiseAllocation(data); // for shemeWiseAllocation
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
@@ -269,7 +270,8 @@ export class MutualFundOverviewComponent implements OnInit {
     this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if (this.dataSource3.data.length > 0) {
-      this.dataSource3 = new MatTableDataSource(this.filteredArray);
+      let sortedData = this.MfServiceService.sorting(this.filteredArray,'subCategory')
+      this.dataSource3 = new MatTableDataSource(sortedData);
       this.isLoading = false;
       this.changeInput.emit(false);
 
@@ -279,7 +281,8 @@ export class MutualFundOverviewComponent implements OnInit {
     this.isLoading = true;
     this.changeInput.emit(true);
     if (this.dataSource.data.length > 0) {
-      this.dataSource = new MatTableDataSource(data.family_member_list);
+      let sortedData = this.MfServiceService.sorting(data.family_member_list,'name')
+      this.dataSource = new MatTableDataSource(sortedData);
       this.isLoading = false;
       this.changeInput.emit(false);
 
@@ -317,7 +320,8 @@ export class MutualFundOverviewComponent implements OnInit {
               element.xirr = catObj[key].xirr;
 
               dataToShow.push(element);
-              this.dataSource2 = new MatTableDataSource(dataToShow);
+              let sortedData = this.MfServiceService.sorting(dataToShow,'schemeName')
+              this.dataSource2 = new MatTableDataSource(sortedData);
               this.isLoading = false;
               this.changeInput.emit(false);
             });
@@ -330,7 +334,8 @@ export class MutualFundOverviewComponent implements OnInit {
 
       } else {
         dataToShow.push(element);
-        this.dataSource2 = new MatTableDataSource(dataToShow);
+        let sortedData = this.MfServiceService.sorting(dataToShow,'schemeName')
+        this.dataSource2 = new MatTableDataSource(sortedData);
         this.changeInput.emit(false);
       }
     });

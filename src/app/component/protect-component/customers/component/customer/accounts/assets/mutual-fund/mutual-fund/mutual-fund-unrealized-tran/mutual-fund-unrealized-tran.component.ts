@@ -202,7 +202,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         nav: this.mutualFund.nav,
-        mutualFund:this.mutualFund,
+        mutualFund:this.mfData,
         // mfService: this.mfService
       };
       // Create a new

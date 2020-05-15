@@ -259,6 +259,8 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
+    const index = item.id
+    this.riskAssessmentQuestionList[index].done = true
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -285,6 +287,9 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
+    this.riskAssessmentQuestionList.forEach(element => {
+      element.done = false
+    });
     console.log(this.riskAssessmentQuestionList);
     // if (flag == false) {
     //   this.reset(false)

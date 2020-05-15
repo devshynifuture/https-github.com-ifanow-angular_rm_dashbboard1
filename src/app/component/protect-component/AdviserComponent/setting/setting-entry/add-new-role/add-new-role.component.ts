@@ -4,6 +4,8 @@ import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-new-role',
@@ -18,14 +20,30 @@ export class AddNewRoleComponent implements OnInit {
   rolesFG: FormGroup;
   editDetails: any;
   advisorId: any;
-  isLoading: boolean = false;
-
+  isLoading:boolean = false;
+  formPlaceHolders:any;
+  changesMade = false;
+  
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
+  
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -47,7 +65,6 @@ export class AddNewRoleComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getTemplateRole({ optionId: this.data.roleType }).subscribe((res) => {
       if (res) {
-        console.log(res);
         this.isLoading = false;
         this.constructAdminDataSource(res.modules);
       }
@@ -61,7 +78,6 @@ export class AddNewRoleComponent implements OnInit {
     this.isLoading = true;
     this.settingsService.getDetailedRole({ id: this.data.mainData.id }).subscribe((res) => {
       if (res) {
-        console.log(res);
         this.editDetails = res.roleDetail;
         this.isLoading = false;
         this.constructAdminDataSource(res.modules);
@@ -75,9 +91,13 @@ export class AddNewRoleComponent implements OnInit {
   createFormGroup() {
     this.rolesFG = this.fb.group({
       advisorId: [this.advisorId],
-      roleName: [this.data.mainData.roleName || '', [Validators.required, Validators.maxLength(30)]],
+      roleName: [this.data.mainData.roleName || '', [Validators.required, Validators.maxLength(50)]],
       roleDescription: [this.data.mainData.roleDesc || '', [Validators.maxLength(250)]]
     });
+  }
+
+  setChangesMade() {
+    this.changesMade = true;
   }
 
   segregateNormalAndAdvancedPermissions(data: any[], featureId) {
@@ -159,10 +179,31 @@ export class AddNewRoleComponent implements OnInit {
     return segregatedPermissions;
   }
 
+  switchAllModelPermissions(module, value) {
+    this.changesMade = true;
+    module.subModules.forEach(permissionSet => {
+      for(let permission in permissionSet.permissions) {
+        if(Object.prototype.hasOwnProperty.call(permissionSet.permissions, permission)) {
+          permissionSet.permissions[permission].enabledOrDisabled = value;
+        }
+      }
+    });
+    module.subModules.forEach(permissionSet => {
+      permissionSet.advanced_permissions.forEach(advPermission => {
+        advPermission.enabledOrDisabled = value;
+      });
+    });
+  }
+
   save() {
-    if (this.rolesFG.invalid) {
+    if (this.rolesFG.invalid || this.barButtonOptions.active) {
       this.rolesFG.markAllAsTouched();
     } else {
+      if(this.data.is_add_flag && !this.changesMade) {
+        this.eventService.openSnackBar("Please make changes to permissions to create new role");
+        return;
+      }
+      this.barButtonOptions.active = true;
       if (this.data.is_add_flag) {
         let dataObj = {
           "advisorOrClientRole": this.data.roleType,
@@ -174,6 +215,7 @@ export class AddNewRoleComponent implements OnInit {
           this.eventService.openSnackBar("Role Added Successfully");
           this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
         }, err => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar("Error Occured");
         })
       } else {
@@ -182,11 +224,11 @@ export class AddNewRoleComponent implements OnInit {
           ...this.rolesFG.value,
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };
-        console.log(dataObj)
         this.settingsService.editRole(dataObj).subscribe((res) => {
           this.eventService.openSnackBar("Role Modified Successfully");
           this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
         }, err => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar("Error Occured");
         })
       }
