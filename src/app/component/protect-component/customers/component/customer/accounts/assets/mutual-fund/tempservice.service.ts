@@ -1,27 +1,63 @@
 export class TempserviceService {
 
-  subCatArrayForSummary = (mutualFundList, type) => {
+  subCatArrayForSummary = (mutualFundList,type,allData) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
-      catObj = this.categoryFilter(mutualFundList, reportType);
+      if(reportType != 'ownerName'){
+        catObj = this.categoryFilter(mutualFundList, reportType);
+      }else{
+        catObj = this.categoryFilterForInvestorWise(mutualFundList, 'familyMemberId' ,allData);
+      }
       Object.keys(catObj).map(key => {
-        filteredArray.push({groupName: key});
+        (reportType == 'ownerName') ? filteredArray.push({groupName: key,pan: catObj[key][0].pan}) :  filteredArray.push({groupName: key});
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
           filteredArray.push(singleData);
           totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
+          let obj = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
+          totalObj.totalXirr=obj.xirr;
+          totalObj.totalAbsoluteReturn=obj.absoluteReturn;
         });
         filteredArray.push(totalObj);
       });
       return filteredArray;
     }
   }
-
-  getCategoryForTransaction(mutualFundList, type) { // first table category wise
+  getAbsAndxirrCategoryWise(mainData,allData,reportType){
+    let array;
+    let mainDataId;
+    let obj;
+    if(reportType == 'subCategoryName' ){
+      array = 'subCategoryData' 
+      mainDataId = 'subCategoryId';
+    } else if(reportType == 'categoryName'){
+      array = 'mutualFundCategoryMastersList'
+      mainDataId = 'categoryId';
+    } else if(reportType == 'ownerName'){
+      array = 'family_member_list'
+      mainDataId = 'familyMemberId';
+    }else if( reportType = 'schemeName'){
+      array = 'schemeWise'
+      mainDataId = 'schemeId'; 
+    }else{
+      array = 'subCategoryData'
+      mainDataId = 'subCategoryId';
+    }
+    allData[array].forEach(element => {
+      if(element.id == mainData[mainDataId]){
+         obj={
+          xirr:element.xirr,
+          absoluteReturn:element.absoluteReturn
+        }
+      }
+    });
+    return obj;
+  }
+  getCategoryForTransaction(mutualFundList, type,allData) { // first table category wise
     let isSummaryTabValues=true;
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
@@ -30,12 +66,19 @@ export class TempserviceService {
     let catObj = {};
     const newArray = [];
 
-    catObj = this.categoryFilter(mutualFundList, reportType);
+    if(reportType != 'ownerName'){
+      catObj = this.categoryFilter(mutualFundList, reportType);
+    }else{
+      catObj = this.categoryFilterForInvestorWise(mutualFundList, 'familyMemberId' ,allData);
+    }
     Object.keys(catObj).map(key => {
       let totalObj: any = {};
       catObj[key].forEach((singleData) => {
         // this.totalObj = this.this.getEachTotalValue(singleData);
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,isSummaryTabValues), totalObj, {total: true});
+        let obj = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
+        totalObj.xirr=obj.xirr;
+        totalObj.absReturn=obj.absoluteReturn;
         Object.assign(totalObj, {categoryName: key});
       });
       newArray.push(totalObj);
@@ -48,24 +91,31 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type,nav) {
+  getSubCategoryArrayForTransaction(mutualFundList, type,nav,allData) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
     // const dataArray = [];
     const filteredData = [];
     let catObj;
-    catObj = this.categoryFilter(mutualFundList, reportType);
+    let obj:any;
+    if(reportType != 'ownerName'){
+      catObj = this.categoryFilter(mutualFundList, reportType);
+    }else{
+      catObj = this.categoryFilterForInvestorWise(mutualFundList, 'familyMemberId' ,allData);
+    }
     // const filteredData = new MatTableDataSource(dataArray);
     Object.keys(catObj).map(key => {
       // this.initializeValues(); // for initializing total values object
       let totalObj: any = {};
-
+      if(reportType != 'schemeName'){
+        (reportType == 'ownerName') ? filteredData.push({groupName: key,pan: catObj[key][0].pan}) :  filteredData.push({groupName: key});
+      ;
+      }
       catObj[key].forEach((singleData) => {
+
         if(singleData.mutualFundTransactions.length>0){
-          if(reportType != 'schemeName'){
-            filteredData.push({groupName: key});
-          }
+         
           if(nav){
             nav.forEach(element => {
               if(element.schemeCode == singleData.schemeCode){
@@ -74,24 +124,33 @@ export class TempserviceService {
             }); 
           }
        
-        const obj = {
+         obj = {
           schemeName: singleData.schemeName,
           nav: singleData.nav,
           navDate:singleData.navDate,
-          avgNav:singleData.avgCostNav
+          avgNav:singleData.avgCostNav,
         };
+        if(reportType == 'ownerName'){
+          obj.folioNumber= singleData.folioNumber
+        }
         filteredData.push(obj);
-        const obj2 = {
-          name: singleData.ownerName,
-          pan: singleData.pan,
-          folio: singleData.folioNumber
-        };
-        filteredData.push(obj2);
+        if(reportType != 'ownerName'){
+          const obj2 = {
+            name: singleData.ownerName,
+            pan: singleData.pan,
+            folio: singleData.folioNumber
+          };
+          filteredData.push(obj2);
+        }
+       
         singleData.mutualFundTransactions.forEach((ele,ind) => {
           ele.indexId = (ind+1);
           filteredData.push(ele);
         });
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
+        let data = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
+        totalObj.totalCagr=data.xirr;
+        totalObj.trnAbsoluteReturn=data.absoluteReturn;
         filteredData.push(totalObj);
         }
       });
@@ -213,6 +272,9 @@ export class TempserviceService {
     let netInvestment = 0;
     let redemption = 0;
     let switchIn = 0;
+    let totalCagr = 0;
+    let trnAbsoluteReturn = 0;
+    let totalCurrentValue = 0;
     if(!isSummaryTabValues){
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
@@ -228,6 +290,9 @@ export class TempserviceService {
         netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
         xirr += (ele.xirr) ? ele.xirr : 0;
         allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
+        totalCagr += (ele.cagr) ? ele.cagr : 0;
+        trnAbsoluteReturn += (ele.absoluteReturn) ? ele.absoluteReturn : 0;
+        totalCurrentValue  += (ele.currentAmount) ? ele.currentAmount : 0;
       });
     }else{
       totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
@@ -271,13 +336,16 @@ export class TempserviceService {
       marketValue,
       netInvestment,
       redemption,
-      switchIn
+      switchIn,
+      totalCagr,
+      trnAbsoluteReturn,
+      totalCurrentValue
     };
     // this.totalObj = obj;
     return obj;
   }
 
-  categoryFilter(data, type) {
+   categoryFilter(data, type) {
     const catObj = {};
     const categoryArray = [];
     data.forEach(ele => {
@@ -291,7 +359,29 @@ export class TempserviceService {
     });
     return catObj;
   }
-
+  
+  categoryFilterForInvestorWise(data, type,list) {
+    const catObj = {};
+    const categoryArrayLocal =[];
+    let name;
+    const categoryArray = [];
+    data.forEach(ele => {
+      if (ele[type]) {
+        // const categoryArrayLocal = catObj[ele[type]] ? catObj[ele[type]] : [];
+        categoryArrayLocal.push(ele);
+        list.family_member_list.forEach(element => {
+          if(element.id == ele.familyMemberId){
+            name = 'name';
+            ele.name = element.name
+          }
+        });
+        catObj[ele[name]] = categoryArrayLocal;
+      } else {
+        categoryArray.push(ele);
+      }
+    });
+    return catObj;
+  }
   filterScheme(data) {
     const filterData = [];
     const filterData2 = [];

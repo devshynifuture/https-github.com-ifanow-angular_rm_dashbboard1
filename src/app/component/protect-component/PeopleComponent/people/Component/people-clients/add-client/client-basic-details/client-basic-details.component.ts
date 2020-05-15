@@ -473,9 +473,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('email').setValidators([Validators.required]);
       this.basicDetails.get('email').updateValueAndValidity();
-      this.basicDetails.get('role').setValidators(null);
+      this.basicDetails.get('role').clearValidators();
       this.basicDetails.get('role').updateValueAndValidity();
-
     }
     let gardianObj;
     if (this.invTypeCategory == '2') {
@@ -498,6 +497,8 @@ export class ClientBasicDetailsComponent implements OnInit {
           }
         ]
       };
+      this.minorForm.get('role').clearValidators();
+      this.minorForm.get('role').updateValueAndValidity();
     } else {
       gardianObj = null;
     }

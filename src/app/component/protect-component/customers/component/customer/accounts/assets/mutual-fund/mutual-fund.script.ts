@@ -8,7 +8,7 @@ export const MUTUAL_FUND_SUMMARY = (input) => {
 
   const mfService: TempserviceService = new TempserviceService();
   const mutualFundList = input.mutualFundList;
-  const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList, input.type);
+  const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList, input.type,input.mutualFund);
 
   const output = {customDataSourceData};
   console.log('Mutual fund script output: ', output);

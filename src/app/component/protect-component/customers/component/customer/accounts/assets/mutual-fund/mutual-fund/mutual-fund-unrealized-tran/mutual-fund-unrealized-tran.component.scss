@@ -41,3 +41,17 @@
     justify-content: end;
     margin-right: 10px;
 }
+
+::ng-deep .cdk-virtual-scroll-spacer {
+    height: auto !important;
+}
+
+.zIndex {
+    z-index: 0 !important;
+}
+
+.nonesticky {
+    position: relative !important;
+}
+
+::ng-deep .secoundTable #table-low th {}

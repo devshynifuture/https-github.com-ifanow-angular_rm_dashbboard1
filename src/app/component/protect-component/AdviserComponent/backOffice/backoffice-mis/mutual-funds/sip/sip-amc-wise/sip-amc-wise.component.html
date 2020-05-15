@@ -106,8 +106,8 @@
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="category.showCategory==false && !isLoading" class=" mt-8 mb-8"
-                                        id="table-low">
+                                    <table *ngIf="category.showCategory==false" class="skeletonAnimation mt-8 mb-8"
+                                        appSkeletonLoading [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
@@ -150,13 +150,32 @@
                                         </thead>
                                         <tbody *ngFor="let subcategory of category.schemeList; let i = index">
                                             <tr>
-                                                <td>{{i+1}}</td>
                                                 <td>
-                                                    {{subcategory.schemeName}}
+                                                    <div class="bar">{{(isLoadingCategory)?'':i+1}}
+                                                    </div>
                                                 </td>
-                                                <td><span appFormatNumber>{{subcategory.sipAmount}}</span> </td>
-                                                <td>{{subcategory.sipCount}} </td>
-                                                <td>{{subcategory.weightInPercentage}}%</td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{subcategory.schemeName}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        <span appFormatNumber>
+                                                            {{subcategory.sipAmount}}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{subcategory.sipCount}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bar">
+                                                        {{subcategory.weightInPercentage}}{{(isLoadingCategory?'':'%') }}
+                                                    </div>
+                                                </td>
                                                 <td class="text-center"
                                                     (click)="showSchemeName(i,subcategory.showSubCategory,subcategory)">
                                                     <i *ngIf="subcategory.showSubCategory==true"
@@ -173,7 +192,8 @@
                                                             save_alt
                                                         </mat-icon>
                                                     </button>
-                                                    <table class=" mt-8 mb-8" id="table-low"
+                                                    <table class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                                        [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
                                                         *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
                                                             <tr class="h-40">
@@ -216,14 +236,32 @@
                                                         <tbody
                                                             *ngFor="let inv of subcategory.investorList;let i = index">
                                                             <tr>
-                                                                <td>{{i+1}}</td>
                                                                 <td>
-                                                                    {{inv.investorName}}
+                                                                    <div class="bar">
+                                                                        {{(isLoadingSubCategory)?'':i+1}}
+                                                                    </div>
                                                                 </td>
-                                                                <td><span appFormatNumber>{{inv.sipAmount}}</span>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{inv.investorName}}
+                                                                    </div>
                                                                 </td>
-                                                                <td>{{inv.sipCount}} </td>
-                                                                <td>{{inv.weightInPercentage}}%
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        <span appFormatNumber>
+                                                                            {{inv.sipAmount}}
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{inv.sipCount}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="bar">
+                                                                        {{inv.weightInPercentage}}{{(isLoadingSubCategory?'':'%') }}
+                                                                    </div>
                                                                 </td>
 
                                                                 <td class="text-center"
@@ -245,8 +283,10 @@
                                                                             </mat-icon>
                                                                         </button>
                                                                     </div>
-                                                                    <table class=" mt-8 mb-8" id="table-low"
-                                                                        *ngIf="inv.showInvestor==false">
+                                                                    <table class="skeletonAnimation mt-8 mb-8"
+                                                                        appSkeletonLoading
+                                                                        [appSkeletonLoading]="isLoadingApplicant"
+                                                                        id="table-low" *ngIf="inv.showInvestor==false">
                                                                         <thead>
                                                                             <tr class="h-40">
                                                                                 <th class="w-12 c-p"
@@ -365,34 +405,56 @@
                                                                         <tbody
                                                                             *ngFor="let applicant of inv.applicantList;let i = index">
                                                                             <tr>
-                                                                                <td>{{applicant.investorName}}
+                                                                                <td>
+                                                                                    <div class="bar">
+                                                                                        {{applicant.investorName}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.schemeName}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.schemeName}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.folioNumber}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.folioNumber}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.registeredDate | date:'dd/MM/yyyy'}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.registeredDate | date:'dd/MM/yyyy'}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.from_date | date:'dd/MM/yyyy'}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.from_date | date:'dd/MM/yyyy'}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.to_date | date:'dd/MM/yyyy'}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.to_date | date:'dd/MM/yyyy'}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.sipTriggerDay}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.sipTriggerDay}}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.frequency}}
+                                                                                    <div class="bar">
+                                                                                        {{applicant.frequency}}
+                                                                                    </div>
                                                                                 </td>
-                                                                                <td><span
-                                                                                        appFormatNumber>{{applicant.sipAmount}}</span>
+                                                                                <td><span appFormatNumber>
+                                                                                        <div class="bar">
+                                                                                            {{applicant.sipAmount}}
+                                                                                        </div>
+                                                                                    </span>
                                                                                 </td>
                                                                                 <td>
-                                                                                    {{applicant.weightInPercentage}}%
+                                                                                    <div class="bar">
+                                                                                        {{applicant.weightInPercentage}}{{(isLoadingApplicant?'':'%') }}
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>ceased
                                                                                 </td>
@@ -401,14 +463,33 @@
                                                                         </tbody>
 
                                                                     </table>
+                                                                    <div *ngIf="!isLoadingApplicant && inv.showInvestor==false">
+                                                                        <div *ngIf="applicantList.length == 0"
+                                                                            class="d-flex flex-column align-items-center">
+                                                                            <h4 class="text-center pt-12">No data Found
+                                                                            </h4>
+                                                                        </div>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                    <div *ngIf="!isLoadingSubCategory && subcategory.showSubCategory==false">
+                                                        <div *ngIf="subCategory.length == 0"
+                                                            class="d-flex flex-column align-items-center">
+                                                            <h4 class="text-center pt-12">No data Found</h4>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div *ngIf="!isLoadingCategory && category.showCategory==false">
+                                        <div *ngIf="schemeDataList.length == 0"
+                                            class="d-flex flex-column align-items-center">
+                                            <h4 class="text-center pt-12">No data Found</h4>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

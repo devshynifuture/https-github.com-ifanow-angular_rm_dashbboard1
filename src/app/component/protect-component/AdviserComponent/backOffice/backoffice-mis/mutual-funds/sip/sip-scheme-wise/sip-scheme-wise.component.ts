@@ -110,6 +110,10 @@ export class SipSchemeWiseComponent implements OnInit {
   arrayOfExcelData: any[] = [];
   selectedSubCategory: any;
   selectedCategoryApp: any;
+  isLoadingSubCategory: boolean;
+  isLoadingCategory: boolean;
+  applicantListArr: any[];
+  subCatList: any[];
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
@@ -160,8 +164,10 @@ export class SipSchemeWiseComponent implements OnInit {
   }
   aumReport() {
     this.changedValue.emit(true);
-
     //  this.sip.sipComponent=true;
+    this.filteredArray.forEach(element => {
+      element.showCategory = true
+    });
   }
   getSchemeWiseGet() {
     this.isLoading = true;
@@ -228,9 +234,12 @@ export class SipSchemeWiseComponent implements OnInit {
 
   }
   showSubTableList(index, category, schemeData) {
+    this.isLoadingCategory = true
     this.selectedCategory = index
     schemeData.showCategory = !schemeData.showCategory
     schemeData.subCatList = []
+    this.subCatList = []
+    schemeData.subCatList = [{}, {}, {}];
     if (schemeData.showCategory == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -240,19 +249,30 @@ export class SipSchemeWiseComponent implements OnInit {
       }
       this.backoffice.Scheme_Wise_Investor_Get(obj).subscribe(
         data => {
+          this.isLoadingCategory = false
           if (data) {
             data.forEach(element => {
               element.showSubCategory = true;
               element.mutualFundSchemeMasterId = schemeData.mutualFundSchemeMasterId;
             });
             schemeData.subCatList = data
+            this.subCatList = data
             if (schemeData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'investor');
             } else {
               this.removeValuesFromExcel('investor', index);
             }
             console.log(data)
+          }else{
+            this.subCatList = []
+            schemeData.subCatList = []
+            this.isLoadingCategory = false
           }
+        },
+        err => {
+          this.subCatList = []
+          schemeData.subCatList = []
+          this.isLoadingCategory = false
         }
       )
     }
@@ -324,9 +344,12 @@ export class SipSchemeWiseComponent implements OnInit {
     console.log(this.arrayOfExcelData);
   }
   showSchemeName(index, subcashowSubcat, ApplicantData) {
+    this.isLoadingSubCategory = true
     this.selectedCategoryApp = index
     ApplicantData.showSubCategory = !ApplicantData.showSubCategory
     ApplicantData.applicantList = [];
+    this.applicantListArr = []
+    ApplicantData.applicantList = [{}, {}, {}];
     if (ApplicantData.showSubCategory == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -338,15 +361,26 @@ export class SipSchemeWiseComponent implements OnInit {
       }
       this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
         data => {
+          this.isLoadingSubCategory = false
           if (data) {
             ApplicantData.applicantList = data;
+            this.applicantListArr = data
             if (ApplicantData.showSubCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
             } else {
               this.removeValuesFromExcel('applicant', index);
             }
             console.log(data)
+          }else{
+            this.applicantListArr = []
+            ApplicantData.applicantList = [];
+            this.isLoadingSubCategory = false
           }
+        },
+        err => {
+          this.applicantListArr = []
+          ApplicantData.applicantList = [];
+          this.isLoadingSubCategory = false
         }
       )
     }

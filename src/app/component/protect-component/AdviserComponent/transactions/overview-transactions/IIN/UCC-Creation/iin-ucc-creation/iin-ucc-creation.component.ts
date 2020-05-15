@@ -27,7 +27,9 @@ export class IinUccCreationComponent implements OnInit {
   advisorId: any;
   clientData: any;
   isLoading: boolean = false;
-  taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}, {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}];
+  taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
+    {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'},
+    {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private processTrasaction: ProcessTransactionService,
@@ -57,6 +59,14 @@ export class IinUccCreationComponent implements OnInit {
           }
         }),
       );
+
+
+    this.processTrasaction.getCountryCodeList().subscribe((responseData) => {
+      console.log('country code list : ', responseData);
+    }, error => {
+      console.error('country code error : ', error);
+
+    });
   }
 
   closeRightSlider(flag) {
@@ -85,10 +95,8 @@ export class IinUccCreationComponent implements OnInit {
         this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}];
         this.generalDetails.controls.taxStatus.setValue('01');
       } else {
-        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}, {
-          taxStatusDesc: 'On behalf of minor',
-          taxStatusCode: '02'
-        }];
+        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
+          {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
       }
     });
   }

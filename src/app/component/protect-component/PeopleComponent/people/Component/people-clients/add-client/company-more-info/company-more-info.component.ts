@@ -74,6 +74,11 @@ export class CompanyMoreInfoComponent implements OnInit {
     });
     console.log(this.moreInfoForm)
   }
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
 
   ngOnInit() {
   }

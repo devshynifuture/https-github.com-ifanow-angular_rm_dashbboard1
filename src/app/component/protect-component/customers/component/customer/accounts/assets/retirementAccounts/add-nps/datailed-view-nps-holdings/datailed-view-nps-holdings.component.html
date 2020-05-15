@@ -13,6 +13,7 @@
 <div class="pl-20 pr-20 mt-44 pb-48">
   <div class="row pt-40">
       <div class="col-md-12 p-0">
+          <h4>Basic details</h4>
           <div class="insurance-ui bt">
               <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.ownerList; let i = index">
                   <div class="col-md-8 text-left f-14 roboto p-0" >
@@ -23,6 +24,14 @@
                   </div>
               </div>
               <div class="row bb p-8 b-l br">
+                <div class="col-md-8 text-left f-14 roboto p-0">
+                    Scheme choice
+                </div>
+                <div class="col-md-4 text-right f-14 roboto p-0">
+                    {{npsData.schemeChoice == 2 ? 'Auto':'Active'}}
+                </div>
+            </div>
+              <div class="row bb p-8 b-l br">
                   <div class="col-md-8 text-left f-14 roboto p-0">
                       PRAN
                   </div>
@@ -30,6 +39,18 @@
                       {{npsData.pran ? npsData.pran:'-'}}
                   </div>
               </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-6 text-left f-14 roboto p-0">
+                        Linked bank account
+                    </div>
+                    <div class="col-md-6 text-right f-14 roboto p-0">
+                        <div [ngSwitch]="npsData.userBankMappingId">
+                            <div class="bar" *ngFor="let b of bankList"> 
+                                <span *ngSwitchCase="b.id"> {{npsData.userBankMappingId ? b.name:'-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               <div class="row bb p-8 b-l br">
                   <div class="col-md-6 text-left f-14 roboto p-0">
                       Description
@@ -56,6 +77,7 @@
               </div>
           </div>
 
+          <h4 class="mt-32 mb-10">Holdings</h4>
           <table *ngIf="dataSource.filteredData.length > 0" matSort #holdingsTableSort="matSort" mat-table
             [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading
             >
@@ -68,14 +90,12 @@
                   </div>
                 </div>
               </td>
-              <td *matFooterCellDef mat-footer-cell></td>
           </ng-container>
           <ng-container matColumnDef="units">
             <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="units"> Units</th>
             <td mat-cell *matCellDef="let element" class="br text-primary">
                 <div class="bar"> {{element.totalUnits}} </div>
             </td>
-            <td *matFooterCellDef mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="amount">
             <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
@@ -85,7 +105,6 @@
             <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
                 <div class="bar" *ngIf="element.totalAmountInvested != 0">₹<span appFormatNumber>{{element.totalAmountInvested}}</span> </div>
             </td>
-            <td *matFooterCellDef mat-footer-cell></td>
             
         </ng-container>
         <ng-container matColumnDef="value">
@@ -96,15 +115,34 @@
             <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
                 <div class="bar" *ngIf="element.currentValue != 0">₹<span appFormatNumber>{{element.currentValue}}</span> </div>
             </td>
-            <td *matFooterCellDef mat-footer-cell></td>
            
         </ng-container>
             
             
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" ></tr>
         </table>
+
+        <h4 class="mt-32 mb-10" >Nominees details</h4>
+          <div class="insurance-ui bt">
+              <div class="row bb p-8 b-l br" *ngIf="npsData.nomineeList.length <= 0">
+                  <div class="col-md-8 text-left f-14 roboto p-0" >
+                      Nominee
+                  </div>
+                  <div class="col-md-4 text-right f-14 roboto p-0">
+                      -
+                  </div>
+              </div>
+              <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.nomineeList; let i = index">
+                  <div class="col-md-8 text-left f-14 roboto p-0" >
+                      Nominee {{i + 1}}
+                  </div>
+                  <div class="col-md-4 text-right f-14 roboto p-0">
+                      {{obj.name}}
+                  </div>
+              </div>
+          </div>
+        
       </div>
   </div>
 </div>

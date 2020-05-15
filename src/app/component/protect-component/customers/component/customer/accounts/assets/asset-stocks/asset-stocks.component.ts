@@ -175,6 +175,7 @@ export class AssetStocksComponent implements OnInit {
         component = StockScripLevelTransactionComponent;
     }
     data.portfolioName = portfolioData.portfolioName;
+    data.ownerList = portfolioData.ownerList;
     const fragmentData = {
       flag: 'addStock',
       data,

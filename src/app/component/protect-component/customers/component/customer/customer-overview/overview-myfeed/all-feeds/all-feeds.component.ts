@@ -86,7 +86,44 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
 
   totalValue: any = {};
   filterData: any;
-  mfAllocationData:any[] = [];
+  mfAllocationData:any[] = [
+    {
+      name: 'Equity',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Debt',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Hybrid',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Solution oriented',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Others',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
   mfSubCatAllocationData:any[] = [];
   worker:Worker;
 
@@ -214,8 +251,8 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
         this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
         break;
       default:
-        this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
-        // console.error("Unidentified role master id found", this.clientData.roleId);
+        // this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
+        console.error("Unidentified role master id found", this.clientData.roleId);
         break;
     }
   }
@@ -306,6 +343,13 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
       }]
     }
     this.assetAllocationPieConfig = new Chart(chartConfig);
+
+    chartConfig.series = [{
+      type: 'pie',
+      name: 'MF Asset allocation',
+      innerSize: '60%',
+      data: this.mfAllocationData
+    }]
     this.mfAllocationPieConfig = new Chart(chartConfig);
     this.mfSubCategoryPieConfig = new Chart(chartConfig);
   }
@@ -679,8 +723,8 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
 
   getMFPortfolioData() {
     const obj = {
-      clientId: 25054,//this.clientData.clientId,
-      advisorId: 2775//this.advisorId
+      clientId: this.clientData.clientId,
+      advisorId: this.advisorId
     }
 
     if(this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
@@ -709,6 +753,8 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
         this.totalValue = data.totalValue;
         this.generateMFallocationChartData(categoryList); // for Calculating MF categories percentage
         this.mfPieChartDataMgnt(); // pie chart data after calculating percentage
+        this.tabsLoaded.mfPortfolioSummaryData.hasData = true;
+        this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = true;
       };
       this.worker.postMessage(input);
     } else {
@@ -723,8 +769,6 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.generateSubCategorywiseAllocationData(data); // For subCategoryWiseAllocation
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
-    } else {
-      this.eventService.openSnackBar(" No Mutual Fund Found", "DISMISS");
     }
   }
 
@@ -762,11 +806,7 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
       }
     });
     this.mfAllocationData.forEach(e => {
-      if(e.name == 'SOLUTION ORIENTED') {
-        e.name = 'Solutions oriented'
-      } else {
-        e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
-      }
+      e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
     })
   }
 

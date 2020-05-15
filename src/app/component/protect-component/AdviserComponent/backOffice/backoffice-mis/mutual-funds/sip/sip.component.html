@@ -1,249 +1,250 @@
 <!-- <div *ngIf="showLoader">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-    
+
     <img class="loader" src="https://offerscouponsdeals.in/public/ocd_images/overlay-loader.gif">
 </div> -->
 <div id="ui-misreport">
-    <div class="bg-white pb-36">
-        <div *ngIf="sipComponent==true">
-            <div class="row pt-28 pb-16">
-                <div class="col-md-8">
-                    <h3 class="mb-0">SIP</h3>
-                </div>
-                <div class="col-md-4 text-right " *ngIf="parentId !== 0">
-                    <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0">
-                        {{viewMode}}
-                        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <div *ngFor="let item of arnRiaList">
-                            <button mat-menu-item (click)="changeArnRiaValue(item)">{{item.number}}</button>
-                        </div>
-                    </mat-menu>
-                </div>
-            </div>
-
-            <div class=" mr-12">
-                <div class="row ">
-                    <div class="col-md-9 p-0">
-                        <div class="row">
-                            <div class="col-md-4 pr-0">
-                                <div class="bg-aum pt-24 pb-24 text-center br-2 height180">
-                                    <h1 class="text-white f-44 f-300 pt-32" *ngIf="sipCount">
-                                        {{(sipCount.totalAmountInWords)?sipCount.totalAmountInWords:0}}
-                                    </h1>
-                                    <p class="f-16 pt-4 text-white">TOTAL SIP BOOK</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 pr-0">
-                                <div class="bg-foliocount br-2 height180 pr-20 pl-12">
-
-                                    <div class="row pt-12">
-                                        <div class="col-md-5 text-left p-0" *ngIf="sipCount">
-                                            <div class="pl-12">
-                                                <h1 class="f-24 text-white mb-0 pb-8">
-                                                    {{(sipCount.totalCount)?sipCount.totalCount:0}}
-                                                </h1>
-                                                <p class="f-12 text-white mb-0">SIP Count</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7 p-0 text-right" *ngIf="sipCount">
-                                            <h1 class="text-white f-24 mb-0 pb-8"><span appFormatNumber>
-                                                    {{(sipCount.totalAmount)?sipCount.totalAmount:0}}</span></h1>
-                                            <p class="f-12 mb-0 text-white">Average SIP</p>
-
-                                        </div>
-                                        <div class="col-md-12 pr-0">
-                                            <div class="pt-20">
-                                                <mat-progress-bar mode="determinate" value="10" class="text-white">
-                                                </mat-progress-bar>
-                                                <p class="text-white f-12 pt-4 mb-0 pb-8">{{clientWithoutSip}} % Clients without SIP
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 pr-0">
-                                <div class="bg-info p-16 br-2 pt-12 height180">
-                                    <div class="row">
-                                        <div class="col-md-12 p-0">
-                                            <div class="text-center">
-                                                <h1 class="text-white f-300 f-40 mb-4 pt-8">13.22%</h1>
-
-                                                <p class="text-white f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4% (716 folios) are currently linked to financial goals of your clients
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pt-16">
-                            <div class="col-md-6 d-flex align-items-center">
-                                <p class="f-16 mb-4 text-muted">Filter Options</p>
-                            </div>
-                            <div class="col-md-6 pr-0 text-right mb-10">
-                                <button (click)="amcWise('Allsip')">View all Sip</button>
-                            </div>
-
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-12 d-flex">
-                                <div class=" width183 borderLine ">
-                                    <div class="row ">
-                                        <div class="col-md-3 pt-12 pl-8">
-                                            <img src="/assets/images/svg/cal.svg">
-                                        </div>
-                                        <div class="col-md-9 p-0 c-p" (click)="amcWise('amc')">
-                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Amc wise</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="width183 borderLine">
-                                    <div class="row ">
-                                        <div class="col-md-3 pt-12 pl-8 ">
-                                            <img src="/assets/images/svg/cal.svg">
-                                        </div>
-                                        <!-- (click)="categoryWise('amc')" prod build -->
-                                        <div class="col-sm-9 p-0 c-p" (click)="amcWise('scheme')">
-                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Scheme wise</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="width183 borderLine">
-                                    <div class="row ">
-                                        <div class="col-md-3 pt-12 pl-8 ">
-                                            <img src="/assets/images/svg/cal.svg">
-                                        </div>
-                                        <!-- (click)="categoryWise('client')" prod build -->
-                                        <div class="col-md-9 p-0 c-p" (click)="amcWise('client')">
-                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="width183 borderLine m-0">
-                                    <div class="row ">
-                                        <div class="col-md-3 pt-12 pl-8">
-                                            <img src="/assets/images/svg/cal.svg">
-                                        </div>
-                                        <!-- (click)="categoryWise('applicant')"  prod build -->
-                                        <div class="col-sm-9 p-0 c-p" (click)="amcWise('applicant')">
-                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row p-12 pr-0">
-                            <!-- <img src="/assets/images/grap.png"
-                                    class="w-100 h-365"> -->
-                            <div class="col-md-9 p-0 borderLine">
-                                <div class="highcharts-figure" id="pieChartSip"></div>
-                            </div>
-                            <div class="col-md-3 p-0">
-                                <div id="mistabs1">
-                                    <mat-tab-group class="h-500 bg-white borderLine borderLeftNone">
-                                        <mat-tab label="SIP Rejections/Reversals">
-                                            <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP rejection in last 90 days </p>
-                                            <!-- *ngIf="clientTotalAum" prod build -->
-                                            <div class="b-white" *ngIf="rejectionSip">
-                                                <div class="row bb" *ngFor="let item of rejectionSip">
-                                                    <div class="col-md-7 p-0 ">
-                                                        <p class="mb-0 f-bold  p-8 ">
-                                                            {{item.schemeName}}|{{item.folioNumber}}</p>
-                                                        <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                            {{item.investorName}}</p>
-                                                        <p>{{item.amount}}</p>
-                                                    </div>
-                                                    <div class="col-md-5 p-0 ">
-                                                        <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                            {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div *ngIf="!rejectionSip || rejectionSip.length==0" class="text-center">
-                                                No data found
-                                            </div>
-                                        </mat-tab>
-                                    </mat-tab-group>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 pr-0">
-                        <div id="mistabs1">
-                            <mat-tab-group class="h-500 borderLine bg-white b-a ">
-                                <mat-tab label="Expiring SIP">
-                                    <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90 days </p>
-                                    <!-- *ngIf="clientTotalAum" prod build -->
-                                    <div class="b-white" *ngIf="expiringSip">
-                                        <div class="row bb" *ngFor="let item of expiringSip">
-                                            <div class="col-md-7 p-0 ">
-                                                <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}
-                                                </p>
-                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                    {{item.investorName}}</p>
-                                                <p>{{item.sipAmount}}</p>
-                                            </div>
-                                            <div class="col-md-5 p-0 ">
-                                                <p class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
-                                                    {{item.dateDiff}}</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div *ngIf="!expiringSip || expiringSip.length==0" class="text-center">
-                                        No data found
-                                    </div>
-                                </mat-tab>
-                                <mat-tab label="Expired SIP ">
-                                    <p class="b-a text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90 days </p>
-                                    <div class="b-white " *ngIf="expiringSip">
-                                        <div class="row bb " *ngFor="let item of expiredSip">
-                                            <div class="col-md-7 p-0 ">
-                                                <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}
-                                                </p>
-                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                    {{item.investorName}}</p>
-                                                <p>{{item.sipAmount}}</p>
-                                            </div>
-                                            <div class="col-md-5 p-0 ">
-                                                <p class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
-                                                    {{item.dateDiff}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="!expiredSip || expiredSip.length==0" class="text-center">
-                                        No data found
-                                    </div>
-                                </mat-tab>
-                            </mat-tab-group>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="bg-white pb-36">
+    <div *ngIf="sipComponent==true">
+      <div class="row pt-28 pb-16">
+        <div class="col-md-8">
+          <h3 class="mb-0">SIP</h3>
         </div>
+        <div *ngIf="parentId !== 0" class="col-md-4 text-right ">
+          <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
+            {{viewMode}}
+            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <div *ngFor="let item of arnRiaList">
+              <button (click)="changeArnRiaValue(item)" mat-menu-item>{{item.number}}</button>
+            </div>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div class=" mr-12">
+        <div class="row ">
+          <div class="col-md-9 p-0">
+            <div class="row">
+              <div class="col-md-4 pr-0">
+                <div class="bg-aum pt-24 pb-24 text-center br-2 height180">
+                  <h1 *ngIf="sipCount" class="text-white f-44 f-300 pt-32">
+                    {{(sipCount.totalAmountInWords) ? sipCount.totalAmountInWords : 0}}
+                  </h1>
+                  <p class="f-16 pt-4 text-white">TOTAL SIP BOOK</p>
+                </div>
+              </div>
+              <div class="col-md-4 pr-0">
+                <div class="bg-foliocount br-2 height180 pr-20 pl-12">
+
+                  <div class="row pt-12">
+                    <div *ngIf="sipCount" class="col-md-5 text-left p-0">
+                      <div class="pl-12">
+                        <h1 class="f-24 text-white mb-0 pb-8">
+                          {{(sipCount.totalCount) ? sipCount.totalCount : 0}}
+                        </h1>
+                        <p class="f-12 text-white mb-0">SIP Count</p>
+                      </div>
+                    </div>
+                    <div *ngIf="sipCount" class="col-md-7 p-0 text-right">
+                      <h1 class="text-white f-24 mb-0 pb-8"><span appFormatNumber>
+                                                    {{(sipCount.totalAmount) ? sipCount.totalAmount : 0}}</span></h1>
+                      <p class="f-12 mb-0 text-white">Average SIP</p>
+
+                    </div>
+                    <div class="col-md-12 pr-0">
+                      <div class="pt-20">
+                        <mat-progress-bar class="text-white" mode="determinate" value="10">
+                        </mat-progress-bar>
+                        <p class="text-white f-12 pt-4 mb-0 pb-8">{{clientWithoutSip}} % Clients without SIP
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 pr-0">
+                <div class="bg-info p-16 br-2 pt-12 height180">
+                  <div class="row">
+                    <div class="col-md-12 p-0">
+                      <div class="text-center">
+                        <h1 class="text-white f-300 f-40 mb-4 pt-8">13.22%</h1>
+
+                        <p class="text-white f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4% (716 folios) are currently
+                          linked to financial goals of your clients
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-16">
+              <div class="col-md-6 d-flex align-items-center">
+                <p class="f-16 mb-4 text-muted">Filter Options</p>
+              </div>
+              <div class="col-md-6 pr-0 text-right mb-10">
+                <button (click)="amcWise('Allsip')">View all Sip</button>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12 d-flex">
+                <div class=" width183 borderLine ">
+                  <div class="row ">
+                    <div class="col-md-3 pt-12 pl-8">
+                      <img src="/assets/images/svg/cal.svg">
+                    </div>
+                    <div (click)="amcWise('amc')" class="col-md-9 p-0 c-p">
+                      <h5 class="mb-0 text-custom pt-16 pb-16 ">Amc wise</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="width183 borderLine">
+                  <div class="row ">
+                    <div class="col-md-3 pt-12 pl-8 ">
+                      <img src="/assets/images/svg/cal.svg">
+                    </div>
+                    <!-- (click)="categoryWise('amc')" prod build -->
+                    <div (click)="amcWise('scheme')" class="col-sm-9 p-0 c-p">
+                      <h5 class="mb-0 text-custom pt-16 pb-16 ">Scheme wise</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="width183 borderLine">
+                  <div class="row ">
+                    <div class="col-md-3 pt-12 pl-8 ">
+                      <img src="/assets/images/svg/cal.svg">
+                    </div>
+                    <!-- (click)="categoryWise('client')" prod build -->
+                    <div (click)="amcWise('client')" class="col-md-9 p-0 c-p">
+                      <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="width183 borderLine m-0">
+                  <div class="row ">
+                    <div class="col-md-3 pt-12 pl-8">
+                      <img src="/assets/images/svg/cal.svg">
+                    </div>
+                    <!-- (click)="categoryWise('applicant')"  prod build -->
+                    <div (click)="amcWise('applicant')" class="col-sm-9 p-0 c-p">
+                      <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row p-12 pr-0">
+              <!-- <img src="/assets/images/grap.png"
+                      class="w-100 h-365"> -->
+              <div class="col-md-9 p-0 borderLine">
+                <div class="highcharts-figure" id="pieChartSip"></div>
+              </div>
+              <div class="col-md-3 p-0">
+                <div id="mistabs1">
+                  <mat-tab-group class="h-500 bg-white borderLine borderLeftNone">
+                    <mat-tab label="SIP Rejections/Reversals">
+                      <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP rejection in last 90 days </p>
+                      <!-- *ngIf="clientTotalAum" prod build -->
+                      <div *ngIf="rejectionSip" class="b-white">
+                        <div *ngFor="let item of rejectionSip" class="row bb">
+                          <div class="col-md-7 p-0 ">
+                            <p class="mb-0 f-bold  p-8 ">
+                              {{item.schemeName}}|{{item.folioNumber}}</p>
+                            <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                              {{item.investorName}}</p>
+                            <p>{{item.amount}}</p>
+                          </div>
+                          <div class="col-md-5 p-0 ">
+                            <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                              {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="!rejectionSip || rejectionSip.length==0" class="text-center">
+                        No data found
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 pr-0">
+            <div id="mistabs1">
+              <mat-tab-group class="h-500 borderLine bg-white b-a ">
+                <mat-tab label="Expiring SIP">
+                  <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90 days </p>
+                  <!-- *ngIf="clientTotalAum" prod build -->
+                  <div *ngIf="expiringSip" class="b-white">
+                    <div *ngFor="let item of expiringSip" class="row bb">
+                      <div class="col-md-7 p-0 ">
+                        <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}
+                        </p>
+                        <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                          {{item.investorName}}</p>
+                        <p>{{item.sipAmount}}</p>
+                      </div>
+                      <div class="col-md-5 p-0 ">
+                        <p class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
+                          {{item.dateDiff}}</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="!expiringSip || expiringSip.length==0" class="text-center">
+                    No data found
+                  </div>
+                </mat-tab>
+                <mat-tab label="Expired SIP ">
+                  <p class="b-a text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90 days </p>
+                  <div *ngIf="expiringSip" class="b-white ">
+                    <div *ngFor="let item of expiredSip" class="row bb ">
+                      <div class="col-md-7 p-0 ">
+                        <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}
+                        </p>
+                        <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                          {{item.investorName}}</p>
+                        <p>{{item.sipAmount}}</p>
+                      </div>
+                      <div class="col-md-5 p-0 ">
+                        <p class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
+                          {{item.dateDiff}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!expiredSip || expiredSip.length==0" class="text-center">
+                    No data found
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false">
-        <app-all-sip (changedValue)="display($event)"></app-all-sip>
-    </div>
-    <div *ngIf="sipcomponentWise=='amc'">
-        <app-sip-amc-wise (changedValue)="display($event)"></app-sip-amc-wise>
-    </div>
-    <div *ngIf="sipcomponentWise=='scheme'">
-        <app-sip-scheme-wise (changedValue)="display($event)"></app-sip-scheme-wise>
-    </div>
-    <div *ngIf="sipcomponentWise=='client'">
-        <app-sip-client-wise (changedValue)="display($event)"></app-sip-client-wise>
-    </div>
-    <div *ngIf="sipcomponentWise=='applicant'">
-        <app-sip-applicant-wise (changedValue)="display($event)"></app-sip-applicant-wise>
-    </div>
+  </div>
+  <div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false">
+    <app-all-sip (changedValue)="display($event)"></app-all-sip>
+  </div>
+  <div *ngIf="sipcomponentWise=='amc'">
+    <app-sip-amc-wise (changedValue)="display($event)"></app-sip-amc-wise>
+  </div>
+  <div *ngIf="sipcomponentWise=='scheme'">
+    <app-sip-scheme-wise (changedValue)="display($event)"></app-sip-scheme-wise>
+  </div>
+  <div *ngIf="sipcomponentWise=='client'">
+    <app-sip-client-wise (changedValue)="display($event)"></app-sip-client-wise>
+  </div>
+  <div *ngIf="sipcomponentWise=='applicant'">
+    <app-sip-applicant-wise (changedValue)="display($event)"></app-sip-applicant-wise>
+  </div>

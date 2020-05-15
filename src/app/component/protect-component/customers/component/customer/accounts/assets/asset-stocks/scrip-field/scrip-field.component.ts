@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit,EventEmitter, Output} from '@angular/core';
 import {AddScripComponent} from '../add-scrip/add-scrip.component';
 import {MatDialog} from '@angular/material';
 import {EventService} from 'src/app/Data-service/event.service';
@@ -13,6 +13,7 @@ export class ScripFieldComponent implements OnInit {
   scripList: any;
   scripFormControl: any;
   scripTransactionForm: any;
+  @Output() valueChange1 = new EventEmitter();
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService) { }
 
@@ -39,6 +40,11 @@ export class ScripFieldComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+  selectedScript(data){
+    this.valueChange1.emit(data);
+  }
+  
   getScripList() {
     let obj = {}
     this.cusService.getScripList(obj).subscribe(

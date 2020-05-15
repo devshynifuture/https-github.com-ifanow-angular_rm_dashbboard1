@@ -484,6 +484,8 @@ export const appConfig = {
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'nse/tax-master/get',
+  COUNTRY_MASTER: 'user/register/country-code/all/get',
+
   INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
   INVESTOR_STATUS_CHECK: 'user/register/status/check/update',
 
@@ -582,6 +584,7 @@ export const appConfig = {
   GET_TICKET: 'rmdashboard/tickets/get',
   GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
   GET_COMMENT_COUNT_RM_ADMIN: 'rmdashboard/dashboard/ifa-onboard/task-level-comment/count',
+  GET_FILE_ORDER_ARN_RIA_LIST: 'fileorder/arn-ria/list/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

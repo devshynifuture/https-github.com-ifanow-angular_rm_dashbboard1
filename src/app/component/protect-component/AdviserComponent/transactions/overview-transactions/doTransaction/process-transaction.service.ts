@@ -10,6 +10,8 @@ import {ContactDetailsInnComponent} from '../IIN/UCC-Creation/contact-details-in
 import {BankDetailsIINComponent} from '../IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
 import {NomineeDetailsIinComponent} from '../IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
 import {FatcaDetailsInnComponent} from '../IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,13 @@ import {FatcaDetailsInnComponent} from '../IIN/UCC-Creation/fatca-details-inn/fa
 export class ProcessTransactionService {
   [x: string]: any;
 
+  countryCodeList;
   inverstorList: any;
   transactionSummary: {};
   schemeSelection: any;
 
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,) {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
+              private onlineTransactService: OnlineTransactionService) {
     this.transactionSummary = {};
   }
 
@@ -320,6 +324,18 @@ export class ProcessTransactionService {
     }
   }
 
+  public filterCountryName(value: any, countryList): any[] {
+    const filterValue = this.normalizeValue(value + '');
+    console.log('_filter value : ', value);
+    console.log('_filter countryList : ', countryList);
+
+    if (countryList) {
+      return countryList.filter(singleScheme => this.normalizeValue(singleScheme.name).includes(filterValue));
+    } else {
+      return [];
+    }
+  }
+
   public normalizeValue(value: string): string {
     return value.toLowerCase().replace(/\s/g, '');
   }
@@ -444,5 +460,17 @@ export class ProcessTransactionService {
 
   displaySchemeName(scheme) {
     return scheme && scheme.schemeName ? scheme.schemeName : '';
+  }
+
+  displayCountryName(scheme) {
+    return scheme && scheme.name ? scheme.name : '';
+  }
+
+  getCountryCodeList() {
+    if (this.countryCodeList) {
+      return of(this.countryCodeList);
+    } else {
+      return this.onlineTransactService.getCountryCodeList({});
+    }
   }
 }

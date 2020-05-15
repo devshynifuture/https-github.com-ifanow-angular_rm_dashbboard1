@@ -57,7 +57,8 @@
         </div>
         <div class="col-md-7">
             <mat-radio-group formControlName="selectRta" (change)="resetDateAsOnDateAndFormCheckbox()">
-                <mat-radio-button #radioBtnRef [value]="item.id" *ngFor="let item of rtList"
+                <mat-radio-button #radioBtnRef [value]="item.id" *ngFor="let item of rtList; index as i"
+                    [ngStyle]="{ 'padding-right': getPaddingTop(i) }"
                     [ngClass]="orderHistoryFileForm.get('selectRta') === item.id ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                     {{ item.name }}
                 </mat-radio-button>

@@ -56,8 +56,8 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       number: [arnNumber, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
       euin: [euinNumber || ''],
-      commencementDate: [this.data.mainData.commencementDate || ''],
-      renewalDate: [this.data.mainData.renewalDate || ''],
+      commencementDate: [this.data.mainData.commencementDate],
+      renewalDate: [this.data.mainData.renewalDate],
       registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.pattern(ValidatorType.EMAIL)]],
       registeredPan: [this.data.mainData.registeredPan || '', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.PAN)]],
       registeredAddress: [this.data.mainData.registeredAddress || '', [Validators.maxLength(150)]],
@@ -145,12 +145,12 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           ...jsonObj
         }
         this.settingService.editArn(editJson).subscribe((res) => {
-          this.eventService.openSnackBar("ARN-RIA Added successfully");
+          this.eventService.openSnackBar("ARN-RIA Modified successfully");
           this.Close(true);
         })
       } else {
         this.settingService.addArn(jsonObj).subscribe((res) => {
-          this.eventService.openSnackBar("ARN-RIA Modified successfully");
+          this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);
         })
       }
@@ -166,6 +166,6 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   clearDate(fomrControlName) {
-    this.arnRiaFG.get(fomrControlName).setValue('');
+    this.arnRiaFG.get(fomrControlName).setValue(null);
   }
 }

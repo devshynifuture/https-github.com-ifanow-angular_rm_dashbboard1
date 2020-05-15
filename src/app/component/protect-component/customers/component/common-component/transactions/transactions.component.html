@@ -105,9 +105,13 @@
             <ng-container matColumnDef="icons">
               <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
               <td *matCellDef="let element" class="t-2" mat-cell>
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
+                <div [matTooltip]="'For Edit and Delete Operations, Mutual Fund need to be of type Manual'"
+                  [matTooltipDisabled]="element.rtTypeId === 14" matTooltipPosition="below">
+                  <button mat-icon-button [disabled]="element.rtTypeId !== 14" [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                </div>
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item (click)="openMutualFund('editTransaction', element)">
                     <span>Edit</span>

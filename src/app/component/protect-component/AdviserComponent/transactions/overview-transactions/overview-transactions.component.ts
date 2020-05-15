@@ -1,17 +1,17 @@
-import { UtilService } from '../../../../../services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
-import { OnlineTrasactionComponent } from './doTransaction/online-trasaction/online-trasaction.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { KnowYourCustomerComponent } from './know-your-customer/know-your-customer.component';
-import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { VerifyMemberComponent } from './MandateCreation/verify-member/verify-member.component';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { HttpService } from 'src/app/http-service/http-service';
-import { TransactionMobileViewComponent } from '../transaction-mobile-view/transaction-mobile-view.component';
-import { MatDialog } from '@angular/material';
-import { OnlineTransactionService } from '../online-transaction.service';
+import {UtilService} from '../../../../../services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {OnlineTrasactionComponent} from './doTransaction/online-trasaction/online-trasaction.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {KnowYourCustomerComponent} from './know-your-customer/know-your-customer.component';
+import {IinUccCreationComponent} from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {AddMandateComponent} from './MandateCreation/add-mandate/add-mandate.component';
+import {HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpService} from 'src/app/http-service/http-service';
+import {TransactionMobileViewComponent} from '../transaction-mobile-view/transaction-mobile-view.component';
+import {MatDialog} from '@angular/material';
+import {OnlineTransactionService} from '../online-transaction.service';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -27,7 +27,7 @@ export class OverviewTransactionsComponent implements OnInit {
   transactionCount: any;
   totalUccCount: any;
   totalInvestorWithoutMandate: any;
-  isLoading = false
+  isLoading = false;
   pendingCount: any;
   rejectCount: any;
   acceptCount: any;
@@ -46,21 +46,21 @@ export class OverviewTransactionsComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
-    public eventService: EventService, private http: HttpService,
-    private tranService: OnlineTransactionService) {
-    this.advisorId = AuthService.getAdvisorId()
+              public eventService: EventService, private http: HttpService,
+              private tranService: OnlineTransactionService) {
+    this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
     this.finalEndDate = new Date().getTime();
-    this.getAllTransactionList()
-    this.getMandate()
-    this.getIInData()
+    this.getAllTransactionList();
+    this.getMandate();
+    this.getIInData();
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   openMobileErrorCopyTransactionPopup() {
@@ -76,6 +76,7 @@ export class OverviewTransactionsComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
   openNewTransaction() {
     const fragmentData = {
       flag: 'addNewTransaction',
@@ -126,7 +127,7 @@ export class OverviewTransactionsComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: VerifyMemberComponent
+      componentName: AddMandateComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -142,7 +143,7 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   getAllTransactionList() {
-    this.isLoading = true
+    this.isLoading = true;
     // this.transactionList = [
     //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
     //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
@@ -157,21 +158,21 @@ export class OverviewTransactionsComponent implements OnInit {
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
         console.log(data);
-        this.isLoading = false
+        this.isLoading = false;
         console.log('transaction data', data);
-        this.transactionList = data
-        this.transactionCount = data.length
+        this.transactionList = data;
+        this.transactionCount = data.length;
         this.pendingTransaction = data.filter(data => data.status == 2);
         this.rejectionTransaction = data.filter(data => data.status == 7);
         this.doneTrasaction = data.filter(data => data.status == 6 || data.status == 8);
-        this.doneTrasaction = this.doneTrasaction.length
+        this.doneTrasaction = this.doneTrasaction.length;
         if (this.doneTrasaction == undefined) {
-          this.doneTrasaction = []
+          this.doneTrasaction = [];
         } else {
-          this.percentageTrasact = (this.doneTrasaction / this.transactionCount) * 100
+          this.percentageTrasact = (this.doneTrasaction / this.transactionCount) * 100;
         }
-        this.pendingTransaction = this.rejectionTransaction.length
-        this.rejectionTransaction = this.rejectionTransaction.length
+        this.pendingTransaction = this.rejectionTransaction.length;
+        this.rejectionTransaction = this.rejectionTransaction.length;
 
       },
       err => {
@@ -180,24 +181,25 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
   }
+
   getMandate() {
-    this.isLoadingMandate = true
+    this.isLoadingMandate = true;
     const obj = {
       advisorId: this.advisorId,
     };
     this.tranService.getOverviewMandate(obj).subscribe(
       data => {
         console.log(data);
-        this.isLoadingMandate = false
+        this.isLoadingMandate = false;
         console.log('getOverviewMandate data', data);
-        this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate
+        this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate;
         data.statusList.forEach(element => {
           if (element.status == 1) {
-            this.pendingCount = element.count
+            this.pendingCount = element.count;
           } else if (element.status == 2) {
-            this.acceptCount = element.count
+            this.acceptCount = element.count;
           } else if (element.status == 3) {
-            this.rejectCount = element.count
+            this.rejectCount = element.count;
           }
         });
       },
@@ -207,6 +209,7 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
   }
+
   //     totalInvestorWithoutMandate: 589
   // statusList: Array(4)
   // 0: {count: 4, status: 0}
@@ -215,21 +218,21 @@ export class OverviewTransactionsComponent implements OnInit {
   // 3: {count: 1, status: 3}
   //   }
   getIInData() {
-    this.isLoadingIIN = true
+    this.isLoadingIIN = true;
     const obj = {
       advisorId: this.advisorId,
     };
     this.tranService.getIINUCCOverview(obj).subscribe(
       data => {
         console.log(data);
-        this.isLoadingIIN = false
-        this.totalUccCount = data.length
+        this.isLoadingIIN = false;
+        this.totalUccCount = data.length;
         console.log('getIINUCCOverview data', data);
-        this.totalPending = data.totalPending
-        this.totalClient = data.totalClient
-        this.totalClientCode = data.totalClientCode
-        this.totalPendingClient = data.totalPendingClient
-        this.totalRejected = data.totalRejected
+        this.totalPending = data.totalPending;
+        this.totalClient = data.totalClient;
+        this.totalClientCode = data.totalClientCode;
+        this.totalPendingClient = data.totalPendingClient;
+        this.totalRejected = data.totalRejected;
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -237,6 +240,7 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
   }
+
   openNewCustomerIIN() {
     const fragmentData = {
       flag: 'addNewCustomer',
@@ -262,7 +266,7 @@ export class OverviewTransactionsComponent implements OnInit {
   soapCall() {
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'https://www.bsestarmf.in/StarMFFileUploadService/StarMFFileUploadService.svc/Secure', true);
-    xmlhttp.setRequestHeader("Content-Type", "application/soap+xml; charset=utf-8; action=http://tempuri.org/IStarMFFileUploadService/GetPassword")
+    xmlhttp.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8; action=http://tempuri.org/IStarMFFileUploadService/GetPassword');
     const sr =
       `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/" xmlns:star="http://schemas.datacontract.org/2004/07/StarMFFileUploadService">
       <soap:Header/>
@@ -287,23 +291,25 @@ export class OverviewTransactionsComponent implements OnInit {
           console.log(response_number);
         }
       }
-    }
+    };
     // Send the POST request.
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.responseType = 'document';
     xmlhttp.send(sr);
   }
+
   uploadFile(file) {
-    console.log('2324234324', file)
-    this.file = file.target.files[0]
-    this.nseUpload(this.file)
+    console.log('2324234324', file);
+    this.file = file.target.files[0];
+    this.nseUpload(this.file);
   }
+
   nseUpload(file) {
 
 
     const BASE_NSE_URL = 'https://www.nsenmf.com/';
     const fileuploadurl = BASE_NSE_URL + 'NMFIIImageUpload/ImageUpload/UPLOADIMG';
-    const fileName = file
+    const fileName = file;
 
     const params = new HttpParams()
 
