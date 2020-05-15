@@ -197,8 +197,9 @@
       <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button (click)="save()" class="btn-bottom br-0 text-inherit" mat-button>SAVE
-      </button>
+      <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "
+          [options]="barButtonOptions">
+      </app-progress-button>
     </div>
   </div>
 </div>

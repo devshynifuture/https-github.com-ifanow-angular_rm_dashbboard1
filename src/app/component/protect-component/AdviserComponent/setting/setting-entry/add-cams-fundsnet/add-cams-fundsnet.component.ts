@@ -6,6 +6,7 @@ import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-cams-fundsnet',
@@ -21,6 +22,18 @@ export class AddCamsFundsnetComponent implements OnInit {
   advisorId: any;
   showAddMoreQuestionBtn = true;
   formPlaceHolders:any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -78,9 +91,10 @@ export class AddCamsFundsnetComponent implements OnInit {
     });
   }
   save(){
-    if(this.camsFundFG.invalid) {
+    if(this.camsFundFG.invalid || this.barButtonOptions.active) {
       this.camsFundFG.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const jsonObj = this.camsFundFG.value;
       jsonObj.arnOrRia = this.data.arnData.find((data) => this.camsFundFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
     
@@ -92,6 +106,9 @@ export class AddCamsFundsnetComponent implements OnInit {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Fundsnet Added successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       } else {
         let editJson = {
@@ -101,6 +118,9 @@ export class AddCamsFundsnetComponent implements OnInit {
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Fundsnet Modified successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         });
       }
     }

@@ -357,8 +357,12 @@ export class OrgProfileComponent implements OnInit {
     this.showCropper = false;
     this.cropImage = false;
     this.imageUploadEvent = '';
-    this.finalImage =
-     '';
+    this.finalImage = '';
+    if(this.selectedTab == 2) {
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+    } else {
+      this.barButtonOptions.text = 'SAVE & NEXT';
+    }
   }
   protected filterCodes() {
     if (!this.isdCodes) {
