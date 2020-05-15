@@ -86,9 +86,9 @@
         </div>
         <div class="col-md-5">
             <div class="form-group p-0">
-                <mat-form-field appearance="standard" floatLabel="never">
-                    <button mat-stroked-button class="b-0 borderBtn h-40   bg-grey lter min-80 text-custom">E</button>
-                    <input matInput type="text" [placeholder]="formPlaceHolders.ENTER_EUIN" formControlName="euin" class="form-control br-0" maxlength="6" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                <mat-form-field class="url" floatLabel="never" appearance="standard">
+                    <button mat-stroked-button class="b-0 borderBtn h-40 bg-grey lter min-80 text-custom">E</button>
+                    <input matInput type="text" [placeholder]="formPlaceHolders.ENTER_EUIN" formControlName="euin" class="form-control inputBorderTransparent br-0" maxlength="6" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                     <mat-error *ngIf="arnRiaFG.get('euin').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="arnRiaFG.get('euin').errors?.pattern">Valid EUIN required</mat-error>
                 </mat-form-field>
@@ -102,7 +102,7 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input class="form-control b-0" [placeholder]="formPlaceHolders.ENTER_DATE" formControlName="commencementDate" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
+                    <input class="form-control b-0" formControlName="commencementDate" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-hint>Optional</mat-hint>
@@ -127,7 +127,7 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input class="form-control b-0" [placeholder]="formPlaceHolders.ENTER_DATE" formControlName="renewalDate" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
+                    <input class="form-control b-0" formControlName="renewalDate" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-hint>Optional</mat-hint>
@@ -253,8 +253,7 @@
                 <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit"
-                    [options]="barButtonOptions">
+                <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>

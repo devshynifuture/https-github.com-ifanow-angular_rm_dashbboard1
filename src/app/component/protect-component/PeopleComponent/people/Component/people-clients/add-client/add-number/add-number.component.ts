@@ -41,6 +41,7 @@ export class AddNumberComponent implements OnInit {
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
   selectedISD: any;
+  taxstatusId: any;
 
   ngOnInit() {
     // listen for search field value changes
@@ -59,6 +60,7 @@ export class AddNumberComponent implements OnInit {
     if (taxStatusId == undefined) {
       return;
     }
+    this.taxstatusId = taxStatusId;
     // let taxStatusObj = this.enumService.filterTaxStatusList(taxStatusId);
     this.getIsdCodesData(taxStatusId);
   }

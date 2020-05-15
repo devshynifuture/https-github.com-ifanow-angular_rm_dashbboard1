@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 })
 export class MfServiceService {
   advisorData: any;
-  constructor(private settingService: SettingsService, private authService: AuthService,private datePipe: DatePipe) {
+  constructor(private settingService: SettingsService, private authService: AuthService, private datePipe: DatePipe) {
   }
 
   private mutualFundDataSource = new BehaviorSubject('');
@@ -64,7 +64,7 @@ export class MfServiceService {
     const filterData = [];
     const finalDataSource = [];
     data.filter(element => {
-      if((element[key]) ? element[key].length> 0 : element[key]){
+      if ((element[key]) ? element[key].length > 0 : element[key]) {
         filterData.push(element[key]);
       }
     });
@@ -102,9 +102,9 @@ export class MfServiceService {
     // this.totalGain = 0;
     // this.allocationPer = 0;
   }
-  getYearFromDate(date){ //for converting timeStampdate into year
+  getYearFromDate(date) { //for converting timeStampdate into year
     date = new Date(date);
-    date =date.getFullYear();
+    date = date.getFullYear();
     return date;
   }
   calculateTotalValue(data) {// for getting total value as per category in Summary
@@ -146,7 +146,7 @@ export class MfServiceService {
     for (const [key, value] of Object.entries(primaryObject)) {
       if (exceptionKeys[key]) {
       } else {
-        if ((primaryObject[key] || primaryObject[key]==0) && (secondary[key]) || secondary[key]==0) {
+        if ((primaryObject[key] || primaryObject[key] == 0) && (secondary[key]) || secondary[key] == 0) {
           primaryObject[key] = value + secondary[key];
         }
       }
@@ -168,7 +168,7 @@ export class MfServiceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
-    let netGain =0;
+    let netGain = 0;
     data.mutualFundTransactions.forEach(ele => {
       totalTransactionAmt += (ele.amount) ? ele.amount : 0;
       totalUnit += (ele.unit) ? ele.unit : 0;
@@ -179,7 +179,7 @@ export class MfServiceService {
       dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
       totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
       totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
-      netGain+=(ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0;
+      netGain += (ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0;
       absReturn += (ele.absReturn) ? ele.absReturn : 0;
       xirr += (ele.xirr) ? ele.xirr : 0;
       allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
@@ -217,7 +217,16 @@ export class MfServiceService {
     });
     return catObj;
   }
+  sorting(data, filterId) {
+    if(data){
+      data.sort((a, b) =>
+      a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+    );
+    }
 
+
+    return data
+  }
   filterScheme(data) {
     const filterData = [];
     const filterData2 = [];
@@ -285,7 +294,7 @@ export class MfServiceService {
         item.folioNumber != 0
       );
     }
-    if(dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT'){
+    if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
       dataForFilter.reportAsOn = null;
     }
     if (dataForFilter.reportAsOn) {
@@ -295,7 +304,7 @@ export class MfServiceService {
         );
       });
     }
-    if(dataForFilter.transactionPeriodCheck){
+    if (dataForFilter.transactionPeriodCheck) {
       if (dataForFilter.fromDate && dataForFilter.toDate) {
         mutualFundList.forEach(element => {
           element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
@@ -325,10 +334,10 @@ export class MfServiceService {
     });
 
     let capitalGainArray = [];
-    if(dataForFilter.capitalGainData){
+    if (dataForFilter.capitalGainData) {
       dataForFilter.capitalGainData.responseData.forEach(element => {
         const family_member_list = this.filterArray(element.mutualFund, 'familyMemberId', dataForFilter.familyMember, 'familyMemberId');
-        if(family_member_list.length > 0){
+        if (family_member_list.length > 0) {
           capitalGainArray.push(element)
         }
       });
@@ -347,13 +356,13 @@ export class MfServiceService {
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
-      overviewFilter : dataForFilter.overviewFilter,
-      reportFormat:dataForFilter.reportFormat,
-      financialYear:dataForFilter.financialYear,
-      grandfathering:dataForFilter.grandfathering,    
+      overviewFilter: dataForFilter.overviewFilter,
+      reportFormat: dataForFilter.reportFormat,
+      financialYear: dataForFilter.financialYear,
+      grandfathering: dataForFilter.grandfathering,
       mfData,
-      capitalGainData:dataForFilter.capitalGainData,
-      categoryWiseMfList:categoryWiseMfList
+      capitalGainData: dataForFilter.capitalGainData,
+      categoryWiseMfList: categoryWiseMfList
     };
     return sendData;
   }
