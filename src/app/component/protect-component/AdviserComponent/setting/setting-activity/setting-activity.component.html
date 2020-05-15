@@ -77,7 +77,7 @@
         </table>
     </div>
     <div class="col-md-12 pt-20" *ngIf="taskList && unlinkedTaskList.length > 0">
-        <div>Non linked task template</div>
+        Non linked task template
         <table mat-table [dataSource]="unlinkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="symbol1">
                 <th mat-header-cell *matHeaderCellDef class="br"> Task template </th>
