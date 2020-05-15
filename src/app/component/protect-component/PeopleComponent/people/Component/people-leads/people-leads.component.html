@@ -16,11 +16,11 @@
             <button (click)="Excel('Lead')" mat-menu-item>XLS</button>
         </mat-menu>
 
-        <a class="c-p downloadPdfIcon iconBorderNone">
+        <!-- <a class="c-p downloadPdfIcon iconBorderNone">
             <img src="assets/images/svg/up-down.svg">
         </a>
 
-        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8"> -->
 
         <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button> -->
@@ -48,7 +48,7 @@
             <ng-container matColumnDef="name">
                 <th mat-sort-header="mobileNo" mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.mobileNo}}</div>
+                    <div class="bar"> {{(element.mobileNo!=0)?element.mobileNo:'N/A'}}</div>
                 </td>
             </ng-container>
 

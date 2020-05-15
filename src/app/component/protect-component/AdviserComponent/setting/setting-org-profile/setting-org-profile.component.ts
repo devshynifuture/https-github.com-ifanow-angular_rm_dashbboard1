@@ -102,7 +102,9 @@ export class SettingOrgProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getPersonalProfiles();
+          if(UtilService.isRefreshRequired(sideBarData)) {
+            this.getPersonalProfiles();
+          }
           rightSideDataSub.unsubscribe();
         }
       }
@@ -131,8 +133,10 @@ export class SettingOrgProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          this.isOrgProfileLoaded = false;
-          this.getOrgProfiles();
+          if(UtilService.isRefreshRequired(sideBarData)) {
+            this.isOrgProfileLoaded = false;
+            this.getOrgProfiles();
+          }
           rightSideDataSub.unsubscribe();
         }
       }

@@ -19,28 +19,15 @@ export class SubscriptionInject {
   private openCloseupperSlider = new BehaviorSubject('');
   rightslider = this.openCloseupperSlider.asObservable();
 
-  private openContent = new BehaviorSubject('');
-  closeRightSlider = this.openContent.asObservable();
-
-  // document-clients
-
-  private openDocument = new BehaviorSubject('');
-  rightSliderDocument = this.openDocument.asObservable();
-
   // billerProfileData
 
   private billerData = new BehaviorSubject('');
   singleProfileData = this.billerData.asObservable();
 
-  private upper = new BehaviorSubject('');
-  upperData = this.upper.asObservable();
 
-  private specialEvent = new BehaviorSubject<any>('');
-  event = this.specialEvent.asObservable();
+  private refreshObservable = new BehaviorSubject<boolean>(false);
 
   rightSideData(msg) {
-    console.log('dialog-container rightSideData: ', msg);
-
     this.openCloseRightSlider.next(msg);
     return this.rightSideBarData;
   }
@@ -49,28 +36,9 @@ export class SubscriptionInject {
     this.openCloseupperSlider.next(msg);
   }
 
-  closeSlider(msg: string) {
-    this.openContent.next(msg);
-  }
-
-  /*
-    rightDocumentSlider(msg: string) {
-      this.openDocument.next(msg);
-    }*/
-
   addSingleProfile(obj) {
-    /**/
     this.billerData.next(obj);
     return this.singleProfileData;
-  }
-
-  pushUpperData(data) {
-    this.upper.next(data);
-  }
-
-  changeNewRightSliderState(sliderState: object) {
-    this.newRightSliderData.next(sliderState);
-    return this.newRightSliderDataObs;
   }
 
   changeUpperRightSliderState(sliderState: object) {
@@ -78,7 +46,29 @@ export class SubscriptionInject {
     return this.upperRightSliderDataObs;
   }
 
-  addEvent(data: object) {
-    this.specialEvent.next(data)
+
+  // methods for opening compoennts in slider
+  changeNewRightSliderState(sliderState: object) {
+    this.newRightSliderData.next(sliderState);
+    return this.newRightSliderDataObs;
   }
+
+  setRefreshRequired(){
+    this.refreshObservable.next(true);
+  }
+
+  openNewRightSlider(sliderData: any) {
+    this.newRightSliderData.next(sliderData);
+    return this.newRightSliderDataObs;
+  }
+
+  closeNewRightSlider(sliderObj:any) {
+    const sliderCloseObj = {
+      refreshRequired: this.refreshObservable.getValue(),
+      ...sliderObj
+    }
+    this.refreshObservable.next(false);
+    this.newRightSliderData.next(sliderCloseObj);
+  }
+  // ending of methods for opening components in slider
 }

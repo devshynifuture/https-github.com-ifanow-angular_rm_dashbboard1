@@ -16,9 +16,7 @@
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput (input)="capitalise($event)" placeholder="Enter full name"
-                        formControlName="fullName" class="form-control" [readonly]="!data.is_add_call"
-                        [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
+                    <input matInput (input)="capitalise($event)" [placeholder]="formPlaceHolders.ENTER_FULL_NAME" formControlName="fullName" class="form-control" [readonly]="!data.is_add_call" [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
                     <mat-hint align="end">{{teamMemberFG.get('fullName').value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -33,8 +31,7 @@
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input placeholder="Enter email id" matInput formControlName="emailId" class="form-control"
-                        [readonly]="!data.is_add_call">
+                    <input [placeholder]="formPlaceHolders.ENTER_EMAIL_ID" matInput formControlName="emailId" class="form-control" [readonly]="!data.is_add_call">
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.pattern">Email is invalid</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.required">This field is required</mat-error>
                 </mat-form-field>
@@ -65,9 +62,7 @@
         <div class="col-md-4 col-8 pr-0 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation
-                        #mobileNo formControlName="mobileNo" placeholder="Enter mobile number" class="form-control"
-                        [readonly]="!data.is_add_call">
+                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation #mobileNo formControlName="mobileNo" [placeholder]="formPlaceHolders.ENTER_MOBILE_NUMBER" class="form-control" [readonly]="!data.is_add_call">
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.pattern">
                         Enter Valid Mobile number</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
@@ -84,7 +79,7 @@
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="roleId">
-                        <mat-option value="">Select role</mat-option>
+                        <mat-option value="">{{formPlaceHolders.SELECT_ROLE}}</mat-option>
                         <mat-option *ngFor="let role of roles" [value]="role.roleMasterId">{{role.roleName}}
                         </mat-option>
                     </mat-select>
@@ -95,20 +90,12 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
-            <h5 class="m-0 pt-20">Your logo</h5>
+            <h5 class="m-0 pt-20">Profile Photo</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
-            <div class="photView ">
-
-
+            <div class="photView " *ngIf="imageLoader || logoImg">
                 <mat-spinner class="positionLoader" *ngIf="imageLoader==true" [diameter]="30"></mat-spinner>
-
                 <img *ngIf="logoImg" src="{{logoImg}}">
-                <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
-                    <i class="material-icons c-p" style="font-size: 100px;">
-                        cloud_upload
-                    </i>
-                </div>
                 <i class="material-icons cancel_btn_icon" *ngIf="logoImg" (click)="cancelImageUpload()">
                     cancel
                 </i>

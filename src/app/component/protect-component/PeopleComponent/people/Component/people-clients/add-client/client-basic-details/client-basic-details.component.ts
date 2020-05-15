@@ -50,7 +50,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   @Input() fieldFlag;
   @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
-
+  @Output() cancelTab = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
@@ -64,6 +65,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   countryCodeFlag: any;
   sendRole: any;
   disableBtn: boolean = false;
+  clientTypeList: any;
 
   // advisorId;
 
@@ -107,6 +109,12 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
       }
       (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
+      if (this.fieldFlag == 'client') {
+        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : (this.basicDetailsData.clientType == 2) ? { name: 'Minor', value: '2' } : { name: 'Non-individual', value: '3' }
+      }
+      else {
+        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : { name: 'Non-individual', value: '2' }
+      }
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
     }
@@ -457,6 +465,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTabAndSendData(data) {
     this.clientData.emit(data);
     this.tabChange.emit(1);
+    this.saveNextData.emit(true);
   }
 
   saveNextFamilyMember(flag) {
@@ -568,9 +577,9 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({
+    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({
       state: 'close',
-      clientData: data
+      refreshRequired: true
     });
   }
 

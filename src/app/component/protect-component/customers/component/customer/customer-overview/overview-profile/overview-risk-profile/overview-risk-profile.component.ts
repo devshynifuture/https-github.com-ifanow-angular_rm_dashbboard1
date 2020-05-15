@@ -259,6 +259,8 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
+    const index = item.id
+    this.riskAssessmentQuestionList[index].done = true
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -285,6 +287,10 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
+    this.riskAssessmentQuestionList.forEach(element => {
+      element.done = false
+    });
+    this.riskAssessmentQuestionList[0].done = true
     console.log(this.riskAssessmentQuestionList);
     // if (flag == false) {
     //   this.reset(false)
@@ -384,6 +390,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         this.reset(true);
       }
     }
+    // this.riskAssessmentQuestionList.forEach(element => {
+    //   element.done = true
+    // });
   }
   reset(flag) {
     this.statusArray = []

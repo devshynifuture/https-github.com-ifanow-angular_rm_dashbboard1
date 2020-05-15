@@ -7,6 +7,8 @@ import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Subscription} from 'rxjs';
 import {AuthService} from 'src/app/auth-service/authService';
 import {DatePipe} from '@angular/common';
+import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-arn-ria-details',
@@ -23,6 +25,19 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   advisorId: any;
   @ViewChild('arnForm', {static: true}) arnForm: ElementRef;
   validatorType = ValidatorType;
+  formPlaceHolders:any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -33,6 +48,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     public utils: UtilService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
   }
 
   ngOnInit() {
@@ -107,10 +123,11 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    if (this.arnRiaFG.invalid) {
+    if (this.arnRiaFG.invalid || this.barButtonOptions.active) {
       this.arnRiaFG.markAllAsTouched();
       this.utils.focusOnInvalid(this.arnRiaFG, this.arnForm);
     } else {
+      this.barButtonOptions.active = true;
       const jsonObj = {
         ...this.data.mainData,
         ...this.arnRiaFG.getRawValue()
@@ -147,11 +164,17 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         this.settingService.editArn(editJson).subscribe((res) => {
           this.eventService.openSnackBar("ARN-RIA Modified successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       } else {
         this.settingService.addArn(jsonObj).subscribe((res) => {
           this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);
+        }, err=> {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
         })
       }
     }

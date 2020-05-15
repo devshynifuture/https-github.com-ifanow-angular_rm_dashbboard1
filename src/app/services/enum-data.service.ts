@@ -86,7 +86,7 @@ export class EnumDataService {
     );
   }
 
-  searchClientAndFamilymember() {
+  searchClientAndFamilyMember() {
     const obj = {
       advisorId: AuthService.getAdvisorId(),
       displayName: '%'

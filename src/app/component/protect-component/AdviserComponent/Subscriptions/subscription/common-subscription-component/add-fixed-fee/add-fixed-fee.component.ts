@@ -1,12 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChildren, QueryList } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { MatInput } from '@angular/material';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {MatInput} from '@angular/material';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -131,12 +131,6 @@ export class AddFixedFeeComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
     this.setValidation(false);
     this.createFixedFeeForm('');
-  }
-
-  closeTab(state, value) {
-    console.log(state);
-    this.subInjectService.rightSliderData(state);
-    this.subInjectService.closeSlider(value);
   }
 
   saveFeeTypeData(feeType, state) {

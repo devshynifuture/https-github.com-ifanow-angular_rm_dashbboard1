@@ -34,7 +34,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" placeholder="Enter Login ID" matInput formControlName="loginId" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolders.ENTER_LOGIN_ID" matInput formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -47,7 +47,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" placeholder="Enter password" formControlName="loginPassword" matInput class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolders.ENTER_PASSWORD" formControlName="loginPassword" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -73,7 +73,7 @@
                 <div class="col-md-2 pl-0">
                     <div class="form-group mb-24">
                         <mat-form-field>
-                            <input [formControlName]="'answer'" class="form-control" matInput type="text">
+                            <input [formControlName]="'answer'" [placeholder]="formPlaceHolders.ENTER_ANSWER" class="form-control" matInput type="text">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -89,7 +89,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>
+            <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit"
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

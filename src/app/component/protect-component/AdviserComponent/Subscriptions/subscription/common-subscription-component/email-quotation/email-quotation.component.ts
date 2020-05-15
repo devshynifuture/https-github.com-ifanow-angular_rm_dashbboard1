@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {MatDialog} from '@angular/material';
 import {HowItWorksComponent} from '../how-it-works/how-it-works.component';
@@ -20,20 +20,19 @@ export class EmailQuotationComponent implements OnInit {
 
   ngOnInit() {
     this.showSent = 'false';
-    console.log('this.headerData', this.headerData)
+    console.log('this.headerData', this.headerData);
   }
 
   Close(state) {
-    this.subInjectService.rightSliderData(state)
-    this.subInjectService.rightSideData(state)
+    this.subInjectService.rightSliderData(state);
+    this.subInjectService.rightSideData(state);
     this.showSent = 'false';
 
   }
 
   closeTab(state, value) {
-    console.log(state)
-    this.subInjectService.rightSliderData(state)
-    this.subInjectService.closeSlider(value)
+    console.log(state);
+    this.subInjectService.rightSliderData(state);
   }
 
   sentMail() {
@@ -41,9 +40,9 @@ export class EmailQuotationComponent implements OnInit {
   }
 
   openModel(data) {
-    let Fragmentdata = {
+    const Fragmentdata = {
       flag: data,
-    }
+    };
     const dialogRef = this.dialog.open(HowItWorksComponent, {
       width: '50%',
       data: Fragmentdata,

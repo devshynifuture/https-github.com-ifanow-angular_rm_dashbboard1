@@ -55,7 +55,7 @@ export class RiskProfileComponent implements OnInit {
     this.getRiskProfileList(true);
     this.getdataForm('');
     this.sendRiskList = [];
-   // this.progressBar = [];
+    // this.progressBar = [];
     this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false
@@ -239,7 +239,7 @@ export class RiskProfileComponent implements OnInit {
         data: [this.score],
         dataLabels: 1,
         tooltip: {
-          valueSuffix: this.score+'/600'
+          valueSuffix: this.score + '/600'
         },
       }]
 
@@ -251,7 +251,7 @@ export class RiskProfileComponent implements OnInit {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if (this.checkFamilyMem == false &&  this.statusArray.length < 15) {
+      if (this.checkFamilyMem == false && this.statusArray.length < 15) {
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
@@ -259,6 +259,8 @@ export class RiskProfileComponent implements OnInit {
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
+    const index = item.id
+    this.riskAssessmentQuestionList[index].done = true
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -274,11 +276,11 @@ export class RiskProfileComponent implements OnInit {
     this.isLoading = true
     this.showButton = false
     this.planService.getRiskProfile('').subscribe(
-      data => this.getRiskProfilRes(data,flag)
+      data => this.getRiskProfilRes(data, flag)
     );
   }
 
-  getRiskProfilRes(data,flag) {
+  getRiskProfilRes(data, flag) {
     this.showButton = true
     this.isLoading = false
     console.log(data);
@@ -286,9 +288,14 @@ export class RiskProfileComponent implements OnInit {
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
     console.log(this.riskAssessmentQuestionList);
-    if(flag == false){
+    if (flag == false) {
       this.reset(false)
     }
+    this.riskAssessmentQuestionList.forEach(element => {
+      element.done = false
+    });
+    this.riskAssessmentQuestionList[0].done = true
+
   }
 
   submitRiskAnalysis(data) {
@@ -333,17 +340,17 @@ export class RiskProfileComponent implements OnInit {
     if (data) {
       console.log(data);
       this.score = data.score;
-      if(this.score <= 180){
+      if (this.score <= 180) {
         this.scoreStatus = 'conservative'
-      }else if(this.score <= 290){
+      } else if (this.score <= 290) {
         this.scoreStatus = 'Moderately conservative'
-      }else if(this.score <= 400){
+      } else if (this.score <= 400) {
         this.scoreStatus = 'Moderate'
-      }else if(this.score <= 510){
+      } else if (this.score <= 510) {
         this.scoreStatus = 'Moderately aggressive'
-      }else if(this.score <= 600){
+      } else if (this.score <= 600) {
         this.scoreStatus = 'Aggressive'
-      }else{
+      } else {
         this.scoreStatus = ''
       }
       this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
@@ -382,12 +389,17 @@ export class RiskProfileComponent implements OnInit {
         this.showButton = false
       }
     }
+    // if(data.refreshRequired){
+    //   this.riskAssessmentQuestionList.forEach(element => {
+    //     element.done = true
+    //   });
+    // }
   }
-  reset(flag){
+  reset(flag) {
     this.statusArray = []
     this.progressBar = this.statusArray.length * 0
-    if(flag == true){
-      this.getRiskProfileList(true);  
+    if (flag == true) {
+      this.getRiskProfileList(true);
     }
   }
   close() {

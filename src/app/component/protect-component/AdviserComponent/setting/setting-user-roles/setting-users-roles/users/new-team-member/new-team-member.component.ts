@@ -11,6 +11,7 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-new-team-member',
@@ -25,6 +26,7 @@ export class NewTeamMemberComponent implements OnInit {
   counter = 0;
   isLoading = true;
   validatorType = ValidatorType;
+  formPlaceHolders = AppConstants.formPlaceHolders;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SEND INVITE',
@@ -36,9 +38,6 @@ export class NewTeamMemberComponent implements OnInit {
     value: 10,
     disabled: false,
     fullWidth: false,
-    // buttonIcon: {
-    //   fontIcon: 'favorite'
-    // }
   };
   isdCodes: Array<any> = [];
   logoImg;
@@ -178,8 +177,7 @@ export class NewTeamMemberComponent implements OnInit {
       return;
     }
     else {
-      if (this.barButtonOptions.active) {
-      } else {
+      if (!this.barButtonOptions.active) {
         this.barButtonOptions.active = true;
         if (this.data.is_add_call) {
           this.addTeamMember();
@@ -191,11 +189,9 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
-    this.barButtonOptions.active = true;
     this.teamMemberFG.value['profilePic'] = this.logoImg;
     const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
-      this.barButtonOptions.active = false;
       this.close(true);
       this.eventService.openSnackBar('Invitation sent successfully', "Dismiss");
     }, (err) => {
@@ -212,10 +208,8 @@ export class NewTeamMemberComponent implements OnInit {
       roleId: this.teamMemberFG.controls.roleId.value,
       profilePic: this.logoImg
     };
-    this.barButtonOptions.active = true;
     this.settingsService.editTeamMember(dataObj).subscribe((res) => {
       this.close(true);
-      this.barButtonOptions.active = false;
       this.eventService.openSnackBar('Member data updated', "Dismiss");
     }, (err) => {
       console.error(err);

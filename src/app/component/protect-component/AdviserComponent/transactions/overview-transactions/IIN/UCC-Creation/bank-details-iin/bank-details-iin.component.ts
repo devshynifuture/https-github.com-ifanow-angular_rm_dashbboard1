@@ -214,7 +214,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: [!data ? '' : data.bankName, [Validators.required]],
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [!data ? '1' : data.accountType + '', [Validators.required]],
+      accountType: [this.inputData.taxStatus == '21' ? '3' : !data ? '1' : data.accountType + '', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
