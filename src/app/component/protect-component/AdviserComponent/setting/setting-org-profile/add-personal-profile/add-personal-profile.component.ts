@@ -91,6 +91,10 @@ export class AddPersonalProfileComponent implements OnInit {
       });
   }
 
+  cropImg(data) {
+    this.cropImage = true;
+    this.showCropper = true;
+  }
 
   getIsdCodesData() {
     this.peopleService.getIsdCode({}).subscribe(
