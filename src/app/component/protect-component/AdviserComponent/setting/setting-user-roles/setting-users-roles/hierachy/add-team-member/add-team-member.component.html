@@ -93,8 +93,9 @@
             <!--        TODO    <h5 class="mb-0  text-white c-p" (click)="Close('close')">Cancel</h5>-->
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveTeamMember()">Save</button>
-
+            <app-progress-button (btnClick)="saveTeamMember()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

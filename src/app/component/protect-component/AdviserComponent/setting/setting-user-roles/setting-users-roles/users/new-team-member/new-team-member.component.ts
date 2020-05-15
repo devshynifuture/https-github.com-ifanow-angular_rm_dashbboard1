@@ -38,9 +38,6 @@ export class NewTeamMemberComponent implements OnInit {
     value: 10,
     disabled: false,
     fullWidth: false,
-    // buttonIcon: {
-    //   fontIcon: 'favorite'
-    // }
   };
   isdCodes: Array<any> = [];
   logoImg;

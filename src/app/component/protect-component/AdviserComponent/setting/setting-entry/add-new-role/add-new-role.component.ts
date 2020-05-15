@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-new-role',
@@ -21,6 +22,19 @@ export class AddNewRoleComponent implements OnInit {
   advisorId: any;
   isLoading:boolean = false;
   formPlaceHolders:any;
+  
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
   
   constructor(
     private fb: FormBuilder,
@@ -163,9 +177,10 @@ export class AddNewRoleComponent implements OnInit {
   }
 
   save() {
-    if (this.rolesFG.invalid) {
+    if (this.rolesFG.invalid || this.barButtonOptions.active) {
       this.rolesFG.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       if (this.data.is_add_flag) {
         let dataObj = {
           "advisorOrClientRole": this.data.roleType,
@@ -177,6 +192,7 @@ export class AddNewRoleComponent implements OnInit {
           this.eventService.openSnackBar("Role Added Successfully");
           this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
         }, err => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar("Error Occured");
         })
       } else {
@@ -185,11 +201,11 @@ export class AddNewRoleComponent implements OnInit {
           ...this.rolesFG.value,
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };
-        console.log(dataObj)
         this.settingsService.editRole(dataObj).subscribe((res) => {
           this.eventService.openSnackBar("Role Modified Successfully");
           this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
         }, err => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar("Error Occured");
         })
       }
