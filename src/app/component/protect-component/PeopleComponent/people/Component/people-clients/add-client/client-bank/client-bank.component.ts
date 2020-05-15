@@ -265,7 +265,7 @@ export class ClientBankComponent implements OnInit {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
           } else {
-            this.close('save');
+            this.closeAndSave();
           }
         },
         err => {
@@ -280,5 +280,8 @@ export class ClientBankComponent implements OnInit {
   close(data) {
     (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+  }
+  closeAndSave() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }
