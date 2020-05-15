@@ -146,8 +146,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					if (!this.utilService.isEmptyObj(obj)) {
 						this.dataSource.data = ELEMENT_DATA;
 						this.fileOrderHistoryListGet(obj);
-					} else {
-						this.eventService.openSnackBar("Please Select atleast one filter", "DISMISS");
 					}
 				}
 			});
@@ -174,6 +172,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	}
 
 	refreshFileOrder() {
+		this.dataSource.data = ELEMENT_DATA;
 		this.fileOrderHistoryListGet({
 			days: this.days,
 			rtId: this.rtId
@@ -328,12 +327,17 @@ export class FileOrderingHistoricalComponent implements OnInit {
 						let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
 
 						if (days && rtId && rmId) {
+							this.filterBy = [];
+							this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
+
 							this.fileOrderHistoryListGet({
 								days: this.filterForm.get("filterByPeriod").value.value,
 								rtId: this.filterForm.get("filterByRta").value.value,
 								rmId: this.filterForm.get("filterByRmName").value.id,
 							});
 						} else {
+							this.filterBy = [];
+							this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
 							this.fileOrderHistoryListGet({
 								days: 2,
 								rmId: this.rmId,
@@ -370,12 +374,16 @@ export class FileOrderingHistoricalComponent implements OnInit {
 						let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
 
 						if (days && rtId && rmId) {
+							this.filterBy = [];
+							this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
 							this.fileOrderHistoryListGet({
 								days: this.filterForm.get("filterByPeriod").value.value,
 								rtId: this.filterForm.get("filterByRta").value.value,
 								rmId: this.filterForm.get("filterByRmName").value.id,
 							});
 						} else {
+							this.filterBy = [];
+							this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
 							this.fileOrderHistoryListGet({
 								days: 2,
 								rmId: this.rmId,

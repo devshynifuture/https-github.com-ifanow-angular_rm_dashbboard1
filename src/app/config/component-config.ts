@@ -584,6 +584,7 @@ export const appConfig = {
   GET_TICKET: 'rmdashboard/tickets/get',
   GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
   GET_COMMENT_COUNT_RM_ADMIN: 'rmdashboard/dashboard/ifa-onboard/task-level-comment/count',
+  GET_FILE_ORDER_ARN_RIA_LIST: 'fileorder/arn-ria/list/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

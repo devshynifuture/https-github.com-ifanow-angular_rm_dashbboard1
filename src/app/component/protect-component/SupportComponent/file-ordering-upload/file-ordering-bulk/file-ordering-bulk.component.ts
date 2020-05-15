@@ -132,8 +132,6 @@ export class FileOrderingBulkComponent implements OnInit {
           if (!this.utilService.isEmptyObj(obj)) {
             this.dataSource.data = ELEMENT_DATA;
             this.fileOrderBulkHistoryListGet(obj);
-          } else {
-            this.eventService.openSnackBar("Please Select atleast one filter", "DISMISS");
           }
         }
       });
@@ -262,12 +260,16 @@ export class FileOrderingBulkComponent implements OnInit {
             let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
 
             if (days && rtId && rmId) {
+              this.filterBy = [];
+              this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
               this.fileOrderBulkHistoryListGet({
                 days,
                 rtId,
                 rmId,
               });
             } else {
+              this.filterBy = [];
+              this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
               this.fileOrderBulkHistoryListGet({
                 days: 2,
                 rmId: 2
@@ -298,12 +300,16 @@ export class FileOrderingBulkComponent implements OnInit {
             let rtId = this.filterForm.get("filterByRta").value ? this.filterForm.get("filterByRta").value.value : null;
             let rmId = this.filterForm.get("filterByRmName").value ? this.filterForm.get("filterByRmName").value.value : null;
             if (days && rtId && rmId) {
+              this.filterBy = [];
+              this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
               this.fileOrderBulkHistoryListGet({
                 days: this.filterForm.get("filterByPeriod").value.value,
                 rtId: this.filterForm.get("filterByRta").value.value,
                 rmId: this.filterForm.get("filterByRmName").value.id,
               });
             } else {
+              this.filterBy = [];
+              this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
               this.fileOrderBulkHistoryListGet({
                 days: 2,
                 rmId: 2,
