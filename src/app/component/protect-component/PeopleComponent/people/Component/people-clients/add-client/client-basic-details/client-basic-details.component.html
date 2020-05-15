@@ -9,20 +9,35 @@
                     <p class="m-0 roboto mob-pb-5">Category</p>
                     <div *ngIf="fieldFlag=='client'" class="form-group">
                         <mat-form-field>
-                            <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
-                                class="form-control">
+                            <mat-select *ngIf="basicDetailsData.userId==undefined" [(ngModel)]="invTypeCategory"
+                                (selectionChange)="changeInvestorType($event)" class="form-control">
                                 <mat-option value='1'>Individual</mat-option>
                                 <mat-option value='2'>Minor</mat-option>
                                 <mat-option value='3'>Non-individual</mat-option>
+                            </mat-select>
+                            <mat-select *ngIf="basicDetailsData.userId" [(ngModel)]="invTypeCategory"
+                                (selectionChange)="changeInvestorType($event)" class="form-control">
+                                <!-- <mat-option value='1'>Individual</mat-option>
+                                <mat-option value='2'>Minor</mat-option>
+                                <mat-option value='3'>Non-individual</mat-option> -->
+                                <mat-option [value]="clientTypeList.value">
+                                    {{clientTypeList.name}}</mat-option>
+
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div *ngIf="fieldFlag=='lead'" class="form-group">
                         <mat-form-field>
-                            <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
-                                class="form-control">
+                            <mat-select *ngIf="basicDetailsData.userId==undefined" [(ngModel)]="invTypeCategory"
+                                (selectionChange)="changeInvestorType($event)" class="form-control">
                                 <mat-option value='1'>Individual</mat-option>
                                 <mat-option value='2'>Non-individual</mat-option>
+                                <!-- <mat-option value='3'>Non-individual</mat-option> -->
+                            </mat-select>
+                            <mat-select *ngIf="basicDetailsData.userId" [(ngModel)]="invTypeCategory"
+                                (selectionChange)="changeInvestorType($event)" class="form-control">
+                                <mat-option [value]="clientTypeList.value">
+                                    {{clientTypeList.name}}</mat-option>
                                 <!-- <mat-option value='3'>Non-individual</mat-option> -->
                             </mat-select>
                         </mat-form-field>
