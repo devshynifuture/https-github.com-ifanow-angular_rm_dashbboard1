@@ -3,7 +3,7 @@
         <img class="pt-4 w-100" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-        <p class="f-16 mb-0"> Add new role</p>
+        <p class="f-16 mb-0"> {{data.is_add_flag ? 'Add new' : 'Edit'}} role</p>
     </div>
     <div class="col-md-2 text-right" (click)="close()">
         <i class="material-icons pt-16 c-p pr-16">
@@ -133,8 +133,9 @@
         </div>
 
         <div class="col-md-6 text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()"
-                [disabled]="isLoading">SAVE</button>
+            <app-progress-button *ngIf="!isLoading" (btnClick)="save()" class="br-0 text-inherit"
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>
