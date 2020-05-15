@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { CancelFlagService } from '../people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-people-clients',
@@ -30,7 +31,7 @@ export class PeopleClientsComponent implements OnInit {
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
-    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService) {
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService) {
   }
 
   ngOnInit() {
@@ -103,7 +104,10 @@ export class PeopleClientsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getClientList()
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.cancelFlagService.setCancelFlag(undefined)
+            this.getClientList();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
