@@ -105,7 +105,7 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.startedOn | date:'short'}}
+                        {{element.startedOn | date:'d/M/y, h:mm a'}}
                     </div>
                 </td>
             </ng-container>
@@ -113,7 +113,7 @@
             <ng-container matColumnDef="totalFiles">
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
                 <td class="br" mat-cell *matCellDef="let element" class="c-p"
-                    (click)="openUpperFileOrdering('bulk', element)">
+                    (click)="openUpperFileOrdering('bulk', 'total', element)">
                     <div class="bar">
                         <a href="javascript:void(0)">
                             {{element.totalFiles}}
@@ -124,9 +124,12 @@
 
             <ng-container matColumnDef="queue">
                 <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('bulk', 'inqueue', element)">
                     <div class="bar">
-                        {{element.queue}}
+                        <a href="javascript:void(0)">
+                            {{element.queue}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -142,18 +145,24 @@
 
             <ng-container matColumnDef="ordered">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('bulk', 'ordered', element)">
                     <div class="bar">
-                        {{element.ordered}}
+                        <a href="javascript:void(0)">
+                            {{element.ordered}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="failed">
                 <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('bulk', 'skipped', element)">
                     <div class="bar">
-                        {{element.failed}}
+                        <a href="javascript:void(0)">
+                            {{element.failed}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -161,9 +170,12 @@
 
             <ng-container matColumnDef="uploaded">
                 <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element"
+                    (click)="openUpperFileOrdering('bulk', 'uploaded', element)">
                     <div class="bar">
-                        {{element.uploaded}}
+                        <a href="javascript:void(0)">
+                            {{element.uploaded}}
+                        </a>
                     </div>
                 </td>
             </ng-container>
@@ -179,17 +191,6 @@
                             </mat-icon>
                             Refresh
                         </button>
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="empty">
-                <th class="br" mat-header-cell *matHeaderCellDef> </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        <mat-icon *ngIf="!isLoading">
-                            more_vert
-                        </mat-icon>
                     </div>
                 </td>
             </ng-container>
