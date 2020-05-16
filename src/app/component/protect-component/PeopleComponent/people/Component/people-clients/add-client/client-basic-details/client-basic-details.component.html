@@ -31,7 +31,7 @@
                             <mat-select *ngIf="basicDetailsData.userId==undefined" [(ngModel)]="invTypeCategory"
                                 (selectionChange)="changeInvestorType($event)" class="form-control">
                                 <mat-option value='1'>Individual</mat-option>
-                                <mat-option value='2'>Non-individual</mat-option>
+                                <mat-option value='3'>Non-individual</mat-option>
                                 <!-- <mat-option value='3'>Non-individual</mat-option> -->
                             </mat-select>
                             <mat-select *ngIf="basicDetailsData.userId" [(ngModel)]="invTypeCategory"
@@ -655,8 +655,7 @@
         </div>
     </div>
     <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'">
-        <div *ngIf="(fieldFlag=='lead' && invTypeCategory=='2') || (fieldFlag=='client' && invTypeCategory=='3')"
-            [formGroup]="nonIndividualForm" class="non-individualBox">
+        <div *ngIf="invTypeCategory=='3'" [formGroup]="nonIndividualForm" class="non-individualBox">
             <div class="row pt-20">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-20">Company name</h5>
