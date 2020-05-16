@@ -168,7 +168,7 @@
                                 <h5 class="mb-24 posRelative">Didn’t receive? <span (click)="getOtp(true)" [ngClass]="{'disbleResend': showTimeRemaing>0,'lightRead':showTimeRemaing==0}" class="c-p">Resend OTP</span>
                                     <span *ngIf="showTimeRemaing>0">0.<span
                                             *ngIf="showTimeRemaing<10">0</span>{{showTimeRemaing}}</span>
-                                    <span *ngIf="showTimeRemaing>0" class="timeGlass">
+                                    <span *ngIf="showTimeRemaing>0" class="hourglass">
                                         <span class="two"> </span>
                                     </span>
                                 </h5>
