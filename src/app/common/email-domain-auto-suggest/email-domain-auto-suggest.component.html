@@ -1,6 +1,6 @@
 
 <input class="form-control" matInput [formControl]="email" 
-    [matAutocomplete]="auto" [placeholder]="placeholder" (input)="setInputValue()" [disabled]="_disabled" (blur)='onTouched()'>
+    [matAutocomplete]="auto" [placeholder]="placeholder" (input)="setInputValue()" (blur)='onTouched()'>
 <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let email of suggestionEmails | async" [value]="email">
         {{email}}
