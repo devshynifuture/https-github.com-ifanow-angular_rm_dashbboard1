@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-35">
     <div class="col-md-10 p-0">
-        <h3 class="m-0 wrapper-16"> SELECT FILTERS - {{_data.name}}</h3>
+        <h3 class="m-0 wrapper-16"> Select filters - {{_data.name}}</h3>
     </div>
     <div class="col-md-2">
         <i class="material-icons pt-16 right text-right c-p" (click)="Close('Close')"> clear </i>
@@ -42,7 +42,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false"  *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Schemes<span class="text-right f-14 pl-12">{{countScheme}} of {{scheme.length}}
@@ -60,7 +60,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false"  *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Folios<span class="text-right f-14 pl-12">{{countFolio}} of {{folio.length}}
@@ -78,7 +78,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'" >
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12">{{countTranView}} of
@@ -165,10 +165,11 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox">
-                 <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                        <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">{{'FY '+item.from+' - '+item.to}}
-                        </mat-checkbox>
-                    </mat-list-item>
+                <mat-list-item role="listitem" *ngFor="let item of financialYears">
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
+                        {{'FY '+item.from+' - '+item.to}}
+                    </mat-checkbox>
+                </mat-list-item>
             </div>
         </mat-expansion-panel>
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name=='CAPITAL GAIN REPORT'">
@@ -178,16 +179,16 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox">
-                 <mat-list-item role="listitem" *ngFor="let item of reportFormat">
-                        <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}} 
-                        </mat-checkbox>
-                    </mat-list-item>
+                <mat-list-item role="listitem" *ngFor="let item of reportFormat">
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}}
+                    </mat-checkbox>
+                </mat-list-item>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
 
     <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
-        <div class="col-md-4 pl-0" *ngIf="transactionPeriod == false && _data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'" >
+        <div class="col-md-4 pl-0" *ngIf="transactionPeriod == false && _data.name!='CAPITAL GAIN REPORT' && _data.name!='ALL TRANSACTION REPORT' && _data.name!='UNREALIZED TRANSACTION REPORT'">
             <h5 class="m-0 pb-8">Report as on</h5>
             <div class="col-md-12 p-0">
                 <div class="from-group  ">
@@ -202,50 +203,54 @@
                 </div>
             </div>
         </div>
-            <div class="col-md-4 pl-0" *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' ">
-                <h5 class="m-0 pb-8">From date</h5>
-                <div class="col-md-12 p-0">
-                    <mat-form-field class="ba-date">
-                        <input class="form-control br-0 b-0" matInput [matDatepicker]="picker1" formControlName="fromDate" readonly>
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                        <!-- <mat-error class="f-12">
+        <div class="col-md-4 pl-0" *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' ">
+            <h5 class="m-0 pb-8">From date</h5>
+            <div class="col-md-12 p-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" matInput [matDatepicker]="picker1" formControlName="fromDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <!-- <mat-error class="f-12">
               This field is required
             </mat-error> -->
-                    </mat-form-field>
+                </mat-form-field>
 
-                </div>
             </div>
-            <div class="col-md-4 p-0" *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' ">
-                <h5 class="m-0 pb-8">To date</h5>
-                <div class="col-md-12 p-0">
-                    <mat-form-field class="ba-date">
-                        <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" formControlName="toDate" readonly>
-                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                        <mat-datepicker #picker2></mat-datepicker>
-                        <!-- <mat-error class="f-12">
+        </div>
+        <div class="col-md-4 p-0" *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' ">
+            <h5 class="m-0 pb-8">To date</h5>
+            <div class="col-md-12 p-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" formControlName="toDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <!-- <mat-error class="f-12">
               This field is required
             </mat-error> -->
-                    </mat-form-field>
+                </mat-form-field>
 
-                </div>
             </div>
+        </div>
         <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
-                <mat-radio-button value="1"[ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==1,'text-primary':summaryFilerForm.get('showFolios').value==1,'b-a':summaryFilerForm.get('showFolios').value==2}">Yes</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==2,'text-primary':summaryFilerForm.get('showFolios').value==2,'b-a':summaryFilerForm.get('showFolios').value==1}">No</mat-radio-button>
+                <mat-radio-button value="1" [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==1,'text-primary':summaryFilerForm.get('showFolios').value==1,'b-a':summaryFilerForm.get('showFolios').value==2}">
+                    Yes</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==2,'text-primary':summaryFilerForm.get('showFolios').value==2,'b-a':summaryFilerForm.get('showFolios').value==1}">
+                    No</mat-radio-button>
             </mat-radio-group>
 
         </div>
-          <div class="col-md-6 pl-0" *ngIf=" _data.name=='CAPITAL GAIN REPORT' && this.showGrandfathering">
+        <div class="col-md-6 pl-0" *ngIf=" _data.name=='CAPITAL GAIN REPORT' && this.showGrandfathering">
             <h5 class="m-0 pb-8">Grandfathering?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="grandfathering">
-                <mat-radio-button value="1"[ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==1,'text-primary':summaryFilerForm.get('grandfathering').value==1,'b-a':summaryFilerForm.get('grandfathering').value==2}">Yes</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==2,'text-primary':summaryFilerForm.get('grandfathering').value==2,'b-a':summaryFilerForm.get('grandfathering').value==1}">No</mat-radio-button>
+                <mat-radio-button value="1" [ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==1,'text-primary':summaryFilerForm.get('grandfathering').value==1,'b-a':summaryFilerForm.get('grandfathering').value==2}">
+                    Yes</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==2,'text-primary':summaryFilerForm.get('grandfathering').value==2,'b-a':summaryFilerForm.get('grandfathering').value==1}">
+                    No</mat-radio-button>
             </mat-radio-group>
 
-        </div>  
+        </div>
     </div>
     <div *ngIf="showError" class="errorClass">Please select at least one {{showError}}</div>
 </div>
@@ -254,7 +259,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('Close')">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div class="col-md-8 right pr-10 text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button> -->
             <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="(!showError) ? generateReport() : null" [options]="barButtonOptions">
             </app-progress-button>
