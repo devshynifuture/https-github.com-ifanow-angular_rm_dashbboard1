@@ -107,6 +107,7 @@ export class OverviewProfileComponent implements OnInit {
         }
       },
       err => {
+        this.familyMemberList = undefined;
         console.error(err)
       }
     );
