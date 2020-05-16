@@ -215,10 +215,7 @@
         <ng-container matColumnDef="owner">
           <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
           <td mat-cell *matCellDef="let element" class="br">
-            <div class="bar"></div>
-            <div *ngFor="let owner of element.ownerList; let i = index">
-                <span *ngIf="i == 0">{{owner.name}}</span>
-            </div>
+            <div class="bar">{{singlePortfolio.ownerList[0].name}}</div>
         </td>
           <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 

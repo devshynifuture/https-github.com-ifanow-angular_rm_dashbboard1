@@ -353,23 +353,22 @@ addNewNominee(data) {
                 "quantity": element.get('holdings').value,
                 "transactionTypeOrScripNameId":this.scripData?this.scripData.id:element.value.scripNameId,
                 "holdingOrTransactionDate": element.get('holdingAsOn').value,
-                "investedOrTransactionAmount": element.get('investedAmt').value
+                "investedOrTransactionAmount": element.get('investedAmt').value,
+                
               }
             ]
           }
 
            if (this.editApiData) {
              obj['id'] = this.editApiData.id;
-             obj.transactionorHoldingSummaryList.forEach(t => {
-              t['id'] = this.editApiData.id;
-             });
+             obj.transactionorHoldingSummaryList[0]['id'] = element.get('id').value;
            }
 
           finalStocks.push(obj)
         })
         const obj =
         {
-          "id": this.editApiData?this.editApiData.id : null,
+          "id": this.editApiData?this.editApiData.portfolioId : this.portfolioData.id,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
@@ -379,7 +378,7 @@ addNewNominee(data) {
         }
 
         if (this.editApiData) {
-          this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+          this.cusService.editStockData(obj).subscribe(
             data => {
               console.log(data);
               this.Close();

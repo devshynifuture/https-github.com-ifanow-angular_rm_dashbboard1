@@ -207,7 +207,7 @@ export const appConfig = {
   GET_SCRIP_lIST: 'account/asset/stock/scrip-name/get',
   ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',
   DELETE_STOCK: 'account/asset/stock/delete',
-  EDIT_STOCK_PORTFOLIO: 'account/asset/stock/portfolio/edit',
+  EDIT_STOCK_PORTFOLIO: 'account/asset/stock/edit',
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',

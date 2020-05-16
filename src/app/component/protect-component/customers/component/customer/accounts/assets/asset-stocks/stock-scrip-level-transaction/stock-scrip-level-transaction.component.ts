@@ -372,6 +372,7 @@ addNewNominee(data) {
             "scripNameId": this.scripData?this.scripData.id:this.editApiData.scripNameId,
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
+            "id":this.editApiData?this.editApiData.id:null,
             "transactionorHoldingSummaryList": [
               {
                 "id": element.get('id').value,
@@ -388,7 +389,7 @@ addNewNominee(data) {
         console.log(finalStocks)
         const obj =
         {
-          "id": this.editApiData?this.editApiData.id:null,
+          "id": this.editApiData?this.editApiData.portfolioId : this.portfolioData.id,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
@@ -398,7 +399,7 @@ addNewNominee(data) {
         }
         console.log(obj)
       if (this.editApiData) {
-        this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+        this.cusService.editStockData(obj).subscribe(
           data => {
             console.log(data);
             this.Close();
