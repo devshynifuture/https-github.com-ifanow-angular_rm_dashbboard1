@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSidenav } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,8 +14,12 @@ import { UpperCustomerComponent } from '../../../common-component/upper-customer
   styleUrls: ['./assets.component.scss']
 })
 export class AssetsComponent implements OnInit {
+  sidenavState: boolean = false;
+  matSideNavOpen:boolean = true;
   advisorId: any;
   clientId: any;
+  // sidenavState: boolean = false;
+  @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
   assetSideBarData = [
     { name: 'Mutual funds', viewmode: 'tab1', count: '0' },
     { name: 'Stocks', viewmode: 'tab2', count: '0' },
@@ -115,6 +119,8 @@ export class AssetsComponent implements OnInit {
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     console.log("this is client id:::", this.clientId);
     this.getAssetCountGLobalData();
+    this.stateOfPanel.mode = 'side';
+    this.stateOfPanel.open();
     this.route.queryParams.subscribe((params) => {
       if (params.tab) {
         this.Settab = params.tab;
@@ -124,7 +130,19 @@ export class AssetsComponent implements OnInit {
     });
 
   }
+  toggleSideNav() {
+    this.stateOfPanel.toggle();
+  }
+  getValue(data){
+    if(data == 'Capital Gains'){
+      this.sidenavState = true;
+      this.toggleSideNav();
+    }else{
+      this.sidenavState = false;
+      this.stateOfPanel.open();
 
+    }
+  }
   getRouterLink(assetType) {
     if (assetType['viewmode'] === 'tab1') {
       return assetType['name'].toLowerCase().split(' ').join('-') + '/overview';
