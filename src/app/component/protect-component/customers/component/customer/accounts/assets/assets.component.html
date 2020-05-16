@@ -1,16 +1,16 @@
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay" (click)="close()">
 </div>
-<mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-    <mat-sidenav #sidenav role="navigation">
+<mat-sidenav-container class="sidenav-container " [hasBackdrop]="false">
+    <mat-sidenav class=" bg-grey lter" #sidenav role="navigation">
         <!-- <div  [ngClass]="sidenavState ? 'd-none': ''" class="leftside-overlay-toggle-button" (click)="sidenav.toggle()">
             <i class="material-icons f-30 text-custom">
                 keyboard_arrow_right
             </i>
         </div> -->
-        <div id="ui-assets-account" class="bg-grey lter ">
+        <div id="ui-assets-account" class="width220">
             <div class="col-md-12 p-0 pt-8 pb-20  ">
-                <div (click)="sidenav.toggle()" *ngIf="sidenavState">
-                    "toggle"
+                <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
+                    <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
                 </div>
                 <ul class="vertical-menu sticky-top z-0">
                     <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode;sidenavState = false" [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
@@ -70,26 +70,18 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-        <div id="ui-assets-account" class="bg-grey lter">
+        <div id="ui-assets-account">
             <div (click)="sidenav.toggle()" *ngIf="sidenavState">
                 "toggle"
             </div>
-            <div class="row h-100vh">
 
-                <!-- <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
-              <ul class="vertical-menu sticky-top z-0">
-                  <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode" [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
-                      <div class="row">
-                          <div class="col-md-9 p-0">
-                              {{ singleAssetType.name }}
-                          </div>
-                          <div class="col-md-3 pl-0 pr-8 text-right text-custom">
-                              {{ singleAssetType.count }}
-                          </div>
-                      </div>
-                  </li>
-              </ul>
-          </div> -->
+            <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
+                <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
+            </div> -->
+
+
+
+            <div class="row h-100vh">
 
                 <div class="col-md-12 bg-white bb-0 pb-24  b-a pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
