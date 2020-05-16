@@ -61,7 +61,7 @@
                         Reference Id
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.referenceId }}
+                        {{ data.referenceId ? data.referenceId: '-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -77,7 +77,7 @@
                         File Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0 break-word">
-                        {{ data.fileName }}
+                        {{ data.fileName ? data.fileName: '-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -85,7 +85,7 @@
                         Failed Reason
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0 break-word">
-                        {{ data.errorMsg }}
+                        {{ data.errorMsg ? data.errorMsg : '-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
