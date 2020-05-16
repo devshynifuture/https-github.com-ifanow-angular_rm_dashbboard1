@@ -58,10 +58,16 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
       status: filter.status
     }
     this.reconService.getBackOfficeTransactions(obj).subscribe((data) => {
-      this.listData = data;
-      this.dataSource = new MatTableDataSource(this.listData);
-      this.dataSource.sort = this.sortList;
-      this.isLoading = false;
+      if(data){
+        this.listData = data;
+        this.dataSource = new MatTableDataSource(this.listData);
+        this.dataSource.sort = this.sortList;
+        this.isLoading = false;
+      }else{
+        this.dataSource =[]
+        this.isLoading = false;
+      }
+ 
     });
   }
 

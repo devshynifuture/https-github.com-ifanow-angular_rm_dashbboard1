@@ -124,5 +124,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.filter.rt = this.filterRTA;
     this.BackOffice.addFilterData(this.filter);
   }
-  
+  refresh(flag){
+    
+  }
 }
