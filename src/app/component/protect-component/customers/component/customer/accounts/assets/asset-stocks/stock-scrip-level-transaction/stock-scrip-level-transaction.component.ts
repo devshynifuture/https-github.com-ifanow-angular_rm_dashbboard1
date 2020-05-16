@@ -236,7 +236,7 @@ addNewNominee(data) {
     if (data.transactionorHoldingSummaryList) {
       data.transactionorHoldingSummaryList.forEach(element => {
         this.transactionArray.push(this.fb.group({
-          transactionType: [String(element.transactionTypeOrScripNameId), [Validators.required]],
+          transactionType: [element.transactionTypeOrScripNameId, [Validators.required]],
           date: [new Date(element.holdingOrTransactionDate), [Validators.required]],
           transactionAmount: [element.investedOrTransactionAmount, [Validators.required]],
           quantity: [element.quantity, [Validators.required]],
@@ -369,7 +369,7 @@ addNewNominee(data) {
             "valueAsOn": null,
             "currentMarketValue": 0,
             "amountInvested": 0,
-            "scripNameId": this.scripData?this.scripData.id:this.scipLevelTransactionForm.get('scripName').value,
+            "scripNameId": this.scripData?this.scripData.id:this.editApiData.scripNameId,
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
             "transactionorHoldingSummaryList": [
@@ -393,7 +393,7 @@ addNewNominee(data) {
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
           "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
-          "portfolioName": this.portfolioData.portfolioName,
+          "portfolioName": this.portfolioData?this.portfolioData.portfolioName:this.scipLevelTransactionForm.value.portfolioName,
           "stockList": finalStocks
         }
         console.log(obj)

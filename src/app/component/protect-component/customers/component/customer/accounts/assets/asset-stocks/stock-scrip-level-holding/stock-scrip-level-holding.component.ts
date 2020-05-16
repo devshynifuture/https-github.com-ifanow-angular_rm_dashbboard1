@@ -195,7 +195,7 @@ addNewNominee(data) {
 }
 /***nominee***/ 
 // ===================owner-nominee directive=====================//
-
+  selectedScript:any=[];
   getFormData(data) {
     if (data == null) {
       data = {};
@@ -207,6 +207,7 @@ addNewNominee(data) {
       this.editApiData = data;
       this.familyMemberId = data.familyMemberId;
       this.ownerName = data.ownerName;
+     
       // this.scipLevelHoldingForm.get('ownerName').setValue(this.ownerName)
     }
     this.scipLevelHoldingForm = this.fb.group({
@@ -228,7 +229,7 @@ addNewNominee(data) {
     if (data.transactionorHoldingSummaryList) {
       data.transactionorHoldingSummaryList.forEach(element => {
         let singleScripData = this.fb.group({
-          scripName: [data.scripName, [Validators.required]],
+          scripName: [element.scripName, [Validators.required]],
           holdings: [element.quantity, [Validators.required]],
           holdingAsOn: [new Date(element.holdingOrTransactionDate), [Validators.required]],
           investedAmt: [element.investedOrTransactionAmount, [Validators.required]],
@@ -341,7 +342,7 @@ addNewNominee(data) {
         let finalStocks = [];
         this.HoldingArray.controls.forEach(element => {
           let obj = {
-            "scripNameId": element.value.id,
+            "scripNameId": this.scripData?this.scripData.id:element.value.scripNameId,
             "currentMarketValue": 0,
             "stockType": 2,
             "amountInvested": 0,
@@ -350,7 +351,7 @@ addNewNominee(data) {
               {
                 "holdingOrTransaction": 1,
                 "quantity": element.get('holdings').value,
-                "transactionTypeOrScripNameId":element.value.id,
+                "transactionTypeOrScripNameId":this.scripData?this.scripData.id:element.value.scripNameId,
                 "holdingOrTransactionDate": element.get('holdingAsOn').value,
                 "investedOrTransactionAmount": element.get('investedAmt').value
               }
@@ -398,6 +399,16 @@ addNewNominee(data) {
         }
       // }
     }
+  }
+
+  scripDataList:any=[];
+  getScriptList(data){
+    this.scripDataList = data;
+  }
+
+  scripData:any;
+  getScript(data){
+    this.scripData = data;
   }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
