@@ -10,17 +10,19 @@ import {Router} from '@angular/router';
 import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 import {EnumDataService} from 'src/app/services/enum-data.service';
 import {map, startWith} from 'rxjs/operators';
+import {PeopleService} from '../../../../../PeopleComponent/people.service';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-online-trasaction',
-  templateUrl: './online-trasaction.component.html',
-  styleUrls: ['./online-trasaction.component.scss']
+  templateUrl: './online-transaction.component.html',
+  styleUrls: ['./online-transaction.component.scss']
 })
-export class OnlineTrasactionComponent implements OnInit {
+export class OnlineTransactionComponent implements OnInit {
 
   formStep = 'step-1';
   isSaveAndAddClicked = false;
-
+  familyMemberList = [];
   transactionAddForm: FormGroup = this.fb.group({
     selectInvestor: [, Validators.required],
     transactionType: [, Validators.required],
@@ -63,27 +65,12 @@ export class OnlineTrasactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
-              private processTransaction: ProcessTransactionService, private router: Router, private enumDataService: EnumDataService) {
+              private processTransaction: ProcessTransactionService, private router: Router,
+              private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
-    this.filteredStates = this.stateCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(state => {
-          if (state) {
-            let list = this.enumDataService.getSearchData(state);
-            if (list.length == 0) {
-              this.stateCtrl.setErrors({invalid: true});
-            }
-            return this.enumDataService.getSearchData(state);
-          } else {
-            return this.enumDataService.getEmptySearchStateData();
-          }
-        }),
-      );
   }
 
   stateCtrl = new FormControl('', [Validators.required]);
-  familyMemberList;
 
   @Input()
   set data(data) {
@@ -103,7 +90,49 @@ export class OnlineTrasactionComponent implements OnInit {
   ngOnInit() {
     this.clientCodeData = {};
     this.getdataForm(this.inputData);
+    this.setClientFilterList();
     // this.getDefaultDetails(null)
+  }
+
+  setClientFilterList() {
+    if (this.inputData.isAdvisorSection == null ||
+      this.inputData.isAdvisorSection == undefined ||
+      this.inputData.isAdvisorSection) {
+      this.filteredStates = this.stateCtrl.valueChanges
+        .pipe(
+          startWith(''),
+          map(state => {
+            if (state) {
+              const list = this.enumDataService.getSearchData(state);
+              if (list.length == 0) {
+                this.stateCtrl.setErrors({invalid: true});
+              }
+              return this.enumDataService.getSearchData(state);
+            } else {
+              return this.enumDataService.getEmptySearchStateData();
+            }
+          }),
+        );
+    } else {
+      const obj = {
+        clientId: AuthService.getClientId(),
+      };
+
+      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+        data => {
+          console.log('getClientFamilyMemberListAsset data : ', data);
+          this.familyMemberList = data;
+          this.filteredStates = of(this.familyMemberList);
+        }, error => {
+          console.error('error data : ', error);
+        }
+      );
+      this.stateCtrl.valueChanges
+        .subscribe(newValue => {
+          this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
+            map(value => this.processTransaction.filterName(newValue + '', this.familyMemberList)));
+        });
+    }
   }
 
   checkOwnerList(event) {
@@ -302,9 +331,7 @@ export class OnlineTrasactionComponent implements OnInit {
     }
     console.log(this.formStep);
     if (this.stateCtrl.valid) {
-      this.familyMemberList.forEach(element => {
-        this.checkFamilyMem = element.name.includes(this.stateCtrl.value);
-      });
+
       // if (this.formStep == 'step-1' == this.checkFamilyMem == true) {
       //   if (this.allData && this.allData.length > 0) {
       //     this.formStep = 'step-2';
@@ -313,7 +340,7 @@ export class OnlineTrasactionComponent implements OnInit {
       // }
       if (this.transactionAddForm.get('transactionType').valid && this.formStep == 'step-2') {
         const data = {
-          selectedFamilyMember: this.stateCtrl.value,
+          selectedFamilyMember: this.stateCtrl.value.name,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
           familyMemberId: this.familyMemberData.familyMemberId

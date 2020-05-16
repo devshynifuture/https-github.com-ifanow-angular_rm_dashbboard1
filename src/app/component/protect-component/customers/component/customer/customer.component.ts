@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  //templateUrl: './transactions-mob.component.html',
+  //templateUrl: './goal.mobile.component.html',
   //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
@@ -132,5 +132,9 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.authService.logout();
     this.router.navigate(['/login']);
     // }
+  }
+
+  goHome(){
+    AuthService.goHome(this.router);
   }
 }

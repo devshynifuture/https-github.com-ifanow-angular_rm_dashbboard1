@@ -80,6 +80,7 @@ export class LoginService {
       authService.setUserInfo(userData);
       router.navigate(['customer', 'detail', 'overview', 'myfeed']);
     }
+    // when changing routers, make changes to authservice gohome() method
   }
 }
 
