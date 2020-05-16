@@ -188,14 +188,15 @@ export class ClientWiseComponent implements OnInit {
 
   }
   getInvestorName(clientData, index) {
-    this.isLoadingInvestor = true
     this.selectedClient = index;
     clientData.show = !clientData.show
-    clientData.investorList = []
-    this.investorList = []
-    clientData.investorList = [{}, {}, {}];
+
 
     if (clientData.show == false) {
+      clientData.investorList = []
+      this.investorList = []
+      clientData.investorList = [{}, {}, {}];
+      this.isLoadingInvestor = true
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
@@ -410,15 +411,16 @@ export class ClientWiseComponent implements OnInit {
     this.clientList[index].show = (show) ? show = false : show = true;
   }
   getSchemeName(investorData, index, clientIndex) {
-    this.isLoadingScheme = true
     this.selectedInvestor = index;
     this.selectedClient = clientIndex;
     investorData.showInvestor = !investorData.showInvestor
-    investorData.schemeList = [];
-    this.scheme1ListArr = []
-    investorData.schemeList = [{}, {}, {}];
+    
 
     if (investorData.showInvestor == false) {
+      investorData.schemeList = [];
+    this.scheme1ListArr = []
+    investorData.schemeList = [{}, {}, {}];
+      this.isLoadingScheme = true
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
@@ -452,15 +454,16 @@ export class ClientWiseComponent implements OnInit {
 
   }
   getFolio(schemeData, index, investorIndex, clientIndex) {
-    this.isLoadingFolio = true
     this.selectedScheme = index;
     this.selectedInvestor = investorIndex;
     this.selectedClient = clientIndex;
     schemeData.showScheme = !schemeData.showScheme
-    this.scheme2List = []
-    schemeData.folioList = []
-    schemeData.folioList = [{}, {}, {}];
+  
     if (schemeData.showScheme == false) {
+      this.scheme2List = []
+      schemeData.folioList = []
+      schemeData.folioList = [{}, {}, {}];
+      this.isLoadingFolio = true
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,

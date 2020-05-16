@@ -68,7 +68,7 @@
                                 <td colspan="5" class="innerTd one">
                                     <div class="d-block text-right" *ngIf="!amc.showAmc">
                                         <button mat-icon-button
-                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)">
+                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)" *ngIf="!isLoading">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -119,7 +119,7 @@
                                                 <td colspan="6" class="innerTd two">
                                                     <div class="d-block text-right" *ngIf="!scheme.showScheme">
                                                         <button mat-icon-button
-                                                            (click)="exportToExcelSheet('applicant-wise', i, amcIndex)">
+                                                            (click)="exportToExcelSheet('applicant-wise', i, amcIndex)" *ngIf="!isLoading">
                                                             <mat-icon>
                                                                 save_alt
                                                             </mat-icon>
