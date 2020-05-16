@@ -290,6 +290,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.riskAssessmentQuestionList.forEach(element => {
       element.done = false
     });
+    this.riskAssessmentQuestionList[0].done = true
     console.log(this.riskAssessmentQuestionList);
     // if (flag == false) {
     //   this.reset(false)
@@ -389,6 +390,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         this.reset(true);
       }
     }
+    // this.riskAssessmentQuestionList.forEach(element => {
+    //   element.done = true
+    // });
   }
   reset(flag) {
     this.statusArray = []

@@ -43,8 +43,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 		"ordered",
 		"failed",
 		"uploaded",
-		"refresh",
-		"empty",
+		"refresh"
 	];
 	dataSource = new MatTableDataSource(ELEMENT_DATA);
 	rmList: any[] = [];
@@ -88,15 +87,17 @@ export class FileOrderingHistoricalComponent implements OnInit {
 			.subscribe(res => {
 				if (res && res.length !== 0) {
 					res.forEach(element => {
-						if (element.name === 'All') {
-							this.rtId = element.id;
-						}
-						if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
-							this.rtaList.push({
-								name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
-								value: element.id,
-								type: 'rta'
-							});
+						if (element.name !== "MANUAL") {
+							if (element.name === 'All') {
+								this.rtId = element.id;
+							}
+							if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+								this.rtaList.push({
+									name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+									value: element.id,
+									type: 'rta'
+								});
+							}
 						}
 					});
 					this.getRmMasterDetails();
@@ -350,8 +351,9 @@ export class FileOrderingHistoricalComponent implements OnInit {
 			});
 	}
 
-	openUpperFileOrdering(flag, data) {
+	openUpperFileOrdering(flag, status, data) {
 		data.flag = flag;
+		data.status = status;
 		console.log("hello mf button clicked");
 		const fragmentData = {
 			flag,

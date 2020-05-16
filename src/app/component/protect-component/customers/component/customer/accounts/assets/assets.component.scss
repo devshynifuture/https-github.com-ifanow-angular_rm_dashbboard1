@@ -473,3 +473,10 @@ mat-drawer-content {
     color: #207638;
     font-weight: 600;
 }
+.mat-sidenav-content {
+    margin-left: 0 !important;
+    flex: 1 1 auto;
+}
+.mat-sidenav {
+    flex: 0 1 auto;
+}

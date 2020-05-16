@@ -24,6 +24,22 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        Employer's Monthly Contribution
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{epf.employersMonthlyContribution?utils.formatter(epf.employersMonthlyContribution):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Employees Monthly Contribution
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Voluntary contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" >
@@ -33,14 +49,7 @@
                         {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
                     </div> -->
                 </div>
-                <!-- <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Employer's Monthly Contribution
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.employersMonthlyContribution?utils.formatter(epf.employersMonthlyContribution):'-'}}
-                    </div>
-                </div> -->
+                
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Account balance - epf
@@ -90,18 +99,26 @@
                         {{epf.maturityYear?epf.maturityYear:'-'}}
                     </div>
                 </div> -->
-                <!-- <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Interest rate
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{epf.rate?epf.rate:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Annual Salary growth rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.annualSalaryGrowthRate?epf.annualSalaryGrowthRate:'-'}}
                     </div>
-                </div> -->
+                </div>
 
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-6 text-left f-14 roboto p-0">
-                        EPF No.
+                        Member ID
                     </div>
                     <div class="col-md-6 text-right f-14 roboto p-0">
                         {{epf.epfNo?epf.epfNo:'-'}}

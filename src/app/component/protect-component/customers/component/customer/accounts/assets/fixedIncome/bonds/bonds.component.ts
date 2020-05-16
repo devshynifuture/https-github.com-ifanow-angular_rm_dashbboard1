@@ -279,7 +279,7 @@ export class BondsComponent implements OnInit {
       type: [(data.type == undefined) ? '' : (data.type) + "", [Validators.required]],
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required, Validators.min(1)]],
       // rateReturns: [(data == undefined) ? '' : data.rateOfReturn, [Validators.required, Validators.min(1)]],
-      couponOption: [(data.couponPayoutOption == undefined) ? '' : (data.couponPayoutOption) + "", [Validators.required]],
+      couponOption: [(data.couponPayoutFrequencyId == undefined) ? '' : (data.couponPayoutFrequencyId) + "", [Validators.required]],
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       // compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
@@ -289,6 +289,7 @@ export class BondsComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description,],
       // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id,],
+      bondNo: [(data == undefined) ? '' : data.bondNo,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -317,10 +318,12 @@ export class BondsComponent implements OnInit {
 
     /***nominee***/
     if (data.nomineeList) {
-      this.getNominee.removeAt(0);
-      data.nomineeList.forEach(element => {
-        this.addNewNominee(element);
-      });
+      if (data.nomineeList.length > 0) {
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
 

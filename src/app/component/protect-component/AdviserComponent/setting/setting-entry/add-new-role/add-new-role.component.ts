@@ -184,13 +184,11 @@ export class AddNewRoleComponent implements OnInit {
     module.subModules.forEach(permissionSet => {
       for(let permission in permissionSet.permissions) {
         if(Object.prototype.hasOwnProperty.call(permissionSet.permissions, permission)) {
-          permissionSet.permissions[permission].enabledOrDisabled = value;
+          permissionSet.permissions[permission].enabledOrDisabled = value.value;
         }
       }
-    });
-    module.subModules.forEach(permissionSet => {
       permissionSet.advanced_permissions.forEach(advPermission => {
-        advPermission.enabledOrDisabled = value;
+        advPermission.enabledOrDisabled = value.value;
       });
     });
   }
@@ -237,6 +235,26 @@ export class AddNewRoleComponent implements OnInit {
 
   close() {
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
+  }
+
+
+  getModelToggle(module) {
+    let toggleMode = false;
+    module.subModules.forEach(permissionSet => {
+      if(!toggleMode) {
+        for(let permission in permissionSet.permissions) {
+          if(Object.prototype.hasOwnProperty.call(permissionSet.permissions, permission)) {
+            toggleMode = permissionSet.permissions[permission].enabledOrDisabled;
+            if(toggleMode) break;
+          }
+        }
+        for(let advPermission of permissionSet.advanced_permissions) {
+          if(toggleMode) break;
+          toggleMode = advPermission.enabledOrDisabled;
+        }
+      }
+    });
+    return toggleMode;
   }
 
 }

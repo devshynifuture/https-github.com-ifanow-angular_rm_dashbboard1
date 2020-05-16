@@ -53,9 +53,12 @@
                         <h5 class="m-0 text-black f-500 pt-20">{{model.modelName}}</h5>
                     </div>
                     <div class="col-md-7 pr-0 text-right">
-                        <button class="mr-8" (click)="switchAllModelPermissions(model, true)">Select all
-                            permissions</button>
-                        <button (click)="switchAllModelPermissions(model, false)">Remove all permissions</button>
+                        <mat-button-toggle-group class="w-80" [value]="getModelToggle(model)" (change)="switchAllModelPermissions(model, $event)">
+                            <mat-button-toggle class="w-50 f-14" [value]="true">Select all permissions
+                            </mat-button-toggle>
+                            <mat-button-toggle class="w-50 f-14" [value]="false">Remove all permissions
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
                     </div>
                 </div>
 

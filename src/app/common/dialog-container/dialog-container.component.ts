@@ -152,6 +152,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.subinject.changeNewRightSliderState({state: 'close'});
+    this.subinject.closeNewRightSlider({state: 'close'});
   }
 }

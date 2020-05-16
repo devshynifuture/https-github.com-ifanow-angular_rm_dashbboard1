@@ -7,6 +7,7 @@ import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.ser
 import {Subscription} from 'rxjs';
 import { SettingsService } from '../../settings.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-task-template',
@@ -27,6 +28,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   category: any = 'asset';
   listOfSub: any;
   adviceTypeMasterList: any[] = [];
+  formPlaceHolder:any;
 
   dataEdited = false;
 
@@ -54,6 +56,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.user = AuthService.getUserInfo();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
 
     // create turnaround time list
     for (let index = 1; index <= 100; index++) {
