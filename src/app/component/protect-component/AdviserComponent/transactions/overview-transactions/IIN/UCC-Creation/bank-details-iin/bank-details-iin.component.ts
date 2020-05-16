@@ -12,6 +12,7 @@ import {ContactDetailsInnComponent} from '../contact-details-inn/contact-details
 import {MatInput} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -19,11 +20,13 @@ import {SubscriptionService} from 'src/app/component/protect-component/AdviserCo
   styleUrls: ['./bank-details-iin.component.scss']
 })
 export class BankDetailsIINComponent implements OnInit {
+  bankListArr: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
               private processTransaction: ProcessTransactionService,
               private cusService: CustomerService,
               private subService: SubscriptionService,
+              private enumService: EnumServiceService,
               private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
@@ -134,7 +137,10 @@ export class BankDetailsIINComponent implements OnInit {
       }
     );
   }
-
+  selectedBank(bank){
+    this.firstHolderBank = bank
+    this.getdataForm(this.firstHolderBank);
+  }
   getHolderList(data) {
     console.log(data);
     this.holderList = data;
@@ -212,9 +218,10 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
+      bankACNo:[(data.bankName) ? data.bankName : ''], 
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [this.inputData.taxStatus == '21' ? '3' : !data ? '1' : data.accountType + '', [Validators.required]],
+      accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType): '1', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],

@@ -26,6 +26,22 @@
       <div class="p-20">
         <h3 class="f-18 mb-28 f-600">Bank details #1</h3>
 
+        <div class="row" *ngIf="bankList">
+          <div class="col-md-5 pr-0 text-right">
+              <h5 class="m-0 pt-8">Select bank account</h5>
+          </div>
+          <div class="col-md-5 form-group">
+              <mat-form-field>
+                  <mat-select class="form-control" formControlName="bankACNo" matInput>
+                    <mat-option value='' disabled>Select bank account</mat-option>
+                      <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i" [value]="option.bankName">
+                          {{option.bankName}}</mat-option>
+                  </mat-select>
+                  <mat-error>This field is required
+                  </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
         <div class="row">
           <div class="col-md-4 text-right pr-0">
             <h3 class="f-16 pt-20 m-0"> IFSC code </h3>
@@ -103,15 +119,15 @@
           <div class="col-md-8">
 
             <mat-radio-group aria-label="Select an option" formControlName="accountType">
-              <mat-radio-button *ngIf="inputData.taxStatus != '21'" [value]="1"
+              <mat-radio-button *ngIf="inputData.taxStatus != '21'" [value]='1'
                                 [ngClass]="bankDetailsForm.get('accountType').value == '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                 Savings
               </mat-radio-button>
-              <mat-radio-button *ngIf="inputData.taxStatus != '21'" value="2"
+              <mat-radio-button *ngIf="inputData.taxStatus != '21'" value='2'
                                 [ngClass]="bankDetailsForm.get('accountType').value == '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                 Current
               </mat-radio-button>
-              <mat-radio-button *ngIf="inputData.taxStatus == '21'" value="3"
+              <mat-radio-button *ngIf="inputData.taxStatus == '21'" value='3'
                                 [ngClass]="bankDetailsForm.get('accountType').value =='3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                 NRE
               </mat-radio-button>
