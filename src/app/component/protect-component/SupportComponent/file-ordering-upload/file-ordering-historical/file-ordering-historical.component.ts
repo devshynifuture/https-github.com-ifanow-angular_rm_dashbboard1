@@ -11,6 +11,8 @@ import { FileOrderingUpperComponent } from "../file-ordering-upper/file-ordering
 import { FileOrderingUploadService } from "../file-ordering-upload.service";
 import { FormBuilder } from "@angular/forms";
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { Subscription } from 'rxjs';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 @Component({
 	selector: "app-file-ordering-historical",
@@ -51,6 +53,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	selectable = true;
 	removable = true;
 	addOnBlur = true;
+	filterFormValueSubscription: Subscription;
 	readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 	filterBy = [];
 	filterForm = this.fb.group({
@@ -118,7 +121,10 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	ngOnInit() {
 		this.isLoading = true;
 		this.getRtaList();
-		this.filterForm.valueChanges
+		this.filterFormValueSubscription = this.filterForm.valueChanges
+			.pipe(
+				debounceTime(500)
+			)
 			.subscribe(res => {
 				if (res) {
 					console.log("full filter data", res);
@@ -147,9 +153,11 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					if (!this.utilService.isEmptyObj(obj)) {
 						this.dataSource.data = ELEMENT_DATA;
 						this.fileOrderHistoryListGet(obj);
+
 					}
 				}
 			});
+
 	}
 
 	defaultSelectionInFilter() {

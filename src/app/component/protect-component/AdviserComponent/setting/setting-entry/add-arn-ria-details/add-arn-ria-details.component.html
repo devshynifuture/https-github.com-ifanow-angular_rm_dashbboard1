@@ -154,7 +154,7 @@
         <div class="col-md-5">
             <div class="form-group p-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input matInput type="text" [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL" formControlName="registeredEmail" class="form-control br-0">
+                    <app-email-domain-auto-suggest [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL" formControlName="registeredEmail" class="br-0"></app-email-domain-auto-suggest>
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.required">This field is required
                     </mat-error>

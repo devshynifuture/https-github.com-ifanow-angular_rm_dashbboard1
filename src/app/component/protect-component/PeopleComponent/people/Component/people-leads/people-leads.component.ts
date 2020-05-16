@@ -50,6 +50,7 @@ export class PeopleLeadsComponent implements OnInit {
             if (singleData.emailList && singleData.emailList.length > 0) {
               singleData.email = singleData.emailList[0].email;
             }
+            singleData['leadrating'] = (singleData.leadRating == 0) ? 'N/A' : (singleData.leadRating == 1) ? 'Cold' : "Hot"
           });
           this.leadDataSource.data = data;
           this.leadDataSource.sort = this.leadTableSort;

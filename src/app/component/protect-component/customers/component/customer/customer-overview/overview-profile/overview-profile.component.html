@@ -166,7 +166,7 @@
                                 <h5 class=" headingDetails ml-8 "> Basic details </h5>
                             </div>
 
-                            <div class=" col-md-2 text-right ">
+                            <div *ngIf="!letsideBarLoader" class=" col-md-2 text-right ">
                                 <a (click)="openClient('edit client',clientOverviewData)"
                                     class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
