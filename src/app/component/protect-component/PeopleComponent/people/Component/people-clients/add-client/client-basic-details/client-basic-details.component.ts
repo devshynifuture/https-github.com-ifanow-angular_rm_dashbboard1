@@ -508,7 +508,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         pan: 'pan',
         genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
         relationshipId: (this.minorForm.value.relationWithMinor != '') ? this.minorForm.value.relationWithMinor : null,
-        aadhaarNumber: null,
+        aadhaarNumber: (this.basicDetailsData.guardianData) ? this.basicDetailsData.guardianData.aadhaarNumber : null,
         occupationId: 1,
         martialStatusId: 1,
         anniversaryDate: null,
