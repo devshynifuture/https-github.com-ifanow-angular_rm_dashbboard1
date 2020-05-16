@@ -1,20 +1,20 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
-import {MatInput} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import * as moment from 'moment';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -56,10 +56,10 @@ export class NomineeDetailsIinComponent implements OnInit {
   filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private onlineTransact: OnlineTransactionService, private postalService: PostalService,
-              private processTransaction: ProcessTransactionService, private custumService: CustomerService,
-              private peopleService: PeopleService,
-              private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    private onlineTransact: OnlineTransactionService, private postalService: PostalService,
+    private processTransaction: ProcessTransactionService, private custumService: CustomerService,
+    private peopleService: PeopleService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -122,12 +122,12 @@ export class NomineeDetailsIinComponent implements OnInit {
     console.log('onChange', value.checked);
 
     if (value.checked == true) {
-      this.nomineeDetails.controls.address1.setValue(this.allData.holderList[0].address1);
-      this.nomineeDetails.controls.address2.setValue(this.allData.holderList[0].address2);
-      this.nomineeDetails.controls.pinCode.setValue(this.allData.holderList[0].pinCode);
-      this.nomineeDetails.controls.city.setValue(this.allData.holderList[0].city);
-      this.nomineeDetails.controls.state.setValue(this.allData.holderList[0].state);
-      this.nomineeDetails.controls.country.setValue(this.allData.holderList[0].country);
+      this.nomineeDetails.controls.address1.setValue((this.allData.holderList[0].address1) ? this.allData.holderList[0].address1 : this.allData.holderList[0].address.address1);
+      this.nomineeDetails.controls.address2.setValue((this.allData.holderList[0].address2) ? this.allData.holderList[0].address2 : this.allData.holderList[0].address.address2);
+      this.nomineeDetails.controls.pinCode.setValue((this.allData.holderList[0].pinCode) ? this.allData.holderList[0].pinCode : this.allData.holderList[0].address.pinCode);
+      this.nomineeDetails.controls.city.setValue((this.allData.holderList[0].city) ? this.allData.holderList[0].city : this.allData.holderList[0].address.city);
+      this.nomineeDetails.controls.state.setValue((this.allData.holderList[0].state) ? this.allData.holderList[0].state : this.allData.holderList[0].address.state);
+      this.nomineeDetails.controls.country.setValue((this.allData.holderList[0].country) ? this.allData.holderList[0].country : this.allData.holderList[0].address.country);
     }
   }
 
@@ -228,7 +228,7 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     this.nomineeDetails.controls.country.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
-        return this.processTransaction.filterCountryName(newValue, this.countryList);
+        return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
     // if (data.nomineeType == undefined) {

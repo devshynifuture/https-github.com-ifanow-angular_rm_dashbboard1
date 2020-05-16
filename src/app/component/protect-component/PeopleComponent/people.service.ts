@@ -108,7 +108,7 @@ export class PeopleService {
   }
 
   getClientFamilyMemberListAsset(data) {
-    const httpParams = new HttpParams().set('clientId', data.userId);
+    const httpParams = new HttpParams().set('clientId', data.clientId);
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, httpParams);
   }
 
