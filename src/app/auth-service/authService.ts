@@ -3,15 +3,14 @@ import { Injectable } from '@angular/core';
 
 // import {Router} from '@angular/router';
 import { EventService } from '../Data-service/event.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
   familyMemberId: any;
   constructor(
-    /*private myRoute: Router*/
-
-  ) {
-  }
+      private router: Router
+  ) {}
 
   static getAdminStatus() {
     if (this.getUserInfo().hasOwnProperty('isAdmin')) {
@@ -168,5 +167,14 @@ export class AuthService {
     return JSON.parse(sessionStorage.getItem('subUpperData'))
   }
 
-  // static get
+  static goHome(router: Router){
+    const userInfo = AuthService.getUserInfo();
+    if(userInfo.userType == 1 || userInfo.userType == 8) {
+      router.navigate(['admin', 'subscription', 'dashboard']);
+    } else if(userInfo.isRmLogin) {
+      router.navigate(['support', 'dashboard']);
+    } else {
+      router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+    }
+  }
 }
