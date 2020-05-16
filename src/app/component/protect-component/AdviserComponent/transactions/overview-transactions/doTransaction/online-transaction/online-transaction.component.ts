@@ -95,7 +95,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   setClientFilterList() {
-    if (this.inputData.isAdvisorSection == null ||
+    if (!this.inputData || this.inputData.isAdvisorSection == null ||
       this.inputData.isAdvisorSection == undefined ||
       this.inputData.isAdvisorSection) {
       this.filteredStates = this.stateCtrl.valueChanges
