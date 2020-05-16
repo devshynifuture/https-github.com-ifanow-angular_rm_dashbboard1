@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -14,6 +14,7 @@ import { SettingsService } from 'src/app/component/protect-component/AdviserComp
   styleUrls: ['./mutual-fund.component.scss']
 })
 export class MutualFundComponent implements OnInit {
+  @Output() sendData = new EventEmitter();
   viewMode: string;
   mfData: any;
   advisorId: any;
@@ -99,6 +100,7 @@ export class MutualFundComponent implements OnInit {
   changeViewMode(data) {
     this.viewMode = data;
     this.mfService.changeViewMode(this.viewMode);
+    this.sendData.emit(data);
     // this.mfData.viewMode = data;
   }
 

@@ -54,10 +54,15 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
       status: filter.status
     };
     this.reconService.getBackOfficeFolio({advisorId: this.advisorId}).subscribe((data) => {
+     if(data){
       this.listData = data;
       this.dataSource = new MatTableDataSource(this.listData);
       this.dataSource.sort = this.sortList;
       this.isLoading = false;
+    } else {
+      this.dataSource = []
+      this.isLoading = false;
+    }
     });
   }
 

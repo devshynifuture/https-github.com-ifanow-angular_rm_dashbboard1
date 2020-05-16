@@ -242,6 +242,10 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   // prepareRoute(outlet: RouterOutlet) {
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
+
+  goHome(){
+    AuthService.goHome(this.router);
+  }
 }
 
 

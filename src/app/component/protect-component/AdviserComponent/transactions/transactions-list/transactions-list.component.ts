@@ -6,7 +6,7 @@ import {OnlineTransactionService} from '../online-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {TransactionEnumService} from '../transaction-enum.service';
-import {OnlineTrasactionComponent} from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
+import {OnlineTransactionComponent} from '../overview-transactions/doTransaction/online-transaction/online-transaction.component';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {Router} from '@angular/router';
 
@@ -48,6 +48,9 @@ export class TransactionsListComponent implements OnInit {
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
     }
+    this.selectedPreviousToShowDate = '7';
+    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
+    this.finalEndDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     if (this.isAdvisorSection) {
       this.getFilterOptionData();
@@ -86,9 +89,6 @@ export class TransactionsListComponent implements OnInit {
       this.filterData = data;
       this.credentialData = data;
       this.selectedBroker = data[0];
-      this.selectedPreviousToShowDate = '7';
-      this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
-      this.finalEndDate = new Date().getTime();
       this.getAllTransactionList();
     } else {
       this.isLoading = false;
@@ -187,7 +187,7 @@ export class TransactionsListComponent implements OnInit {
       data: {isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction'},
       id: 1,
       state: 'open65',
-      componentName: OnlineTrasactionComponent,
+      componentName: OnlineTransactionComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

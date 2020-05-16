@@ -92,7 +92,7 @@ export class FatcaDetailsInnComponent implements OnInit {
 
     this.fatcaDetails = this.fb.group({
       nationality: [(!data) ? '1' : (data.nationality) ? data.nationality + '' : '1', [Validators.required]],
-      annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
+      annualIncome: [(!data) ? '' : data.income, [Validators.required]],
       placeOfBirth: [(!data) ? '' : data.placeOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
@@ -103,7 +103,7 @@ export class FatcaDetailsInnComponent implements OnInit {
     });
     this.fatcaDetails.controls.countryOfBirth.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
-        return this.processTransaction.filterCountryName(newValue, this.countryList);
+        return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
     // if(!data){

@@ -182,7 +182,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
     this.contactDetails.controls.country.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
-        return this.processTransaction.filterCountryName(newValue, this.countryList);
+        return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
   }

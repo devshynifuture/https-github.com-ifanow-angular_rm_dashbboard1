@@ -32,4 +32,6 @@ export class AppConstants {
     ENTER_COMPANY_ADDRESS: 'Enter office address',
     ENTER_PIN_CODE: 'Enter pin code',
   }
+
+  public static EMAIL_DOMAINS = ['google.com'];
 }
