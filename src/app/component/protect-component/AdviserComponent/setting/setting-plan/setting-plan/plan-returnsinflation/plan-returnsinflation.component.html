@@ -19,7 +19,7 @@
     <div class="col-md-4 pl-0">
         <table mat-table [dataSource]="shortDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-                <th class="br t-70" mat-header-cell *matHeaderCellDef>SHORT TERM </th>
+                <th class="br t-65" mat-header-cell *matHeaderCellDef> Short item </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
@@ -35,7 +35,7 @@
 
         <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-                <th mat-header-cell class="br t-70" *matHeaderCellDef>SHORT TERM </th>
+                <th mat-header-cell class="br t-65" *matHeaderCellDef>Short item </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
@@ -57,10 +57,10 @@
         </table>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 pl-0">
         <table mat-table [dataSource]="longDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-                <th class="br t-70" mat-header-cell *matHeaderCellDef>LONG TERM </th>
+                <th class="br t-65" mat-header-cell *matHeaderCellDef> Long item </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
@@ -78,7 +78,7 @@
         <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="position">
-                <th mat-header-cell class="br t-70" *matHeaderCellDef>LONG TERM</th>
+                <th mat-header-cell class="br t-65" *matHeaderCellDef>Long item</th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">

@@ -69,8 +69,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput #bondName type="text" appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="50" class="form-control br-0"
+                    <input autocomplete="off" matInput #bondName type="text" maxlength="50" class="form-control br-0"
                         formControlName="bondName">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isBondName && getFormControl().bondName.invalid || getFormControl().bondName.touched && getFormControl().bondName.invalid)}">
@@ -170,7 +169,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Coupon payout option</h5>
+            <h5 class="m-0 pt-12">coupon option</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
@@ -282,7 +281,25 @@
         </div>
     </div>
     <div *ngIf="showHide == true">
-        
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-24">Bond number</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input autocomplete="off" matInput autocomplete="off" formControlName="bondNo" 
+                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="number"
+                         class="form-control br-0">
+                       
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
+                       
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
         <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>

@@ -100,7 +100,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.getAddressList(this.clientData);
       }
     }
-    this.sendObj = {};
+    this.sendObj = {...this.inputData};
     console.log('holding list', this.holdingList);
   }
 
@@ -182,7 +182,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
     this.contactDetails.controls.country.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
-        return this.processTransaction.filterCountryName(newValue, this.countryList);
+        return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
   }

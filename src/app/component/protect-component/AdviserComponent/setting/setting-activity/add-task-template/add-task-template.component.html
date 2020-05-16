@@ -139,7 +139,7 @@
           <div class="form-group matFormPadding">
             <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
               <input class="form-control br-0 rupess" formControlName="description" matInput
-                     placeholder="Sub Task Description" type="text">
+                     [placeholder]="formPlaceHolder.ADD_SUB_TASK_DESCRIPTION" type="text">
               <mat-error class="f-12">
                 This field is required
               </mat-error>
@@ -197,8 +197,9 @@
       <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button (click)="save()" class="btn-bottom br-0 text-inherit" mat-button>SAVE
-      </button>
+      <app-progress-button (btnClick)="save()" class="br-0 text-inherit  "
+          [options]="barButtonOptions">
+      </app-progress-button>
     </div>
   </div>
 </div>

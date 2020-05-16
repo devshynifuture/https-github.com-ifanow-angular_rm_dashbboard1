@@ -34,7 +34,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" placeholder="Enter Login ID" matInput formControlName="loginId" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_LOGIN_ID" matInput formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -47,7 +47,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" placeholder="Enter Login password" matInput formControlName="loginPassword" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput formControlName="loginPassword" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -60,7 +60,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" matInput formControlName="registeredEmail" class="form-control" placeholder="Enter Registered email">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control" [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL">
                     <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.required">This field is required
                     </mat-error>
                     <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
@@ -75,7 +75,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" placeholder="Enter password" matInput formControlName="mailbackPassword" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput formControlName="mailbackPassword" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -106,7 +106,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>
+            <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit"
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

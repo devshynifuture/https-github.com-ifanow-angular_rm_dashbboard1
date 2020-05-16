@@ -54,7 +54,8 @@ Description description: "this is futurewise Tech" -->
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.amountInvested?utils.formatter(fixedDeposit.amountInvested):'-'}}
+                        ₹<span appFormatNumber>{{fixedDeposit.amountInvested}}</span>
+                        <!-- {{fixedDeposit.amountInvested?utils.formatter(fixedDeposit.amountInvested):'-'}} -->
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -79,9 +80,9 @@ Description description: "this is futurewise Tech" -->
                         Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <span *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ 'Year':fixedDeposit.tenureInYear+ 'Years'}}</span>
-                        <span *ngIf="fixedDeposit.tenureInMonth > 0">{{fixedDeposit.tenureInMonth == 1?fixedDeposit.tenureInMonth+ 'Month':fixedDeposit.tenureInMonth+ 'Months'}}</span>
-                        <span *ngIf="fixedDeposit.tenureInDay > 0">{{fixedDeposit.tenureInDay == 1?fixedDeposit.tenureInDay+ 'Day':fixedDeposit.tenureInDay+ 'Days'}}</span>
+                        <span *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ 'Year':fixedDeposit.tenureInYear+ ' Years'}}</span>
+                        <span *ngIf="fixedDeposit.tenureInMonth > 0">{{fixedDeposit.tenureInMonth == 1?fixedDeposit.tenureInMonth+ 'Month':fixedDeposit.tenureInMonth+ ' Months'}}</span>
+                        <span *ngIf="fixedDeposit.tenureInDay > 0">{{fixedDeposit.tenureInDay == 1?fixedDeposit.tenureInDay+ 'Day':fixedDeposit.tenureInDay+ ' Days'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -97,12 +98,12 @@ Description description: "this is futurewise Tech" -->
                         Rate of interest
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.interestRate?fixedDeposit.interestRate:'-'}}
+                        {{fixedDeposit.interestRate?fixedDeposit.interestRate:'-'}}%
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        interest option
+                        Interest option
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative':'Interest payout'}}
@@ -110,7 +111,7 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest compounding
+                        Compounding frequency
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.interestCompoundingId == 2)?'Monthly':(fixedDeposit.interestCompoundingId == 3)?'Quarterly':(fixedDeposit.interestCompoundingId == 4)?'Half yearly':'Yearly'}}
@@ -129,7 +130,8 @@ Description description: "this is futurewise Tech" -->
                         {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}} payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{fixedDeposit.payoutAmount?utils.formatter(fixedDeposit.payoutAmount):'-'}}
+                        ₹<span appFormatNumber>{{fixedDeposit.payoutAmount}}</span>
+                        <!-- {{fixedDeposit.payoutAmount?utils.formatter(fixedDeposit.payoutAmount):'-'}} -->
                     </div>
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
@@ -137,7 +139,8 @@ Description description: "this is futurewise Tech" -->
                         Payout received till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillToday):'-'}}
+                        ₹<span appFormatNumber>{{fixedDeposit.payoutTillToday}}</span>
+                        <!-- {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillToday):'-'}} -->
                     </div>
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2"F class="row bb p-8 b-l br">
@@ -145,7 +148,8 @@ Description description: "this is futurewise Tech" -->
                         Payout received till maturity
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillMaturity):'-'}}
+                        ₹<span appFormatNumber>{{fixedDeposit.payoutTillMaturity}}</span>
+                        <!-- {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillMaturity):'-'}} -->
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -162,7 +166,8 @@ Description description: "this is futurewise Tech" -->
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}}
+                        ₹<span appFormatNumber>{{fixedDeposit.currentValue}}</span>
+                        <!-- {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}} -->
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -170,7 +175,8 @@ Description description: "this is futurewise Tech" -->
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{fixedDeposit.maturityValue?utils.formatter(fixedDeposit.maturityValue):'-'}}
+                        ₹<span appFormatNumber>{{fixedDeposit.maturityValue}}</span>
+                        <!-- ₹{{fixedDeposit.maturityValue?utils.formatter(fixedDeposit.maturityValue):'-'}} -->
                     </div>
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
@@ -179,7 +185,8 @@ Description description: "this is futurewise Tech" -->
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
-                        ₹{{utils.formatter(fixedDeposit.currentValue - fixedDeposit.amountInvested)}}
+                        ₹<span appFormatNumber>{{fixedDeposit.amountInvested}}</span>
+                        <!-- ₹{{utils.formatter(fixedDeposit.currentValue - fixedDeposit.amountInvested)}} -->
 
                     </div>
                 </div>

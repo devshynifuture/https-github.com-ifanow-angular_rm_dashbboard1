@@ -22,7 +22,7 @@ export class FileOrderingUpperComponent implements OnInit {
     private fileOrderingService: FileOrderingUploadService,
     private supportService: SupportService
   ) { }
-  displayedColumns: string[] = ['checkbox', 'advisorName', 'arnRia', 'fileType', 'fileOrderTime', 'status', 'referenceId', 'inFileOrAdded', 'fileName', 'errorMsg', 'action'];
+  displayedColumns: string[] = ['checkbox', 'advisorName', 'arnRia', 'fileType', 'fileOrderTime', 'status', 'referenceId', 'inFileOrAdded', 'fileName', 'fileUrl', 'errorMsg', 'action'];
 
   dataSource = new MatTableDataSource<fileOrderingUpperI>(ELEMENT_DATA);
   data;
@@ -89,8 +89,17 @@ export class FileOrderingUpperComponent implements OnInit {
   fileOrderBulkListData() {
     this.isLoading = true;
     let tableData = [];
-    const reqObj = {
-      bulkFileOrderId: this.data.id
+    let reqObj;
+    if (this.data.status !== 'total') {
+      let status = this.data.status === 'inqueue' ? 1 : (this.data.status === 'ordered' ? 2 : (this.data.status === 'uploaded' ? 3 : (this.data.status === 'skipped' ? 4 : null)))
+      reqObj = {
+        bulkFileOrderId: this.data.id,
+        status
+      }
+    } else {
+      reqObj = {
+        bulkFileOrderId: this.data.id,
+      }
     }
 
     this.fileOrderingService.getFileOrderBulkUpperListData(reqObj)
@@ -120,7 +129,8 @@ export class FileOrderingUpperComponent implements OnInit {
               errorMsg: element.errorMsg ? element.errorMsg : '-',
               action: '',
               fromDate: element.fromDate,
-              toDate: element.toDate
+              toDate: element.toDate,
+              fileUrl: element.fileUrl ? element.fileUrl : null
             })
           });
           this.dataSource.data = tableData;
@@ -172,16 +182,29 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   fileOrderingListData() {
-    console.log(this.data.startedOn)
     this.isLoading = true;
     let tableData = [];
-    const reqObj = {
-      arnRiaDetailId: this.data.arnRiaDetailId,
-      days: this.data.days,
-      rmId: this.data.rmId,
-      rtId: this.data.rtId,
-      startedOn: this.data.startedOn
+    let reqObj;
+    if (this.data.status !== 'total') {
+      let status = this.data.status === 'inqueue' ? 1 : (this.data.status === 'ordered' ? 2 : (this.data.status === 'uploaded' ? 3 : (this.data.status === 'skipped' ? 4 : null)))
+      reqObj = {
+        arnRiaDetailId: this.data.arnRiaDetailId,
+        days: this.data.days,
+        rmId: this.data.rmId,
+        rtId: this.data.rtId,
+        startedOn: this.data.startedOn,
+        status
+      }
+    } else {
+      reqObj = {
+        arnRiaDetailId: this.data.arnRiaDetailId,
+        days: this.data.days,
+        rmId: this.data.rmId,
+        rtId: this.data.rtId,
+        startedOn: this.data.startedOn
+      }
     }
+
     this.fileOrderingService.getFileOrderHistoricalUpperListData(reqObj)
       .subscribe(res => {
         this.isLoading = false;
@@ -209,7 +232,8 @@ export class FileOrderingUpperComponent implements OnInit {
               errorMsg: element.errorMsg ? element.errorMsg : '-',
               action: '',
               fromDate: element.fromDate,
-              toDate: element.toDate
+              toDate: element.toDate,
+              fileUrl: element.fileUrl ? element.fileUrl : null
             })
           });
           this.dataSource.data = tableData;
@@ -275,9 +299,9 @@ export class FileOrderingUpperComponent implements OnInit {
 
 }
 const ELEMENT_DATA: fileOrderingUpperI[] = [
-  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' },
-  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' },
-  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' }
+  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' },
+  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' },
+  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' }
 ]
 
 export interface fileOrderingUpperI {
@@ -291,6 +315,7 @@ export interface fileOrderingUpperI {
   referenceId: string;
   inFileOrAdded: string;
   fileName: string;
+  fileUrl: string,
   failedReason: string;
   action: string;
 }

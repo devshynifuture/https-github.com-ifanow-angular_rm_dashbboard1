@@ -6,6 +6,8 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 import {Subscription} from 'rxjs';
 import { SettingsService } from '../../settings.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-task-template',
@@ -26,11 +28,24 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   category: any = 'asset';
   listOfSub: any;
   adviceTypeMasterList: any[] = [];
+  formPlaceHolder:any;
 
   dataEdited = false;
 
   @Input() data;
   hideSubcategory = true;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -41,6 +56,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.user = AuthService.getUserInfo();
+    this.formPlaceHolder = AppConstants.formPlaceHolders;
 
     // create turnaround time list
     for (let index = 1; index <= 100; index++) {
@@ -219,10 +235,11 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    if (this.taskTemplate.invalid) {
+    if (this.taskTemplate.invalid || this.barButtonOptions.active) {
       this.taskTemplate.markAllAsTouched();
       return;
     }
+    this.barButtonOptions.active = true;
     if (this.data.id) {
       this.saveEditedTemplate();
     } else {
@@ -243,7 +260,10 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.event.openSnackBar('Modified successfully!', 'Dismiss');
         this.Close(true);
       },
-      err => this.event.openSnackBar(err, 'Dismiss')
+      err => {
+        this.barButtonOptions.active = true;
+        this.event.openSnackBar(err, 'Dismiss')
+      }
     );
   }
 
@@ -262,7 +282,10 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.event.openSnackBar('Added successfully!', 'Dismiss');
         this.Close(true);
       },
-      err => this.event.openSnackBar(err, 'Dismiss')
+      err =>  {
+        this.barButtonOptions.active = true;
+        this.event.openSnackBar(err, 'Dismiss')
+      }
     );
   }
 

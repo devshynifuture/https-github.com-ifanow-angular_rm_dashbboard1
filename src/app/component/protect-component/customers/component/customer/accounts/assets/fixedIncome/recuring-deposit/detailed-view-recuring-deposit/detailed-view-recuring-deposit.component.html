@@ -56,7 +56,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Tenure
+                        Tenure (In months)
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(recuringDeposit.tenure)?recuringDeposit.tenure:'-'}}
@@ -72,7 +72,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest compounding
+                        Compounding frequency
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(recuringDeposit.interestCompounding=='1')?'Daily':(recuringDeposit.interestCompounding=='2')?'Monthly':(recuringDeposit.interestCompounding=='3')?'Quarterly':(recuringDeposit.interestCompounding=='4')?'Half yearly ':(recuringDeposit.interestCompounding=='5')?'Yearly':'-'}}

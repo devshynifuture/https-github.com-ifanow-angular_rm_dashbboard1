@@ -20,7 +20,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="companyName" class="form-control" placeholder="Enter Company name" maxLength="50" [maxLength]="50" appInputValueValidation>
+                                <input matInput formControlName="companyName" class="form-control" [placeholder]="formPlaceHolder.ENTER_COMPANY_NAME" maxLength="50" [maxLength]="50" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('companyName').value.length}}/50
                                 </mat-hint>
                                 <mat-error class="pt-4">
@@ -37,7 +37,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="emailId" class="form-control" placeholder="Enter Email Id">
+                                <input matInput formControlName="emailId" class="form-control" [placeholder]="formPlaceHolder.ENTER_EMAIL_ID">
                                 <mat-error class=" pt-4" *ngIf="orgProfile.get('emailId').errors?.required">This field is required</mat-error>
                                 <mat-error class=" pt-4" *ngIf="orgProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
                             </mat-form-field>
@@ -65,7 +65,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter mobile no" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input matInput formControlName="mobileNo" class="form-control" [placeholder]="formPlaceHolder.ENTER_MOBILE_NUMBER" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('mobileNo').value.length}}/10
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field is required</mat-error>
@@ -82,7 +82,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="website" class="form-control" placeholder="http://www.example.com">
+                                <input matInput formControlName="website" class="form-control" [placeholder]="formPlaceHolder.ENTER_WEBSITE">
                                 <mat-error class=" pt-4">
                                     This field is required
                                 </mat-error>
@@ -97,7 +97,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <textarea matInput formControlName="address" class="form-control" rows="5" placeholder="Office address"></textarea>
+                                <textarea matInput formControlName="address" class="form-control" rows="5" [placeholder]="formPlaceHolder.ENTER_COMPANY_ADDRESS"></textarea>
                                 <mat-error class=" pt-4">
                                     This field is required
                                 </mat-error>
@@ -114,6 +114,7 @@
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <!-- (ngModelChange)="gstTreatmentRemove($event)" prod build -->
                                 <mat-select formControlName="gstTreatment" class="form-control br-0" id="sel1">
+                                    <mat-option [value]="" disabled>{{formPlaceHolder.SELECT_OPTION}}</mat-option>
                                     <mat-option [value]=1>Consumer</mat-option>
                                     <mat-option [value]=2>Not registered business</mat-option>
                                     <mat-option [value]=3>Overseas</mat-option>
@@ -154,7 +155,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="gstNumber" class="form-control" placeholder="Enter GST number" maxLength="15" [maxLength]="15" appInputValueValidation>
+                                <input matInput formControlName="gstNumber" class="form-control" [placeholder]="formPlaceHolder.ENTER_GST" maxLength="15" [maxLength]="15" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('gstNumber').value.length}}/30
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="orgProfile.get('gstNumber').errors?.required">This field is required</mat-error>
@@ -171,7 +172,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" maxLength="6" placeholder="Enter pin code" [maxLength]="6" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" maxLength="6" [placeholder]="formPlaceHolder.ENTER_PIN_CODE" [maxLength]="6" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('pincode').value.length}}/6
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
@@ -188,7 +189,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input #city class="form-control br-0" formControlName="city" type="text" matInput readonly placeholder="Mumbai">
+                                <input #city class="form-control br-0" formControlName="city" type="text" matInput readonly placeholder="City">
                                 <mat-error class=" pt-4">This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -201,7 +202,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input #state class="form-control br-0" type="text" formControlName="state" matInput readonly placeholder="Maharashtra">
+                                <input #state class="form-control br-0" type="text" formControlName="state" matInput readonly placeholder="State">
                                 <mat-error class=" pt-4">This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -322,9 +323,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
-                {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
-            </button>
+            <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

@@ -11,7 +11,6 @@ import {BankDetailsIINComponent} from '../IIN/UCC-Creation/bank-details-iin/bank
 import {NomineeDetailsIinComponent} from '../IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
 import {FatcaDetailsInnComponent} from '../IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
 import {OnlineTransactionService} from '../../online-transaction.service';
-import {of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,7 @@ import {of} from 'rxjs';
 export class ProcessTransactionService {
   [x: string]: any;
 
-  countryCodeList;
+  // countryCodeList;
   inverstorList: any;
   transactionSummary: {};
   schemeSelection: any;
@@ -324,7 +323,7 @@ export class ProcessTransactionService {
     }
   }
 
-  public filterCountryName(value: any, countryList): any[] {
+  public filterName(value: any, countryList): any[] {
     const filterValue = this.normalizeValue(value + '');
     console.log('_filter value : ', value);
     console.log('_filter countryList : ', countryList);
@@ -462,15 +461,15 @@ export class ProcessTransactionService {
     return scheme && scheme.schemeName ? scheme.schemeName : '';
   }
 
-  displayCountryName(scheme) {
+  displayName(scheme) {
     return scheme && scheme.name ? scheme.name : '';
   }
 
   getCountryCodeList() {
-    if (this.countryCodeList) {
-      return of(this.countryCodeList);
-    } else {
-      return this.onlineTransactService.getCountryCodeList({});
-    }
+    // if (this.countryCodeList) {
+    //   return of(this.countryCodeList);
+    // } else {
+    return this.onlineTransactService.getCountryCodeList({});
+    // }
   }
 }

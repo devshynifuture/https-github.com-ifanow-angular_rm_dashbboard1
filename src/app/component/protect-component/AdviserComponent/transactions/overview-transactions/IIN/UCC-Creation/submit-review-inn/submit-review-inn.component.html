@@ -98,17 +98,23 @@
           </button>
         </div>
 
-        <div class="col-md-3 mb-12 pl-0  ">
+        <div *ngIf="selectedBrokerBse&&createdBrokerMap[selectedBrokerBse.id]" class="col-md-3 mb-12 pl-0  ">
           <h5 *ngIf="BSEValue == '1'">4) Upload forms</h5>
           <h5 *ngIf="BSEValue == '2'">5) Upload forms</h5>
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
           <button (click)="uploadFileInput.click()"
-                  *ngIf="selectedBrokerBse&&createdBrokerMap[selectedBrokerBse.id]"
                   class="btnConfirm bg-primary text-white"
                   mat-button>
             Upload AOF
-            <input #uploadFileInput (change)="getFileDetails($event)" class="uploadInput" id="file-4" type="file">
+            <input #uploadFileInput (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file">
+          </button>
+          <button (click)="uploadFileInput.click()"
+                  *ngIf="BSEValue == '1'"
+                  class="btnConfirm bg-primary text-white"
+                  mat-button>
+            Upload Cheque
+            <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-4" type="file">
           </button>
         </div>
 

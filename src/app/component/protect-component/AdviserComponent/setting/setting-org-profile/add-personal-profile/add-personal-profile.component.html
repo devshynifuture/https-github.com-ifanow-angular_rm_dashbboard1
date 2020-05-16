@@ -20,8 +20,9 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="name" class="form-control" placeholder="Enter Name" maxLength="40" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
-                                <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40</mat-hint>
+                                <input matInput formControlName="name" class="form-control" [placeholder]="formPlaceHolder.ENTER_FULL_NAME" maxLength="40" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
+                                <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40
+                                </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required
                                 </mat-error>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
@@ -36,7 +37,7 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="emailId" class="form-control" placeholder="Enter Email ID">
+                                <input matInput formControlName="emailId" class="form-control" [placeholder]="formPlaceHolder.ENTER_EMAIL_ID">
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
                             </mat-form-field>
@@ -65,7 +66,7 @@
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter Mobile No" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input matInput formControlName="mobileNo" class="form-control" [placeholder]="formPlaceHolder.ENTER_MOBILE_NUMBER" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{personalProfile.get('mobileNo').value.length}}/10
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
@@ -88,10 +89,10 @@
                         </div>
                     </div>
                 </div>
-    
+
             </mat-tab>
             <mat-tab label="Profile picture">
-                <div class="row pt-40">
+                <div class="row pt-40 pb-60">
                     <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
                         <h5 class="m-0 f-14 pt-8">Your profile picture</h5>
                         <p class="f-12 text-primitive">
@@ -103,10 +104,21 @@
                             <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                         </div>
                         <div class="image-cropper">
-                            <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
-                            <div *ngIf="showCropper">
+                            <app-image-cropper [imageURL]="imgURL" [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
+                            <!-- <div *ngIf="showCropper">
                                 <button (click)="imageCropper.zoomIn()">ZoomIn</button>
                                 <button (click)="imageCropper.zoomOut()">ZoomIn</button>
+                            </div> -->
+
+                            <div class="zoomClassPosition" *ngIf="showCropper">
+
+                                <i (click)="imageCropper.zoomIn()" class="material-icons mr-12 c-p">
+                                    zoom_in
+                                </i>
+
+                                <i (click)="imageCropper.zoomOut()" class="material-icons c-p">
+                                    zoom_out
+                                </i>
                             </div>
                         </div>
                         <div class="profile-img" [hidden]="!showCropper">
@@ -116,7 +128,8 @@
                         </div>
                     </div>
                     <div class="col-md-7" *ngIf="cropImage">
-                        <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+                        <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE
+                            IMAGE</button>
                         <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
                             EDIT</button>
                         <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
@@ -126,7 +139,8 @@
                             <img [src]="imgURL">
                         </div>
                         <div class="row pt-24">
-                            <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
+                            <button mat-stroked-button class="btn-primary" (click)="cropImg(imgURL)">EDIT
+                                IMAGE</button>
                         </div>
                     </div>
                 </div>
@@ -143,9 +157,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
-                {{selectedTab == 1 ? 'CLOSE' : 'NEXT'}}
-            </button>
+            <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  " [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

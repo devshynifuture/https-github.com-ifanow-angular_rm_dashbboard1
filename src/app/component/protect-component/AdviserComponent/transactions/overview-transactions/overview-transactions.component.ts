@@ -1,7 +1,7 @@
 import {UtilService} from '../../../../../services/util.service';
 import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 import {Component, OnInit} from '@angular/core';
-import {OnlineTrasactionComponent} from './doTransaction/online-trasaction/online-trasaction.component';
+import {OnlineTransactionComponent} from './doTransaction/online-transaction/online-transaction.component';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {KnowYourCustomerComponent} from './know-your-customer/know-your-customer.component';
@@ -83,7 +83,7 @@ export class OverviewTransactionsComponent implements OnInit {
       data: null,
       id: 1,
       state: 'open65',
-      componentName: OnlineTrasactionComponent,
+      componentName: OnlineTransactionComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
