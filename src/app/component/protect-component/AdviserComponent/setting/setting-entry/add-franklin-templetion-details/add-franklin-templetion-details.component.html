@@ -60,7 +60,7 @@
         <div class="col-md-4">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" matInput formControlName="registeredEmail" class="form-control" [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL">
+                    <app-email-domain-auto-suggest formControlName="registeredEmail" [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
 
                     <mat-error *ngIf="franklinFG.get('registeredEmail').errors?.required && franklinFG.get('registeredEmail').touched">
                         This field is required

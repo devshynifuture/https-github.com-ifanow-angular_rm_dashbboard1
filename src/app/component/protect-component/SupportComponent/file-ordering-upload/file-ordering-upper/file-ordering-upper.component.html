@@ -21,7 +21,7 @@
 <div class="row pt-90">
 	<div class="col-lg-3 pl-15">
 		<div class="form-group">
-			<button mat-stroked-button (click)="fileOrderRetry(null)">
+			<button mat-stroked-button (click)="fileOrderRetry(null, 'multiple')">
 				Retry Selected Files
 			</button>
 		</div>
@@ -148,7 +148,7 @@
 							<button mat-menu-item class="c-p" (click)="openDetailedView(element)">
 								Detailed View
 							</button>
-							<button mat-menu-item class="c-p" (click)="fileOrderRetry(element.id)">
+							<button mat-menu-item class="c-p" (click)="fileOrderRetry(element.id, 'single')">
 								Retry Ordering
 							</button>
 							<button mat-menu-item class="c-p" (click)="refreshList()">
