@@ -46,6 +46,16 @@ export class EmailDomainAutoSuggestComponent implements OnInit, MatFormFieldCont
     this.stateChanges.next();
   }
 
+  private _readonly:boolean = false;
+  @Input()
+  set readonly(read){
+    this._readonly = coerceBooleanProperty(read);
+  }
+
+  get readonly(){
+    return this._readonly;
+  }
+
   onChanged: any = () => {};
   onTouched: any = () => {};
   

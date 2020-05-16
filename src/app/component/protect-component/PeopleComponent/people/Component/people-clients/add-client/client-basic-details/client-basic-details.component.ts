@@ -117,7 +117,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : (this.basicDetailsData.clientType == 2) ? { name: 'Minor', value: '2' } : { name: 'Non-individual', value: '3' }
       }
       else {
-        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : { name: 'Non-individual', value: '2' }
+        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : { name: 'Non-individual', value: '3' }
       }
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
@@ -298,7 +298,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    if (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) && this.nonIndividualForm.invalid) {
+    if (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '3')) && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
       return;
     }
@@ -387,10 +387,10 @@ export class ClientBasicDetailsComponent implements OnInit {
         userType: 2,
         remarks: null,
         status: (this.fieldFlag == 'client') ? 1 : 2,
-        leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadSource != '') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadSource != '') ? this.nonIndividualForm.value.leadSource : null,
-        leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadRating != '') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadRating != '') ? this.nonIndividualForm.value.leadRating : null,
-        companyStatus: ((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) ? this.nonIndividualForm.value.comStatus : null,
-        leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leaadStatus != '') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadStatus != '') ? this.nonIndividualForm.value.leadStatus : null,
+        leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadSource != '') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '3' && this.nonIndividualForm.value.leadSource != '') ? this.nonIndividualForm.value.leadSource : null,
+        leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadRating != '') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '3' && this.nonIndividualForm.value.leadRating != '') ? this.nonIndividualForm.value.leadRating : null,
+        companyStatus: ((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '3')) ? this.nonIndividualForm.value.comStatus : null,
+        leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leaadStatus != '') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '3' && this.nonIndividualForm.value.leadStatus != '') ? this.nonIndividualForm.value.leadStatus : null,
         occupationId: (this.fieldFlag == 'client' && this.invTypeCategory != '3') ? this.basicDetailsData.occupationId : (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetailsData.occupationId : (this.nonIndividualForm.controls.comOccupation.value != '') ? this.nonIndividualForm.controls.comOccupation.value : null,
         guardianData: gardianObj.name ? gardianObj : null
       };
