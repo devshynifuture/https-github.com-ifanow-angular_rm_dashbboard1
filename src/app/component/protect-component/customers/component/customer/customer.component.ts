@@ -133,4 +133,8 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.router.navigate(['/login']);
     // }
   }
+
+  goHome(){
+    AuthService.goHome(this.router);
+  }
 }

@@ -1,7 +1,7 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
     <mat-sidenav class="mobileMargin" #sidenav mode="side" opened role="navigation">
         <mat-nav-list class="pt-0" id="d" [ngStyle]="{'width':showTabs?'230px':''}">
-            <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 h-60 logoWrap">
+            <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 h-60 logoWrap c-p" (click)="goHome()">
                 <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo">
                 <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
                 <!-- <div>
