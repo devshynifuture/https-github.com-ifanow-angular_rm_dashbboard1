@@ -65,7 +65,7 @@ export class OnlineTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
-              private processTransaction: ProcessTransactionService, private router: Router,
+              public processTransaction: ProcessTransactionService, private router: Router,
               private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
