@@ -9,9 +9,9 @@
         </div> -->
         <div id="ui-assets-account" class="width220">
             <div class="col-md-12 p-0 pt-8 pb-20  ">
-                <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
+                <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
                     <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
-                </div>
+                </div> -->
                 <ul class="vertical-menu sticky-top z-0">
                     <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode;sidenavState = false" [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
                         <div class="row">
@@ -71,8 +71,11 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div id="ui-assets-account">
-            <div (click)="sidenav.toggle()" *ngIf="sidenavState">
-                "toggle"
+            <div *ngIf="sidenavState">
+                <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
+                    <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
+                </div>
+
             </div>
 
             <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
@@ -83,7 +86,7 @@
 
             <div class="row h-100vh">
 
-                <div class="col-md-12 bg-white bb-0 pb-24  b-a pl-0 pr-0 min-height" [ngSwitch]="viewMode">
+                <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
                         <div>
                             <app-mutual-fund (sendData)="getValue($event)"></app-mutual-fund>
