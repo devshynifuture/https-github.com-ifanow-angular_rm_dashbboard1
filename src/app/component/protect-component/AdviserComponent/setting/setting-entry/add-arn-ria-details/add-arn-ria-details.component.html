@@ -59,7 +59,7 @@
             <div class="form-group p-0">
                 <mat-form-field class="url" floatLabel="never" appearance="standard">
                     <button mat-stroked-button class="b-0 borderBtn h-40   bg-grey lter min-80 text-custom">{{arnRiaFG.get('arnOrRia').value == '' ? 'ARN/INA' : arnRiaFG.get('arnOrRia').value == 1 ? 'ARN' : 'INA'}}</button>
-                    <input matInput type="text" formControlName="number" [placeholder]="formPlaceHolders.ENTER_ARN_RIA_NUMBER" class="form-control br-0 inputBorderTransparent" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                    <input matInput type="text" formControlName="number" [placeholder]="formPlaceHolders.ENTER_ARN_RIA_NUMBER" class="form-control br-0 inputBorderTransparent" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="{{maxArnLength}}">
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.pattern">Please enter valid number</mat-error>
                 </mat-form-field>
