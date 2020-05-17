@@ -70,8 +70,8 @@ export class AddFamilyMemberComponent implements OnInit {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
   next() {
     this.step++;
@@ -152,7 +152,7 @@ export class AddFamilyMemberComponent implements OnInit {
       this.peopleService.addMultipleFamilyMembers(arrayObj).subscribe(
         data => {
           console.log(data),
-            this.close();
+            this.close(data);
           this.barButtonOptions.active = false;
         },
         err => {

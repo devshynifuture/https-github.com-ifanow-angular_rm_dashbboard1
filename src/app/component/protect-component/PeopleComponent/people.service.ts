@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -114,5 +114,9 @@ export class PeopleService {
 
   getClientFamilyMemberList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST, data, 1);
+  }
+
+  getClientSearch(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.CLIENT_SEARCH, data, 1);
   }
 }

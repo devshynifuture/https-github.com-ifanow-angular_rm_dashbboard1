@@ -14,6 +14,7 @@ export class ScripFieldComponent implements OnInit {
   scripFormControl: any;
   scripTransactionForm: any;
   @Output() valueChange1 = new EventEmitter();
+  @Output() scriptList = new EventEmitter();
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService) { }
 
@@ -55,5 +56,7 @@ export class ScripFieldComponent implements OnInit {
   getScripListRes(data) {
     console.log(data, "scripList")
     this.scripList = data.scripName;
+    this.scriptList.emit(this.scripList);
+
   }
 }

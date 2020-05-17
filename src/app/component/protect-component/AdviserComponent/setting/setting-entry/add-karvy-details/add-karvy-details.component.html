@@ -60,7 +60,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" matInput formControlName="registeredEmail" class="form-control" [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL">
+                    <app-email-domain-auto-suggest formControlName="registeredEmail" [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
                     <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.required">This field is required
                     </mat-error>
                     <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>

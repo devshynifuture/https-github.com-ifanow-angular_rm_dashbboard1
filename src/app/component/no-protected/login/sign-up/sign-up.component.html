@@ -90,8 +90,7 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Email</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input class="form-control" formControlName="email" matInput
-                                        placeholder="Enter email" tabindex="1">
+                                    <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email"></app-email-domain-auto-suggest>
                                     <mat-error *ngIf="signUpForm.get('email').errors?.pattern" align="end">Email invalid
                                     </mat-error>
                                     <mat-error *ngIf="signUpForm.get('email').errors?.required" align="end">Email

@@ -137,7 +137,7 @@ export class MfRtaDetailsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData) || componentID == 4) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
             this.loadRTAList();
           }
           rightSideDataSub.unsubscribe();

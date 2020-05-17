@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -19,7 +19,7 @@ export class ClientDematComponent implements OnInit {
 
   mobileNumberFlag = 'Broker phone';
 
-  dematForm;
+  dematForm: FormGroup;
   userData;
   dematList: any;
   holdingMode: string;
@@ -41,6 +41,7 @@ export class ClientDematComponent implements OnInit {
   clientData: any;
   disableBtn = false;
   saveAndNextFlag: any;
+  storeTempDematData: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService) {
@@ -54,6 +55,7 @@ export class ClientDematComponent implements OnInit {
   idData;
   @Input() set data(data) {
     this.userData = data;
+    this.storeTempDematData = Object.assign({}, data);
     this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
@@ -95,9 +97,8 @@ export class ClientDematComponent implements OnInit {
     };
   }
   changeHoldingType(data) {
-    (data.value == '1') ? this.dematForm.get('holderName').setValue('') : '';
-    this.dematList.holderNameList = [];
-    this.holderList = [];
+    // (data.value == '1') ?  : '';
+    (data.value == '1') ? this.holderList = [] : '';
   }
   displayControler(con) {
     console.log('value selected', con);
@@ -307,6 +308,8 @@ export class ClientDematComponent implements OnInit {
   }
 
   saveNext(flag) {
+    (this.dematForm.value.modeOfHolding == '1') ? this.dematForm.get('holderName').setValidators([Validators.required]) : this.dematForm.get('holderName').clearValidators();
+    this.dematForm.get('holderName').updateValueAndValidity();
     if (this.dematForm.invalid) {
       this.dematForm.markAllAsTouched();
       return;
