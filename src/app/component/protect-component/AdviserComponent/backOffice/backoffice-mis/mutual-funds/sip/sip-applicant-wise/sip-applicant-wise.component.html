@@ -6,14 +6,14 @@
                     <h3 class="pt-8 mb-0">Applicant wise SIP</h3>
                 </div>
                 <div class="col-md-6 text-right pr-0">
-                    <button (click)="exportToExcelSheet('client-wise', null)" class="btn-default addon"
+                    <button (click)="exportToExcelSheet('client-wise', null)" *ngIf="!isLoading && filteredArray.length>0" class="btn-default addon"
                         mat-stroked-button><i class="material-icons">add</i>XLS
                     </button>
                     <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="!isLoading && filteredArray.length > 0">
                 <div class="col-md-8"></div>
                 <div class="col-md-4 pr-0 mt-12 mb-12" ng-init="applicantFilter=''">
                     <input class="form-control" type="text" placeholder="Search applicant Name"
@@ -50,14 +50,14 @@
                             <tr>
                                 <td>
                                     <div class="bar">
-                                        {{data.name}}
+                                          {{isLoading ? '' : data.name}}
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="bar"><span appFormatNumber> {{data.totalAum}} </span></div>
+                                    <div class="bar">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="data.totalAum"></span></div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{data.weightInPercentage}}{{(isLoading?'':'%') }} </div>
+                                    <div class="bar"> {{isLoading ? '' : data.weightInPercentage | number : '1.2-2'}}{{(isLoading?'':'%') }} </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,data)">
                                     <div class="bar text-center">
@@ -71,14 +71,14 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
-                                    <div class="d-block text-right">
+                                    <div class="d-block text-right" *ngIf="!data.showScheme && !isLoading && data.schemeList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="data.showScheme == false" class="skeletonAnimation mt-8 mb-8"
+                                    <table *ngIf="data.showScheme == false && data.schemeList?.length > 0" class="skeletonAnimation mt-8 mb-8"
                                         appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">
@@ -176,52 +176,52 @@
                                             <tr>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.name}}
+                                                        {{isLoadingApplicant ? '' : scheme.name}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.schemeName}}
+                                                        {{isLoadingApplicant ? '' : scheme.schemeName}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.folioNumber}}
+                                                        {{isLoadingApplicant ? '' : scheme.folioNumber}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.registeredDate | date:'dd/MM/yyyy'}}
+                                                        {{isLoadingApplicant ? '' : (scheme.registeredDate | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.from_date | date:'dd/MM/yyyy'}}
+                                                        {{isLoadingApplicant ? '' : (scheme.from_date | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.to_date | date:'dd/MM/yyyy'}}
+                                                        {{isLoadingApplicant ? '' : (scheme.to_date | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.sipTriggerDay}}
+                                                        {{isLoadingApplicant ? '' : scheme.sipTriggerDay}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.frequency}}
+                                                        {{isLoadingApplicant ? '' : scheme.frequency}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        <span appFormatNumber>{{scheme.amount}}</span>
+                                                            {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="scheme.amount"></span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                        {{scheme.weightInPercentage}}{{(isLoadingApplicant?'':'%') }}
+                                                        {{isLoadingApplicant ? '' : (scheme.weightInPercentage | number:'1.2-2')}}{{(isLoadingApplicant?'':'%') }}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -231,7 +231,7 @@
                                         </tbody>
                                     </table>
                                     <div *ngIf="!isLoadingApplicant && data.showScheme == false">
-                                        <div *ngIf="applicantListArr.length == 0"
+                                        <div *ngIf="data.schemeList?.length == 0 && applicantListArr.length == 0"
                                             class="d-flex flex-column align-items-center">
                                             <h4 class="text-center pt-12">No data Found
                                             </h4>
@@ -243,14 +243,14 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
+                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [value]="totalOfSipAmount"></span></strong>
                                 </td>
-                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div *ngIf="filteredArray.length==0">
+                    <div *ngIf="filteredArray.length==0" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">No data found</h4>
                     </div>

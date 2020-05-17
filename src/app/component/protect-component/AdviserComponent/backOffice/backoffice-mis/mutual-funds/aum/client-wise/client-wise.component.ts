@@ -214,7 +214,6 @@ export class ClientWiseComponent implements OnInit {
             clientData.investorList = data
             this.investorList = data;
             console.log(data);
-
             this.appendingOfValuesInExcel(data, index, 'investor');
           } else {
             this.investorList = []
@@ -460,10 +459,10 @@ export class ClientWiseComponent implements OnInit {
     schemeData.showScheme = !schemeData.showScheme
   
     if (schemeData.showScheme == false) {
+     this.isLoadingFolio = true
       this.scheme2List = []
       schemeData.folioList = []
       schemeData.folioList = [{}, {}, {}];
-      this.isLoadingFolio = true
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
