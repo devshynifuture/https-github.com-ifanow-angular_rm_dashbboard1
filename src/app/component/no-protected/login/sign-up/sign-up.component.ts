@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../login.service';
@@ -20,16 +20,24 @@ export class SignUpComponent implements OnInit {
   termsAndCondition: any;
   typeOfRegister: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
-    private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService, 
+    public routerActive: ActivatedRoute,
+    private router: Router, 
+    private loginService: LoginService, 
+    private eventService: EventService, 
+    public dialog: MatDialog
+  ) {
   }
+
   signUpBarList = [
     { name: "CREATE ACCOUNT", flag: false },
     { name: "VERIFY EMAIL", flag: false },
     { name: "VERIFY MOBILE", flag: false },
     { name: "SET PASSWORD", flag: false }
   ]
-  signUpForm;
+  signUpForm:FormGroup;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -53,6 +61,7 @@ export class SignUpComponent implements OnInit {
         // this.clientSignUp = true;
       }
     });
+    
     this.typeOfRegister = '1'
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],

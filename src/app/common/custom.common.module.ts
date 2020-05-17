@@ -7,37 +7,30 @@ import { ProgressButtonComponent } from './progress-button/progress-button.compo
 import { CustomDirectiveModule } from "./directives/common-directive.module";
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { LinkBankComponent } from './link-bank/link-bank.component';
-
-// import {AppModule} from "../app.module";
-
+import { EmailDomainAutoSuggestComponent } from './email-domain-auto-suggest/email-domain-auto-suggest.component';
 
 @NgModule({
   declarations: [
-    // ConfirmDialogComponent,
     DialogContainerComponent,
     ProgressButtonComponent,
     LinkBankComponent,
-    // DynamicComponentComponent
+    EmailDomainAutoSuggestComponent,
   ],
   imports: [
     MaterialModule,
-    // SubscriptionModule,
-    // AccountModule,
-    // PlanModule,
     CommonModule,
     FormsModule,
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
-    // EmailModule
-    // DynamicComponentModule,
-    // AccountEntryModule,
-    // PlanEntryModule,
-    // EntryComponentsModule
   ],
-  exports: [DialogContainerComponent, ProgressButtonComponent, LinkBankComponent],
+  exports: [
+    DialogContainerComponent, 
+    ProgressButtonComponent, 
+    LinkBankComponent,
+    EmailDomainAutoSuggestComponent
+  ],
   entryComponents: [LinkBankComponent]
-  // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomCommonModule {
 }

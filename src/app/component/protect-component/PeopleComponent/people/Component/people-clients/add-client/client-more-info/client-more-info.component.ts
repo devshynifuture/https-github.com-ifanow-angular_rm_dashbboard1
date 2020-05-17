@@ -154,7 +154,7 @@ export class ClientMoreInfoComponent implements OnInit {
       (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
         taxStatusId: this.moreInfoData.taxStatusId,
-        // advisorId: this.moreInfoData.advisorId,
+        advisorId: this.moreInfoData.advisorId,
         emailList: this.moreInfoData.emailList,
         displayName: (this.moreInfoData.invCategory == '1' || this.moreInfoData.invCategory == '2') ? this.moreInfoForm.controls.displayName.value : null,
         bio: this.moreInfoForm.controls.bio.value,

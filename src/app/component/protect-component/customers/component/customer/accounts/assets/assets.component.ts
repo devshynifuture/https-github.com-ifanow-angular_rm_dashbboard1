@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MatDialog, MatSidenav } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MatDialog, MatSidenav} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UpperCustomerComponent} from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
   selector: 'app-assets',
@@ -14,25 +14,27 @@ import { UpperCustomerComponent } from '../../../common-component/upper-customer
   styleUrls: ['./assets.component.scss']
 })
 export class AssetsComponent implements OnInit {
+  dialogState = false;
   sidenavState: boolean = false;
-  matSideNavOpen:boolean = true;
+  matSideNavOpen: boolean = true;
   advisorId: any;
   clientId: any;
   // sidenavState: boolean = false;
-  @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
+  @ViewChild('sidenav', {static: true}) stateOfPanel: MatSidenav;
   assetSideBarData = [
-    { name: 'Mutual funds', viewmode: 'tab1', count: '0' },
-    { name: 'Stocks', viewmode: 'tab2', count: '0' },
-    { name: 'Fixed income', viewmode: 'tab3', count: '0' },
-    { name: 'Real estate', viewmode: 'tab4', count: '0' },
-    { name: 'Retirement accounts', viewmode: 'tab5', count: '0' },
-    { name: 'Small saving scheme', viewmode: 'tab6', count: '0' },
-    { name: 'Cash & Bank', viewmode: 'tab7', count: '0' },
-    { name: 'Commodities', viewmode: 'tab8', count: '0' }
+    {name: 'Mutual funds', viewmode: 'tab1', count: '0'},
+    {name: 'Stocks', viewmode: 'tab2', count: '0'},
+    {name: 'Fixed income', viewmode: 'tab3', count: '0'},
+    {name: 'Real estate', viewmode: 'tab4', count: '0'},
+    {name: 'Retirement accounts', viewmode: 'tab5', count: '0'},
+    {name: 'Small saving scheme', viewmode: 'tab6', count: '0'},
+    {name: 'Cash & Bank', viewmode: 'tab7', count: '0'},
+    {name: 'Commodities', viewmode: 'tab8', count: '0'}
   ];
   tab: any;
   Settab: any;
   viewMode = 'tab1';
+  isOverlayVisible = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -41,6 +43,9 @@ export class AssetsComponent implements OnInit {
     private cusService: CustomerService,
     private route: ActivatedRoute,
     private router: Router) {
+  }
+
+  close() {
   }
 
   private loadComponent = false;
@@ -117,7 +122,7 @@ export class AssetsComponent implements OnInit {
     // this.viewMode = 'tab2';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    console.log("this is client id:::", this.clientId);
+    console.log('this is client id:::', this.clientId);
     this.getAssetCountGLobalData();
     this.stateOfPanel.mode = 'side';
     this.stateOfPanel.open();
@@ -125,24 +130,27 @@ export class AssetsComponent implements OnInit {
       if (params.tab) {
         this.Settab = params.tab;
         this.viewMode = this.Settab;
-        this.eventService.tabData('2')
+        this.eventService.tabData('2');
       }
     });
 
   }
+
   toggleSideNav() {
     this.stateOfPanel.toggle();
   }
-  getValue(data){
-    if(data == 'Capital Gains'){
+
+  getValue(data) {
+    if (data == 'Capital Gains') {
       this.sidenavState = true;
       this.toggleSideNav();
-    }else{
+    } else {
       this.sidenavState = false;
       this.stateOfPanel.open();
 
     }
   }
+
   getRouterLink(assetType) {
     if (assetType['viewmode'] === 'tab1') {
       return assetType['name'].toLowerCase().split(' ').join('-') + '/overview';
@@ -278,8 +286,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     xirr: 8.32,
     alloc: 20.32
   },
-  { name: 'ICICI Equity Fund Growth	', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32 },
-  { name: 'HDFC Top 200', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32 },
+  {name: 'ICICI Equity Fund Growth	', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32},
+  {name: 'HDFC Top 200', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32},
   {
     name: 'Aditya Birla Sun Life Frontline Equity Fund-Growth',
     amt: '2,28,580',
@@ -288,7 +296,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     xirr: 8.32,
     alloc: 20.32
   },
-  { name: 'Total', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32 },
+  {name: 'Total', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32},
 ];
 
 export interface PeriodicElement2 {
@@ -395,15 +403,15 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { data: 'a. Investment', amts: '15,70,000' },
-  { data: 'b. Switch In', amts: '2,28,580' },
-  { data: 'c. Switch Out', amts: '2,28,580' },
-  { data: 'd. Redemption', amts: '0' },
-  { data: 'e. Dividend Payout', amts: '0' },
-  { data: 'f. Net Investment (a+b-c-d-e)', amts: '2,28,580' },
-  { data: 'g. Market Value', amts: '2,28,580' },
-  { data: 'h. Net Gain (g-f)', amts: '2,28,580' },
-  { data: 'i. Realized XIRR (All Transactions)', amts: '2.81 %' },
+  {data: 'a. Investment', amts: '15,70,000'},
+  {data: 'b. Switch In', amts: '2,28,580'},
+  {data: 'c. Switch Out', amts: '2,28,580'},
+  {data: 'd. Redemption', amts: '0'},
+  {data: 'e. Dividend Payout', amts: '0'},
+  {data: 'f. Net Investment (a+b-c-d-e)', amts: '2,28,580'},
+  {data: 'g. Market Value', amts: '2,28,580'},
+  {data: 'h. Net Gain (g-f)', amts: '2,28,580'},
+  {data: 'i. Realized XIRR (All Transactions)', amts: '2.81 %'},
 
 ];
 
@@ -436,7 +444,7 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     desc: 'ICICI FD',
     status: 'ICICI FD'
   },
-  { no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' ' },
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' '},
 
 
 ];

@@ -214,9 +214,9 @@
         </ng-container>
         <ng-container matColumnDef="owner">
           <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar">{{element.ownerName}}</div>
-          </td>
+          <td mat-cell *matCellDef="let element" class="br">
+            <div class="bar">{{singlePortfolio.ownerList[0].name}}</div>
+        </td>
           <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
         </ng-container>

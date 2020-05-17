@@ -189,7 +189,7 @@
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList | async"
-                            [value]="singleClient">
+                            [value]="singleClient.displayName">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
