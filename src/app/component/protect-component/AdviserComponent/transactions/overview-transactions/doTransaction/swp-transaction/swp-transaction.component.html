@@ -2,7 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h3 class="mb-0 wrapper-20"><img (click)="backToTransact()" class="mr-8 c-p"
-                                       src="/assets/images/svg/back-arrow.svg"> {{transactionType}} TRANSACTION</h3>
+          src="/assets/images/svg/back-arrow.svg"> Swp transaction</h3>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -64,13 +64,11 @@
           <div class="col-md-11 p-0">
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input [matAutocomplete]="auto" appCustomAutoComplete
-                       aria-label="Number" class="form-control" formControlName="schemeSwp" matInput
-                       placeholder="Start typing to see scheme names" type="text">
+                <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
+                  formControlName="schemeSwp" matInput placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
-                                  [displayWith]="processTransaction.displaySchemeName">
-                  <mat-option
-                    *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
+                  [displayWith]="processTransaction.displaySchemeName">
+                  <mat-option *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -80,8 +78,8 @@
                 <mat-error *ngIf="swpTransaction.get('schemeSwp').errors?.setValue" class="f-12">
                   No schemes Found
                 </mat-error>
-                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing
-                  NAV: {{navOfSelectedScheme}}
+                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
+                  {{navOfSelectedScheme}}
                 </mat-hint>
               </mat-form-field>
             </div>
@@ -137,11 +135,17 @@
               <div class="row">
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Current value</p>
-                  <h3 class="f-18 roboto m-0">Rs: <span appFormatNumber>{{currentValue}}</span></h3>
+                  <mat-form-field appearance="standard" floatLabel="never">
+                    <input #currentValue appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                      formControlName="currentValue" matInput type="text">
+                  </mat-form-field>
                 </div>
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Balance unit</p>
-                  <h3 class="f-18 roboto m-0"><span appFormatNumber>{{folioDetails.balanceUnit}}</span></h3>
+                  <mat-form-field appearance="standard" floatLabel="never">
+                    <input #balanceUnit appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                      formControlName="balanceUnit" matInput type="text">
+                  </mat-form-field>
                 </div>
               </div>
               <div class="row">
@@ -163,7 +167,7 @@
                 <mat-select class="form-control" formControlName="frequency">
                   <mat-option value='' disabled>Select SWP frequency</mat-option>
                   <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency"
-                              [value]="frequency.frequency">{{frequency.frequencyName}}
+                    [value]="frequency.frequency">{{frequency.frequencyName}}
                   </mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
@@ -182,9 +186,8 @@
             <div class="form-group  inputPaddNone">
               <mat-form-field *ngIf="selectScheme == 2" floatLabel="never" appearance="standard">
                 <input #employeeContry placeholder="Enter amount" appInputValueValidation
-                       [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)"
-                       class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10"
-                       type="text">
+                  [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)"
+                  class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount: ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
                 </mat-hint>
@@ -238,14 +241,14 @@
         </div>
         <div *ngIf="(swpTransaction.get('tenure').value) != 3" class="row">
           <div class="col-md-12 p-0 text-left">
-            <h5 class="mb-8 pt-28  text-black">Enter 
+            <h5 class="mb-8 pt-28  text-black">Enter
               {{(swpTransaction.get('tenure').value =='2')?'No. of years':'No. of installments'}}</h5>
           </div>
 
           <div class="col-md-5 form-group inputPaddNone p-0">
             <mat-form-field floatLabel="never" appearance="standard">
-              <input #employeeContry placeholder="Enter installment" class="form-control br-0 rupess"
-                     [maxLength]="4" formControlName="installment" matInput maxlength="10" type="number">
+              <input #employeeContry placeholder="Enter installment" class="form-control br-0 rupess" [maxLength]="4"
+                formControlName="installment" matInput maxlength="10" type="number">
               <mat-error class="f-12 pt-4">
                 This field is required
               </mat-error>
@@ -255,7 +258,7 @@
       </div>
       <div class="col-md-4 bg-grey lter p-0">
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-                                 (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>

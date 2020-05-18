@@ -130,8 +130,8 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.folioSelection.setValue(value)
     if (value == '2') {
       this.setMinAmount();
-      Object.assign(this.transactionSummary, {folioNumber: ''});
-    } else if(this.existingSchemeList.length > 0) {
+      Object.assign(this.transactionSummary, { folioNumber: '' });
+    } else if (this.existingSchemeList.length > 0) {
       this.getFolioList();
     }
     this.ExistingOrNew = value;
@@ -196,12 +196,12 @@ export class SipTransactionComponent implements OnInit {
             this.getNewSchemesRes(responseData, data);
           }, (error) => {
             this.showSchemeSpinner = false;
-            this.sipTransaction.get('schemeSip').setErrors({setValue: error});
+            this.sipTransaction.get('schemeSip').setErrors({ setValue: error });
             this.sipTransaction.get('schemeSip').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-            // this.eventService.openSnackBar(error, 'dismiss');
+            // this.eventService.openSnackBar(error, 'Dismiss');
           }
-          );
+        );
       } else {
 
       }
@@ -237,7 +237,7 @@ export class SipTransactionComponent implements OnInit {
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data), (error) => {
         this.showSchemeSpinner = false;
-        this.sipTransaction.get('schemeSip').setErrors({setValue: error});
+        this.sipTransaction.get('schemeSip').setErrors({ setValue: error });
         this.sipTransaction.get('schemeSip').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
         // this.eventService.openSnackBar(error, 'Dismiss');
@@ -594,7 +594,7 @@ export class SipTransactionComponent implements OnInit {
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
-      modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
+      modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '2' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
@@ -619,6 +619,7 @@ export class SipTransactionComponent implements OnInit {
       this.schemeDetails.isin = data.isIn;
       this.selectedScheme(data.scheme);
     }
+    this.sipTransaction.controls.modeOfPaymentSelection.setValue('2')
   }
 
   getFormControl(): any {

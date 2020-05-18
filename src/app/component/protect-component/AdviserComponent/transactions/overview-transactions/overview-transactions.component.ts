@@ -34,7 +34,7 @@ export class OverviewTransactionsComponent implements OnInit {
   pendingTransaction: any;
   rejectionTransaction: any;
   doneTrasaction: any;
-  percentageTrasact: number;
+  percentageTrasact: any;
   transactionList: any;
   totalRejected: any;
   totalClientCode: any;
@@ -169,7 +169,8 @@ export class OverviewTransactionsComponent implements OnInit {
         if (this.doneTrasaction == undefined) {
           this.doneTrasaction = [];
         } else {
-          this.percentageTrasact = (this.doneTrasaction / this.transactionCount) * 100;
+          this.percentageTrasact = ((this.doneTrasaction / this.transactionCount) * 100);
+          this.percentageTrasact = (this.percentageTrasact).toFixed(2)
         }
         this.pendingTransaction = this.rejectionTransaction.length;
         this.rejectionTransaction = this.rejectionTransaction.length;

@@ -143,6 +143,8 @@ export class RedemptionTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
+      balanceUnit:[(!data) ? '' : data.balanceUnit,],
+      currentValue:[(!data) ? '' : data.currentValue,],
       // investor: [(!data) ? '' : this.scheme, [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
@@ -287,6 +289,8 @@ export class RedemptionTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.showUnits = true;
+    this.redemptionTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2))
+    this.redemptionTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2))
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });

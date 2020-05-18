@@ -25,7 +25,7 @@
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600">Bank details #1</h3>
 
-                <div class="row" *ngIf="bankList">
+                <div class="row" *ngIf="bankList.length > 1">
                     <div class="col-md-4 pr-0 text-right">
                         <h5 class="m-0 pt-8">Select bank account</h5>
                     </div>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <div class="row pt-20">
+                <!-- <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0"> Branch code </h3>
                     </div>
@@ -148,7 +148,7 @@
                             <mat-error class="">This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">

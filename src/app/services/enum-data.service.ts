@@ -175,7 +175,7 @@ export class EnumDataService {
   }
 
   public getDataForTaxMasterService() {
-    const obj = {tpUserCredentialId: 192, bseUserId: 0};
+    const obj = {};
     this.onlineTransactionService.getTaxMasterData(obj).subscribe(
       data => {
 
@@ -185,10 +185,10 @@ export class EnumDataService {
           const corporateTaxList = [];
           const minorTaxList = [];
           data.forEach(singleData => {
-            if (singleData.corporateFlag === 1) {
+            if (singleData.corporateFlag) {
               corporateTaxList.push(singleData);
               // corporateTaxList.
-            } else if (singleData.minorFlag === 1) {
+            } else if (singleData.minorFlag) {
               minorTaxList.push(singleData);
             } else {
               individualTaxList.push(singleData);
