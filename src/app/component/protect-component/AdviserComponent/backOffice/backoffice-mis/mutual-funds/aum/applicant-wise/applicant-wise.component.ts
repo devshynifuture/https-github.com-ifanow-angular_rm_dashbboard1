@@ -429,13 +429,14 @@ export class ApplicantWiseComponent implements OnInit {
 
 
   category(applicantData, index) {
-    this.isLoadingCategory = true
     this.selectedApplicant = index;
     applicantData.show = !applicantData.show
-    applicantData.categoryList = [];
-    applicantData.categoryList = [{}, {}, {}];
-    this.categoryListArr = []
+
     if (applicantData.show == false) {
+      this.isLoadingCategory = true
+      applicantData.categoryList = [];
+      applicantData.categoryList = [{}, {}, {}];
+      this.categoryListArr = []
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
@@ -481,15 +482,16 @@ export class ApplicantWiseComponent implements OnInit {
   }
   subCategory(catData, index, applicantIndex) {
     console.log(applicantIndex);
-    this.isLoadingSubCategory = true
 
     this.selectedCat = index;
     this.selectedApplicant = applicantIndex;
     catData.showCategory = !catData.showCategory
-    catData.subCatList = [];
-    catData.subCatList = [{}, {}, {}];
-    this.subCategoryList = []
+
     if (catData.showCategory == false) {
+      this.isLoadingSubCategory = true
+      catData.subCatList = [];
+      catData.subCatList = [{}, {}, {}];
+      this.subCategoryList = []
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
@@ -534,17 +536,18 @@ export class ApplicantWiseComponent implements OnInit {
     category.subCategoryList = data;
   }
   getScheme(subCatData, index, catIndex, applicantIndex) {
-    this.isLoadingScheme = true
     console.log(applicantIndex);
     this.selectedScheme = index;
     this.selectedCat = catIndex;
-    this.schemeListArr = []
     this.selectedApplicant = applicantIndex;
 
     subCatData.showSubCategory = !subCatData.showSubCategory
-    subCatData.schemeList = []
-    subCatData.schemeList = [{}, {}, {}];
+
     if (subCatData.showSubCategory == false) {
+      this.isLoadingScheme = true
+      this.schemeListArr = []
+      subCatData.schemeList = []
+      subCatData.schemeList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,

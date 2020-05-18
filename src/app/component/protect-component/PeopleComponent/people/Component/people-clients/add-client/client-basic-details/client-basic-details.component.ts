@@ -45,7 +45,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   // new Date(.date());
   mobileNumberFlag = 'Mobile number';
 
-  basicDetails;
+  basicDetails: FormGroup;
   date = new Date();
   @Input() fieldFlag;
   @Output() clientData = new EventEmitter();
@@ -143,11 +143,11 @@ export class ClientBasicDetailsComponent implements OnInit {
       email: [{
         value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '',
         disabled: this.basicDetailsData.userId ? true : false
-      }, [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
+      }, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [{
         value: data.pan,
         disabled: this.basicDetailsData.userId ? true : false
-      }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      }, [Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
@@ -158,6 +158,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == "client") ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != "familyMember") ? [Validators.required] : null],
     });
+
+    if (this.fieldFlag != 'familyMember') {
+      this.basicDetails.controls.email.setValidators([Validators.required]);
+      this.basicDetails.controls.pan.setValidators([Validators.required]);
+    }
+    this.basicDetails.controls.email.updateValueAndValidity();
+    this.basicDetails.controls.pan.updateValueAndValidity();
   }
 
   createMinorForm(data) {
@@ -178,10 +185,6 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.fieldFlag == 'client') {
       this.minorForm.controls.gEmail.setValidators([Validators.required]);
       this.minorForm.controls.pan.setValidators([Validators.required]);
-    }
-    else {
-      this.minorForm.controls.gEmail.clearValidators();
-      this.minorForm.controls.pan.clearValidators();
     }
     if (this.fieldFlag == 'client' && this.basicDetailsData.name) {
       this.minorForm.controls.gEmail.disable();
@@ -495,8 +498,6 @@ export class ClientBasicDetailsComponent implements OnInit {
       });
     });
     if (this.invTypeCategory == '1') {
-      this.basicDetails.get('email').setValidators([Validators.required]);
-      this.basicDetails.get('email').updateValueAndValidity();
       this.basicDetails.get('role').clearValidators();
       this.basicDetails.get('role').updateValueAndValidity();
     }

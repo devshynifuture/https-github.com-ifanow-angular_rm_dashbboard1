@@ -146,12 +146,13 @@ export class SipApplicantWiseComponent implements OnInit {
     )
   }
   showSubTableList(index, applicantData) {
-    this.isLoadingApplicant = true
     applicantData.showScheme = !applicantData.showScheme
-    applicantData.schemeList = [];
-    this.applicantListArr = []
-    applicantData.schemeList = [{}, {}, {}];
+
     if (applicantData.showScheme == false) {
+      this.isLoadingApplicant = true
+      applicantData.schemeList = [];
+      this.applicantListArr = []
+      applicantData.schemeList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,

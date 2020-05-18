@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AddPersonalProfileComponent } from './add-personal-profile/add-personal-profile.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OrgProfileComponent } from './add-personal-profile/org-profile/org-profile.component';
-import { SettingsService } from '../settings.service';
-import { ResetPasswordComponent } from '../../../common-component/reset-password/reset-password.component';
+import {Component, OnInit} from '@angular/core';
+import {AddPersonalProfileComponent} from './add-personal-profile/add-personal-profile.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OrgProfileComponent} from './add-personal-profile/org-profile/org-profile.component';
+import {SettingsService} from '../settings.service';
+import {ResetPasswordComponent} from '../../../common-component/reset-password/reset-password.component';
 
 @Component({
   selector: 'app-setting-org-profile',
@@ -18,8 +18,8 @@ export class SettingOrgProfileComponent implements OnInit {
   orgProfile = false;
   userList: any = undefined;
   orgDetails: any = {};
-  isLoading = true
-  counter: number = 0;
+  isLoading = true;
+  counter = 0;
   isOrgProfileLoaded = false;
 
   constructor(
@@ -27,47 +27,49 @@ export class SettingOrgProfileComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
   ) {
-    this.advisorId = AuthService.getAdvisorId()
+    this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
-    this.getPersonalProfiles()
-    this.orgProfile = false
+    this.getPersonalProfiles();
+    this.orgProfile = false;
   }
 
   getPersonalProfiles() {
-    this.loader(1)
-    let obj = {
+    this.loader(1);
+    const obj = {
       id: this.advisorId
-    }
+    };
     this.settingsService.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
       err => {
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.userList = undefined;
         this.loader(-1);
       }
     );
   }
+
   getPersonalProfileRes(data) {
-    if(data) {
-      this.userList = data
+    if (data) {
+      this.userList = data;
     } else {
       this.userList = undefined;
-      this.eventService.showErrorMessage("Error");
+      this.eventService.showErrorMessage('Error');
     }
     this.loader(-1);
   }
+
   getOrgProfiles() {
-    if(!this.isOrgProfileLoaded) {
-      this.loader(1)
-      let obj = {
+    if (!this.isOrgProfileLoaded) {
+      this.loader(1);
+      const obj = {
         advisorId: this.advisorId,
-      }
+      };
       this.settingsService.getOrgProfile(obj).subscribe(
         data => this.getOrgProfileRes(data),
         err => {
-          this.eventService.openSnackBar(err, "Dismiss");
+          this.eventService.openSnackBar(err, 'Dismiss');
           this.isOrgProfileLoaded = true;
           this.orgDetails = undefined;
           this.loader(-1);
@@ -75,11 +77,12 @@ export class SettingOrgProfileComponent implements OnInit {
       );
     }
   }
+
   getOrgProfileRes(data) {
     if (data) {
-      this.orgDetails = data
+      this.orgDetails = data;
     } else {
-      this.eventService.showErrorMessage("Error");
+      this.eventService.showErrorMessage('Error');
       this.isOrgProfileLoaded = true;
       this.orgDetails = undefined;
     }
@@ -90,10 +93,10 @@ export class SettingOrgProfileComponent implements OnInit {
   OpenpersonalProfile(data, flag, openTab = 0) {
     const dataObj = {
       ...data,
-      openTab: openTab
-    }
+      openTab
+    };
     const fragmentData = {
-      flag: flag,
+      flag,
       data: dataObj,
       id: 1,
       state: (flag == 'detailedNsc') ? 'open' : 'open',
@@ -102,7 +105,7 @@ export class SettingOrgProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
             this.getPersonalProfiles();
           }
           rightSideDataSub.unsubscribe();
@@ -118,13 +121,13 @@ export class SettingOrgProfileComponent implements OnInit {
     }
   }
 
-  OpenOrgProfile(data, flag, openTab=0) {
+  OpenOrgProfile(data, flag, openTab = 0) {
     const dataObj = {
       ...data,
-      openTab: openTab
-    }
+      openTab
+    };
     const fragmentData = {
-      flag: flag,
+      flag,
       data: dataObj,
       id: 1,
       state: 'open',
@@ -133,7 +136,7 @@ export class SettingOrgProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
             this.isOrgProfileLoaded = false;
             this.getOrgProfiles();
           }
@@ -160,7 +163,7 @@ export class SettingOrgProfileComponent implements OnInit {
 
   loader(increamenter) {
     this.counter += increamenter;
-    if(this.counter == 0) {
+    if (this.counter == 0) {
       this.isLoading = false;
     } else {
       this.isLoading = true;
