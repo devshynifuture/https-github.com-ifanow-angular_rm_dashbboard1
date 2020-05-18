@@ -34,6 +34,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  showSpinnerOwner = false;
   dataForTable: any[] = [];
   dataSource = new MatTableDataSource(this.dataForTable);
   stateCtrl = new FormControl('', [Validators.required]);
@@ -72,22 +73,25 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   getClientData(data) {
+    this.showSpinnerOwner = true;
     const obj = {
       clientId: data.clientId
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       responseData => {
+        this.showSpinnerOwner = false;
         if (responseData == undefined) {
           return;
         } else {
           Object.assign(data, responseData);
           data.genderString = UtilService.getGenderStringFromGenderId(data.genderId);
-          this.dataSource.data = [{data}];
+          this.dataSource.data = [data];
           console.log('mergeclientFamilyMember this.dataSource.data ', this.dataSource.data);
 
         }
       },
       err => {
+        this.showSpinnerOwner = false;
         console.error(err);
       }
     );
