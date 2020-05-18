@@ -483,7 +483,7 @@ export const appConfig = {
   CREATE_IIN_UCC: 'user/register/create',
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
-  TAX_MASTER: 'nse/tax-master/get',
+  TAX_MASTER: 'user/tax-master/get',
   COUNTRY_MASTER: 'user/register/country-code/all/get',
 
   INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
