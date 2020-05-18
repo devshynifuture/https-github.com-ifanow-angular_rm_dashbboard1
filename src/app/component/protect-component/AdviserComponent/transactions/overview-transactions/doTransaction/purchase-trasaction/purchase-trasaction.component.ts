@@ -16,6 +16,18 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./purchase-trasaction.component.scss']
 })
 export class PurchaseTrasactionComponent implements OnInit {
+
+  isSuccessfulTransaction = false;
+
+  constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
+              private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
+              private customerService: CustomerService) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -74,16 +86,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   @Output() changedValue = new EventEmitter();
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
-
-  constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-              private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
-              private customerService: CustomerService) {
-  }
-
-
-  get data() {
-    return this.inputData;
-  }
 
   @Input()
   set data(data) {
@@ -500,7 +502,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   getdataForm(data, isEdit) {
@@ -614,7 +619,10 @@ export class PurchaseTrasactionComponent implements OnInit {
       console.log('new purchase obj', obj);
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.purchaseRes(data), (error) => {
+        data => {
+          this.purchaseRes(data);
+          this.isSuccessfulTransaction = true;
+        }, (error) => {
           this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'dismiss');
         }

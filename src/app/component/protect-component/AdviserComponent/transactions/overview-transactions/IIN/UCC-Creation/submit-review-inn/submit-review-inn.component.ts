@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FileUploadService} from '../../../../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../../../../config/main-config';
-import {appConfig} from '../../../../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import { Component, Input, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FileUploadService } from '../../../../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../../../../config/main-config';
+import { appConfig } from '../../../../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -44,7 +44,7 @@ export class SubmitReviewInnComponent implements OnInit {
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
+    private eventService: EventService) {
   }
 
   @Input()
@@ -228,7 +228,7 @@ export class SubmitReviewInnComponent implements OnInit {
     };
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -257,7 +257,7 @@ export class SubmitReviewInnComponent implements OnInit {
     const file = e.target.files[0];
     const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
     if (!requestMapObject) {
-      this.eventService.openSnackBar('Please create account first', 'dismiss');
+      this.eventService.openSnackBar('Please create account first', 'Dismiss');
       return;
     }
     const requestMap = {

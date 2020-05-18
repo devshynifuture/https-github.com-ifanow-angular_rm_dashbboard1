@@ -43,10 +43,10 @@
                         </ng-container>
 
                         <ng-container matColumnDef="amtInvested">
-                            <th class="br text-left" mat-header-cell *matHeaderCellDef>
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Amount invested
                             </th>
-                            <td class="br text-left" mat-cell *matCellDef="let element">
+                            <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                                 </div>
                             </td>
@@ -117,7 +117,7 @@
 
                         <ng-container matColumnDef="absReturn">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Absolute Return%
+                                Absolute Return
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
@@ -135,7 +135,7 @@
 
                         <ng-container matColumnDef="xirr">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Xirr%
+                                Xirr
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
@@ -150,7 +150,7 @@
 
                         <ng-container matColumnDef="allocation" sticky>
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Allocation%
+                                Allocation
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
@@ -200,10 +200,10 @@
                     </ng-container>
 
                     <ng-container matColumnDef="transactionDate">
-                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                        <th class="br text-left" mat-header-cell *matHeaderCellDef>
                             Transaction date
                         </th>
-                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                        <td class="br text-left zIndex" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}}
                             </div>

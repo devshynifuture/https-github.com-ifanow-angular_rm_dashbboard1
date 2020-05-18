@@ -300,9 +300,11 @@ input.mat-input-element {
 
 .posRelative {
     position: relative;
+    display: inline-block;
+    width: auto;
 }
 
-.timeGlass {
+.hourglass {
     transform: scale(0.5);
     -webkit-transform-origin-y: 30px;
     display: block;
@@ -315,8 +317,8 @@ input.mat-input-element {
     position: relative;
     animation: hglasstop 8s infinite;
     position: absolute;
-    right: 0;
-    top: 0px;
+    right: -35px;
+    top: -60px;
     .two {
         content: '';
         display: block;
