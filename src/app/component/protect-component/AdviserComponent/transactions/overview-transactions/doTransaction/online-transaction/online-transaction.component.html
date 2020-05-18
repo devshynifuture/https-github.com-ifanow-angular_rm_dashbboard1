@@ -49,9 +49,6 @@
                 <mat-spinner class=" "></mat-spinner>
             </div>
         </div>
-
-
-       
     </div>
     <div class="row pt-60" *ngIf="clientCodeData==undefined && stateCtrl.valid">
         <div class="col-md-12 pl-0">
@@ -65,12 +62,12 @@
             <p class="f-12 lh-16 text-primitive">Depending on your registration with NSE NMF <br>of BSE Star MF, you will be able to create a new IIN/UCC</p>
         </div>
     </div>
-    <div *ngIf="clientCodeData==undefined && stateCtrl.valid" class="d-flex flex-column align-items-center">
+    <!-- <div *ngIf="clientCodeData==undefined && stateCtrl.valid" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No IIN/UCC found</h4>
         <button (click)="openNewCustomerIIN()" *ngIf="inputData.isAdvisorSection" class="btn-green text-white" mat-button>
             IIN/UCC CREATION
         </button>
-    </div>
+    </div> -->
     <!-- second click -->
     <div *ngIf="formStep == 'step-2' &&  !transactionType && clientCodeData && stateCtrl.valid">
         <div class="row pt-10 pl-40 pr-40">
