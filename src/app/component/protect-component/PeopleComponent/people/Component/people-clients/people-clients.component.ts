@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { CancelFlagService } from '../people-service/cancel-flag.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-people-clients',
@@ -31,7 +32,8 @@ export class PeopleClientsComponent implements OnInit {
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
-    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService) {
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
+  ) {
   }
 
   ngOnInit() {
@@ -107,6 +109,7 @@ export class PeopleClientsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.enumDataService.searchClientList();
             this.cancelFlagService.setCancelFlag(undefined)
             this.getClientList();
           }
