@@ -95,7 +95,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData);
       }
-      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
+      this.invTaxStatus = (this.basicDetailsData.residentFlag == 0) ? '' : String(this.basicDetailsData.residentFlag);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ?
         this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
@@ -111,7 +111,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         // this.selectedClientOwner = (this.tableGetData.userId) ? this.tableGetData.advisorId : '';
         this.selectedClientOwner = this.basicDetailsData.advisorId;
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
-        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : String(this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.residentFlag == 0) ? '' : String(this.basicDetailsData.residentFlag);
       }
       (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
       if (this.fieldFlag == 'client') {
@@ -372,7 +372,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       const obj: any = {
         parentAdvisorId: this.advisorId,
         advisorId,
-        taxStatusId: parseInt(this.invTaxStatus),
+        residentFlag: parseInt(this.invTaxStatus),
         emailList,
         bio: null,
         martialStatusId: 0,
@@ -386,7 +386,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ?
           this.minorForm.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.username,
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.userId : null,
+        userId: this.basicDetailsData.userId,
         mobileList,
         referredBy: 0,
         name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.minorFullName.value : this.nonIndividualForm.value.comName,
@@ -444,6 +444,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         obj.remarks = this.basicDetailsData.remarks;
         obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
         obj.martialStatusId = this.basicDetailsData.martialStatusId;
+        obj.taxStatusId = this.basicDetailsData.taxStatusId;
+
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
@@ -556,7 +558,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
       occupationId: 1,
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
-      taxStatusId: parseInt(this.invTaxStatus),
+      residentFlag: parseInt(this.invTaxStatus),
+      taxStatusId: this.basicDetailsData.taxStatusId,
       relationshipId: this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
