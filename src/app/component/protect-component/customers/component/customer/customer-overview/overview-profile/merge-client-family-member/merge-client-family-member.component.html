@@ -59,7 +59,7 @@
     </p>
 
 
-    <div class="row">
+    <div *ngIf="dataSource.data.length>0" class="row">
       <div class="col-md-12 mamberDetailsTable pl-0">
         <table [dataSource]="dataSource" class=" " id="table-low" mat-table>
 

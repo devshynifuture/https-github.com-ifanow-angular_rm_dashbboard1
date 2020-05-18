@@ -34,7 +34,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  dataSource = new MatTableDataSource([]);
+  dataForTable: any[] = [];
+  dataSource = new MatTableDataSource(this.dataForTable);
   stateCtrl = new FormControl('', [Validators.required]);
   filteredStates: any;
   selectedClient;
@@ -82,6 +83,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           Object.assign(data, responseData);
           data.genderString = UtilService.getGenderStringFromGenderId(data.genderId);
           this.dataSource.data = [{data}];
+          console.log('mergeclientFamilyMember this.dataSource.data ', this.dataSource.data);
+
         }
       },
       err => {
