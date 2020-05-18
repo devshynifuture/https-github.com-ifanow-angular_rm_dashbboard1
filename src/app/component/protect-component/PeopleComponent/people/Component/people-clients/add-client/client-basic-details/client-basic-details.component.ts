@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EnumDataService } from 'src/app/services/enum-data.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EnumDataService} from 'src/app/services/enum-data.service';
 
 const moment = require('moment');
 
@@ -68,12 +68,13 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientTypeList: any;
   tableGetData: any;
   taxStatusFormControl = new FormControl('', [Validators.required]);
+
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe,
-    private utilService: UtilService, private enumDataService: EnumDataService) {
+              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+              private eventService: EventService, private datePipe: DatePipe,
+              private utilService: UtilService, private enumDataService: EnumDataService) {
   }
 
   @Input() set data(data) {
@@ -82,15 +83,15 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.fieldFlag == 'familyMember') {
       (data.relationshipId == 2 || data.relationshipId == 4 || data.relationshipId == 5) ?
         data.genderId = 2 : (data.relationshipId == 3 || data.relationshipId == 6) ?
-          data.genderId = 1 : data.genderId = 3;
+        data.genderId = 1 : data.genderId = 3;
       this.basicDetailsData = data;
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 6
         || this.basicDetailsData.relationshipId == 5 || this.basicDetailsData.relationshipId == 7) {
-        this.familyMemberType = { name: 'Individual', value: '1' };
+        this.familyMemberType = {name: 'Individual', value: '1'};
         this.invTypeCategory = '1';
         this.createIndividualForm(this.basicDetailsData);
       } else {
-        this.familyMemberType = { name: 'Minor', value: '2' };
+        this.familyMemberType = {name: 'Minor', value: '2'};
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData);
       }
@@ -114,10 +115,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       }
       (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
       if (this.fieldFlag == 'client') {
-        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : (this.basicDetailsData.clientType == 2) ? { name: 'Minor', value: '2' } : { name: 'Non-individual', value: '3' }
-      }
-      else {
-        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : { name: 'Non-individual', value: '3' }
+        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? {
+          name: 'Individual',
+          value: '1'
+        } : (this.basicDetailsData.clientType == 2) ? {name: 'Minor', value: '2'} : {name: 'Non-individual', value: '3'};
+      } else {
+        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? {name: 'Individual', value: '1'} : {
+          name: 'Non-individual',
+          value: '3'
+        };
       }
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
@@ -148,15 +154,15 @@ export class ClientBasicDetailsComponent implements OnInit {
         value: data.pan,
         disabled: this.basicDetailsData.userId ? true : false
       }, [Validators.pattern(this.validatorType.PAN)]],
-      username: [{ value: data.userName, disabled: true }],
+      username: [{value: data.userName, disabled: true}],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
       leadSource: [(data.leadSource) ? data.leadSource : ''],
       leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
-      leadOwner: [this.selectedClientOwner, (this.fieldFlag == "lead") ? [Validators.required] : null],
-      clientOwner: [this.selectedClientOwner, (this.fieldFlag == "client") ? [Validators.required] : null],
-      role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != "familyMember") ? [Validators.required] : null],
+      leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
+      clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
+      role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
     });
 
     if (this.fieldFlag != 'familyMember') {
@@ -179,8 +185,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       relationWithMinor: [(data.guardianData) ? (data.guardianData.relationshipId != 0) ? String(data.guardianData.relationshipId) : '' : ''],
       gEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
-      clientOwner: [this.selectedClientOwner, (this.fieldFlag == "client") ? [Validators.required] : null],
-      role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != "familyMember") ? [Validators.required] : null],
+      clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
+      role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
     });
     if (this.fieldFlag == 'client') {
       this.minorForm.controls.gEmail.setValidators([Validators.required, Validators.pattern(this.validatorType.EMAIL)]);
@@ -209,12 +215,12 @@ export class ClientBasicDetailsComponent implements OnInit {
         disabled: this.basicDetailsData.userId ? true : false
       }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
-      username: [{ value: data.userName, disabled: true }],
+      username: [{value: data.userName, disabled: true}],
       leadSource: [data.leadSource ? data.leadSource : ''],
       leadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
-      leadOwner: [this.selectedClientOwner, (this.fieldFlag == "lead") ? [Validators.required] : null],
-      clientOwner: [this.selectedClientOwner, (this.fieldFlag == "client") ? [Validators.required] : null],
+      leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
+      clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
   }
@@ -279,7 +285,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       console.log(this.invTaxStatusList);
     }
     this.taxStatusFormControl.reset();
-    this.taxStatusFormControl.setValue('')
+    this.taxStatusFormControl.setValue('');
     this.invTypeCategory = event.value;
   }
 
@@ -304,8 +310,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '3')) && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
       return;
-    }
-    else if (this.taxStatusFormControl.invalid) {
+    } else if (this.taxStatusFormControl.invalid) {
       return;
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
