@@ -90,7 +90,7 @@ export class TransactionsListComponent implements OnInit {
       this.filterData = data;
       this.credentialData = data;
       this.selectedBroker = data[0];
-      this.refresh(true);
+     this.getAllTransactionList();
     } else {
       this.isLoading = false;
       this.noData = 'No credentials found';
