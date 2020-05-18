@@ -8,18 +8,18 @@
     background-color: #f2f2f2;
     h4 {
       line-height: 20px;
-      font-family: CircularStd;
+      font-family: Roboto;
     }
     p {
       line-height: 15px;
-      font-family: CircularStd;
+      font-family: Roboto;
     }
     h5 {
-      font-family: CircularStd;
+      font-family: Roboto;
     }
     .bg-white {
       box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
-      border-radius: 10px;
+      border-radius: 4px;
     }
   }
   .f-nowrap {
@@ -29,7 +29,7 @@
     position: fixed;
     width: 100%;
     z-index: 999;
-    font-family: CircularStd;
+    font-family: Roboto;
     line-height: 1.2;
     padding-top: 16px !important;
     height: 56px;
@@ -111,7 +111,7 @@
     height: 20px;
     min-width: 49px !important;
     padding: 0 3px !important;
-    font-family: CircularStd;
+    font-family: Roboto;
   }
   .st {
     background: linear-gradient(69.24deg, #BEEBF8 -7.38%, #49C2F1 83.8%);
@@ -254,5 +254,10 @@
 }
 .heterogenous-yellow{
   color: #FDAF40 !important;
+}
+.add-fixed-desposit{
+  input.mat-input-element{
+    background-color:#fff !important;
+  }
 }
 }

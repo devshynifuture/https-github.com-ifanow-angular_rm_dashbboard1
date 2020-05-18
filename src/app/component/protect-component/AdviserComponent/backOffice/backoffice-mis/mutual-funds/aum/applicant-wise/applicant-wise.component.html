@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-md-6 pr-0">
                         <div class="right text-right">
-                            <button mat-stroked-button (click)="exportToExcelSheet('applicant-wise', null)"
+                            <button mat-stroked-button *ngIf="!isLoading && applicantName.length > 0" (click)="exportToExcelSheet('applicant-wise', null)"
                                 class="btn-default addon"><i class="material-icons">add</i>XLS</button>
                             <button mat-stroked-button class="btn-success ml-8 addon"
                                 (click)="aumReport()">Back</button>
@@ -55,16 +55,16 @@
                             <tbody *ngFor="let name of applicantName; index as applicantIndex">
                                 <tr>
                                     <td>
-                                        <div class="bar"> {{(isLoading)?'':applicantIndex+1}} </div>
+                                        <div [ngClass]="{'bar': isLoading}"> {{(isLoading) ? '' : applicantIndex+1}} </div>
                                     </td>
                                     <td>
-                                        <div class="bar"> {{(isLoading)?'':((name.name)?name.name:'-')}} </div>
+                                        <div [ngClass]="{'bar': isLoading}"> {{(isLoading) ? '' : ((name.name)?name.name:'-')}} </div>
                                     </td>
                                     <td class="">
-                                        <div class="bar"><span appFormatNumber> {{name.totalAum}} </span></div>
+                                        <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber [value]="name.totalAum" *ngIf="!isLoading"></span></div>
                                     </td>
                                     <td class="">
-                                        <div class="bar"> {{name.weightInPercentage}}{{(isLoading?'':'%') }}</div>
+                                        <div [ngClass]="{'bar': isLoading}"> {{(isLoading) ? '' : name.weightInPercentage}}{{(isLoading?'':'%') }}</div>
                                     </td>
                                     <td class="text-center" (click)="category(name, applicantIndex)">
                                         <div class="bar text-center">
@@ -79,16 +79,17 @@
 
                                 <tr style="border: transparent !important">
                                     <td class="innerTd one" colspan="5">
-                                        <div class="d-block text-right" *ngIf="!name.show && !isLoading">
+                                        <div class="d-block text-right" *ngIf="!name.show && name.categoryList?.length > 0">
                                             <button mat-icon-button
-                                                (click)="exportToExcelSheet('category-wise', applicantIndex)">
+                                                (click)="exportToExcelSheet('category-wise', applicantIndex)"
+                                                *ngIf="!isLoading">
                                                 <mat-icon>
                                                     save_alt
                                                 </mat-icon>
                                             </button>
                                         </div>
-                                        <table *ngIf="name.show == false" class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
-                                            [appSkeletonLoading]="isLoadingCategory" id="table-low">
+                                        <table *ngIf="name.show == false && name.categoryList?.length > 0" class="skeletonAnimation mt-8 mb-8"
+                                            appSkeletonLoading [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                             <thead class="bg-light text-dark">
                                                 <tr class="h-40">
                                                     <th class="w-10">Sr No.</th>
@@ -119,43 +120,46 @@
                                             <tbody *ngFor="let category of name.categoryList; index as catIndex">
                                                 <tr>
                                                     <td>
-                                                        <div class="bar">
-                                                            {{isLoadingCategory?'':catIndex+1}}
+                                                        <div [ngClass]="{'bar': isLoadingCategory}">
+                                                            {{isLoadingCategory ? '' : catIndex+1}}
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="bar">
-                                                            {{category.name}}
+                                                        <div [ngClass]="{'bar': isLoadingCategory}">
+                                                            {{isLoadingCategory ? '' : category.name}}
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="bar">
-                                                            <span appFormatNumber>{{category.totalAum}}</span>
+                                                        <div [ngClass]="{'bar': isLoadingCategory}">
+                                                                {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber [value]="category.totalAum" *ngIf="!isLoadingCategory"></span>
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="bar">
-                                                            {{category.weightInPercentage}}{{(isLoadingCategory?'':'%') }}
+                                                        <div [ngClass]="{'bar': isLoadingCategory}">
+                                                            {{isLoadingCategory ? '' : category.weightInPercentage}}{{(isLoadingCategory?'':'%') }}
                                                         </div>
                                                     </td>
-                                                    <td class="text-center"
-                                                        (click)="subCategory(category, catIndex ,applicantIndex)">
-                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
-                                                            *ngIf="category.showCategory">add</i>
-                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
-                                                            *ngIf="!category.showCategory"> remove </i> </td>
+                                                    <td (click)="subCategory(category, catIndex ,applicantIndex)">
+                                                        <div class="bar text-center">
+                                                            <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                *ngIf="category.showCategory && !isLoadingCategory">add</i>
+                                                            <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                *ngIf="!category.showCategory && !isLoadingCategory"> remove </i>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr style="border: transparent !important">
                                                     <td class="innerTd two" colspan="5">
-                                                        <div class="d-block text-right" *ngIf="!category.showCategory">
+                                                        <div class="d-block text-right" *ngIf="!category.showCategory && !isLoadingCategory && category.subCatList?.length > 0">
                                                             <button mat-icon-button
-                                                                (click)="exportToExcelSheet('sub-category-wise', applicantIndex)">
+                                                                (click)="exportToExcelSheet('sub-category-wise', applicantIndex)"
+                                                                *ngIf="!isLoadingCategory">
                                                                 <mat-icon>
                                                                     save_alt
                                                                 </mat-icon>
                                                             </button>
                                                         </div>
-                                                        <table *ngIf="category.showCategory == false"
+                                                        <table *ngIf="category.showCategory == false && category.subCatList?.length > 0"
                                                             class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
                                                             [appSkeletonLoading]="isLoadingSubCategory" id="table-low">
                                                             <thead>
@@ -191,47 +195,50 @@
                                                                 *ngFor="let sub of category.subCatList; index as schemeIndex">
                                                                 <tr>
                                                                     <td>
-                                                                        <div class="bar">
-                                                                            {{isLoadingSubCategory?'':schemeIndex+1}}
+                                                                        <div  [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : schemeIndex+1}}
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <div class="bar">
-                                                                            {{sub.name}}
+                                                                        <div  [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : sub.name}}
                                                                         </div>
                                                                     </td>
                                                                     <td class="">
-                                                                        <div class="bar">
-                                                                            <span
-                                                                                appFormatNumber>{{sub.totalAum}}</span>
+                                                                        <div  [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                                {{isLoadingSubCategory ? ' ' : '₹ '}}<span appFormatNumber [value]="sub.totalAum" *ngIf="!isLoadingSubCategory"></span>
                                                                         </div>
                                                                     </td>
                                                                     <td class="">
-                                                                        <div class="bar">
-                                                                            {{sub.weightInPercentage}}{{(isLoadingSubCategory?'':'%') }}
+                                                                        <div  [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                            {{isLoadingSubCategory ? '' : sub.weightInPercentage}}{{(isLoadingSubCategory?'':'%') }}
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-center"
+                                                                    <td
                                                                         (click)="getScheme(sub, schemeIndex, catIndex, applicantIndex)">
-                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
-                                                                            *ngIf="sub.showSubCategory">add</i>
-                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
-                                                                            *ngIf="!sub.showSubCategory"> remove
-                                                                        </i> </td>
+                                                                        <div class="bar text-center">
+                                                                            <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                *ngIf="sub.showSubCategory && !isLoadingSubCategory">add</i>
+                                                                            <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                *ngIf="!sub.showSubCategory && !isLoadingSubCategory"> remove
+                                                                            </i>
+                                                                        </div>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr *ngIf="!sub.showSubCategory"
                                                                     style="border: transparent !important">
                                                                     <td class="innerTd three" colspan="6">
                                                                         <div class="d-block text-right"
-                                                                            *ngIf="!sub.showSubCategory">
+                                                                            *ngIf="!sub.showSubCategory && sub.schemeList?.length > 0">
                                                                             <button mat-icon-button
-                                                                                (click)="exportToExcelSheet('sub-cat-scheme-wise', applicantIndex)">
+                                                                                (click)="exportToExcelSheet('sub-cat-scheme-wise', applicantIndex)"
+                                                                                *ngIf="!isLoadingSubCategory">
                                                                                 <mat-icon>
                                                                                     save_alt
                                                                                 </mat-icon>
                                                                             </button>
                                                                         </div>
-                                                                        <table *ngIf="sub.showSubCategory == false"
+                                                                        <table *ngIf="sub.showSubCategory == false && sub.schemeList?.length > 0"
                                                                             class="skeletonAnimation mt-8 mb-8"
                                                                             appSkeletonLoading
                                                                             [appSkeletonLoading]="isLoadingScheme"
@@ -283,39 +290,40 @@
                                                                                 *ngFor="let client of sub.schemeList; index as clientIndex">
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <div class="bar">
-                                                                                            {{isLoadingScheme?'':clientIndex+1}}
+                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                            {{isLoadingScheme ? '' : clientIndex+1}}
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <div class="bar">
-                                                                                            {{client.schemeName}}
+                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                            {{isLoadingScheme ? '' : client.schemeName}}
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <div class="bar">
-                                                                                            {{client.folioNumber}}
+                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                            {{isLoadingScheme ? '' : client.folioNumber}}
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <div class="bar">
-                                                                                            <span
-                                                                                                appFormatNumber>{{client.totalAum}}</span>
+                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                                {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber [value]="client.totalAum" *ngIf="!isLoadingScheme"></span>
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <div class="bar">
-                                                                                            {{client.weightInPercentage}}
+                                                                                        <div [ngClass]="{'bar': isLoadingScheme}">
+                                                                                            {{isLoadingScheme ? '' : client.weightInPercentage}}{{(isLoadingScheme?'':'%') }}
                                                                                         </div>
                                                                                     </td>
-                                                                                    <td class="text-center"
+                                                                                    <td
                                                                                         (click)="getSchemeFolio(client, clientIndex, schemeIndex, catIndex, applicantIndex)">
-                                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
-                                                                                            *ngIf="client.showFolio">add</i>
-                                                                                        <i class="material-icons b-a f-14 mt-4 c-p"
-                                                                                            *ngIf="!client.showFolio">
-                                                                                            remove
-                                                                                        </i>
+                                                                                        <div class="bar text-center">
+                                                                                            <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                                *ngIf="client.showFolio && !isLoadingScheme">add</i>
+                                                                                            <i class="material-icons b-a f-14 mt-4 c-p"
+                                                                                                *ngIf="!client.showFolio && !isLoadingScheme">
+                                                                                                remove
+                                                                                            </i>
+                                                                                        </div>
                                                                                     </td>
                                                                                 </tr>
 
@@ -323,7 +331,7 @@
                                                                                     style="border: transparent !important">
                                                                                     <td class="innerTd four"
                                                                                         colspan="6">
-                                                                                        <div class="d-block text-right">
+                                                                                        <div class="d-block text-right" *ngIf="!client.showFolio && !isLoadingScheme && sub.schemeList?.length > 0">
                                                                                             <button mat-icon-button
                                                                                                 (click)="exportToExcelSheet('scheme-wise', applicantIndex)">
                                                                                                 <mat-icon>
@@ -332,7 +340,8 @@
                                                                                             </button>
                                                                                         </div>
                                                                                         <!-- [appSkeletonLoading]="isLoadingApplicant" prod build -->
-                                                                                        <table *ngIf="client.showFolio == false"
+                                                                                        <table
+                                                                                            *ngIf="client.showFolio == false && sub.schemeList?.length > 0"
                                                                                             class="skeletonAnimation mt-8 mb-8"
                                                                                             appSkeletonLoading
                                                                                             id="table-low">
@@ -406,7 +415,7 @@
                                                                                                     <td>
                                                                                                         <div
                                                                                                             class="bar">
-                                                                                                            <!-- {{isLoadingApplicant?'':i+1}} prod build-->
+                                                                                                            {{i+1}} 
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
@@ -423,21 +432,19 @@
                                                                                                     </td>
                                                                                                     <td>
                                                                                                         <div
-                                                                                                            class="bar">
-                                                                                                            <span
-                                                                                                                appFormatNumber>{{client.totalAum}}</span>
+                                                                                                            class="bar">{{'₹ '}}<span appFormatNumber [value]="client.totalAum"></span>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <div
+                                                                                                            class="bar">{{'₹ '}}<span>
+                                                                                                            {{client.balanceUnit | number:'1.2-2'}}</span>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td>
                                                                                                         <div
                                                                                                             class="bar">
-                                                                                                            {{client.balanceUnit}}
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <div
-                                                                                                            class="bar">
-                                                                                                            {{client.weightInPercentage}}
+                                                                                                            {{client.weightInPercentage}}{{'%'}}
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td></td>
@@ -447,9 +454,9 @@
                                                                                         <!-- !isLoadingApplicant && brod build -->
                                                                                         <!-- *ngIf="subCatList.length == 0" brod build -->
                                                                                         <div
-                                                                                            *ngIf=" client.showFolio == false">
-                                                                                            <div 
-                                                                                                class="d-flex flex-column align-items-center">
+                                                                                            *ngIf="client.showFolio == false">
+                                                                                            <div
+                                                                                                class="d-flex flex-column align-items-center" *ngIf="sub.schemeList?.length == 0">
                                                                                                 <h4
                                                                                                     class="text-center pt-12">
                                                                                                     No data Found
@@ -462,7 +469,7 @@
                                                                         </table>
                                                                         <div
                                                                             *ngIf="!isLoadingScheme && sub.showSubCategory == false">
-                                                                            <div *ngIf="schemeListArr.length == 0"
+                                                                            <div *ngIf="sub.schemeList?.length == 0 && schemeListArr.length == 0"
                                                                                 class="d-flex flex-column align-items-center">
                                                                                 <h4 class="text-center pt-12">No data
                                                                                     Found
@@ -473,8 +480,9 @@
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                        <div *ngIf="!isLoadingSubCategory && category.showCategory == false">
-                                                            <div *ngIf="subCategoryList.length == 0"
+                                                        <div
+                                                            *ngIf="!isLoadingSubCategory && category.showCategory == false">
+                                                            <div *ngIf="category.subCatList?.length == 0 && subCategoryList.length == 0"
                                                                 class="d-flex flex-column align-items-center">
                                                                 <h4 class="text-center pt-12">No data Found
                                                                 </h4>
@@ -485,7 +493,7 @@
                                             </tbody>
                                         </table>
                                         <div *ngIf="!isLoadingCategory && name.show == false">
-                                            <div *ngIf="categoryList.length == 0"
+                                            <div *ngIf="name.categoryList?.length == 0 && categoryList.length == 0"
                                                 class="d-flex flex-column align-items-center">
                                                 <h4 class="text-center pt-12">No data Found
                                                 </h4>
@@ -498,15 +506,15 @@
                                 <tr>
                                     <td class="p-table"><strong>Total</strong></td>
                                     <td class="p-table">&nbsp;</td>
-                                    <td class="p-table"><strong><span
-                                                appFormatNumber>{{totalCurrentValue}}</span></strong></td>
-                                    <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                    <td class="p-table"><strong>{{'₹ '}}<span
+                                                appFormatNumber [value]="totalCurrentValue"></span></strong></td>
+                                    <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                     <td></td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <div *ngIf="!applicantName && applicantName.length==0"
+                        <div *ngIf="applicantName.length==0"
                             class="d-flex flex-column align-items-center">
                             <img class="width300" src="assets/images/svg/noDataFound.svg">
                             <h4 class="text-center pt-12">No data Found</h4>

@@ -275,12 +275,12 @@ export class SipClientWiseComponent implements OnInit {
 
   }
   showSubTableList(index, category, applicantData) {
-    this.isLoadingApplicant = true
     applicantData.showCategory = !applicantData.showCategory
-    applicantData.applicantList = []
-    this.applicantList = []
-    applicantData.applicantList = [{}, {}, {}];
     if (applicantData.showCategory == false) {
+      this.isLoadingApplicant = true
+      applicantData.applicantList = []
+      this.applicantList = []
+      applicantData.applicantList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,

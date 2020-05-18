@@ -236,23 +236,25 @@ export class SipAmcWiseComponent implements OnInit {
           });
           this.filteredArray = [...this.amcList];
         } else {
-          this.amcList = []
+          this.amcList = [];
+          this.filteredArray = [];
         }
       },
       err => {
         this.isLoading = false;
-        this.amcList = []
+        this.amcList = [];
+        this.filteredArray = [];
       }
     )
   }
   showSubTableList(index, category, schemeData) {
-    this.isLoadingCategory = true
     this.selectedCategory = index;
-    schemeData.showCategory = !schemeData.showCategory
-    schemeData.schemeList = []
-    this.schemeDataList = []
-    schemeData.schemeList = [{}, {}, {}];
+    schemeData.showCategory = !schemeData.showCategory;
     if (schemeData.showCategory == false) {
+      this.isLoadingCategory = true
+      schemeData.schemeList = []
+      this.schemeDataList = []
+      schemeData.schemeList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         amcId: schemeData.amcId,
@@ -375,13 +377,13 @@ export class SipAmcWiseComponent implements OnInit {
   }
 
   showSchemeName(index, subcashowSubcat, investorData) {
-    this.isLoadingSubCategory = true
     this.selectedAmc = index;
     investorData.showSubCategory = !investorData.showSubCategory
-    this.subCategory = []
-    investorData.investorList = [];
-    investorData.investorList = [{}, {}, {}];
     if (investorData.showSubCategory == false) {
+      this.isLoadingSubCategory = true
+      this.subCategory = []
+      investorData.investorList = [];
+      investorData.investorList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
@@ -419,14 +421,15 @@ export class SipAmcWiseComponent implements OnInit {
     }
   }
   showApplicantName(index, subcashowSubcat, applicantData) {
-    this.isLoadingApplicant = true
     this.selectedClientIndex = index;
     this.selectedSubCategory = subcashowSubcat
     applicantData.showInvestor = !applicantData.showInvestor
-    applicantData.applicantList = [];
-    this.applicantList = [];
-    applicantData.applicantList = [{}, {}, {}];
+
     if (applicantData.showInvestor == false) {
+      this.isLoadingApplicant = true
+      applicantData.applicantList = [];
+      this.applicantList = [];
+      applicantData.applicantList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
