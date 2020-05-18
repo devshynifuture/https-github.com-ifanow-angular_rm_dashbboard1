@@ -13,7 +13,7 @@ import {PeopleService} from '../component/protect-component/PeopleComponent/peop
 })
 export class EnumDataService {
   searchData: any;
-
+  clientAndFamilyData: any;
   proofType = [
     {proofId: 1, proofType: 'Personal Pan'},
     {proofId: 2, proofType: 'Company Pan'},
@@ -105,7 +105,7 @@ export class EnumDataService {
       // displayName: '%'
     };
     this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-      this.setSearchData(responseArray);
+      this.setClientAndFamilyData(responseArray);
     }, error => {
       console.log('getFamilyMemberListRes error : ', error);
     });
@@ -118,9 +118,16 @@ export class EnumDataService {
     }
   }
 
-  getSearchData(value) {
+  setClientAndFamilyData(data) {
+    console.log(data);
+    if (data) {
+      this.clientAndFamilyData = data;
+    }
+  }
+
+  getClientAndFamilyData(value) {
     const filterValue = value.toLowerCase();
-    return this.searchData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.clientAndFamilyData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   getClientSearchData(value) {

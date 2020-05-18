@@ -82,7 +82,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br w-18 rightText text-right">
+                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br  w-12 rightTextHide text-right">
                         Current value-EPF
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -93,6 +93,21 @@
                         <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpfBalance" appFormatNumber>{{sumOfcurrentEpfBalance}}</span></div>
                     </td>
                 </ng-container>
+
+                <ng-container matColumnDef="bal">
+                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br w-12 rightTextHide text-right">
+                        Current value -EPS
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br  text-right amt">
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.currentEpsValue }}
+                            </span></div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right">
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance" appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
+                    </td>
+                </ng-container>
+
+
                 <ng-container matColumnDef="emp">
                     <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef class="br  w-12 rightTextHide text-right">
                         Employee's contribution
@@ -134,18 +149,7 @@
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="bal">
-                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br w-12 rightTextHide text-right">
-                        Current value -EPS
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br  text-right amt">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.currentEpsValue }}
-                            </span></div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right">
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance" appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
-                    </td>
-                </ng-container>
+                
 
                 <ng-container matColumnDef="desc">
                     <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description

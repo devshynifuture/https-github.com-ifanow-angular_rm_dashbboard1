@@ -36,12 +36,11 @@ export class OnlineTransactionComponent implements OnInit {
 
   });
   selectedDiv = 'div1';
-  familyMemberId: any;
   ownerName: any;
   nomineesListFM: any = [];
   ownerData: any;
   dataSource: any;
-  inputData: any;
+  inputData: any = {};
   isViewInitCalled: any;
   selectedFamilyMember: any;
   advisorId: any;
@@ -59,7 +58,7 @@ export class OnlineTransactionComponent implements OnInit {
   noMapping = false;
   transactionType: any;
   transactionData: any;
-  clientCodeData: any;
+  clientCodeData: any = [];
   filteredStates: any;
   selectedClientOrFamily: any;
 
@@ -76,6 +75,9 @@ export class OnlineTransactionComponent implements OnInit {
   set data(data) {
     this.familyMemberList = this.enumDataService.getEmptySearchStateData();
     this.inputData = data;
+    if (!this.inputData) {
+      this.inputData = {};
+    }
     console.log('This is Input data of Online Transaction Component ', data);
 
     if (this.isViewInitCalled) {
@@ -88,7 +90,6 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clientCodeData = {};
     this.getdataForm(this.inputData);
     this.setClientFilterList();
     // this.getDefaultDetails(null)
@@ -98,21 +99,19 @@ export class OnlineTransactionComponent implements OnInit {
     if (!this.inputData || this.inputData.isAdvisorSection == null ||
       this.inputData.isAdvisorSection == undefined ||
       this.inputData.isAdvisorSection) {
-      this.filteredStates = this.stateCtrl.valueChanges
-        .pipe(
-          startWith(''),
-          map(state => {
-            if (state) {
-              const list = this.enumDataService.getSearchData(state);
-              if (list.length == 0) {
-                this.stateCtrl.setErrors({invalid: true});
+      this.stateCtrl.valueChanges
+        .subscribe(newValue => {
+          this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
+            map(value => {
+              this.clientCodeData = [];
+              console.log('12398127389127398127389172389723891273891273');
+              if (newValue) {
+                return this.enumDataService.getClientAndFamilyData(newValue);
+              } else {
+                return this.enumDataService.getEmptySearchStateData();
               }
-              return this.enumDataService.getSearchData(state);
-            } else {
-              return this.enumDataService.getEmptySearchStateData();
-            }
-          }),
-        );
+            }));
+        });
     } else {
       const obj = {
         clientId: AuthService.getClientId(),
@@ -129,10 +128,13 @@ export class OnlineTransactionComponent implements OnInit {
       );
       this.stateCtrl.valueChanges
         .subscribe(newValue => {
+          this.clientCodeData = [];
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
             map(value => this.processTransaction.filterName(newValue + '', this.familyMemberList)));
         });
     }
+
+    this.stateCtrl.setValue('');
   }
 
   checkOwnerList(event) {
@@ -144,7 +146,7 @@ export class OnlineTransactionComponent implements OnInit {
     this.selectedClientOrFamily = platform.name;
     const obj = {
       advisorId: this.advisorId,
-      familyMemberId: platform.familyMemberId,
+      familyMemberId: platform.userType == 3 ? platform.familyMemberId : 0,
       clientId: platform.clientId,
       // aggregatorType: platform
     };
@@ -184,8 +186,9 @@ export class OnlineTransactionComponent implements OnInit {
           selectedFamilyMember: this.ownerData.ownerName.value,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
-          familyMemberId: this.familyMemberData.familyMemberId,
-          defaultValue: value
+          familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
+          defaultValue: value,
+          isAdvisorSection: this.inputData.isAdvisorSection
         };
         this.openPurchaseTransaction(data.transactionType, data);
       }
@@ -220,8 +223,8 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   ownerDetails(value) {
+
     this.familyMemberData = value;
-    this.familyMemberId = value.id;
     this.getDefaultDetails(value);
     this.ownerDetail();
   }
@@ -231,15 +234,22 @@ export class OnlineTransactionComponent implements OnInit {
     const obj = {
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
-      familyMemberId: this.familyMemberData.familyMemberId,
+      familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
       // tpUserCredentialId: 292
     };
+    this.showSpinnerOwner = true;
     this.onlineTransact.getClientCodes(obj).subscribe(
       data => {
-        console.log(data);
-        this.clientCodeData = data;
+        this.showSpinnerOwner = false;
+        console.log('clientcode response : ', data);
+        if (data) {
+          this.clientCodeData = data;
+        }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.showSpinnerOwner = false;
+      }
     );
   }
 
@@ -285,18 +295,6 @@ export class OnlineTransactionComponent implements OnInit {
     console.log(this.transactionAddForm);
   }
 
-  saveAndAddAnother() {
-    this.isSaveAndAddClicked = true;
-    console.log(this.transactionAddForm);
-  }
-
-  onAddTransaction() {
-    console.log(this.transactionAddForm);
-  }
-
-  baackToSelectTransaction() {
-    this.formStep = 'step-2';
-  }
 
   getResponse(data) {
     this.formStep = data;
@@ -326,7 +324,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   saveAndNext() {
-    if (!this.clientCodeData) {
+    if (!this.clientCodeData || this.clientCodeData.length == 0) {
       return;
     }
     console.log(this.formStep);
@@ -343,7 +341,9 @@ export class OnlineTransactionComponent implements OnInit {
           selectedFamilyMember: this.stateCtrl.value.name,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
-          familyMemberId: this.familyMemberData.familyMemberId
+          familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
+          isAdvisorSection: this.inputData.isAdvisorSection
+
         };
         this.openPurchaseTransaction(data.transactionType, data);
       } else {

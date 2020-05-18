@@ -77,8 +77,7 @@
                   This field is required
                 </mat-error>
                 <mat-error *ngIf="stpTransaction.get('schemeStp').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
-                </mat-error>
+                  No schemes Found                </mat-error>
                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing
                   NAV: {{navOfSelectedScheme}}
                 </mat-hint>
@@ -120,11 +119,11 @@
               <div class="row">
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Current value</p>
-                  <h3 class="f-18 roboto m-0">Rs: {{currentValue}}</h3>
+                  <h3 class="f-18 roboto m-0">Rs: <span appFormatNumber>{{currentValue}}</span></h3>
                 </div>
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Balance unit</p>
-                  <h3 class="f-18 roboto m-0">{{folioDetails.balanceUnit}}</h3>
+                  <h3 class="f-18 roboto m-0"><span appFormatNumber>{{folioDetails.balanceUnit}}</span></h3>
                 </div>
               </div>
               <div class="row">
@@ -160,7 +159,7 @@
                   This field is required
                 </mat-error>
                 <mat-error *ngIf="stpTransaction.get('transferIn').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
+                  No schemes Found
                 </mat-error>
                 <mat-hint *ngIf="schemeTransfer" align="start" class="f-12 text-custom">Last closing
                   NAV: {{navOfSelectedScheme}}
@@ -265,8 +264,8 @@
             <mat-form-field>
               <mat-select class="form-control" formControlName="tenure">
                 <mat-option value='' disabled>Select tenure</mat-option>
-                <mat-option value="1">No. of installment</mat-option>
-                <mat-option value="2">No. year</mat-option>
+                <mat-option value="1">No. of installments</mat-option>
+                <mat-option value="2">No. of years</mat-option>
                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
                   Continue until cancelled
                 </mat-option>
@@ -279,7 +278,7 @@
         </div>
         <div *ngIf="(stpTransaction.get('tenure').value) != 3" class="row">
           <div class="col-md-12 p-0 text-left">
-            <h5 class="mb-8 pt-28  text-black">Enter installment</h5>
+            <h5 class="mb-8 pt-28  text-black">Enter {{(stpTransaction.get('tenure').value =='2')?'No. of years':'No. of installments'}}</h5>
           </div>
 
           <div class="col-md-5 form-group inputPaddNone p-0">

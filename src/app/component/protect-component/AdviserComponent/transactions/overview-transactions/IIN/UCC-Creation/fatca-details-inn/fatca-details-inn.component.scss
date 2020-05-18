@@ -159,6 +159,6 @@
     width: 100px;
 }
 
-.mat-radio-button {
-    min-width: 90px;
+::ng-deep .uiClassTab .radioBtnWidth {
+    min-width: 100px;
 }

@@ -36,7 +36,12 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
   getFolioMasterResponse(data) {
     console.log(data);
-    this.folioDetails=data.folioMasterList;
+    // this.folioDetails=data.folioMasterList;
+    if(data){
+      this.folioDetails=data;
+    }else{
+      this.folioDetails = [];
+    }
   }
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
