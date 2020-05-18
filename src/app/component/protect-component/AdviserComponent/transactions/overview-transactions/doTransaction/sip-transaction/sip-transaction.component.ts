@@ -594,7 +594,7 @@ export class SipTransactionComponent implements OnInit {
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
-      modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
+      modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '2' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
@@ -619,6 +619,7 @@ export class SipTransactionComponent implements OnInit {
       this.schemeDetails.isin = data.isIn;
       this.selectedScheme(data.scheme);
     }
+    this.sipTransaction.controls.modeOfPaymentSelection.setValue('2')
   }
 
   getFormControl(): any {

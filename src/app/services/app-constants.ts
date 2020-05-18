@@ -33,5 +33,5 @@ export class AppConstants {
     ENTER_PIN_CODE: 'Enter pin code',
   }
 
-  public static EMAIL_DOMAINS = ['google.com'];
+  public static EMAIL_DOMAINS = ['gmail.com','hotmail.com','mail.com','outlook.com','yahoo.com','yahoo.co.in','rediffmail.com'];
 }

@@ -49,11 +49,11 @@ export class IinUccCreationComponent implements OnInit {
         startWith(''),
         map(state => {
           if (state) {
-            let list = this.enumDataService.getSearchData(state);
+            let list = this.enumDataService.getClientAndFamilyData(state);
             if (list.length == 0) {
               this.generalDetails.controls.ownerName.setErrors({invalid: true});
             }
-            return this.enumDataService.getSearchData(state);
+            return this.enumDataService.getClientAndFamilyData(state);
           } else {
             return this.enumDataService.getEmptySearchStateData();
           }

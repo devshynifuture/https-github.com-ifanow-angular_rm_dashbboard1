@@ -134,11 +134,11 @@
                             <div class="row">
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Current value</p>
-                                    <h3 class="f-18 roboto m-0">Rs: {{currentValue}}</h3>
+                                    <h3 class="f-18 roboto m-0">Rs: <span appFormatNumber>{{currentValue}}</span></h3>
                                 </div>
                                 <div class="col-md-6 p-20 text-left">
                                     <p class="f-14 m-0">Balance unit</p>
-                                    <h3 class="f-18 roboto m-0">{{folioDetails.balanceUnit}}</h3>
+                                    <h3 class="f-18 roboto m-0"><span appFormatNumber>{{folioDetails.balanceUnit}}</span></h3>
                                 </div>
                             </div>
                             <div class="row">
