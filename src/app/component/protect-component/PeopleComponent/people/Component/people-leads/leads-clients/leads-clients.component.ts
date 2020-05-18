@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {PeopleService} from '../../../../people.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {Router} from '@angular/router';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { PeopleService } from '../../../../people.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { Router } from '@angular/router';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-leads-clients',
@@ -42,16 +42,16 @@ export class LeadsClientsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clientRoles = this.enumService.getClientRole();
-    this.convertClientForm = this.fb.group({
-      clientOwner: ['', [Validators.required]],
-      confirmRole: ['', [Validators.required]],
-      sendEmailFlag: [true, [Validators.required]]
-    });
   }
 
   set data(data) {
     this.clientData = data;
+    this.clientRoles = this.enumService.getClientRole();
+    this.convertClientForm = this.fb.group({
+      clientOwner: [data.advisorId, [Validators.required]],
+      confirmRole: ['', [Validators.required]],
+      sendEmailFlag: [true, [Validators.required]]
+    });
     this.getClientList(data);
   }
 
@@ -59,7 +59,7 @@ export class LeadsClientsComponent implements OnInit {
     const obj = {
       advisorId: AuthService.getAdvisorId()
     };
-    this.peopleService.getAllClients(obj).subscribe(
+    this.peopleService.getTeamMemberList(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;
@@ -78,7 +78,7 @@ export class LeadsClientsComponent implements OnInit {
       clientId: this.clientData.clientId,
       roleId: parseInt(this.convertClientForm.get('confirmRole').value),
       status: 1, // 1- client, 2 - lead
-      advisorId: this.convertClientForm.get('clientOwner').value.advisorId,
+      advisorId: this.convertClientForm.get('clientOwner').value,
       sendEmail: this.convertClientForm.get('sendEmailFlag').value
     };
     this.peopleService.updateClientStatus(obj).subscribe(
@@ -98,6 +98,6 @@ export class LeadsClientsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

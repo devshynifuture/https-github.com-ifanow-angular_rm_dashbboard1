@@ -160,8 +160,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     });
 
     if (this.fieldFlag != 'familyMember') {
-      this.basicDetails.controls.email.setValidators([Validators.required]);
-      this.basicDetails.controls.pan.setValidators([Validators.required]);
+      this.basicDetails.controls.email.setValidators([Validators.required, Validators.pattern(this.validatorType.EMAIL)]);
+      this.basicDetails.controls.pan.setValidators([Validators.required, Validators.pattern(this.validatorType.PAN)]);
     }
     this.basicDetails.controls.email.updateValueAndValidity();
     this.basicDetails.controls.pan.updateValueAndValidity();
@@ -183,8 +183,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != "familyMember") ? [Validators.required] : null],
     });
     if (this.fieldFlag == 'client') {
-      this.minorForm.controls.gEmail.setValidators([Validators.required]);
-      this.minorForm.controls.pan.setValidators([Validators.required]);
+      this.minorForm.controls.gEmail.setValidators([Validators.required, Validators.pattern(this.validatorType.EMAIL)]);
+      this.minorForm.controls.pan.setValidators([Validators.required, Validators.pattern(this.validatorType.PAN)]);
     }
     if (this.fieldFlag == 'client' && this.basicDetailsData.name) {
       this.minorForm.controls.gEmail.disable();
