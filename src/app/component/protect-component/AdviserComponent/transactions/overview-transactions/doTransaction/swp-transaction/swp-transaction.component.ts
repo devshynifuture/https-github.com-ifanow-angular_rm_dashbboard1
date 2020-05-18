@@ -1,14 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {ProcessTransactionService} from '../process-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -67,8 +67,8 @@ export class SwpTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
+    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
+    private eventService: EventService) {
   }
 
   @Output() changedValue = new EventEmitter();
@@ -95,12 +95,12 @@ export class SwpTransactionComponent implements OnInit {
     this.childTransactions = [];
     this.getdataForm(this.inputData);
 
-    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
-    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
-    Object.assign(this.transactionSummary, {transactType: 'SWP'});
-    Object.assign(this.transactionSummary, {allEdit: true});
-    Object.assign(this.transactionSummary, {isMultiTransact: false});
-    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
+    Object.assign(this.transactionSummary, { transactType: 'SWP' });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { isMultiTransact: false });
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
 
   }
 
@@ -111,7 +111,7 @@ export class SwpTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
-    Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     this.getSchemeList();
   }
 
@@ -125,8 +125,8 @@ export class SwpTransactionComponent implements OnInit {
      }*/
     if (this.swpTransaction.get('schemeSwp').invalid) {
       this.showSpinner = false;
-      Object.assign(this.transactionSummary, {schemeName: ''});
-      Object.assign(this.transactionSummary, {folioNumber: ''});
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     this.showSpinner = true;
@@ -145,10 +145,10 @@ export class SwpTransactionComponent implements OnInit {
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data), (error) => {
         this.showSpinner = false;
-        this.swpTransaction.get('schemeSwp').setErrors({setValue: error.message});
+        this.swpTransaction.get('schemeSwp').setErrors({ setValue: error.message });
         this.swpTransaction.get('schemeSwp').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
-        // this.eventService.openSnackBar(error, 'dismiss');
+        // this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -176,7 +176,7 @@ export class SwpTransactionComponent implements OnInit {
 
   reinvest(scheme) {
     this.schemeDetails = scheme;
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
@@ -195,7 +195,7 @@ export class SwpTransactionComponent implements OnInit {
     this.schemeDetails = null;
     this.onFolioChange(null);
     this.swpFrequency = [];
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -205,7 +205,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -224,7 +224,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -234,12 +234,12 @@ export class SwpTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     this.folioList = data;
     if (this.swpTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
   }
 
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, {enteredAmount: value});
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
 
   onFolioChange(folio) {
@@ -250,10 +250,10 @@ export class SwpTransactionComponent implements OnInit {
     this.folioDetails = folio;
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
-    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
-    Object.assign(this.transactionSummary, {mutualFundId: folio.id});
-    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
-    this.transactionSummary = {...this.transactionSummary};
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
+    this.transactionSummary = { ...this.transactionSummary };
   }
 
   getFrequency() {
@@ -264,7 +264,7 @@ export class SwpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -306,7 +306,7 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getdataForm(data) {
@@ -408,7 +408,7 @@ export class SwpTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.swpBSERes(data), (error) => {
-          this.eventService.openSnackBar(error, 'dismiss');
+          this.eventService.openSnackBar(error, 'Dismiss');
           this.barButtonOptions.active = false;
         }
       );
@@ -423,7 +423,7 @@ export class SwpTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
-      Object.assign(this.transactionSummary, {allEdit: false});
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
 

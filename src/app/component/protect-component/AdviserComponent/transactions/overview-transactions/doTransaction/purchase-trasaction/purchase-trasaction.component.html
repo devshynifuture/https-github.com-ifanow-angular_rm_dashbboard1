@@ -25,19 +25,19 @@
         <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length > 0">
             <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading>
                 <ng-container matColumnDef="no">
-                    <th *matHeaderCellDef class="br" mat-header-cell> No</th>
+                    <th *matHeaderCellDef class="br w-4" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
                         <div class="bar"> {{i + 1}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="folio">
-                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
+                    <th *matHeaderCellDef class="br w-10" mat-header-cell> Folio</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{element.folioNo}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="ownerName">
-                    <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell> Scheme name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
                             {{element.schemeName}}
@@ -45,23 +45,20 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="amount">
-                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
-                    <td *matCellDef="let element" class="br" mat-cell>
+                    <th *matHeaderCellDef class="br w-11 text-right" mat-header-cell> Amount</th>
+                    <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar"> {{element.orderVal}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell>
-                        <div>
-                            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                                more_vert
-                            </i>
-                            <mat-menu #menubank="matMenu">
-                                <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-                                <button mat-menu-item>Delete</button>
-                            </mat-menu>
-                        </div>
+                        <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                        <mat-menu #menubank="matMenu">
+                            <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
+                            <button mat-menu-item>Delete</button>
+                        </mat-menu>
+
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
@@ -69,16 +66,18 @@
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
         </div>
+
+
         <div class="row pt-20 pb-44">
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
                         <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option" class="bigRadio" formControlName="schemeSelection">
-                            <mat-radio-button value="1" [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'radio-border':purchaseTransaction.get('schemeSelection').value==2}" class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
+                            <mat-radio-button value="1" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'radio-border':purchaseTransaction.get('schemeSelection').value==2}" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left ">
                                 Invest in existing scheme
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==2,'text-primary':purchaseTransaction.get('schemeSelection').value==2,'radio-border':purchaseTransaction.get('schemeSelection').value==1}" class="radio-border radioBtn bor_top_tb_right">
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('schemeSelection').value==2,'text-primary':purchaseTransaction.get('schemeSelection').value==2,'radio-border':purchaseTransaction.get('schemeSelection').value==1}" class="radio-border radioBtn bor_top_tb_right">
                                 Select a new scheme
                             </mat-radio-button>
                         </mat-radio-group>
@@ -143,10 +142,10 @@
                     </div>
                     <div>
                         <mat-radio-group (ngModelChange)="selectExistingOrNewFolio($event)" aria-label="Select an option" class="smallRadio" formControlName="folioSelection">
-                            <mat-radio-button value="1" [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'radio-border':purchaseTransaction.get('folioSelection').value==2}" class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
+                            <mat-radio-button value="1" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'radio-border':purchaseTransaction.get('folioSelection').value==2}" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left ">
                                 Existing
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==2,'text-primary':purchaseTransaction.get('folioSelection').value==2,'radio-border':purchaseTransaction.get('folioSelection').value==1}" class="radio-border bor_top_tb_right radioBtn ">
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('folioSelection').value==2,'text-primary':purchaseTransaction.get('folioSelection').value==2,'radio-border':purchaseTransaction.get('folioSelection').value==1}" class="radio-border bor_top_tb_right radioBtn ">
                                 New
                             </mat-radio-button>
                         </mat-radio-group>
@@ -212,11 +211,11 @@
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option" class="mediumRadio" formControlName="modeOfPaymentSelection">
-                            <mat-radio-button checked="true" value="1" [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">
+                            <mat-radio-button checked="true" value="1" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
+                                class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left">
                                 Net banking
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
+                            <mat-radio-button value="2" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
                                 class="b-a radioBtn bor_top_tb_right">
                                 Debit mandate
                             </mat-radio-button>

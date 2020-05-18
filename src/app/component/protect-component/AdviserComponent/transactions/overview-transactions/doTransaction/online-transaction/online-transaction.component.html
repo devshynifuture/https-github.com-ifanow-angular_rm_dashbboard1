@@ -10,185 +10,173 @@
         </div>
     </div>
 </div>
-
 <div [formGroup]="transactionAddForm">
     <!-- first page -->
     <div *ngIf="formStep == 'step-1' || formStep == 'step-2' && transactionType==undefined" class="pt-90 pr-40 pl-40 pb-40">
         <div class="row">
             <div class="col-md-8 p-0">
-                <h5 class="m-0 text-black pb-12">Select an investor from the search box below</h5>
+                <h5 class="m-0 text-black">Select an investor from the search box below</h5>
                 <mat-form-field appearance="standard" floatLabel="never">
                     <input #searchClient (input)="checkOwnerList($event)" [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput placeholder="Start typing to see investor names">
                     <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="ownerDetails($event.option.value)" [displayWith]="processTransaction.displayName" autoFocus>
                         <mat-option *ngFor="let f of filteredStates | async" [value]="f">
                             <div class="row">
-                                <div class="col-md-7 d-flex align-items-center">
+                                <div class="col-md-1 p-0 d-flex align-items-center">
+                                    <i class="material-icons"> person </i>
+                                </div>
+                                <div class="col-md-7 pl-0 d-flex align-items-center">
                                     <p class="t-left m-0">{{f.name}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
-                                    <div *ngIf="f.userType==3" class="small-primitive">FAMILY MEMBER
-                                        </button>
-
-                                        <button mat-stroked-button *ngIf="f.userType==2" class="small-primitive">CLIENT
-                                        </button>
-                                    </div>
+                                    <button mat-stroked-button *ngIf="f.userType==3" class="small-primitive">
+                                        FAMILY MEMBER
+                                    </button>
+                                    <button mat-stroked-button *ngIf="f.userType==2" class="small-primitive">CLIENT
+                                    </button>
                                 </div>
+                            </div>
                         </mat-option>
                     </mat-autocomplete>
                     <!-- <mat-error *ngIf="transactionAddForm.get('ownerName').errors?.required" class="f-12 pt-4">
-              This field is required
-          </mat-error> -->
+                This field is required
+            </mat-error> -->
                     <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
                         This family member does not exist
                     </mat-error>
                 </mat-form-field>
-                </div>
-                <div *ngIf="showSpinnerOwner == true" class="col-md-1 align-items-end d-flex">
-                    <mat-spinner class=" "></mat-spinner>
-                </div>
+            </div>
+            <div *ngIf="showSpinnerOwner == true" class="col-md-1 align-items-end d-flex">
+                <mat-spinner class=" "></mat-spinner>
             </div>
         </div>
-
-        <div *ngIf="!showSpinnerOwner&&clientCodeData.length==0 && stateCtrl.valid" class="d-flex flex-column align-items-center">
-            <h4 class="text-center pt-12">No IIN/UCC found</h4>
-            <button (click)="openNewCustomerIIN()" *ngIf="inputData.isAdvisorSection" class="btn-green text-white" mat-button>
+    </div>
+    <div *ngIf="clientCodeData==undefined && stateCtrl.valid" class="d-flex flex-column align-items-center">
+        <h4 class="text-center pt-12">No IIN/UCC found</h4>
+        <button (click)="openNewCustomerIIN()" *ngIf="inputData.isAdvisorSection" class="btn-green text-white" mat-button>
             IIN/UCC CREATION
         </button>
+    </div>
+    <!-- second click -->
+    <div *ngIf="formStep == 'step-2' &&  !transactionType && clientCodeData && stateCtrl.valid">
+        <div class="row pt-10 pl-40 pr-40">
+            <div class="col-md-12 p-0">
+                <h5 class="m-0 text-black">Great! Next, select a transaction type from the below given options...</h5>
+            </div>
         </div>
-        <!-- second click -->
-        <div *ngIf="formStep == 'step-2' &&  !transactionType && clientCodeData.length>0 && stateCtrl.valid">
-            <div class="row pt-10 pl-40 pr-40">
-                <div class="col-md-12 p-0">
-                    <h5 class="m-0 text-black">Great! Next, select a transaction type from the below given options...</h5>
-                </div>
-            </div>
-            <!-- second click -->
-            <div *ngIf="formStep == 'step-2' &&  !transactionType && clientCodeData && stateCtrl.valid">
-                <div class="row pt-10 pl-40 pr-40">
-                    <div class="col-md-12 p-0">
-                        <h5 class="m-0 text-black">Great! Next, select a transaction type from the below given options...
-                        </h5>
+        <div class="row pt-12 pl-32 pr-32">
+            <div (click)="selectTransactionType('PURCHASE');saveAndNext()" class="col-md-4 pl-8 pr-8 c-p">
+                <mat-checkbox [ngClass]="{'v-h': selectedDiv != 'PURCHASE' }" [ngStyle]="{'pointer-events': (selectedDiv == 'PURCHASE') ? 'all': 'none'}" checked="false" class="checked">
+                </mat-checkbox>
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'PURCHASE'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                    <div class="col-md-4 text-right">
+                        <img class="pt-4" src="/assets/images/svg/shopping{{ (selectedDiv == 'PURCHASE') ? '-blue': '-icons' }}.svg">
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <h3 [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0"> Purchase</h3>
+                        <p [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0 roboto text-custom pt-4 f-13">Invest a lumpsum amount in a jiffy
+                        </p>
                     </div>
                 </div>
-                <div class="row pt-12 pl-32 pr-32">
-                    <div (click)="selectTransactionType('PURCHASE');saveAndNext()" class="col-md-4 pl-8 pr-8 c-p">
-                        <mat-checkbox [ngClass]="{'v-h': selectedDiv != 'PURCHASE' }" [ngStyle]="{'pointer-events': (selectedDiv == 'PURCHASE') ? 'all': 'none'}" checked="false" class="checked">
-                        </mat-checkbox>
-                        <div [ngClass]="{'b-a-custom': selectedDiv == 'PURCHASE'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
-                            <div class="col-md-4 text-right">
-                                <img class="pt-4" src="/assets/images/svg/shopping{{ (selectedDiv == 'PURCHASE') ? '-blue': '-icons' }}.svg">
-                            </div>
-                            <div class="col-md-8 pl-0">
-                                <h3 [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0"> Purchase</h3>
-                                <p [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0 roboto text-custom pt-4 f-13">Invest a lumpsum amount in a jiffy
-                                </p>
-                            </div>
-                        </div>
+            </div>
+            <div (click)="selectTransactionType('SWITCH');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+                <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWITCH' }" [ngStyle]=" {'pointer-events': (selectedDiv == 'SWITCH') ? 'all': 'none'}" checked="false" class="checked">
+                </mat-checkbox>
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'SWITCH'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                    <div class="col-md-4 text-right">
+                        <img class="pt-4" src="/assets/images/svg/switch{{ (selectedDiv == 'SWITCH') ? '-blue': '-icons' }}.svg">
                     </div>
-                    <div (click)="selectTransactionType('SWITCH');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
-                        <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWITCH' }" [ngStyle]=" {'pointer-events': (selectedDiv == 'SWITCH') ? 'all': 'none'}" checked="false" class="checked">
-                        </mat-checkbox>
-                        <div [ngClass]="{'b-a-custom': selectedDiv == 'SWITCH'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
-                            <div class="col-md-4 text-right">
-                                <img class="pt-4" src="/assets/images/svg/switch{{ (selectedDiv == 'SWITCH') ? '-blue': '-icons' }}.svg">
-                            </div>
-                            <div class="col-md-8 pl-0">
-                                <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0"> Switch</h3>
-                                <p [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0 roboto text-custom pt-4 f-13">Switch lumpsum from one scheme to another
-                                </p>
-                            </div>
-                        </div>
+                    <div class="col-md-8 pl-0">
+                        <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0"> Switch</h3>
+                        <p [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0 roboto text-custom pt-4 f-13">Switch lumpsum from one scheme to another
+                        </p>
                     </div>
-                    <div (click)="selectTransactionType('REDEMPTION');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
-                        <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'REDEMPTION' }" [ngStyle]="{'pointer-events': (selectedDiv == 'REDEMPTION') ? 'all': 'none'}" checked="false" class="checked">
-                        </mat-checkbox>
-                        <div [ngClass]="{'b-a-custom': selectedDiv == 'REDEMPTION'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
-                            <div class="col-md-4 text-right">
-                                <img class="pt-4" src="/assets/images/svg/reedem{{ (selectedDiv == 'REDEMPTION') ? '-blue': '-icons' }}.svg">
-                            </div>
-                            <div class="col-md-8 pl-0">
-                                <h3 [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }" class="m-0"> Redeem</h3>
-                                <p [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }" class="m-0 roboto text-custom pt-4 f-13">
-                                    Redeem from your existing schemes
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row pt-12 pl-32 pr-32">
-                    <div (click)="selectTransactionType('SIP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
-                        <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SIP' }" [ngStyle]="{'pointer-events': (selectedDiv == 'SIP') ? 'all': 'none'}" checked="false" class="checked">
-                        </mat-checkbox>
-                        <div [ngClass]="{'b-a-custom': selectedDiv == 'SIP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
-                            <div class="col-md-4 text-right">
-                                <img class="pt-4" src="/assets/images/svg/sip{{ (selectedDiv == 'SIP') ? '-blue': '-icons' }}.svg">
-                            </div>
-                            <div class="col-md-8 pl-0">
-                                <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0"> SIP</h3>
-                                <p [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0 roboto text-custom pt-4 f-13">Start a systematic investment plan</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div (click)="selectTransactionType('STP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
-                        <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'STP' }" [ngStyle]="{'pointer-events':(selectedDiv == 'STP') ? 'all': 'none'}" checked="false" class="checked">
-                        </mat-checkbox>
-                        <div [ngClass]="{'b-a-custom': selectedDiv == 'STP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
-                            <div class="col-md-4 text-right">
-                                <img class="pt-4" src="/assets/images/svg/switch{{ (selectedDiv == 'STP') ? '-blue': '-icons' }}.svg">
-                            </div>
-                            <div class="col-md-8 pl-0">
-                                <h3 [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0"> STP</h3>
-                                <p [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0 roboto text-custom pt-4 f-13">Systematic transfer from one scheme to another
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div (click)="selectTransactionType('SWP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
-                        <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWP' }" [ngStyle]="{'pointer-events':(selectedDiv == 'SWP') ? 'all': 'none'}" checked="false" class="checked">
-                        </mat-checkbox>
-                        <div [ngClass]="{'b-a-custom': selectedDiv == 'SWP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
-                            <div class="col-md-4 text-right">
-                                <img class="pt-4" src="/assets/images/svg/reedem{{ (selectedDiv == 'SWP') ? '-blue': '-icons' }}.svg">
-                            </div>
-                            <div class="col-md-8 pl-0">
-                                <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0"> SWP</h3>
-                                <p [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0 roboto text-custom pt-4 f-13">Systematic withdrawal from a scheme
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-
-
-            <div *ngIf="noMapping==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
-                <p>no mapping found</p>
-                <button (click)="noMapFunction()" class="btn-primary addon v-middle" mat-stroked-button><i
-                    class="material-icons pr-8 v-middle">
-                    add
-                </i>ADD
-            </button>
+            <div (click)="selectTransactionType('REDEMPTION');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+                <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'REDEMPTION' }" [ngStyle]="{'pointer-events': (selectedDiv == 'REDEMPTION') ? 'all': 'none'}" checked="false" class="checked">
+                </mat-checkbox>
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'REDEMPTION'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                    <div class="col-md-4 text-right">
+                        <img class="pt-4" src="/assets/images/svg/reedem{{ (selectedDiv == 'REDEMPTION') ? '-blue': '-icons' }}.svg">
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <h3 [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }" class="m-0"> Redeem</h3>
+                        <p [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }" class="m-0 roboto text-custom pt-4 f-13">
+                            Redeem from your existing schemes
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div *ngIf="noSubBroker==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
-                <p>no broker found</p>
-                <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button><i
-                    class="material-icons pr-8 v-middle">
-                    add
-                </i>ADD
-            </button>
-            </div>
-            <div>
-                <app-purchase-trasaction (changedValue)="getResponse($event)" *ngIf="transactionType=='PURCHASE'" [data]='transactionData'></app-purchase-trasaction>
-                <app-switch-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWITCH'" [data]='transactionData'></app-switch-transaction>
-                <app-redemption-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='REDEMPTION'" [data]='transactionData'></app-redemption-transaction>
-                <app-sip-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SIP'" [data]='transactionData'>
-                </app-sip-transaction>
-                <app-stp-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='STP'" [data]='transactionData'>
-                </app-stp-transaction>
-                <app-swp-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWP'" [data]='transactionData'>
-                </app-swp-transaction>
-            </div>
-
         </div>
+        <div class="row pt-12 pl-32 pr-32">
+            <div (click)="selectTransactionType('SIP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+                <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SIP' }" [ngStyle]="{'pointer-events': (selectedDiv == 'SIP') ? 'all': 'none'}" checked="false" class="checked">
+                </mat-checkbox>
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'SIP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                    <div class="col-md-4 text-right">
+                        <img class="pt-4" src="/assets/images/svg/sip{{ (selectedDiv == 'SIP') ? '-blue': '-icons' }}.svg">
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0"> SIP</h3>
+                        <p [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0 roboto text-custom pt-4 f-13">Start a systematic investment plan</p>
+                    </div>
+                </div>
+            </div>
+            <div (click)="selectTransactionType('STP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+                <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'STP' }" [ngStyle]="{'pointer-events':(selectedDiv == 'STP') ? 'all': 'none'}" checked="false" class="checked">
+                </mat-checkbox>
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'STP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                    <div class="col-md-4 text-right">
+                        <img class="pt-4" src="/assets/images/svg/switch{{ (selectedDiv == 'STP') ? '-blue': '-icons' }}.svg">
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <h3 [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0"> STP</h3>
+                        <p [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0 roboto text-custom pt-4 f-13">Systematic transfer from one scheme to another
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div (click)="selectTransactionType('SWP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
+                <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWP' }" [ngStyle]="{'pointer-events':(selectedDiv == 'SWP') ? 'all': 'none'}" checked="false" class="checked">
+                </mat-checkbox>
+                <div [ngClass]="{'b-a-custom': selectedDiv == 'SWP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
+                    <div class="col-md-4 text-right">
+                        <img class="pt-4" src="/assets/images/svg/reedem{{ (selectedDiv == 'SWP') ? '-blue': '-icons' }}.svg">
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0"> SWP</h3>
+                        <p [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0 roboto text-custom pt-4 f-13">Systematic withdrawal from a scheme
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="noMapping==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
+        <p>no mapping found</p>
+        <button (click)="noMapFunction()" class="btn-primary addon v-middle" mat-stroked-button><i
+                class="material-icons pr-8 v-middle">
+                add
+            </i>ADD
+        </button>
+    </div>
+    <div *ngIf="noSubBroker==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
+        <p>no broker found</p>
+        <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button><i
+                class="material-icons pr-8 v-middle">
+                add
+            </i>ADD
+        </button>
+    </div>
+    <div>
+        <app-purchase-trasaction (changedValue)="getResponse($event)" *ngIf="transactionType=='PURCHASE'" [data]='transactionData'></app-purchase-trasaction>
+        <app-switch-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWITCH'" [data]='transactionData'></app-switch-transaction>
+        <app-redemption-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='REDEMPTION'" [data]='transactionData'></app-redemption-transaction>
+        <app-sip-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SIP'" [data]='transactionData'>
+        </app-sip-transaction>
+        <app-stp-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='STP'" [data]='transactionData'>
+        </app-stp-transaction>
+        <app-swp-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWP'" [data]='transactionData'>
+        </app-swp-transaction>
+    </div>
+</div>
