@@ -124,16 +124,18 @@ export class SipTransactionComponent implements OnInit {
   }
 
   selectExistingOrNew(value) {
+    this.sipTransaction.controls.folioSelection.setValue(value)
     if (value == '2') {
       this.setMinAmount();
       Object.assign(this.transactionSummary, {folioNumber: ''});
-    } else {
+    } else if(this.existingSchemeList.length > 0) {
       this.getFolioList();
     }
     this.ExistingOrNew = value;
   }
 
   selectSchemeOption(value) {
+    //this.selectExistingOrNew(value)
     console.log('value selction scheme', value);
     this.sipTransaction.controls.schemeSip.reset();
     this.folioList = [];
@@ -191,11 +193,12 @@ export class SipTransactionComponent implements OnInit {
             this.getNewSchemesRes(responseData, data);
           }, (error) => {
             this.showSchemeSpinner = false;
-            this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
+            this.sipTransaction.get('schemeSip').setErrors({setValue: error});
             this.sipTransaction.get('schemeSip').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.openSnackBar(error, 'dismiss');
-          });
+          }
+          );
       } else {
 
       }
@@ -231,7 +234,7 @@ export class SipTransactionComponent implements OnInit {
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data), (error) => {
         this.showSchemeSpinner = false;
-        this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
+        this.sipTransaction.get('schemeSip').setErrors({setValue: error});
         this.sipTransaction.get('schemeSip').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
         // this.eventService.openSnackBar(error, 'dismiss');

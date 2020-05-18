@@ -10,7 +10,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class EuinSelectPopUpComponent implements OnInit {
   dataCount: number;
-  displayedColumns: string[] = ['checkbox', 'no', 'ownerName'];
+  displayedColumns: string[] = ['checkbox', 'no', 'name','ownerName'];
   dataSource = ELEMENT_DATA;
   subBrokerList: any;
   popUP: any;

@@ -121,7 +121,7 @@
                   This field is required
                 </mat-error>
                 <mat-error *ngIf="sipTransaction.get('schemeSip').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
+                  No schemes Found
                 </mat-error>
               </mat-form-field>
             </div>
@@ -310,8 +310,8 @@
             <mat-form-field>
               <mat-select class="form-control" formControlName="tenure">
                 <mat-option disabled value=''>Select tenure</mat-option>
-                <mat-option value="1">No. of installment</mat-option>
-                <mat-option value="2">No. year</mat-option>
+                <mat-option value="1">No. of installments</mat-option>
+                <mat-option value="2">No. of years</mat-option>
                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
                   Continue until cancelled
                 </mat-option>
@@ -324,7 +324,7 @@
         </div>
         <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
           <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0  pb-8 text-black">Enter installment</h5>
+            <h5 class="m-0  pb-8 text-black">Enter {{(sipTransaction.get('tenure').value =='2')?'No. of years':'No. of installments'}}</h5>
           </div>
 
           <div class="col-md-5 inputPaddNone p-0">

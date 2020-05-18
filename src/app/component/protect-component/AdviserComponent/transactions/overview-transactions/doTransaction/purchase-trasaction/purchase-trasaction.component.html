@@ -115,7 +115,7 @@
                   This field is required
                 </mat-error>
                 <mat-error *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
+                  No schemes Found
                 </mat-error>
                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing
                   NAV: {{navOfSelectedScheme}}
@@ -155,13 +155,13 @@
           <div>
             <mat-radio-group (ngModelChange)="selectExistingOrNewFolio($event)" aria-label="Select an option"
                              class="smallRadio" formControlName="folioSelection">
-              <mat-radio-button value="1"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'radio-border':purchaseTransaction.get('folioSelection').value==2}"
+              <mat-radio-button value="1" slected="true"
+                                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value=='1','text-primary':purchaseTransaction.get('folioSelection').value=='1','radio-border':purchaseTransaction.get('folioSelection').value=='2'}"
                                 class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
                 Existing
               </mat-radio-button>
               <mat-radio-button value="2"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==2,'text-primary':purchaseTransaction.get('folioSelection').value==2,'radio-border':purchaseTransaction.get('folioSelection').value==1}"
+                                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value=='2','text-primary':purchaseTransaction.get('folioSelection').value=='2','radio-border':purchaseTransaction.get('folioSelection').value=='1'}"
                                 class="radio-border bor_top_tb_right radioBtn ">
                 New
               </mat-radio-button>

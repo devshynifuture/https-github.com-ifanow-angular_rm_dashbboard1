@@ -112,6 +112,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   selectSchemeOption(value) {
+      this.selectExistingOrNewFolio(value)
     this.scheme = undefined;
     this.schemeList = undefined;
     console.log('value selction scheme', value);
@@ -223,6 +224,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   selectExistingOrNewFolio(value) {
     this.ExistingOrNew = value;
+    this.purchaseTransaction.controls.folioSelection.setValue(value)
     if (value == '2') {
       this.setMinAmount();
       Object.assign(this.transactionSummary, {folioNumber: ''});
