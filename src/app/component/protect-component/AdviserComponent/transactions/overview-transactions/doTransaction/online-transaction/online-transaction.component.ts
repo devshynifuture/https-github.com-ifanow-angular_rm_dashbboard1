@@ -40,7 +40,7 @@ export class OnlineTransactionComponent implements OnInit {
   nomineesListFM: any = [];
   ownerData: any;
   dataSource: any;
-  inputData: any;
+  inputData: any = {};
   isViewInitCalled: any;
   selectedFamilyMember: any;
   advisorId: any;
@@ -75,6 +75,9 @@ export class OnlineTransactionComponent implements OnInit {
   set data(data) {
     this.familyMemberList = this.enumDataService.getEmptySearchStateData();
     this.inputData = data;
+    if (!this.inputData) {
+      this.inputData = {};
+    }
     console.log('This is Input data of Online Transaction Component ', data);
 
     if (this.isViewInitCalled) {
