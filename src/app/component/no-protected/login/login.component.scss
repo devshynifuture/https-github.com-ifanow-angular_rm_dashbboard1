@@ -315,8 +315,9 @@ input.mat-input-element {
     position: relative;
     animation: hglasstop 8s infinite;
     position: absolute;
+    z-index: 99;
     right: 0;
-    top: 0px;
+    top: 6px;
     .two {
         content: '';
         display: block;
