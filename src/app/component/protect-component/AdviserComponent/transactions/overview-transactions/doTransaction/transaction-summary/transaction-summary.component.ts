@@ -101,7 +101,7 @@ export class TransactionSummaryComponent implements OnInit {
   openEuin(): void {
     const dialogRef = this.dialog.open(EuinSelectPopUpComponent, {
       width: '470px',
-      data: {subBroker: this.subBrokerCredList, animal: this.element}
+      data: {subBroker: this.subBrokerCredList, brokerCode: this.defaultClient.brokerCode}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {

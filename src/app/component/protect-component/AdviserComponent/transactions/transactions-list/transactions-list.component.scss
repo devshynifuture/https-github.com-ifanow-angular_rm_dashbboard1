@@ -1,4 +1,15 @@
-.pe-none
-{
-  pointer-events: none;
+.pe-none {
+    pointer-events: none;
+}
+
+::ng-deep .rightText .mat-sort-header-container {
+    display: block !important;
+}
+
+::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
+    float: right;
+}
+
+::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
+    float: right;
 }

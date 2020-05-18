@@ -80,7 +80,9 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       return;
     }
   };
-
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
+  }
   getdataForm(data) {
     if (!data) {
       data = {};

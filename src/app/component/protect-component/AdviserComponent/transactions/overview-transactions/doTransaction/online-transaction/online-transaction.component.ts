@@ -244,6 +244,8 @@ export class OnlineTransactionComponent implements OnInit {
         console.log('clientcode response : ', data);
         if (data) {
           this.clientCodeData = data;
+        }else{
+          this.clientCodeData = undefined
         }
       },
       err => {

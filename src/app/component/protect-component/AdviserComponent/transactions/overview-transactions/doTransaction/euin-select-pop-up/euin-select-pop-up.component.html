@@ -1,7 +1,7 @@
-<div class="popup-header-fix-35">
+<div class=" ">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">CHANGE EUIN</h4>
+            <h4 class="mb-0 wrapper-20">Change EUIN</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -11,13 +11,13 @@
     </div>
 </div>
 
-<div class="col-md-12 mt-70 all-transactions">
+<div class="col-md-12 mt-10 all-transactions">
     <table mat-table [dataSource]="subBrokerList" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef class="br f-18" style="width: 2%;">
+            <th mat-header-cell *matHeaderCellDef class="br w-4 f-18">
                 Select
             </th>
-            <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p br">
+            <td mat-cell *matCellDef="let element" class="c-p br radioBtnCls">
                 <mat-radio-button value="1" class="radioBtn custom-radio" (click)="selectedEuin(element)">
                 </mat-radio-button>
             </td>
@@ -34,6 +34,13 @@
             <th mat-header-cell *matHeaderCellDef class="br w-20">Team member </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.name}} </div>
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+        </ng-container>
+        <ng-container matColumnDef="bname">
+            <th mat-header-cell *matHeaderCellDef class="br w-20">Broker code </th>
+            <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar"> {{brokerCode}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
         </ng-container>
@@ -57,7 +64,6 @@
         <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="undefined">
             CANCEL
         </button>
-        <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
-            cdkFocusInitial>SELECT</button>
+        <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>SELECT</button>
     </div>
 </div>
