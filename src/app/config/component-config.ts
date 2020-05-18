@@ -666,6 +666,9 @@ export const appConfig = {
   GET_ADVISOR_FROM_EMAIL_MOBILE: 'user/advisor/search/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
+  MERGE_CLIENT: 'user/client/merge/client',
+
+
   UPDATE_CLIENT_STATUS: 'user/client/status/update',
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
