@@ -73,7 +73,7 @@ export class ClientAddressComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       addressType: [(data.addressType) ? String(data.addressType) : '1'],
-      addProofType: [(data.proofType) ? String(data.proofType) : ''],
+      addProofType: [(data.proofType) ? String(data.proofType) : '', [Validators.required]],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2],
