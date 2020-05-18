@@ -13,7 +13,7 @@ import {EnumDataService} from '../../../../../services/enum-data.service';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  //templateUrl: './goal.mobile.component.html',
+  //templateUrl: './customer.mobile.component.html',
   //templateUrl: './transact-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
