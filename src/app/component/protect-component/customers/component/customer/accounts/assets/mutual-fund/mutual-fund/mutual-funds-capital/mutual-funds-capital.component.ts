@@ -187,6 +187,10 @@ export class MutualFundsCapitalComponent implements OnInit {
         // this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
         this.calculateCapitalGain(this.capitalGainData)
       }, (error) => {
+        this.dataSource.data = [];
+        this.dataSource1.data = [];
+        this.dataSource2.data = [];
+        this.changeInput.emit(false);
         this.eventService.showErrorMessage(error);
       }
     );
@@ -228,6 +232,8 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.dataSource.data = [];
       this.dataSource1.data = [];
       this.dataSource2.data = [];
+      this.changeInput.emit(false);
+
     }
   }
   getDividendSummaryData(data) {
