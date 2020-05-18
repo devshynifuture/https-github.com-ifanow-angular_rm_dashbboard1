@@ -28,7 +28,7 @@
       </mat-radio-group>
     </div>
   </div>
-  <div *ngIf="holdingMode=='1'" class="row pt-54 mob-pt-10">
+  <div *ngIf="holdingMode=='1'" class="row pt-44 mob-pt-10">
     <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10">
       <h5 class="m-0 pt-20">Holder name</h5>
     </div>
@@ -151,8 +151,7 @@
       </div>
   </div> -->
   <div *ngIf="nomineesListFM" formArrayName="getNomineeName">
-    <div class="row pt-36" *ngFor="let obj of getNominee.controls; let pointIndex=index"
-      [formGroupName]="pointIndex">
+    <div class="row pt-48" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right mob-pl-10 mob-text-left">
         <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
       </div>

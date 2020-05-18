@@ -7,10 +7,12 @@
     color: #FFFFFF;
     height: 40px !important;
   }
+
   .upload-pan-mob {
     height: 48px !important;
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14) !important;
   }
+
   // .upload-pan-mob.mat-stroked-button:not([class*=mat-elevation-z]){
   //  box-shadow: none;
   // }
@@ -23,15 +25,18 @@
     font-size: 14px;
     border-radius: 50%;
   }
+
   .mob-shadow {
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
   }
+
   .mob-active {
     border-radius: 14.5px !important;
     height: 29px !important;
     background: #fff !important;
     line-height: 30px !important
   }
+
   .custom-modalbox {
     .mat-dialog-container {
       padding: 0;
@@ -39,6 +44,7 @@
       overflow: hidden;
     }
   }
+
   .custom-modalbox-error {
     .mat-dialog-container {
       padding: 0;
@@ -47,6 +53,7 @@
       margin-top: 100%;
     }
   }
+
   .mob-error-icon {
     background: linear-gradient(180deg, #FF9AA3 0%, #C8374D 100%);
     color: #fff;
@@ -59,6 +66,7 @@
     margin-top: -35px;
     border: 3px solid #fff;
   }
+
   .curve-left {
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
@@ -73,6 +81,7 @@
     width: 10px;
     height: 10px;
   }
+
   .curve-right {
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
@@ -87,6 +96,7 @@
     width: 10px;
     height: 10px;
   }
+
   .transaction-top {
     background: linear-gradient(180deg, #94E9B6 0%, #5BCF7F 100%);
     color: #fff;
@@ -98,6 +108,7 @@
     position: fixed;
     margin-top: -35px;
     border: 3px solid #fff;
+
     .material-icons {
       padding-top: 7px;
       text-align: center;
@@ -105,10 +116,12 @@
       font-weight: 900;
     }
   }
+
   .sbi {
     background: #EBEBEB;
     border-radius: 9.5px
   }
+
   .mob-line {
     margin: 0 auto !important;
     height: 0.1px;
@@ -116,6 +129,7 @@
     background: #ECECEC;
     border-radius: 3px !important
   }
+
   .mob-input {
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
     border-radius: 4px !important;
@@ -123,10 +137,12 @@
     height: 46px !important;
     color: #939393 !important;
   }
+
   .mob-amt {
     .mat-chip-list-wrapper {
       justify-content: center;
     }
+
     .mat-standard-chip {
       padding: 4px 12px !important;
       background-color: #fff;
@@ -138,6 +154,7 @@
       width: 86px !important;
     }
   }
+
   .payment-copy {
     background: linear-gradient(180deg, #94E9B6 0%, #5BCF7F 100%);
     border-radius: 50%;
@@ -145,11 +162,13 @@
     padding-top: 3px;
     color: #fff;
   }
+
   .payment-empty {
     border: 1.1px solid #D8D8D8;
     padding: 3px 7px;
     border-radius: 50%;
   }
+
   .mob-add-center {
     button {
       border-radius: 35px !important;
@@ -159,6 +178,7 @@
       border: 0px !important;
     }
   }
+
   .mob-realinace {
     button {
       border-radius: 4px !important;
@@ -169,48 +189,60 @@
       padding: 0 13px !important
     }
   }
+
   .mob-bbx {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
   }
+
   .mob-h-100vh {
     height: calc(100vh - 60px) !important;
   }
+
   .mob-btn-selected {
     background: linear-gradient(180deg, #385E72 0%, #1A303E 100%) !important;
     color: #fff !important;
   }
+
   .mob-btn-selected-searched {
     background: linear-gradient(180deg, #36DBFA 0%, #19B5F2 100%) !important;
     color: #fff !important;
   }
+
   .mob-transaction-search {
     .bg-white {
       box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
       border-radius: 10px;
     }
+
     .input.mat-input-element {
       height: 60px !important;
     }
+
     .mat-form-field-infix {
       margin-top: 16px;
       bottom: 6px;
     }
+
     .mat-form-field-prefix {
       bottom: 12px;
       right: 6px;
     }
+
     .mat-icon {
       position: relative;
       bottom: 12px;
     }
+
     #cdk-overlay-0 {
       left: 0;
     }
   }
+
   #mob-transactions-search,
   #mob-client-list {
     background-color: #f2f2f2;
   }
+
   .quick-search-button {
     button {
       background: #FFFFFF;
@@ -222,6 +254,7 @@
       height: 40px;
     }
   }
+
   .mob-bottom-search {
     background: #FAFAFA;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14);
@@ -229,10 +262,12 @@
     bottom: 0px;
     width: 100%;
     height: 56px;
+
     .mat-form-field-flex {
       height: 50px !important;
       align-items: center !important;
       margin-top: 4px;
+
       input.mat-input-element {
         line-height: 1.2;
         height: 35px !important;
@@ -240,30 +275,37 @@
         font-family: Roboto;
       }
     }
+
     .mat-form-field-infix {
       margin-top: 0px !important;
       bottom: 0px !important;
     }
+
     .mat-form-field-label-wrapper {
       font-size: 16px;
     }
   }
+
   #transactions-searchresult {
     background-color: #f2f2f2;
+
     .view-all {
       padding: 6px 10px !important;
       height: 25px !important;
       font-family: Roboto;
     }
   }
+
   #mob-transaction-profile {
     .mob-bx {
       box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
     }
+
     .bg-white {
       background: #FFFFFF;
     }
   }
+
   #mob-noresult,
   #mob-quick-invest,
   #mob-quick-invest-payment,
@@ -277,36 +319,41 @@
   #mob-family-members,
   #mob-transaction-profile {
     background-color: #f2f2f2;
+
     .bg-white {
       box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
       border-radius: 4px;
     }
   }
+
   #mob-quick-invest,
   #mob-quick-invest-payment,
   #mob-quick-invest-new,
   #mob-existing-investor,
   #mob-existing-folio-selected {
     .mat-button-toggle-group-appearance-standard {
-          padding-top: 2px;
-    padding-bottom: 2px;
-    height: 50px !important;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      height: 50px !important;
       border-radius: 4px !important;
       width: 100%;
       background-color: #fff;
       box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
       border: 0px;
     }
+
     .mat-button-toggle {
       font-family: Roboto;
       font-size: 14px;
       line-height: 22px;
     }
   }
+
   #mob-quick-invest-payment {
     .mat-radio-label-content {
       width: 100% !important;
       margin-left: 6px;
+
       .bg-white {
         background: #FFFFFF;
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
@@ -314,6 +361,7 @@
       }
     }
   }
+
   #mob-quick-invest-new,
   #mob-funds-page,
   .mob-folio {
@@ -322,15 +370,18 @@
       padding-left: 0px;
       padding-right: 0px;
     }
+
     .mat-select {
       background: #FFFFFF;
       border: 1px solid #1A303E !important;
       border-radius: 4px !important;
+
       .mat-select-arrow-wrapper {
         display: block;
       }
     }
   }
+
   #mob-funds-page,
   #mob-existing-investor {
     .mob-input {
@@ -338,6 +389,7 @@
       padding-top: 8px !important;
     }
   }
+
   #mob-existing-folio-selected {
     .mob-input {
       color: #1A303E !important;
@@ -346,6 +398,7 @@
       padding-left: 16px !important;
     }
   }
+
   #mob-transaction-successful {
     hr {
       box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.2);
@@ -356,6 +409,7 @@
       width: 90%;
     }
   }
+
   .mobfixednow {
     position: absolute;
     margin: 0 auto;
@@ -363,42 +417,51 @@
     width: calc(100% - 11%);
     text-align: center;
   }
+
   .mob-bottom-buttons {
     li {
       padding-top: 20px;
     }
+
     button {
       border-radius: 17.5px !important;
     }
   }
+
   #mob-transactions-search {
     input.mat-input-element {
       color: #939393;
       font-size: 16px !important;
     }
+
     p {
       font-weight: 400;
       font-family: Roboto !important;
     }
   }
+
   #transactions-searchresult {
     .view-all {
       border-radius: 4px !important
     }
   }
+
   #mob-quick-invest .mat-button-toggle-group-appearance-standard {
     .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
       line-height: 44px !important
     }
   }
+
   #mob-quick-invest {
     .mob-input {
       padding-left: 16px !important;
     }
+
     .mat-button-toggle-group-appearance-standard {
       border: 0px !important;
     }
   }
+
   .mob-debit {
     #mat-button-toggle-2-button {
       .mat-button-toggle-label-content {
@@ -406,15 +469,17 @@
       }
     }
   }
+
   #mob-quick-invest-new {
     input.mat-input-element {
-      font-family: CircularStd;
+      font-family: "Roboto";
       font-size: 16px !important;
       line-height: 19px;
       padding-left: 12px !important;
       color: #1A303E !important;
     }
   }
+
   #mob-payment-gateway,
   #mob-existing-investor {
     .mat-button-toggle-group-appearance-standard {
@@ -423,22 +488,27 @@
       line-height: 22px !important;
     }
   }
+
   #mob-transact {
     background-color: #f2f2f2;
     height: 100vh;
+
     input.mat-input-element {
       background-color: #fff;
     }
+
     .mob-proccess-fixed {
       background: #FAFAFA;
       box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14);
     }
+
     .otp-mob {
       input.mat-input-element {
         font-weight: 500 !important;
         font-size: 16px !important;
       }
     }
+
     .record-mob {
       background: #F44336;
       border-radius: 1px !important;
@@ -446,6 +516,7 @@
       color: #fff;
       border: 0px !important;
     }
+
     .retake-mob {
       color: #EA5970;
       border-radius: 1px !important;
@@ -456,15 +527,18 @@
       height: 40px !important;
     }
   }
+
   .nomineedetails-mob {
     .mat-radio-button {
       min-width: 116px !important;
     }
   }
+
   .add-nominee-mob {
     position: fixed;
     bottom: 80px;
     width: 100%;
+
     .btn-nominee {
       color: #008FFF !important;
       letter-spacing: 0.64px;
@@ -474,8 +548,10 @@
       background: #fff !important;
     }
   }
+
   .add-bank-mob {
     margin-top: 40px !important;
+
     .btn-bank {
       color: #008FFF !important;
       letter-spacing: 0.64px;
@@ -485,6 +561,7 @@
       background: #fff !important;
     }
   }
+
   .btn-id {
     border: 1px dashed #83959D !important;
     color: #83959D;
@@ -493,11 +570,13 @@
     line-height: 12px !important;
     padding: 5px !important;
   }
+
   .mob-points {
     li {
       text-align: left !important;
       font-size: 14px;
     }
+
     li span {
       border-radius: 50%;
       background-color: #D9DEE1;
@@ -507,12 +586,14 @@
       margin-right: 10px !important;
     }
   }
+
   .mob-timeline {
     ul.timeline {
       list-style-type: none;
       position: relative;
       display: grid;
     }
+
     ul.timeline:before {
       content: ' ';
       background: #d4d9df;
@@ -524,11 +605,13 @@
       height: 90%;
       z-index: 400;
     }
+
     ul.timeline>li {
       margin: 20px 0;
       padding-left: 50px;
       text-align: left;
     }
+
     ul.timeline>li:before {
       content: ' ';
       background: white;
@@ -541,26 +624,32 @@
       height: 20px;
       z-index: 400;
     }
+
     span {
       font-family: "Roboto", sans-serif !important;
     }
+
     ul.timeline>li:nth-child(1):before {
       // font-family: "Material Icons";
       content: url(assets/images/svg/mob-right.svg);
       line-height: 14px;
       text-align: center;
     }
+
     ul.timeline>li.non-mob:before {
       border-color: #83959D;
     }
+
     ul.timeline>li.selected-mob:before {
       border-color: #83959D;
     }
+
     ul.timeline>li.selected-mob:before {
       background-color: #02B875;
       color: #fff;
       border-color: #02B875;
     }
+
     button {
       height: 24px !important;
       line-height: 22px !important;
