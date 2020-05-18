@@ -16,6 +16,14 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./switch-transaction.component.scss']
 })
 export class SwitchTransactionComponent implements OnInit {
+
+  showSpinnerEx = false;
+  isSuccessfulTransaction = false;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+    private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -69,13 +77,13 @@ export class SwitchTransactionComponent implements OnInit {
   id = 0;
   navOfSelectedSchemeSwitchIn: any;
   validatorType = ValidatorType;
-  showSpinnerEx: boolean = false;
+
+  get data() {
+    return this.inputData;
+  }
+
   filterSchemeList: Observable<any[]>;
   filterNewSchemeList: Observable<any[]>;
-
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
-  }
 
   @Output() changedValue = new EventEmitter();
 
@@ -90,10 +98,6 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -258,7 +262,10 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   selectedSchemeTransfer(schemeTransfer) {
@@ -462,7 +469,11 @@ export class SwitchTransactionComponent implements OnInit {
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.switchBSERes(data), (error) => {
+        data => {
+          this.isSuccessfulTransaction = true;
+
+          this.switchBSERes(data);
+        }, (error) => {
           this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'Dismiss');
         }

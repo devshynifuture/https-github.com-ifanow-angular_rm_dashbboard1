@@ -19,6 +19,18 @@ import { AddMandateComponent } from '../../MandateCreation/add-mandate/add-manda
   styleUrls: ['./sip-transaction.component.scss']
 })
 export class SipTransactionComponent implements OnInit {
+
+  isSuccessfulTransaction = false;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
+    private eventService: EventService, public dialog: MatDialog) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -79,11 +91,6 @@ export class SipTransactionComponent implements OnInit {
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-    private eventService: EventService, public dialog: MatDialog) {
-  }
-
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -96,10 +103,6 @@ export class SipTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getDataForm('', false);
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -560,7 +563,10 @@ export class SipTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   getDataForm(data, isEdit) {
@@ -688,6 +694,7 @@ export class SipTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
+          this.isSuccessfulTransaction = true;
           this.sipBSERes(data);
         }, (error) => {
           this.barButtonOptions.active = false;
@@ -718,6 +725,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sipBSERes(data) {
+
     this.barButtonOptions.active = false;
     console.log('sip', data);
     if (data == undefined) {

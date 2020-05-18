@@ -1,6 +1,7 @@
 <div class="row pt-32">
     <div class="col-md-6">
-        <h5 class="m-0 text-black pb-10">Company PAN</h5>
+        <h5 *ngIf="userData.clientType==3" class="m-0 text-black pb-10">Company PAN</h5>
+        <h5 *ngIf="userData.clientType!=3 || userData.clientType==undefined" class="m-0 text-black pb-10">PAN</h5>
         <input #fileComPan (change)="getFile($event, 'company-pan')" accept='image/*, .pdf' style="display: none;"
             type="file">
         <mat-card appFileDragDrop class="upload-card c-p" (click)="fileComPan.click()">
@@ -22,7 +23,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        <h5 class="m-0 text-black pb-10 mob-pt-10">Contact/Authorized person PAN</h5>
+        <h5 *ngIf="userData.clientType==3" class="m-0 text-black pb-10 mob-pt-10">Contact/Authorized person PAN</h5>
+        <h5 *ngIf="userData.clientType!=3 || userData.clientType==undefined" class="m-0 text-black pb-10 mob-pt-10">
+            Aadhaar</h5>
         <input #filePerPan (change)="getFile($event, 'personal-pan')" accept='image/*, .pdf' style="display: none;"
             type="file">
         <mat-card class="upload-card c-p" (click)="filePerPan.click()">
@@ -46,7 +49,7 @@
 </div>
 <div class="row pt-40 pb-100">
     <div class="col-md-6">
-        <h5 class="m-0 text-black pb-10">Bank proof</h5>
+        <h5 class="m-0 text-black pb-10"><span *ngIf="userData.clientType==3">Company</span> Bank proof</h5>
         <div class="row pb-12">
             <div class="col-md-6 pr-8 pl-0 mob-pr-0">
                 <div class="form-group mb-0">
@@ -91,7 +94,8 @@
             class="mr-0">REMOVE</button>
     </div>
     <div class="col-md-6">
-        <h5 class="m-0 text-black pb-10 mob-pt-10">Address proof</h5>
+        <h5 class="m-0 text-black pb-10 mob-pt-10"><span *ngIf="userData.clientType==3">Company</span> Address proof
+        </h5>
         <div class="row pb-12">
             <div class="col-md-6 pr-8 pl-0 mob-pr-10">
                 <div class="form-group mb-0">

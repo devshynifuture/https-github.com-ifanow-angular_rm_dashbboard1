@@ -16,6 +16,18 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./swp-transaction.component.scss']
 })
 export class SwpTransactionComponent implements OnInit {
+
+  isSuccessfulTransaction = false;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
+    private eventService: EventService) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -66,11 +78,6 @@ export class SwpTransactionComponent implements OnInit {
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-    private eventService: EventService) {
-  }
-
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -84,10 +91,6 @@ export class SwpTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getdataForm('');
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -306,7 +309,10 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   getdataForm(data) {
@@ -407,7 +413,10 @@ export class SwpTransactionComponent implements OnInit {
       console.log('swp json obj', obj);
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.swpBSERes(data), (error) => {
+        data => {
+          this.isSuccessfulTransaction = true;
+          this.swpBSERes(data);
+        }, (error) => {
           this.eventService.openSnackBar(error, 'Dismiss');
           this.barButtonOptions.active = false;
         }

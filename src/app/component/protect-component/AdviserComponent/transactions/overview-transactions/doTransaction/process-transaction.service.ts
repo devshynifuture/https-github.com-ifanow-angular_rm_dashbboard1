@@ -20,7 +20,6 @@ export class ProcessTransactionService {
   [x: string]: any;
 
   // countryCodeList;
-  inverstorList: any;
   transactionSummary: {};
   schemeSelection: any;
 
@@ -112,18 +111,6 @@ export class ProcessTransactionService {
       select: 'Select a new scheme',
       value: 2
     }];
-  }
-
-  getIINList() {
-    this.inverstorList = [
-      {
-        iin: '5011102595'
-      },
-      {
-        iin: '2011103545'
-      }
-    ];
-    return this.inverstorList;
   }
 
   getDefaultLoginDetials() {

@@ -146,6 +146,7 @@ export class PeopleClientsComponent implements OnInit {
           responseData => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
+            this.enumDataService.searchClientList();
             this.getClientList();
           },
           error => this.eventService.showErrorMessage(error)
