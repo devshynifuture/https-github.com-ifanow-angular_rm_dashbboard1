@@ -221,8 +221,8 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio;
-    this.stpTransaction.controls.balanceUnit.setValue(folio.balanceUnit)
-    this.stpTransaction.controls.currentValue.setValue(this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit))
+    this.stpTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2))
+    this.stpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2))
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });

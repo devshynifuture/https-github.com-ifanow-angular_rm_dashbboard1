@@ -251,8 +251,8 @@ export class SwpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio;
-    this.swpTransaction.controls.balanceUnit.setValue(folio.balanceUnit)
-    this.swpTransaction.controls.currentValue.setValue(this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit))
+    this.swpTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2))
+    this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2))
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });

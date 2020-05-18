@@ -289,8 +289,8 @@ export class RedemptionTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.showUnits = true;
-    this.redemptionTransaction.controls.balanceUnit.setValue(folio.balanceUnit)
-    this.redemptionTransaction.controls.currentValue.setValue(this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit))
+    this.redemptionTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2))
+    this.redemptionTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2))
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
