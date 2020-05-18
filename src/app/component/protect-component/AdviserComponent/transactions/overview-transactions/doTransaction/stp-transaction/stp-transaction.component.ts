@@ -15,6 +15,18 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./stp-transaction.component.scss']
 })
 export class StpTransactionComponent implements OnInit {
+
+  isSuccessfulTransaction = false;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              public processTransaction: ProcessTransactionService, private eventService: EventService,
+              private fb: FormBuilder) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -70,11 +82,6 @@ export class StpTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
   filterNewSchemeList: Observable<any[]>;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              public processTransaction: ProcessTransactionService, private eventService: EventService,
-              private fb: FormBuilder) {
-  }
-
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -87,10 +94,6 @@ export class StpTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getDataForm('');
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -383,8 +386,6 @@ export class StpTransactionComponent implements OnInit {
   stpType(value) {
 
   }
-
-  isSuccessfulTransaction = false;
 
   close() {
     this.subInjectService.changeNewRightSliderState({

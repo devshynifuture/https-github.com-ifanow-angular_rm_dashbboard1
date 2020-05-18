@@ -16,6 +16,18 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./swp-transaction.component.scss']
 })
 export class SwpTransactionComponent implements OnInit {
+
+  isSuccessfulTransaction = false;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
+              private eventService: EventService) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -66,11 +78,6 @@ export class SwpTransactionComponent implements OnInit {
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
-  }
-
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -84,10 +91,6 @@ export class SwpTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getdataForm('');
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -304,8 +307,6 @@ export class SwpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay);
   }
-
-  isSuccessfulTransaction = false;
 
   close() {
     this.subInjectService.changeNewRightSliderState({

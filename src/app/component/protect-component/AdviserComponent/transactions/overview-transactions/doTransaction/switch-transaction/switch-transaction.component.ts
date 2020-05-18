@@ -16,6 +16,14 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./switch-transaction.component.scss']
 })
 export class SwitchTransactionComponent implements OnInit {
+
+  showSpinnerEx = false;
+  isSuccessfulTransaction = false;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -69,13 +77,13 @@ export class SwitchTransactionComponent implements OnInit {
   id = 0;
   navOfSelectedSchemeSwitchIn: any;
   validatorType = ValidatorType;
-  showSpinnerEx: boolean = false;
+
+  get data() {
+    return this.inputData;
+  }
+
   filterSchemeList: Observable<any[]>;
   filterNewSchemeList: Observable<any[]>;
-
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
-  }
 
   @Output() changedValue = new EventEmitter();
 
@@ -90,10 +98,6 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -256,8 +260,6 @@ export class SwitchTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
-
-  isSuccessfulTransaction = false;
 
   close() {
     this.subInjectService.changeNewRightSliderState({
