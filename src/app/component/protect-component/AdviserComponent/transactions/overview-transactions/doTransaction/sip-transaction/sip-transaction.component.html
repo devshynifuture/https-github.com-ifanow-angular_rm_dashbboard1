@@ -299,36 +299,6 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="platformType == 1" class="row">
-              <div class="col-md-5 p-0 text-left">
-                <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
-              </div>
-              <div class="col-md-12 p-0">
-                <div class="row">
-                  <div class="col-md-9 p-0">
-                    <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option"
-                      class="mediumRadio" formControlName="modeOfPaymentSelection">
-                      <mat-radio-button
-                        [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value==1,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==1,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==2}"
-                        checked="true" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
-                        value="1">
-                        Net banking
-                      </mat-radio-button>
-                      <mat-radio-button
-                        [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value==2,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==2,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==1}"
-                        class="b-a radioBtn bor_top_tb_right" value="2">
-                        Debit mandate
-                      </mat-radio-button>
-                    </mat-radio-group>
-                  </div>
-                  <div *ngIf="showSpinnerMandate == true" class="col-md-1">
-                    <mat-spinner class="mt-8"></mat-spinner>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
             <div class="row pt-40">
               <div class="col-md-12 p-0 text-left">
                 <h5 class="m-0  text-black pb-8">Select 1st date SIP</h5>
@@ -388,6 +358,37 @@
                 </mat-form-field>
               </div>
             </div>
+            <div *ngIf="platformType == 1" class="row">
+              <div class="col-md-5 p-0 text-left">
+                <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
+              </div>
+              <div class="col-md-12 p-0">
+                <div class="row">
+                  <div class="col-md-9 p-0">
+                    <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option"
+                      class="mediumRadio" formControlName="modeOfPaymentSelection">
+                      <mat-radio-button
+                        [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value==1,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==1,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==2}"
+                        checked="true" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
+                        value="1">
+                        Net banking
+                      </mat-radio-button>
+                      <mat-radio-button
+                        [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value==2,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==2,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==1}"
+                        class="b-a radioBtn bor_top_tb_right" value="2">
+                        Debit mandate
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  <div *ngIf="showSpinnerMandate == true" class="col-md-1">
+                    <mat-spinner class="mt-8"></mat-spinner>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
           <div class="col-md-4 bg-grey lter p-0">
             <app-transaction-summary (bankDetailsSend)='getBankDetails($event)'
