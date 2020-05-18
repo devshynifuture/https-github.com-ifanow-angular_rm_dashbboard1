@@ -36,7 +36,6 @@ export class OnlineTransactionComponent implements OnInit {
 
   });
   selectedDiv = 'div1';
-  familyMemberId: any;
   ownerName: any;
   nomineesListFM: any = [];
   ownerData: any;
@@ -131,6 +130,8 @@ export class OnlineTransactionComponent implements OnInit {
             map(value => this.processTransaction.filterName(newValue + '', this.familyMemberList)));
         });
     }
+
+    this.stateCtrl.setValue('');
   }
 
   checkOwnerList(event) {
@@ -220,7 +221,6 @@ export class OnlineTransactionComponent implements OnInit {
   ownerDetails(value) {
 
     this.familyMemberData = value;
-    this.familyMemberId = value.id;
     this.getDefaultDetails(value);
     this.ownerDetail();
   }
@@ -230,7 +230,7 @@ export class OnlineTransactionComponent implements OnInit {
     const obj = {
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
-      familyMemberId: this.familyMemberData.familyMemberId,
+      familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
       // tpUserCredentialId: 292
     };
     this.showSpinnerOwner = true;
