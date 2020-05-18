@@ -88,7 +88,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="amount">
-                <th *matHeaderCellDef class="br rightText" mat-header-cell mat-sort-header="amtUnitType"> Amount/Units
+                <th *matHeaderCellDef class="br w-12 rightTextHide" mat-header-cell mat-sort-header="amtUnitType">
+                    Amount/Units
                 </th>
                 <td *matCellDef="let element" class="br text-right" mat-cell>
                     <div class="bar">
@@ -98,7 +99,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="order">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="orderDate"> Order date time</th>
+                <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
+                </th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} {{element.orderDate | date:'shortTime'}}
                     </div>
