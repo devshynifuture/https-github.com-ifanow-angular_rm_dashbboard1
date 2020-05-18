@@ -15,6 +15,8 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./redemption-transaction.component.scss']
 })
 export class RedemptionTransactionComponent implements OnInit {
+  isSuccessfulTransaction = false;
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -117,8 +119,12 @@ export class RedemptionTransactionComponent implements OnInit {
 
   }
 
+
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   getdataForm(data, isEdit) {
@@ -348,7 +354,11 @@ export class RedemptionTransactionComponent implements OnInit {
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.redeemBSERes(data), (error) => {
+        data => {
+          this.redeemBSERes(data);
+          this.isSuccessfulTransaction = true;
+
+        }, (error) => {
           this.eventService.openSnackBar(error, 'dismiss');
         }
       );

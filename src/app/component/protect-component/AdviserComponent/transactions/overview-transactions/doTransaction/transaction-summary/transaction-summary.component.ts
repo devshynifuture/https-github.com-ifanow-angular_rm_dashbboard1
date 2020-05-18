@@ -23,7 +23,6 @@ export class TransactionSummaryComponent implements OnInit {
   selectedInvestor: any;
   showInvestor = false;
   showbank = false;
-  investorList: void;
   inputData: any;
   isViewInitCalled: any;
   selectedFamilyMember: any;
@@ -76,8 +75,6 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.investorList = this.processTransaction.getIINList();
-    console.log('iinList == ', this.investorList);
     this.transactionSummary = this.inputData;
     console.log('transactionSummary', this.transactionSummary);
     // this.getDefaultDetails(null);
