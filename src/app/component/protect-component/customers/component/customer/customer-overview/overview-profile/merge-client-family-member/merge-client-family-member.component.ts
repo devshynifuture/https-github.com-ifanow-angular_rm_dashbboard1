@@ -54,11 +54,11 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         startWith(''),
         map(state => {
           if (state) {
-            const list = this.enumDataService.getSearchData(state);
+            const list = this.enumDataService.getClientSearchData(state);
             if (list.length == 0) {
               this.stateCtrl.setErrors({invalid: true});
             }
-            return this.enumDataService.getSearchData(state);
+            return this.enumDataService.getClientSearchData(state);
           } else {
             return this.enumDataService.getEmptySearchStateData();
           }
