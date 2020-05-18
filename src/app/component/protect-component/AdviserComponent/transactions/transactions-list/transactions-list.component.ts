@@ -52,12 +52,9 @@ export class TransactionsListComponent implements OnInit {
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
     this.finalEndDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
-    if (this.isAdvisorSection) {
-      this.getFilterOptionData();
-    } else {
-      this.getAllTransactionList();
-    }
+    this.refresh(false);
   }
+
 
   getFilterOptionData() {
     this.dataSource.data = [{}, {}, {}];
@@ -79,7 +76,11 @@ export class TransactionsListComponent implements OnInit {
 
   refresh(flag) {
     this.dontHide = true;
-    this.getAllTransactionList();
+    if (this.isAdvisorSection) {
+      this.getFilterOptionData();
+    } else {
+      this.getAllTransactionList();
+    }
   }
 
   getFilterOptionDataRes(data) {
@@ -89,7 +90,7 @@ export class TransactionsListComponent implements OnInit {
       this.filterData = data;
       this.credentialData = data;
       this.selectedBroker = data[0];
-      this.getAllTransactionList();
+     this.getAllTransactionList();
     } else {
       this.isLoading = false;
       this.noData = 'No credentials found';
@@ -152,13 +153,13 @@ export class TransactionsListComponent implements OnInit {
     console.log(this.selectedPreviousToShowDate);
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
     this.finalEndDate = new Date().getTime();
-    (data.value == 'custom') ? '' : this.getAllTransactionList();
+    (data.value == 'custom') ? '' : this.refresh(true);
   }
 
   startAndEndDateEvent(data) {
     this.finalStartDate = data.value.begin.getTime();
     this.finalEndDate = data.value.end.getTime();
-    this.getAllTransactionList();
+    this.refresh(true);
     console.log(data);
   }
 
@@ -193,6 +194,9 @@ export class TransactionsListComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.refresh(true);
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

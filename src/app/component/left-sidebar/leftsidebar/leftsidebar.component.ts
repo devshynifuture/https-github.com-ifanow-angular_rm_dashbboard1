@@ -115,6 +115,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
     this.onResize();
+    this.enumDataService.searchClientList();
     this.enumDataService.searchClientAndFamilyMember();
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
@@ -126,13 +127,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         startWith(''),
         map(state => {
           if (state) {
-            let list = this.enumDataService.getSearchData(state);
+            let list = this.enumDataService.getClientSearchData(state);
             if (list.length == 0) {
               this.showDefaultDropDownOnSearch = true;
               return;
             }
             this.showDefaultDropDownOnSearch = false;
-            return this.enumDataService.getSearchData(state)
+            return this.enumDataService.getClientSearchData(state)
           } else {
             this.showDefaultDropDownOnSearch = false;
             return this.enumDataService.getEmptySearchStateData();
@@ -243,7 +244,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
 
-  goHome(){
+  goHome() {
     AuthService.goHome(this.router);
   }
 }

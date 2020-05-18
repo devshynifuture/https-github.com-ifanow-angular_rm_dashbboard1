@@ -59,9 +59,11 @@ body {
 .text-custom {
     color: $light !important;
 }
-.text-mob-common{
+
+.text-mob-common {
     color: $mob-common !important;
 }
+
 .text-lighter {
     color: #3F3F3F !important;
 }
@@ -426,6 +428,7 @@ button:active {
     border-color: $primary !important;
     // background-color: $warning !important;
 }
+
 .btn-primitive-outline {
     color: $primitive !important;
     border-color: $primitive !important;

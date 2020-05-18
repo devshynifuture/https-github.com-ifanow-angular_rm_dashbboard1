@@ -1,19 +1,21 @@
 :host {
-    button {
-        &.active {
-            cursor: not-allowed;
-        }
-        &.fullWidth {
-            width: 100%;
-        }
-        .bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: yellow;
-            /*.mat-progress-bar-background {
+  button {
+    &.active {
+      cursor: not-allowed;
+    }
+
+    &.fullWidth {
+      width: 100%;
+    }
+
+    .bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: yellow;
+      /*.mat-progress-bar-background {
         animation: none;
         background-color: green;
         fill: yellow;
@@ -22,72 +24,80 @@
       .mat-progress-bar-buffer {
         background-color: red !important;
       }*/
-        }
-        mat-icon {
-            padding-right: 5px;
-            &.is-mat-icon {
-                font-size: 18px;
-                position: relative;
-                top: 3px;
-            }
-        }
     }
-    .textZindex {
+
+    mat-icon {
+      padding-right: 5px;
+
+      &.is-mat-icon {
+        font-size: 18px;
         position: relative;
-        left: 0px;
-        right: 0px;
-        text-align: center;
-        z-index: 1;
-        color: #ffffff !important;
+        top: 3px;
+      }
     }
-    .boxShadowNone {
-        box-shadow: none;
-    }
-    //mat-progress-bar
+  }
+
+  .textZindex {
+    position: relative;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    z-index: 1;
+    color: #ffffff !important;
+  }
+
+  .boxShadowNone {
+    box-shadow: none;
+  }
+
+  //mat-progress-bar
 }
 
 ::ng-deep .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
-    background-color: #277ec1 !important;
+  background-color: #277ec1 !important;
 }
 
 ::ng-deep .mat-progress-bar-buffer {
-    background-color: #3098ea !important;
+  background-color: #3098ea !important;
 }
 
 .mainloginBtn {
-    width: 100%;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 4px !important;
-    height: 40px;
+  width: 100%;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 4px !important;
+  height: 40px;
 }
 
 .iconPosition {
-    position: absolute;
-    top: 11px;
-    left: 11px;
+  position: absolute;
+  top: 11px;
+  left: 11px;
 }
 
 @media screen and (max-width: 767px) {
-    .mobBtnScreen {
-        .btn-primary {
-            font-size: 16px;
-            background: #939393 !important;
-            border-radius: 40px !important;
-            width: 125px;
-            height: 50px;
-            color: #ffffff;
-        }
+  .mobBtnScreen {
+    .btn-primary {
+      font-size: 16px;
+      background: #939393 !important;
+      border-radius: 40px !important;
+      width: 125px;
+      height: 50px;
+      color: #ffffff;
     }
-    .mobileNone {
-        display: none;
+  }
+
+  .mobileNone {
+    display: none;
+  }
+
+  button {
+    .bar {
+      border-radius: 50px;
     }
-    button {
-        .bar {
-            border-radius: 50px;
-        }
-    }
-     ::ng-deep .mat-progress-bar-buffer {
-        border-radius: 50px !important;
-    }
+  }
+
+  ::ng-deep .mat-progress-bar-buffer {
+    border-radius: 50px !important;
+  }
 }

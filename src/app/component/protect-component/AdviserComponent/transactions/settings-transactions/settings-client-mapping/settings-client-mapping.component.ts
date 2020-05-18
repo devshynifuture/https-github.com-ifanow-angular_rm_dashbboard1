@@ -72,7 +72,7 @@ export class SettingsClientMappingComponent implements OnInit {
     if (data) {
       this.credentialsData = data;
       this.filterData = TransactionEnumService.setPlatformEnum(data);
-      this.type = '1';
+      this.type = '2';
       this.selectedBrokerCode = data[0];
       this.selectedPlatform = String(data[0].aggregatorType);
       this.dataSource.data = [{}, {}, {}];

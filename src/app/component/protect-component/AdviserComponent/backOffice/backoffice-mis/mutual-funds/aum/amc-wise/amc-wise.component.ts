@@ -331,7 +331,6 @@ export class AmcWiseComponent implements OnInit {
     //this.showLoader = false;
   }
   showScheme(amcData, amcIndex) {
-    this.isLoadingCategory = true
     this.selectedAmc = amcIndex;
     amcData.showAmc = !amcData.showAmc
     amcData.schemes.forEach(o => {
@@ -339,6 +338,12 @@ export class AmcWiseComponent implements OnInit {
     });
 
     if (amcData.showAmc == false) {
+      if(amcData.name =="LIC Mutual Fund Asset Management Limited"){
+        amcData.schemes = [];
+      }
+      // this.isLoadingCategory = true
+      // amcData.schemes = [];
+      // amcData.scheme =[{},{},{}]
       this.appendingOfValuesInExcel(this.amcList[this.selectedAmc].schemes, amcIndex, 'schemes');
     } else {
       this.removeValuesFromExcel('schemes', amcIndex);
@@ -346,12 +351,12 @@ export class AmcWiseComponent implements OnInit {
   }
   showApplicant(schemeData, index, amcIndex) {
     this.schemeIndex = index;
-    this.isLoadingApplicant = true
     schemeData.showScheme = !schemeData.showScheme
-    this.applicationList = []
-    schemeData.applicantList = []
-    schemeData.applicantList = [{}, {}, {}];
     if (schemeData.showScheme == false) {
+      this.isLoadingApplicant = true
+      this.applicationList = []
+      schemeData.applicantList = []
+      schemeData.applicantList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,

@@ -86,6 +86,10 @@ export class PeopleService {
     return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
+  mergeClient(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.MERGE_CLIENT, data);
+  }
+
   getAllClients(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_ALL_CLIENTS, data, 1);
   }
@@ -114,5 +118,9 @@ export class PeopleService {
 
   getClientFamilyMemberList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST, data, 1);
+  }
+
+  getClientSearch(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.CLIENT_SEARCH, data, 1);
   }
 }

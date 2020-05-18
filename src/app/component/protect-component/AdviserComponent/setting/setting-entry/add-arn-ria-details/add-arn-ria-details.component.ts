@@ -38,6 +38,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     disabled: false,
     fullWidth: false,
   };
+  maxArnLength = 12;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -59,7 +60,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   createForm() {
     let arnNumber = this.data.mainData.number;
     if(arnNumber) {
-      arnNumber = arnNumber.slice(4);
+      arnNumber = arnNumber.replace('ARN-', '').replace('INA-', '');
     }
     let euinNumber = this.data.mainData.euin;
     if(euinNumber) {
@@ -93,7 +94,9 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     }
     if (this.data.mainData.arnOrRia == 1) {
       this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
+      this.maxArnLength = 6
     }
+    this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
     this.arnRiaFG.updateValueAndValidity();
   }
 
@@ -114,9 +117,13 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         if (value == 2) {
           this.arnRiaFG.controls.euin.clearValidators();
           this.arnRiaFG.controls.euin.setValue('');
+          this.maxArnLength = 12;
         } else {
           this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
+          this.maxArnLength = 6;
         }
+        this.arnRiaFG.controls.number.setValue('');
+        this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
         this.arnRiaFG.updateValueAndValidity();
       })
     )

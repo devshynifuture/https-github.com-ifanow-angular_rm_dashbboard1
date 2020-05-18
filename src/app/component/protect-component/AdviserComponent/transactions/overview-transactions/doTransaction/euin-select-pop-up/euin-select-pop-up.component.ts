@@ -10,11 +10,12 @@ import { FormBuilder } from '@angular/forms';
 })
 export class EuinSelectPopUpComponent implements OnInit {
   dataCount: number;
-  displayedColumns: string[] = ['checkbox', 'no', 'ownerName'];
+  displayedColumns: string[] = ['checkbox', 'no', 'name','bname','ownerName'];
   dataSource = ELEMENT_DATA;
   subBrokerList: any;
   popUP: any;
   euin: any;
+  brokerCode: any;
   constructor(public dialogRef: MatDialogRef<EuinSelectPopUpComponent>, private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
@@ -25,6 +26,7 @@ export class EuinSelectPopUpComponent implements OnInit {
     const ELEMENT_DATA = this.dataS;
     console.log('investorList == ', this.data)
     this.subBrokerList = this.data.subBroker;
+    this.brokerCode = this.data.brokerCode
     ELEMENT_DATA.forEach(item => item.selected = false);
   }
   selectedEuin(euin) {

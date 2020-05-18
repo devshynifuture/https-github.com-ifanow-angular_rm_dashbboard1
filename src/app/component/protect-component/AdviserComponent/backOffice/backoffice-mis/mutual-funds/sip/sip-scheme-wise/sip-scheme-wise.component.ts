@@ -234,13 +234,13 @@ export class SipSchemeWiseComponent implements OnInit {
 
   }
   showSubTableList(index, category, schemeData) {
-    this.isLoadingCategory = true
     this.selectedCategory = index
     schemeData.showCategory = !schemeData.showCategory
-    schemeData.subCatList = []
-    this.subCatList = []
-    schemeData.subCatList = [{}, {}, {}];
     if (schemeData.showCategory == false) {
+      this.isLoadingCategory = true
+      schemeData.subCatList = []
+      this.subCatList = []
+      schemeData.subCatList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
@@ -344,13 +344,13 @@ export class SipSchemeWiseComponent implements OnInit {
     console.log(this.arrayOfExcelData);
   }
   showSchemeName(index, subcashowSubcat, ApplicantData) {
-    this.isLoadingSubCategory = true
     this.selectedCategoryApp = index
     ApplicantData.showSubCategory = !ApplicantData.showSubCategory
-    ApplicantData.applicantList = [];
-    this.applicantListArr = []
-    ApplicantData.applicantList = [{}, {}, {}];
     if (ApplicantData.showSubCategory == false) {
+      this.isLoadingSubCategory = true
+      ApplicantData.applicantList = [];
+      this.applicantListArr = []
+      ApplicantData.applicantList = [{}, {}, {}];
       const obj = {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
