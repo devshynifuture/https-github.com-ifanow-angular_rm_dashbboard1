@@ -257,8 +257,13 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
 
+  isSuccessfulTransaction = false;
+
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   selectedSchemeTransfer(schemeTransfer) {
@@ -462,7 +467,11 @@ export class SwitchTransactionComponent implements OnInit {
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.switchBSERes(data), (error) => {
+        data => {
+          this.isSuccessfulTransaction = true;
+
+          this.switchBSERes(data);
+        }, (error) => {
           this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'dismiss');
         }

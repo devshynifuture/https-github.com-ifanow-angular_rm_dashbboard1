@@ -305,8 +305,13 @@ export class SwpTransactionComponent implements OnInit {
     console.log('dateDisplay = ', this.dateDisplay);
   }
 
+  isSuccessfulTransaction = false;
+
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   getdataForm(data) {
@@ -407,7 +412,10 @@ export class SwpTransactionComponent implements OnInit {
       console.log('swp json obj', obj);
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.swpBSERes(data), (error) => {
+        data => {
+          this.isSuccessfulTransaction = true;
+          this.swpBSERes(data);
+        }, (error) => {
           this.eventService.openSnackBar(error, 'dismiss');
           this.barButtonOptions.active = false;
         }

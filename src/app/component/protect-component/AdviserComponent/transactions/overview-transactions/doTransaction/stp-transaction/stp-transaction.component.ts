@@ -384,8 +384,13 @@ export class StpTransactionComponent implements OnInit {
 
   }
 
+  isSuccessfulTransaction = false;
+
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   enteredAmount(value) {
@@ -514,7 +519,10 @@ export class StpTransactionComponent implements OnInit {
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.stpBSERes(data), (error) => {
+        data => {
+          this.stpBSERes(data);
+          this.isSuccessfulTransaction = true;
+        }, (error) => {
           this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'dismiss');
         }
