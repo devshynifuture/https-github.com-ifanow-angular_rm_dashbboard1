@@ -123,10 +123,10 @@ export class FileOrderingUpperComponent implements OnInit {
               fileType: this.fileName,
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
-              referenceId: element.referenceId ? element.referenceId : '-',
+              referenceId: element.referenceId ? element.referenceId : null,
               inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
-              fileName: element.fileName ? element.fileName : '-',
-              errorMsg: element.errorMsg ? element.errorMsg : '-',
+              fileName: element.fileName ? element.fileName : null,
+              errorMsg: element.errorMsg ? element.errorMsg : null,
               action: '',
               fromDate: element.fromDate,
               toDate: element.toDate,
@@ -147,38 +147,43 @@ export class FileOrderingUpperComponent implements OnInit {
     console.log("this is element:::", element);
   }
 
-  fileOrderRetry(value) {
-    if (this.arrayOfIdsForRetry.length !== 0) {
-
-      let data;
-      if (value === null) {
-        data = {
-          ids: [...this.arrayOfIdsForRetry],
-          isHistorical: this.data.flag == 'historical' ? true : false
-        }
-      } else if (value !== null) {
-        data = {
-          ids: value,
-          isHistorical: this.data.flag == 'historical' ? true : false
-        }
-      }
-      console.log(this.arrayOfIdsForRetry);
-      this.fileOrderingService.putFileOrderRetry(data)
-        .subscribe(res => {
-          if (res) {
-            console.log("this is retry files res:::", res);
-            this.dataSource.data = ELEMENT_DATA;
-            this.selection.clear();
-            this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
-
-          }
-        }, err => {
-          this.eventService.openSnackBar(err, "DISMISS");
-        })
-
-    } else {
-      this.eventService.openSnackBar("No Files Selected to Retry", "DISMISS");
+  fileOrderRetry(value, singleOrMultiple) {
+    let idArray = [];
+    if (singleOrMultiple === 'single') {
+      idArray = [value];
     }
+    if (singleOrMultiple === 'multiple') {
+      if (this.arrayOfIdsForRetry.length !== 0) {
+        idArray = [...this.arrayOfIdsForRetry];
+      } else {
+        this.eventService.openSnackBar("No Files Selected to Retry", "DISMISS");
+      }
+    }
+    let data;
+    if (value === null) {
+      data = {
+        ids: idArray,
+        isHistorical: this.data.flag == 'historical' ? true : false
+      }
+    } else if (value !== null) {
+      data = {
+        ids: value,
+        isHistorical: this.data.flag == 'historical' ? true : false
+      }
+    }
+    console.log(this.arrayOfIdsForRetry);
+    this.fileOrderingService.putFileOrderRetry(data)
+      .subscribe(res => {
+        if (res) {
+          console.log("this is retry files res:::", res);
+          this.dataSource.data = ELEMENT_DATA;
+          this.selection.clear();
+          this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
+
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS");
+      })
   }
 
   fileOrderingListData() {
@@ -226,10 +231,10 @@ export class FileOrderingUpperComponent implements OnInit {
               fileType: this.fileName,
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
-              referenceId: element.referenceId ? element.referenceId : '-',
+              referenceId: element.referenceId ? element.referenceId : null,
               inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
-              fileName: element.fileName ? element.fileName : '-',
-              errorMsg: element.errorMsg ? element.errorMsg : '-',
+              fileName: element.fileName ? element.fileName : null,
+              errorMsg: element.errorMsg ? element.errorMsg : null,
               action: '',
               fromDate: element.fromDate,
               toDate: element.toDate,

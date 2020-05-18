@@ -10,6 +10,7 @@ import { DataComponent } from '../../../../../../interfaces/data.component';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -73,7 +74,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   showFilter: any;
   // minDate = new Date()
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    public custumService: CustomerService, public eventService: EventService) {
+    public custumService: CustomerService, public eventService: EventService,private datePipe: DatePipe) {
   }
 
   @Input()
@@ -285,11 +286,16 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
   select(data) {
     this.showSelect = data.checked;
+
     if (data.checked == true) {
+      this.addLiabilityForm.get('poDate').setValue('');
+      this.addLiabilityForm.get('outstandingAmt').setValue('');
       this.addLiabilityForm.get('poDate').setValidators([Validators.required]);
       this.addLiabilityForm.get('outstandingAmt').setValidators([Validators.required]);
     }
     else {
+      this.addLiabilityForm.get('poDate').setValue('');
+      this.addLiabilityForm.get('outstandingAmt').setValue('');
       this.addLiabilityForm.get('poDate').setValidators();
       this.addLiabilityForm.get('outstandingAmt').setValidators();
       this.addLiabilityForm.get('poDate').updateValueAndValidity();
@@ -422,7 +428,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
-            "partPaymentDate": (element.controls.date.value._d) ? element.controls.date.value._d : element.controls.date.value,
+            "partPaymentDate": (element.controls.date.value._d) ? this.datePipe.transform(element.controls.date.value._d , 'yyyy-MM-dd') : element.controls.date.value,
             "partPayment": element.controls.amount.value,
             "option": element.controls.type.value,
             "id":(element.value.id) ? element.value.id : null
@@ -449,10 +455,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           ownerName:this.addLiabilityForm.value.getCoOwnerName[0].name,
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
           loanAmount: this.addLiabilityForm.controls.loanAmount.value,
-          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
+          principalOutStandingAmount: (this.addLiabilityForm.controls.outstandingAmt.value) ? this.addLiabilityForm.controls.outstandingAmt.value : null,
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
-          commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
-          principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
+          commencementDate: this.datePipe.transform(this.addLiabilityForm.controls.CommencementDate.value, 'yyyy-MM-dd'),
+          principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.datePipe.transform(this.addLiabilityForm.controls.poDate.value, 'yyyy-MM-dd') : null,
           principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
@@ -470,10 +476,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
           id: this._data.id,
           loanAmount: this.addLiabilityForm.controls.loanAmount.value,
-          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
+          principalOutStandingAmount: (this.addLiabilityForm.controls.outstandingAmt.value) ? this.addLiabilityForm.controls.outstandingAmt.value : null,
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
-          commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
-          principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
+          commencementDate: this.datePipe.transform(this.addLiabilityForm.controls.CommencementDate.value, 'yyyy-MM-dd'),
+          principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.datePipe.transform(this.addLiabilityForm.controls.poDate.value, 'yyyy-MM-dd') : null,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
           principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,

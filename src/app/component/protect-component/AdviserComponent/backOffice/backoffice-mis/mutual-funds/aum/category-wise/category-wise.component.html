@@ -13,9 +13,9 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"
+                        <button mat-stroked-button  *ngIf="!isLoading && category.length != 0" class="btn-default addon"
                             (click)="exportToExcelReport('category', null)"><i
-                                class="material-icons">add</i>XLXS</button>
+                                class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -68,12 +68,12 @@
 
                                 <td>
                                     <div class="bar">
-                                        <span appFormatNumber> {{category.totalAum}}</span>
+                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber> {{category.totalAum}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="bar">
-                                        {{category.weightInPercentage}}{{(isLoading?'':'%')}}
+                                        {{category.weightInPercentage  | number :'1.2-2'}}{{(isLoading?'':'%')}}
                                     </div>
                                 </td>
                                 <td class="text-center"
@@ -92,7 +92,7 @@
 
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
-                                    <div class="d-block text-right" *ngIf="category.showCategory==false">
+                                    <div class="d-block text-right" *ngIf="category.showCategory==false && category.subCategoryList!=0">
                                         <button mat-icon-button
                                             (click)="exportToExcelReport('sub-category', categoryIndex)">
                                             <mat-icon>
@@ -100,7 +100,7 @@
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="category.showCategory==false" class=" mt-8 mb-8 " id="table-low">
+                                    <table *ngIf="category.showCategory==false && category.subCategoryList?.length > 0" class=" mt-8 mb-8 " id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
@@ -136,8 +136,8 @@
                                                 <td>
                                                     {{subcategory.name}}
                                                 </td>
-                                                <td><span appFormatNumber>{{subcategory.totalAum}}</span> </td>
-                                                <td>{{subcategory.weightInPercentage}}%</td>
+                                                <td>{{'₹ '}}<span appFormatNumber [value]="subcategory.totalAum"></span> </td>
+                                                <td>{{subcategory.weightInPercentage | number :'1.2-2'}}%</td>
                                                 <td class="text-center"
                                                     (click)="showSchemeName(subcategory, subCatIndex, categoryIndex)">
                                                     <i *ngIf="subcategory.showSubCategory==true"
@@ -149,7 +149,7 @@
                                             <tr style="border: transparent !important">
                                                 <td colspan="5" class="innerTd two">
                                                     <div class="d-block text-right"
-                                                        *ngIf="subcategory.showSubCategory==false">
+                                                        *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length > 0">
                                                         <button mat-icon-button
                                                             (click)="exportToExcelReport('schemes', categoryIndex)">
                                                             <mat-icon>
@@ -158,7 +158,7 @@
                                                         </button>
                                                     </div>
                                                     <table class=" mt-8 mb-8 " id="table-low"
-                                                        *ngIf="subcategory.showSubCategory==false">
+                                                        *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length > 0">
                                                         <thead>
                                                             <tr class="h-40">
                                                                 <th class="w-10">Sr No.</th>
@@ -193,9 +193,9 @@
                                                                 <td>{{scheme.schemeName}}
 
                                                                 </td>
-                                                                <td><span appFormatNumber>{{scheme.totalAum}}</span>
+                                                                <td>{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum"></span>
                                                                 </td>
-                                                                <td>{{scheme.weightInPercentage}}</td>
+                                                                <td>{{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>
                                                                 <td class="text-center"
                                                                     (click)="showApplicantName(scheme, schemeIndex, categoryIndex)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
@@ -209,7 +209,7 @@
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="5" class="innerTd three">
                                                                     <div class="d-block text-right"
-                                                                        *ngIf="!scheme.showScheme">
+                                                                        *ngIf="!scheme.showScheme && scheme.clientList?.length > 0">
                                                                         <button mat-icon-button
                                                                             (click)="exportToExcelReport('applicant', categoryIndex)">
                                                                             <mat-icon>
@@ -218,7 +218,7 @@
                                                                         </button>
                                                                     </div>
                                                                     <table class=" mt-8 mb-8 " id="table-low"
-                                                                        *ngIf="!scheme.showScheme">
+                                                                        *ngIf="!scheme.showScheme && scheme.clientList?.length > 0">
                                                                         <thead>
                                                                             <tr class="h-40">
                                                                                 <th class="w-25 c-p"
@@ -276,25 +276,37 @@
                                                                             *ngFor="let applicant of scheme.clientList;let i = index">
                                                                             <tr>
                                                                                 <td>{{applicant.name}} </td>
-                                                                                <td>{{applicant.balanceUnit}} </td>
+                                                                                <td>{{'₹ '}}{{applicant.balanceUnit | number:'1.2-2'}} </td>
                                                                                 <td>{{applicant.folioNumber}} </td>
-                                                                                <td><span
-                                                                                        appFormatNumber>{{applicant.totalAum}}</span>
+                                                                                <td>{{'₹ '}}<span
+                                                                                        appFormatNumber [value]="applicant.totalAum"></span>
                                                                                 </td>
-                                                                                <td>{{applicant.weightInPercentage}}
+                                                                                <td>{{applicant.weightInPercentage | number:'1.2-2'}}{{'%'}}
                                                                                 </td>
                                                                             </tr>
 
                                                                         </tbody>
                                                                     </table>
+                                                                    <div *ngIf="scheme.showScheme==false && scheme.clientList?.length==0" class="d-flex flex-column align-items-center">
+                                                                            <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                                            <h4 class="text-center pt-12">No data found</h4>
+                                                                        </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                    <div *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length==0" class="d-flex flex-column align-items-center">
+                                                            <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                                            <h4 class="text-center pt-12">No data found</h4>
+                                                        </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div *ngIf="category.showCategory==false && category.subCategoryList?.length==0" class="d-flex flex-column align-items-center">
+                                            <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                            <h4 class="text-center pt-12">No data found</h4>
+                                        </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -302,17 +314,18 @@
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong>
+                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"></span></strong>
                                 </td>
-                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
-                        <div *ngIf="category.length==0" class="d-flex flex-column align-items-center">
+                      
+                    </table>
+                    <div *ngIf="category.length==0" class="d-flex flex-column align-items-center">
                             <img class="width300" src="assets/images/svg/noDataFound.svg">
                             <h4 class="text-center pt-12">No data found</h4>
                         </div>
-                    </table>
                 </div>
             </div>
 

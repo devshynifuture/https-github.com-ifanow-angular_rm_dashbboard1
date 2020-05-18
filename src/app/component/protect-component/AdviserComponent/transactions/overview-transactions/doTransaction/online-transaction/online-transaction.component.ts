@@ -65,7 +65,7 @@ export class OnlineTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
-              private processTransaction: ProcessTransactionService, private router: Router,
+              public processTransaction: ProcessTransactionService, private router: Router,
               private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -95,7 +95,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   setClientFilterList() {
-    if (this.inputData.isAdvisorSection == null ||
+    if (!this.inputData || this.inputData.isAdvisorSection == null ||
       this.inputData.isAdvisorSection == undefined ||
       this.inputData.isAdvisorSection) {
       this.filteredStates = this.stateCtrl.valueChanges

@@ -31,7 +31,7 @@
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input [placeholder]="formPlaceHolders.ENTER_EMAIL_ID" matInput formControlName="emailId" class="form-control" [readonly]="!data.is_add_call">
+                    <app-email-domain-auto-suggest [placeholder]="formPlaceHolders.ENTER_EMAIL_ID" formControlName="emailId" [readonly]="!data.is_add_call"></app-email-domain-auto-suggest>
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.pattern">Email is invalid</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.required">This field is required</mat-error>
                 </mat-form-field>

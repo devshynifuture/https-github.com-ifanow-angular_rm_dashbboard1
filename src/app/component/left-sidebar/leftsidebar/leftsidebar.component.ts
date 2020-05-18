@@ -1,18 +1,18 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
-import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {Router} from '@angular/router';
-import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
-import {DynamicComponentService} from '../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
-import {EnumDataService} from '../../../services/enum-data.service';
-import {SettingsService} from '../../protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from 'src/app/services/util.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
-import {map, startWith} from 'rxjs/operators';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
+import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
+import { DynamicComponentService } from '../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
+import { EnumDataService } from '../../../services/enum-data.service';
+import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from 'src/app/services/util.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -115,7 +115,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
     this.onResize();
-    this.enumDataService.searchClientAndFamilyMember();
+    this.enumDataService.searchClientList();
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
     this.enumDataService.getDataForTaxMasterService();
@@ -126,13 +126,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         startWith(''),
         map(state => {
           if (state) {
-            let list = this.enumDataService.getSearchData(state);
+            let list = this.enumDataService.getClientSearchData(state);
             if (list.length == 0) {
               this.showDefaultDropDownOnSearch = true;
               return;
             }
             this.showDefaultDropDownOnSearch = false;
-            return this.enumDataService.getSearchData(state)
+            return this.enumDataService.getClientSearchData(state)
           } else {
             this.showDefaultDropDownOnSearch = false;
             return this.enumDataService.getEmptySearchStateData();
@@ -242,6 +242,10 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   // prepareRoute(outlet: RouterOutlet) {
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
+
+  goHome() {
+    AuthService.goHome(this.router);
+  }
 }
 
 

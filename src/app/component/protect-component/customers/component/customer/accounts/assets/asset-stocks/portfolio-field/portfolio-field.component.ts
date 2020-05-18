@@ -49,6 +49,7 @@ export class PortfolioFieldComponent implements OnInit {
       this.portfolioForm.get('portfolioName').setValue(this.portfolioName);
     }
   };
+
   getPortfolioList() {
     const obj =
     {
@@ -60,8 +61,9 @@ export class PortfolioFieldComponent implements OnInit {
       error => this.eventService.showErrorMessage(error)
     )
   }
+
   getPortfolioListRes(data) {
-    console.log(data)
+    console.log(data, "porfolio list")
     let checkOwnerId = false;
     this.familyWisePortfolio = [];
     data.forEach(element => {
@@ -72,7 +74,6 @@ export class PortfolioFieldComponent implements OnInit {
     });
     (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
     console.log(this.familyWisePortfolio)
-    
   }
   openAddPortfolio() {
     console.log(this.portfolioData)

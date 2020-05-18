@@ -79,7 +79,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-6 p-0 pr-8 left">
+                        <div class="col-md-5 p-0 pr-8 left">
                             <mat-form-field *ngIf="filterList">
                                 <mat-select class="form-control" [(ngModel)]="filterStatus">
                                     <!-- formControlName="lead" -->
@@ -89,6 +89,10 @@
                                     <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
                                 </mat-select>
                             </mat-form-field>
+                        </div>
+                        <div class="col-md-1 p-0 pr-8 left">
+                            <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
+
                         </div>
                     </div>
                 </div>

@@ -86,10 +86,23 @@ export class EnumDataService {
     );
   }
 
+  searchClientList() {
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+    };
+    this.peopleService.getClientSearch(obj).subscribe(
+      data => {
+        if (data) {
+          this.setSearchData(data);
+        }
+      },
+    );
+  }
+
   searchClientAndFamilyMember() {
     const obj = {
       advisorId: AuthService.getAdvisorId(),
-      displayName: '%'
+      // displayName: '%'
     };
     this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
       this.setSearchData(responseArray);
@@ -106,6 +119,11 @@ export class EnumDataService {
   }
 
   getSearchData(value) {
+    const filterValue = value.toLowerCase();
+    return this.searchData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  getClientSearchData(value) {
     const filterValue = value.toLowerCase();
     return this.searchData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
   }

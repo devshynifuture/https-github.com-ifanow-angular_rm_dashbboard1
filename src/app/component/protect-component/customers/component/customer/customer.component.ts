@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../../../auth-service/authService';
-import { DialogContainerComponent } from '../../../../../common/dialog-container/dialog-container.component';
-import { EventService } from '../../../../../Data-service/event.service';
-import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
-import { PeopleService } from '../../../PeopleComponent/people.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../../../../auth-service/authService';
+import {DialogContainerComponent} from '../../../../../common/dialog-container/dialog-container.component';
+import {EventService} from '../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {DynamicComponentService} from '../../../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../../../animation/animation';
+import {PeopleService} from '../../../PeopleComponent/people.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {EnumDataService} from '../../../../../services/enum-data.service';
 
 @Component({
   selector: 'app-customer',
@@ -38,7 +39,8 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     private route: ActivatedRoute,
     public authService: AuthService,
     private peopleService: PeopleService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private enumDataService: EnumDataService
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
@@ -84,6 +86,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+    if (!this.enumDataService.searchData || this.enumDataService.searchData.length == 0) {
+      this.enumDataService.searchClientList();
+    }
+
     this.showRouter = true;
     this.selected = 1;
     this._value = 1;
@@ -132,5 +138,9 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.authService.logout();
     this.router.navigate(['/login']);
     // }
+  }
+
+  goHome() {
+    AuthService.goHome(this.router);
   }
 }

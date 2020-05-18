@@ -207,7 +207,7 @@ export const appConfig = {
   GET_SCRIP_lIST: 'account/asset/stock/scrip-name/get',
   ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',
   DELETE_STOCK: 'account/asset/stock/delete',
-  EDIT_STOCK_PORTFOLIO: 'account/asset/stock/portfolio/edit',
+  EDIT_STOCK_PORTFOLIO: 'account/asset/stock/edit',
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
@@ -666,6 +666,9 @@ export const appConfig = {
   GET_ADVISOR_FROM_EMAIL_MOBILE: 'user/advisor/search/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
+  MERGE_CLIENT: 'user/client/merge/client',
+
+
   UPDATE_CLIENT_STATUS: 'user/client/status/update',
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
@@ -677,6 +680,9 @@ export const appConfig = {
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
   GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
+  // CLIENT_SEARCH: 'user/client/all/names/get',
+  CLIENT_SEARCH: 'user/client/all/names/count/get',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
