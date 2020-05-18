@@ -25,18 +25,18 @@
             <table [dataSource]="childTransactions" id="table-low" mat-table>
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell> No</th>
-                    <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
+                    <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
                         <div class="bar"> {{i + 1 }} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="folio">
-                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
+                    <th *matHeaderCellDef class="br w-10" mat-header-cell> Folio</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{element.folioNo}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="ownerName">
-                    <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell> Scheme name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
                             {{element.schemeName}}
@@ -44,7 +44,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="amount">
-                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
+                    <th *matHeaderCellDef class="br w-10" mat-header-cell> Amount</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{element.orderVal}} </div>
                     </td>
@@ -54,15 +54,13 @@
                     <td *matCellDef="let element" class="t-2" mat-cell>
                         <!-- ng build prod issue isLoading removed -->
                         <!-- <div *ngIf="!isLoading"> -->
-                        <div>
-                            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                more_vert
-              </i>
+                       
+                          <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
                             <mat-menu #menubank="matMenu">
                                 <button (click)="getDataForm(element,true)" mat-menu-item>Edit</button>
                                 <button mat-menu-item>Delete</button>
                             </mat-menu>
-                        </div>
+                        
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
@@ -120,58 +118,7 @@
                         <mat-spinner class="mt-8"></mat-spinner>
                     </div>
                 </div>
-
-                <div class="row pt-20 pb-44">
-                    <div class="col-md-8 pl-0 pr-20">
-                        <div class="row">
-                            <div class="col-md-12 p-0 text-left">
-                                <h5 class="m-0 pb-8 text-black">Select from the following options</h5>
-                                <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option" class="bigRadio" formControlName="schemeSelection">
-                                    <mat-radio-button [ngClass]="{'b-a-custom-outline': sipTransaction.get('schemeSelection').value==1,'text-primary':sipTransaction.get('schemeSelection').value==1,'radio-border':sipTransaction.get('schemeSelection').value==2}" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
-                                        value="1">
-                                        Invest in existing scheme
-                                    </mat-radio-button>
-                                    <mat-radio-button [ngClass]="{'b-a-custom-outline': sipTransaction.get('schemeSelection').value==2,'text-primary':sipTransaction.get('schemeSelection').value==2,'radio-border':sipTransaction.get('schemeSelection').value==1}" class="bor_top_tb_right radio-border radioBtn "
-                                        value="2">
-                                        Select a new scheme
-                                    </mat-radio-button>
-                                </mat-radio-group>
-                            </div>
-                        </div>
-                        <!-- value == 1 -->
-                        <div class="row">
-                            <div class="col-md-12 p-0 text-left">
-                                <h5 class="m-0 pt-28 text-black ">Select a scheme to invest in</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-11 p-0">
-                                <div class="form-group">
-                                    <mat-form-field appearance="standard" floatLabel="never">
-                                        <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control" formControlName="schemeSip" matInput placeholder="Start typing to see scheme names" type="text">
-                                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)" [displayWith]="processTransaction.displaySchemeName">
-                                            <mat-option *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
-                                                {{scheme.schemeName}}
-                                            </mat-option>
-                                        </mat-autocomplete>
-                                        <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">
-                                            Last closing NAV: {{navOfSelectedScheme}}
-                                        </mat-hint>
-                                        <mat-error *ngIf="sipTransaction.get('schemeSip').errors?.required" class="f-12 pt-4">
-                                            This field is required
-                                        </mat-error>
-                                        <mat-error *ngIf="sipTransaction.get('schemeSip').errors?.setValue" class="f-12">
-                                            Selected scheme does not exist
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <!-- removed for prod build" -->
-                            <div *ngIf="showSchemeSpinner == true" class="col-md-1">
-                                <mat-spinner class="mt-8"></mat-spinner>
-                            </div>
-                        </div>
-
+ 
                         <div *ngIf="reInvestmentOpt.length > 1" class="row pt-28 ">
                             <div class="col-md-12 p-0 text-left">
                                 <h5 class="m-0 text-black pb-8">Select re-investment</h5>
@@ -255,6 +202,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row pt-28">
                             <div class="col-md-12 p-0 text-left">
                                 <h5 class="m-0  text-black pb-8">Enter amount</h5>
@@ -280,6 +228,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row pt-40">
                             <div class="col-md-12 p-0 text-left">
                                 <h5 class="m-0  text-black pb-8">Select 1st date SIP</h5>
@@ -298,6 +247,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
+
                         <div class="row pt-28">
                             <div class="col-md-12 p-0 text-left">
                                 <h5 class="m-0  pb-8 text-black">Select tenure</h5>
@@ -319,6 +269,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
+
                         <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
                             <div class="col-md-12 p-0 text-left">
                                 <h5 class="m-0  pb-8 text-black">Enter {{(sipTransaction.get('tenure').value =='2')?'No. of years':'No. of installments'}}</h5>
@@ -336,6 +287,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
+
                         <div *ngIf="platformType == 1" class="row">
                             <div class="col-md-5 p-0 text-left">
                                 <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
