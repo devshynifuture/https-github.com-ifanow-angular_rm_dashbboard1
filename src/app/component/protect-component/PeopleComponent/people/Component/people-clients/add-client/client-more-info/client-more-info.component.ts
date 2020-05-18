@@ -153,6 +153,7 @@ export class ClientMoreInfoComponent implements OnInit {
       }
       (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
+        residentFlag: this.moreInfoData.residentFlag,
         taxStatusId: this.moreInfoData.taxStatusId,
         advisorId: this.moreInfoData.advisorId,
         emailList: this.moreInfoData.emailList,
@@ -222,6 +223,7 @@ export class ClientMoreInfoComponent implements OnInit {
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
+      residentFlag: this.moreInfoData.residentFlag,
       emailList: this.moreInfoData.emailList,
       displayName: this.moreInfoForm.controls.displayName.value,
       martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
@@ -275,6 +277,7 @@ export class ClientMoreInfoComponent implements OnInit {
           this.saveNextData.emit(true);
         }
         else {
+          this.disableBtn = false;
           this.barButtonOptions.active = false;
           this.close(data);
         }
