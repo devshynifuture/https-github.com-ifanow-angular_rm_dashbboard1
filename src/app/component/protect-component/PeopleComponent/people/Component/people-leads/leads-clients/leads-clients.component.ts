@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { PeopleService } from '../../../../people.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { Router } from '@angular/router';
-import { EnumDataService } from 'src/app/services/enum-data.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {PeopleService} from '../../../../people.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {Router} from '@angular/router';
+import {EnumDataService} from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-leads-clients',
@@ -85,7 +85,8 @@ export class LeadsClientsComponent implements OnInit {
       data => {
         console.log(data);
         this.enumDataService.searchClientList();
-        this.router.navigate(['/admin/people/clients'])
+        this.enumDataService.searchClientAndFamilyMember();
+        this.router.navigate(['/admin/people/clients']);
         this.close();
         this.barButtonOptions.active = false;
       },
@@ -97,6 +98,6 @@ export class LeadsClientsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 }
