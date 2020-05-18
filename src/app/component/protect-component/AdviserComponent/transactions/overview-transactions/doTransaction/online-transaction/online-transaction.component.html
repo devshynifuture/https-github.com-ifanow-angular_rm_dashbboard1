@@ -49,6 +49,19 @@
                 <mat-spinner class=" "></mat-spinner>
             </div>
         </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <p class="f-16 roboto">Uh oh!</p>
+                <p class="f-16 f-500 roboto">It looks like Aryan Jain does not have an investment account opened yet.
+                </p>
+                <p class="f-16 roboto">Would you like to open a new investment account?</p>
+                <button mat-button class="newAcBtn bg-primary">
+                    Open new investment account <i class="material-icons text-right ml-16"> arrow_forward </i>
+                </button>
+            </div>
+        </div>
     </div>
     <div *ngIf="clientCodeData==undefined && stateCtrl.valid" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No IIN/UCC found</h4>
@@ -168,6 +181,8 @@
             </i>ADD
         </button>
     </div>
+
+
     <div>
         <app-purchase-trasaction (changedValue)="getResponse($event)" *ngIf="transactionType=='PURCHASE'" [data]='transactionData'></app-purchase-trasaction>
         <app-switch-transaction (changedValue)="getResponse($event)" *ngIf="transactionType=='SWITCH'" [data]='transactionData'></app-switch-transaction>
