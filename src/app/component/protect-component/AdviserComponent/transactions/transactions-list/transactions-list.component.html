@@ -41,8 +41,8 @@
             <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
                 <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
                 <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
-          NEW
-        </button>
+                    NEW
+                </button>
             </div>
         </div>
 
@@ -88,8 +88,9 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="amount">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="amtUnitType"> Amount/Units</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th *matHeaderCellDef class="br rightText" mat-header-cell mat-sort-header="amtUnitType"> Amount/Units
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
                     <div class="bar">
                         <span *ngIf="element.amtUnitType=='Amount'">₹</span>
                         <span appFormatNumber> {{element.amount}}</span>
@@ -115,7 +116,7 @@
                     <div *ngIf="element.transactionStatus == 'UNKNOWN'" class="bar text-primary t-10 f-500 c-p">
                         <div class="bar"> {{element.transactionStatus}} </div>
                     </div>
-                    <div *ngIf="element.transactionStatus == 'Order submitted to AMC'" class="bar text-success t-10 f-500 c-p">
+                    <div *ngIf="element.transactionStatus == 'Order submitted to FGC'" class="bar text-success t-10 f-500 c-p">
                         <div class="bar"> {{element.transactionStatus}} </div>
                     </div>
                     <!-- <div class="bar">{{element.transactionStatus}}</div> -->
@@ -126,8 +127,8 @@
                 <td (click)="openTransactionHistory(element)" *matCellDef="let element" mat-cell>
                     <div class="bar">
                         <i *ngIf="element.platformName" class="material-icons c-p text-custom">
-              keyboard_arrow_right
-            </i>
+                            keyboard_arrow_right
+                        </i>
                     </div>
                 </td>
             </ng-container>
@@ -139,11 +140,11 @@
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">{{noData}}</h4>
             <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  " mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
             <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
         </div>
     </div>
 </div>
