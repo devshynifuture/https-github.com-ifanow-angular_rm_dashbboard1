@@ -277,6 +277,7 @@ export class ClientMoreInfoComponent implements OnInit {
           this.saveNextData.emit(true);
         }
         else {
+          this.disableBtn = false;
           this.barButtonOptions.active = false;
           this.close(data);
         }

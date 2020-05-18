@@ -464,6 +464,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             }
           },
           (err) => {
+            this.disableBtn = false
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar(err, 'Dismiss');
           }
