@@ -183,8 +183,9 @@ export class OnlineTransactionComponent implements OnInit {
           selectedFamilyMember: this.ownerData.ownerName.value,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
-          familyMemberId: this.familyMemberData.familyMemberId,
-          defaultValue: value
+          familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
+          defaultValue: value,
+          isAdvisorSection: this.inputData.isAdvisorSection
         };
         this.openPurchaseTransaction(data.transactionType, data);
       }
@@ -291,18 +292,6 @@ export class OnlineTransactionComponent implements OnInit {
     console.log(this.transactionAddForm);
   }
 
-  saveAndAddAnother() {
-    this.isSaveAndAddClicked = true;
-    console.log(this.transactionAddForm);
-  }
-
-  onAddTransaction() {
-    console.log(this.transactionAddForm);
-  }
-
-  baackToSelectTransaction() {
-    this.formStep = 'step-2';
-  }
 
   getResponse(data) {
     this.formStep = data;
@@ -349,7 +338,9 @@ export class OnlineTransactionComponent implements OnInit {
           selectedFamilyMember: this.stateCtrl.value.name,
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
-          familyMemberId: this.familyMemberData.familyMemberId
+          familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
+          isAdvisorSection: this.inputData.isAdvisorSection
+
         };
         this.openPurchaseTransaction(data.transactionType, data);
       } else {
