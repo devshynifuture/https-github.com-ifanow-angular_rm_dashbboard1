@@ -60,6 +60,7 @@ export class AddCamsFundsnetComponent implements OnInit {
       loginId: [this.data.mainData.loginId || '', [Validators.required]],
       loginPassword: [this.data.mainData.loginPassword || '', [Validators.required]],
       rtaCamsFundNetSecurityQuestionsList: this.fb.array([]),
+      fileOrderingUseabilityStatusId: [1]
     });
 
     if(this.data.mainData.rtaCamsFundNetSecurityQuestionsList && this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length > 0) {
