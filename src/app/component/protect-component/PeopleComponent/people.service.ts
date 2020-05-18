@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +84,10 @@ export class PeopleService {
 
   loginWithPassword(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
+  }
+
+  mergeClient(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.MERGE_CLIENT, data);
   }
 
   getAllClients(data) {
