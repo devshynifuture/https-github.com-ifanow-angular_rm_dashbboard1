@@ -1,19 +1,42 @@
-.people-clients,
+.people-clients {
+  tr.mat-header-row {
+    height: 44px;
+  }
+
+  .mat-sort-header-button {
+    height: 31px !important;
+  }
+
+
+  #tbs {
+    tr.mat-row {
+      height: 34px !important;
+    }
+
+
+
+    tbody td {
+      padding: 4px 8px !important;
+    }
+  }
+}
+
 .people-leads {
   tr.mat-header-row {
     height: 44px;
   }
 
+  tr.mat-row {
+    height: 36px;
 
+  }
 
-  #tbs{
-    tr.mat-row {
-      height: 34px !important;
-    }
+  #table-low th {
+    padding: 3px 8px !important;
+  }
 
-    tbody td {
-      padding: 4px 8px !important;
-    }
+  #table-low tbody td {
+    padding: 9px 8px !important;
   }
 }
 
@@ -43,7 +66,7 @@
     border-top: 1px solid #e9eaec;
     margin-top: -1px;
   }
- 
+
   .mat-ink-bar {
     display: none;
   }
@@ -88,7 +111,7 @@
     }
 
     .mat-radio-button:nth-child(2) {
-      min-width: 115px;
+      min-width: 128px;
     }
 
     .mat-radio-button:nth-child(3) {
@@ -171,21 +194,27 @@
 
 
 }
-@media(max-width: 767px){
-  #ui-add-client{
-    h5,p{
+
+@media(max-width: 767px) {
+  #ui-add-client {
+
+    h5,
+    p {
       font-family: "Roboto" !important;
     }
-    p{
+
+    p {
       color: #212121;
       font-weight: 400 !important;
     }
   }
-  .clientmobs .mat-radio-button{
+
+  .clientmobs .mat-radio-button {
     min-width: 109px !important;
   }
-  .marital-status .mat-radio-button{
+
+  .marital-status .mat-radio-button {
     min-width: 100px !important;
-    padding-right:10px  !important;
+    padding-right: 10px !important;
   }
 }

@@ -327,15 +327,15 @@ input.mat-input-element {
 
 .hourglass {
   transform: scale(0.5);
-  -webkit-transform-origin-y: 30px;
+  -webkit-transform-origin-y: 85px;
+  -webkit-transform-origin-x: 175px;
   display: block;
   width: 40px;
   height: 30px;
-  //background: #574D35;
   background: #574D35;
   border-radius: 0px 0px 50px 50px;
   margin: 40px auto 30px;
-  position: relative;
+  // position: relative;
   animation: hglasstop 8s infinite;
   position: absolute;
   z-index: 99;
@@ -352,5 +352,59 @@ input.mat-input-element {
     position: absolute;
     top: 30px;
     animation: hglass 8s infinite;
+  }
+}
+
+$bg:#fff;
+$fillloader: #008FFF;
+
+.hourglass1 {
+  display: block;
+  // background: $bg;
+  // margin: 3em auto;
+  width: 1.6em;
+  height: 2.2em;
+  animation: hourglass1 1s linear infinite;
+  position: absolute;
+  margin-top: -8px;
+  right: -46px;
+  top: 0;
+  z-index: 99;
+
+
+  .outer {
+    fill: $fillloader;
+  }
+
+  .middle {
+    fill: $bg;
+  }
+}
+
+
+
+@keyframes hourglass1 {
+  0% {
+    transform: rotate(0deg);
+    box-shadow:
+      inset $fillloader 0 -0em 0 0,
+      inset $bg 0 -2em 0 0,
+      inset $fillloader 0 -4em 0 0;
+  }
+
+  80% {
+    transform: rotate(0deg);
+    box-shadow:
+      inset $fillloader 0 -2em 0 0,
+      inset $bg 0 -2em 0 0,
+      inset $fillloader 0 -2em 0 0;
+  }
+
+  100% {
+    transform: rotate(180deg);
+    box-shadow:
+      inset $fillloader 0 -2em 0 0,
+      inset $bg 0 -2em 0 0,
+      inset $fillloader 0 -2em 0 0;
   }
 }
