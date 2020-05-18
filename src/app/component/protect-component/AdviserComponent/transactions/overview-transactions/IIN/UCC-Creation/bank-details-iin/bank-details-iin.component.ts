@@ -323,9 +323,10 @@ export class BankDetailsIINComponent implements OnInit {
   setValueFun(value) {
     this.bankDetailsForm.controls.ifscCode.setValue(value.ifscCode);
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
+    this.bankDetailsForm.controls.bankACNo.setValue(value.bankName);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
-    this.bankDetailsForm.controls.accountType.setValue(value.accountType);
+    this.bankDetailsForm.controls.accountType.setValue(parseInt(value.accountType));
     this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
@@ -353,7 +354,6 @@ export class BankDetailsIINComponent implements OnInit {
 
   SendToForm(value, flag) {
     if (value == 'first') {
-      if (this.saveBankDetails(this.formId)) {
         this.formId = value;
         if (this.firstHolderBank) {
           this.setValueFun(this.firstHolderBank);
@@ -361,11 +361,7 @@ export class BankDetailsIINComponent implements OnInit {
           return;
         }
         this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
-      }
     } else if (value == 'second') {
-      if (this.saveBankDetails(this.formId)) {
         if (this.secondHolderBank && this.secondHolderBank.bankName) {
           this.setValueFun(this.secondHolderBank);
         } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
@@ -375,14 +371,7 @@ export class BankDetailsIINComponent implements OnInit {
           this.reset();
         }
         this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
-      } else {
-        this.secondHolderBank.validated = false;
-        this.formId = value;
-      }
     } else if (value == 'third') {
-      if (this.saveBankDetails(this.formId)) {
         if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
           this.formId = value;
           this.setValueFun(this.thirdHolderBank);
@@ -393,13 +382,6 @@ export class BankDetailsIINComponent implements OnInit {
           this.reset();
         }
         this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
-      } else {
-        this.thirdHolderBank.validated = false;
-        this.formId = value;
-      }
-
     } else {
       this.saveBankDetails(value);
     }
