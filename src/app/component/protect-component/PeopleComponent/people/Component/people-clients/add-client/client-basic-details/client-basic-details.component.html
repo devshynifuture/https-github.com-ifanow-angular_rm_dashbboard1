@@ -104,6 +104,7 @@
                             <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
                             <mat-error *ngIf="basicDetails.get('email').errors?.required">This field is required
                             </mat-error>
+                            <mat-hint *ngIf="fieldFlag=='familyMember'">Optional</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -127,6 +128,7 @@
                             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan invalid
                             </mat-error>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                            <mat-hint *ngIf="fieldFlag=='familyMember'">Optional</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
