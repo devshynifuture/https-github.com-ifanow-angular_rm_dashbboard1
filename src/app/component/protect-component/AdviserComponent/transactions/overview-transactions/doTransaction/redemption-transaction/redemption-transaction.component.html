@@ -133,15 +133,20 @@
                 <div *ngIf="showUnits ==true" class="row">
                     <div class="col-md-12 mt-20 pl-0">
                         <div *ngIf="folioDetails" class="bg-grey lter">
-                            <div class="row">
-                                <div class="col-md-6 p-20 text-left">
-                                    <p class="f-14 m-0">Current value</p>
-                                    <h3 class="f-18 roboto m-0">Rs: <span appFormatNumber>{{currentValue}}</span></h3>
-                                </div>
-                                <div class="col-md-6 p-20 text-left">
-                                    <p class="f-14 m-0">Balance unit</p>
-                                    <h3 class="f-18 roboto m-0"><span appFormatNumber>{{folioDetails.balanceUnit}}</span></h3>
-                                </div>
+                          <div class="row">
+                            <div class="col-md-6 p-20 text-left">
+                              <p class="f-14 m-0">Current value</p>
+                              <mat-form-field appearance="standard" floatLabel="never">
+                                <input #currentValue appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                                  formControlName="currentValue" matInput type="text">
+                              </mat-form-field>
+                            </div>
+                            <div class="col-md-6 p-20 text-left">
+                              <p class="f-14 m-0">Balance unit</p>
+                              <mat-form-field appearance="standard" floatLabel="never">
+                                <input #balanceUnit appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                                  formControlName="balanceUnit" matInput type="text">
+                              </mat-form-field>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-12">

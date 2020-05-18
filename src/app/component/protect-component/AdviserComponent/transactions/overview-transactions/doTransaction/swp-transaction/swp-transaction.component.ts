@@ -251,6 +251,8 @@ export class SwpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio;
+    this.swpTransaction.controls.balanceUnit.setValue(folio.balanceUnit)
+    this.swpTransaction.controls.currentValue.setValue(this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit))
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
@@ -328,6 +330,8 @@ export class SwpTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       investor: [(!data) ? '' : data.investor, [Validators.required]],
+      balanceUnit:[(!data) ? '' : data.balanceUnit,],
+      currentValue:[(!data) ? '' : data.currentValue,],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],

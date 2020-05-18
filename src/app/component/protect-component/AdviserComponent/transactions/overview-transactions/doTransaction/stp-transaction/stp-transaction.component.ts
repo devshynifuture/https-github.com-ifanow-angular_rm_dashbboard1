@@ -221,6 +221,8 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio;
+    this.stpTransaction.controls.balanceUnit.setValue(folio.balanceUnit)
+    this.stpTransaction.controls.currentValue.setValue(this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit))
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
@@ -416,6 +418,8 @@ export class StpTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
+      currentValue:[data.currentValue],
+      balanceUnit:[data.balanceUnit],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
       investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],

@@ -51,17 +51,18 @@
         </div>
 
 
-        <div class="row pt-60">
-            <div class="col-md-12 pl-0">
-                <p class="f-16 text-black mb-4 roboto">Uh oh!</p>
-                <p class="f-16 f-500 roboto">It looks like Aryan Jain does not have an investment account opened yet.
-                </p>
-                <p class="f-16 text-black roboto">Would you like to open a new investment account?</p>
-                <button mat-button class="newAcBtn bg-primary">
-                    Open new investment account <i class="material-icons text-right ml-16"> arrow_forward </i>
-                </button>
-                <p class="f-12 lh-16 text-primitive">Depending on your registration with NSE NMF <br>of BSE Star MF, you will be able to create a new IIN/UCC</p>
-            </div>
+       
+    </div>
+    <div class="row pt-60" *ngIf="clientCodeData==undefined && stateCtrl.valid">
+        <div class="col-md-12 pl-0">
+            <p class="f-16 text-black mb-4 roboto">Uh oh!</p>
+            <p class="f-16 f-500 roboto">It looks like Aryan Jain does not have an investment account opened yet.
+            </p>
+            <p class="f-16 text-black roboto">Would you like to open a new investment account?</p>
+            <button mat-button class="newAcBtn bg-primary">
+                Open new investment account <i class="material-icons text-right ml-16"> arrow_forward </i>
+            </button>
+            <p class="f-12 lh-16 text-primitive">Depending on your registration with NSE NMF <br>of BSE Star MF, you will be able to create a new IIN/UCC</p>
         </div>
     </div>
     <div *ngIf="clientCodeData==undefined && stateCtrl.valid" class="d-flex flex-column align-items-center">
