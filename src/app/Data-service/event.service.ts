@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -44,12 +44,12 @@ export class EventService {
     return this.upperSliderDataObs;
   }
 
-  openUpperSlider(sliderData:any) {
+  openUpperSlider(sliderData: any) {
     this.upperSliderData.next(sliderData);
     return this.upperSliderDataObs;
   }
 
-  setRefreshRequired(){
+  setRefreshRequired() {
     this.sliderRefreshState.next(true);
   }
 
@@ -69,6 +69,15 @@ export class EventService {
   openSnackBar(message: string, action: string = null, actionCallback = null) {
     const snackBbarref = this.snackBar.open(message, action, {
       duration: 2000,
+      panelClass: ['app-bottom-snackbar']
+    });
+    if (actionCallback) {
+      snackBbarref.onAction().subscribe(actionCallback);
+    }
+  }
+
+  openSnackBarNoDuration(message: string, action: string = null, actionCallback = null) {
+    const snackBbarref = this.snackBar.open(message, action, {
       panelClass: ['app-bottom-snackbar']
     });
     if (actionCallback) {

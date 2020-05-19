@@ -109,8 +109,17 @@
 
 			<ng-container matColumnDef="fileName">
 				<th class="b-a" mat-header-cell *matHeaderCellDef class="w-10"> File name </th>
-				<td class="b-a brrakAll" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
-					<div class="bar  "> {{ element.fileName ? element.fileName : '-' }} </div>
+				<td class="b-a brrakAll" mat-cell *matCellDef="let element">
+					<div class="bar  ">
+						<div class="row">
+							<div class="col-8">
+								{{ element.fileName ? element.fileName : '-' }}
+							</div>
+							<div *ngIf="element.fileUrl" class="col-4" (click)="copyText(element.fileUrl)">
+								<img src="/assets/images/svg/copy-icon.svg" class="copy-icon" />
+							</div>
+						</div>
+					</div>
 				</td>
 			</ng-container>
 
