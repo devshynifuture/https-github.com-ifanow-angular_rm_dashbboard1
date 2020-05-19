@@ -1,37 +1,38 @@
 .roleSetting-table {
-    table {
-        tr.mat-header-row {
-            height: 40px;
-        }
+  table {
+    tr.mat-header-row {
+      height: 40px;
     }
+  }
 }
 
 .classEditBtn {
-    width: 55px;
-    height: 25px;
-    padding: 0px !important;
-    line-height: 25px;
+  min-width: 55px;
+  height: 25px;
+  padding: 0px !important;
+  line-height: 25px;
 }
 
 .cloneBtn {
-    width: 55px;
-    height: 25px;
-    padding: 0px !important;
-    line-height: 25px;
+  min-width: 60px;
+  height: 25px;
+  padding: 0px !important;
+  line-height: 25px;
 }
 
 .deleteBtn {
-    width: 55px;
-    height: 25px;
-    padding: 0px !important;
-    line-height: 25px;
+  min-width: 64px;
+  height: 25px;
+  padding: 0px !important;
+  line-height: 25px;
 }
 
 .addBtnclass {
-    width: 112px;
-    height: 40px;
-    padding: 0px;
-    i {
-        padding-right: 2px;
-    }
+  width: 112px;
+  height: 40px;
+  padding: 0px;
+
+  i {
+    padding-right: 2px;
+  }
 }

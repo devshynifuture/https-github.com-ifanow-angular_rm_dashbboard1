@@ -38,7 +38,7 @@
             </mat-tab>
 
 
-            <mat-tab label="Onboarding activity" (click)="getIFAActivity()">
+            <mat-tab label="Onboarding activity" (click)="getIFAActivity()" class="pb-44">
                 <h3 class="f-500 f-16 mb-4">
                     Stages
                 </h3>
@@ -55,6 +55,7 @@
                                 [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
                                 {{isLoading? '': stage.taskName}}
                                 <span>
+                                    <!-- <img src="assets/images/svg/conversation.svg" class="c-p"> -->
                                     <mat-icon *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null">
                                         message</mat-icon>
                                     {{ stage.stageCommentCount }}
@@ -139,7 +140,7 @@
 
                 </div>
 
-                <div class="bg-grey lter mt-44 p-20">
+                <div class="bg-grey lter mt-32 p-20 pb-8">
                     <h4 class="f-14 f-500">Comments</h4>
                     <div class="row pb-20" *ngFor="let activity of activityCommentList">
                         <div class="col-md-1 text-center p-0">
@@ -186,9 +187,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </mat-tab>
 
             <mat-tab label="RTA details">
