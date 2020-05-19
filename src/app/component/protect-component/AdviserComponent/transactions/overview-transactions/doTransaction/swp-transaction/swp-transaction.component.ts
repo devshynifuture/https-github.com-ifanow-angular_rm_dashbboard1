@@ -18,6 +18,7 @@ import { map, startWith } from 'rxjs/operators';
 export class SwpTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -236,6 +237,9 @@ export class SwpTransactionComponent implements OnInit {
     console.log('res scheme folio', data);
     this.showSpinnerFolio = false;
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.swpTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }

@@ -166,7 +166,7 @@
     </div>
 
     <div class="col-md-5 center_menu">
-        <a (click)="SendToForm('first',false);" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
+        <a (click)="SendToForm('first',false);" [ngClass]="{'activeLink': activeDetailsClass=='first'}" *ngIf="inputData.holdingNature != 'SI'"class="c-p">
             First holder </a>
         <a (click)="SendToForm('second',false);" [ngClass]="{'activeLink': activeDetailsClass=='second'}" *ngIf="inputData.holdingNature != 'SI'" class="c-p"> Second
             holder </a>
