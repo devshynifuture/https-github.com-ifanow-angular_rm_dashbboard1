@@ -47,7 +47,7 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   newRightSliderDataObsSubscription: Subscription;
 
   constructor(
-    protected eventService: EventService, 
+    protected eventService: EventService,
     protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService
   ) {
