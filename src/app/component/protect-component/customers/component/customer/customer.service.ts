@@ -863,5 +863,9 @@ export class CustomerService {
   postMutualFundDelete(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_DELETE, data);
   }
+
+  updateClientProfilePic(data){
+    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_PROFILE_PIC, data);
+  }
 }
 
