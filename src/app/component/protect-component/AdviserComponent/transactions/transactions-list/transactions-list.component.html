@@ -98,8 +98,8 @@
         <td *matCellDef="let element" class="br text-right" mat-cell>
           <div class="bar">
             <span *ngIf="element.amtUnitType=='Amount'">₹</span>
-            <span appFormatNumber> {{element.amount}}</span>
-            <span *ngIf="element.amtUnitType==undefined && element.platformName"> Units</span></div>
+            <span [shouldRoundOff]="false" appFormatNumber> {{element.amount}}</span>
+            <span *ngIf="!element.amtUnitType&&!isLoading ||element.amtUnitType=='Unit'"> Units</span></div>
         </td>
       </ng-container>
       <ng-container matColumnDef="orderDate">
@@ -142,7 +142,7 @@
             <div class="bar">Payment successful</div>
           </div>
           <div *ngIf="element.status == 8" class="bar text-success t-10 f-500 c-p">
-            <div class="bar">Units alloted</div>
+            <div class="bar">Units allotted</div>
           </div>
           <!-- <div class="bar">{{element.transactionStatus}}</div> -->
         </td>

@@ -28,8 +28,11 @@
   </div>
   <div class="row">
     <div class="col-md-6 pl-0">
-      <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
-      <p class="m-0 text-black roboto">₹{{transactionData.amount}}</p>
+      <p class="m-0 f-12 text-uppercase text-primitive">Amount/Unit</p>
+      <span *ngIf="transactionData.amtUnitType=='Amount'">₹</span>
+      <span [shouldRoundOff]="false" appFormatNumber> {{transactionData.amount}}</span>
+      <span *ngIf="!transactionData.amtUnitType||transactionData.amtUnitType=='Unit'"> Units</span>
+      <!--      <p class="m-0 text-black roboto">₹{{transactionData.amount}}</p>-->
     </div>
     <div class="col-md-6 pr-0">
       <p class="m-0 f-12 text-uppercase text-primitive">FOLIO</p>
