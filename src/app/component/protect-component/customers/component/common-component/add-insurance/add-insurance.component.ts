@@ -5,12 +5,14 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -55,6 +57,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   callMethod:any;
   showInsurance: any;
   flag = 'ADD';
+  bankList: any;
   /*_data;
   @Input()
   set data(inputData) {
@@ -64,7 +67,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   get data() {
     return this._data;
   }*/
-  constructor(private datePipe: DatePipe,private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
+  constructor(private dialog: MatDialog,private enumService: EnumServiceService,private datePipe: DatePipe,private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
   }
   validatorType = ValidatorType
   @Input() set data(data) {
@@ -194,7 +197,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   Miscellaneous = this.fb.group({
     permiumPaymentMode: [, [Validators.required]],
     advisorName: [, [Validators.required]],
-    serviceBranch: [, [Validators.required]]
+    serviceBranch: [, [Validators.required]],
+    bankAccount: [],
+
   });
 
   getFormDataNominee(data) {
@@ -216,7 +221,19 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.familyMemberLifeData = data;
     console.log('family Member', this.FamilyMember);
   }
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+        width: '50%',
+        data: this.bankList
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+        setTimeout(() => {
+            this.bankList = this.enumService.getBank();
+        }, 5000);
+    })
+
+}
 
   disabledMember(value, type) {
     this.callMethod = {
@@ -362,6 +379,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     }
   }
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
     this.addMoreFlag = false;
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
 
@@ -488,6 +506,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.Miscellaneous.controls.permiumPaymentMode.setValue(this.editInsuranceData.premiumPaymentMode);
       this.Miscellaneous.controls.advisorName.setValue(this.editInsuranceData.advisorName);
       this.Miscellaneous.controls.serviceBranch.setValue(this.editInsuranceData.serviceBranch);
+      this.Miscellaneous.controls.bankAccount.setValue(this.editInsuranceData.linkedBankAccountId);
       this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm }
     }
 
@@ -650,6 +669,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "premiumPaymentMode": this.Miscellaneous.get('permiumPaymentMode').value,
         "advisorName": this.Miscellaneous.get('advisorName').value,
         "serviceBranch": this.Miscellaneous.get('serviceBranch').value,
+        'linkedBankAccountId': this.Miscellaneous.get('bankAccount').value,
         "policyId": this.policyData.id,
         "policyTypeId": this.policyData.policyTypeId,
         "description": "test data life insurance 22",

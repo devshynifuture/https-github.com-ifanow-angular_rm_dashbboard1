@@ -395,7 +395,7 @@ export class LiabilitiesComponent implements OnInit {
   checkStatusId(data) {
     data.forEach(obj => {
       if (obj.maturityDate < new Date()) {
-        obj.statusId = 'MATURED';
+        obj.statusId = 'CLOSED';
       } else {
         obj.statusId = 'LIVE';
       }
@@ -418,6 +418,14 @@ export class LiabilitiesComponent implements OnInit {
           element.outstandingAmount = 0
         }
         this.outStandingAmt += element.outstandingAmount
+      });
+      data.loans.forEach(element => {
+        if(element.remainingMonths){
+          element.months=(element.remainingMonths % 12);
+          element.years= ~~(element.remainingMonths / 12)
+          console.log('months',element.months);
+          console.log('years',element.years);
+        }
       });
       this.dataStore = [];
       this.dataSource.filteredData = [];

@@ -55,13 +55,18 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     nomineesListFM: any = [];
   maxDate = new Date();
   minDate = new Date();
-  transactionViewData =
+  // transactionViewData =
+  //   {
+  //     optionList: [
+  //       { name: 'Keep the EMI as it is and reduce the term', value: 1 },
+  //       { name: 'the term as it is and reduce the EMI', value: 2 }
+  //     ],
+  //     transactionHeader: ['Option', 'Part payment date', 'Part payment amount']
+  //   }
+    transactionViewData =
     {
-      optionList: [
-        { name: 'Keep the EMI as it is and reduce the term', value: 1 },
-        { name: 'the term as it is and reduce the EMI', value: 2 }
-      ],
-      transactionHeader: ['Option', 'Part payment date', 'Part payment amount']
+      optionList: [],
+      transactionHeader: ['Part payment date', 'Part payment amount']
     }
   transactionData: any;
   editData: any;

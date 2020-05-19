@@ -53,7 +53,8 @@
                         Tenure remaining
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{libility.remainingMonths}}{{' months'}}
+                        <!-- {{(libility.years + 'yr '+libility.months+' months')}} -->
+                        {{(element.years || element.years != 0 || element.years > 0) ? element.years : ''}}{{(element.years || element.years != 0 || element.years > 0) ? 'yr ' : ''}}{{element.months+' months'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
