@@ -11,7 +11,7 @@ import {detailStatusObj} from './detailStatus';
 })
 export class TransactionsHistoryComponent implements OnInit {
   transactionData: any;
-  transactionDetailData: any;
+  // transactionData: any;
   transactionStatusList;
   isLoading = false;
   showBankDetail = false;
@@ -53,12 +53,12 @@ export class TransactionsHistoryComponent implements OnInit {
     } else if (data.status == 8) {
       this.transactionStatusList = this.transactionStatusList.filter((item) => item.checked !== false);
     }
-    this.getTransactionDetail(data);
+    // this.getTransactionDetail(data);
   }
 
   ngOnInit() {
     console.log('status details', detailStatusObj);
-
+    this.setPaymentMode();
   }
 
   getTransactionDetail(data) {
@@ -71,25 +71,28 @@ export class TransactionsHistoryComponent implements OnInit {
         console.log(responseData);
         this.isLoading = false;
 
-        this.transactionDetailData = responseData;
-        if (this.transactionDetailData.paymentMode == 'OL') {
-          this.transactionDetailData.paymentMode = 'Online';
-          this.showBankDetail = true;
-        } else if (this.transactionDetailData.paymentMode == 'M') {
-          this.transactionDetailData.paymentMode = 'Debit Mandate';
-          this.showBankDetail = false;
-        } else {
-          this.transactionDetailData.paymentMode = 'Online';
-          this.showBankDetail = true;
-        }
+        this.transactionData = responseData;
+
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
+  setPaymentMode() {
+    if (this.transactionData.paymentMode == 'OL') {
+      this.transactionData.paymentMode = 'Online';
+      this.showBankDetail = true;
+    } else if (this.transactionData.paymentMode == 'M') {
+      this.transactionData.paymentMode = 'Debit Mandate';
+      this.showBankDetail = false;
+    } else {
+      this.transactionData.paymentMode = 'Online';
+      this.showBankDetail = true;
+    }
+  }
 
   refresh(data) {
-    this.getTransactionDetail(data);
+    // this.getTransactionDetail(data);
   }
 
   close() {
