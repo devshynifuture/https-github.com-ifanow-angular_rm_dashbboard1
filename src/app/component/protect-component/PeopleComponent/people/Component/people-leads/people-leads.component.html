@@ -116,7 +116,7 @@
             </ng-container> -->
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell class="text-center" *matCellDef="let element">
+                <td mat-cell class="text-center" *matCellDef="let element" class="c-p">
                     <img class="c-p" *ngIf="isLoading==false" [matMenuTriggerFor]="menu"
                         src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">

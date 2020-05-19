@@ -275,7 +275,7 @@
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="tenure">
                                 <mat-option disabled value=''>Select tenure</mat-option>
-                                <mat-option value="1">No. of installments</mat-option>
+                                <mat-option value="1">No. of instalments</mat-option>
                                 <mat-option value="2">No. of years</mat-option>
                                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1"
                                     value="3">
@@ -292,7 +292,7 @@
                 <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0  pb-8 text-black">Enter
-                            {{(sipTransaction.get('tenure').value =='2')?'No. of years':'No. of installments'}}</h5>
+                            {{(sipTransaction.get('tenure').value =='2')?'No. of years':'No. of instalments'}}</h5>
                     </div>
 
                     <div class="col-md-5 inputPaddNone p-0">
@@ -322,13 +322,13 @@
                                     formControlName="modeOfPaymentSelection">
                                     <mat-radio-button
                                         [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value=='1','text-primary':sipTransaction.get('modeOfPaymentSelection').value=='1','radio-border':sipTransaction.get('modeOfPaymentSelection').value=='2'}"
-                                        class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
+                                        [disabled]="isMultiTransact" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
                                         value="1">
                                         Net banking
                                     </mat-radio-button>
                                     <mat-radio-button
                                         [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value=='2','text-primary':sipTransaction.get('modeOfPaymentSelection').value=='2','radio-border':sipTransaction.get('modeOfPaymentSelection').value=='1'}"
-                                        checked="true" class="b-a radioBtn bor_top_tb_right" value="2">
+                                       [disabled]="isMultiTransact" checked="true" class="b-a radioBtn bor_top_tb_right" value="2">
                                         Debit mandate
                                     </mat-radio-button>
                                 </mat-radio-group>

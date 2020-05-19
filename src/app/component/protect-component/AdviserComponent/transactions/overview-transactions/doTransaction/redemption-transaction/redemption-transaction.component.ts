@@ -367,6 +367,7 @@ export class RedemptionTransactionComponent implements OnInit {
           this.isSuccessfulTransaction = true;
 
         }, (error) => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
