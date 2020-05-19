@@ -209,6 +209,7 @@
                                                 <p class="f-14 f-500 roboto "> No Data Found </p>
                                             </div>
                                         </div>
+
                                         <div *ngIf="transactionList==undefined && isLoading">
                                             <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
                                                 <div class="col-md-12 p-0 mt-12 overflow-hidden">
@@ -249,6 +250,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
                                             <div class="row">
                                                 <div class="col-md-6 p-0 relClass">
