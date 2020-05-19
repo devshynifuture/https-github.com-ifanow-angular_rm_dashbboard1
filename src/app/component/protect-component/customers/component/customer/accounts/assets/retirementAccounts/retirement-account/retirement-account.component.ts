@@ -198,15 +198,15 @@ export class RetirementAccountComponent implements OnInit {
   //   }
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
-     private subInjectService: SubscriptionInject, 
-     private fileUpload : FileUploadServiceService,
-     private custumService: CustomerService, private eventService: EventService, 
-     public utils: UtilService, public dialog: MatDialog) {
-      this.clientData = AuthService.getClientData()
+  constructor(private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private subInjectService: SubscriptionInject,
+    private fileUpload: FileUploadServiceService,
+    private custumService: CustomerService, private eventService: EventService,
+    public utils: UtilService, public dialog: MatDialog) {
+    this.clientData = AuthService.getClientData()
   }
 
-  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','bal', 'desc', 'status', 'icons'];
+  displayedColumns11 = ['no', 'owner', 'cvalue', 'bal', 'emp', 'employer', 'vol', 'rate', 'desc', 'status', 'icons'];
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
@@ -232,9 +232,9 @@ export class RetirementAccountComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.data);
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle)
   }
   fetchData(value, fileName) {
     this.isLoadingUpload = true
@@ -254,7 +254,7 @@ export class RetirementAccountComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  pdf(tableTitle){
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -384,7 +384,7 @@ export class RetirementAccountComponent implements OnInit {
   }
 
   openDetailedView(data, flag) {
-    let component = (flag == 'detailedViewEpf') ? DetailedViewEPFComponent : (flag == 'detailedViewNps') ? DetailedViewNpsComponent : (flag == 'detailedViewGratuity') ? DetailedViewGratuityComponent : (flag == 'detailedViewSuperannuation') ? DetaildedViewSuperannuationComponent : flag == 'detailedViewNpsHolding'?DatailedViewNpsHoldingsComponent : DetailedViewEPSComponent;
+    let component = (flag == 'detailedViewEpf') ? DetailedViewEPFComponent : (flag == 'detailedViewNps') ? DetailedViewNpsComponent : (flag == 'detailedViewGratuity') ? DetailedViewGratuityComponent : (flag == 'detailedViewSuperannuation') ? DetaildedViewSuperannuationComponent : flag == 'detailedViewNpsHolding' ? DatailedViewNpsHoldingsComponent : DetailedViewEPSComponent;
     const fragmentData = {
       flag: 'addEPF',
       data,
@@ -526,7 +526,7 @@ export class RetirementAccountComponent implements OnInit {
 
   }
 
-  sumOfGratuityReceived:any;
+  sumOfGratuityReceived: any;
   getGrauityRes(data) {
     this.isLoading = false;
     if (data != undefined) {
@@ -559,7 +559,7 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     this.isLoading = false;
-    
+
     if (data != undefined) {
       if (data.assetList) {
         console.log('getNPSRes =', data);
@@ -569,7 +569,7 @@ export class RetirementAccountComponent implements OnInit {
         this.totalCurrentValue = data.sumOfCurrentValue;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }
-    } 
+    }
     else {
       this.noData = "No NPS found";
       this.dataSource.data = [];
@@ -581,7 +581,7 @@ export class RetirementAccountComponent implements OnInit {
     const obj = this.getObject;
     this.dataSource.data = [{}, {}, {}];
     this.custumService.getSuperannuation(obj).subscribe(
-      data => this.getSuperannuationRes(data)   , (error) => {
+      data => this.getSuperannuationRes(data), (error) => {
         this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
@@ -619,7 +619,7 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPSRes(data) {
     this.isLoading = false;
-    
+
     if (data != undefined) {
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;
@@ -640,10 +640,11 @@ export interface PeriodicElement11 {
   no: string;
   owner: string;
   cvalue: string;
+  bal: string;
   emp: string;
   //empc: string;
   rate: string;
-  bal: string;
+
   bacla: string;
   year: string;
   desc: string;

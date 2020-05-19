@@ -146,3 +146,8 @@
 .mat-radio-disabled .mat-radio-label {
     cursor: none;
 }
+
+::ng-deep .genderRadioButton .mat-radio-button {
+    min-width: 115px;
+    padding-left: 8px;
+}

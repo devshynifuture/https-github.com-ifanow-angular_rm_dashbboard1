@@ -61,7 +61,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   policyFeature: any;
   id: any;
   options: any;
-  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -207,7 +207,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0] 
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0], relationshipId: [data ? data.relationshipId : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -250,26 +250,26 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : null), [Validators.required]],
+      name: [(this.dataForEdit ? this.dataForEdit.name : null)],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       financierName: [(this.dataForEdit ? this.dataForEdit.hypothetication : null)],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       copay: [(this.dataForEdit ? this.dataForEdit.copay : null)],
       copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : null],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
-      additionalCovers: [this.dataForEdit ? (this.dataForEdit.addOns > 0 ? this.dataForEdit.addOns[0].addOnId + '' : null ) : null],
+      additionalCovers: [this.dataForEdit ? (this.dataForEdit.addOns > 0 ? this.dataForEdit.addOns[0].addOnId + '' : null) : null],
       coversAmount: [this.dataForEdit ? (this.dataForEdit.addOns > 0 ? this.dataForEdit.addOns[0].addOnSumInsured : null) : null],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -277,15 +277,15 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
         sharePercentage: [0],
         familyMemberId: [0],
         id: [0],
-        relationshipId:[0]
+        relationshipId: [0]
       })]),
       planFeatureForm: this.fb.array([this.fb.group({
-        planfeatures: ['',[Validators.required]],
-        sumInsured:['',[Validators.required]]
+        planfeatures: ['', [Validators.required]],
+        sumInsured: ['', [Validators.required]]
       })]),
       addOnForm: this.fb.array([this.fb.group({
-        additionalCovers :[''],
-        sumAddOns:null
+        additionalCovers: [''],
+        sumAddOns: null
       })])
 
     })
@@ -304,18 +304,18 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
 
     if (this.dataForEdit) {
       this.getCoOwner.removeAt(0);
-      const data={
-        name:this.dataForEdit.policyHolderName,
-        familyMemberId:this.dataForEdit.policyHolderId
+      const data = {
+        name: this.dataForEdit.policyHolderName,
+        familyMemberId: this.dataForEdit.policyHolderId
       }
-        this.addNewCoOwner(data);
+      this.addNewCoOwner(data);
     }
 
     /***owner***/
 
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.nominees.length > 0){
+      if (this.dataForEdit.nominees.length > 0) {
         this.getNominee.removeAt(0);
         this.dataForEdit.nominees.forEach(element => {
           this.addNewNominee(element);
@@ -324,7 +324,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     }
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.addOns.length > 0){
+      if (this.dataForEdit.addOns.length > 0) {
         this.addOnForm.removeAt(0);
         this.dataForEdit.addOns.forEach(element => {
           this.addNewAddOns(element);
@@ -332,7 +332,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
       }
     }
     if (this.dataForEdit) {
-      if(this.dataForEdit.policyFeatures.length > 0){
+      if (this.dataForEdit.policyFeatures.length > 0) {
         this.planFeatureForm.removeAt(0);
         this.dataForEdit.policyFeatures.forEach(element => {
           this.addNewFeature(element);
@@ -355,50 +355,50 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     this.customerService.getCompanyNames(inpValue).subscribe(
       data => {
         console.log(data);
-        this.options =data;
+        this.options = data;
       }
     );
   }
 
-  dateChange(value,form,formValue){
-    if(form=='policyExpiryDate' && formValue){
-    let startDate =  new Date(this.homeInsuranceForm.controls.policyStartDate.value);
+  dateChange(value, form, formValue) {
+    if (form == 'policyExpiryDate' && formValue) {
+      let startDate = new Date(this.homeInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate :any = new Date(this.homeInsuranceForm.controls.policyStartDate.value);
+      let comparedDate: any = new Date(this.homeInsuranceForm.controls.policyStartDate.value);
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
-      if(policyExpiryDate < comparedDate){
+      if (policyExpiryDate < comparedDate) {
         this.homeInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
         this.homeInsuranceForm.get('policyExpiryDate').markAsTouched();
-      }else{
+      } else {
         this.homeInsuranceForm.get('policyExpiryDate').setErrors();
       }
-    }else{
-      if(formValue){
+    } else {
+      if (formValue) {
         let policyExpiryDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
         let policyStartDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
 
-        if(policyStartDate >= policyExpiryDate){
+        if (policyStartDate >= policyExpiryDate) {
           this.homeInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
           this.homeInsuranceForm.get('policyExpiryDate').markAsTouched();
-        }else{
+        } else {
           this.homeInsuranceForm.get('policyExpiryDate').setErrors();
 
         }
       }
     }
-  
+
   }
   addNewAddOns(data) {
     this.addOnForm.push(this.fb.group({
-      additionalCovers :[data ? data.addOnId +'' : ''],
-      sumAddOns:[data ? data.addOnSumInsured : ''] 
+      additionalCovers: [data ? data.addOnId + '' : ''],
+      sumAddOns: [data ? data.addOnSumInsured : '']
     }));
   }
   removeNewAddOns(item) {
-    let finalFeatureList = this.homeInsuranceForm.get('addOnForm') as FormArray 
-    if(finalFeatureList.length > 1){
-    this.addOnForm.removeAt(item);
+    let finalFeatureList = this.homeInsuranceForm.get('addOnForm') as FormArray
+    if (finalFeatureList.length > 1) {
+      this.addOnForm.removeAt(item);
 
     }
   }
@@ -406,14 +406,14 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   /***owner***/
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.policyFeatureId+'' : '',[Validators.required]],
-      sumInsured:[data ? data.featureSumInsured : '',[Validators.required]]
+      planfeatures: [data ? data.policyFeatureId + '' : '', [Validators.required]],
+      sumInsured: [data ? data.featureSumInsured : '', [Validators.required]]
     }));
   }
   removeNewFeature(item) {
-    let finalFeatureList = this.homeInsuranceForm.get('planFeatureForm') as FormArray 
-    if(finalFeatureList.length > 1){
-    this.planFeatureForm.removeAt(item);
+    let finalFeatureList = this.homeInsuranceForm.get('planFeatureForm') as FormArray
+    if (finalFeatureList.length > 1) {
+      this.planFeatureForm.removeAt(item);
 
     }
   }
@@ -442,10 +442,10 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     let featureList = [];
     let finalplanFeatureList = this.homeInsuranceForm.get('planFeatureForm') as FormArray
     finalplanFeatureList.controls.forEach(element => {
-      if(element.get('planfeatures').value && element.get('sumInsured').value){
+      if (element.get('planfeatures').value && element.get('sumInsured').value) {
         let obj =
         {
-          policyFeatureId : element.get('planfeatures').value,
+          policyFeatureId: element.get('planfeatures').value,
           featureSumInsured: element.get('sumInsured').value,
         }
         featureList.push(obj)
@@ -454,10 +454,10 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     let addOns = [];
     let addOnList = this.homeInsuranceForm.get('addOnForm') as FormArray
     addOnList.controls.forEach(element => {
-      if(element.get('additionalCovers').value && element.get('sumAddOns').value){
+      if (element.get('additionalCovers').value && element.get('sumAddOns').value) {
         let obj =
         {
-          addOnId : element.get('additionalCovers').value,
+          addOnId: element.get('additionalCovers').value,
           addOnSumInsured: element.get('sumAddOns').value,
         }
         addOns.push(obj)
@@ -483,8 +483,8 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
         "advisorName": this.homeInsuranceForm.get('advisorName').value,
         "serviceBranch": this.homeInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
-        "id":(this.id) ? this.id : null,
-        "policyFeatures":featureList,
+        "id": (this.id) ? this.id : null,
+        "policyFeatures": featureList,
         "addOns": addOns,
         nominees: this.homeInsuranceForm.value.getNomineeName,
       }
@@ -497,11 +497,11 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
         });
         obj.nominees = this.homeInsuranceForm.value.getNomineeName;
         obj.nominees.forEach(element => {
-          if(element.sharePercentage){
+          if (element.sharePercentage) {
             element.sumInsured = element.sharePercentage;
           }
-           element.insuredOrNominee = 2
-         });
+          element.insuredOrNominee = 2
+        });
       } else {
         obj.nominees = [];
       }
@@ -514,7 +514,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Updated successfully!", 'dismiss');
+            this.eventService.openSnackBar("Updated successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
@@ -528,7 +528,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Added successfully!", 'dismiss');
+            this.eventService.openSnackBar("Added successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,

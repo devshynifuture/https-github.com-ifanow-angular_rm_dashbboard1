@@ -251,7 +251,9 @@ export class ForgotPasswordComponent implements OnInit {
           this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
           this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
+        }
       );
     } else {
       // err => this.eventService.openSnackBar(err, 'Dismiss');

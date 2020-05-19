@@ -1,17 +1,17 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {NomineeDetailsIinComponent} from '../nominee-details-iin/nominee-details-iin.component';
-import {PostalService} from 'src/app/services/postal.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {ContactDetailsInnComponent} from '../contact-details-inn/contact-details-inn.component';
-import {MatInput} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
+import { PostalService } from 'src/app/services/postal.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
+import { MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
@@ -21,13 +21,14 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 })
 export class BankDetailsIINComponent implements OnInit {
   bankListArr: any;
+  activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private processTransaction: ProcessTransactionService,
-              private cusService: CustomerService,
-              private subService: SubscriptionService,
-              private enumService: EnumServiceService,
-              private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    private processTransaction: ProcessTransactionService,
+    private cusService: CustomerService,
+    private subService: SubscriptionService,
+    private enumService: EnumServiceService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -137,7 +138,7 @@ export class BankDetailsIINComponent implements OnInit {
       }
     );
   }
-  selectedBank(bank){
+  selectedBank(bank) {
     this.firstHolderBank = bank
     this.getdataForm(this.firstHolderBank);
   }
@@ -162,9 +163,9 @@ export class BankDetailsIINComponent implements OnInit {
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-          console.log('postal 121221', data);
-          this.bankData(data);
-        },
+        console.log('postal 121221', data);
+        this.bankData(data);
+      },
         err => {
           console.log(err, 'error internet');
           this.isIfsc = false;
@@ -218,11 +219,11 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
-      bankACNo:[(data.bankName) ? data.bankName : ''], 
+      bankACNo: [(data.bankName) ? data.bankName : ''],
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType): '1', [Validators.required]],
-      branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
+      accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType) : '1', [Validators.required]],
+      //branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
@@ -323,9 +324,10 @@ export class BankDetailsIINComponent implements OnInit {
   setValueFun(value) {
     this.bankDetailsForm.controls.ifscCode.setValue(value.ifscCode);
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
+    this.bankDetailsForm.controls.bankACNo.setValue(value.bankName);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
-    this.bankDetailsForm.controls.accountType.setValue(value.accountType);
+    this.bankDetailsForm.controls.accountType.setValue(parseInt(value.accountType));
     this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
@@ -352,54 +354,36 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
+    this.activeDetailsClass = value;
     if (value == 'first') {
-      if (this.saveBankDetails(this.formId)) {
-        this.formId = value;
-        if (this.firstHolderBank) {
-          this.setValueFun(this.firstHolderBank);
-        } else {
-          return;
-        }
-        this.formId = value;
-      } else if (this.formId == 'first') {
+      this.formId = value;
+      if (this.firstHolderBank) {
+        this.setValueFun(this.firstHolderBank);
+      } else {
         return;
       }
+      this.formId = value;
     } else if (value == 'second') {
-      if (this.saveBankDetails(this.formId)) {
-        if (this.secondHolderBank && this.secondHolderBank.bankName) {
-          this.setValueFun(this.secondHolderBank);
-        } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
-          this.secondHolderBank = this.bankList[1];
-          this.setValueFun(this.secondHolderBank);
-        } else {
-          this.reset();
-        }
-        this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
+      if (this.secondHolderBank && this.secondHolderBank.bankName) {
+        this.setValueFun(this.secondHolderBank);
+      } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
+        this.secondHolderBank = this.bankList[1];
+        this.setValueFun(this.secondHolderBank);
       } else {
-        this.secondHolderBank.validated = false;
-        this.formId = value;
+        this.reset();
       }
+      this.formId = value;
     } else if (value == 'third') {
-      if (this.saveBankDetails(this.formId)) {
-        if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
-          this.formId = value;
-          this.setValueFun(this.thirdHolderBank);
-        } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
-          this.thirdHolderBank = this.bankList[2];
-          this.setValueFun(this.thirdHolderBank);
-        } else {
-          this.reset();
-        }
+      if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
         this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
+        this.setValueFun(this.thirdHolderBank);
+      } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
+        this.thirdHolderBank = this.bankList[2];
+        this.setValueFun(this.thirdHolderBank);
       } else {
-        this.thirdHolderBank.validated = false;
-        this.formId = value;
+        this.reset();
       }
-
+      this.formId = value;
     } else {
       this.saveBankDetails(value);
     }

@@ -479,11 +479,11 @@ export const appConfig = {
   GET_IIN_UCC_OVERVIEW: 'report/client-code/count/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
-  GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
+  // GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
-  TAX_MASTER: 'nse/tax-master/get',
+  TAX_MASTER: 'user/tax-master/get',
   COUNTRY_MASTER: 'user/register/country-code/all/get',
 
   INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',

@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import * as moment from 'moment';
-import {MergeClientFamilyMemberComponent} from '../merge-client-family-member/merge-client-family-member.component';
+import { MergeClientFamilyMemberComponent } from '../merge-client-family-member/merge-client-family-member.component';
 
 @Component({
   selector: 'app-add-family-member',
@@ -21,16 +21,16 @@ export class AddFamilyMemberComponent implements OnInit {
   validatorType = ValidatorType;
   familyMemberList = {
     firstRow: [
-      {name: 'Wife', imgUrl: '/assets/images/svg/wife-profile.svg', selected: false, relationshipTypeId: 2}
+      { name: 'Wife', imgUrl: '/assets/images/svg/wife-profile.svg', selected: false, relationshipTypeId: 2 }
     ],
     secondRow: [
-      {name: 'Father', imgUrl: '/assets/images/svg/father-profile.svg', selected: false, relationshipTypeId: 6},
-      {name: 'Mother', imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 5}
+      { name: 'Father', imgUrl: '/assets/images/svg/father-profile.svg', selected: false, relationshipTypeId: 6 },
+      { name: 'Mother', imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 5 }
     ],
     thirdRow: [
-      {name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, count: 1, relationshipTypeId: 3},
-      {name: 'Daughter', imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 4},
-      {name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 7}
+      { name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, count: 1, relationshipTypeId: 3 },
+      { name: 'Daughter', imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 4 },
+      { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 7 }
     ]
   };
 
@@ -41,8 +41,8 @@ export class AddFamilyMemberComponent implements OnInit {
   step = 1;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private eventService: EventService,
-              private peopleService: PeopleService) {
+    private fb: FormBuilder, private eventService: EventService,
+    private peopleService: PeopleService) {
   }
 
   createFamily: any;
@@ -96,7 +96,7 @@ export class AddFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState((data == 'close') ? {state: 'close'} : {state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
   next() {
@@ -217,7 +217,7 @@ export class AddFamilyMemberComponent implements OnInit {
 
   createFamilyMember() {
     if (this.selectedCount == 0) {
-      this.eventService.openSnackBar('Please select member', 'dismiss');
+      this.eventService.openSnackBar('Please select member', 'Dismiss');
       return;
     }
     this.familyMemberList.firstRow.forEach(element => {

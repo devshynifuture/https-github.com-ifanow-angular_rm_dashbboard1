@@ -1,8 +1,7 @@
-<link href="https://cdn.jsdelivr.net/npm/@css-pkg/circular-std@2.0.0/dist/woff.min.css" rel="stylesheet">
 <div class="container-fluid p-0">
     <div class="row mobileLoginUi">
         <div class="col-md-6 mobileNone imgBoxlogin p-0 bg-grey lter">
-            <img src="assets/images/svg/login-img.svg">
+            <img src="assets/images/svg/login-img.svg" class="w-100">
         </div>
 
         <div class="col-md-6 p-0 bg-white forgotMobileUi flexLogin">
@@ -90,7 +89,8 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Email</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email"></app-email-domain-auto-suggest>
+                                    <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email">
+                                    </app-email-domain-auto-suggest>
                                     <mat-error *ngIf="signUpForm.get('email').errors?.pattern" align="end">Email invalid
                                     </mat-error>
                                     <mat-error *ngIf="signUpForm.get('email').errors?.required" align="end">Email

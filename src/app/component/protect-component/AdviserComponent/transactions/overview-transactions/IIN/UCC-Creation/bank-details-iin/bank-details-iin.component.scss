@@ -158,3 +158,8 @@
 .btnwidth {
     width: 100px;
 }
+
+::ng-deep .uiRadioBtn .mat-radio-button {
+    min-width: 139px;
+    padding-left: 8px;
+}

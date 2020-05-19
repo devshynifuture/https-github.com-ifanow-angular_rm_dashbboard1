@@ -57,6 +57,7 @@ export class AddCamsDetailsComponent implements OnInit {
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId || '', [Validators.required]],
       registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
+      fileOrderingUseabilityStatusId: [1]
     });
   }
 

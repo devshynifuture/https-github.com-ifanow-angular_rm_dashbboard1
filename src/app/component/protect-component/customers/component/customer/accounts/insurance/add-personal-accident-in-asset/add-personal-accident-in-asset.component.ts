@@ -63,7 +63,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   insuredMemberList: any;
   options: any;
 
-  constructor(private dialog: MatDialog,private enumService:EnumServiceService,private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input() set data(data) {
@@ -248,7 +248,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     this.getFamilyData(this.insuredMemberList);
   }
   resetValue(data) {
-    if(data){
+    if (data) {
       data.forEach(item => item.isDisabled = false);
     }
   }
@@ -346,21 +346,21 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.nominees.length > 0){
-      this.getNominee.removeAt(0);
-      this.dataForEdit.nominees.forEach(element => {
-        this.addNewNominee(element);
-      });
-    }
+      if (this.dataForEdit.nominees.length > 0) {
+        this.getNominee.removeAt(0);
+        this.dataForEdit.nominees.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.insuredMembers.length > 0){
-      this.insuredMembersForm.removeAt(0);
-      this.dataForEdit.insuredMembers.forEach(element => {
-        this.addTransaction(element);
-      });
-    }
+      if (this.dataForEdit.insuredMembers.length > 0) {
+        this.insuredMembersForm.removeAt(0);
+        this.dataForEdit.insuredMembers.forEach(element => {
+          this.addTransaction(element);
+        });
+      }
     }
     if (this.dataForEdit) {
       if (this.dataForEdit.policyFeatures.length > 0) {
@@ -383,7 +383,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   //   this.bankList = value;
   // }
   getFamilyData(data) {
-    if(data){
+    if (data) {
       data.forEach(element => {
         for (let e in this.insuredMembersForm.controls) {
           let name = this.insuredMembersForm.controls[e].get('insuredMembers')
@@ -394,7 +394,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
             element.isDisabled = true;
           }
         }
-  
+
       });
     }
   }
@@ -454,7 +454,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     this.customerService.getCompanyNames(inpValue).subscribe(
       data => {
         console.log(data);
-        this.options =data;
+        this.options = data;
       }
     );
   }
@@ -553,7 +553,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Updated successfully!", 'dismiss');
+            this.eventService.openSnackBar("Updated successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
@@ -567,7 +567,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Added successfully!", 'dismiss');
+            this.eventService.openSnackBar("Added successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,

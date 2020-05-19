@@ -1,155 +1,152 @@
 <div class="row pt-150">
-  <div class="col-md-3 d-flex align-items-center">
-    <!--        <h4 class="m-0">All transactions</h4>-->
-  </div>
-
-  <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
-    <div class="row"> -->
-
-  <div *ngIf="credentialData||!isAdvisorSection " class="col-md-9">
-    <div [ngClass]="{'pe-none': isLoading}" class="row">
-      <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
-        <mat-chip-list>
-          <mat-chip-list class="newDateIcon">
-            <mat-chip class="bg-white b-a c-p f-400 p-12">
-              <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)" [max]="maxDate"
-                     [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-              <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true" [selectFirstDateOnClose]="true">
-              </sat-datepicker>
-              <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-            </mat-chip>
-          </mat-chip-list>
-        </mat-chip-list>
-      </div>
-      <div class="col-md-3 pr-0">
-        <div class="form-group mb-0">
-          <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedPreviousToShowDate"
-                      class="form-control br-0">
-            <mat-option value="1">Previous 1 Day</mat-option>
-            <mat-option value="7">Previous 7 Day</mat-option>
-            <mat-option value="30">Previous 30 Day</mat-option>
-            <mat-option value="custom">Custom Range</mat-option>
-          </mat-select>
-        </div>
-      </div>
-      <div *ngIf="isAdvisorSection" class="col-md-2 pr-0">
-        <div class="form-group mb-0">
-          <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedBroker" class="form-control br-0">
-            <mat-option *ngFor="let singleData of filterData" [value]="singleData">{{singleData.brokerCode}}
-            </mat-option>
-          </mat-select>
-        </div>
-      </div>
-      <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
-        <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
-        <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
-          NEW
-        </button>
-      </div>
+    <div class="col-md-3 d-flex align-items-center">
+        <!--        <h4 class="m-0">All transactions</h4>-->
     </div>
 
-  </div>
+    <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
+    <div class="row"> -->
 
-  <div class="col-md-12 all-transactions">
+    <div *ngIf="credentialData||!isAdvisorSection " class="col-md-9">
+        <div [ngClass]="{'pe-none': isLoading}" class="row">
+            <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
+                <mat-chip-list>
+                    <mat-chip-list class="newDateIcon">
+                        <mat-chip class="bg-white b-a c-p f-400 p-12">
+                            <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)" [max]="maxDate" [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
+                            <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true" [selectFirstDateOnClose]="true">
+                            </sat-datepicker>
+                            <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-chip-list>
+            </div>
+            <div class="col-md-3 pr-0">
+                <div class="form-group mb-0">
+                    <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedPreviousToShowDate" class="form-control br-0">
+                        <mat-option value="1">Previous 1 Day</mat-option>
+                        <mat-option value="7">Previous 7 Day</mat-option>
+                        <mat-option value="30">Previous 30 Day</mat-option>
+                        <mat-option value="custom">Custom Range</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div *ngIf="isAdvisorSection" class="col-md-2 pr-0">
+                <div class="form-group mb-0">
+                    <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedBroker" class="form-control br-0">
+                        <mat-option *ngFor="let singleData of filterData" [value]="singleData">{{singleData.brokerCode}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
+                <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
+                <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+                    NEW
+                </button>
+            </div>
+        </div>
 
-    <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
-           appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
-      <ng-container matColumnDef="position">
-        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform</th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div class="bar"> {{element.platformName}} </div>
-        </td>
-      </ng-container>
-      <!-- <ng-container matColumnDef="name">
+    </div>
+
+    <div class="col-md-12 all-transactions">
+
+        <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
+            <ng-container matColumnDef="position">
+                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform</th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                    <div class="bar"> {{element.platformName}} </div>
+                </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="name">
     <th mat-sort-header="brokerCode" mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
     <td mat-cell *matCellDef="let element" class="br">
         <div class="bar"> {{element.brokerCode}} </div>
     </td>
 </ng-container> -->
-      <ng-container matColumnDef="weight">
-        <th *matHeaderCellDef class="br w-18" mat-header-cell mat-sort-header="clientName"> Investor name Client code
-        </th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div class="bar">
+            <ng-container matColumnDef="weight">
+                <th *matHeaderCellDef class="br w-18" mat-header-cell mat-sort-header="clientName"> Investor name
+                </th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                    <div class="bar">
 
-            <span>{{element.clientName}}</span>
-            <span>{{element.clientCode}}</span>
+                        <span>{{element.clientName}}</span>
+                        <span class="pl-4 text-primitive">{{element.clientCode}}</span>
 
-          </div>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="symbol">
-        <th *matHeaderCellDef class="br w-27" mat-header-cell mat-sort-header="schemeName"> Scheme details</th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div class="bar"> {{element.schemeName}} </div>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="type">
-        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionType"> Type</th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div class="bar"> {{element.transactionType}} </div>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="amount">
-        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="amtUnitType"> Amount/Units</th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div class="bar">
-            <span *ngIf="element.amtUnitType=='Amount'">₹</span>
-            <span appFormatNumber> {{element.amount}}</span>
-            <span *ngIf="element.amtUnitType==undefined && element.platformName"> Units</span></div>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="order">
-        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="orderDate"> Order date time</th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} {{element.orderDate | date:'shortTime'}}
-          </div>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
-        <td *matCellDef="let element" class="br" mat-cell>
-          <div *ngIf="element.transactionStatus == 'PENDING AUTHORIZATION'" class="bar text-warning t-10 f-500 c-p">
-            <div class="bar"> {{element.transactionStatus}} </div>
-          </div>
-          <div *ngIf="element.transactionStatus == 'Transaction rejected'" class="bar text-danger t-10 f-500 c-p">
-            <div class="bar"> {{element.transactionStatus}} </div>
-          </div>
-          <div *ngIf="element.transactionStatus == 'UNKNOWN'" class="bar text-primary t-10 f-500 c-p">
-            <div class="bar"> {{element.transactionStatus}} </div>
-          </div>
-          <div *ngIf="element.transactionStatus == 'Order submitted to AMC'" class="bar text-success t-10 f-500 c-p">
-            <div class="bar"> {{element.transactionStatus}} </div>
-          </div>
-          <!-- <div class="bar">{{element.transactionStatus}}</div> -->
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="icons">
-        <th *matHeaderCellDef mat-header-cell></th>
-        <td (click)="openTransactionHistory(element)" *matCellDef="let element" mat-cell>
-          <div class="bar">
-            <i *ngIf="element.platformName" class="material-icons c-p text-custom">
-              keyboard_arrow_right
-            </i>
-          </div>
-        </td>
-      </ng-container>
-      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-    </table>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="symbol">
+                <th *matHeaderCellDef class="br w-27" mat-header-cell mat-sort-header="schemeName"> Scheme details</th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                    <div class="bar"> {{element.schemeName}} </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionType"> Type</th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                    <div class="bar"> {{element.transactionType}} </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+                <th *matHeaderCellDef class="br w-12 rightTextHide" mat-header-cell mat-sort-header="amtUnitType">
+                    Amount/Units
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                    <div class="bar">
+                        <span *ngIf="element.amtUnitType=='Amount'">₹</span>
+                        <span appFormatNumber> {{element.amount}}</span>
+                        <span *ngIf="element.amtUnitType==undefined && element.platformName"> Units</span></div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="order">
+                <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
+                </th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                    <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} {{element.orderDate | date:'shortTime'}}
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                    <div *ngIf="element.transactionStatus == 'PENDING AUTHORIZATION'" class="bar text-warning t-10 f-500 c-p">
+                        <div class="bar"> {{element.transactionStatus}} </div>
+                    </div>
+                    <div *ngIf="element.transactionStatus == 'Transaction rejected'" class="bar text-danger t-10 f-500 c-p">
+                        <div class="bar"> {{element.transactionStatus}} </div>
+                    </div>
+                    <div *ngIf="element.transactionStatus == 'UNKNOWN'" class="bar text-primary t-10 f-500 c-p">
+                        <div class="bar"> {{element.transactionStatus}} </div>
+                    </div>
+                    <div *ngIf="element.transactionStatus == 'Order submitted to FGC'" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> {{element.transactionStatus}} </div>
+                    </div>
+                    <!-- <div class="bar">{{element.transactionStatus}}</div> -->
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="icons">
+                <th *matHeaderCellDef mat-header-cell></th>
+                <td (click)="openTransactionHistory(element)" *matCellDef="let element" mat-cell>
+                    <div class="bar">
+                        <i *ngIf="element.platformName" class="material-icons c-p text-custom">
+                            keyboard_arrow_right
+                        </i>
+                    </div>
+                </td>
+            </ng-container>
+            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+        </table>
 
-    <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
-      <img class="width300" src="assets/images/svg/noDataFound.svg">
-      <h4 class="pt-12">{{noData}}</h4>
-      <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  "
-              mat-stroked-button>
-        ADD NEW
-      </button>
-      <button *ngIf="noData=='No credentials found'"
-              [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
-              class="btn-primary addon v-middle" mat-stroked-button>
-        ADD NEW
-      </button>
+        <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            <img class="width300" src="assets/images/svg/noDataFound.svg">
+            <h4 class="pt-12">{{noData}}</h4>
+            <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  " mat-stroked-button>
+                ADD NEW
+            </button>
+            <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
     </div>
-  </div>
 </div>

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OnlineTransactionService } from '../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { apiConfig } from 'src/app/config/main-config';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-settings-empanelled-amc',
@@ -12,11 +12,12 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class SettingsEmpanelledAmcComponent implements OnInit {
   displayedColumns;
-  dataSource = new MatTableDataSource();
+  dataSource: any = new MatTableDataSource();
   advisorId: any;
   isLoading = false;
   credentialData: any;
   noData: string;
+  @ViewChild('epmTableSort', { static: false }) epmTableSort: MatSort;
   constructor(private tranService: OnlineTransactionService, private eventService: EventService) { }
   columns = [];
   ngOnInit() {
@@ -47,6 +48,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     console.log(data);
     if (data) {
       this.credentialData = data;
+      
       this.getEmpanelledAmcData();
     } else {
       this.isLoading = false;
@@ -66,6 +68,8 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
         this.isLoading = false;
         this.getEmpanelledAmcDataRes(data);
         this.dataSource.data = data.amcMasterList;
+        this.dataSource.sort = this.epmTableSort;
+
       },
       err => {
         this.isLoading = false;

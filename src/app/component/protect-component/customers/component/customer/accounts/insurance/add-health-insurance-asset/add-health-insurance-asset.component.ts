@@ -19,7 +19,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
     providers: [
         [DatePipe],
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-      ],
+    ],
 })
 export class AddHealthInsuranceAssetComponent implements OnInit {
     barButtonOptions: MatProgressButtonOptions = {
@@ -72,7 +72,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     insuredMemberList: any;
     options: any;
 
-    constructor(private enumService:EnumServiceService,private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
+    constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
 
     get data() {
@@ -160,29 +160,29 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     findCompanyName(data) {
         const inpValue = this.healthInsuranceForm.get('insurerName').value;
         this.customerService.getCompanyNames(inpValue).subscribe(
-          data => {
-            console.log(data);
-            this.options =data;
-          },
-          (error) =>{
-              console.log(error);
-          }
+            data => {
+                console.log(data);
+                this.options = data;
+            },
+            (error) => {
+                console.log(error);
+            }
         );
-      }
-    
-      openDialog(eventData): void {
+    }
+
+    openDialog(eventData): void {
         const dialogRef = this.dialog.open(LinkBankComponent, {
-          width: '50%',
-          data: this.bankList
+            width: '50%',
+            data: this.bankList
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
-          setTimeout(() => {
-            this.bankList = this.enumService.getBank();
-          }, 5000);
+            setTimeout(() => {
+                this.bankList = this.enumService.getBank();
+            }, 5000);
         })
-    
-      }
+
+    }
     onChangeJointOwnership(data) {
         this.callMethod = {
             methodName: 'onChangeJointOwnership',
@@ -428,25 +428,25 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 this.addTransaction(element);
             });
         }
-        if(this.dataForEdit){
+        if (this.dataForEdit) {
             this.dataForEdit.insuredMembers.forEach(element => {
-                if(element.sumInsured == 0){
-                 this.showinsuredMemberSum = false
+                if (element.sumInsured == 0) {
+                    this.showinsuredMemberSum = false
                 }
-             });
+            });
         }
-       
-        if(this.healthInsuranceForm.get('PlanType').value == '8'){
+
+        if (this.healthInsuranceForm.get('PlanType').value == '8') {
             this.showSumAssured = true;
-        }else{
+        } else {
             this.showSumAssured = false;
         }
-        if(this.healthInsuranceForm.get('planDetails').value != '0'){
+        if (this.healthInsuranceForm.get('planDetails').value != '0') {
             this.showDeductibleSum = true;
-        }else{
+        } else {
             this.showDeductibleSum = false;
         }
-        
+
         this.ownerData = { Fmember: this.nomineesListFM, controleData: this.healthInsuranceForm };
         this.bankAccountDetails = { accountList: this.accountList, controleData: this.healthInsuranceForm };
 
@@ -461,35 +461,35 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         this.bankList = this.enumService.getBank();
         this.minDate.setFullYear(this.minDate.getFullYear() - 100);
     }
-    dateChange(value,form,formValue){
-        if(form=='policyExpiryDate' && formValue){
-        let startDate =  new Date(this.healthInsuranceForm.controls.policyStartDate.value);
-          let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-          let comparedDate :any = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
-          comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
-          comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
-          if(policyExpiryDate < comparedDate){
-            this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
-            this.healthInsuranceForm.get('policyExpiryDate').markAsTouched();
-          }else{
-            this.healthInsuranceForm.get('policyExpiryDate').setErrors();
-          }
-        }else{
-          if(formValue){
+    dateChange(value, form, formValue) {
+        if (form == 'policyExpiryDate' && formValue) {
+            let startDate = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
             let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-            let policyStartDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
-
-            if(policyStartDate >= policyExpiryDate){
-              this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
-              this.healthInsuranceForm.get('policyExpiryDate').markAsTouched();
-            }else{
-              this.healthInsuranceForm.get('policyExpiryDate').setErrors();
-    
+            let comparedDate: any = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
+            comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+            comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+            if (policyExpiryDate < comparedDate) {
+                this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+                this.healthInsuranceForm.get('policyExpiryDate').markAsTouched();
+            } else {
+                this.healthInsuranceForm.get('policyExpiryDate').setErrors();
             }
-          }
+        } else {
+            if (formValue) {
+                let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+                let policyStartDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
+
+                if (policyStartDate >= policyExpiryDate) {
+                    this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+                    this.healthInsuranceForm.get('policyExpiryDate').markAsTouched();
+                } else {
+                    this.healthInsuranceForm.get('policyExpiryDate').setErrors();
+
+                }
+            }
         }
-      
-      }
+
+    }
     changeSign(event, value, formValue) {
         this.healthInsuranceForm.get(value).setValue('');
         if (event == '2') {
@@ -511,7 +511,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     }
 
     getFamilyData(data) {
-        if(data){
+        if (data) {
             data.forEach(element => {
                 for (let e in this.insuredMembersForm.controls) {
                     let name = this.insuredMembersForm.controls[e].get('insuredMembers');
@@ -520,26 +520,26 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                         this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
                         this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
                         element.isDisabled = true;
-    
+
                     }
                 }
-    
+
             });
         }
-    
+
     }
 
     addTransaction(data) {
         this.insuredMembersForm.push(this.fb.group({
-            insuredMembers: [data ? data.name : '',[Validators.required]],
-            sumAssured: [data ? data.sumInsured : '',[Validators.required]],
+            insuredMembers: [data ? data.name : '', [Validators.required]],
+            sumAssured: [data ? data.sumInsured : '', [Validators.required]],
             id: [data ? data.id : ''],
             relationshipId: [data ? data.relationshipId : ''],
             familyMemberId: [data ? data.familyMemberId : '']
         }));
         this.resetValue(this.insuredMemberList);
         this.getFamilyData(this.insuredMemberList);
-        this.onChangeSetErrorsType(this.healthInsuranceForm.get('PlanType').value,'planType')
+        this.onChangeSetErrorsType(this.healthInsuranceForm.get('PlanType').value, 'planType')
     }
 
     removeTransaction(item) {
@@ -552,8 +552,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         this.getFamilyData(this.insuredMemberList);
 
     }
-    resetValue(data){
-        if(data){
+    resetValue(data) {
+        if (data) {
             data.forEach(item => item.isDisabled = false);
         }
     }
@@ -680,7 +680,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                     data => {
                         this.barButtonOptions.active = false;
                         console.log(data);
-                        this.eventService.openSnackBar('Updated successfully!', 'dismiss');
+                        this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
                         const insuranceData =
                         {
                             insuranceTypeId: this.inputData.insuranceTypeId,
@@ -694,7 +694,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                     data => {
                         this.barButtonOptions.active = false;
                         console.log(data);
-                        this.eventService.openSnackBar('Added successfully!', 'dismiss');
+                        this.eventService.openSnackBar('Added successfully!', 'Dismiss');
                         const insuranceData =
                         {
                             insuranceTypeId: this.inputData.insuranceTypeId,
