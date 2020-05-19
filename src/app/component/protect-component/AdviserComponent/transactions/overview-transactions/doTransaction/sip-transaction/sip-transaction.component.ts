@@ -21,6 +21,7 @@ import { AddMandateComponent } from '../../MandateCreation/add-mandate/add-manda
 export class SipTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -543,6 +544,9 @@ export class SipTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('getFoliosAmcWiseRes', data);
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.sipTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }

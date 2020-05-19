@@ -17,6 +17,7 @@ import { map, startWith } from 'rxjs/operators';
 export class StpTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private eventService: EventService,
@@ -330,6 +331,9 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.stpTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }

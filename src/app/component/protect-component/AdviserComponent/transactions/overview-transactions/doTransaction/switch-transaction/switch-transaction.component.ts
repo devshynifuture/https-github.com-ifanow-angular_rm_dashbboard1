@@ -19,6 +19,7 @@ export class SwitchTransactionComponent implements OnInit {
 
   showSpinnerEx = false;
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
@@ -258,6 +259,9 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.switchTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
