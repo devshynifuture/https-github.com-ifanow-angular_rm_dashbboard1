@@ -77,7 +77,7 @@
     </div>
   </div>
   <div *ngIf="!(transactionData.status==0 || transactionData.status==1 || transactionData.status==7)">
-    <div *ngFor="let singleStep of transactionDetails" class="circleGreen">
+    <div *ngFor="let singleStep of transactionStatusList" class="circleGreen">
       <div class="d-flex">
         <div *ngIf="singleStep.checked == true" class="circle1">
           <i class="material-icons text-success">
