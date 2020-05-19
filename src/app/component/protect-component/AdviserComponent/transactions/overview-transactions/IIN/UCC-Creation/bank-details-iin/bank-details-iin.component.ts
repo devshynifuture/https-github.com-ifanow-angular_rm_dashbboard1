@@ -1,18 +1,18 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
-import { PostalService } from 'src/app/services/postal.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
-import { MatInput } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {NomineeDetailsIinComponent} from '../nominee-details-iin/nominee-details-iin.component';
+import {PostalService} from 'src/app/services/postal.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {ContactDetailsInnComponent} from '../contact-details-inn/contact-details-inn.component';
+import {MatInput} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -24,11 +24,11 @@ export class BankDetailsIINComponent implements OnInit {
   activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-    private processTransaction: ProcessTransactionService,
-    private cusService: CustomerService,
-    private subService: SubscriptionService,
-    private enumService: EnumServiceService,
-    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+              private processTransaction: ProcessTransactionService,
+              private cusService: CustomerService,
+              private subService: SubscriptionService,
+              private enumService: EnumServiceService,
+              private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -138,10 +138,12 @@ export class BankDetailsIINComponent implements OnInit {
       }
     );
   }
+
   selectedBank(bank) {
-    this.firstHolderBank = bank
+    this.firstHolderBank = bank;
     this.getdataForm(this.firstHolderBank);
   }
+
   getHolderList(data) {
     console.log(data);
     this.holderList = data;
@@ -163,9 +165,9 @@ export class BankDetailsIINComponent implements OnInit {
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-        console.log('postal 121221', data);
-        this.bankData(data);
-      },
+          console.log('postal 121221', data);
+          this.bankData(data);
+        },
         err => {
           console.log(err, 'error internet');
           this.isIfsc = false;
@@ -225,7 +227,7 @@ export class BankDetailsIINComponent implements OnInit {
       accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType) : '1', [Validators.required]],
       //branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
-      paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
+      paymentMode: [(!data) ? '02' : (data.paymentMode) ? data.paymentMode : '02', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
@@ -328,9 +330,9 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
     this.bankDetailsForm.controls.accountType.setValue(parseInt(value.accountType));
-  //  this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
+    //  this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
-    this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
+    this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode ? value.paymentMode : '02');
     if (value.address) {
       this.bankDetailsForm.controls.address1.setValue(value.address.address1);
       this.bankDetailsForm.controls.address2.setValue(value.address.address2);
@@ -414,7 +416,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.sendObj = {
         ...this.inputData,
         ownerName: this.generalDetails.ownerName,
-        holdingType: this.generalDetails.holdingNature,
+        holdingType: this.generalDetails.holdingType,
         taxStatus: this.generalDetails.taxStatus,
         familyMemberId: this.generalDetails.familyMemberId,
         clientId: this.generalDetails.clientId,
@@ -436,7 +438,7 @@ export class BankDetailsIINComponent implements OnInit {
       accountType: holder.accountType,
       bankName: holder.bankName,
       branchName: holder.branchName,
-   //   branchCode: holder.branchCode,
+      //   branchCode: holder.branchCode,
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
       paymentMode: this.bankDetailsForm.controls.paymentMode.value,

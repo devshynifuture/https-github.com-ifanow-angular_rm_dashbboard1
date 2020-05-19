@@ -629,7 +629,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       const obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
-        holdingNature: this.getDataSummary.defaultClient.holdingType,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,

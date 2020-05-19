@@ -117,8 +117,8 @@
           <div *ngIf="element.status == 7" class="bar text-warning  f-500 c-p">
             <div class="bar"> Transaction rejected</div>
           </div>
-          <div *ngIf="element.status == 2" class="bar text-danger  f-500 c-p">
-            <div class="bar"> Pending authorization</div>
+          <div *ngIf="element.status == 1" class="bar text-danger  f-500 c-p">
+            <div class="bar">Failue</div>
           </div>
           <div *ngIf="element.status == 0" class="bar text-primary  f-500 c-p">
             <div class="bar"> Unknown</div>
@@ -129,8 +129,8 @@
           <div *ngIf="element.status == 4" class="bar text-success  f-500 c-p">
             <div class="bar">Pending submission to AMC</div>
           </div>
-          <div *ngIf="element.status == 6" class="bar text-success t-10 f-500 c-p">
-            <div class="bar">Order processed</div>
+          <div *ngIf="element.status == 2" class="bar text-success t-10 f-500 c-p">
+            <div class="bar">Pending Authorization</div>
           </div>
           <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
             <div class="bar">OTP authorised</div>
