@@ -19,6 +19,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   folioNumberShow: any;
+  isMultiTransact: boolean = false;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
@@ -652,6 +653,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   AddMultiTransaction() {
     Object.assign(this.transactionSummary, { isMultiTransact: true });
+    this.isMultiTransact = true
     if (this.isEdit != true) {
       this.id++;
     }
