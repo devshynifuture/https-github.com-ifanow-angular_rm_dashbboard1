@@ -212,7 +212,7 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group ">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="frequency">
+                                <mat-select class="form-control" [(ngModel)]="defaultFrequency" formControlName="frequency">
                                     <mat-option value='' disabled>Select STP frequency</mat-option>
                                     <mat-option (click)="selectedFrequency(frequency)"
                                         *ngFor="let frequency of switchFrequency" [value]="frequency.frequency">
@@ -254,13 +254,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="mb-8 pt-28 text-black ">Select 1st Date STP</h5>
+                        <h5 class="mb-8 pt-28 text-black ">Select 1st STP date</h5>
                     </div>
 
                     <div class="col-md-5 form-group p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="date">
-                                <mat-option value='' disabled>Select 1st Date STP</mat-option>
+                                <mat-option value='' disabled>Select 1st STP date</mat-option>
                                 <mat-option *ngFor="let date of dateDisplay" value="{{date.dateToDisplay}}">
                                     {{date.dateToDisplay}}</mat-option>
                             </mat-select>
