@@ -3,7 +3,8 @@
         <!--        <h4 class="m-0">Clients</h4>-->
     </div>
 
-    <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end pb-10">
+    <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
+        class="col-md-8 d-flex align-items-center justify-content-end pb-10">
 
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
@@ -31,7 +32,9 @@
 <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients">
         <div [ngClass]="{'table-scroll':isLoading==false }">
-            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
+                [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                class="skeletonAnimation">
                 <ng-container matColumnDef="position" sticky>
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20"> Group head name
                     </th>
@@ -78,7 +81,8 @@
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
-                        <div class="bar"> {{element.lastLoginString}} <span *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
+                        <div class="bar"> {{element.lastLoginString}} <span
+                                *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
@@ -95,8 +99,9 @@
                 </ng-container>
                 <ng-container matColumnDef="icons1" sticky>
                     <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element">
-                        <img *ngIf="isLoading==false" class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                    <td mat-cell *matCellDef="let element" class="c-p">
+                        <img *ngIf="isLoading==false" class="c-p" [matMenuTriggerFor]="menu"
+                            src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menu="matMenu">
                             <button (click)="addClient(element)" mat-menu-item>
                                 <span>Edit</span>

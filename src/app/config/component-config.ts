@@ -586,6 +586,8 @@ export const appConfig = {
   GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
   GET_COMMENT_COUNT_RM_ADMIN: 'rmdashboard/dashboard/ifa-onboard/task-level-comment/count',
   GET_FILE_ORDER_ARN_RIA_LIST: 'fileorder/arn-ria/list/get',
+  REFRESH_FILE_ORDER_HISTORICAL_PER_ROW: 'fileorder/historical/advisor/order/refresh',
+  REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

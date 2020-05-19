@@ -21,6 +21,8 @@ import { AddMandateComponent } from '../../MandateCreation/add-mandate/add-manda
 export class SipTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
+  defaultFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -138,7 +140,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   selectSchemeOption(value) {
-    //this.selectExistingOrNew(value)
+    this.selectExistingOrNew(value)
     console.log('value selction scheme', value);
     this.sipTransaction.controls.schemeSip.reset();
     this.folioList = [];
@@ -326,7 +328,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   setMinAmount() {
-    if (this.sipTransaction.get('schemeSelection').value == '2') {
+    if (this.sipTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     } else if (this.ExistingOrNew == 1) {
       this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
@@ -355,6 +357,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.sipFrequency) {
       this.sipFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
+          this.defaultFrequency = singleFrequency.frequency
           this.sipTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }
@@ -517,7 +520,7 @@ export class SipTransactionComponent implements OnInit {
           this.sipTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'Dismiss');
-          this.setMinAmount();
+          //this.setMinAmount();
 
         }
       );
@@ -543,6 +546,9 @@ export class SipTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('getFoliosAmcWiseRes', data);
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.sipTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }

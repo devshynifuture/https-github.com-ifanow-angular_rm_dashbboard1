@@ -7,7 +7,9 @@
 .m-t-md button {
     font-size: 12px;
 }
-
+.mat-option-text {
+    text-transform: capitalize !important;
+  }
 .m-t-md button:focus {
     outline: none;
 }
