@@ -114,7 +114,7 @@
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
                 <td *matCellDef="let element" class="br" mat-cell>
-                    <div *ngIf="element.status == 7" class="bar text-danger t-10 f-500 c-p">
+                    <div *ngIf="element.status == 7" class="bar text-warning t-10 f-500 c-p">
                         <div class="bar"> Transaction rejected </div>
                     </div>
                     <div *ngIf="element.status == 2" class="bar text-danger t-10 f-500 c-p">
