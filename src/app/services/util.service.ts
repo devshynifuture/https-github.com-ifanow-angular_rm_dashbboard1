@@ -431,6 +431,8 @@ export class ValidatorType {
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
   static COMPULSORY_ALPHA_NUMERIC = new RegExp(/^[a-zA-Z]+[a-zA-Z0-9/-]*$/);
   static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);
+  static CAPITAL_CASE = new RegExp(/^[ A-Z0-9_@./#&+-]*$/);
+
   static EMAIL = new RegExp(/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/);
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//-]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);

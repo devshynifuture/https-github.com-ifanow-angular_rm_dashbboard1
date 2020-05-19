@@ -15,26 +15,25 @@
 
         <div *ngIf="credentialData" class="col-md-8 text-right pt-4">
             <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
-                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="type to filter data">
+                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="Type to filter data">
             </mat-form-field>
 
 
             <img class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg">
             <img (click)="refresh(true)" class="b-a p-8 c-p" src="/assets/images/svg/reload.svg">
-            <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i
-          class="material-icons">filter_list</i>FILTERS
-      </button>
+            <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            </button>
             <mat-menu #IINUCCMenu>
                 <button (click)="getIINUCC()" mat-menu-item>
-          PENDING
-        </button>
+                    PENDING
+                </button>
                 <button (click)="getMappedData()" mat-menu-item>
-          INVESTMENT READY
-        </button>
+                    INVESTMENT READY
+                </button>
             </mat-menu>
             <button (click)="openNewCustomerIIN()" *ngIf="dataSource.filteredData.length > 0" class="btn-primary addon v-middle" mat-stroked-button> ADD
-        NEW
-      </button>
+                NEW
+            </button>
 
         </div>
     </div>
@@ -51,7 +50,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="brokerCode">
-                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="brokerCode"> ARN/RIA</th>
+                    <th *matHeaderCellDef class="br w-9" mat-header-cell mat-sort-header="brokerCode"> ARN/RIA</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{isLoading ? '' : (element.brokerCode) ? element.brokerCode : '-'}} </div>
                     </td>
@@ -87,7 +86,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="clientCode">
-                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="accountNo"> Account number</th>
+                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="accountNo"> Account number
+                    </th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{isLoading ? '' : (element.clientCode) ? element.clientCode : '-'}} </div>
                     </td>
@@ -96,7 +96,7 @@
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="activationStatus"> Status</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
-                            <span *ngIf="element.activationStatus=='YES'" class="text-success t-10 f-500 c-p">{{'INVESTMENT READY'}}</span>
+                            <span *ngIf="element.activationStatus=='YES'" class="text-success  f-500 c-p">{{'Investment ready'}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -107,8 +107,8 @@
                             {{''}}
                         </div>
                         <div *ngIf="isLoading==false"><i class="material-icons c-p">
-                more_vert
-              </i></div>
+                                more_vert
+                            </i></div>
                     </td>
                 </ng-container>
 
@@ -119,13 +119,13 @@
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">{{noData}}</h4>
                 <button *ngIf="noData=='No investors found'" class="btn-primary addon v-middle  " mat-stroked-button>
-          <!-- (click)="openTransaction()"for prod build -->
+                    <!-- (click)="openTransaction()"for prod build -->
 
-          ADD NEW
-        </button>
+                    ADD NEW
+                </button>
                 <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
-          ADD NEW
-        </button>
+                    ADD NEW
+                </button>
             </div>
         </div>
     </div>

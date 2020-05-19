@@ -28,18 +28,18 @@
                                     <p class="t-left m-0">{{f.name}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
-                                    <button mat-stroked-button *ngIf="f.userType==3" class="small-primitive">
-                                        FAMILY MEMBER
-                                    </button>
-                                    <button mat-stroked-button *ngIf="f.userType==2" class="small-primitive">CLIENT
-                                    </button>
+                                    <button *ngIf="f.userType==3" class="small-primitive" mat-stroked-button>
+                    FAMILY MEMBER
+                  </button>
+                                    <button *ngIf="f.userType==2" class="small-primitive" mat-stroked-button>CLIENT
+                  </button>
                                 </div>
                             </div>
                         </mat-option>
                     </mat-autocomplete>
                     <!-- <mat-error *ngIf="transactionAddForm.get('ownerName').errors?.required" class="f-12 pt-4">
-                This field is required
-            </mat-error> -->
+      This field is required
+  </mat-error> -->
                     <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
                         This family member does not exist
                     </mat-error>
@@ -50,28 +50,22 @@
             </div>
         </div>
     </div>
-    <div class=" pt-60 pl-40" *ngIf="clientCodeData==undefined && stateCtrl.valid">
+    <div *ngIf="noMapping && stateCtrl.valid" class=" pt-60 pl-40">
         <div class="row">
             <div class="col-md-12 pl-0">
                 <p class="f-16 text-black mb-4 roboto">Uh oh!</p>
                 <p class="f-16 f-500 roboto">It looks like {{selectedName}} does not have an investment account opened yet.
                 </p>
                 <p class="f-16 text-black roboto">Would you like to open a new investment account?</p>
-                <button mat-button class="newAcBtn bg-primary">
-                    Open new investment account <i class="material-icons text-right ml-16"> arrow_forward </i>
-                </button>
+                <button class="newAcBtn bg-primary" mat-button>
+          Open new investment account <i class="material-icons text-right ml-16"> arrow_forward </i>
+        </button>
                 <p class="f-12 lh-16 text-primitive">Depending on your registration with NSE NMF <br>of BSE Star MF, you will be able to create a new IIN/UCC</p>
             </div>
         </div>
     </div>
-    <!-- <div *ngIf="clientCodeData==undefined && stateCtrl.valid" class="d-flex flex-column align-items-center">
-        <h4 class="text-center pt-12">No IIN/UCC found</h4>
-        <button (click)="openNewCustomerIIN()" *ngIf="inputData.isAdvisorSection" class="btn-green text-white" mat-button>
-            IIN/UCC CREATION
-        </button>
-    </div> -->
     <!-- second click -->
-    <div *ngIf="formStep == 'step-2' &&  !transactionType && clientCodeData && stateCtrl.valid">
+    <div *ngIf="formStep == 'step-2' &&  !transactionType &&!noMapping && stateCtrl.valid">
         <div class="row pt-10 pl-40 pr-40">
             <div class="col-md-12 p-0">
                 <h5 class="m-0 text-black">Great! Next, select a transaction type from the below given options...</h5>
@@ -167,20 +161,14 @@
         </div>
     </div>
     <div *ngIf="noMapping==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
-        <p>no mapping found</p>
-        <button (click)="noMapFunction()" class="btn-primary addon v-middle" mat-stroked-button><i
-                class="material-icons pr-8 v-middle">
-                add
-            </i>ADD
-        </button>
+        <p>No mapping found</p>
+        <button (click)="noMapFunction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+    </button>
     </div>
     <div *ngIf="noSubBroker==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
-        <p>no broker found</p>
-        <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button><i
-                class="material-icons pr-8 v-middle">
-                add
-            </i>ADD
-        </button>
+        <p>No broker found</p>
+        <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+    </button>
     </div>
 
 

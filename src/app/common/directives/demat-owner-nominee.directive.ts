@@ -87,14 +87,19 @@ export class DematOwnerNomineeDirective {
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data);
-    data.forEach((singleData) => {
-      singleData['userName'] = singleData.displayName;
-      setTimeout(() => {
-        singleData.disable = false;
-      }, 100);
-    });
-    this.sendData = data;
-    this.disabledMember(null);
+    if (data) {
+      data.forEach((singleData) => {
+        singleData['userName'] = singleData.displayName;
+        setTimeout(() => {
+          singleData.disable = false;
+        }, 100);
+      });
+      this.sendData = data;
+      this.disabledMember(null);
+    }
+    else {
+      this.sendData = [];
+    }
     this.valueChange1.emit(this.sendData);
     console.log(this.sendData, 'sendData 123');
   }

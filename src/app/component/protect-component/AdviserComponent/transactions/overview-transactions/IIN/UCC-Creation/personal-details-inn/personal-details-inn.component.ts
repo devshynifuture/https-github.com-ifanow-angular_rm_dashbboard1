@@ -1,15 +1,15 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatInput } from '@angular/material';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatInput} from '@angular/material';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -91,7 +91,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       }
     }
     this.holdingList = [];
-    if (this.inputData.holdingNature != 'SI') {
+    if (this.inputData.holdingType != 'SI') {
       this.getNomineeList(this.clientData);
     }
     // this.obj1 = [];
@@ -273,7 +273,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       holderList.push(this.thirdHolder);
     }
 
-    if (this.inputData.holdingNature != 'SI' && holderList.length < 2 && flag) {
+    if (this.inputData.holdingType != 'SI' && holderList.length < 2 && flag) {
       this.eventService.openSnackBar('Please enter atleast two holders.');
       return;
     }

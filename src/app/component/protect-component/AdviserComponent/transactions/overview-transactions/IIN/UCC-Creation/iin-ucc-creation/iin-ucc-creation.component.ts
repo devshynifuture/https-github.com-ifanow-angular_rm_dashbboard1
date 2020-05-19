@@ -87,10 +87,10 @@ export class IinUccCreationComponent implements OnInit {
 
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
+      holdingType: [(!data) ? '' : data.ownerName, [Validators.required]],
       taxStatus: [(!data) ? '' : data.ownerName, [Validators.required]],
     });
-    this.generalDetails.controls.holdingNature.valueChanges.subscribe((newValue) => {
+    this.generalDetails.controls.holdingType.valueChanges.subscribe((newValue) => {
       if (newValue != 'SI') {
         this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}];
         this.generalDetails.controls.taxStatus.setValue('01');
@@ -224,7 +224,7 @@ export class IinUccCreationComponent implements OnInit {
     }
     const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
-      holdingNature: this.generalDetails.controls.holdingNature.value,
+      holdingType: this.generalDetails.controls.holdingType.value,
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,

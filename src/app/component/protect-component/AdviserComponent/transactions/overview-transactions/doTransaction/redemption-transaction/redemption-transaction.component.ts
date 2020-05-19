@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { ValidatorType } from 'src/app/services/util.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {ValidatorType} from 'src/app/services/util.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -318,7 +318,7 @@ export class RedemptionTransactionComponent implements OnInit {
       const obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
-        holdingNature: this.getDataSummary.defaultClient.holdingType,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
@@ -367,6 +367,7 @@ export class RedemptionTransactionComponent implements OnInit {
           this.isSuccessfulTransaction = true;
 
         }, (error) => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
