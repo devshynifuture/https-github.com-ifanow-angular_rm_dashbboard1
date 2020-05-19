@@ -34,7 +34,7 @@ export class TransactionEnumService {
       if (element.taxStatus) {
         const taxStatusObj = enumServiceService.getTaxStatus()[element.taxStatus];
         if (taxStatusObj) {
-          element.taxDesc = taxStatusObj.taxStatusDesc;
+          element.taxDesc = taxStatusObj.description;
         }
       }
     });
