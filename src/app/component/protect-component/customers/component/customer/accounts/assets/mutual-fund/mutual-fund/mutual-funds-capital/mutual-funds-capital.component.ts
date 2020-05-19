@@ -243,23 +243,33 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.totalReinvesment = 0;
       let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
       mutualFund.forEach(element => {
-        if (element.redemptionTransactions) {
-          element.redemptionTransactions.forEach(ele => {
-            // let financialyear = this.MfServiceService.getYearFromDate(ele.transactionDate)
+       if (element.dividendTransactions) {
+          element.dividendTransactions.forEach(ele => {
             let trnDate = new Date(ele.transactionDate)
             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
-              if (element.dividendPayout != 0 && element.dividendReinvestment != 0) {
-                element.totalReinvesment = element.dividendPayout + element.dividendReinvestment
-                this.totalReinvesment += ((element.totalReinvesment) ? element.totalReinvesment : 0);
-                this.totaldividendPayout += ((element.dividendPayout) ? element.dividendPayout : 0);
-                this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
-                filterObj.push(element);
+              if(ele.fwTransactionType == 'Dividend Payout'){
+                ele.dividendPayout = ele.amount
+              }else{
+                ele.dividendReinvestment =ele.amount
+              }
+              if (ele.dividendPayout != 0 || ele.dividendReinvestment != 0) {
+                ele.totalReinvesment = ((ele.dividendPayout ? ele.dividendPayout : 0) + (ele.dividendReinvestment ? ele.dividendReinvestment : 0))
+                this.totalReinvesment += ((ele.totalReinvesment) ? ele.totalReinvesment : 0);
+                this.totaldividendPayout += ((ele.dividendPayout) ? ele.dividendPayout : 0);
+                this.totaldividendReinvestment += ((ele.dividendReinvestment) ? ele.dividendReinvestment : 0);
+              
               }
             }
           });
-        } else {
-          filterObj = [];
-        }
+          const obj={
+            schemeName :element.schemeName,
+            folioNumber:element.folioNumber,
+            dividendPayout:this.totaldividendPayout,
+            dividendReinvestment:this.totaldividendReinvestment,
+            totalReinvesment:this.totalReinvesment
+          }
+          filterObj.push(obj);
+        } 
       });
       return filterObj;
     }
