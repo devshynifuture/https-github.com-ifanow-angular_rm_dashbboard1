@@ -555,8 +555,8 @@ findCompanyName(data) {
         "insurerName": this.critialIllnessForm.get('insurerName').value,
         "planName": this.critialIllnessForm.get('planeName').value,
         "premiumAmount": this.critialIllnessForm.get('premium').value,
-        "policyStartDate": this.critialIllnessForm.get('policyStartDate').value,
-        "policyExpiryDate": this.critialIllnessForm.get('policyExpiryDate').value,
+        "policyStartDate":this.datePipe.transform(this.critialIllnessForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate":this.datePipe.transform(this.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "cumulativeBonus": this.critialIllnessForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.critialIllnessForm.get('bonusType').value,
         "addOns": [{
@@ -564,7 +564,7 @@ findCompanyName(data) {
           "addOnSumInsured": this.critialIllnessForm.get('coversAmount').value
         }],
         "exclusion": this.critialIllnessForm.get('exclusion').value,
-        "policyInceptionDate": this.critialIllnessForm.get('inceptionDate').value,
+        "policyInceptionDate":this.datePipe.transform(this.critialIllnessForm.get('inceptionDate').value, 'yyyy-MM-dd'),
         "tpaName": this.critialIllnessForm.get('tpaName').value,
         "advisorName": this.critialIllnessForm.get('advisorName').value,
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,

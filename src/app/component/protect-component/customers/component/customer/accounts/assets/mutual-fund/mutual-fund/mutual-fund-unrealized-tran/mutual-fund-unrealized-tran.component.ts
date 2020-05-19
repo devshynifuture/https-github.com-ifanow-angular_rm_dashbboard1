@@ -168,7 +168,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   getUnrealizedData() {
-    this.mutualFund.mutualFundList.forEach(element => {
+    let list =[];
+    list =this.mutualFund.mutualFundList;
+    list.forEach(element => {
       element.navDate = this.datePipe.transform(element.navDate, 'yyyy-MM-dd');
       element.mutualFundTransactions = [];
       // element.mutualFundTransactions.forEach(element => {
@@ -176,7 +178,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // });
     });
     const obj = {
-      mutualFundList: this.mutualFund.mutualFundList
+      mutualFundList: list
     }
     this.custumService.getMfUnrealizedTransactions(obj).subscribe(
       data => {

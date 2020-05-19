@@ -10,6 +10,7 @@ import { DataComponent } from '../../../../../../interfaces/data.component';
 import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-insurance',
@@ -63,7 +64,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   get data() {
     return this._data;
   }*/
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
+  constructor(private datePipe: DatePipe,private eventService: EventService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
   }
   validatorType = ValidatorType
   @Input() set data(data) {
@@ -612,7 +613,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       }
     })
     this.lifeInsuranceForm.get('policyName').value;
-
+    this.loanDetailsForm.controls.loanTakenOn.setErrors(null);
     if (this.lifeInsuranceForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
@@ -628,7 +629,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "ownerName": "",
-        "commencementDate": this.lifeInsuranceForm.get('commencementDate').value,
+        "commencementDate":this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd'),
         "policyNumber": this.lifeInsuranceForm.get('policyNum').value,
         "policyName": this.lifeInsuranceForm.get('policyName').value,
         "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
@@ -645,7 +646,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "assumedRate": this.keyDetailsForm.get('assumedRate').value,
         "loanAvailable": this.loanDetailsForm.get('loanAvailable').value,
         "loanTaken": this.loanDetailsForm.get('loanTaken').value,
-        "loanTakenOn": this.loanDetailsForm.get('loanTakenOn').value,
+        "loanTakenOn": (this.loanDetailsForm.get('loanTakenOn').value) ? this.datePipe.transform(this.loanDetailsForm.get('loanTakenOn').value, 'yyyy-MM-dd') : null,
         "premiumPaymentMode": this.Miscellaneous.get('permiumPaymentMode').value,
         "advisorName": this.Miscellaneous.get('advisorName').value,
         "serviceBranch": this.Miscellaneous.get('serviceBranch').value,

@@ -87,7 +87,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
       let catObj = this.MfServiceService.categoryFilter(data, 'category');
       Object.keys(catObj).map(key => {
-        if(catObj[key] != 'DEBT'){
+        if(catObj[key][0].category != 'DEBT'){
           // this.dataSource =  new MatTableDataSource(this.getFilterData(catObj[key], 'EQUITY'));
           let tempData = this.getFilterData(catObj[key], 'EQUITY');
           equityData.push(...tempData)

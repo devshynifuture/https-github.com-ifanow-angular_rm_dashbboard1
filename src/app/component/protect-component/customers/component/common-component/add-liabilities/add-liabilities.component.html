@@ -119,7 +119,25 @@
             </div>
         </div>
     </div>
-
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input matInput class="form-control br-0 b-0"  #CommencementDate (ngModelChange)="dateChange('CommencementDate')" (selectionChange)="calculateEmi()" (focus)="picker.open()" [min]="minDate"  [max]="maxDate"
+                        (input)="preventDefault($event)" matInput [matDatepicker]="picker"
+                        formControlName="CommencementDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Loan tenure</h5>
@@ -163,12 +181,13 @@
                 <label class="f-14">Outstanding as on</label>
                 <div class="form-group  mb-0">
                     <mat-form-field class="ba-date">
-                        <input class="form-control br-0 b-0"  (selectionChange)="calculateEmi()" matInput (focus)="picker.open()" [max]="maxDate"
+                        <input class="form-control br-0 b-0"  (selectionChange)="calculateEmi()" #poDate (ngModelChange)="dateChange('poDate')" matInput (focus)="picker.open()" [max]="maxDate"
                             (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <mat-error class="f-12 pt-4">
-                            This field is required
+                        <mat-error class="f-12" *ngIf="(addLiabilityForm.get('poDate').errors?.required)">This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(addLiabilityForm.get('poDate').errors?.max)">Date cannot be less than or equal to commencement date
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -190,26 +209,8 @@
         </div>
     </div>
 
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Commencement date</h5>
-        </div>
-        <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input matInput class="form-control br-0 b-0" (selectionChange)="calculateEmi()" (focus)="picker.open()" [min]="minDate"  [max]="maxDate"
-                        (input)="preventDefault($event)" matInput [matDatepicker]="picker"
-                        formControlName="CommencementDate" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-48">
+
+    <!-- <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">EMI frequency</h5>
         </div>
@@ -217,7 +218,6 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select matInput formControlName="emiFrequency"  (selectionChange)="calculateEmi()" class="form-control br-0">
-                        <!-- |<mat-option *ngFor="let emi of this.emiFrequency" value={{emi.name}}>{{emi.name}}</mat-option> -->
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Yearly</mat-option>
                         <mat-option value="2">Half yearly</mat-option>
@@ -231,7 +231,7 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">

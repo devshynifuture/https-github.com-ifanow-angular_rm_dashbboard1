@@ -12,7 +12,7 @@
 </div>
 
 <div >
-  <table *ngIf="dataSource.filteredData.length > 0" matSort #holdingsTableSort="matSort" mat-table
+  <table *ngIf="dataSource.filteredData?.length > 0" matSort #holdingsTableSort="matSort" mat-table
       [dataSource]="dataSource" id="table-low" class="skeletonAnimation mt-60 ml-8 mr-8" appSkeletonLoading>
       
   <ng-container matColumnDef="no">
@@ -102,4 +102,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <div *ngIf="dataSource.filteredData?.length == 0" class="d-flex flex-column align-items-center pt-200">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12"> No data found</h4>
+</div>
 </div>

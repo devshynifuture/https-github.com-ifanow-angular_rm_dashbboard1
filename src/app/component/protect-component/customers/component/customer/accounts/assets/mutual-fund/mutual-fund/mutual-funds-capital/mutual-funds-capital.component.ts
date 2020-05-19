@@ -205,7 +205,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.categoryData = data;
       let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
       Object.keys(catObj).map(key => {
-        if (catObj[key] != 'DEBT') {
+        if (catObj[key][0].category != 'DEBT') {
           let tempData = this.filterCategoryWise(catObj[key], 'EQUITY');
           equityData.push(...tempData)
         }
