@@ -82,7 +82,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm(this.firstHolderNominee);
     } else {
     }
-    if (this.clientData) {
+    if (this.clientData && !this.firstHolderNominee) {
       this.getNomineeList(this.clientData, !this.firstHolderNominee);
     }
   }
@@ -99,9 +99,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else {
       this.getdataForm('');
     }
-    if (this.clientData) {
-      this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
-    }
+    // if (this.clientData) {
+    //   this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
+    // }
     this.holdingList = [];
     this.nominee = [];
     this.processTransaction.getCountryCodeList().subscribe(responseValue => {
