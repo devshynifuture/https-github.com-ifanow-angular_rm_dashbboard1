@@ -443,9 +443,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
   
-    if (data.ownerList) {
+    if (data.borrowerList) {
       this.getCoOwner.removeAt(0);
-      data.ownerList.forEach(element => {
+      data.borrowerList.forEach(element => {
         this.addNewCoOwner(element);
       });
     }
@@ -495,7 +495,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           advisorId: this.advisorId,
           clientId: this.clientId,
           familyMemberId: this.familyMemberId,
-          ownerList:this.addLiabilityForm.value.getCoOwnerName,
+          borrowerList:this.addLiabilityForm.value.getCoOwnerName,
           // ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
           ownerName:this.addLiabilityForm.value.getCoOwnerName[0].name,
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
@@ -518,7 +518,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         const editObj = {
           familyMemberId: this._data.familyMemberId,
           ownerName:this.addLiabilityForm.value.getCoOwnerName[0].name,
-          ownerList:this.addLiabilityForm.value.getCoOwnerName,
+          borrowerList:this.addLiabilityForm.value.getCoOwnerName,
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
           id: this._data.id,
           loanAmount: this.addLiabilityForm.controls.loanAmount.value,

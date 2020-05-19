@@ -242,7 +242,7 @@
                                         <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar">
                                                 <span *ngIf="!isLoading">
-                                                      {{(element.years || element.years != 0 || element.years > 0) ? element.years : ''}}{{(element.years || element.years != 0 || element.years > 0) ? 'yr ' : ''}}{{element.months+' months'}}
+                                                      {{(element.years || element.years != 0 || element.years > 0) ? element.years : ''}}{{(element.years || element.years != 0 || element.years > 0) ? ' y ' : ''}}{{element.months+' m'}}
                                                 </span>
                                                 <span *ngIf="isLoading">
                                                     {{''}}
