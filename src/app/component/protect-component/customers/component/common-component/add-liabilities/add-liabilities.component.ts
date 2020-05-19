@@ -161,7 +161,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.ownerName : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -431,13 +431,25 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (this.addLiabilityForm.controls.outstandingCheck.value == true) {
       this.showSelect = true;
     }
-    if (this.addLiabilityForm.value.getCoOwnerName.length == 1) {
+    // if (this.addLiabilityForm.value.getCoOwnerName.length == 1) {
+    //   this.getCoOwner.controls['0'].get('share').setValue('100');
+    // }
+    // if (data) {
+    //   this.getCoOwner.removeAt(0);
+    //     this.addNewCoOwner(data);
+    // }
+
+    if(this.addLiabilityForm.value.getCoOwnerName.length == 1){
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
-    if (data) {
+  
+    if (data.ownerList) {
       this.getCoOwner.removeAt(0);
-        this.addNewCoOwner(data);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
     }
+    
     if(data.nomineeList){
       if(data.nomineeList.length > 0){
       
@@ -460,18 +472,15 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     let transactionFlag, finalTransctList = []
     if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
-        if (element.valid) {
           let obj = {
             "partPaymentDate": (element.controls.date.value._d) ? this.datePipe.transform(element.controls.date.value._d , 'yyyy-MM-dd') : element.controls.date.value,
             "partPayment": element.controls.amount.value,
-            "option": element.controls.type.value,
-            "id":(element.value.id) ? element.value.id : null
+            "option": 0,
+            "id":(element.value.id) ? element.value.id : null,
+            'edit':(element.value.id) ? true : false
           }
           finalTransctList.push(obj)
-        }
-        else {
-          transactionFlag = false;
-        }
+       
       });
     }
     this.addLiabilityForm.get('poDate').setErrors();
@@ -486,6 +495,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           advisorId: this.advisorId,
           clientId: this.clientId,
           familyMemberId: this.familyMemberId,
+          ownerList:this.addLiabilityForm.value.getCoOwnerName,
           // ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
           ownerName:this.addLiabilityForm.value.getCoOwnerName[0].name,
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
@@ -508,6 +518,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         const editObj = {
           familyMemberId: this._data.familyMemberId,
           ownerName:this.addLiabilityForm.value.getCoOwnerName[0].name,
+          ownerList:this.addLiabilityForm.value.getCoOwnerName,
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
           id: this._data.id,
           loanAmount: this.addLiabilityForm.controls.loanAmount.value,

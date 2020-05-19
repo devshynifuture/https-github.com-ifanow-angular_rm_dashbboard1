@@ -23,7 +23,7 @@
                                 Life assured
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.lifeAssuredName) ? _data.lifeAssuredName : 'N.A.'}}
+                                {{(_data.lifeAssuredName) ? _data.lifeAssuredName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -31,7 +31,7 @@
                                 Proposer
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.familyMemberName) ? _data.familyMemberName : 'N.A.'}}
+                                {{(_data.familyMemberName) ? _data.familyMemberName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -39,7 +39,7 @@
                                 Policy name
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.policyName) ? _data.policyName : 'N.A.'}}
+                                {{(_data.policyName) ? _data.policyName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -47,7 +47,7 @@
                                 Policy type
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.familyMemberName) ? _data.familyMemberName : 'N.A.'}}
+                                {{(_data.familyMemberName) ? _data.familyMemberName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -55,7 +55,7 @@
                                 Policy number
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.policyNumber) ? _data.policyNumber : 'N.A.'}}
+                                {{(_data.policyNumber) ? _data.policyNumber : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -63,7 +63,7 @@
                                 Commencement date
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.commencementDate ) ?( _data.commencementDate | date:'dd/MM/yyyy') : 'N.A.'}}
+                                {{(_data.commencementDate ) ?( _data.commencementDate | date:'dd/MM/yyyy') : '-'}}
                             </div>
                         </div>
 
@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
                                 {{(_data.sumAssured) ? '₹' : ''}}<span appFormatNumber>
-                                    {{(_data.sumAssured) ? _data.sumAssured : 'N.A.'}}</span>
+                                    {{(_data.sumAssured) ? _data.sumAssured : '-'}}</span>
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -81,7 +81,7 @@
                                 Premium amount
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.premiumAmount) ? '₹' : ''}}<span appFormatNumber>{{(_data.premiumAmount) ? _data.premiumAmount : 'N.A.'}}</span>
+                                {{(_data.premiumAmount) ? '₹' : ''}}<span appFormatNumber>{{(_data.premiumAmount) ? _data.premiumAmount : '-'}}</span>
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -89,7 +89,7 @@
                                 Premium frequency
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.frequency == 1) ? 'Monthly' : (_data.frequency == 2) ? 'Quarterly' : (_data.frequency == 3) ? 'Half yearly' : (_data.frequency == 4) ? 'Yearly' : 'N.A.'}}
+                                {{(_data.frequency == 1) ? 'Monthly' : (_data.frequency == 2) ? 'Quarterly' : (_data.frequency == 3) ? 'Half yearly' : (_data.frequency == 4) ? 'Yearly' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -97,7 +97,7 @@
                                 Policy tenure
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.policyTenure) ? _data.policyTenure : 'N.A.'}}
+                                {{(_data.policyTenure) ? _data.policyTenure : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -105,7 +105,7 @@
                                 Premium paying term
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.premiumPayingTerm) ? _data.premiumPayingTerm : 'N.A.'}}
+                                {{(_data.premiumPayingTerm) ? _data.premiumPayingTerm : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -113,7 +113,7 @@
                                 Policy status
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.policyStatusId == 1) ? 'In force' : (_data.policyStatusId == 2) ? 'Lapsed' : (_data.policyStatusId == 3) ? 'Paid up' : (_data.policyStatusId == 4) ? 'Fully paid up' : 'N.A.'}}
+                                {{(_data.policyStatusId == 1) ? 'In force' : (_data.policyStatusId == 2) ? 'Lapsed' : (_data.policyStatusId == 3) ? 'Paid up' : (_data.policyStatusId == 4) ? 'Fully paid up' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -121,7 +121,7 @@
                                 Last unpaid premium
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.lastUnpaidPremium) ? '₹' : ''}}<span appFormatNumber>{{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : 'N.A.'}}</span>
+                                {{(_data.lastUnpaidPremium) ? '₹' : ''}}<span appFormatNumber>{{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}</span>
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -138,7 +138,7 @@
                                 Duration remaining
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.durationRemaining) ? _data.durationRemaining : 'N.A.'}}
+                                {{(_data.durationRemaining) ? _data.durationRemaining : '-'}}
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
                                 {{(_data.loanAvailable) ? '₹' : ''}}<span appFormatNumber>
-                                    {{(_data.loanAvailable) ? _data.loanAvailable : 'N.A.'}}</span>
+                                    {{(_data.loanAvailable) ? _data.loanAvailable : '-'}}</span>
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -163,7 +163,7 @@
                                 Loan taken
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.loanTaken) ? '₹' : ''}}<span appFormatNumber>{{(_data.loanTaken) ? _data.loanTaken : 'N.A.'}}</span>
+                                {{(_data.loanTaken) ? '₹' : ''}}<span appFormatNumber>{{(_data.loanTaken) ? _data.loanTaken : '-'}}</span>
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -171,7 +171,7 @@
                                 Loan taken on
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.loanTakenOn) ? (_data.loanTakenOn | date:'dd/MM/yyyy') : 'N.A.'}}
+                                {{(_data.loanTakenOn) ? (_data.loanTakenOn | date:'dd/MM/yyyy') : '-'}}
                             </div>
                         </div>
 
@@ -188,7 +188,7 @@
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                                 {{(_data.premiumPaymentMode == '1') ? 'Cheque' :(_data.premiumPaymentMode == '2') ? 'Cash' : (_data.premiumPaymentMode == '3') ? 'Net banking' : (_data.premiumPaymentMode == '4') ? 'Credit card' : (_data.premiumPaymentMode == '5') ? 'NACH' : (_data.premiumPaymentMode
-                                == '6') ? 'ECS' : 'N.A.'}}
+                                == '6') ? 'ECS' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -196,7 +196,7 @@
                                 Advisor name
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.advisorName) ? _data.advisorName : 'N.A.'}}
+                                {{(_data.advisorName) ? _data.advisorName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -204,16 +204,16 @@
                                 Service branch
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.serviceBranch) ? (_data.serviceBranch) : 'N.A.'}}
+                                {{(_data.serviceBranch) ? (_data.serviceBranch) : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br" >
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Linked bank account
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0" >
-                                {{(_data.bankName )?_data.bankName :'N.A.'}}
-                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                    {{(_data.bankName )?_data.bankName :'-'}}
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -232,7 +232,7 @@
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
                                 {{(_data.riskCover) ? '₹' : ''}}<span appFormatNumber>
-                                    {{(_data.riskCover) ? _data.riskCover : 'N.A.'}}</span>
+                                    {{(_data.riskCover) ? _data.riskCover : '-'}}</span>
                             </div>
                         </div>
 
@@ -242,7 +242,7 @@
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                                 {{(_data.surrenderValue) ? '₹' : ''}}<span appFormatNumber>
-                                    {{(_data.surrenderValue) ? _data.surrenderValue : 'N.A.'}}</span>
+                                    {{(_data.surrenderValue) ? _data.surrenderValue : '-'}}</span>
                             </div>
                         </div>
 
@@ -253,7 +253,7 @@
                                         Nominee {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.name) ? data.name : 'N.A.' }}
+                                        {{ (data.name) ? data.name : '-' }}
                                     </div>
                                 </div>
 
@@ -262,7 +262,7 @@
                                         Nominee relation{{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.relationName) ? data.relationName : 'N.A.' }}
+                                        {{ (data.relationName) ? data.relationName : '-' }}
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@
                                 Assumed rate
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.assumedRate) ? _data.assumedRate : 'N.A.'}}
+                                {{(_data.assumedRate) ? (_data.assumedRate+'%') : '-'}}
                             </div>
                         </div>
 
@@ -285,7 +285,7 @@
                                         Fund name {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.fundName) ? data.fundName : 'N.A.' }}
+                                        {{ (data.fundName) ? data.fundName : '-' }}
                                     </div>
                                 </div>
                                 <div class="row bb p-8 b-l br">
@@ -293,7 +293,7 @@
                                         Equity ratio {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.equityRatio) ? data.equityRatio : 'N.A.' }}
+                                        {{ (data.equityRatio) ? data.equityRatio : '-' }}
                                     </div>
                                 </div>
                                 <div class="row bb p-8 b-l br">
@@ -301,7 +301,7 @@
                                         Debt ratio {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.debtRatio) ? data.debtRatio : 'N.A.' }}
+                                        {{ (data.debtRatio) ? data.debtRatio : '-' }}
                                     </div>
                                 </div>
                                 <div class="row bb p-8 b-l br" *ngIf="data.units">
@@ -309,7 +309,7 @@
                                         Units {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.units) ? data.units : 'N.A.' }}
+                                        {{ (data.units) ? data.units : '-' }}
                                     </div>
                                 </div>
                                 <div class="row bb p-8 b-l br" *ngIf="data.nav">
@@ -317,7 +317,7 @@
                                         NAV {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                        {{ (data.nav) ? data.nav : 'N.A.' }}
+                                        {{ (data.nav) ? data.nav : '-' }}
                                     </div>
                                 </div>
                                 <div class="row bb p-8 b-l br" *ngIf="data.fundValue ">
@@ -325,7 +325,7 @@
                                         Fund value {{i+1}}
                                     </div>
                                     <div class="col-md-4 text-right f-14 roboto p-0">
-                                        {{(_data.fundValue) ? '₹' : ''}}<span appFormatNumber>{{ (data.fundValue) ? data.fundValue : 'N.A.' }}</span>
+                                        {{(_data.fundValue) ? '₹' : ''}}<span appFormatNumber>{{ (data.fundValue) ? data.fundValue : '-' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +338,7 @@
 
             <div class="row">
                 <div class="col-md-12 p-0  mt-24">
-                    <h4 class="f-16 roboto f-500">Cash flow</h4>
+                    <h4 class="f-16 roboto f-500">Cash inflow</h4>
                     <div *ngIf="cashFlowList.length > 0" class="insurance-ui bt">
 
                         <div class="row bb p-8 b-l br">
@@ -355,13 +355,13 @@
 
                         <div class="row bb p-8 b-l br" *ngFor="let data of cashFlowList; let i = index">
                             <div class="col-md-6 text-left f-14 roboto p-0">
-                                {{(data.cashFlowType == 1) ? 'Survival benefit' : (data.cashFlowType == 2) ? 'Maturity benefit' : (data.cashFlowType == 3) ? 'Annuity' : 'N.A.'}}
+                                {{(data.cashFlowType == 1) ? 'Survival benefit' : (data.cashFlowType == 2) ? 'Maturity benefit' : (data.cashFlowType == 3) ? 'Annuity' : '-'}}
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                {{(data.cashFlowYear) ? data.cashFlowYear : 'N.A.'}}
+                                {{(data.cashFlowYear) ? data.cashFlowYear : '-'}}
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                {{(_data.cashFlowApproxAmount) ? '₹' : ''}}<span appFormatNumber>{{(data.cashFlowApproxAmount) ? data.cashFlowApproxAmount : 'N.A.'}}</span>
+                                {{(_data.cashFlowApproxAmount) ? '₹' : ''}}<span appFormatNumber>{{(data.cashFlowApproxAmount) ? data.cashFlowApproxAmount : '-'}}</span>
                             </div>
                         </div>
                     </div>
@@ -381,7 +381,7 @@
                                 Accidental benefit
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.ridersAccidentalBenifits) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersAccidentalBenifits) ? _data.ridersAccidentalBenifits : 'N.A.'}}</span>
+                                {{(_data.ridersAccidentalBenifits) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersAccidentalBenifits) ? _data.ridersAccidentalBenifits : '-'}}</span>
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -389,7 +389,7 @@
                                 Double accidental benefit
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.ridersDoubleAccidentalBenefit) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersDoubleAccidentalBenefit) ? _data.ridersDoubleAccidentalBenefit : 'N.A.'}}</span>
+                                {{(_data.ridersDoubleAccidentalBenefit) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersDoubleAccidentalBenefit) ? _data.ridersDoubleAccidentalBenefit : '-'}}</span>
                             </div>
                         </div>
                         <!-- <div class="row bb p-8 b-l br">
@@ -406,7 +406,7 @@
                                 Critical illness
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.ridersCriticalIllness) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersCriticalIllness) ? _data.ridersCriticalIllness : 'N.A.'}}</span>
+                                {{(_data.ridersCriticalIllness) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersCriticalIllness) ? _data.ridersCriticalIllness : '-'}}</span>
                             </div>
                         </div>
                         <!-- 
