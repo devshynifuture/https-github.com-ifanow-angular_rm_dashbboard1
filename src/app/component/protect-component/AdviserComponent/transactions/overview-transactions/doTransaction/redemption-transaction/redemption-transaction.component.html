@@ -25,18 +25,18 @@
             <table [dataSource]="childTransactions" id="table-low" mat-table>
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell> No</th>
-                    <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
+                    <td *matCellDef="let element let i = index;" class="br w-4  " mat-cell>
                         <div class="bar"> {{i + 1 }} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="folio">
-                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
+                    <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{element.folioNo}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="ownerName">
-                    <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
+                    <th *matHeaderCellDef class="br " mat-header-cell> Scheme name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
                             {{element.schemeName}}
@@ -44,7 +44,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="amount">
-                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
+                    <th *matHeaderCellDef class="br w-11" mat-header-cell> Amount</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{element.orderVal}} </div>
                     </td>
@@ -55,9 +55,10 @@
                         <!-- ng build prod issue isLoading removed -->
                         <!-- <div *ngIf="!isLoading"> -->
                         <div>
-                            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                                more_vert
-                            </i>
+
+
+                            <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
+
                             <mat-menu #menubank="matMenu">
                                 <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
                                 <button mat-menu-item>Delete</button>
@@ -116,7 +117,7 @@
                     <div class="col-md-7 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="folioSelection">
+                                <mat-select class="form-control" [(ngModel)]="folioNumberShow" formControlName="folioSelection">
                                     <mat-option value='' disabled>Select scheme folio</mat-option>
                                     <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                                 </mat-select>

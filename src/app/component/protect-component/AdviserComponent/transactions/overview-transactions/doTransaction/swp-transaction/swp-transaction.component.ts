@@ -18,6 +18,8 @@ import { map, startWith } from 'rxjs/operators';
 export class SwpTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
+  defaultFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -236,6 +238,9 @@ export class SwpTransactionComponent implements OnInit {
     console.log('res scheme folio', data);
     this.showSpinnerFolio = false;
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.swpTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
@@ -281,6 +286,7 @@ export class SwpTransactionComponent implements OnInit {
     if (this.swpFrequency) {
       this.swpFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
+          this.defaultFrequency = singleFrequency.frequency
           this.swpTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }

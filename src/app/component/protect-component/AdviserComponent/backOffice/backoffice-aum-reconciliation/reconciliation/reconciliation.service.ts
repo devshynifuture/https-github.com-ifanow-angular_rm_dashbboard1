@@ -34,7 +34,7 @@ export class ReconciliationService {
                         subject.next(brokerListArr);
                     });
                 } else {
-                    this.eventService.openSnackBar('No Broker LIst Found', "DISMISS");
+                    this.eventService.openSnackBar('No Broker LIst Found', "Dismiss");
                 }
             });
 

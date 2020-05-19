@@ -72,9 +72,9 @@ export class MutualFundSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.mfService.getViewMode()
-    .subscribe(res => {
-      this.viewMode = res;
-    })
+      .subscribe(res => {
+        this.viewMode = res;
+      })
     this.getMutualFund();
   }
 
@@ -179,7 +179,7 @@ export class MutualFundSummaryComponent implements OnInit {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
         mutualFundList: mutualFund,
-        mutualFund:this.mfData,
+        mutualFund: this.mfData,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         // mfService: this.mfService
       };
@@ -276,8 +276,8 @@ export class MutualFundSummaryComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.reponseData= this.doFiltering(this.rightFilterData.mfData)
-            this.mfData =  this.reponseData;
+            this.reponseData = this.doFiltering(this.rightFilterData.mfData)
+            this.mfData = this.reponseData;
             this.asyncFilter(this.reponseData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
@@ -412,7 +412,7 @@ export class MutualFundSummaryComponent implements OnInit {
           this.customerService.postMutualFundDelete(obj)
             .subscribe(res => {
               if (res) {
-                this.eventService.openSnackBar('Deleted Successfully', "DISMISS");
+                this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
               }
             })
         }

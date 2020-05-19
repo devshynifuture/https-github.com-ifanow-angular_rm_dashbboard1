@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
-import {EmailUtilService} from '../services/email-util.service';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
@@ -30,7 +30,7 @@ export class HttpService {
       if (err.error.message) {
         return throwError(err.error.message);
       } else {
-        return throwError(err.error);
+        return throwError("Something went wrong !");
       }
     } else {
       return throwError(err);
@@ -450,14 +450,14 @@ export class HttpService {
     //   headers: new HttpHeaders().set('Content-Type', 'application/json')
     // }
     return this._http.get(url).pipe(this.errorObservable)
-    .map((res: any) => {
-      if (res) {
-        return res;
-      } else {
-        // this._router.navigate(['login']);
-        throw new Error(res.message);
-      }
-    });
+      .map((res: any) => {
+        if (res) {
+          return res;
+        } else {
+          // this._router.navigate(['login']);
+          throw new Error(res.message);
+        }
+      });
   }
   getBaseUrl() {
     return this.baseUrl;

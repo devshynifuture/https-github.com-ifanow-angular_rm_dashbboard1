@@ -82,7 +82,7 @@ export class FileOrderingSetupComponent implements OnInit {
           });
           this.getFileTypeName();
         } else {
-          this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
+          this.eventService.openSnackBar("Error In Fetching RTA List", "Dismiss");
         }
       });
   }
@@ -96,7 +96,7 @@ export class FileOrderingSetupComponent implements OnInit {
           this.fileTypeListValue = res;
           this.setValueChanges();
         } else {
-          this.eventService.openSnackBar("No File Type List Found", "DISMISS")
+          this.eventService.openSnackBar("No File Type List Found", "Dismiss")
         }
       })
   }
