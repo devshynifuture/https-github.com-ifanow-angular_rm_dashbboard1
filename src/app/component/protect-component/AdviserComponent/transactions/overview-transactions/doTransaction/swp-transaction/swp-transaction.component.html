@@ -194,12 +194,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="mb-8 pt-28 text-black ">Select 1st date SWP</h5>
+                        <h5 class="mb-8 pt-28 text-black ">Select 1st SWP date</h5>
                     </div>
                     <div class="col-md-5 p-0">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="date">
-                                <mat-option value='' disabled>Select 1st date SWP</mat-option>
+                                <mat-option value='' disabled>Select 1st SWP date</mat-option>
                                 <mat-option *ngFor="let date of dateDisplay" value="{{date.dateToDisplay}}">
                                     {{date.dateToDisplay}}</mat-option>
                             </mat-select>
