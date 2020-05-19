@@ -112,7 +112,7 @@ export class AumCamsComponent implements OnInit {
 
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No AUM History Found", "DISMISS");
+          this.eventService.openSnackBar("No AUM History Found", "Dismiss");
         }
       })
   }

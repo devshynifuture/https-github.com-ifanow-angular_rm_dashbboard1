@@ -46,7 +46,7 @@ export class DuplicateDataComponent implements OnInit {
           this.duplicateFolioData();
         } else {
           this.adminAdvisorIds = [...this.advisorId];
-          this.eventService.openSnackBar("No Team Member Found", "DISMISS");
+          this.eventService.openSnackBar("No Team Member Found", "Dismiss");
         }
       })
   }
@@ -112,7 +112,7 @@ export class DuplicateDataComponent implements OnInit {
           this.isLoading = false;
         } else {
           this.isLoading = false;
-          this.eventService.openSnackBar("No Duplicate Data Found!!!", "DISMISS");
+          this.eventService.openSnackBar("No Duplicate Data Found!!!", "Dismiss");
           this.dataSource.data = null;
         }
       })
