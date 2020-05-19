@@ -1,5 +1,5 @@
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 
 import { EventService } from './../../../../../Data-service/event.service';
@@ -15,7 +15,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class FileOrderingUpperComponent implements OnInit {
   fileName: any;
-
+  isDisableTooltip = true;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -119,7 +119,7 @@ export class FileOrderingUpperComponent implements OnInit {
               id: element.id,
               position: index + 1,
               advisorName: element.advisorName,
-              arnRia: element.arnOrRia === 1 ? 'ARN' + element.arnRiaNumber : 'RIA' + element.arnRiaNumber,
+              arnRia: element.arnRiaNumber,
               fileType: this.fileName,
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
@@ -136,11 +136,26 @@ export class FileOrderingUpperComponent implements OnInit {
           this.dataSource.data = tableData;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No Data Found", "Dismiss");
+          this.eventService.openSnackBarNoDuration("No Data Found", "DISMISS");
         }
       }, err => {
-        this.eventService.openSnackBar("Something went wrong", "Dismiss");
+        this.eventService.openSnackBarNoDuration("Something went wrong", "DISMISS");
       })
+  }
+
+  copyText(val: string): void {
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.eventService.openSnackBar("COPIED!!!", "DISMISS");
   }
 
   consoleData(element) {
@@ -150,28 +165,20 @@ export class FileOrderingUpperComponent implements OnInit {
   fileOrderRetry(value, singleOrMultiple) {
     let idArray = [];
     if (singleOrMultiple === 'single') {
-      idArray = [value];
+      idArray.push(value);
     }
     if (singleOrMultiple === 'multiple') {
       if (this.arrayOfIdsForRetry.length !== 0) {
         idArray = [...this.arrayOfIdsForRetry];
       } else {
-        this.eventService.openSnackBar("No Files Selected to Retry", "Dismiss");
+        this.eventService.openSnackBarNoDuration("No Files Selected to Retry", "DISMISS");
       }
     }
-    let data;
-    if (value === null) {
-      data = {
-        ids: idArray,
-        isHistorical: this.data.flag == 'historical' ? true : false
-      }
-    } else if (value !== null) {
-      data = {
-        ids: value,
-        isHistorical: this.data.flag == 'historical' ? true : false
-      }
+    let data = {
+      ids: idArray,
+      isHistorical: this.data.flag == 'historical' ? true : false
     }
-    console.log(this.arrayOfIdsForRetry);
+    // console.log(this.arrayOfIdsForRetry);
     this.fileOrderingService.putFileOrderRetry(data)
       .subscribe(res => {
         if (res) {
@@ -227,7 +234,7 @@ export class FileOrderingUpperComponent implements OnInit {
               id: element.id,
               position: index + 1,
               advisorName: this.data.advisorName,
-              arnRia: element.arnOrRia === 1 ? 'ARN' + element.arnRiaNumber : 'RIA' + element.arnRiaNumber,
+              arnRia: element.arnRiaNumber,
               fileType: this.fileName,
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
@@ -244,10 +251,10 @@ export class FileOrderingUpperComponent implements OnInit {
           this.dataSource.data = tableData;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No Data Found", "Dismiss");
+          this.eventService.openSnackBarNoDuration("No Data Found", "DISMISS");
         }
       }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBarNoDuration(err, "DISMISS");
       })
 
   }
