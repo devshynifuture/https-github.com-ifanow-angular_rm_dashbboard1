@@ -125,9 +125,9 @@ export class TransactionsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log("success::", res);
-          this.eventService.openSnackBar("Deletion Completed", "DISMISS")
+          this.eventService.openSnackBar("Deletion Completed", "Dismiss")
         } else {
-          this.eventService.openSnackBar("Deletion Failed", "DISMISS")
+          this.eventService.openSnackBar("Deletion Failed", "Dismiss")
         }
       })
   }
