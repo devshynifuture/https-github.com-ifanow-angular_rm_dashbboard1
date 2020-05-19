@@ -247,7 +247,7 @@ export class MfCapitalDetailedComponent implements OnInit {
                 totalIndexGain :totalValue.totalIndexGain,
                 totalIndexLoss :totalValue.totalIndexLoss
               }
-              this.categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
+              this.categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, this.categoryWiseTotal, {totalAmt: true});
               totalValue = {};
             }
 
