@@ -43,6 +43,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   mutualFundList: any[];
   fromDate: Date;
   toDate: Date;
+  categoryWiseTotal ={};
   constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
@@ -162,7 +163,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
       let filteredArray = [];    
       let totalValue: any ={};
-      let categoryWiseTotal:any ={};
+      this.categoryWiseTotal;
       let mfList = this.MfServiceService.filter(data, 'mutualFund');
       mfList.forEach(element => {
         const startObj={
@@ -246,7 +247,7 @@ export class MfCapitalDetailedComponent implements OnInit {
                 totalIndexGain :totalValue.totalIndexGain,
                 totalIndexLoss :totalValue.totalIndexLoss
               }
-              categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
+              this.categoryWiseTotal = this.MfServiceService.addTwoObjectValues(filterr, categoryWiseTotal, {totalAmt: true});
               totalValue = {};
             }
 
@@ -268,11 +269,14 @@ export class MfCapitalDetailedComponent implements OnInit {
           filteredArray.pop();
         }
       }
-
-      (category == 'DEBT') ? this.debtObj =categoryWiseTotal : this.equityObj =categoryWiseTotal;
+      if(Object.keys(this.categoryWiseTotal).length != 0){
+        (category == 'DEBT') ? this.debtObj =this.categoryWiseTotal : this.equityObj =this.categoryWiseTotal;
+      }
       console.log('DEBT',this.debtObj);
       console.log('EQUITY',this.equityObj);
-      categoryWiseTotal={};
+      if(category != 'EQUITY'){
+        this.categoryWiseTotal={};
+      }
 
       return filteredArray;
     }

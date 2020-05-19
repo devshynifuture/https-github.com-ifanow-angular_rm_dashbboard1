@@ -26,8 +26,10 @@ export class TempserviceService {
             totalObj.totalAbsoluteReturn=obj.absoluteReturn;
           }else{
             if(filteredArray.length > 0){
-              if(filteredArray[filteredArray.length - 1].groupName){
-                filteredArray.pop();
+              if(array.length == 0){
+                if(filteredArray[filteredArray.length - 1].groupName){
+                  filteredArray.pop();
+                }
               }
             }
           }

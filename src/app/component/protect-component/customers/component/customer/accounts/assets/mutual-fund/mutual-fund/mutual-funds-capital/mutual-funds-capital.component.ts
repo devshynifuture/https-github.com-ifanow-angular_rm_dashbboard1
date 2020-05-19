@@ -71,6 +71,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   capitalGainData: any;
   toDate: Date;
   fromDate: Date;
+  finalValue={};
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -265,7 +266,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   }
   filterCategoryWise(data, category) {
     if (data) {
-      let finalValue = {};
+      this.finalValue;
       let fiterArray=[];
       this.mfList = this.MfServiceService.filter(data, 'mutualFund');
       this.mfList.forEach(element => {
@@ -304,7 +305,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                   stGain: totalValue.stGain,
                   stLoss: totalValue.stLoss
                 }
-                finalValue = this.MfServiceService.addTwoObjectValues(filterr, finalValue, { totalAmt: true });
+                this.finalValue = this.MfServiceService.addTwoObjectValues(filterr, this.finalValue, { totalAmt: true });
               } else {
                 ele.purchaceAgainstRedemptionTransactions = []
               }
@@ -314,8 +315,12 @@ export class MutualFundsCapitalComponent implements OnInit {
           element.redemptionTransactions = [];
         }
       });
-      (category == 'DEBT') ? this.debtObj = finalValue : this.equityObj = finalValue;
-      finalValue = {};
+      if(Object.keys(this.finalValue).length != 0){
+        (category == 'DEBT') ? this.debtObj = this.finalValue : this.equityObj = this.finalValue;
+      }
+      if(category!='EQUITY'){
+        this.finalValue = {};
+      }
       return fiterArray;
     }
   }
