@@ -106,20 +106,39 @@
                     </div>
                 </td>
             </ng-container>
+            
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
                 <td *matCellDef="let element" class="br" mat-cell>
-                    <div *ngIf="element.transactionStatus == 'PENDING AUTHORIZATION'" class="bar text-warning t-10 f-500 c-p">
-                        <div class="bar"> {{element.transactionStatus}} </div>
+                    <div *ngIf="element.status == 2" class="bar text-warning t-10 f-500 c-p">
+                        <div class="bar">  'Pending authorization'</div>
                     </div>
-                    <div *ngIf="element.transactionStatus == 'Transaction rejected'" class="bar text-danger t-10 f-500 c-p">
-                        <div class="bar"> {{element.transactionStatus}} </div>
+                    <div *ngIf="element.status == 7" class="bar text-danger t-10 f-500 c-p">
+                        <div class="bar"> 'Transaction rejected' </div>
                     </div>
-                    <div *ngIf="element.transactionStatus == 'UNKNOWN'" class="bar text-primary t-10 f-500 c-p">
-                        <div class="bar"> {{element.transactionStatus}} </div>
+                    <div *ngIf="element.status == 0" class="bar text-primary t-10 f-500 c-p">
+                        <div class="bar"> 'Unknown' </div>
                     </div>
-                    <div *ngIf="element.transactionStatus == 'Order submitted to FGC'" class="bar text-success t-10 f-500 c-p">
-                        <div class="bar"> {{element.transactionStatus}} </div>
+                    <div *ngIf="element.status == 5" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'Order submitted to AMC' </div>
+                    </div>
+                    <div *ngIf="element.status == 4" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'Pending submission to AMC' </div>
+                    </div>
+                    <div *ngIf="element.status == 6" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'Order processed' </div>
+                    </div>
+                    <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'OTP authorised' </div>
+                    </div>
+                    <div *ngIf="element.status == 6" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'Order processed' </div>
+                    </div>
+                    <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'Payment successful' </div>
+                    </div>
+                    <div *ngIf="element.status == 8" class="bar text-success t-10 f-500 c-p">
+                        <div class="bar"> 'Units alloted' </div>
                     </div>
                     <!-- <div class="bar">{{element.transactionStatus}}</div> -->
                 </td>
