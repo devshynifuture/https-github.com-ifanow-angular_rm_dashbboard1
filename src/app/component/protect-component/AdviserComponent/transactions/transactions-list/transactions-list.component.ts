@@ -16,13 +16,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./transactions-list.component.scss']
 })
 export class TransactionsListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'weight', 'symbol', 'type', 'amount', 'order', 'status', 'icons'];
+  displayedColumns: string[] = ['platformName', 'transactionNumber', 'clientName', 'schemeName', 'type', 'amount', 'orderDate',
+    'status', 'icons'];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   selectedPreviousToShowDate;
   filterData: any;
-  selectedBroker: any;
+  selectedBroker = {id: 0};
   seletedPreviousDate;
   finalStartDate;
   finalEndDate;
@@ -89,8 +90,8 @@ export class TransactionsListComponent implements OnInit {
       console.log(data);
       this.filterData = data;
       this.credentialData = data;
-      this.selectedBroker = data[0];
-     this.getAllTransactionList();
+      // this.selectedBroker = data[0];
+      this.getAllTransactionList();
     } else {
       this.isLoading = false;
       this.noData = 'No credentials found';
@@ -131,6 +132,7 @@ export class TransactionsListComponent implements OnInit {
         }
       },
       err => {
+
         this.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
         this.dataSource.data = [];
@@ -139,7 +141,7 @@ export class TransactionsListComponent implements OnInit {
     );
   }
 
-  Close(flag) {
+  close(flag) {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
@@ -164,22 +166,14 @@ export class TransactionsListComponent implements OnInit {
   }
 
   openTransactionHistory(data) {
+    console.log('openTransactionHistory data: ', data);
     const fragmentData = {
       flag: 'addNewTransaction',
       data,
       state: 'open35',
       componentName: TransactionsHistoryComponent,
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
+    this.subInjectService.changeNewRightSliderState(fragmentData);
   }
 
   openTransaction() {
