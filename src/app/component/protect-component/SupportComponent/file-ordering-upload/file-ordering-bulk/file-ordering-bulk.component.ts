@@ -40,8 +40,7 @@ export class FileOrderingBulkComponent implements OnInit {
     "ordered",
     "failed",
     "uploaded",
-    "refresh",
-    "empty",
+    "refresh"
   ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   visible = true;
@@ -140,9 +139,7 @@ export class FileOrderingBulkComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.getRtaList();
-
   }
 
   defaultSelectionInFilter() {
@@ -409,7 +406,6 @@ export interface PeriodicElement {
   failed: string;
   uploaded: string;
   refresh: string;
-  empty: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -425,7 +421,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     failed: "",
     uploaded: "",
     refresh: "",
-    empty: "",
   },
   {
     rta: "",
@@ -439,7 +434,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     failed: "",
     uploaded: "",
     refresh: "",
-    empty: "",
   },
   {
     rta: "",
@@ -452,7 +446,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     ordered: "",
     failed: "",
     uploaded: "",
-    refresh: "",
-    empty: "",
+    refresh: ""
   },
 ];
