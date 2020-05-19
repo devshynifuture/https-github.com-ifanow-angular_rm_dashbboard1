@@ -189,7 +189,7 @@ export class FileOrderingUpperComponent implements OnInit {
 
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       })
   }
 

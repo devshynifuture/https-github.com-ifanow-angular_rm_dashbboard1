@@ -328,7 +328,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
     this.bankDetailsForm.controls.accountType.setValue(parseInt(value.accountType));
-    this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
+  //  this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
     if (value.address) {
@@ -436,7 +436,7 @@ export class BankDetailsIINComponent implements OnInit {
       accountType: holder.accountType,
       bankName: holder.bankName,
       branchName: holder.branchName,
-      branchCode: holder.branchCode,
+   //   branchCode: holder.branchCode,
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
       paymentMode: this.bankDetailsForm.controls.paymentMode.value,

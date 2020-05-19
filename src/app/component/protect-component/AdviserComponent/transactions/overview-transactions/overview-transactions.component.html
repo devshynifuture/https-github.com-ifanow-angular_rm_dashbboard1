@@ -199,7 +199,7 @@
                 <div class="col-md-4 p-0 ">
                     <div class="bg-white shadowBox p-9">
                         <div class="row pb-12">
-                            <div class="col-md-12 tabClassTransaction p-0">
+                            <div class="col-md-12 height550 tabClassTransaction p-0">
                                 <mat-tab-group class="overviewTab" animationDuration="0ms">
                                     <mat-tab label="Recent">
 
@@ -209,6 +209,7 @@
                                                 <p class="f-14 f-500 roboto "> No Data Found </p>
                                             </div>
                                         </div>
+
                                         <div *ngIf="transactionList==undefined && isLoading">
                                             <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
                                                 <div class="col-md-12 p-0 mt-12 overflow-hidden">
@@ -249,8 +250,9 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
-                                            <div class="row">
+                                            <div class="row" (click)="openTransactionHistory(transact)">
                                                 <div class="col-md-6 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-12 mb-10">
@@ -266,7 +268,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" (click)="openTransactionHistory(transact)">
                                                 <div class="col-md-6 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-16  mb-10 f-500">
@@ -285,7 +287,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" (click)="openTransactionHistory(transact)">
                                                 <div class="col-md-12 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-12 text-primitive mb-10">
@@ -434,7 +436,7 @@
         </div>
 
         <div class="col-md-3 pr-0">
-            <div class="bg-white p-12">
+            <div class="bg-white h-100vh p-12">
                 <h5 class=" mb-12 f-16 pt-14 f-500 text-black">NEW</h5>
                 <button mat-stroked-button class="btn-transaction text-primary  roboto" (click)="openNewTransaction()">
                     <img class="width20 mr-4" src="assets/images/svg/shopping-blue.svg"> TRANSACTION

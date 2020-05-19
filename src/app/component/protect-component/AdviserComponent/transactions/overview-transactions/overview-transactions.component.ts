@@ -12,6 +12,7 @@ import {HttpService} from 'src/app/http-service/http-service';
 import {TransactionMobileViewComponent} from '../transaction-mobile-view/transaction-mobile-view.component';
 import {MatDialog} from '@angular/material';
 import {OnlineTransactionService} from '../online-transaction.service';
+import { TransactionsHistoryComponent } from '../transactions-list/transactions-history/transactions-history.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -52,8 +53,8 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
-    this.finalEndDate = new Date().getTime();
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getAllTransactionList();
     this.getMandate();
     this.getIInData();
@@ -75,6 +76,17 @@ export class OverviewTransactionsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  openTransactionHistory(data) {
+    console.log('openTransactionHistory data: ', data);
+    const fragmentData = {
+      flag: 'addNewTransaction',
+      data,
+      state: 'open35',
+      componentName: TransactionsHistoryComponent,
+    };
+    this.subInjectService.changeNewRightSliderState(fragmentData);
   }
 
   openNewTransaction() {

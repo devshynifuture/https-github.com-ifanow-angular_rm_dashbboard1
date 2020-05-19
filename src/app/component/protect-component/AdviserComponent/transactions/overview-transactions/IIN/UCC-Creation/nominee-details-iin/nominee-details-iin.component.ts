@@ -54,6 +54,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   maxDateForAdultDob;
   countryList;
   filterCountryName: Observable<any[]>;
+  activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
@@ -81,7 +82,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm(this.firstHolderNominee);
     } else {
     }
-    if (this.clientData) {
+    if (this.clientData && !this.firstHolderNominee) {
       this.getNomineeList(this.clientData, !this.firstHolderNominee);
     }
   }
@@ -98,9 +99,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else {
       this.getdataForm('');
     }
-    if (this.clientData) {
-      this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
-    }
+    // if (this.clientData) {
+    //   this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
+    // }
     this.holdingList = [];
     this.nominee = [];
     this.processTransaction.getCountryCodeList().subscribe(responseValue => {
@@ -309,6 +310,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
+    this.activeDetailsClass = value;
     if (value == 'first') {
       this.saveNomineeDetails(value);
       if (this.firstHolderNominee) {

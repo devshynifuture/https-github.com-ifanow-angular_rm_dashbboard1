@@ -55,7 +55,7 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
           this.transactionTypeList = res;
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS")
+        this.eventService.openSnackBar(err, "Dismiss")
       })
   }
 

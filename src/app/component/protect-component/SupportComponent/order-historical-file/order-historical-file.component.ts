@@ -316,7 +316,7 @@ export class OrderHistoricalFileComponent implements OnInit {
       }, err => {
         this.arrayAdvisorNameError = true;
         this.errorMsg = 'Something went wrong';
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       });
   }
 
@@ -327,7 +327,7 @@ export class OrderHistoricalFileComponent implements OnInit {
       }
       return this.supportService.getBackofficeAdvisorSearchByName(data);
     } else {
-      this.eventService.openSnackBar("Advisor Name must not be empty!", "DISMISS");
+      this.eventService.openSnackBar("Advisor Name must not be empty!", "Dismiss");
     }
   }
 
@@ -347,7 +347,7 @@ export class OrderHistoricalFileComponent implements OnInit {
           });
           console.log(data);
         } else {
-          this.eventService.openSnackBar("Can't fetch File Type Order list", "DISMISS");
+          this.eventService.openSnackBar("Can't fetch File Type Order list", "Dismiss");
         }
       });
   }
@@ -1710,7 +1710,7 @@ export class OrderHistoricalFileComponent implements OnInit {
           console.error("error::", data)
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       })
   }
 

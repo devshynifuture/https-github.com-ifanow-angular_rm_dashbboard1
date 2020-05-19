@@ -18,6 +18,7 @@ import { map, startWith } from 'rxjs/operators';
 export class PurchaseTrasactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
+  folioNumberShow: any;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
@@ -114,6 +115,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   selectSchemeOption(value) {
+    if (value == '2') {
+      this.existingSchemeList = []
+    }
     this.selectExistingOrNewFolio(value)
     this.scheme = undefined;
     this.schemeList = undefined;
@@ -228,6 +232,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value;
     this.purchaseTransaction.controls.folioSelection.setValue(value)
     if (value == '2') {
+
       this.setMinAmount();
       Object.assign(this.transactionSummary, { folioNumber: '' });
     } else {
@@ -287,11 +292,11 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   setMinAmount() {
-    if (this.purchaseTransaction.get('schemeSelection').value == '2') {
+    if (this.purchaseTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     } else if (this.ExistingOrNew == 1) {
       this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
-    } else {
+    } else if (this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
     if (this.selectedMandate) {
@@ -304,7 +309,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       } else {
         this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
       }
-    } else {
+    } else if (this.schemeDetails) {
       this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
     }// this.purchaseTransaction.updateValueAndValidity();
   }
@@ -382,6 +387,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     console.log('getFoliosAmcWiseRes', data);
     if (data) {
       this.folioList = data;
+      if(this.folioList.length == 1){
+        this.folioNumberShow = this.folioList[0].folioNumber
+      }
       if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
         Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
       }

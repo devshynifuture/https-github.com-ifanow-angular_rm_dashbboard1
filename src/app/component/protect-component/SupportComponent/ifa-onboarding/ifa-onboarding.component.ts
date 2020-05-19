@@ -56,7 +56,7 @@ export class IfaOnboardingComponent implements OnInit {
           this.getMyIfaDetail();
         }
       },
-      (err) => this.eventService.openSnackBar(err, "DISMISS")
+      (err) => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   getOverviewIFAOnbording() {

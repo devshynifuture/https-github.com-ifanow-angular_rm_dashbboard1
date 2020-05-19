@@ -61,6 +61,7 @@ export class OnlineTransactionComponent implements OnInit {
   clientCodeData: any = [];
   filteredStates: any;
   selectedClientOrFamily: any;
+  selectedName: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
@@ -223,7 +224,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   ownerDetails(value) {
-
+    this.selectedName = value.name
     this.familyMemberData = value;
     this.getDefaultDetails(value);
     this.ownerDetail();
