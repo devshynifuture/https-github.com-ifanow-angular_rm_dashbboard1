@@ -103,7 +103,7 @@
                 <th *matHeaderCellDef class="br w-10 textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
                 </th>
                 <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} {{element.orderDate | date:'shortTime'}}
+                    <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy HH:mm'}}
                     </div>
                 </td>
 
