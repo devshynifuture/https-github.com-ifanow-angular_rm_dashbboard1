@@ -54,6 +54,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   maxDateForAdultDob;
   countryList;
   filterCountryName: Observable<any[]>;
+  activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
@@ -309,6 +310,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
+    this.activeDetailsClass = value;
     if (value == 'first') {
       this.saveNomineeDetails(value);
       if (this.firstHolderNominee) {

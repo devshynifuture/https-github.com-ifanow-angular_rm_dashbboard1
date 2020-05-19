@@ -36,21 +36,21 @@
             <p class="m-0 f-12 text-white">CURRENT VALUE</p>
             <div class="row">
               <div class="col-md-7 p-0">
-                <h1 class="m-0 text-white f-26 proxima">₹ 9,23,920</h1>
+                <h1 class="m-0 text-white f-26 proxima">₹ {{ currentValue }}</h1>
               </div>
               <div class="col-md-5 p-0">
-                <h5 class="m-0 text-white pt-8 proxima">+9.68%</h5>
+                <h5 class="m-0 text-white pt-8 proxima"> {{ xirrValue }}%</h5>
               </div>
             </div>
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-white">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-white proxima f-26">₹ 47,590</h1>
+            <h1 class="m-0 text-white proxima f-26">₹ {{ profitOrLossValue }}</h1>
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-white">INVESTOR NAME</p>
-            <h3 class="m-0 text-white f-18">Ronak Hasmukh Hindocha</h3>
-            <p class="m-0 text-white">23243434/78</p>
+            <h3 class="m-0 text-white f-18">{{ investorName }}</h3>
+            <p class="m-0 text-white">{{ folioNumber }}</p>
           </div>
         </div>
         <div class="col-md-1"></div>

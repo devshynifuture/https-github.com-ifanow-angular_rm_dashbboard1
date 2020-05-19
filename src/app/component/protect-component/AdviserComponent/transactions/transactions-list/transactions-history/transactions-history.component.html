@@ -1,113 +1,113 @@
 <div class="popup-header-fix-35">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h3 class="mb-0 wrapper-20"> Transactions History</h3>
-        </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <!-- (click)="Close(false)" commented for prod -->
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
-            </div>
-        </div>
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h3 class="mb-0 wrapper-20"> Transactions History</h3>
     </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <!-- (click)="Close(false)" commented for prod -->
+        <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="pt-90 pl-28 pr-28 b-h-dashed pb-28">
-    <div class="row pb-20">
-        <div class="col-md-12 p-0">
-            <p class="m-0 text-custom text-uppercase f-12 roboto">SCHEME</p>
-            <p class="m-0 text-black">{{transactionData.schemeName}}
-            </p>
-        </div>
+  <div class="row pb-20">
+    <div class="col-md-12 p-0">
+      <p class="m-0 text-custom text-uppercase f-12 roboto">SCHEME</p>
+      <p class="m-0 text-black">{{transactionData.schemeName}}
+      </p>
     </div>
-    <div class="row">
-        <div class="col-md-6 pl-0">
-            <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
-            <p class="m-0 text-black roboto">₹{{transactionData.amount}}</p>
-        </div>
-        <div class="col-md-6 pr-0">
-            <p class="m-0 f-12 text-uppercase text-primitive">FOLIO</p>
-            <p class="m-0 text-black roboto">{{transactionData.folio}}</p>
-        </div>
-        <div class="col-md-6 pl-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">Investor details</p>
-            <p class="m-0 text-black roboto">{{transactionData.clientName}} (Joint)</p>
-        </div>
-        <div class="col-md-6 pr-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">ARN/RIA and EUIN</p>
-            <p class="m-0 text-black roboto">ARN-83866 E023539 - Ankit Mehta</p>
-        </div>
-        <div class="col-md-6 pl-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">Transaction platform</p>
-            <p class="m-0 text-black roboto">{{transactionData.platformName}}</p>
-        </div>
-        <div class="col-md-6 pr-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION INITIATION</p>
-            <p class="m-0 text-black roboto">Immediate</p>
-        </div>
-        <div class="col-md-6 pl-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">Mode of payment</p>
-            <p class="m-0 text-black roboto">Debit mandate</p>
-        </div>
-        <div class="col-md-6 pr-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
-            <p class="m-0 text-black roboto" *ngIf="transactionDetailData">{{transactionDetailData.bankName}}
-                {{transactionDetailData.bankAccountType}} A/c {{transactionDetailData.bankAccountNumber}}</p>
-        </div>
-        <div class="col-md-6 pl-0 pt-20">
-            <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
-            <p class="m-0 text-black roboto">{{transactionData.transactionNumber}}
-            </p>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 pl-0">
+      <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
+      <p class="m-0 text-black roboto">₹{{transactionData.amount}}</p>
     </div>
+    <div class="col-md-6 pr-0">
+      <p class="m-0 f-12 text-uppercase text-primitive">FOLIO</p>
+      <p class="m-0 text-black roboto">{{transactionData.folio}}</p>
+    </div>
+    <div class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Investor details</p>
+      <p class="m-0 text-black roboto">{{transactionData.clientName}} (Joint)</p>
+    </div>
+    <div class="col-md-6 pr-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">ARN/RIA and EUIN</p>
+      <p class="m-0 text-black roboto">ARN-83866 E023539 - Ankit Mehta</p>
+    </div>
+    <div class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Transaction platform</p>
+      <p class="m-0 text-black roboto">{{transactionData.platformName}}</p>
+    </div>
+    <div class="col-md-6 pr-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION INITIATION</p>
+      <p class="m-0 text-black roboto">Immediate</p>
+    </div>
+    <div class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Mode of payment</p>
+      <p class="m-0 text-black roboto">Debit mandate</p>
+    </div>
+    <div class="col-md-6 pr-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
+      <p *ngIf="transactionDetailData" class="m-0 text-black roboto">{{transactionDetailData.bankName}}
+        {{transactionDetailData.bankAccountType}} A/c {{transactionDetailData.bankAccountNumber}}</p>
+    </div>
+    <div class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
+      <p class="m-0 text-black roboto">{{transactionData.transactionNumber}}
+      </p>
+    </div>
+  </div>
 </div>
 
 <div class="p-28 pb-100">
 
-    <div class="row">
-        <div class="col-md-5 p-0">
-            <h5 class="m-0 f-500 text-black">Status</h5>
-        </div>
-        <div class="col-md-5 p-0 text-right right">
-            <button mat-stroked-button class="primary-sm" (click)="refresh(transactionData)">REFRESH</button>
-        </div>
-        <div class="col-md-2 p-0 mt-12">
-            <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
-        </div>
+  <div class="row">
+    <div class="col-md-5 p-0">
+      <h5 class="m-0 f-500 text-black">Status</h5>
     </div>
-    <div *ngIf="!(transactionData.status==0 || transactionData.status==1 || transactionData.status==7)">
-        <div class="circleGreen" *ngFor="let singleStep of transactionDetails">
-            <div class="d-flex">
-                <div class="circle1" *ngIf="singleStep.checked == true">
-                    <i class="material-icons text-success">
-                        check_circle_outline
-                    </i>
-                </div>
-                <div class="circle1" *ngIf="singleStep.checked == false">
-                    <i class="material-icons text-primary">
-                        query_builder
-                    </i>
-                </div>
-                <div class="circleDetails">
-                    <p class="m-0 f-16 l-18">{{singleStep.name}}</p>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-5 p-0 text-right right">
+      <button (click)="refresh(transactionData)" class="primary-sm" mat-stroked-button>REFRESH</button>
     </div>
-    <div class="circleGreen" *ngIf="transactionData.status==7">
-        <div class="d-flex">
-            <div class="circle1">
-                <i class="material-icons text-danger">
-                    check_circle_outline
-                </i>
-            </div>
-            <div class="circleDetails">
-                <p class="m-0 f-16 l-18">Transaction rejected</p>
-                <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text
-                    like this or something short.
-                </p>
-            </div>
-        </div>
+    <div class="col-md-2 p-0 mt-12">
+      <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mt-4"></mat-spinner>
     </div>
+  </div>
+  <div *ngIf="!(transactionData.status==0 || transactionData.status==1 || transactionData.status==7)">
+    <div *ngFor="let singleStep of transactionDetails" class="circleGreen">
+      <div class="d-flex">
+        <div *ngIf="singleStep.checked == true" class="circle1">
+          <i class="material-icons text-success">
+            check_circle_outline
+          </i>
+        </div>
+        <div *ngIf="singleStep.checked == false" class="circle1">
+          <i class="material-icons text-primary">
+            query_builder
+          </i>
+        </div>
+        <div class="circleDetails">
+          <p class="m-0 f-16 l-18">{{singleStep.name}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="transactionData.status==7" class="circleGreen">
+    <div class="d-flex">
+      <div class="circle1">
+        <i class="material-icons text-danger">
+          check_circle_outline
+        </i>
+      </div>
+      <div class="circleDetails">
+        <p class="m-0 f-16 l-18">Transaction rejected</p>
+        <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text
+          like this or something short.
+        </p>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -136,24 +136,10 @@
 </div> -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="bottom-fixed wrapper-12 w-35">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Close</h5>
-        </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Close</h5>
     </div>
+  </div>
 </div>

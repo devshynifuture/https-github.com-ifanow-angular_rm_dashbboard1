@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ProcessTransactionService} from '../process-transaction.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {PopUpComponent} from '../pop-up/pop-up.component';
-import {MatDialog} from '@angular/material';
-import {PlatformPopUpComponent} from '../platform-pop-up/platform-pop-up.component';
-import {EuinSelectPopUpComponent} from '../euin-select-pop-up/euin-select-pop-up.component';
-import {BankSelectPopUpComponent} from '../bank-select-pop-up/bank-select-pop-up.component';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UmrnPopUpComponent} from '../umrn-pop-up/umrn-pop-up.component';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ProcessTransactionService } from '../process-transaction.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { PopUpComponent } from '../pop-up/pop-up.component';
+import { MatDialog } from '@angular/material';
+import { PlatformPopUpComponent } from '../platform-pop-up/platform-pop-up.component';
+import { EuinSelectPopUpComponent } from '../euin-select-pop-up/euin-select-pop-up.component';
+import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-up.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UmrnPopUpComponent } from '../umrn-pop-up/umrn-pop-up.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -51,8 +51,8 @@ export class TransactionSummaryComponent implements OnInit {
   advisorId: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-              private subInjectService: SubscriptionInject, public dialog: MatDialog,
-              private customerService: CustomerService, private eventService: EventService,) {
+    private subInjectService: SubscriptionInject, public dialog: MatDialog,
+    private customerService: CustomerService, private eventService: EventService, ) {
   }
 
   showPlatform = false;
@@ -83,7 +83,7 @@ export class TransactionSummaryComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(PopUpComponent, {
       width: '470px',
-      data: {investor: this.clientDataList, animal: this.element}
+      data: { investor: this.clientDataList, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -100,8 +100,8 @@ export class TransactionSummaryComponent implements OnInit {
 
   openEuin(): void {
     const dialogRef = this.dialog.open(EuinSelectPopUpComponent, {
-      width: '470px',
-      data: {subBroker: this.subBrokerCredList, brokerCode: this.defaultClient.brokerCode}
+      width: '750px',
+      data: { subBroker: this.subBrokerCredList, brokerCode: this.defaultClient.brokerCode }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -118,7 +118,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.showPlatform = false;
     const dialogRef = this.dialog.open(PlatformPopUpComponent, {
       width: '467px',
-      data: {platform: this.platForm, animal: this.element}
+      data: { platform: this.platForm, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -136,7 +136,7 @@ export class TransactionSummaryComponent implements OnInit {
   openBank(): void {
     const dialogRef = this.dialog.open(BankSelectPopUpComponent, {
       width: '470px',
-      data: {bank: this.bankDetails, animal: this.element}
+      data: { bank: this.bankDetails, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -152,7 +152,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.getMandateDetails();
     const dialogRef = this.dialog.open(UmrnPopUpComponent, {
       width: '470px',
-      data: {mandate: this.achMandateNSE, animal: this.element}
+      data: { mandate: this.achMandateNSE, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
