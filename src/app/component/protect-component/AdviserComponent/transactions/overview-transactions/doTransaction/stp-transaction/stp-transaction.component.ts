@@ -257,8 +257,7 @@ export class StpTransactionComponent implements OnInit {
     // this.maiSchemeList = data
     this.showSpinnerTrans = false;
     this.schemeDetailsTransfer = data[0];
-    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
-    this.stpTransaction.controls.employeeContry.updateValueAndValidity();
+    this.setMinAmount();
 
     if (data.length > 1) {
       this.reInvestmentOpt = data;
@@ -276,7 +275,7 @@ export class StpTransactionComponent implements OnInit {
 
   reinvest(scheme) {
     this.schemeDetailsTransfer = scheme;
-    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.sipMinimumInstallmentAmount)]);
+    this.setMinAmount();
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
@@ -371,12 +370,20 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFrequency(getFrerq) {
     // this.fre = getFrerq
+    console.log('selected freq : ', getFrerq);
     this.frequency = getFrerq.frequency;
-    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
+    // this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       this.dateArray(getFrerq.stpDates);
     } else {
       this.dateArray(getFrerq.sipDates);
+    }
+  }
+
+  setMinAmount() {
+    if (this.schemeDetailsTransfer) {
+      this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
+      this.stpTransaction.controls.employeeContry.updateValueAndValidity();
     }
   }
 
