@@ -54,11 +54,10 @@ export class OnlineTransactionComponent implements OnInit {
   showSpinnerOwner = false;
   ownerNameQuery = '';
   familyMemberData: any;
-  noSubBroker = false;
-  noMapping = false;
+  noSubBroker = true;
+  noMapping = true;
   transactionType: any;
   transactionData: any;
-  clientCodeData: any = [];
   filteredStates: any;
   selectedClientOrFamily: any;
   selectedName: any;
@@ -128,7 +127,6 @@ export class OnlineTransactionComponent implements OnInit {
       );
       this.stateCtrl.valueChanges
         .subscribe(newValue => {
-          this.clientCodeData = [];
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
             map(value => this.processTransaction.filterName(newValue + '', this.familyMemberList)));
         });
@@ -145,6 +143,7 @@ export class OnlineTransactionComponent implements OnInit {
     console.log('onlineTransactionComponent platform: ', platform);
     this.selectedClientOrFamily = platform.name;
     this.showSpinnerOwner = true;
+    this.noMapping = true;
 
     const obj = {
       advisorId: this.advisorId,
@@ -307,7 +306,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   saveAndNext() {
-    if (!this.clientCodeData || this.clientCodeData.length == 0) {
+    if (this.noMapping) {
       return;
     }
     console.log(this.formStep);
