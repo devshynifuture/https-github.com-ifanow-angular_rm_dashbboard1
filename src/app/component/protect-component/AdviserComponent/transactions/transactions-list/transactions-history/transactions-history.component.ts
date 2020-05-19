@@ -14,6 +14,7 @@ export class TransactionsHistoryComponent implements OnInit {
   transactionDetailData: any;
   transactionStatusList;
   isLoading = false;
+  showBankDetail = false;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
               private onlineTransact: OnlineTransactionService) {
@@ -73,15 +74,19 @@ export class TransactionsHistoryComponent implements OnInit {
         this.transactionDetailData = responseData;
         if (this.transactionDetailData.paymentMode == 'OL') {
           this.transactionDetailData.paymentMode = 'Online';
+          this.showBankDetail = true;
         } else if (this.transactionDetailData.paymentMode == 'M') {
           this.transactionDetailData.paymentMode = 'Debit Mandate';
+          this.showBankDetail = false;
         } else {
           this.transactionDetailData.paymentMode = 'Online';
+          this.showBankDetail = true;
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
+
 
   refresh(data) {
     this.getTransactionDetail(data);

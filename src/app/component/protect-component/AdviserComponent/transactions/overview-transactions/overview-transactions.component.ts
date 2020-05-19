@@ -53,8 +53,8 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
-    this.finalEndDate = new Date().getTime();
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getAllTransactionList();
     this.getMandate();
     this.getIInData();

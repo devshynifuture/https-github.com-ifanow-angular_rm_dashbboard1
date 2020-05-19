@@ -49,8 +49,8 @@ export class TransactionsListComponent implements OnInit {
       this.isAdvisorSection = false;
     }
     this.selectedPreviousToShowDate = '7';
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
-    this.finalEndDate = new Date().getTime();
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.selectedBroker = this.credentialData[0];
     if (this.isAdvisorSection) {
@@ -164,8 +164,8 @@ export class TransactionsListComponent implements OnInit {
   }
 
   startAndEndDateEvent(data) {
-    this.finalStartDate = data.value.begin.getTime();
-    this.finalEndDate = data.value.end.getTime();
+    this.finalStartDate = UtilService.getStartOfTheDay(data.value.begin).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(data.value.end).getTime();
     this.refresh(true);
     console.log(data);
   }
