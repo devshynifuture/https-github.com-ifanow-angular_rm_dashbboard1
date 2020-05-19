@@ -1,4 +1,7 @@
 <!--<h1>hI this is gaurav</h1>-->
+<div *ngIf="!onlineStatus && isConnected==false" class="alert alert-primary" role="alert">
+  This is a primary alert—check it out!
+</div>
 <div cdkScrollable>
   <router-outlet #mainrouter>
 
