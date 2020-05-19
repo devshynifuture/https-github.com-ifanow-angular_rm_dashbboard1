@@ -321,10 +321,13 @@ img.header-img {
   top: 10px;
 }
 
-// #earphones-menu {
-//   min-height: 310px;
-//   overflow-y: scroll;
-// }
+
+
+#earphones-menu {
+  height: calc(100vh - 352px);
+  overflow: auto;
+
+}
 
 #setting-menu {
   padding: 25px;
