@@ -54,6 +54,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   currentDate: string = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
   advisorNameInput = '';
   requestJsonForOrderingFiles: any[] = [];
+  isOnlyCamsSelected = false;
   searchAdvisorForm = this.fb.group({
     searchAdvisor: [, Validators.required]
   });
@@ -315,7 +316,7 @@ export class OrderHistoricalFileComponent implements OnInit {
       }, err => {
         this.arrayAdvisorNameError = true;
         this.errorMsg = 'Something went wrong';
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       });
   }
 
@@ -326,7 +327,7 @@ export class OrderHistoricalFileComponent implements OnInit {
       }
       return this.supportService.getBackofficeAdvisorSearchByName(data);
     } else {
-      this.eventService.openSnackBar("Advisor Name must not be empty!", "DISMISS");
+      this.eventService.openSnackBar("Advisor Name must not be empty!", "Dismiss");
     }
   }
 
@@ -346,7 +347,7 @@ export class OrderHistoricalFileComponent implements OnInit {
           });
           console.log(data);
         } else {
-          this.eventService.openSnackBar("Can't fetch File Type Order list", "DISMISS");
+          this.eventService.openSnackBar("Can't fetch File Type Order list", "Dismiss");
         }
       });
   }
@@ -407,12 +408,14 @@ export class OrderHistoricalFileComponent implements OnInit {
   changesDueToCamsSelection(option) {
     if (option === 1) {
       this.asOnDate = false;
+      this.orderingFreq = [{ id: '1', name: 'Yearly' }, { id: '2', name: 'Monthly' }, { id: '3', name: 'All at once' }];
       this.orderHistoryFileForm.get('orderingFreq').reset();
       this.orderHistoryFileForm.get('asOnDate').setValidators([]);
       this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
       this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
     } else if (option === 2) {
       this.asOnDate = true;
+      this.orderingFreq = [{ id: '3', name: "All at once" }];
       this.orderHistoryFileForm.get('orderingFreq').setValue('3');
       this.orderHistoryFileForm.get('asOnDate').setValidators(Validators.required);
       this.orderHistoryFileForm.get('asOnDate').setErrors({ 'error': true });
@@ -676,7 +679,7 @@ export class OrderHistoricalFileComponent implements OnInit {
               } else {
                 fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
                 if (index === yearDiffr) {
-                  toDateIter = toDateValueObj.getFullYear() + "-" + (toDateValueObj.getMonth() + 1) + "-" + toDateValueObj.getDate();
+                  toDateIter = toDateValueObj;
                   if (toDateIter === fromDateIter) {
                     break;
                   }
@@ -1707,7 +1710,7 @@ export class OrderHistoricalFileComponent implements OnInit {
           console.error("error::", data)
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       })
   }
 

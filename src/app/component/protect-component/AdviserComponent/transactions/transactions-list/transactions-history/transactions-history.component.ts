@@ -11,9 +11,10 @@ import {detailStatusObj} from './detailStatus';
 })
 export class TransactionsHistoryComponent implements OnInit {
   transactionData: any;
-  transactionDetailData: any;
-  transactionDetails;
+  // transactionData: any;
+  transactionStatusList;
   isLoading = false;
+  showBankDetail = false;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
               private onlineTransact: OnlineTransactionService) {
@@ -24,40 +25,40 @@ export class TransactionsHistoryComponent implements OnInit {
     this.transactionData = data;
     switch (true) {
       case (this.transactionData.transactionType == 'ORDER' || this.transactionData.transactionType == 'PURCHASE'):
-        this.transactionDetails = detailStatusObj.transactionDetailStatus.ORDER;
+        this.transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
         break;
       case (this.transactionData.transactionType == 'REDEMPTION'):
-        this.transactionDetails = detailStatusObj.transactionDetailStatus.REDEMPTION;
+        this.transactionStatusList = detailStatusObj.transactionDetailStatus.REDEMPTION;
         break;
       case (this.transactionData.transactionType == 'SWP'):
-        this.transactionDetails = detailStatusObj.transactionDetailStatus.SWP;
+        this.transactionStatusList = detailStatusObj.transactionDetailStatus.SWP;
         break;
       case (this.transactionData.transactionType == 'SWITCH'):
-        this.transactionDetails = detailStatusObj.transactionDetailStatus.SWITCH;
+        this.transactionStatusList = detailStatusObj.transactionDetailStatus.SWITCH;
         break;
       case (this.transactionData.transactionType == 'STP'):
-        this.transactionDetails = detailStatusObj.transactionDetailStatus.STP;
+        this.transactionStatusList = detailStatusObj.transactionDetailStatus.STP;
         break;
       case (this.transactionData.transactionType == 'SIP'):
-        this.transactionDetails = detailStatusObj.transactionDetailStatus.ORDER;
+        this.transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
         break;
       default:
         console.log('');
     }
-    this.transactionDetails.forEach(element => {
+    this.transactionStatusList.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
     if (data.status == 7) {
-      this.transactionDetails = this.transactionDetails.filter((item) => item.checked !== false);
+      this.transactionStatusList = this.transactionStatusList.filter((item) => item.checked !== false);
     } else if (data.status == 8) {
-      this.transactionDetails = this.transactionDetails.filter((item) => item.checked !== false);
+      this.transactionStatusList = this.transactionStatusList.filter((item) => item.checked !== false);
     }
-    this.getTransactionDetail(data);
+    // this.getTransactionDetail(data);
   }
 
   ngOnInit() {
     console.log('status details', detailStatusObj);
-
+    this.setPaymentMode();
   }
 
   getTransactionDetail(data) {
@@ -69,14 +70,29 @@ export class TransactionsHistoryComponent implements OnInit {
       responseData => {
         console.log(responseData);
         this.isLoading = false;
-        this.transactionDetailData = responseData;
+
+        this.transactionData = responseData;
+
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
+  setPaymentMode() {
+    if (this.transactionData.paymentMode == 'OL') {
+      this.transactionData.paymentMode = 'Online';
+      this.showBankDetail = true;
+    } else if (this.transactionData.paymentMode == 'M') {
+      this.transactionData.paymentMode = 'Debit Mandate';
+      this.showBankDetail = false;
+    } else {
+      this.transactionData.paymentMode = 'Online';
+      this.showBankDetail = true;
+    }
+  }
+
   refresh(data) {
-    this.getTransactionDetail(data);
+    // this.getTransactionDetail(data);
   }
 
   close() {

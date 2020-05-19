@@ -21,6 +21,10 @@ export class FileOrderingUploadService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.RM_DASHBOARD_RM_MASTER_USER_GET, data);
     }
 
+    getFileOrderRefreshPerRowData(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_FILE_ORDER_HISTORICAL_PER_ROW, data);
+    }
+
     getFileOrderHistoryListData(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_ORDER_HISTORICAL_LIST_DATA, data);
     }

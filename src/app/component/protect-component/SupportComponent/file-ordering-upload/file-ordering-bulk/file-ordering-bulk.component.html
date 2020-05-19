@@ -72,8 +72,8 @@
 
 <div class="row pt-20">
     <div class="col-md-12">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading" appSkeletonLoading
-            [appSkeletonLoading]="isLoading">
+        <table mat-table [dataSource]="dataSource" class="skeletonLoading" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" id="table-low">
             <ng-container matColumnDef="rta">
                 <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
                 <td class="br" mat-cell *matCellDef="let element">
@@ -196,7 +196,7 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
         <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
             <h4 class="d-flex justify-content-center b-a p-44">

@@ -168,7 +168,7 @@ export class MutualFundOverviewComponent implements OnInit {
         this.showCategory = false;
         this.datasource1.data = [];
         this.showCashFlow = false;
-        this.eventService.openSnackBar(" No Mutual Fund Found", "DISMISS");
+        this.eventService.openSnackBar(" No Mutual Fund Found", "Dismiss");
       }
     );
   }
@@ -209,7 +209,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showCategory = false;
       this.datasource1.data = [];
       this.showCashFlow = false;
-      this.eventService.openSnackBar(" No Mutual Fund Found", "DISMISS");
+      this.eventService.openSnackBar(" No Mutual Fund Found", "Dismiss");
     }
 
   }

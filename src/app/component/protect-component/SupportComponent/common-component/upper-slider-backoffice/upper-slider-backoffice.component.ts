@@ -84,7 +84,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.upperHeaderName = this.getRtName(this.data.rtId);
           this.teamMemberListGet();
         } else {
-          this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
+          this.eventService.openSnackBar("Error In Fetching RTA List", "Dismiss");
         }
       });
   }
@@ -133,7 +133,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         } else {
           this.adminAdvisorIds = [this.advisorId];
           this.handlingDataVariable();
-          this.eventService.openSnackBar('No Team Member Found', "DISMISS");
+          this.eventService.openSnackBar('No Team Member Found', "Dismiss");
         }
       })
   }
@@ -327,7 +327,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           console.error(err);
         });
     } else {
-      this.eventService.openSnackBar("No Aum Report List Found", "DISMISS");
+      this.eventService.openSnackBar("No Aum Report List Found", "Dismiss");
       this.dataSource2.data = null;
     }
   }
@@ -491,7 +491,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         });
         ExcelService.exportExcel(headerData, header, excelData, footer, value);
       } else {
-        this.eventService.openSnackBar("No Aum Report List Found", "DISMISS")
+        this.eventService.openSnackBar("No Aum Report List Found", "Dismiss")
       }
     }
 

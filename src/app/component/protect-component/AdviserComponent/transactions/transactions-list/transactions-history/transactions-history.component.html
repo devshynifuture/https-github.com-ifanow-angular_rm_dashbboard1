@@ -19,6 +19,13 @@
       </p>
     </div>
   </div>
+  <div *ngIf="transactionData.targetProductName" class="row pb-20">
+    <div class="col-md-12 p-0">
+      <p class="m-0 text-custom text-uppercase f-12 roboto">TARGET SCHEME</p>
+      <p class="m-0 text-black">{{transactionData.targetProductName}}
+      </p>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-6 pl-0">
       <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
@@ -30,11 +37,12 @@
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Investor details</p>
-      <p class="m-0 text-black roboto">{{transactionData.clientName}} (Joint)</p>
+      <p class="m-0 text-black roboto">{{transactionData.clientName}}</p>
     </div>
     <div class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">ARN/RIA and EUIN</p>
-      <p class="m-0 text-black roboto">ARN-83866 E023539 - Ankit Mehta</p>
+      <p
+        class="m-0 text-black roboto">{{transactionData.brokerCode}} {{ transactionData.euin ? transactionData.euin : ''}}</p>
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Transaction platform</p>
@@ -46,18 +54,50 @@
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Mode of payment</p>
-      <p class="m-0 text-black roboto">Debit mandate</p>
+      <p
+        class="m-0 text-black roboto">{{ transactionData.paymentMode ? transactionData.paymentMode : '-'}}</p>
     </div>
-    <div class="col-md-6 pr-0 pt-20">
+    <div *ngIf="showBankDetail&&transactionData.bankAccountNumber"
+         class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
-      <p *ngIf="transactionDetailData" class="m-0 text-black roboto">{{transactionDetailData.bankName}}
-        {{transactionDetailData.bankAccountType}} A/c {{transactionDetailData.bankAccountNumber}}</p>
+      <p
+        class="m-0 text-black roboto">{{transactionData.bankName}} {{transactionData.bankAccountType}}
+        A/c {{transactionData.bankAccountNumber}}</p>
+    </div>
+    <div *ngIf="!showBankDetail && transactionData.umrn" class="col-md-6 pr-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Mandate details</p>
+      <p class="m-0 text-black roboto">{{transactionData.umrn}} <!--{{transactionData.bankAccountType}}
+        A/c {{transactionData.bankAccountNumber}}--></p>
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
       <p class="m-0 text-black roboto">{{transactionData.transactionNumber}}
       </p>
     </div>
+    <div *ngIf="transactionData.frequency" class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Frequency</p>
+      <p class="m-0 text-black roboto">{{transactionData.frequency}}
+      </p>
+    </div>
+    <div *ngIf="transactionData.startDate&&transactionData.startDate>0" class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Start Date</p>
+      <p class="m-0 text-black roboto">{{transactionData.startDate | date:'dd/MM/yyyy'}}
+        <!--{{element.orderDate | date:'shortTime'}}-->
+      </p>
+    </div>
+    <div *ngIf="transactionData.perpetualFlag||(transactionData.startDate&&transactionData.endDate>0)"
+         class="col-md-6 pl-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">End Date</p>
+      <p class="m-0 text-black roboto">{{transactionData.perpetualFlag ? 'Continue until cancelled'
+        : (transactionData.endDate | date:'dd/MM/yyyy')}}
+        <!--{{element.orderDate | date:'shortTime'}}-->
+      </p>
+    </div>
+    <!--    <div class="col-md-6 pl-0 pt-20" *ngIf="transactionData.perpetualFlag">-->
+    <!--      <p class="m-0 f-12 text-uppercase text-primitive">Continue untill cancelled</p>-->
+    <!--      <p class="m-0 text-black roboto">Yes &lt;!&ndash;{{element.orderDate | date:'shortTime'}}&ndash;&gt;-->
+    <!--      </p>-->
+    <!--    </div>-->
   </div>
 </div>
 
@@ -70,12 +110,12 @@
     <div class="col-md-5 p-0 text-right right">
       <button (click)="refresh(transactionData)" class="primary-sm" mat-stroked-button>REFRESH</button>
     </div>
-    <div class="col-md-2 p-0 mt-12">
-      <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mt-4"></mat-spinner>
+    <div class="col-md-2 p-0  ">
+      <mat-spinner *ngIf="isLoading==true" [diameter]="20" class=" ml-4"></mat-spinner>
     </div>
   </div>
   <div *ngIf="!(transactionData.status==0 || transactionData.status==1 || transactionData.status==7)">
-    <div *ngFor="let singleStep of transactionDetails" class="circleGreen">
+    <div *ngFor="let singleStep of transactionStatusList" class="circleGreen">
       <div class="d-flex">
         <div *ngIf="singleStep.checked == true" class="circle1">
           <i class="material-icons text-success">
@@ -102,8 +142,8 @@
       </div>
       <div class="circleDetails">
         <p class="m-0 f-16 l-18">Transaction rejected</p>
-        <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text
-          like this or something short.
+        <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text like this or
+          something short.
         </p>
       </div>
     </div>

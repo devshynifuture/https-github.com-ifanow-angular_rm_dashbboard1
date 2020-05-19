@@ -63,6 +63,7 @@ export class RedemptionTransactionComponent implements OnInit {
   editedId: any;
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
+  folioNumberShow: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService,
@@ -282,6 +283,9 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
     this.folioList = data;
+    if(this.folioList.length == 1){
+      this.folioNumberShow = this.folioList[0].folioNumber
+    }
     if (this.redemptionTransaction.get('folioSelection').valid) {
       Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }

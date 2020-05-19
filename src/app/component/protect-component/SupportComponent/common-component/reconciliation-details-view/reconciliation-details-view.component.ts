@@ -136,7 +136,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.deleteMultipleTransactionArray.length > 0) {
       this.deleteTransactionApi(this.deleteMultipleTransactionArray);
     } else {
-      this.eventService.openSnackBar("Please select atleast one transaction", "DISMISS")
+      this.eventService.openSnackBar("Please select atleast one transaction", "Dismiss")
     }
   }
 

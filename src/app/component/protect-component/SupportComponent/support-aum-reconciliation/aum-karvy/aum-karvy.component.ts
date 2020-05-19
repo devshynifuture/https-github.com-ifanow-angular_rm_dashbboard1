@@ -111,7 +111,7 @@ export class AumKarvyComponent implements OnInit {
           this.dataSource.sort = this.sort;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No AUM History Found", "DISMISS");
+          this.eventService.openSnackBar("No AUM History Found", "Dismiss");
         }
       })
   }

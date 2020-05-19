@@ -115,7 +115,7 @@ export class AumAllRtaComponent implements OnInit {
           this.isLoading = false;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No AUM History Found", "DISMISS");
+          this.eventService.openSnackBar("No AUM History Found", "Dismiss");
         }
       })
   }

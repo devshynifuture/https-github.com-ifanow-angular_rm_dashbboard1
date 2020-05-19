@@ -40,8 +40,7 @@ export class FileOrderingBulkComponent implements OnInit {
     "ordered",
     "failed",
     "uploaded",
-    "refresh",
-    "empty",
+    "refresh"
   ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   visible = true;
@@ -140,9 +139,7 @@ export class FileOrderingBulkComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.getRtaList();
-
   }
 
   defaultSelectionInFilter() {
@@ -174,7 +171,7 @@ export class FileOrderingBulkComponent implements OnInit {
         this.rmList = data;
         this.defaultSelectionInFilter();
       } else {
-        this.eventService.openSnackBar("No Rm Data Found!", "DISMISS");
+        this.eventService.openSnackBar("No Rm Data Found!", "Dismiss");
       }
     });
   }
@@ -223,7 +220,7 @@ export class FileOrderingBulkComponent implements OnInit {
 
           this.dataSource.data = tableData;
         } else {
-          this.eventService.openSnackBar("No Data Found", "DISMISS");
+          this.eventService.openSnackBar("No Data Found", "Dismiss");
           this.dataSource.data = null;
         }
       });
@@ -409,7 +406,6 @@ export interface PeriodicElement {
   failed: string;
   uploaded: string;
   refresh: string;
-  empty: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -425,7 +421,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     failed: "",
     uploaded: "",
     refresh: "",
-    empty: "",
   },
   {
     rta: "",
@@ -439,7 +434,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     failed: "",
     uploaded: "",
     refresh: "",
-    empty: "",
   },
   {
     rta: "",
@@ -452,7 +446,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     ordered: "",
     failed: "",
     uploaded: "",
-    refresh: "",
-    empty: "",
+    refresh: ""
   },
 ];

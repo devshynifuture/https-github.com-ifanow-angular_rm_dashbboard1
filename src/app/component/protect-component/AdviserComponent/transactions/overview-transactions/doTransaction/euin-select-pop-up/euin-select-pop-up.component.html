@@ -24,7 +24,7 @@
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
         </ng-container>
         <ng-container matColumnDef="no">
-            <th mat-header-cell *matHeaderCellDef class="br w-20"> EUIN </th>
+            <th mat-header-cell *matHeaderCellDef class="br w-10"> EUIN </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.euin}} </div>
             </td>
@@ -38,14 +38,14 @@
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
         </ng-container>
         <ng-container matColumnDef="bname">
-            <th mat-header-cell *matHeaderCellDef class="br w-20">Broker code </th>
+            <th mat-header-cell *matHeaderCellDef class="br w-15">Broker code </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{brokerCode}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
         </ng-container>
         <ng-container matColumnDef="ownerName">
-            <th mat-header-cell *matHeaderCellDef class="br w-15"> Sub-broker code</th>
+            <th mat-header-cell *matHeaderCellDef class="br w-20"> Sub-broker code</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     {{element.subBrokerCode}}

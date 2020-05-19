@@ -144,7 +144,7 @@ export class IfasDetailsComponent implements OnInit {
           console.log('broker list values:::', res);
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       });
   }
 
@@ -156,7 +156,7 @@ export class IfasDetailsComponent implements OnInit {
       if (this.brokerList && this.brokerList.length !== 0) {
         this.openSelectArnRiaDialog(this.brokerList, this.franklineData, this.rtId)
       } else {
-        this.eventService.openSnackBar('No Broker List Found For This User', "DISMISS");
+        this.eventService.openSnackBar('No Broker List Found For This User', "Dismiss");
       }
     } else if (value === this.camsId) {
       this.camsData['rmId'] = this.rmId;
@@ -164,7 +164,7 @@ export class IfasDetailsComponent implements OnInit {
       if (this.brokerList && this.brokerList.length !== 0) {
         this.openSelectArnRiaDialog(this.brokerList, this.camsData, this.rtId)
       } else {
-        this.eventService.openSnackBar('No Broker List Found For This User', "DISMISS");
+        this.eventService.openSnackBar('No Broker List Found For This User', "Dismiss");
       }
     } else if (value === this.karvyId) {
       this.karvyData['rmId'] = this.rmId;
@@ -172,7 +172,7 @@ export class IfasDetailsComponent implements OnInit {
       if (this.brokerList && this.brokerList.length !== 0) {
         this.openSelectArnRiaDialog(this.brokerList, this.karvyData, this.rtId);
       } else {
-        this.eventService.openSnackBar('No Broker List Found For This User', "DISMISS");
+        this.eventService.openSnackBar('No Broker List Found For This User', "Dismiss");
       }
 
     }
