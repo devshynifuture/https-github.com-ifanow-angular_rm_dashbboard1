@@ -5,7 +5,8 @@
 </div>
 
 <div class="overflow-hidden" *ngIf="dataSource.data.length > 0 && !hasError">
-    <table mat-table [dataSource]="dataSource" class="mt-8 hierachy skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+    <table mat-table [dataSource]="dataSource" class="mt-8 hierachy skeletonAnimation" appSkeletonLoading
+        [appSkeletonLoading]="utilService.isLoading" id="table-low">
 
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef class="br w-20"> Full name </th>
@@ -47,13 +48,16 @@
             <th mat-header-cell *matHeaderCellDef class="br"> Access to </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar d-flex align-items-center justify-content-between">
-                    <div *ngIf="element.parentName && !utilService.isLoading && element.canReport == 1" (click)="assignTeamMember(null, element)">
+                    <div *ngIf="element.parentName && !utilService.isLoading && element.canReport == 1"
+                        (click)="assignTeamMember(null, element)">
                         {{element.parentName}}
-                        <button mat-button class="btn-primary changeBtn"> change</button>
+                        <button mat-stroked-button class="btn-primary-outline changeBtn"> Change</button>
                     </div>
                 </div>
-                <button mat-stroked-button class="btn-primary-outline  btn-sm" *ngIf="!element.parentName && !utilService.isLoading && element.canReport == 1" (click)="assignTeamMember(null, element)"> ADD TEAM
-                    MEMBER</button>
+                <p class="text-primary m-0 f-400 c-p"
+                    *ngIf="!element.parentName && !utilService.isLoading && element.canReport == 1"
+                    (click)="assignTeamMember(null, element)"> ADD TEAM
+                    MEMBER</p>
             </td>
         </ng-container>
 
