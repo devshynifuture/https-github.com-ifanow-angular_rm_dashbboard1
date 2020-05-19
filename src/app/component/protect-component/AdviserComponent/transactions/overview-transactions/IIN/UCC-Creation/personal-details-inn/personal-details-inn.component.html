@@ -27,7 +27,7 @@
 
                 <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? ' Name as per PAN' : ''}}</h3>
+                        <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? ' Name as per Pan' : ''}}</h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field appearance="standard" floatLabel="never">
@@ -60,7 +60,7 @@
                 <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">
-                            {{inputData.taxStatus != '02' ? 'Father/Spouse' : 'Guardian name as per pan'}}
+                            {{inputData.taxStatus != '02' ? "Father/Spouse's" : 'Guardian name as per pan'}}
                         </h3>
                     </div>
                     <div class="col-md-5 form-group">
@@ -166,10 +166,11 @@
     </div>
 
     <div class="col-md-5 center_menu">
-        <a (click)="SendToForm('first',false);" class="activeLink c-p"> First holder </a>
-        <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p"> Second
+        <a (click)="SendToForm('first',false);" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
+            First holder </a>
+        <a (click)="SendToForm('second',false);" [ngClass]="{'activeLink': activeDetailsClass=='second'}" *ngIf="inputData.holdingNature != 'SI'" class="c-p"> Second
             holder </a>
-        <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingNature != 'SI'" class="activeLink c-p">
+        <a (click)="SendToForm('third',false);" [ngClass]="{'activeLink': activeDetailsClass=='third'}" *ngIf="inputData.holdingNature != 'SI'" class="c-p">
             {{thirdHolderButtonLabel}}</a>
     </div>
 

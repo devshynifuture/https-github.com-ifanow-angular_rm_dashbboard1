@@ -17,6 +17,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
   styleUrls: ['./personal-details-inn.component.scss']
 })
 export class PersonalDetailsInnComponent implements OnInit {
+  activeDetailsClass = 'first';
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -202,6 +203,8 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
+    this.activeDetailsClass = value;
+
     if (flag == true) {
       this.doneData = true;
     }
