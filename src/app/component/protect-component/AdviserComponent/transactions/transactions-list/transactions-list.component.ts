@@ -158,8 +158,8 @@ export class TransactionsListComponent implements OnInit {
 
   sortDateFilter(data) {
     console.log(this.selectedPreviousToShowDate);
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
-    this.finalEndDate = new Date().getTime();
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * data.value)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     (data.value == 'custom') ? '' : this.refresh(true);
   }
 
@@ -196,7 +196,7 @@ export class TransactionsListComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.refresh(true);
           }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          console.log('this is sidebardata transactions list in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
         }
