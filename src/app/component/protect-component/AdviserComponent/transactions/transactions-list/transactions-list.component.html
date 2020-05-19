@@ -59,7 +59,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="transactionNumber">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionNumber"> Transaction Number
+                <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="transactionNumber">
+                    Transaction Number
                 </th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar"> {{element.transactionNumber}} </div>
@@ -99,12 +100,13 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="orderDate">
-                <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
+                <th *matHeaderCellDef class="br w-10 textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
                 </th>
                 <td *matCellDef="let element" class="br" mat-cell>
                     <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} {{element.orderDate | date:'shortTime'}}
                     </div>
                 </td>
+
             </ng-container>
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
