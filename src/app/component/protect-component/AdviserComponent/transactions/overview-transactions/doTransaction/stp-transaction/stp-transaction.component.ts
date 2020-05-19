@@ -18,6 +18,7 @@ export class StpTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   folioNumberShow: any;
+  defaultFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private eventService: EventService,
@@ -359,6 +360,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.switchFrequency) {
       this.switchFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
+          this.defaultFrequency = singleFrequency.frequency
           this.stpTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }

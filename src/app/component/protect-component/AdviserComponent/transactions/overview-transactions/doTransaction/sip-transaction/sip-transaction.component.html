@@ -205,7 +205,7 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="frequency">
+                                <mat-select class="form-control" [(ngModel)]="defaultFrequency" formControlName="frequency">
                                     <mat-option disabled value=''>Select SIP frequency</mat-option>
                                     <mat-option (click)="selectedFrequency(frequency)"
                                         *ngFor="let frequency of sipFrequency" [value]="frequency.frequency">

@@ -22,6 +22,7 @@ export class SipTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   folioNumberShow: any;
+  defaultFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -356,6 +357,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.sipFrequency) {
       this.sipFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
+          this.defaultFrequency = singleFrequency.frequency
           this.sipTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }

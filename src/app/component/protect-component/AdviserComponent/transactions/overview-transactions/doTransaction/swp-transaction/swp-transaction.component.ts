@@ -19,6 +19,7 @@ export class SwpTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   folioNumberShow: any;
+  defaultFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -285,6 +286,7 @@ export class SwpTransactionComponent implements OnInit {
     if (this.swpFrequency) {
       this.swpFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
+          this.defaultFrequency = singleFrequency.frequency
           this.swpTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }
