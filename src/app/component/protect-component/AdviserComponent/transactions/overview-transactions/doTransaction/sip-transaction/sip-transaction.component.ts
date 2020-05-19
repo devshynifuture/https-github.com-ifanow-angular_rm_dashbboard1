@@ -265,11 +265,12 @@ export class SipTransactionComponent implements OnInit {
     if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
     }
-    if (this.platformType == 1) {
+    /*if (this.platformType == 1) {
       this.getMandateDetails();
     } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
-      this.getMandateDetails();
-    }
+    }*/
+    this.getMandateDetails();
+
   }
 
   selectPaymentMode(value) {
@@ -451,7 +452,7 @@ export class SipTransactionComponent implements OnInit {
         // max
         this.sipTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
         this.sipTransaction.controls.employeeContry.updateValueAndValidity();
-        this.mandateAmountErrorMessage = 'Sip amount connot be greater than mandate amount';
+        this.mandateAmountErrorMessage = 'Sip amount cannot be greater than mandate amount';
       }
     }
   }

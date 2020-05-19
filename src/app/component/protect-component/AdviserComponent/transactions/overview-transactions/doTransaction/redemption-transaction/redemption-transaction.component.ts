@@ -15,6 +15,18 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./redemption-transaction.component.scss']
 })
 export class RedemptionTransactionComponent implements OnInit {
+
+  oldDefaultData;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              private fb: FormBuilder, private eventService: EventService,
+              public processTransaction: ProcessTransactionService) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   isSuccessfulTransaction = false;
 
   barButtonOptions: MatProgressButtonOptions = {
@@ -65,11 +77,6 @@ export class RedemptionTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
   folioNumberShow: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private fb: FormBuilder, private eventService: EventService,
-              public processTransaction: ProcessTransactionService) {
-  }
-
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -82,10 +89,6 @@ export class RedemptionTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -112,8 +115,40 @@ export class RedemptionTransactionComponent implements OnInit {
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
 
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
+    if (this.oldDefaultData) {
+      this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
+    }
+    this.oldDefaultData = data;
     this.getSchemeList();
+
     // this.redemptionTransaction.controls.investor.reset();
+  }
+
+  checkAndResetForm(oldData, newData) {
+    if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
+      this.resetForm();
+    } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
+      this.resetForm();
+    } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
+
+    }
+    //
+
+  }
+
+  resetForm() {
+    this.scheme = null;
+    this.schemeList = null;
+    this.reInvestmentOpt = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
+    this.navOfSelectedScheme = 0;
+    (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
+    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, {folioNumber: ''});
+    this.redemptionTransaction.controls.employeeContry.reset();
+    this.redemptionTransaction.controls.investmentAccountSelection.reset();
+    this.redemptionTransaction.controls.schemePurchase.reset();
   }
 
   redemptionType(value) {

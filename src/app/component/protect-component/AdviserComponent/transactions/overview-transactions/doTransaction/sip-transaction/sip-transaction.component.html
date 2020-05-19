@@ -291,7 +291,7 @@
 
         <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
           <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0  pb-8 text-black">Enter
+            <h5 #tenureLabel class="m-0  pb-8 text-black">Enter
               {{(sipTransaction.get('tenure').value == '2') ? 'No. of years' : 'No. of instalments'}}</h5>
           </div>
 
@@ -299,7 +299,7 @@
             <mat-form-field appearance="standard" floatLabel="never">
               <input #employeeContry [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4"
                      appInputValueValidation class="form-control br-0 rupess" formControlName="installment"
-                     matInput maxlength="4" placeholder="Enter installment" type="number">
+                     [placeholder]="tenureLabel.value" matInput maxlength="4" type="number">
               <mat-error *ngIf="sipTransaction.get('installment').errors?.required" class="f-12 pt-4">
                 This field is required
               </mat-error>
