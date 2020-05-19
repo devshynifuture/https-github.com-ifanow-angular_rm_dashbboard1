@@ -139,7 +139,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   selectSchemeOption(value) {
-    //this.selectExistingOrNew(value)
+    this.selectExistingOrNew(value)
     console.log('value selction scheme', value);
     this.sipTransaction.controls.schemeSip.reset();
     this.folioList = [];
@@ -327,7 +327,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   setMinAmount() {
-    if (this.sipTransaction.get('schemeSelection').value == '2') {
+    if (this.sipTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     } else if (this.ExistingOrNew == 1) {
       this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
@@ -518,7 +518,7 @@ export class SipTransactionComponent implements OnInit {
           this.sipTransaction.get('folioSelection').setValue('2');
           this.ExistingOrNew = 2;
           this.eventService.openSnackBar(error, 'Dismiss');
-          this.setMinAmount();
+          //this.setMinAmount();
 
         }
       );

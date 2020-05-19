@@ -117,7 +117,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control" [(ngModel)]="folioNumberShow" formControlName="folioSelection">
-                                    <mat-option *ngIf="folioList.length > 1" value='' disabled>Select scheme folio</mat-option>
+                                    <mat-option value='' disabled>Select scheme folio</mat-option>
                                     <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
