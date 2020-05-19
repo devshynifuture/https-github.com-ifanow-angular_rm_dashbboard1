@@ -20,6 +20,7 @@ export class TransactionsComponent implements OnInit {
   transactionTypeList = [];
   advisorId = AuthService.getAdvisorId();
   clientId = 15545;
+  investorName: any;
 
   constructor(
     private UtilService: UtilService,
@@ -29,10 +30,20 @@ export class TransactionsComponent implements OnInit {
     private mfService: MfServiceService
   ) { }
 
+  currentValue;
+  profitOrLossValue;
+  xirrValue;
+  folioNumber;
+
   mutualFundTransactions = [];
 
   ngOnInit() {
     console.log("this is data what we got::", this.data);
+    this.currentValue = this.data.currentValue;
+    this.profitOrLossValue = this.currentValue - this.data.amountInvested;
+    this.xirrValue = this.data.calculated.xirr;
+    this.investorName = this.data.ownerName;
+    this.folioNumber = this.data.folioNumber;
     this.initPoint();
     this.getTransactionTypeList()
   }
