@@ -275,7 +275,7 @@
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="tenure">
                                 <mat-option disabled value=''>Select tenure</mat-option>
-                                <mat-option value="1">No. of installments</mat-option>
+                                <mat-option value="1">No. of instalments</mat-option>
                                 <mat-option value="2">No. of years</mat-option>
                                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1"
                                     value="3">
@@ -292,7 +292,7 @@
                 <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0  pb-8 text-black">Enter
-                            {{(sipTransaction.get('tenure').value =='2')?'No. of years':'No. of installments'}}</h5>
+                            {{(sipTransaction.get('tenure').value =='2')?'No. of years':'No. of instalments'}}</h5>
                     </div>
 
                     <div class="col-md-5 inputPaddNone p-0">

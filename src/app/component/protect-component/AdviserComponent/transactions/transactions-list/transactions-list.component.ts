@@ -141,7 +141,7 @@ export class TransactionsListComponent implements OnInit {
         this.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
         this.dataSource.data = [];
-        this.errMessage = err.error.message;
+        this.errMessage = err.error;
       }
     );
   }
