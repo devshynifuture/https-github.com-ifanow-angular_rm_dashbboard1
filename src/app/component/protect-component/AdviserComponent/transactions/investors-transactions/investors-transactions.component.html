@@ -15,7 +15,7 @@
 
         <div *ngIf="credentialData" class="col-md-8 text-right pt-4">
             <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
-                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="type to filter data">
+                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="Type to filter data">
             </mat-form-field>
 
 
@@ -96,7 +96,7 @@
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="activationStatus"> Status</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
-                            <span *ngIf="element.activationStatus=='YES'" class="text-success  f-500 c-p">{{'INVESTMENT READY'}}</span>
+                            <span *ngIf="element.activationStatus=='YES'" class="text-success  f-500 c-p">{{'Investment ready'}}</span>
                         </div>
                     </td>
                 </ng-container>

@@ -52,7 +52,7 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                    <td *matCellDef="let element" class="t-2" mat-cell>
+                    <td *matCellDef="let element" class="t-2 c-p" mat-cell>
                         <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
                             <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
@@ -160,7 +160,8 @@
                         <div class="form-group">
                             <mat-form-field>
                                 <mat-select class="form-control" [(ngModel)]="folioNumberShow" formControlName="investmentAccountSelection">
-                                    <mat-option *ngIf="folioList.length > 1" value='' disabled>Select scheme folio</mat-option>
+                                    <mat-option *ngIf="folioList.length > 1" value='' disabled>Select scheme folio
+                                    </mat-option>
                                     <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
@@ -214,11 +215,11 @@
                         <div class="col-md-9 p-0">
                             <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option" class="mediumRadio" formControlName="modeOfPaymentSelection">
                                 <mat-radio-button checked="true" value="1" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'radio-border':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
-                                  [disabled]="isMultiTransact"  class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left">
+                                    [disabled]="isMultiTransact" class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left">
                                     Net banking
                                 </mat-radio-button>
                                 <mat-radio-button value="2" [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'radio-border':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
-                                   [disabled]="isMultiTransact" class="b-a radioBtn bor_top_tb_right">
+                                    [disabled]="isMultiTransact" class="b-a radioBtn bor_top_tb_right">
                                     Debit mandate
                                 </mat-radio-button>
                             </mat-radio-group>
