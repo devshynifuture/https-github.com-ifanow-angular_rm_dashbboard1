@@ -35,9 +35,7 @@
       <div *ngIf="isAdvisorSection" class="col-md-2 pr-0">
         <div class="form-group mb-0">
           <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedBroker" class="form-control br-0">
-            <mat-option [value]="{id:0}">ALL
-            </mat-option>
-            <mat-option *ngFor="let singleData of filterData" [value]="singleData">{{singleData.brokerCode}}
+            <mat-option *ngFor="let singleData of credentialData" [value]="singleData">{{singleData.brokerCode}}
             </mat-option>
           </mat-select>
         </div>
