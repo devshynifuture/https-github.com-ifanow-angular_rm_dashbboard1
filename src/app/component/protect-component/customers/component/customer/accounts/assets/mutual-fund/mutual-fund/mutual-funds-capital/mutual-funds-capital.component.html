@@ -222,7 +222,7 @@
                                 {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}</div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
+                            {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
                         </td>
 
                     </ng-container>
@@ -235,7 +235,7 @@
                                 {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}</div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
+                            {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
                         </td>
 
                     </ng-container>
@@ -248,7 +248,7 @@
                                 {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}</div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain | number:'1.2-2')) : '0'}}
+                            {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
                         </td>
 
                     </ng-container>
@@ -262,7 +262,7 @@
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain | number:'1.2-2')) : '0'}}
+                            {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
                         </td>
 
                     </ng-container>
@@ -275,7 +275,7 @@
                                 {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}</div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss | number:'1.2-2')) : '0'}}
+                            {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
                         </td>
 
                     </ng-container>
@@ -289,7 +289,7 @@
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss | number:'1.2-2')) : '0'}}
+                            {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
                         </td>
 
                     </ng-container>
@@ -363,7 +363,7 @@
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(totaldividendPayout == 0 ) ? (totaldividendPayout) : (totaldividendPayout | number:'1.2-2')}}
+                            {{(totaldividendReinvestment == 0 ) ? (totaldividendReinvestment) : (totaldividendReinvestment | number:'1.2-2')}}
                         </td>
 
                     </ng-container>

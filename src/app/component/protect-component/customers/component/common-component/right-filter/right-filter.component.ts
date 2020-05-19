@@ -100,7 +100,7 @@ export class RightFilterComponent implements OnInit {
     // this.folio = this._data.folioWise;//for getting all folios
     this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()];//amc wise data 
     this.folio = [...new Map(this._data.folioWise.map(item => [item.folioNumber, item])).values()];//for getting all folios
-    this.showSummaryFilterForm('');//as on date and showZero folio form
+    this.showSummaryFilterForm(this._data);//as on date and showZero folio form
 
     this.getCategoryWise(this._data.category);//get category wise data
     this.getSchemeWise(this.amc);//scheme wise data
@@ -154,6 +154,8 @@ export class RightFilterComponent implements OnInit {
   }
 
   showSummaryFilterForm(data) {
+    // let grandFatheringEffect;
+    // (data.capitalGainData.grandFatheringEffect) ? grandFatheringEffect = true : grandFatheringEffect =false;
     const fromDate = new Date();
     fromDate.setFullYear(fromDate.getFullYear() - 1);
     var todayDate = new Date().toISOString().slice(0, 10);
@@ -161,8 +163,8 @@ export class RightFilterComponent implements OnInit {
       reportAsOn: [new Date(todayDate), [Validators.required]],
       fromDate: [new Date(fromDate), [Validators.required]],
       toDate: [new Date(todayDate), [Validators.required]],
-      showFolios: [(data.showFolio) ? data.showFolio : '1', [Validators.required]],
-      grandfathering: [(data.grandfathering) ? data.grandfathering : '', [Validators.required]],
+      showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
+      grandfathering: [(data.grandfathering) ? data.grandfathering+'' : '2', [Validators.required]],
     });
   }
 
@@ -238,9 +240,16 @@ export class RightFilterComponent implements OnInit {
     if (this._data.capitalGainData) {
       let redemptionList = this._data.capitalGainData.redemptionList
       redemptionList.forEach(element => {
+        let year = element.financialYear;
+        let date=new Date(element.transactionDate);
+
+        let finDate =new Date(year, 3, 1); 
+        if(date < finDate){
+          year = (element.financialYear - 1)
+        }
         const obj = {
-          "from": element.financialYear,
-          "to": (element.financialYear + 1),
+          "from": year,
+          "to": (year + 1),
         }
         calculatingYears.push(obj);
       });
@@ -257,6 +266,8 @@ export class RightFilterComponent implements OnInit {
           form.get('grandfathering').updateValueAndValidity();
 
         } else {
+          form.get('grandfathering').setValue('2');
+          form.get('grandfathering').updateValueAndValidity();
           element.selected = false;
         }
 

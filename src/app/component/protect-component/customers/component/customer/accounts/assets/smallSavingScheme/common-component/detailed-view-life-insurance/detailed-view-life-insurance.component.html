@@ -207,7 +207,14 @@
                                 {{(_data.serviceBranch) ? (_data.serviceBranch) : 'N.A.'}}
                             </div>
                         </div>
-
+                        <div class="row bb p-8 b-l br" >
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Linked bank account
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" >
+                                {{(_data.bankName )?_data.bankName :'N.A.'}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -239,7 +246,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="insuranceSubTypeId != 1">
+                        <div >
                             <div *ngFor="let data of nominee; let i = index">
                                 <div class="row bb p-8 b-l br">
                                     <div class="col-md-8 text-left f-14 roboto p-0">
@@ -348,7 +355,7 @@
 
                         <div class="row bb p-8 b-l br" *ngFor="let data of cashFlowList; let i = index">
                             <div class="col-md-6 text-left f-14 roboto p-0">
-                                {{(data.cashFlowType) ? data.cashFlowType : 'N.A.'}}
+                                {{(data.cashFlowType == 1) ? 'Survival benefit' : (data.cashFlowType == 2) ? 'Maturity benefit' : (data.cashFlowType == 3) ? 'Annuity' : 'N.A.'}}
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
                                 {{(data.cashFlowYear) ? data.cashFlowYear : 'N.A.'}}

@@ -404,8 +404,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
       };
       obj.balance = parseInt(obj.balance);
       obj.amtBorrowed = parseInt(obj.amtBorrowed);
-      obj.dateOfReceipt = obj.dateOfReceipt.toISOString().slice(0, 10);
-      obj.dateOfRepayment = obj.dateOfRepayment.toISOString().slice(0, 10);
+      obj.dateOfReceipt = this.datePipe.transform(obj.dateOfReceipt, 'yyyy-MM-dd');
+      obj.dateOfRepayment = this.datePipe.transform(obj.dateOfRepayment, 'yyyy-MM-dd');
       obj.interest = parseInt(obj.interest);
 
       if (this._data == 'Add') {

@@ -55,13 +55,18 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     nomineesListFM: any = [];
   maxDate = new Date();
   minDate = new Date();
-  transactionViewData =
+  // transactionViewData =
+  //   {
+  //     optionList: [
+  //       { name: 'Keep the EMI as it is and reduce the term', value: 1 },
+  //       { name: 'the term as it is and reduce the EMI', value: 2 }
+  //     ],
+  //     transactionHeader: ['Option', 'Part payment date', 'Part payment amount']
+  //   }
+    transactionViewData =
     {
-      optionList: [
-        { name: 'Keep the EMI as it is and reduce the term', value: 1 },
-        { name: 'the term as it is and reduce the EMI', value: 2 }
-      ],
-      transactionHeader: ['Option', 'Part payment date', 'Part payment amount']
+      optionList: [],
+      transactionHeader: ['Part payment date', 'Part payment amount']
     }
   transactionData: any;
   editData: any;
@@ -364,6 +369,34 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
 
     }
+    dateChange(form){
+      if(form=='CommencementDate'){
+        if(this.addLiabilityForm.controls.poDate.value){
+          let commencementDate = this.datePipe.transform(new Date(this.addLiabilityForm.controls.CommencementDate.value), 'yyyy/MM/dd')
+          let poDate = this.datePipe.transform(new Date(this.addLiabilityForm.controls.poDate.value), 'yyyy/MM/dd')
+          // let commencementDate = new Date(this.addLiabilityForm.controls.CommencementDate.value);
+          // let poDate = new Date(this.addLiabilityForm.controls.poDate.value);
+          if(commencementDate > poDate){
+            this.addLiabilityForm.get('poDate').setErrors({ max: 'Date of repayment' });
+            this.addLiabilityForm.get('poDate').markAsTouched();
+          }else{
+            this.addLiabilityForm.get('poDate').setErrors();
+          }
+        }
+      }else{
+        if(this.addLiabilityForm.controls.poDate.value){
+        let commencementDate = this.datePipe.transform(new Date(this.addLiabilityForm.controls.CommencementDate.value), 'yyyy/MM/dd')
+        let poDate = this.datePipe.transform(new Date(this.addLiabilityForm.controls.poDate.value), 'yyyy/MM/dd')
+        if(commencementDate > poDate){
+          this.addLiabilityForm.get('poDate').setErrors({ max: 'Date of repayment' });
+          this.addLiabilityForm.get('poDate').markAsTouched();
+        }else{
+          this.addLiabilityForm.get('poDate').setErrors();
+        }
+      }
+      }
+    
+    }
   getLiability(data) {
     if (data == 'tab1') {
       data = {};
@@ -381,7 +414,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : ''],
       outstandingAmt: [data.principalOutStandingAmount,],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
-      emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + '', [Validators.required]],
+      // emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + '', [Validators.required]],
+      emiFrequency: ['12', [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required,Validators.required]],
       emi: [data.emi,[Validators.required,Validators.max((this.loanAmount) ? this.loanAmount : null)]],
       finInstitution: [data.financialInstitution],
@@ -440,6 +474,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         }
       });
     }
+    this.addLiabilityForm.get('poDate').setErrors();
     if (this.addLiabilityForm.invalid) {
       this.addLiabilityForm.markAllAsTouched();
       this.inputs.find(input => !input.ngControl.valid).focus();
