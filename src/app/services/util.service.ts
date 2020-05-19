@@ -44,6 +44,30 @@ export class UtilService {
     }
   }
 
+  static getTransactionStatusFromStatusId(statusId) {
+    if (statusId == 0) {
+      return 'Unknown';
+    } else if (statusId == 1) {
+      return 'Failure';
+    } else if (statusId == 2) {
+      return 'Pending Authorization';
+    } else if (statusId == 3) {
+      return 'Otp authorized';
+    } else if (statusId == 4) {
+      return 'Pending submission to AMC';
+    } else if (statusId == 5) {
+      return 'Order submitted to AMC';
+    } else if (statusId == 6) {
+      return 'Order processed';
+    } else if (statusId == 7) {
+      return 'Transaction rejected';
+    } else if (statusId == 8) {
+      return 'Success';
+    } else {
+      return 'Other';
+    }
+  }
+
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
