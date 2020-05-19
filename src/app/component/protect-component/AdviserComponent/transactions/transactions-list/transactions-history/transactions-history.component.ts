@@ -13,7 +13,7 @@ export class TransactionsHistoryComponent implements OnInit {
   transactionData: any;
   transactionDetailData: any;
   transactionDetails;
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
               private onlineTransact: OnlineTransactionService) {
@@ -23,7 +23,7 @@ export class TransactionsHistoryComponent implements OnInit {
     console.log(data);
     this.transactionData = data;
     switch (true) {
-      case (this.transactionData.transactionType == 'ORDER'):
+      case (this.transactionData.transactionType == 'ORDER' || this.transactionData.transactionType == 'PURCHASE'):
         this.transactionDetails = detailStatusObj.transactionDetailStatus.ORDER;
         break;
       case (this.transactionData.transactionType == 'REDEMPTION'):
@@ -62,15 +62,14 @@ export class TransactionsHistoryComponent implements OnInit {
 
   getTransactionDetail(data) {
     this.isLoading = true;
-    let obj =
-      {
-        id: data.id
-      };
+    const obj = {
+      id: data.id
+    };
     this.onlineTransact.getTransactionDetail(obj).subscribe(
-      data => {
-        console.log(data);
+      responseData => {
+        console.log(responseData);
         this.isLoading = false;
-        this.transactionDetailData = data;
+        this.transactionDetailData = responseData;
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
