@@ -76,7 +76,7 @@ export class ClientDematComponent implements OnInit {
   familyMemberId: any;
   ownerData: any;
   callMethod: any;
-  nomineesListFM: any = [];
+  nomineesListFM;
   // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value);
