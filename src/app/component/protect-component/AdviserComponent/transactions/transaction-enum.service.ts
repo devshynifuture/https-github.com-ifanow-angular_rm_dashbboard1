@@ -44,8 +44,35 @@ export class TransactionEnumService {
 
   static setTransactionStatus(data) {
     data.forEach(element => {
-      element.transactionStatus = (element.status == 0) ? 'UNKNOWN' : (element.status == 1) ? 'FAILURE' : (element.status == 2) ? 'PENDING AUTHORIZATION' : (element.status == 3) ? 'OTP AUTHORISED' : (element.status == 4) ? 'Pending submission to AMC' : (element.status == 5) ? 'Order submitted to AMC' : (element.status == 6) ? 'Order processed' : (element.status == 7) ? 'Transaction rejected' : 'Order processed';
+      if (element.transactionType == 'ORDER') {
+        element.transactionType = 'PURCHASE';
+      }
+      element.transactionStatus = this.getTransactionStatusFromStatusId(element.status);
     });
     return data;
+  }
+
+  static getTransactionStatusFromStatusId(statusId) {
+    if (statusId == 0) {
+      return 'Unknown';
+    } else if (statusId == 1) {
+      return 'Failure';
+    } else if (statusId == 2) {
+      return 'Pending Authorization';
+    } else if (statusId == 3) {
+      return 'Otp authorized';
+    } else if (statusId == 4) {
+      return 'Pending submission to AMC';
+    } else if (statusId == 5) {
+      return 'Order submitted to AMC';
+    } else if (statusId == 6) {
+      return 'Order processed';
+    } else if (statusId == 7) {
+      return 'Transaction rejected';
+    } else if (statusId == 8) {
+      return 'Success';
+    } else {
+      return 'Other';
+    }
   }
 }
