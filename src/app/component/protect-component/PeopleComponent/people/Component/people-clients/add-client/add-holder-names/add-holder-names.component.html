@@ -10,8 +10,8 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input (input)="capitalise($event)" placeholder="Enter holder name" autocomplete="off" #name
-                        appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50"
-                        formControlName="name" matInput class="form-control">
+                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
+                        [maxLength]="50" formControlName="name" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
