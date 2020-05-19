@@ -19,6 +19,13 @@
       </p>
     </div>
   </div>
+  <div *ngIf="transactionData.targetProductName" class="row pb-20">
+    <div class="col-md-12 p-0">
+      <p class="m-0 text-custom text-uppercase f-12 roboto">TARGET SCHEME</p>
+      <p class="m-0 text-black">{{transactionData.targetProductName}}
+      </p>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-6 pl-0">
       <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
@@ -30,11 +37,12 @@
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Investor details</p>
-      <p class="m-0 text-black roboto">{{transactionData.clientName}} (Joint)</p>
+      <p class="m-0 text-black roboto">{{transactionData.clientName}}</p>
     </div>
     <div class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">ARN/RIA and EUIN</p>
-      <p class="m-0 text-black roboto">ARN-83866 E023539 - Ankit Mehta</p>
+      <p
+        class="m-0 text-black roboto">{{transactionData.brokerCode}} {{transactionDetailData && transactionDetailData.euin ? transactionDetailData.euin : ''}}</p>
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Transaction platform</p>
@@ -49,11 +57,17 @@
       <p
         class="m-0 text-black roboto">{{transactionDetailData && transactionDetailData.paymentMode ? transactionDetailData.paymentMode : '-'}}</p>
     </div>
-    <div class="col-md-6 pr-0 pt-20">
+    <div *ngIf="showBankDetail&&transactionDetailData&&transactionDetailData.bankAccountNumber"
+         class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
-      <p *ngIf="transactionDetailData"
-         class="m-0 text-black roboto">{{transactionDetailData.bankName}} {{transactionDetailData.bankAccountType}}
+      <p
+        class="m-0 text-black roboto">{{transactionDetailData.bankName}} {{transactionDetailData.bankAccountType}}
         A/c {{transactionDetailData.bankAccountNumber}}</p>
+    </div>
+    <div *ngIf="!showBankDetail&&transactionDetailData&&transactionDetailData.umrn" class="col-md-6 pr-0 pt-20">
+      <p class="m-0 f-12 text-uppercase text-primitive">Mandate details</p>
+      <p class="m-0 text-black roboto">{{transactionDetailData.umrn}} <!--{{transactionDetailData.bankAccountType}}
+        A/c {{transactionDetailData.bankAccountNumber}}--></p>
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
