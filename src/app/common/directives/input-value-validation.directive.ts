@@ -1,6 +1,5 @@
-import { ValidatorType } from '../../services/util.service';
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
-import { element } from 'protractor';
+import {ValidatorType} from '../../services/util.service';
+import {Directive, ElementRef, EventEmitter, HostListener, Input, Output} from '@angular/core';
 
 @Directive({
   selector: '[appInputValueValidation]',
@@ -21,18 +20,21 @@ export class InputValueValidationDirective {
     }
   }
 
+  @Input() upperCaseOnly;
   @Input() maxLength;
   @Input() minValue: number;
   @Output() changedValue = new EventEmitter();
   _maxValue: number;
 
-  constructor(private _el: ElementRef) { }
+  constructor(private _el: ElementRef) {
+  }
 
   @Output() errorMessage = new EventEmitter<string>();
   @Output() isValid = new EventEmitter<boolean>();
   @Input() inputValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
 
   private prevValue: string;
+
   @HostListener('focus') onFocus() {
     this.prevValue = this._el.nativeElement.value;
   }
@@ -48,9 +50,9 @@ export class InputValueValidationDirective {
       //   this._el.nativeElement.value = '';
       //   this.changedValue.emit('');
       // }
-      currValue = currValue.trim()
-      let convertStringTochar = currValue.split('');
-      let oldValue = convertStringTochar.filter(element => this.inputValidator.test(element) == true);
+      currValue = currValue.trim();
+      const convertStringTochar = currValue.split('');
+      const oldValue = convertStringTochar.filter(element => this.inputValidator.test(element) == true);
       console.log(oldValue.join(''));
       this._el.nativeElement.value = oldValue.join('');
       this.changedValue.emit(oldValue.join(''));
@@ -61,6 +63,7 @@ export class InputValueValidationDirective {
     if (currValue == '') {
       return true;
     }
+
     if (this.maxLength && currValue.length > this.maxLength) {
       currValue = currValue.slice(0, this.maxLength);
       const newVal = currValue.slice(0, this.maxLength);
@@ -76,6 +79,11 @@ export class InputValueValidationDirective {
         currValue = this.minValue;
         return false;
       }
+    }
+    if (this.upperCaseOnly && !ValidatorType.CAPITAL_CASE.test(currValue)) {
+      const newVal = currValue.toUpperCase();
+      this.changedValue.emit(newVal);
+      this._el.nativeElement.value = newVal;
     }
     if (this.inputValidator.test(currValue)) {
       return true;

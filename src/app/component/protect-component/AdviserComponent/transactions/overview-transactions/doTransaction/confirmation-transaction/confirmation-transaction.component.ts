@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-confirmation-transaction',
@@ -15,26 +14,33 @@ export class ConfirmationTransactionComponent implements OnInit {
   confirmData: any;
 
   constructor(private subInjectService: SubscriptionInject,
-    public router: Router,) { }
+              public router: Router,) {
+  }
+
   @Input() set data(data) {
     this.inputData = data;
     console.log('This is Input ConfirmationTransactionComponent@@  ', data);
-    this.confirmData = data
+    this.confirmData = data;
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
   }
-  redirctTransaction(){
-    this.close()
+
+  redirctTransaction() {
+    this.close();
     this.router.navigate(['admin', 'transactions', 'transactions']);
   }
+
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
-    this.transactionSummary = this.inputData
+    this.transactionSummary = this.inputData;
+    this.subInjectService.setRefreshRequired();
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 }

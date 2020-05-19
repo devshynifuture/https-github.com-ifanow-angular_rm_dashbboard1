@@ -106,9 +106,9 @@ export class FatcaDetailsInnComponent implements OnInit {
         return this.processTransaction.filterName(newValue, this.countryList);
       }));
     });
-    if(!data){
-      this.fatcaDetails.controls.placeOfBirth.setValue(this.inputData.holderList[0].address.city)
-      this.fatcaDetails.controls.countryOfBirth.setValue(this.inputData.holderList[0].address.country)
+    if (!data) {
+      this.fatcaDetails.controls.placeOfBirth.setValue(this.inputData.holderList[0].address.city);
+      this.fatcaDetails.controls.countryOfBirth.setValue(this.inputData.holderList[0].address.country);
     }
   }
 

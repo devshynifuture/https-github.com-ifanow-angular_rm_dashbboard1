@@ -1,17 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { MathUtilService } from '../../../../../../../services/math-util.service';
-import { ConfirmDialogComponent } from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { AddMandateComponent } from '../../MandateCreation/add-mandate/add-mandate.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {MathUtilService} from '../../../../../../../services/math-util.service';
+import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -648,7 +648,7 @@ export class SipTransactionComponent implements OnInit {
         orderVal,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
-        holdingNature: this.getDataSummary.defaultClient.holdingType,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
