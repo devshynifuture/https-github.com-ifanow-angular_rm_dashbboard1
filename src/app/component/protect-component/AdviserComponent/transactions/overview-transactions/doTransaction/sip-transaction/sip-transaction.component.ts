@@ -23,6 +23,7 @@ export class SipTransactionComponent implements OnInit {
   isSuccessfulTransaction = false;
   folioNumberShow: any;
   defaultFrequency: any;
+  isMultiTransact: boolean = false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -748,6 +749,7 @@ export class SipTransactionComponent implements OnInit {
 
   AddMultiTransaction() {
     Object.assign(this.transactionSummary, { isMultiTransact: true });
+    this.isMultiTransact = true
     if (this.isEdit != true) {
       this.id++;
     }

@@ -291,7 +291,7 @@ export class MfServiceService {
 
     if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
-        item.folioNumber != 0
+       (item.balanceUnit!=0 && item.balanceUnit > 0) || item.folioNumber != 0 
       );
     }
     if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
