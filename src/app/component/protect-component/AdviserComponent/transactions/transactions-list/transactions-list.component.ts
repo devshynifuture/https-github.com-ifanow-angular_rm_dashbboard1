@@ -22,8 +22,7 @@ export class TransactionsListComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   selectedPreviousToShowDate;
-  filterData: any;
-  selectedBroker = {id: 0};
+  selectedBroker;
   seletedPreviousDate;
   finalStartDate;
   finalEndDate;
@@ -32,7 +31,7 @@ export class TransactionsListComponent implements OnInit {
   noData: string;
   maxDate = new Date();
   dontHide: boolean;
-  credentialData: any;
+  credentialData = [{id: 0, brokerCode: 'ALL'}];
   isAdvisorSection = true;
 
   isLoading = false;
@@ -53,6 +52,11 @@ export class TransactionsListComponent implements OnInit {
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
     this.finalEndDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
+    this.selectedBroker = this.credentialData[0];
+    if (this.isAdvisorSection) {
+      this.getFilterOptionData();
+    }
+
     this.refresh(false);
   }
 
@@ -77,19 +81,17 @@ export class TransactionsListComponent implements OnInit {
 
   refresh(flag) {
     this.dontHide = true;
-    if (this.isAdvisorSection) {
-      this.getFilterOptionData();
-    } else {
-      this.getAllTransactionList();
-    }
+    this.getAllTransactionList();
   }
 
   getFilterOptionDataRes(data) {
     if (data) {
       this.isLoading = false;
       console.log(data);
-      this.filterData = data;
-      this.credentialData = data;
+      data.forEach(singleBroker => {
+        this.credentialData.push(singleBroker);
+      });
+      console.log('this.credentialData ', this.credentialData);
       // this.selectedBroker = data[0];
       this.getAllTransactionList();
     } else {
@@ -111,9 +113,12 @@ export class TransactionsListComponent implements OnInit {
     };
     if (this.isAdvisorSection) {
       obj.tpUserCredentialId = this.selectedBroker.id;
+      obj.brokerCode = this.selectedBroker.brokerCode == 'ALL' ? '' : this.selectedBroker.brokerCode;
+      // obj.aggregatorType = this.selectedBroker.id;
     } else {
       obj.clientId = AuthService.getClientId();
     }
+    console.log('getTransactionList request JSON : ', obj);
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
         if (data) {

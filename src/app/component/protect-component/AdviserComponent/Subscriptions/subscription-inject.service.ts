@@ -53,7 +53,7 @@ export class SubscriptionInject {
     return this.newRightSliderDataObs;
   }
 
-  setRefreshRequired(){
+  setRefreshRequired() {
     this.refreshObservable.next(true);
   }
 
@@ -62,13 +62,14 @@ export class SubscriptionInject {
     return this.newRightSliderDataObs;
   }
 
-  closeNewRightSlider(sliderObj:any) {
+  closeNewRightSlider(sliderObj: any) {
     const sliderCloseObj = {
       refreshRequired: this.refreshObservable.getValue(),
       ...sliderObj
-    }
+    };
     this.refreshObservable.next(false);
     this.newRightSliderData.next(sliderCloseObj);
   }
+
   // ending of methods for opening components in slider
 }
