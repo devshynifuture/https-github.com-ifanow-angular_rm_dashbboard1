@@ -250,7 +250,7 @@
                                             </div>
                                         </div>
                                         <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
-                                            <div class="row">
+                                            <div class="row" (click)="openTransactionHistory(transact)">
                                                 <div class="col-md-6 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-12 mb-10">
@@ -266,7 +266,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" (click)="openTransactionHistory(transact)">
                                                 <div class="col-md-6 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-16  mb-10 f-500">
@@ -285,7 +285,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" (click)="openTransactionHistory(transact)">
                                                 <div class="col-md-12 p-0 relClass">
                                                     <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-12 text-primitive mb-10">
