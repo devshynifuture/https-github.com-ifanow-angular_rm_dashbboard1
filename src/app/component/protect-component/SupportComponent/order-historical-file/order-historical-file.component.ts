@@ -54,6 +54,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   currentDate: string = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
   advisorNameInput = '';
   requestJsonForOrderingFiles: any[] = [];
+  isOnlyCamsSelected = false;
   searchAdvisorForm = this.fb.group({
     searchAdvisor: [, Validators.required]
   });
@@ -407,12 +408,14 @@ export class OrderHistoricalFileComponent implements OnInit {
   changesDueToCamsSelection(option) {
     if (option === 1) {
       this.asOnDate = false;
+      this.orderingFreq = [{ id: '1', name: 'Yearly' }, { id: '2', name: 'Monthly' }, { id: '3', name: 'All at once' }];
       this.orderHistoryFileForm.get('orderingFreq').reset();
       this.orderHistoryFileForm.get('asOnDate').setValidators([]);
       this.orderHistoryFileForm.addControl('fromDate', new FormControl('', Validators.required));
       this.orderHistoryFileForm.addControl('toDate', new FormControl('', Validators.required));
     } else if (option === 2) {
       this.asOnDate = true;
+      this.orderingFreq = [{ id: '3', name: "All at once" }];
       this.orderHistoryFileForm.get('orderingFreq').setValue('3');
       this.orderHistoryFileForm.get('asOnDate').setValidators(Validators.required);
       this.orderHistoryFileForm.get('asOnDate').setErrors({ 'error': true });
@@ -676,7 +679,7 @@ export class OrderHistoricalFileComponent implements OnInit {
               } else {
                 fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
                 if (index === yearDiffr) {
-                  toDateIter = toDateValueObj.getFullYear() + "-" + (toDateValueObj.getMonth() + 1) + "-" + toDateValueObj.getDate();
+                  toDateIter = toDateValueObj;
                   if (toDateIter === fromDateIter) {
                     break;
                   }
