@@ -72,8 +72,12 @@
     border-bottom: transparent;
 }
 
-.tabClassTransaction {
-    max-height: 550px;
+.height550 {
+    height: 550px;
+    overflow: hidden;
+}
+
+.tabClassTransaction:hover {
     overflow-y: auto;
 }
 
@@ -82,7 +86,7 @@
 }
 
 .tabClassTransaction::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #ffffff;
 }
 
 .tabClassTransaction::-webkit-scrollbar-thumb:hover {

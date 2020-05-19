@@ -1,5 +1,6 @@
-import {ValidatorType} from '../../services/util.service';
-import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
+import { ValidatorType } from '../../services/util.service';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
+import { element } from 'protractor';
 
 @Directive({
   selector: '[appInputValueValidation]',
@@ -25,7 +26,7 @@ export class InputValueValidationDirective {
   @Output() changedValue = new EventEmitter();
   _maxValue: number;
 
-  constructor(private _el: ElementRef) {}
+  constructor(private _el: ElementRef) { }
 
   @Output() errorMessage = new EventEmitter<string>();
   @Output() isValid = new EventEmitter<boolean>();
@@ -37,16 +38,22 @@ export class InputValueValidationDirective {
   }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    const currValue = event.target.value;
+    let currValue = event.target.value;
     if (!this.checkCurrentValue(currValue)) {
       event.preventDefault();
-      if(this.prevValue) {
-        this._el.nativeElement.value = this.prevValue;
-        this.changedValue.emit(this.prevValue);
-      } else {
-        this._el.nativeElement.value = '';
-        this.changedValue.emit('');
-      }
+      // if(this.prevValue) {
+      //   this._el.nativeElement.value = this.prevValue;
+      //   this.changedValue.emit(this.prevValue);
+      // } else {
+      //   this._el.nativeElement.value = '';
+      //   this.changedValue.emit('');
+      // }
+      currValue = currValue.trim()
+      let convertStringTochar = currValue.split('');
+      let oldValue = convertStringTochar.filter(element => this.inputValidator.test(element) == true);
+      console.log(oldValue.join(''));
+      this._el.nativeElement.value = oldValue.join('');
+      this.changedValue.emit(oldValue.join(''));
     }
   }
 

@@ -136,10 +136,10 @@ export class FileOrderingUpperComponent implements OnInit {
           this.dataSource.data = tableData;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No Data Found", "DISMISS");
+          this.eventService.openSnackBar("No Data Found", "Dismiss");
         }
       }, err => {
-        this.eventService.openSnackBar("Something went wrong", "DISMISS");
+        this.eventService.openSnackBar("Something went wrong", "Dismiss");
       })
   }
 
@@ -156,7 +156,7 @@ export class FileOrderingUpperComponent implements OnInit {
       if (this.arrayOfIdsForRetry.length !== 0) {
         idArray = [...this.arrayOfIdsForRetry];
       } else {
-        this.eventService.openSnackBar("No Files Selected to Retry", "DISMISS");
+        this.eventService.openSnackBar("No Files Selected to Retry", "Dismiss");
       }
     }
     let data;
@@ -182,7 +182,7 @@ export class FileOrderingUpperComponent implements OnInit {
 
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       })
   }
 
@@ -244,10 +244,10 @@ export class FileOrderingUpperComponent implements OnInit {
           this.dataSource.data = tableData;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No Data Found", "DISMISS");
+          this.eventService.openSnackBar("No Data Found", "Dismiss");
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       })
 
   }

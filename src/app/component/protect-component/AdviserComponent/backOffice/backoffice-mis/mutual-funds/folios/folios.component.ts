@@ -97,7 +97,7 @@ export class FoliosComponent implements OnInit {
               this.dataSource.sort = this.sort;
             } else {
               this.dataSource.data = null;
-              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+              this.eventService.openSnackBar("No Folio Found", "Dismiss");
             }
           }
         )
@@ -116,7 +116,7 @@ export class FoliosComponent implements OnInit {
               this.dataSource.sort = this.sort;
             } else {
               this.dataSource.data = null;
-              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+              this.eventService.openSnackBar("No Folio Found", "Dismiss");
             }
           }
         )
@@ -144,7 +144,7 @@ export class FoliosComponent implements OnInit {
               this.dataSource.sort = this.sort;
             } else {
               this.dataSource.data = null;
-              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+              this.eventService.openSnackBar("No Folio Found", "Dismiss");
             }
           }
         )
@@ -164,7 +164,7 @@ export class FoliosComponent implements OnInit {
               this.dataSource.sort = this.sort;
             } else {
               this.dataSource.data = null;
-              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+              this.eventService.openSnackBar("No Folio Found", "Dismiss");
             }
           }
         )

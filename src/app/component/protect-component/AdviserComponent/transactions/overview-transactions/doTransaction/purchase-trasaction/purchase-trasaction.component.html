@@ -22,16 +22,16 @@
                 </h5>
             </div>
         </div>
-        <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length > 0">
+        <div class="col-md-12 pl-0 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length > 0">
             <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading>
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br w-4" mat-header-cell> No</th>
-                    <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
+                    <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
                         <div class="bar"> {{i + 1}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="folio">
-                    <th *matHeaderCellDef class="br w-10" mat-header-cell> Folio</th>
+                    <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{element.folioNo}} </div>
                     </td>

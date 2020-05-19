@@ -71,7 +71,7 @@ export class SipComponent implements OnInit {
           this.arnRiaList.unshift(obj);
           this.initPoint();
         } else {
-          this.dataService.openSnackBar("No Arn Ria List Found", "DISMISS")
+          this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
     )
