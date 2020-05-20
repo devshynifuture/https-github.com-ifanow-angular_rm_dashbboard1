@@ -68,7 +68,7 @@
                     <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
                 <td *matFooterCellDef class=" " mat-footer-cell>
-                    <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
+                    <div class="bar"> </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="name">
@@ -76,7 +76,7 @@
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.ownerName}} </div>
                 </td>
-                <td *matFooterCellDef class="br  f-600" mat-footer-cell>
+                <td *matFooterCellDef class="br pr-8 text-right f-600" mat-footer-cell>
                     <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
                 </td>
             </ng-container>
