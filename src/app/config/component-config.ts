@@ -297,6 +297,7 @@ export const appConfig = {
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
   DELETE_PART_PAYMENT:'account/liability/part-payment/delete',
+  DELETE_BORROWER:'account/liability/borrower/delete',
 
   ////////////////////////////// subscription////////////////////////////////////////////
 

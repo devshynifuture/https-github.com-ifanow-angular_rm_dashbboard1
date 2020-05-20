@@ -343,7 +343,7 @@
             <div class=" ">
                 <h4 class="f-16 roboto f-500">Miscellaneous details</h4>
                 <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                    <!-- <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                         <div bb p-8>
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Nominee {{i+1}}
@@ -360,8 +360,28 @@
                                 {{ (data.relationName) ? data.relationName : '-' }}
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <div>
+                    <div *ngFor="let data of nominee; let i = index">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Nominee {{i+1}}
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{ (data.name) ? data.name : '-' }}
+                            </div>
+                        </div>
 
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Nominee relation{{i+1}}
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{ (data.relationName) ? data.relationName : '-' }}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             Exclusions/Special conditions
