@@ -22,9 +22,9 @@
 
 
         <mat-menu #menu7="matMenu">
-            <button mat-menu-item>Upload file
+            <!-- <button mat-menu-item>Upload file
                 <input (change)="fetchData('Po MIS',$event)" class="uploadInput" id="file-4" multiple type="file">
-            </button>
+            </button> -->
         </mat-menu>
         <img [matMenuTriggerFor]="menu6" class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
         <mat-menu #menu6="matMenu">
@@ -163,6 +163,9 @@
                     <mat-menu #menubank="matMenu">
                         <button (click)="openAddPOMIS(element)" mat-menu-item>Edit</button>
                         <button (click)="openDetailPOMIS(element)" mat-menu-item>Detailed view</button>
+                        <button mat-menu-item>Upload file
+                            <input (change)="fetchData('Po MIS',$event)" class="uploadInput" id="file-4" multiple type="file">
+                        </button>
                         <button mat-menu-item>Activity</button>
                         <button (click)="deleteModal('PO MIS',element)" mat-menu-item>Delete</button>
                     </mat-menu>
