@@ -455,12 +455,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   
     if (data.borrowers) {
+      if(data.borrowers.length > 0){
       this.getCoOwner.removeAt(0);
       data.borrowers.forEach(element => {
         this.addNewCoOwner(element);
       });
     }
-    
+  }
     if(data.nomineeList){
       if(data.nomineeList.length > 0){
       
@@ -483,15 +484,16 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     let transactionFlag, finalTransctList = []
     if (this.transactionData && this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
+        if(element.controls.date.value || element.controls.amount.value){
           let obj = {
-            "partPaymentDate": (element.controls.date.value._d) ? this.datePipe.transform(element.controls.date.value._d , 'yyyy-MM-dd') : element.controls.date.value,
+            "partPaymentDate": (element.controls.date.value) ? this.datePipe.transform(element.controls.date.value._d , 'yyyy-MM-dd') : element.controls.date.value,
             "partPayment": element.controls.amount.value,
             "option": 0,
             "id":(element.value.id) ? element.value.id : null,
             'edit':(element.value.id) ? true : false
           }
           finalTransctList.push(obj)
-       
+        }
       });
     }
     this.addLiabilityForm.get('poDate').setErrors();
