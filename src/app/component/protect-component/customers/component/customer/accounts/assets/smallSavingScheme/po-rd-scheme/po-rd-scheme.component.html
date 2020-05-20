@@ -137,7 +137,7 @@
                         <button mat-menu-item (click)="openAddPORD(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailedPoRd(element)">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('Po RD',$event)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('Po RD',$event,element)" class="uploadInput" id="file-4" multiple type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('PO RD',element)">Delete</button>

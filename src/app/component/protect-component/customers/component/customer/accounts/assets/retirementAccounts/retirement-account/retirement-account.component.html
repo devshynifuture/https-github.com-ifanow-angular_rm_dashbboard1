@@ -44,9 +44,9 @@
                     <img src="assets/images/svg/up-down.svg">
                 </a>
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
-                        <input (change)="fetchData('EPF',$event)" class="uploadInput" id="file-4" multiple type="file">
-                    </button>
+                    <!-- <button mat-menu-item>Upload file
+                        <input (change)="fetchData('EPF',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                    </button> -->
                 </mat-menu>
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <mat-menu #menu6="matMenu">
@@ -210,7 +210,7 @@
                                     view
                                 </button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('EPF',$event)" class="uploadInput" id="file-4" multiple
+                                    <input (change)="fetchData('EPF',$event,element)" class="uploadInput" id="file-4" multiple
                                         type="file">
                                 </button>
                                 <button mat-menu-item class="c-p">Activity</button>
@@ -440,7 +440,7 @@
                                         (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed
                                         view</button>
                                     <button mat-menu-item>Upload file
-                                        <input (change)="fetchData('NPS',$event)" class="uploadInput" id="file-4"
+                                        <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
                                             multiple type="file">
                                     </button>
                                     <button mat-menu-item class="c-p">Activity</button>
@@ -480,7 +480,7 @@
                                     <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
                                     <mat-menu #menu7="matMenu">
                                         <button mat-menu-item>Upload file
-                                            <input (change)="fetchData('NPS',$event)" class="uploadInput" id="file-4"
+                                            <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
                                                 multiple type="file">
                                         </button>
                                     </mat-menu>
@@ -704,7 +704,7 @@
                                     view
                                 </button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('Gratuity',$event)" class="uploadInput" id="file-4"
+                                    <input (change)="fetchData('Gratuity',$event,element)" class="uploadInput" id="file-4"
                                         multiple type="file">
                                 </button>
                                 <button class="c-p" mat-menu-item>Activity</button>
@@ -882,7 +882,7 @@
                                 mat-menu-item>Detailed
                                 view</button>
                             <button mat-menu-item>Upload file
-                                <input (change)="fetchData('Superannuation',$event)" class="uploadInput" id="file-4"
+                                <input (change)="fetchData('Superannuation',$event,element)" class="uploadInput" id="file-4"
                                     multiple type="file">
                             </button>
                             <button class="c-p" mat-menu-item>Activity</button>
@@ -1043,7 +1043,7 @@
                                     mat-menu-item>Detailed
                                     view</button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('EPS',$event)" class="uploadInput" id="file-4" multiple
+                                    <input (change)="fetchData('EPS',$event,element)" class="uploadInput" id="file-4" multiple
                                         type="file">
                                 </button>
                                 <button class="c-p" mat-menu-item>Activity</button>

@@ -130,7 +130,7 @@
                         <button mat-menu-item (click)="openAddKVP(element,'editKvp')">Edit</button>
                         <button mat-menu-item (click)="openAddKVP(element,'detailedKvp')">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('KVP',$event)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('KVP',$event,element)" class="uploadInput" id="file-4" multiple type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('KVP',element)">Delete</button>

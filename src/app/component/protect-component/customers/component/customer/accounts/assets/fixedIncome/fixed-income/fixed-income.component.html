@@ -228,7 +228,7 @@
                                     View
                                 </button>
                                 <button mat-menu-item>Upload file
-                                    <input (change)="fetchData('Fixed Deposits',$event)" class="uploadInput" id="file-4"
+                                    <input (change)="fetchData('Fixed Deposits',$event,element)" class="uploadInput" id="file-4"
                                         multiple type="file">
                                 </button>
                                 <button mat-menu-item>Activity</button>
@@ -430,7 +430,7 @@
                                 <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Detailed
                                     View</button>
                                     <button mat-menu-item>Upload file
-                                        <input (change)="fetchData('Recurring Deposits',$event)" class="uploadInput" id="file-4"
+                                        <input (change)="fetchData('Recurring Deposits',$event,element)" class="uploadInput" id="file-4"
                                             multiple type="file">
                                     </button>
                                 <button mat-menu-item>Activity</button>
@@ -657,7 +657,7 @@
                                     <button mat-menu-item (click)="openBonds(element)">Edit</button>
                                     <button mat-menu-item (click)="detailedViewBonds(element)">Detailed view</button>
                                     <button mat-menu-item>Upload file
-                                        <input (change)="fetchData('Bonds',$event)" class="uploadInput" id="file-4" multiple
+                                        <input (change)="fetchData('Bonds',$event,element)" class="uploadInput" id="file-4" multiple
                                             type="file">
                                     </button>
                                     <button mat-menu-item>Activity</button>
