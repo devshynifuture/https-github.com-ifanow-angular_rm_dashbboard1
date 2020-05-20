@@ -120,7 +120,7 @@
                         <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailPPF(element)">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('PPF',$event)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('PPF',$event,element)" class="uploadInput" id="file-4" multiple type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('PPF',element)">Delete</button>

@@ -61,12 +61,12 @@ export class ScssSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getScssSchemedata();
   }
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      clientId: element.clientId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
     this.myFiles = fileName.target.files[0]
@@ -79,7 +79,6 @@ export class ScssSchemeComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-
   Excel(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)

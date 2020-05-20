@@ -131,7 +131,7 @@
                         <button mat-menu-item (click)="addOpenSSY(element,'editSsy')">Edit</button>
                         <button mat-menu-item (click)="addOpenSSY(element,'detailedSsy')">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('SSY',$event)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('SSY',$event,element)" class="uploadInput" id="file-4" multiple type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('SSY',element)">Delete</button>
