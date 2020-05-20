@@ -127,10 +127,10 @@
 
                             <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
                             <mat-menu #menu7="matMenu">
-                                <button mat-menu-item>Upload file
+                                <!-- <button mat-menu-item>Upload file
                                     <input (change)="fetchData('Liabilities',$event)" class="uploadInput" id="file-4"
                                         multiple type="file">
-                                </button>
+                                </button> -->
                             </mat-menu>
                             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-8">
                             <mat-menu #menu="matMenu">
@@ -314,6 +314,10 @@
                                                     <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
                                                     <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Detailed
                                                         View</button>
+                                                        <button mat-menu-item>Upload file
+                                                            <input (change)="fetchData('Liabilities',$event)" class="uploadInput" id="file-4"
+                                                                multiple type="file">
+                                                        </button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
                                                 </mat-menu>
