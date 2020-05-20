@@ -5,7 +5,7 @@ import { EventService } from './Data-service/event.service';
 import { RoutingState } from './services/routing-state.service';
 import { PlatformLocation } from '@angular/common';
 import { ConnectionService } from 'ng-connection-service'
-import { from } from 'rxjs';
+import { from, interval } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +17,10 @@ export class AppComponent implements AfterViewInit {
   }) mainrouter;
   isConnected: boolean = true;
   onlineStatus: boolean;
+  timeLeft: any;
+  intervallTimer: any;
+  showTimeRemaing: number;
+  setNewTime: any;
 
   ngAfterViewInit(): void {
     this.routingState.setMainRouter(this.mainrouter);
@@ -34,9 +38,12 @@ export class AppComponent implements AfterViewInit {
       this.isConnected = isConnected;
       if (this.isConnected) {
         this.onlineStatus = true;
+        this.showTimeRemaing = 5
+        this.intervallTimer.unsubscribe();
       }
       else {
         this.onlineStatus = false;
+        this.countDown(5);
       }
     })
     // routingState.changeDetector = changeDetector;
@@ -48,7 +55,20 @@ export class AppComponent implements AfterViewInit {
     });
 
   }
-
+  countDown(timer) {
+    this.timeLeft = timer;
+    this.setNewTime = timer;
+    this.intervallTimer = interval(1000).subscribe(
+      data => {
+        if (this.timeLeft == 0) {
+          timer = 2 * timer;
+          this.timeLeft = 2 * timer
+        } else {
+          this.showTimeRemaing = this.timeLeft--;
+        }
+      }
+    )
+  }
   private loadingBarInterceptor(event: Event) {
     // console.log('appComponent loadingBar event : ', event);
     if (event instanceof NavigationStart) {

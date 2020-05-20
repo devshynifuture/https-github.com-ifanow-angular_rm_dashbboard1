@@ -18,16 +18,29 @@ export class TempserviceService {
         (reportType == 'ownerName') ? filteredArray.push({groupName: key,pan: catObj[key][0].pan}) :  filteredArray.push({groupName: key});
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
-          array.push(singleData);
-          totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
-          let obj = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
-          totalObj.totalXirr=obj.xirr;
-          totalObj.totalAbsoluteReturn=obj.absoluteReturn;
+          if(singleData.balanceUnit > 0 && singleData.balanceUnit != 0){
+            array.push(singleData);
+            totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
+            let obj = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
+            totalObj.totalXirr=obj.xirr;
+            totalObj.totalAbsoluteReturn=obj.absoluteReturn;
+          }else{
+            if(filteredArray.length > 0){
+              if(array.length == 0){
+                if(filteredArray[filteredArray.length - 1].groupName){
+                  filteredArray.pop();
+                }
+              }
+            }
+          }
+
         });
         sortedData = this.sorting(array,'schemeName')
         filteredArray.push(...sortedData)
         array =[];
-        filteredArray.push(totalObj);
+        if(Object.keys(totalObj).length != 0){
+          filteredArray.push(totalObj);
+        }
       });
       return filteredArray;
     }
@@ -87,15 +100,21 @@ export class TempserviceService {
     Object.keys(catObj).map(key => {
       let totalObj: any = {};
       catObj[key].forEach((singleData) => {
+        if(singleData.balanceUnit > 0 && singleData.balanceUnit != 0){
         // this.totalObj = this.this.getEachTotalValue(singleData);
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,isSummaryTabValues), totalObj, {total: true});
+        totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
         let obj = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
         totalObj.xirr=obj.xirr;
         totalObj.absReturn=obj.absoluteReturn;
         Object.assign(totalObj, {categoryName: key});
+        }
       });
-      newArray.push(totalObj);
-      newArray = this.sorting(newArray,'categoryName')
+      if(Object.keys(totalObj).length != 0){
+        newArray.push(totalObj);
+        newArray = this.sorting(newArray,'categoryName')
+      }
+   
 
     });
     // this.dataSource = newArray;
@@ -128,45 +147,52 @@ export class TempserviceService {
       ;
       }
       catObj[key].forEach((singleData) => {
-
-        if(singleData.mutualFundTransactions.length>0){
+        if(singleData.balanceUnit > 0 && singleData.balanceUnit != 0){
+          if(singleData.mutualFundTransactions.length>0){
          
-          if(nav){
-            nav.forEach(element => {
-              if(element.schemeCode == singleData.schemeCode){
-                singleData.avgCostNav = element.nav;
-              }
-            }); 
-          }
-       
-         obj = {
-          schemeName: singleData.schemeName,
-          nav: singleData.nav,
-          navDate:singleData.navDate,
-          avgNav:singleData.avgCostNav,
-        };
-        if(reportType == 'ownerName'){
-          obj.folioNumber= singleData.folioNumber
-        }
-        filteredData.push(obj);
-        if(reportType != 'ownerName'){
-          const obj2 = {
-            name: singleData.ownerName,
-            pan: singleData.pan,
-            folio: singleData.folioNumber
+            if(nav){
+              nav.forEach(element => {
+                if(element.schemeCode == singleData.schemeCode){
+                  singleData.avgCostNav = element.nav;
+                }
+              }); 
+            }
+         
+           obj = {
+            schemeName: singleData.schemeName,
+            nav: singleData.nav,
+            navDate:singleData.navDate,
+            avgNav:singleData.avgCostNav,
           };
-          filteredData.push(obj2);
-        }
-       
-        singleData.mutualFundTransactions.forEach((ele,ind) => {
-          ele.indexId = (ind+1);
-          filteredData.push(ele);
-        });
-        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
-        let data = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
-        totalObj.totalCagr=data.xirr;
-        totalObj.trnAbsoluteReturn=data.absoluteReturn;
-        filteredData.push(totalObj);
+          if(reportType == 'ownerName'){
+            obj.folioNumber= singleData.folioNumber
+          }
+          filteredData.push(obj);
+          if(reportType != 'ownerName'){
+            const obj2 = {
+              name: singleData.ownerName,
+              pan: singleData.pan,
+              folio: singleData.folioNumber
+            };
+            filteredData.push(obj2);
+          }
+         
+          singleData.mutualFundTransactions.forEach((ele,ind) => {
+            ele.indexId = (ind+1);
+            filteredData.push(ele);
+          });
+          totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
+          let data = this.getAbsAndxirrCategoryWise(singleData,allData,reportType);
+          totalObj.totalCagr=data.xirr;
+          totalObj.trnAbsoluteReturn=data.absoluteReturn;
+          filteredData.push(totalObj);
+          }
+        }else{
+          if(filteredData.length > 0){
+            if(filteredData[filteredData.length - 1].groupName){
+              filteredData.pop();
+            }
+          }
         }
       });
     });
@@ -455,7 +481,7 @@ export class TempserviceService {
     let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
     if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
-        item.folioNumber != 0
+      (item.balanceUnit!=0 && item.balanceUnit > 0) || item.folioNumber != 0
       );
     }
     if (dataForFilter.reportAsOn) {

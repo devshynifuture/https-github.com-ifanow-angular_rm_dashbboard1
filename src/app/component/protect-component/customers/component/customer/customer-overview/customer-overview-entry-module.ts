@@ -11,10 +11,18 @@ import {PeopleEntryModule} from 'src/app/component/protect-component/PeopleCompo
 import {CustomDirectiveModule} from 'src/app/common/directives/common-directive.module';
 import {CustomCommonModule} from 'src/app/common/custom.common.module';
 import {MergeClientFamilyMemberComponent} from './overview-profile/merge-client-family-member/merge-client-family-member.component';
+import { UpdateClientProfileComponent } from './overview-profile/update-client-profile/update-client-profile.component';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 
-export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, ViewActivityComponent,
-  DocumentNewFolderComponent, MergeClientFamilyMemberComponent];
+export const componentList = [
+  AddFamilyMemberComponent, 
+  HistoryViewComponent, 
+  ViewActivityComponent,
+  DocumentNewFolderComponent, 
+  MergeClientFamilyMemberComponent,
+  UpdateClientProfileComponent
+];
 
 @NgModule({
   declarations: [componentList],
@@ -26,7 +34,8 @@ export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, Vi
     ReactiveFormsModule,
     CustomDirectiveModule,
     CustomCommonModule,
-    PeopleEntryModule
+    PeopleEntryModule,
+    CommonComponentModule,
   ],
   entryComponents: [componentList]
 })

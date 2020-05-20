@@ -21,7 +21,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{otherpayables.ownerName}}
+                        {{(otherpayables.ownerName) ? otherpayables.ownerName : 'N.A.'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -29,7 +29,7 @@
                         Date of receipt
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{otherpayables.dateOfReceived  |  date:'dd/MM/yyyy'}}
+                        {{otherpayables.dateOfReceived ? (otherpayables.dateOfReceived  |  date:'dd/MM/yyyy') : 'N.A.'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -37,15 +37,15 @@
                         Creditor name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0 wb">
-                        {{otherpayables.creditorName}}
+                        {{(otherpayables.creditorName) ? otherpayables.creditorName : 'N.A.'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount borrowed
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{otherpayables.amountBorrowed}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{(otherpayables.amountBorrowed) ? '₹ ' : ''}}<span appFormatNumber [value]="otherpayables.amountBorrowed"></span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -53,7 +53,7 @@
                         Interest
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{otherpayables.interest}}
+                        {{(otherpayables.interest) ? otherpayables.interest : 'N.A.'}}{{(otherpayables.amountBorrowed) ? '%' : ''}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -61,15 +61,15 @@
                         Date of repayment
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{otherpayables.dateOfRepayment  |  date:'dd/MM/yyyy'}}
+                        {{(otherpayables.dateOfRepayment) ? (otherpayables.dateOfRepayment  |  date:'dd/MM/yyyy') : 'N.A.'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Outstanding balance
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{otherpayables.outstandingBalance}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{(otherpayables.outstandingBalance) ? '₹ ' : ''}} <span appFormatNumber [value]="otherpayables.outstandingBalance"></span> 
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -77,7 +77,7 @@
                         Collateral
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{otherpayables.collateral}}
+                        {{(otherpayables.collateral) ? otherpayables.collateral : 'N.A.'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -85,7 +85,7 @@
                         Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{otherpayables.description}}
+                        {{(otherpayables.description) ? otherpayables.description : 'N.A.'}}
                     </div>
                 </div>
             </div>

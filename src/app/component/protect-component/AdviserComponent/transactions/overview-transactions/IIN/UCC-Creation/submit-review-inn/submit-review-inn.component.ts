@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FileUploadService } from '../../../../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../../../../config/main-config';
-import { appConfig } from '../../../../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import {Component, Input, OnInit} from '@angular/core';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FileUploadService} from '../../../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../../../config/main-config';
+import {appConfig} from '../../../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -44,7 +44,7 @@ export class SubmitReviewInnComponent implements OnInit {
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-    private eventService: EventService) {
+              private eventService: EventService) {
   }
 
   @Input()
@@ -273,7 +273,10 @@ export class SubmitReviewInnComponent implements OnInit {
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
-
+          this.eventService.openSnackBar('File uploaded successfully');
+        } else {
+          const responseObject = JSON.parse(response);
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
         }
       });
   }

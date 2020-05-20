@@ -152,7 +152,7 @@
           <p class="m-0 roboto text-custom pt-8 ws-pre">+ Add nominee</p>
       </div>
   </div> -->
-  <div *ngIf="nomineesListFM" formArrayName="getNomineeName">
+  <div *ngIf="checkNomineeFlag" formArrayName="getNomineeName">
     <div class="row pt-48" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right mob-pl-10 mob-text-left">
         <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
@@ -170,9 +170,7 @@
                 <span>{{f.userName}}</span>
               </mat-option>
             </mat-select>
-            <mat-error class="f-12">
-              This field is required
-            </mat-error>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>

@@ -216,7 +216,7 @@ export class ProcessTransactionService {
   }
 
   calculateCurrentValue(nav, unit) {
-    const currentValue = nav * unit;
+    const currentValue = nav * parseFloat(unit);
     return currentValue;
   }
 

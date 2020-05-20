@@ -27,8 +27,11 @@
                                 appSkeletonLoading>
                                 <div class="relClass">
                                     <div class="bar120">
-                                        <div class="profilePhoto">
-                                            <img *ngIf="clientOverviewData" src="/assets/images/svg/profile-photo.svg">
+                                        <div class="profilePhoto containerOne">
+                                            <img [src]="clientOverviewData.profilePicUrl">
+                                            <div class="middleOne" (click)="OpenpersonalProfile(0)">
+                                                <p class="c-p"> Edit Image </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

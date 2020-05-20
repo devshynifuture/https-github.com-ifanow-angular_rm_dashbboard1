@@ -79,6 +79,9 @@ export class AddNumberComponent implements OnInit {
               element.get('code').setValue(73);
             });
           } else {
+            data.sort(function (a, b) {
+              return a.countryCode.localeCompare(b.countryCode);
+            });
             this.isdCodes = data;
           }
           this.filteredIsdCodes.next(this.isdCodes);
