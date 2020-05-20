@@ -1,13 +1,14 @@
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import {SubscriptionInject} from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
 
-import { EventService } from './../../../../../Data-service/event.service';
-import { FileOrderingDetailComponent } from '../file-ordering-detail/file-ordering-detail.component';
-import { UtilService } from 'src/app/services/util.service';
-import { FileOrderingUploadService } from '../file-ordering-upload.service';
-import { SupportService } from '../../support.service';
-import { SelectionModel } from '@angular/cdk/collections';
+import {EventService} from './../../../../../Data-service/event.service';
+import {FileOrderingDetailComponent} from '../file-ordering-detail/file-ordering-detail.component';
+import {UtilService} from 'src/app/services/util.service';
+import {FileOrderingUploadService} from '../file-ordering-upload.service';
+import {SupportService} from '../../support.service';
+import {SelectionModel} from '@angular/cdk/collections';
+
 @Component({
   selector: 'app-file-ordering-upper',
   templateUrl: './file-ordering-upper.component.html',
@@ -16,6 +17,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class FileOrderingUpperComponent implements OnInit {
   fileName: any;
   isDisableTooltip = true;
+
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -245,7 +247,8 @@ export class FileOrderingUpperComponent implements OnInit {
               action: '',
               fromDate: element.fromDate,
               toDate: element.toDate,
-              fileUrl: element.fileUrl ? element.fileUrl : null
+              fileUrl: element.fileUrl ? element.fileUrl : null,
+              isLoading: false
             })
           });
           this.dataSource.data = tableData;
@@ -278,13 +281,45 @@ export class FileOrderingUpperComponent implements OnInit {
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
   }
 
-  refreshList() {
-    this.dataSource.data = ELEMENT_DATA;
-    if (this.data.flag == 'historical') {
-      this.fileOrderingListData();
-    } else {
-      this.fileOrderBulkListData();
+  refreshOneRowOfList(element, index) {
+    element.isLoading = true;
+    console.log(element);
+    let data = {
+      fileOrderId: element.id
     }
+    this.fileOrderingService.getFileOrderRefreshUpperRowData(data)
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+          let obj: any = {};
+          obj['id'] = element.id;
+          obj['position'] = index + 1;
+          obj['advisorName'] = this.data.advisorName;
+          obj['arnRia'] = element.arnRiaNumber;
+          obj['fileType'] = this.fileName;
+          obj['fileOrderTime'] = element.fileOrderDateTime;
+          obj['status'] = element.status;
+          obj['referenceId'] = element.referenceId ? element.referenceId : null;
+          obj['inFileOrAdded'] = element.totalTransactions + "/" + element.transactionAdded;
+          obj['fileName'] = element.fileName ? element.fileName : null;
+          obj['errorMsg'] = element.errorMsg ? element.errorMsg : null;
+          obj['action'] = '';
+          obj['fromDate'] = element.fromDate;
+          obj['toDate'] = element.toDate;
+          obj['fileUrl'] = element.fileUrl ? element.fileUrl : null;
+          obj['isLoading'] = false;
+          this.dataSource.data.splice(index, 1, obj);
+          element.isLoading = false;
+
+        }
+      })
+
+    // this.dataSource.data = ELEMENT_DATA;
+    // if (this.data.flag == 'historical') {
+    //   this.fileOrderingListData();
+    // } else {
+    //   this.fileOrderBulkListData();
+    // }
   }
 
   openDetailedView(data) {
@@ -309,6 +344,8 @@ export class FileOrderingUpperComponent implements OnInit {
     );
   }
 
+  refreshList() {
+  }
 }
 const ELEMENT_DATA: fileOrderingUpperI[] = [
   { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' },

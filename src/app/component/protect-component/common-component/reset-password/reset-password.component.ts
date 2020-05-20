@@ -32,8 +32,8 @@ export class ResetPasswordComponent implements OnInit {
     { name: "SET PASSWORD", flag: false }
   ]
   constructor(
-    private authService: AuthService, 
-    private fb: FormBuilder, 
+    private authService: AuthService,
+    private fb: FormBuilder,
     private loginService: LoginService,
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
     this.userData = AuthService.getUserInfo();
   }
 
-  setNewPasswordForm:FormGroup;
+  setNewPasswordForm: FormGroup;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -137,7 +137,7 @@ export class ResetPasswordComponent implements OnInit {
 
   checkSpecialCharacter() {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (new RegExp(/([@%])/).test(control.value) && control.value != null) {
+      if (new RegExp(/([!@#$%^&*()])/).test(control.value) && control.value != null) {
         this.passwordStregth.specialCharacter = true;
         return;
       }

@@ -297,6 +297,7 @@ export const appConfig = {
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
   DELETE_PART_PAYMENT:'account/liability/part-payment/delete',
+  DELETE_BORROWER:'account/liability/borrower/delete',
 
   ////////////////////////////// subscription////////////////////////////////////////////
 
@@ -588,6 +589,7 @@ export const appConfig = {
   GET_FILE_ORDER_ARN_RIA_LIST: 'fileorder/arn-ria/list/get',
   REFRESH_FILE_ORDER_HISTORICAL_PER_ROW: 'fileorder/historical/advisor/order/refresh',
   REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
+  REFRESH_FILE_ORDER_UPPER: 'fileorder/refresh',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
