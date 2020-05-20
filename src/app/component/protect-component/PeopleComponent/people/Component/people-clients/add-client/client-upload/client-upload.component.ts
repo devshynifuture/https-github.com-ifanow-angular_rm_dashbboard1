@@ -249,7 +249,7 @@ export class ClientUploadComponent implements OnInit {
         break;
       case 'personal-pan':
         fileName = this.filePerPanImg.store;
-        this.fetchData('Aadhaar',fileName)
+        this.fetchData('Aadhaar',e)
         this.addDocObj.proofType = 1;
         break;
       case 'proof-type1':
