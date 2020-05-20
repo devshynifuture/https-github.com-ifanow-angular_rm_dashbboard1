@@ -273,7 +273,10 @@ export class SubmitReviewInnComponent implements OnInit {
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
-
+          this.eventService.openSnackBar('File uploaded successfully');
+        } else {
+          const responseObject = JSON.parse(response);
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
         }
       });
   }
