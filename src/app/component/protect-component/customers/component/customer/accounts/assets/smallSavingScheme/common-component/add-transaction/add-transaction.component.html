@@ -10,14 +10,13 @@
     </div>
 </div>
 
-<div [formGroup]="transactionForm">
-    <div *ngIf="addTransactionList>0" class="row pt-20 add-liabilities">
-        <div class="col-md-3">
+<div class="widthBox" [formGroup]="transactionForm">
+    <div *ngIf="addTransactionList>0" class="row  add-liabilities">
+        <div class="col-md-3 pl-0">
             <label class="f-14"> {{transactionViewData.transactionHeader[0]}} </label>
         </div>
         <div class="col-md-3 pl-0">
-            <label class="f-14"> {{transactionViewData.transactionHeader[1]}}
-            </label>
+            <label class="f-14"> {{transactionViewData.transactionHeader[1]}}</label>
         </div>
         <div class="col-md-3 pl-0">
             <label class="f-14 ws-nowrap">{{transactionViewData.transactionHeader[2]}}</label>
@@ -26,7 +25,7 @@
 
 
     <div class="pb-28 row" [formGroup]="singleTransForm" *ngFor="let singleTransForm of getTransFormList.controls;index as i">
-        <div class="col-md-4" *ngIf="transactionViewData.optionList?.length > 0">
+        <div class="col-md-3 pl-0" *ngIf="transactionViewData.optionList?.length > 0">
             <mat-form-field>
                 <mat-select formControlName="type" class="form-control br-0">
                     <!-- <mat-option value="1">Deposit</mat-option>
