@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -387,7 +387,7 @@ export class SwpTransactionComponent implements OnInit {
         ...obj,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
-        holdingNature: this.getDataSummary.defaultClient.holdingType,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,

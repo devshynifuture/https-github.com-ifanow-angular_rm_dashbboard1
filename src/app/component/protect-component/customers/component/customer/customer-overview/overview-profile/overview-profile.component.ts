@@ -16,6 +16,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { UpdateClientProfileComponent } from './update-client-profile/update-client-profile.component';
 
 @Component({
   selector: 'app-overview-profile',
@@ -25,7 +26,7 @@ import { CancelFlagService } from 'src/app/component/protect-component/PeopleCom
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
   selectedFamilyMember: any;
-  clientOverviewData;
+  clientOverviewData:any = {};
   addressList: any;
   dematList: any;
   bankList: any;
@@ -72,7 +73,6 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
-        console.log('ClientBasicDetailsComponent getClientOrLeadData data: ', data);
         if (data == undefined) {
           return;
         } else {
@@ -396,5 +396,30 @@ export class OverviewProfileComponent implements OnInit {
     );
   }
 
+
+
+  OpenpersonalProfile(openTab = 0) {
+    const dataObj = {
+      profile: this.clientOverviewData,
+      openTab
+    };
+    const fragmentData = {
+      flag:null,
+      data: dataObj,
+      id: 1,
+      state: 'open',
+      componentName: UpdateClientProfileComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getClientData(this.clientData);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
 
 }

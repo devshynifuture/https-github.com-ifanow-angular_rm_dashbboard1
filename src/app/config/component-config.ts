@@ -229,6 +229,7 @@ export const appConfig = {
   MUTUAL_FUND_DELETE: 'mutual-fund/mutualFund/scheme/folio/delete',
   GET_DATED_REPORT_WISE_CALCULATION: 'mutual-fund/getDatedReportWiseCalculations/list/get',
   GET_NAV: 'mutual-fund/avg/nav/get',
+  UPDATE_CLIENT_PROFILE_PIC: 'user/client/profile/pic/update',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -295,7 +296,7 @@ export const appConfig = {
   ADD_EPS: 'account/asset/retirement/eps/add',
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
-
+  DELETE_PART_PAYMENT:'account/liability/part-payment/delete',
 
   ////////////////////////////// subscription////////////////////////////////////////////
 

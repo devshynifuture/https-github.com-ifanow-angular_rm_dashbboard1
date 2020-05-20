@@ -56,9 +56,9 @@ export class OnlineTransactionComponent implements OnInit {
   familyMemberData: any;
   noSubBroker = false;
   noMapping = false;
+
   transactionType: any;
   transactionData: any;
-  clientCodeData: any = [];
   filteredStates: any;
   selectedClientOrFamily: any;
   selectedName: any;
@@ -104,7 +104,6 @@ export class OnlineTransactionComponent implements OnInit {
         .subscribe(newValue => {
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
             map(value => {
-              this.clientCodeData = [];
               console.log('12398127389127398127389172389723891273891273');
               if (newValue) {
                 return this.enumDataService.getClientAndFamilyData(newValue);
@@ -129,7 +128,6 @@ export class OnlineTransactionComponent implements OnInit {
       );
       this.stateCtrl.valueChanges
         .subscribe(newValue => {
-          this.clientCodeData = [];
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
             map(value => this.processTransaction.filterName(newValue + '', this.familyMemberList)));
         });
@@ -145,6 +143,9 @@ export class OnlineTransactionComponent implements OnInit {
   getDefaultDetails(platform) {
     console.log('onlineTransactionComponent platform: ', platform);
     this.selectedClientOrFamily = platform.name;
+    this.showSpinnerOwner = true;
+    this.noMapping = true;
+
     const obj = {
       advisorId: this.advisorId,
       familyMemberId: platform.userType == 3 ? platform.familyMemberId : 0,
@@ -153,7 +154,13 @@ export class OnlineTransactionComponent implements OnInit {
     };
 
     this.onlineTransact.getDefaultDetails(obj).subscribe(
-      data => this.getDefaultDetailsRes(data)
+      data => {
+        this.showSpinnerOwner = false;
+        this.getDefaultDetailsRes(data);
+      }, error => {
+        this.showSpinnerOwner = false;
+        this.eventService.openSnackBar(error, 'Dismiss');
+      }
     );
   }
 
@@ -224,36 +231,9 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   ownerDetails(value) {
-    this.selectedName = value.name
+    this.selectedName = value.name;
     this.familyMemberData = value;
     this.getDefaultDetails(value);
-    this.ownerDetail();
-  }
-
-  ownerDetail() {
-
-    const obj = {
-      clientId: this.familyMemberData.clientId,
-      advisorId: this.advisorId,
-      familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
-      // tpUserCredentialId: 292
-    };
-    this.showSpinnerOwner = true;
-    this.onlineTransact.getClientCodes(obj).subscribe(
-      data => {
-        this.showSpinnerOwner = false;
-        console.log('clientcode response : ', data);
-        if (data) {
-          this.clientCodeData = data;
-        }else{
-          this.clientCodeData = undefined
-        }
-      },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-        this.showSpinnerOwner = false;
-      }
-    );
   }
 
   getdataForm(data) {
@@ -327,7 +307,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   saveAndNext() {
-    if (!this.clientCodeData || this.clientCodeData.length == 0) {
+    if (this.noMapping) {
       return;
     }
     console.log(this.formStep);

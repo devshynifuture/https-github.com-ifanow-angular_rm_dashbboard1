@@ -27,8 +27,8 @@
 <div [formGroup]="transactionForm">
     <div class="pb-28" *ngFor="let singleTransForm of getTransFormList.controls;index as i"
         [formGroup]="transactionForm">
-        <div [formGroup]="singleTransForm" class="row ">
-            <div class="col-md-4">
+        <div [formGroup]="singleTransForm" class="row " >
+            <div class="col-md-4" *ngIf="transactionViewData.optionList?.length > 0">
                 <mat-form-field>
                     <mat-select formControlName="type" class="form-control br-0">
                         <!-- <mat-option value="1">Deposit</mat-option>

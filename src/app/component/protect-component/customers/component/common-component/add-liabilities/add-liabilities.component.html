@@ -13,26 +13,7 @@
     </div>
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
-    <!-- <div class="row">
-            <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-8">Owner</h5>
-            </div>
-            <div class="col-md-5 pl-0">
-                <mat-form-field class="w-100">
-                    <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                        <mat-option value=''>Select family members</mat-option>
-                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
-                            <span>{{f.userName}}</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div> -->
-        <div formArrayName="getCoOwnerName">
+        <!-- <div formArrayName="getCoOwnerName">
             <div class="row" *ngFor="let obj of addLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
@@ -70,14 +51,55 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
+                   <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> 
                     <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                         (click)="removeCoOwner(pointIndex)">remove</i>
                 </div>
     
             </div>
-        </div>
-    <div class="row pt-40">
+        </div> -->
+    
+        <div formArrayName="getCoOwnerName">
+                <div [ngClass]="{'pt-36': pointIndex>0}" class="row" *ngFor="let obj of addLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-B' : 'B'}}orrower{{pointIndex != 0?pointIndex:''}}</h5>
+                    </div>
+                    <div [ngClass]="addLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                    <mat-option value='' disabled>Select family members</mat-option>
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                        <span>{{f.userName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pl-0" *ngIf="addLiabilityForm.value.getCoOwnerName.length > 1">
+                        <div class="form-group mb-0 iconPetage">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                    Total percent should be 100%
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 p-0 d-flex align-items-center">
+                        <i *ngIf="addLiabilityForm.value.getCoOwnerName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                        <i *ngIf="addLiabilityForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
+                    </div>
+    
+                </div>
+            </div>
+        <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>
         </div>
@@ -119,7 +141,25 @@
             </div>
         </div>
     </div>
-
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input matInput class="form-control br-0 b-0"  #CommencementDate (ngModelChange)="dateChange('CommencementDate')" (selectionChange)="calculateEmi()" (focus)="picker.open()" [min]="minDate"  [max]="maxDate"
+                        (input)="preventDefault($event)" matInput [matDatepicker]="picker"
+                        formControlName="CommencementDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Loan tenure</h5>
@@ -163,12 +203,13 @@
                 <label class="f-14">Outstanding as on</label>
                 <div class="form-group  mb-0">
                     <mat-form-field class="ba-date">
-                        <input class="form-control br-0 b-0"  (selectionChange)="calculateEmi()" matInput (focus)="picker.open()" [max]="maxDate"
+                        <input class="form-control br-0 b-0"  (selectionChange)="calculateEmi()" #poDate (ngModelChange)="dateChange('poDate')" matInput (focus)="picker.open()" [max]="maxDate"
                             (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <mat-error class="f-12 pt-4">
-                            This field is required
+                        <mat-error class="f-12" *ngIf="(addLiabilityForm.get('poDate').errors?.required)">This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(addLiabilityForm.get('poDate').errors?.max)">Date cannot be less than or equal to commencement date
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -190,26 +231,8 @@
         </div>
     </div>
 
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Commencement date</h5>
-        </div>
-        <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input matInput class="form-control br-0 b-0" (selectionChange)="calculateEmi()" (focus)="picker.open()" [min]="minDate"  [max]="maxDate"
-                        (input)="preventDefault($event)" matInput [matDatepicker]="picker"
-                        formControlName="CommencementDate" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-48">
+
+    <!-- <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">EMI frequency</h5>
         </div>
@@ -217,7 +240,6 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select matInput formControlName="emiFrequency"  (selectionChange)="calculateEmi()" class="form-control br-0">
-                        <!-- |<mat-option *ngFor="let emi of this.emiFrequency" value={{emi.name}}>{{emi.name}}</mat-option> -->
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Yearly</mat-option>
                         <mat-option value="2">Half yearly</mat-option>
@@ -231,7 +253,7 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
@@ -298,7 +320,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Financial institution</h5>
             </div>
-            <div class="col-md-3  pr-0">
+            <div class="col-md-5  pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" matInput #finInstitution class="form-control br-0"
@@ -314,7 +336,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Collateral</h5>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-5 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" matInput #collateral class="form-control br-0" formControlName="collateral"

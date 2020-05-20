@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-detailed-view-life-insurance',
@@ -12,7 +13,8 @@ export class DetailedViewLifeInsuranceComponent implements OnInit {
   cashFlowList: any;
   insuranceSubTypeId:any;
   showInsurance: any;
-  constructor(private subInjectService:SubscriptionInject) { }
+  bankList: any;
+  constructor(private enumService: EnumServiceService,private subInjectService:SubscriptionInject) { }
   @Input()
   set data(inputData) {
     this._data = inputData.data;
@@ -29,6 +31,12 @@ export class DetailedViewLifeInsuranceComponent implements OnInit {
     return this._data;
   }
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+    this.bankList.forEach(element => {
+      if(element.id == this._data.linkedBankAccountId){
+        this._data.bankName = element.bankName
+      }
+    });
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

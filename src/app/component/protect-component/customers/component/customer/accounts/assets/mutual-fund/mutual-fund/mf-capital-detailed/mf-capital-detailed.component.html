@@ -597,78 +597,77 @@
                             DIVIDEND SUMMARY
                         </h5>
                     </div>
-                    <table mat-table [dataSource]="dataSource2" id="table-low"
-                        class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
-                        [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
-    
+                    <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
+
                         <!--- Note that these columns can be defined in any order.
                                           The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="schemeName2">
-                    <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
-                    <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.schemeName}} </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total </td>
-
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="folioNumber">
-                    <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
-                    <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.folioNumber}} </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"> </td>
-
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="dividendPayoutAmount">
-                    <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend payout amount </th>
-                    <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            {{(element.dividendPayout == 0 ) ? (element.dividendPayout) : (element.dividendPayout | number:'1.2-2')}}
-                        </div>
-                    </td>
-
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                        {{(totaldividendPayout == 0 ) ? (totaldividendPayout) : (totaldividendPayout | number:'1.2-2')}}
-                    </td>
-
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="dividendReInvestmentAmount">
-                    <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend re-investment amount </th>
-                    <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            {{(element.dividendReinvestment == 0 ) ? (element.dividendReinvestment) : (element.dividendReinvestment | number:'1.2-2')}}
-                        </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                        {{(totaldividendPayout == 0 ) ? (totaldividendPayout) : (totaldividendPayout | number:'1.2-2')}}
-                    </td>
-
-                </ng-container>
-
-                <ng-container matColumnDef="totalReinvestmentAmount">
-                    <th class="br text-right" mat-header-cell *matHeaderCellDef> Total reinvestment amount </th>
-                    <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            {{(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment | number:'1.2-2')}}
-                        </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                        {{(totalReinvesment == 0 ) ? (totalReinvesment) : (totalReinvesment | number:'1.2-2')}} </td>
-
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
-            </table>
+    
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="schemeName2">
+                            <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.schemeName}} </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total </td>
+    
+                        </ng-container>
+    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="folioNumber">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.folioNumber}} </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"> </td>
+    
+                        </ng-container>
+    
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="dividendPayoutAmount">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend payout amount </th>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{(element.dividendPayout == 0 ) ? (element.dividendPayout) : (element.dividendPayout | number:'1.2-2')}}
+                                </div>
+                            </td>
+    
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                {{(totaldividendPayout == 0 ) ? (totaldividendPayout) : (totaldividendPayout | number:'1.2-2')}}
+                            </td>
+    
+                        </ng-container>
+    
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="dividendReInvestmentAmount">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend re-investment amount </th>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{(element.dividendReinvestment == 0 ) ? (element.dividendReinvestment) : (element.dividendReinvestment | number:'1.2-2')}}
+                                </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                {{(totaldividendReinvestment == 0 ) ? (totaldividendReinvestment) : (totaldividendReinvestment | number:'1.2-2')}}
+                            </td>
+    
+                        </ng-container>
+    
+                        <ng-container matColumnDef="totalReinvestmentAmount">
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef> Total reinvestment amount </th>
+                            <td class="br text-right" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment | number:'1.2-2')}}
+                                </div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                {{(totalReinvesment == 0 ) ? (totalReinvesment) : (totalReinvesment | number:'1.2-2')}}
+                            </td>
+    
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
+                    </table>
             <div *ngIf="dataSource2.data.length == 0" class="w-100 d-flex flex-column align-items-center">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                 <h4 class="text-center pt-12">No Data Found</h4>

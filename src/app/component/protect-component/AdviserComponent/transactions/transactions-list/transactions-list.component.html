@@ -1,172 +1,178 @@
 <div class="row pt-150">
-    <div class="col-md-3 d-flex align-items-center">
-        <!--        <h4 class="m-0">All transactions</h4>-->
-    </div>
+  <div class="col-md-3 d-flex align-items-center">
+    <!--        <h4 class="m-0">All transactions</h4>-->
+  </div>
 
-    <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
-  <div class="row"> -->
+  <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
+<div class="row"> -->
 
-    <div *ngIf="credentialData||!isAdvisorSection " class="col-md-9">
-        <div [ngClass]="{'pe-none': isLoading}" class="row">
-            <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
-                <mat-chip-list>
-                    <mat-chip-list class="newDateIcon">
-                        <mat-chip class="bg-white b-a c-p f-400 p-12">
-                            <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)" [max]="maxDate" [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-                            <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true" [selectFirstDateOnClose]="true">
-                            </sat-datepicker>
-                            <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-                        </mat-chip>
-                    </mat-chip-list>
-                </mat-chip-list>
-            </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0">
-                    <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedPreviousToShowDate" class="form-control br-0">
-                        <mat-option value="1">Previous 1 Day</mat-option>
-                        <mat-option value="7">Previous 7 Day</mat-option>
-                        <mat-option value="30">Previous 30 Day</mat-option>
-                        <mat-option value="custom">Custom Range</mat-option>
-                    </mat-select>
-                </div>
-            </div>
-            <div *ngIf="isAdvisorSection" class="col-md-2 pr-0">
-                <div class="form-group mb-0">
-                    <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedBroker" class="form-control br-0">
-                        <mat-option *ngFor="let singleData of credentialData" [value]="singleData">
-                            {{singleData.brokerCode}}
-                        </mat-option>
-                    </mat-select>
-                </div>
-            </div>
-            <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
-                <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
-                <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
-                    NEW
-                </button>
-            </div>
+  <div *ngIf="credentialData||!isAdvisorSection " class="col-md-9">
+    <div class="row">
+      <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
+        <mat-chip-list>
+          <mat-chip-list class="newDateIcon">
+            <mat-chip class="bg-white b-a c-p f-400 p-12">
+              <input (click)="picker2.open()" (dateInput)="startAndEndDateEvent($event)" [max]="maxDate"
+                     [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
+              <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true" [selectFirstDateOnClose]="true">
+              </sat-datepicker>
+              <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-chip-list>
+      </div>
+      <div class="col-md-3 pr-0">
+        <div class="form-group mb-0">
+          <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedPreviousToShowDate"
+                      class="form-control br-0">
+            <mat-option value="1">Previous 1 Day</mat-option>
+            <mat-option value="7">Previous 7 Day</mat-option>
+            <mat-option value="30">Previous 30 Day</mat-option>
+            <mat-option value="custom">Custom Range</mat-option>
+          </mat-select>
         </div>
-
-    </div>
-
-    <div class="col-md-12 all-transactions">
-
-        <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
-            <ng-container matColumnDef="platformName">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform</th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{element.platformName}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="transactionNumber">
-                <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="transactionNumber">
-                    Transaction Number
-                </th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{element.transactionNumber}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="clientName">
-                <th *matHeaderCellDef class="br w-18" mat-header-cell mat-sort-header="clientName"> Investor name
-                </th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar">
-                        <span>{{element.clientName}}</span>
-                        <span class="pl-4 text-primitive">{{element.clientCode}}</span>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="schemeName">
-                <th *matHeaderCellDef class="br w-27" mat-header-cell mat-sort-header="schemeName"> Scheme details</th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{element.schemeName}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="type">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionType"> Type</th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{element.transactionType}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="amount">
-                <th *matHeaderCellDef class="br w-12 rightTextHide" mat-header-cell mat-sort-header="amtUnitType">
-                    Amount/Units
-                </th>
-                <td *matCellDef="let element" class="br text-right" mat-cell>
-                    <div class="bar">
-                        <span *ngIf="element.amtUnitType=='Amount'">₹</span>
-                        <span appFormatNumber> {{element.amount}}</span>
-                        <span *ngIf="element.amtUnitType==undefined && element.platformName"> Units</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="orderDate">
-                <th *matHeaderCellDef class="br w-10 textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
-                </th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} {{element.orderDate | date:'shortTime'}}
-                    </div>
-                </td>
-
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
-                <td *matCellDef="let element" class="br w-14" mat-cell>
-                    <div *ngIf="element.status == 7" class="bar text-warning  f-500 c-p">
-                        <div class="bar"> Transaction rejected </div>
-                    </div>
-                    <div *ngIf="element.status == 2" class="bar text-danger  f-500 c-p">
-                        <div class="bar"> Pending authorization </div>
-                    </div>
-                    <div *ngIf="element.status == 0" class="bar text-primary  f-500 c-p">
-                        <div class="bar"> Unknown </div>
-                    </div>
-                    <div *ngIf="element.status == 5" class="bar text-success  f-500 c-p">
-                        <div class="bar">Order submitted to AMC</div>
-                    </div>
-                    <div *ngIf="element.status == 4" class="bar text-success  f-500 c-p">
-                        <div class="bar">Pending submission to AMC</div>
-                    </div>
-                    <div *ngIf="element.status == 6" class="bar text-success t-10 f-500 c-p">
-                        <div class="bar">Order processed </div>
-                    </div>
-                    <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
-                        <div class="bar">OTP authorised</div>
-                    </div>
-                    <div *ngIf="element.status == 6" class="bar text-success t-10 f-500 c-p">
-                        <div class="bar">Order processed</div>
-                    </div>
-                    <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
-                        <div class="bar">Payment successful</div>
-                    </div>
-                    <div *ngIf="element.status == 8" class="bar text-success t-10 f-500 c-p">
-                        <div class="bar">Units alloted</div>
-                    </div>
-                    <!-- <div class="bar">{{element.transactionStatus}}</div> -->
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let element" mat-cell>
-                    <div class="bar">
-                        <i *ngIf="element.platformName" class="material-icons c-p text-custom">
-                            keyboard_arrow_right
-                        </i>
-                    </div>
-                </td>
-            </ng-container>
-            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr (click)="openTransactionHistory(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-        </table>
-
-        <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">{{noData}}</h4>
-            <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  " mat-stroked-button>
-                ADD NEW
-            </button>
-            <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
-                ADD NEW
-            </button>
+      </div>
+      <div *ngIf="isAdvisorSection" class="col-md-2 pr-0">
+        <div class="form-group mb-0">
+          <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedBroker" class="form-control br-0">
+            <mat-option *ngFor="let singleData of credentialData" [value]="singleData">
+              {{singleData.brokerCode}}
+            </mat-option>
+          </mat-select>
         </div>
+      </div>
+      <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
+        <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
+        <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+          NEW
+        </button>
+      </div>
     </div>
+
+  </div>
+
+  <div class="col-md-12 all-transactions">
+
+    <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+           appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
+      <ng-container matColumnDef="platformName">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.platformName}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="transactionNumber">
+        <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="transactionNumber">
+          Transaction Number
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.transactionNumber}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="clientName">
+        <th *matHeaderCellDef class="br w-18" mat-header-cell mat-sort-header="clientName"> Investor name
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar">
+            <span>{{element.clientName}}</span>
+            <span class="pl-4 text-primitive">{{element.clientCode}}</span>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="schemeName">
+        <th *matHeaderCellDef class="br w-27" mat-header-cell mat-sort-header="schemeName"> Scheme details</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.schemeName}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionType"> Type</th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.transactionType}} </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <th *matHeaderCellDef class="br w-12 rightTextHide" mat-header-cell mat-sort-header="amtUnitType">
+          Amount/Units
+        </th>
+        <td *matCellDef="let element" class="br text-right" mat-cell>
+          <div class="bar">
+            <span *ngIf="element.amtUnitType=='Amount'">₹</span>
+            <span [shouldRoundOff]="false" appFormatNumber> {{element.amount}}</span>
+            <span *ngIf="!element.amtUnitType&&!isLoading ||element.amtUnitType=='Unit'"> Units</span></div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="orderDate">
+        <th *matHeaderCellDef class="br w-10 textLeft" mat-header-cell mat-sort-header="orderDate"> Order date time
+        </th>
+        <td *matCellDef="let element" class="br" mat-cell>
+          <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy HH:mm'}}
+          </div>
+        </td>
+
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
+        <td *matCellDef="let element" class="br w-14" mat-cell>
+          <div *ngIf="element.status == 7" class="bar text-warning  f-500 c-p">
+            <div class="bar"> Transaction rejected</div>
+          </div>
+          <div *ngIf="element.status == 1" class="bar text-danger  f-500 c-p">
+            <div class="bar">Failue</div>
+          </div>
+          <div *ngIf="element.status == 0" class="bar text-primary  f-500 c-p">
+            <div class="bar"> Unknown</div>
+          </div>
+          <div *ngIf="element.status == 5" class="bar text-success  f-500 c-p">
+            <div class="bar">Order submitted to AMC</div>
+          </div>
+          <div *ngIf="element.status == 4" class="bar text-success  f-500 c-p">
+            <div class="bar">Pending submission to AMC</div>
+          </div>
+          <div *ngIf="element.status == 2" class="bar text-success t-10 f-500 c-p">
+            <div class="bar">Pending Authorization</div>
+          </div>
+          <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
+            <div class="bar">OTP authorised</div>
+          </div>
+          <div *ngIf="element.status == 6" class="bar text-success t-10 f-500 c-p">
+            <div class="bar">Order processed</div>
+          </div>
+          <div *ngIf="element.status == 3" class="bar text-success t-10 f-500 c-p">
+            <div class="bar">Payment successful</div>
+          </div>
+          <div *ngIf="element.status == 8" class="bar text-success t-10 f-500 c-p">
+            <div class="bar">Units allotted</div>
+          </div>
+          <!-- <div class="bar">{{element.transactionStatus}}</div> -->
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="icons">
+        <th *matHeaderCellDef mat-header-cell></th>
+        <td *matCellDef="let element" mat-cell>
+          <div class="bar">
+            <i *ngIf="element.platformName" class="material-icons c-p text-custom">
+              keyboard_arrow_right
+            </i>
+          </div>
+        </td>
+      </ng-container>
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr (click)="openTransactionHistory(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+
+    <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+      <img class="width300" src="assets/images/svg/noDataFound.svg">
+      <h4 class="pt-12">{{noData}}</h4>
+      <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  "
+              mat-stroked-button>
+        ADD NEW
+      </button>
+      <button *ngIf="noData=='No credentials found'"
+              [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
+              class="btn-primary addon v-middle" mat-stroked-button>
+        ADD NEW
+      </button>
+    </div>
+  </div>
 </div>

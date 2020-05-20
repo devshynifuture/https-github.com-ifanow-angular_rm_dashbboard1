@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, Input } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
+import { CustomerService } from '../../../../../customer.service';
 
 @Component({
   selector: 'app-add-transaction',
@@ -15,7 +16,7 @@ export class AddTransactionComponent implements OnInit {
   @Input() transactionViewData;
   @Output() outputEvent = new EventEmitter();
   minDate: Date;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private customerService:CustomerService) { }
   @Input() set data(data) {
     this.transactionForm = this.fb.group({
       transactionFormList: new FormArray([])
@@ -86,6 +87,7 @@ export class AddTransactionComponent implements OnInit {
     if(this.getTransFormList.controls[index].value.assetId){
       // this.transactionForm.controls.ppfTransactionList.controls['isActive'].setValue(0);
       this.getTransFormList.controls[index].value.isActive = 0
+
       this.removed.push(this.getTransFormList.controls[index]);
       console.log(this.removed,"removed 123");
       this.transactionForm.controls.transactionFormList.removeAt(index);
@@ -93,8 +95,16 @@ export class AddTransactionComponent implements OnInit {
       // this.transactionForm.controls.transactionFormList.push(this.removed);
     }
     else{
+      if(this.getTransFormList.controls[index].value.id){
+        let id = this.getTransFormList.controls[index].value.id;
+        this.customerService.deletePartPayment(id).subscribe(
+          data => {
+            console.log('delete',data)
+          }
+        )
+      }
       this.transactionForm.controls.transactionFormList.removeAt(index)
-      this.addTransactionList = this.getTransFormList.controls.length
+      this.addTransactionList = this.getTransFormList.controls.length;
     }
 
   }
