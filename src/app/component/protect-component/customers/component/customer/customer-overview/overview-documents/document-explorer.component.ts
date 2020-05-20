@@ -436,6 +436,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   openFolder(value) {
+    this.showMsg = false;
+    this.urlData = ''
     if (this.isLoading) {
       return;
     }

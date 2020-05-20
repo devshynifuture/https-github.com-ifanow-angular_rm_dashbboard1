@@ -568,6 +568,9 @@ export class CustomerService {
   fetchFileUpload(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_FILE_UPLOAD_DATA, data);
   }
+  getFileUploadDataClient(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_UPLOAD_DATA_CLIENT, data);
+  }
   fetchFileClientData(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_CLIENT_FILE_UPLOAD, data);
   }
