@@ -414,9 +414,10 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     if (form == 'policyExpiryDate' && formValue) {
       let startDate = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.travelInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate: any = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
-      comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
-      comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+      let comparedDate: any =this.datePipe.transform(this.travelInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd') ;
+      // let comparedDate: any = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
+      // comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      // comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.travelInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
         this.travelInsuranceForm.get('policyExpiryDate').markAsTouched();

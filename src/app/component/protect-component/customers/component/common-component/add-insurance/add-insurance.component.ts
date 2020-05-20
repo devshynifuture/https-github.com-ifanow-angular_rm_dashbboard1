@@ -625,7 +625,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         let obj =
         {
           cashFlowType: element.get('cashFlowType').value,
-          cashFlowYear: element.get('year').value,
+          cashFlowYear:this.datePipe.transform(element.get('year').value, 'yyyy-MM-dd') ,
           cashFlowApproxAmount: element.get('approxAmt').value
         }
         finalCashFlowList.push(obj)
