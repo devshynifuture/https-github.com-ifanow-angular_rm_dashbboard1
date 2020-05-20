@@ -106,6 +106,13 @@ export class UtilService {
     return data && data.state && data.state === 'close' && data.refreshRequired;
   }
 
+  static deleteRow(element, list: any[]) {
+    const index: number = list.indexOf(element);
+    if (index !== -1) {
+      list.splice(index, 1);
+    }
+  }
+
   static getStartOfTheDay(date: Date) {
     date.setHours(0);
     date.setMinutes(0);
@@ -427,7 +434,7 @@ export class ValidatorType {
   // static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
   static TEXT_ONLY = new RegExp(/^[a-zA-Z ]*$/);
   static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
-  static LOGIN_PASS_REGEX = new RegExp(/(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%])(?=.{8,})/);
+  static LOGIN_PASS_REGEX = new RegExp(/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()])(?=.{8,})/);
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
   static COMPULSORY_ALPHA_NUMERIC = new RegExp(/^[a-zA-Z]+[a-zA-Z0-9/-]*$/);
   static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);
@@ -454,12 +461,14 @@ export function escapeRegExp(s: string): string {
  * You will need to add this to the component's providers to make this function private
  */
 export class LoaderFunction {
-  private counter = 0;
-  private isLoading = false;
 
   public get loading() {
     return this.isLoading;
   }
+
+  private counter = 0;
+  private isLoading = false;
+
 
   public increaseCounter() {
     this.isLoading = true;
@@ -472,6 +481,5 @@ export class LoaderFunction {
       this.isLoading = false;
     }
   }
-
 
 }

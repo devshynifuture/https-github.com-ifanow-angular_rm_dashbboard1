@@ -6,7 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {ValidatorType} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -138,7 +138,6 @@ export class PurchaseTrasactionComponent implements OnInit {
         if (this.existingSchemeList && this.existingSchemeList.length > 0) {
           this.getExistingSchemesRes(this.existingSchemeList);
         } else {
-          this.showSpinner = true;
           this.getExistingScheme();
         }
       }
@@ -162,7 +161,12 @@ export class PurchaseTrasactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
+    let amcId = 0;
+    if (this.childTransactions && this.childTransactions.length > 0) {
+      amcId = this.childTransactions[0].amcId;
+    }
     const obj = {
+      amcId,
       searchQuery: data,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -295,25 +299,27 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   setMinAmount() {
-    if (this.purchaseTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
+    if (!this.schemeDetails) {
+      return;
+    } else if (this.purchaseTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     } else if (this.ExistingOrNew == 1) {
       this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
-    } else if (this.schemeDetails) {
+    } else {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
       Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
       if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
-        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount),
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount),
           Validators.max(this.selectedMandate.amount)]);
         this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
       } else {
-        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
       }
     } else if (this.schemeDetails) {
-      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
     }// this.purchaseTransaction.updateValueAndValidity();
   }
 
@@ -391,11 +397,11 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data) {
       this.folioList = data;
       if (this.folioList.length == 1) {
-        this.purchaseTransaction.controls.folioSelection.setValue(this.folioList[0].folioNumber);
+        this.purchaseTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
         this.selectedFolio(this.folioList[0]);
-      }
-      if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
-        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+        if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
+          Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+        }
       }
     } else {
       this.purchaseTransaction.get('folioSelection').setValue('2');
@@ -461,6 +467,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.schemeList = null;
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
+    this.folioList = [];
+    this.folioDetails = null;
     this.onFolioChange(null);
     this.navOfSelectedScheme = 0;
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
@@ -473,7 +481,13 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getExistingScheme() {
+    this.showSpinner = true;
+    let amcId = 0;
+    if (this.childTransactions && this.childTransactions.length > 0) {
+      amcId = this.childTransactions[0].amcId;
+    }
     const obj = {
+      amcId,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -547,10 +561,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
       Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
-      if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
-        this.purchaseTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
-        this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
-      }
+      this.setMinAmount();
     }
   }
 
@@ -600,6 +611,17 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data.folioNo) {
       this.scheme.amcId = data.amcId;
       this.getFolioList();
+    }
+  }
+
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      if (this.selectScheme == 1) {
+        this.getExistingScheme();
+      }
     }
   }
 
@@ -748,8 +770,21 @@ export class PurchaseTrasactionComponent implements OnInit {
         } else {
           this.childTransactions.push(obj);
         }
+        if (this.childTransactions.length == 1) {
+          this.schemeList = [];
+          if (this.selectScheme == 1) {
+            this.getExistingScheme();
+          } else {
+          }
+        }
         console.log(this.childTransactions);
-        this.schemeList = [];
+        this.navOfSelectedScheme = 0;
+        this.scheme = null;
+        this.schemeDetails = null;
+        this.reInvestmentOpt = [];
+        this.folioDetails = null;
+        this.folioList = [];
+        this.onFolioChange(null);
         this.purchaseTransaction.controls.reinvest.reset();
         this.purchaseTransaction.controls.employeeContry.reset();
         this.purchaseTransaction.controls.investmentAccountSelection.reset();

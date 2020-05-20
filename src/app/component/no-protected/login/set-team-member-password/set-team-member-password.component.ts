@@ -92,7 +92,7 @@ export class SetTeamMemberPasswordComponent implements OnInit {
 
   checkSpecialCharacter() {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (new RegExp(/([@%])/).test(control.value) && control.value != null) {
+      if (new RegExp(/([!@#$%^&*()])/).test(control.value) && control.value != null) {
         this.passwordStregth.specialCharacter = true;
         return;
       }

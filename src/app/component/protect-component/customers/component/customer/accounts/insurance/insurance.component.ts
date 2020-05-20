@@ -73,7 +73,7 @@ export class InsuranceComponent implements OnInit {
   @ViewChild('generalInsurance', { static: false }) generalInsurance: ElementRef;
   lifeInsuranceCount: any;
   generalInsuranceCount: any;
-  showType = 'plan Type';
+  showType = 'Plan Type';
   showPolicyHolder = 'Name of policy holder';
   generalInsuranceDataFilter: any;
   lifeInsuranceFilter: any;
@@ -106,12 +106,12 @@ export class InsuranceComponent implements OnInit {
     this.generalInsuranceFlag = false;
   }
 
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      clientId: element.clientId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
     this.myFiles = fileName.target.files[0]
@@ -212,7 +212,7 @@ export class InsuranceComponent implements OnInit {
         this.totalPremiunAmountLifeIns = 0;
         this.totalSumAssuredLifeIns = 0;
         this.dataSource.data.forEach(element => {
-          this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,
+          this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
             this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0
           this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0
         });
@@ -293,7 +293,7 @@ export class InsuranceComponent implements OnInit {
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,
+        this.totalCurrentValue +=  (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0
       });
@@ -360,7 +360,7 @@ export class InsuranceComponent implements OnInit {
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,
+        this.totalCurrentValue +=  (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0
       });

@@ -378,7 +378,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="row c-p" [routerLink]="['/admin/setting/preference']">
+                            <div class="row c-p" [routerLink]="['/admin/setting/preference']" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
                                 </div>
@@ -389,7 +389,7 @@
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/activity']" class="row c-p">
+                            <div [routerLink]="['/admin/setting/activity']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/activity.svg" class="v-super">
                                 </div>
@@ -401,7 +401,7 @@
                             </div>
 
 
-                            <div [routerLink]="['/admin/setting/plan']" class="row c-p">
+                            <div [routerLink]="['/admin/setting/plan']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/plan.svg" class="v-super">
                                 </div>
@@ -412,7 +412,7 @@
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p">
+                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/user-and-roles.svg" class="v-super">
                                 </div>
@@ -424,7 +424,7 @@
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p">
+                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/backoffice.svg" class="v-super">
                                 </div>
@@ -436,7 +436,7 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="row c-p" [routerLink]="['/admin/setting/backup']">
+                            <!-- <div class="row c-p" [routerLink]="['/admin/setting/backup']" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/backup.svg" class="v-super">
                                 </div>

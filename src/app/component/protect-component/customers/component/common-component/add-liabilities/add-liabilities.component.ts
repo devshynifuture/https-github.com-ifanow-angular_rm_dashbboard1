@@ -486,7 +486,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.transactionData.forEach(element => {
         if(element.controls.date.value || element.controls.amount.value){
           let obj = {
-            "partPaymentDate": (element.controls.date.value) ? this.datePipe.transform(element.controls.date.value._d , 'yyyy-MM-dd') : element.controls.date.value,
+            "partPaymentDate": (element.controls.date.value) ? this.datePipe.transform(element.controls.date.value , 'yyyy-MM-dd') : element.controls.date.value,
             "partPayment": element.controls.amount.value,
             "option": 0,
             "id":(element.value.id) ? element.value.id : null,
