@@ -21,7 +21,6 @@ import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate
 export class SipTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
-  defaultFrequency: any;
   oldDefaultData;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
@@ -291,6 +290,7 @@ export class SipTransactionComponent implements OnInit {
     } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
     }*/
     this.getMandateDetails();
+    this.oldDefaultData = data;
 
   }
 
@@ -411,7 +411,6 @@ export class SipTransactionComponent implements OnInit {
     if (this.sipFrequency) {
       this.sipFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
-          this.defaultFrequency = singleFrequency.frequency;
           this.sipTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }

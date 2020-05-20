@@ -148,18 +148,10 @@
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Current value</p>
                   <p class="f-14 m-0">{{currentValue ? currentValue : '0'}}</p>
-
-                  <!--                  <mat-form-field appearance="standard" floatLabel="never">-->
-                  <!--                    <input #currentValue appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"-->
-                  <!--                           formControlName="currentValue" matInput type="text">-->
-                  <!--                  </mat-form-field>-->
                 </div>
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Balance unit</p>
                   <p class="f-14 m-0">{{folioDetails && folioDetails.balanceUnit ? folioDetails.balanceUnit : '0'}}</p>
-                  <!--                                    <mat-form-field appearance="standard" floatLabel="never">-->
-                  <!--                                        <input #balanceUnit appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="balanceUnit" matInput type="text">-->
-                  <!--                                    </mat-form-field>-->
                 </div>
                 <div class="row">
                   <div class="col-md-12 pb-12">
@@ -218,7 +210,7 @@
                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                   </mat-error>
                   <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)" class="f-12">
-                    This field is requied
+                    This field is required
                   </mat-error>
                 </mat-form-field>
               </div>
