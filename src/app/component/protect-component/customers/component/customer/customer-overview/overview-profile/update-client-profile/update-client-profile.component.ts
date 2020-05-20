@@ -24,11 +24,11 @@ export class UpdateClientProfileComponent implements OnInit {
   cropImage = false;
   selectedTab = 0;
   protected _onDestroy = new Subject<void>();
-  dataLoaded:boolean = false;
-  formPlaceHolder:any;
-  advisorId:any;
-  clientId:any;
-  
+  dataLoaded: boolean = false;
+  formPlaceHolder: any;
+  advisorId: any;
+  clientId: any;
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & CLOSE',
@@ -56,7 +56,7 @@ export class UpdateClientProfileComponent implements OnInit {
 
   validatorType = ValidatorType;
 
-  @Input() data:any = {};
+  @Input() data: any = {};
 
   ngOnInit() {
     this.selectedTab = this.data.openTab;
@@ -75,7 +75,8 @@ export class UpdateClientProfileComponent implements OnInit {
 
   saveImage() {
     if (this.showCropper) {
-      if(this.barButtonOptions.active) return;
+      this.barButtonOptions.active = true;
+      if (this.barButtonOptions.active) return;
       this.loaderFn.increaseCounter();
       const tags = this.clientId + ',client_profile_logo,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
@@ -88,6 +89,7 @@ export class UpdateClientProfileComponent implements OnInit {
               profilePicUrl: responseObject.url
             };
             this.cusService.updateClientProfilePic(jsonDataObj).subscribe((res) => {
+              this.barButtonOptions.active = false;
               this.subInjectService.setRefreshRequired();
               this.imgURL = jsonDataObj.profilePicUrl;
               this.Close()
@@ -120,7 +122,7 @@ export class UpdateClientProfileComponent implements OnInit {
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
-    if(this.selectedTab == 0) {
+    if (this.selectedTab == 0) {
       this.barButtonOptions.text = 'SAVE & NEXT';
     } else {
       this.barButtonOptions.text = 'SAVE & CLOSE';
@@ -128,6 +130,6 @@ export class UpdateClientProfileComponent implements OnInit {
   }
 
   Close() {
-    this.subInjectService.closeNewRightSlider({ state: 'close'});
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 }
