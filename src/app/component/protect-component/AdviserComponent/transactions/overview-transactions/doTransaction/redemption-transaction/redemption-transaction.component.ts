@@ -61,7 +61,7 @@ export class RedemptionTransactionComponent implements OnInit {
   schemeDetails: any;
   navOfSelectedScheme: any;
   transactionSummary: {};
-  folioList: any;
+  folioList: any = [];
   folioDetails: any;
   showUnits = false;
   bankDetails: any;
@@ -118,6 +118,8 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
+    } else {
+      this.getSchemeList();
     }
     this.oldDefaultData = data;
 
@@ -133,8 +135,6 @@ export class RedemptionTransactionComponent implements OnInit {
       this.getSchemeList();
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
     }
-    //
-
   }
 
   resetForm() {
@@ -342,16 +342,19 @@ export class RedemptionTransactionComponent implements OnInit {
   getSchemeWiseFoliosRes(data) {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
-    this.folioList = data;
+    if (data) {
+      this.folioList = data;
+    }
     if (this.folioList.length == 1) {
       this.redemptionTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
       this.selectedFolio(this.folioList[0]);
+      if (this.redemptionTransaction.get('investmentAccountSelection').valid) {
+        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      }
     } else {
-      this.onFolioChange(null);
+      // this.onFolioChange(null);
     }
-    if (this.redemptionTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
-    }
+
   }
 
   selectedFolio(folio) {
@@ -409,7 +412,7 @@ export class RedemptionTransactionComponent implements OnInit {
       orderVal: allRedeem ?
         this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
       amountType,
-      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
+      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : allRedeem ? this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
       schemeCd: this.schemeDetails.schemeCode,
       euin: this.getDataSummary.euin.euin,
       bseDPTransType: 'PHYSICAL',
@@ -523,12 +526,12 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   removeUnnecessaryDataFromJson(singleTransactionJson) {
-    singleTransactionJson.schemeSelection = null;
-    singleTransactionJson.folioSelection = null;
-    singleTransactionJson.modeOfPaymentSelection = null;
-    singleTransactionJson.scheme = null;
-    singleTransactionJson.schemeDetails = null;
-    singleTransactionJson.reInvestmentOpt = null;
-    singleTransactionJson.folioDetails = null;
+    singleTransactionJson.schemeSelection = undefined;
+    singleTransactionJson.folioSelection = undefined;
+    singleTransactionJson.modeOfPaymentSelection = undefined;
+    singleTransactionJson.scheme = undefined;
+    singleTransactionJson.schemeDetails = undefined;
+    singleTransactionJson.reInvestmentOpt = undefined;
+    singleTransactionJson.folioDetails = undefined;
   }
 }

@@ -71,7 +71,7 @@ export class SwpTransactionComponent implements OnInit {
   dateDisplay: any;
   folioDetails: any;
   scheme: any;
-  folioList: any;
+  folioList = [];
   bankDetails: any;
   showSpinnerFolio = false;
   currentValue: number;
@@ -121,6 +121,8 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
+    } else {
+      this.getSchemeList();
     }
     this.oldDefaultData = data;
 
@@ -280,12 +282,17 @@ export class SwpTransactionComponent implements OnInit {
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio', data);
     this.showSpinnerFolio = false;
-    this.folioList = data;
-    if (this.folioList.length == 1) {
-      this.folioNumberShow = this.folioList[0].folioNumber;
+    if (data) {
+      this.folioList = data;
     }
-    if (this.swpTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+    if (this.folioList.length == 1) {
+      this.swpTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
+      this.selectedFolio(this.folioList[0]);
+      if (this.swpTransaction('investmentAccountSelection').valid) {
+        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      }
+    } else {
+      // this.onFolioChange(null);
     }
   }
 
