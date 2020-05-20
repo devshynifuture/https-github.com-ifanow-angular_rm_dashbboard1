@@ -79,7 +79,7 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
-                            <input matInput (click)="commpicker.open()" autocomplete="off" [matDatepicker]="commpicker" [max]="maxDate" class="form-control br-0 b-0" formControlName="commDate" matInput readonly>
+                            <input matInput (click)="commpicker.open()" (dateChange)="checkDate()" autocomplete="off" [matDatepicker]="commpicker" [max]="maxDate" class="form-control br-0 b-0" formControlName="commDate" matInput readonly>
                             <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
                             <mat-datepicker #commpicker></mat-datepicker>
                             <mat-error class="f-12">
@@ -98,7 +98,7 @@
                         <mat-form-field>
                             <mat-select matInput formControlName="Tenure" class="form-control br-0">
                                 <mat-option value="5">5 Years</mat-option>
-                                <mat-option value="10">10 Years</mat-option>
+                                <mat-option value="10" *ngIf="tenure10">10 Years</mat-option>
                             </mat-select>
                             <mat-error class="f-12">
                                 This field is required

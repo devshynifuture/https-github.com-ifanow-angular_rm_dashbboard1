@@ -128,10 +128,10 @@
 
                             <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
                             <mat-menu #menu7="matMenu">
-                                <button mat-menu-item>Upload file
+                                <!-- <button mat-menu-item>Upload file
                                     <input (change)="fetchData('Liabilities',$event)" class="uploadInput" id="file-4"
                                         multiple type="file">
-                                </button>
+                                </button> -->
                             </mat-menu>
                             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-8">
                             <mat-menu #menu="matMenu">
@@ -166,19 +166,21 @@
                                             <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">
-                                            <div class="bar">
-                                                {{isLoading ? '' : 'Total' }}
-                                            </div>
+
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="name">
-                                        <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br">
-                                            Owner
+                                        <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-15">
+                                            Borrower
                                         </th>
                                         <td mat-cell *matCellDef="let element" class="br">
                                             <div class="bar">{{element.ownerName}} </div>
                                         </td>
-                                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+                                        <td mat-footer-cell *matFooterCellDef class="f-600 br pr-8 proximaFont text-right">
+                                            <div class="bar">
+                                                {{isLoading ? '' : 'Total' }}
+                                            </div>
+                                        </td>
                                     </ng-container>
                                     <ng-container matColumnDef="type">
                                         <th mat-sort-header="loanTypeId" mat-header-cell *matHeaderCellDef class="br">
@@ -192,7 +194,7 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="loan">
-                                        <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef class="br textRight">
+                                        <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef class="br rightTextHide">
                                             Loan amount</th>
                                         <!-- <td *matCellDef="let element" class="br text-right" mat-cell>
                                             <div class="bar"><span appFormatNumber>{{element.loanAmount}}</span> </div>
@@ -211,7 +213,7 @@
 
                                     </ng-container>
                                     <ng-container matColumnDef="ldate">
-                                        <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br">
+                                        <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br textLeft">
                                             Loan as on
                                         </th>
                                         <td mat-cell *matCellDef="let element" class="br">
@@ -220,7 +222,7 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="today">
-                                        <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef class="br textRight"> Outstanding <br> as on today
+                                        <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef class="br w-10 rightTextHide"> Outstanding as on today
                                         </th>
                                         <!-- <td *matCellDef="let element" class="br text-right" mat-cell>
                                             <div class="bar"><span appFormatNumber>{{element.outstandingAmount}}</span>
@@ -238,12 +240,12 @@
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="ten">
-                                        <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef class="br textRight">
-                                            Tenure <br> remaining</th>
+                                        <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef class="br w-9 rightTextHide">
+                                            Tenure remaining</th>
                                         <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar">
                                                 <span *ngIf="!isLoading">
-                                                    {{(element.years || element.years != 0 || element.years > 0) ? element.years : ''}}{{(element.years || element.years != 0 || element.years > 0) ? 'yr ' : ''}}{{element.months+' months'}}
+                                                    {{(element.years || element.years != 0 || element.years > 0) ? element.years : ''}}{{(element.years || element.years != 0 || element.years > 0) ? ' y ' : ''}}{{element.months+' m'}}
                                                 </span>
                                                 <span *ngIf="isLoading">
                                                     {{''}}
@@ -253,7 +255,7 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="rate">
-                                        <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef class="br textRight"> Annual <br> interest rate</th>
+                                        <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef class="br w-9 rightTextHide"> Annual interest rate</th>
                                         <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar"> {{element.annualInterestRate}}{{!isLoading? "%" : ""}}
                                             </div>
@@ -261,7 +263,7 @@
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
                                     <ng-container matColumnDef="emi">
-                                        <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef class="br text-right">
+                                        <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef class="br w-9 rightTextHide">
                                             EMI</th>
                                         <!-- <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar" appFormatNumber>
@@ -279,8 +281,8 @@
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="fin">
-                                        <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef class="br text-left">
-                                            Financial <br> institution</th>
+                                        <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef class="br textLeft">
+                                            Financial institution</th>
                                         <td mat-cell *matCellDef="let element" class="br">
                                             <div class="bar">
                                                 {{(isLoading ? '' : ((element.financialInstitution) ? element.financialInstitution : '-'))}}
@@ -316,6 +318,10 @@
                                                     <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
                                                     <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Detailed
                                                         View</button>
+                                                    <button mat-menu-item>Upload file
+                                                        <input (change)="fetchData('Liabilities',$event)"
+                                                            class="uploadInput" id="file-4" multiple type="file">
+                                                    </button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
                                                 </mat-menu>

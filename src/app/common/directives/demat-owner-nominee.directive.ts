@@ -75,7 +75,7 @@ export class DematOwnerNomineeDirective {
   getListFamilyMem(): any {
     const obj = {
       userId: this.clientIdData,
-      userType: (this.userTypeFlag == 'client' || this.userTypeFlag == undefined) ? 2 : 3
+      userType: (this.userTypeFlag == 'client' || this.userTypeFlag == 'lead' || this.userTypeFlag == undefined) ? 2 : 3
     };
 
     if (this.sendData.length <= 0) {

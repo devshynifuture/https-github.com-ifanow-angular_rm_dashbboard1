@@ -54,8 +54,9 @@ export class OnlineTransactionComponent implements OnInit {
   showSpinnerOwner = false;
   ownerNameQuery = '';
   familyMemberData: any;
-  noSubBroker = true;
-  noMapping = true;
+  noSubBroker = false;
+  noMapping = false;
+
   transactionType: any;
   transactionData: any;
   filteredStates: any;

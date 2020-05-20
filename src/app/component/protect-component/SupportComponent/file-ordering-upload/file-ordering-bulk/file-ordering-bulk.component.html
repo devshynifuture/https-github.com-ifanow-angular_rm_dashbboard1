@@ -75,117 +75,158 @@
         <table mat-table [dataSource]="dataSource" class="skeletonLoading" appSkeletonLoading
             [appSkeletonLoading]="isLoading" id="table-low">
             <ng-container matColumnDef="rta">
-                <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.rta}}
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> RTA </th>
+                <td class="br b-a" mat-cell *matCellDef="let element">
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.rta}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="description">
-                <th class="br" mat-header-cell *matHeaderCellDef> Description </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.description}}
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Description </th>
+                <td class="br b-a" mat-cell *matCellDef="let element">
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.description}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="orderedBy">
-                <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.orderedBy}}
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Ordered by </th>
+                <td class="br b-a" mat-cell *matCellDef="let element">
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.orderedBy}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="startedOn">
-                <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.startedOn | date:'d/M/y, h:mm a'}}
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Started on </th>
+                <td class="br b-a" mat-cell *matCellDef="let element">
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.startedOn | date:'d/M/y, h:mm a'}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="totalFiles">
-                <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
-                <td class="br" mat-cell *matCellDef="let element" class="c-p"
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Total files </th>
+                <td class="br b-a" mat-cell *matCellDef="let element" class="c-p"
                     (click)="openUpperFileOrdering('bulk', 'total', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.totalFiles}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.totalFiles}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="queue">
-                <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
-                <td class="br" mat-cell *matCellDef="let element"
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> In queue </th>
+                <td class="br b-a" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('bulk', 'inqueue', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.queue}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.queue}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="ordering">
-                <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.ordering}}
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Ordering </th>
+                <td class="br b-a" mat-cell *matCellDef="let element">
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.ordering}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="ordered">
-                <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
-                <td class="br" mat-cell *matCellDef="let element"
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Ordered </th>
+                <td class="br b-a" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('bulk', 'ordered', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.ordered}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.ordered}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="failed">
-                <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
-                <td class="br" mat-cell *matCellDef="let element"
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Failed </th>
+                <td class="br b-a" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('bulk', 'skipped', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.failed}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.failed}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
 
             <ng-container matColumnDef="uploaded">
-                <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
-                <td class="br" mat-cell *matCellDef="let element"
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Uploaded </th>
+                <td class="br b-a" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('bulk', 'uploaded', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.uploaded}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.uploaded}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
 
 
             <ng-container matColumnDef="refresh">
-                <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Refresh </th>
+                <td class="br b-a" mat-cell *matCellDef="let element; index as i">
                     <div class="bar">
-                        <button mat-button class="bg-grey mr-12 h-22 btn-xs" *ngIf="!isLoading">
+                        <button mat-button class="bg-grey mr-12 h-22 btn-xs" *ngIf="!isLoading"
+                            (click)="refreshRowList(element, i)">
                             <mat-icon>
                                 refresh
                             </mat-icon>

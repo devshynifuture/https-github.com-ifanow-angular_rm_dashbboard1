@@ -21,7 +21,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(libility.ownerName) ? libility.ownerName : 'N.A.'}}
+                        {{(libility.ownerName) ? libility.ownerName : '-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         <!-- {{(libility.years + 'yr '+libility.months+' months')}} -->
-                        {{(libility.years || libility.years != 0 || libility.years > 0) ? libility.years : ''}}{{(libility.years || libility.years != 0 || libility.years > 0) ? 'yr ' : ''}}{{libility.months+' months'}}
+                        {{(libility.years || libility.years != 0 || libility.years > 0) ? libility.years : ''}}{{(libility.years || libility.years != 0 || libility.years > 0) ? ' y ' : ''}}{{libility.months+' m'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -78,7 +78,7 @@
                         Financial institution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(libility.financialInstitution) ? libility.financialInstitution : 'N.A.'}}
+                        {{(libility.financialInstitution) ? libility.financialInstitution : '-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -86,7 +86,7 @@
                         EMI end date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(libility.maturityDate) ? (libility.maturityDate | date:'dd/MM/yyyy') : 'N.A.'}}
+                        {{(libility.maturityDate) ? (libility.maturityDate | date:'dd/MM/yyyy') : '-'}}
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
                         Total in
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'N.A.'}}
+                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div> -->
 
@@ -104,7 +104,7 @@
                         Total principal paid till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" > 
-                        {{(libility.totalPrinciplePaidTillDate) ? '₹ ' : ''}}<span appFormatNumber [value]="(libility.totalPrinciplePaidTillDate) ? libility.totalPrinciplePaidTillDate : 'N.A.'"></span>
+                        {{(libility.totalPrinciplePaidTillDate) ? '₹ ' : ''}}<span appFormatNumber [value]="(libility.totalPrinciplePaidTillDate) ? libility.totalPrinciplePaidTillDate : '-'"></span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br cp">

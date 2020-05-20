@@ -2,6 +2,13 @@
     border-right: 1px solid #dee5e7 !important;
 }
 
+// ::ng-deep .liabilities {
+//   height: 320px;
+//   overflow: auto;
+// }
+// ::ng-deep .mat-sort-header-button {
+//   white-space: normal !important;
+// }
 ::ng-deep .rightText .mat-sort-header-container {
     display: block !important;
 }
@@ -33,14 +40,6 @@
 
  ::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-button {
     float: right;
-    text-align: right;
-}
-
-::ng-deep .textRight .mat-sort-header-container {
-    justify-content: flex-end;
-}
-
-::ng-deep #table-low .mat-sort-header-button {
     text-align: right;
 }
 
