@@ -845,6 +845,14 @@ export class SipTransactionComponent implements OnInit {
     }
   }
 
+  setDefaultTenure() {
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      this.sipTransaction.controls.tenure.setValue('3');
+    } else {
+      this.sipTransaction.controls.tenure.setValue('2');
+    }
+  }
+
   AddMultiTransaction() {
     if (this.validateSingleTransaction()) {
       Object.assign(this.transactionSummary, {multiTransact: true});
@@ -885,7 +893,7 @@ export class SipTransactionComponent implements OnInit {
           const obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
         }
-        //Only once required because for same amcId search
+        // Only once required because for same amcId search
         if (this.childTransactions.length == 1) {
           this.schemeList = [];
           if (this.selectScheme == 1) {
@@ -902,12 +910,14 @@ export class SipTransactionComponent implements OnInit {
         this.folioList = [];
         this.onFolioChange(undefined);
         this.sipTransaction.controls.date.reset();
-        this.sipTransaction.controls.tenure.reset();
+        this.dateDisplay = [];
+        // this.sipTransaction.controls.tenure.reset();
         this.sipTransaction.controls.installment.reset();
         this.sipTransaction.controls.frequency.reset();
         this.sipTransaction.controls.employeeContry.reset();
         this.sipTransaction.controls.investmentAccountSelection.reset();
         this.sipTransaction.controls.schemeSip.reset();
+        this.setDefaultTenure();
       }
 
     }
@@ -971,6 +981,7 @@ export class SipTransactionComponent implements OnInit {
     this.frequency = undefined;
     this.sipFrequency = [];
     this.navOfSelectedScheme = 0;
+    this.dateDisplay = [];
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, {folioNumber: ''});
@@ -980,6 +991,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.schemePurchase.reset();
     this.sipTransaction.controls.schemePurchase.reset();
     this.sipTransaction.controls.frequency.setValue('');
+    this.setDefaultTenure();
   }
 
   removeUnnecessaryDataFromJson(singleTransactionJson) {
