@@ -21,7 +21,6 @@ import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate
 export class SipTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
-  folioNumberShow: any;
   defaultFrequency: any;
   oldDefaultData;
 
@@ -155,7 +154,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.schemeSip.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
-    this.frequency = null;
+    this.frequency = undefined;
     this.sipFrequency = [];
     Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
@@ -188,7 +187,12 @@ export class SipTransactionComponent implements OnInit {
       // if scheme not present then min amt is 0
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
+    let amcId = 0;
+    if (this.childTransactions && this.childTransactions.length > 0) {
+      amcId = this.childTransactions[0].amcId;
+    }
     const obj = {
+      amcId,
       searchQuery: data,
       bseOrderType: 'SIP',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -235,8 +239,12 @@ export class SipTransactionComponent implements OnInit {
 
   getExistingScheme() {
     this.showSchemeSpinner = true;
-
+    let amcId = 0;
+    if (this.childTransactions && this.childTransactions.length > 0) {
+      amcId = this.childTransactions[0].amcId;
+    }
     const obj = {
+      amcId,
       bseOrderType: 'SIP',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -296,7 +304,7 @@ export class SipTransactionComponent implements OnInit {
         this.existingSchemeList = [];
       } else {
         this.folioList = [];
-        this.onFolioChange(null);
+        this.onFolioChange(undefined);
         this.selectExistingOrNew(this.ExistingOrNew);
       }
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
@@ -324,9 +332,9 @@ export class SipTransactionComponent implements OnInit {
     this.scheme = scheme;
     this.folioList = [];
     this.reInvestmentOpt = [];
-    this.schemeDetails = null;
+    this.schemeDetails = undefined;
     this.sipFrequency = [];
-    this.onFolioChange(null);
+    this.onFolioChange(undefined);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -361,15 +369,28 @@ export class SipTransactionComponent implements OnInit {
   }
 
   setMinAmount() {
-    if (this.sipTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
+    if (!this.schemeDetails) {
+      return;
+    } else if (this.sipTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     } else if (this.ExistingOrNew == 1) {
       this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
     } else {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
-    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
-
+    if (this.selectedMandate) {
+      Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
+      Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
+      if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+        this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount),
+          Validators.max(this.selectedMandate.amount)]);
+        this.sipTransaction.controls.employeeContry.updateValueAndValidity();
+      } else {
+        this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
+      }
+    } else if (this.schemeDetails) {
+      this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
+    }// this.sipTransaction.updateValueAndValidity();
   }
 
 
@@ -402,7 +423,7 @@ export class SipTransactionComponent implements OnInit {
     this.selectedFreqModel = getFrerq;
     this.frequency = getFrerq.frequency;
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
-      this.sipTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.additionalPurchaseAmount)]);
+      this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(getFrerq.additionalPurchaseAmount)]);
     }
     this.dateArray(getFrerq.sipDates);
     this.checkAndHandleMaxInstallmentValidator();
@@ -448,7 +469,7 @@ export class SipTransactionComponent implements OnInit {
   handleMandateFailure() {
     this.showSpinnerMandate = false;
     this.mandateDetails = [];
-    this.selectedMandate = null;
+    this.selectedMandate = undefined;
     this.eventService.openSnackBar('No mandate found', 'Dismiss');
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('1');
   }
@@ -479,12 +500,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, {umrnNo: this.selectedMandate.umrnNo});
       Object.assign(this.transactionSummary, {selectedMandate: this.selectedMandate});
-      if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
-        // max
-        this.sipTransaction.controls.employeeContry.setValidators([Validators.max(this.selectedMandate.amount)]);
-        this.sipTransaction.controls.employeeContry.updateValueAndValidity();
-        this.mandateAmountErrorMessage = 'Sip amount cannot be greater than mandate amount';
-      }
+      this.setMinAmount();
     }
   }
 
@@ -582,10 +598,11 @@ export class SipTransactionComponent implements OnInit {
     console.log('getFoliosAmcWiseRes', data);
     this.folioList = data;
     if (this.folioList.length == 1) {
-      this.folioNumberShow = this.folioList[0].folioNumber;
-    }
-    if (this.sipTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      this.sipTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
+      this.selectedFolio(this.folioList[0]);
+      if (this.sipTransaction('investmentAccountSelection').valid) {
+        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      }
     }
   }
 
@@ -603,6 +620,7 @@ export class SipTransactionComponent implements OnInit {
       ...this.transactionSummary,
       schemeName: scheme.schemeName,
     };
+    this.setMinAmount();
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
@@ -621,6 +639,9 @@ export class SipTransactionComponent implements OnInit {
       this.schemeDetails = data.schemeDetails;
       this.reInvestmentOpt = data.reInvestmentOpt;
       this.folioDetails = data.folioDetails;
+      if (this.folioDetails) {
+        this.selectedFolio(this.folioDetails);
+      }
       this.selectedFreqModel = data.selectedFreqModel;
       this.sipFrequency = data.sipFrequency;
       this.scheme = data.scheme;
@@ -643,7 +664,7 @@ export class SipTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
       // investor: [(!data) ? '' : data.investor, [Validators.required]],
-      reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
+      reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag + '' : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
@@ -669,9 +690,8 @@ export class SipTransactionComponent implements OnInit {
     });
     this.ownerData = this.sipTransaction.controls;
     if (data.folioNo) {
-      this.scheme.amcId = data.scheme.amcId;
-      this.schemeDetails.isin = data.isIn;
-      this.selectedScheme(data.scheme);
+      this.getFolioList();
+      // this.selectedScheme(data.scheme);
     }
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('2');
   }
@@ -710,7 +730,7 @@ export class SipTransactionComponent implements OnInit {
       productCode: this.schemeDetails.schemeCode,
       isin: this.schemeDetails.isin,
       umrn: this.umrn,
-      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      folioNo: (this.folioDetails == undefined) ? undefined : this.folioDetails.folioNumber,
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       tpSubBrokerCredentialId: this.getDataSummary.euin.id,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
@@ -728,11 +748,11 @@ export class SipTransactionComponent implements OnInit {
       schemeCd: this.schemeDetails.schemeCode,
       transMode: 'PHYSICAL',
       bseDPTransType: 'PHYSICAL',
-      mandateId: null,
-      bankDetailId: null,
-      nsePaymentMode: null,
-      mandateType: null,
-      xSipMandateId: null,
+      mandateId: undefined,
+      bankDetailId: undefined,
+      nsePaymentMode: undefined,
+      mandateType: undefined,
+      xSipMandateId: undefined,
       childTransactions: [],
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       noOfInstallments: this.sipTransaction.controls.installment.value,
@@ -744,7 +764,7 @@ export class SipTransactionComponent implements OnInit {
       tenure: this.sipTransaction.controls.tenure.value,
       date: this.sipTransaction.controls.date.value,
       sipFrequency: this.sipFrequency,
-      amcId: (this.scheme) ? this.scheme.amcId : null,
+      amcId: this.scheme.amcId,
       scheme: this.scheme,
       schemeName: this.scheme.schemeName,
       schemeDetails: this.schemeDetails,
@@ -752,12 +772,12 @@ export class SipTransactionComponent implements OnInit {
       folioDetails: this.folioDetails,
     };
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      obj.mandateId = (this.selectedMandate) ? this.selectedMandate.id : null;
+      obj.mandateId = (this.selectedMandate) ? this.selectedMandate.id : undefined;
       obj.bankDetailId = this.bankDetails.id;
       obj.nsePaymentMode = (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') ? 'DEBIT_MANDATE' : 'ONLINE';
     } else {
-      obj.mandateType = (this.selectedMandate) ? this.selectedMandate.mandateType : null;
-      obj.xSipMandateId = (this.selectedMandate) ? this.selectedMandate.mandateId : null;
+      obj.mandateType = (this.selectedMandate) ? this.selectedMandate.mandateType : undefined;
+      obj.xSipMandateId = (this.selectedMandate) ? this.selectedMandate.mandateId : undefined;
     }
 
     return obj;
@@ -840,7 +860,7 @@ export class SipTransactionComponent implements OnInit {
               element.id = this.editedId;
               element.date = this.sipTransaction.controls.date.value;
               element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId;
-              element.amcId = (this.scheme) ? this.scheme.amcId : null;
+              element.amcId = this.scheme.amcId;
               element.folioNo = this.sipTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.sipTransaction.get('employeeContry').value;
               element.schemeName = this.scheme.schemeName;
@@ -875,12 +895,12 @@ export class SipTransactionComponent implements OnInit {
         }
         console.log(this.childTransactions);
         this.navOfSelectedScheme = 0;
-        this.scheme = null;
-        this.schemeDetails = null;
+        this.scheme = undefined;
+        this.schemeDetails = undefined;
         this.reInvestmentOpt = [];
-        this.folioDetails = null;
+        this.folioDetails = undefined;
         this.folioList = [];
-        this.onFolioChange(null);
+        this.onFolioChange(undefined);
         this.sipTransaction.controls.date.reset();
         this.sipTransaction.controls.tenure.reset();
         this.sipTransaction.controls.installment.reset();
@@ -941,14 +961,14 @@ export class SipTransactionComponent implements OnInit {
   }
 
   resetForm() {
-    this.scheme = null;
-    this.schemeList = null;
+    this.scheme = undefined;
+    this.schemeList = undefined;
     this.reInvestmentOpt = [];
-    this.schemeDetails = null;
+    this.schemeDetails = undefined;
     this.folioList = [];
-    this.folioDetails = null;
-    this.onFolioChange(null);
-    this.frequency = null;
+    this.folioDetails = undefined;
+    this.onFolioChange(undefined);
+    this.frequency = undefined;
     this.sipFrequency = [];
     this.navOfSelectedScheme = 0;
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
@@ -963,18 +983,18 @@ export class SipTransactionComponent implements OnInit {
   }
 
   removeUnnecessaryDataFromJson(singleTransactionJson) {
-    singleTransactionJson.schemeSelection = null;
-    singleTransactionJson.folioSelection = null;
-    singleTransactionJson.modeOfPaymentSelection = null;
-    singleTransactionJson.scheme = null;
-    singleTransactionJson.schemeDetails = null;
-    singleTransactionJson.reInvestmentOpt = null;
-    singleTransactionJson.folioDetails = null;
-    singleTransactionJson.frequencyType = null;
-    singleTransactionJson.sipFrequency = null;
-    singleTransactionJson.scheme = null;
-    singleTransactionJson.schemeDetails = null;
-    singleTransactionJson.reInvestmentOpt = null;
-    singleTransactionJson.folioDetails = null;
+    singleTransactionJson.schemeSelection = undefined;
+    singleTransactionJson.folioSelection = undefined;
+    singleTransactionJson.modeOfPaymentSelection = undefined;
+    singleTransactionJson.scheme = undefined;
+    singleTransactionJson.schemeDetails = undefined;
+    singleTransactionJson.reInvestmentOpt = undefined;
+    singleTransactionJson.folioDetails = undefined;
+    singleTransactionJson.sipFrequency = undefined;
+    singleTransactionJson.scheme = undefined;
+    singleTransactionJson.schemeDetails = undefined;
+    singleTransactionJson.reInvestmentOpt = undefined;
+    singleTransactionJson.folioDetails = undefined;
+    singleTransactionJson.selectedFreqModel = undefined;
   }
 }

@@ -18,7 +18,6 @@ import {map, startWith} from 'rxjs/operators';
 export class PurchaseTrasactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
-  folioNumberShow: any;
   oldDefaultData;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
@@ -598,7 +597,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       // folioSelection: ['2'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
+      reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag : '', [Validators.required]],
       schemePurchase: [(!data) ? '' : data.scheme, [Validators.required]],
     });
     this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
@@ -611,7 +610,7 @@ export class PurchaseTrasactionComponent implements OnInit {
      );*/
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
-      this.scheme.amcId = data.amcId;
+      // this.scheme.amcId = data.amcId;
       this.getFolioList();
     }
   }
