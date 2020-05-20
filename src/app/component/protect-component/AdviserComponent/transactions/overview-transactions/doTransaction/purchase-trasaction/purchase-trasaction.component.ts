@@ -391,7 +391,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data) {
       this.folioList = data;
       if (this.folioList.length == 1) {
-        this.folioNumberShow = this.folioList[0].folioNumber;
+        this.purchaseTransaction.controls.folioSelection.setValue(this.folioList[0].folioNumber);
+        this.selectedFolio(this.folioList[0]);
       }
       if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
         Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});

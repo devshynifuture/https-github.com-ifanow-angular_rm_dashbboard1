@@ -15,6 +15,18 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./redemption-transaction.component.scss']
 })
 export class RedemptionTransactionComponent implements OnInit {
+
+  oldDefaultData;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              private fb: FormBuilder, private eventService: EventService,
+              public processTransaction: ProcessTransactionService) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   isSuccessfulTransaction = false;
 
   barButtonOptions: MatProgressButtonOptions = {
@@ -54,7 +66,7 @@ export class RedemptionTransactionComponent implements OnInit {
   bankDetails: any;
   showSpinnerFolio = false;
   platformType;
-  currentValue: number;
+  currentValue;
   multiTransact = false;
   id = 0;
   isEdit = false;
@@ -64,11 +76,6 @@ export class RedemptionTransactionComponent implements OnInit {
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
   folioNumberShow: any;
-
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService,
-    public processTransaction: ProcessTransactionService) {
-  }
 
   @Output() changedValue = new EventEmitter();
 
@@ -84,22 +91,18 @@ export class RedemptionTransactionComponent implements OnInit {
     }
   }
 
-  get data() {
-    return this.inputData;
-  }
-
   ngOnInit() {
 
     this.getdataForm(this.inputData, false);
     this.transactionSummary = {};
     this.childTransactions = [];
     this.reInvestmentOpt = [];
-    Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
-    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
-    Object.assign(this.transactionSummary, { allEdit: true });
-    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-    Object.assign(this.transactionSummary, { transactType: 'REDEEM' });
-    Object.assign(this.transactionSummary, { isMultiTransact: false }); // when multi transact then disabled edit button in transaction summary
+    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
+    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
+    Object.assign(this.transactionSummary, {allEdit: true});
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, {transactType: 'REDEEM'});
+    Object.assign(this.transactionSummary, {isMultiTransact: false}); // when multi transact then disabled edit button in transaction summary
   }
 
   backToTransact() {
@@ -111,9 +114,41 @@ export class RedemptionTransactionComponent implements OnInit {
     this.getDataSummary = data;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
 
-    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
+    Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
+    if (this.oldDefaultData) {
+      this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
+    }
+    this.oldDefaultData = data;
     this.getSchemeList();
+
     // this.redemptionTransaction.controls.investor.reset();
+  }
+
+  checkAndResetForm(oldData, newData) {
+    if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
+      this.resetForm();
+    } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
+      this.resetForm();
+    } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
+
+    }
+    //
+
+  }
+
+  resetForm() {
+    this.scheme = null;
+    this.schemeList = null;
+    this.reInvestmentOpt = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
+    this.navOfSelectedScheme = 0;
+    (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
+    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, {folioNumber: ''});
+    this.redemptionTransaction.controls.employeeContry.reset();
+    this.redemptionTransaction.controls.investmentAccountSelection.reset();
+    this.redemptionTransaction.controls.schemePurchase.reset();
   }
 
   redemptionType(value) {
@@ -144,8 +179,6 @@ export class RedemptionTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      balanceUnit:[(!data) ? '' : data.balanceUnit,],
-      currentValue:[(!data) ? '' : data.currentValue,],
       // investor: [(!data) ? '' : this.scheme, [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
@@ -167,7 +200,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, {enteredAmount: value});
   }
 
   getFormControl(): any {
@@ -179,8 +212,8 @@ export class RedemptionTransactionComponent implements OnInit {
     if (this.redemptionTransaction.get('schemeRedeem').invalid) {
       this.showSpinner = false;
       this.folioList = [];
-      Object.assign(this.transactionSummary, { schemeName: '' });
-      Object.assign(this.transactionSummary, { folioNumber: '' });
+      Object.assign(this.transactionSummary, {schemeName: ''});
+      Object.assign(this.transactionSummary, {folioNumber: ''});
     }
     const obj = {
       bseOrderType: 'REDEMPTION',
@@ -198,7 +231,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.onlineTransact.getExistingSchemes(obj).subscribe(
       data => this.getExistingSchemesRes(data), (error) => {
         this.showSpinner = false;
-        this.redemptionTransaction.get('schemeRedeem').setErrors({ setValue: error.message });
+        this.redemptionTransaction.get('schemeRedeem').setErrors({setValue: error.message});
         this.redemptionTransaction.get('schemeRedeem').markAsTouched();
         // this.eventService.openSnackBar(error, 'Dismiss');
       }
@@ -223,7 +256,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -242,10 +275,10 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
-    this.redemptionTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.redemptionAmountMinimum)]);
+    this.redemptionTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.redemptionAmountMinimum)]);
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
-      this.reInvestmentOpt = data;
+      this.reInvestmentOpt = [];
       console.log('reinvestment', this.reInvestmentOpt);
     }
     if (data.length == 1) {
@@ -256,7 +289,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
   reinvest(scheme) {
     this.schemeDetails = scheme;
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
@@ -283,23 +316,23 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
     this.folioList = data;
-    if(this.folioList.length == 1){
-      this.folioNumberShow = this.folioList[0].folioNumber
+    if (this.folioList.length == 1) {
+      this.redemptionTransaction.controls.folioSelection.setValue(this.folioList[0].folioNumber);
+      this.selectedFolio(this.folioList[0]);
     }
     if (this.redemptionTransaction.get('folioSelection').valid) {
-      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
 
   selectedFolio(folio) {
     this.showUnits = true;
-    this.redemptionTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2))
-    this.redemptionTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2))
-    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
-    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
-    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
-    this.transactionSummary = { ...this.transactionSummary };
+    folio.balanceUnit = (folio.balanceUnit).toFixed(2);
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit).toFixed(2);
+    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
+    Object.assign(this.transactionSummary, {mutualFundId: folio.id});
+    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    this.transactionSummary = {...this.transactionSummary};
     this.folioDetails = folio;
   }
 
@@ -310,11 +343,15 @@ export class RedemptionTransactionComponent implements OnInit {
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
       return;
-
     } else if ((this.redemptionTransaction.get('redeemType').value) != '3' &&
       this.redemptionTransaction.get('employeeContry').invalid) {
       this.redemptionTransaction.get('employeeContry').markAsTouched();
     } else {
+      const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
+      let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
+      if (allRedeem) {
+        amountType = 'Unit';
+      }
       const obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
@@ -322,7 +359,7 @@ export class RedemptionTransactionComponent implements OnInit {
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         productCode: this.schemeDetails.schemeCode,
         isin: this.schemeDetails.isin,
-        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+        folioNo: this.folioDetails.folioNumber,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         tpSubBrokerCredentialId: this.getDataSummary.euin.id,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
@@ -334,14 +371,15 @@ export class RedemptionTransactionComponent implements OnInit {
         buySellType: 'FRESH',
         dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
         clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: this.redemptionTransaction.controls.employeeContry.value,
-        amountType: (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
+        orderVal: allRedeem ?
+          this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
+        amountType,
         qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
+        allRedeem,
         bankDetailId: null,
         nsePaymentMode: null,
         isException: true,
@@ -381,12 +419,12 @@ export class RedemptionTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
-      Object.assign(this.transactionSummary, { allEdit: false });
+      Object.assign(this.transactionSummary, {allEdit: false});
     }
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, { isMultiTransact: true });
+    Object.assign(this.transactionSummary, {isMultiTransact: true});
 
     if (this.isEdit != true) {
       this.id++;
