@@ -275,12 +275,12 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     if (data.data == null) {
       data = {};
       this.dataForEdit = data.data;
-      this.flag = "ADD";
+      this.flag = "Add";
     }
     else {
       this.dataForEdit = data.data;
       this.id = this.dataForEdit.id;
-      this.flag = "EDIT";
+      this.flag = "Edit";
     }
     this.personalAccidentForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -303,7 +303,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null)],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       // inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
-      inceptionDate: [(this.dataForEdit) ?((this.dataForEdit.policyInceptionDate) ? new Date(this.dataForEdit.policyInceptionDate) : null) : null],
+      inceptionDate: [(this.dataForEdit) ? ((this.dataForEdit.policyInceptionDate) ? new Date(this.dataForEdit.policyInceptionDate) : null) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
@@ -428,7 +428,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = new Date(comparedDate);
-      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
+      comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.personalAccidentForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -510,8 +510,8 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "policyHolderId": this.personalAccidentForm.value.getCoOwnerName[0].familyMemberId,
-        "policyStartDate":this.datePipe.transform(this.personalAccidentForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        "policyExpiryDate":this.datePipe.transform(this.personalAccidentForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        "policyStartDate": this.datePipe.transform(this.personalAccidentForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate": this.datePipe.transform(this.personalAccidentForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "cumulativeBonus": this.personalAccidentForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.personalAccidentForm.get('bonusType').value,
         "planName": this.personalAccidentForm.get('planeName').value,
@@ -522,7 +522,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         "serviceBranch": this.personalAccidentForm.get('serviceBranch').value,
         "linkedBankAccount": this.personalAccidentForm.get('bankAccount').value,
         "policyNumber": this.personalAccidentForm.get('policyNum').value,
-        "policyInceptionDate":this.datePipe.transform(this.personalAccidentForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+        "policyInceptionDate": this.datePipe.transform(this.personalAccidentForm.get('inceptionDate').value, 'yyyy-MM-dd'),
         "policyFeatures": featureList,
         "insurerName": this.personalAccidentForm.get('insurerName').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
