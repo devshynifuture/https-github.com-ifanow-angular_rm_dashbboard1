@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.rate)?data.rate:'-' }}
+                        {{ data.rate | number: '1.2-2'}}%
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

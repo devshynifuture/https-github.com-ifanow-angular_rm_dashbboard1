@@ -27,7 +27,7 @@
                         Employer's Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.employersMonthlyContribution?utils.formatter(epf.employersMonthlyContribution):'-'}}
+                        {{epf.employersMonthlyContribution?'₹':''}}<span appFormatNumber>{{epf.employersMonthlyContribution?epf.employersMonthlyContribution:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Employees Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
+                        {{epf.employeesMonthlyContribution?'₹':''}}<span appFormatNumber>{{epf.employeesMonthlyContribution?epf.employeesMonthlyContribution:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -104,7 +104,7 @@
                         Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.rate?epf.rate:'-'}}
+                        {{epf.rate | number: '1.2-2'}}{{epf.rate?'%':''}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -112,7 +112,7 @@
                         Annual Salary growth rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.salaryGrowthRate?epf.salaryGrowthRate:'-'}}
+                        {{epf.salaryGrowthRate | number: '1.2-2'}}{{epf.salaryGrowthRate?'%':''}}
                     </div>
                 </div>
 

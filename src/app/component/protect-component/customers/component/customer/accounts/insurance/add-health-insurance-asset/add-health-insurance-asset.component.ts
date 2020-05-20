@@ -328,7 +328,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         if (data.data == null) {
             data = {};
             this.dataForEdit = data.data;
-            this.flag = 'ADD';
+            this.flag = 'Add';
         } else {
             this.dataForEdit = data.data;
             this.id = this.dataForEdit.id;
@@ -336,7 +336,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
                 this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
             }
-            this.flag = 'EDIT';
+            this.flag = 'Edit';
         }
         this.healthInsuranceForm = this.fb.group({
             // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -362,7 +362,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
             bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : '1'],
             exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
-            inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+            inceptionDate: [(this.dataForEdit) ? ((this.dataForEdit.policyInceptionDate) ? new Date(this.dataForEdit.policyInceptionDate) : null) : null],
             tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
             advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
             serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
@@ -468,7 +468,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             let comparedDate: any = startDate;
             comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
             comparedDate = new Date(comparedDate);
-            comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
+            comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
             comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
             if (policyExpiryDate < comparedDate) {
                 this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -619,8 +619,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 'clientId': this.clientId,
                 'advisorId': this.advisorId,
                 'policyHolderId': this.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
-                'policyStartDate':this.datePipe.transform(this.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-                'policyExpiryDate':this.datePipe.transform( this.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+                'policyStartDate': this.datePipe.transform(this.healthInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+                'policyExpiryDate': this.datePipe.transform(this.healthInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
                 'cumulativeBonus': this.healthInsuranceForm.get('cumulativeBonus').value,
                 'cumulativeBonusRupeesOrPercent': this.healthInsuranceForm.get('bonusType').value,
                 'policyTypeId': this.healthInsuranceForm.get('PlanType').value,
@@ -635,7 +635,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 'serviceBranch': this.healthInsuranceForm.get('serviceBranch').value,
                 'linkedBankAccount': this.healthInsuranceForm.get('bankAccount').value,
                 'insurerName': this.healthInsuranceForm.get('insurerName').value,
-                'policyInceptionDate': new Date(this.healthInsuranceForm.get('inceptionDate').value),
+                'policyInceptionDate': this.datePipe.transform(this.healthInsuranceForm.get('inceptionDate').value, 'yyyy-MM-dd'),
                 'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
                 'premiumAmount': this.healthInsuranceForm.get('premium').value,
                 'policyFeatureId': this.healthInsuranceForm.get('planDetails').value,

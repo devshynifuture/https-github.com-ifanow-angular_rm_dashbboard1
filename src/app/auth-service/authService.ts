@@ -46,6 +46,15 @@ export class AuthService {
     }
   }
 
+  static setUserRoleType(roleObj) {
+    localStorage.setItem('roleObj', JSON.stringify(roleObj));
+  }
+
+  static getUserRoleType() {
+    const roleObj = localStorage.getItem('roleObj');
+    return roleObj ? JSON.parse(roleObj) : {};
+  }
+
   static getUserId() {
     return this.getUserInfo().userId;
   }
@@ -124,6 +133,7 @@ export class AuthService {
     localStorage.removeItem('profilePic');
     localStorage.removeItem('orgData');
     localStorage.removeItem('advisorDetail');
+    localStorage.removeItem('roleObj');
 
     // this.myRoute.navigate(['login']);
   }

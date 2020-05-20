@@ -172,7 +172,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" maxLength="6" [placeholder]="formPlaceHolder.ENTER_PIN_CODE" [maxLength]="6" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input (input)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" maxLength="6" [placeholder]="formPlaceHolder.ENTER_PIN_CODE" [maxLength]="6" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('pincode').value.length}}/6
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
@@ -180,6 +180,9 @@
                                     Please enter valid pincode number</mat-error>
                             </mat-form-field>
                         </div>
+                    </div>
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
                 <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value != 3">

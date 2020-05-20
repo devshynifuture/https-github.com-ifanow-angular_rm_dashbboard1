@@ -234,12 +234,12 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     if (data.data == null) {
       data = {};
       this.dataForEdit = data.data;
-      this.flag = "ADD";
+      this.flag = "Add";
     }
     else {
       this.dataForEdit = data.data;
       this.id = this.dataForEdit.id;
-      this.flag = "EDIT";
+      this.flag = "Edit";
     }
     this.homeInsuranceForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -367,7 +367,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
       let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = new Date(comparedDate);
-      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
+      comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.homeInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -478,8 +478,8 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
         "policyTypeId": this.homeInsuranceForm.get('PlanType').value,
         "planName": this.homeInsuranceForm.get('planeName').value,
         "premiumAmount": this.homeInsuranceForm.get('premium').value,
-        "policyStartDate":this.datePipe.transform(this.homeInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        "policyExpiryDate":this.datePipe.transform(this.homeInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        "policyStartDate": this.datePipe.transform(this.homeInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate": this.datePipe.transform(this.homeInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "exclusion": this.homeInsuranceForm.get('exclusion').value,
         "hypothetication": this.homeInsuranceForm.get('financierName').value,
         "advisorName": this.homeInsuranceForm.get('advisorName').value,

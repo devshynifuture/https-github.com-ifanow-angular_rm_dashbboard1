@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-leftsidebar-setting',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeftsidebarSettingComponent implements OnInit {
 
-  constructor() { }
+  roleObj:any;
+  constructor() {
+    this.roleObj = AuthService.getUserRoleType();
+  }
 
   ngOnInit() {
   }

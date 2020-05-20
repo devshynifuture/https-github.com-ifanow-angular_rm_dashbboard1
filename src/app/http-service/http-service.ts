@@ -69,10 +69,10 @@ export class HttpService {
 
           const resData = this.changeBase64ToString(res);
           return resData;
-        } else if (res.status === 304 || 204) {
-          return res.message;
         } else if (res.status == 'active') {
           return res
+        } else if (res.status === 304 || 204) {
+          return res.message;
         } else {
 
           // this._router.navigate(['login']);
