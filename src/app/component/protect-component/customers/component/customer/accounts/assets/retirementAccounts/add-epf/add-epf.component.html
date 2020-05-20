@@ -276,7 +276,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" matInput type="text" appInputValueValidation
-                            [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" #EPFNo maxlength="25"
+                            [inputValidator]="validatorType.ALPHA_NUMERIC" #EPFNo maxlength="25"
                             class="form-control br-0" formControlName="EPFNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{EPFNo.value.length}}/25</mat-hint>

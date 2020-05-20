@@ -1,14 +1,43 @@
-import { Directive, Output, EventEmitter, HostListener } from '@angular/core';
+import {Directive, EventEmitter, HostListener, Output} from '@angular/core';
+import {HostBinding} from '@angular/core/src/metadata/*';
 
 @Directive({
   selector: '[appFileDragDrop]'
 })
 export class FileDragDropDirective {
-  @Output() fileDropped = new EventEmitter<FileList>();
-  constructor() { }
+  @HostBinding('class.fileover') fileOver: boolean;
+  @Output() fileDropped = new EventEmitter<any>();
+
+  // Dragover listener
+  @HostListener('dragover', ['$event']) onDragOver(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.fileOver = true;
+  }
+
+  // Dragleave listener
+  @HostListener('dragleave', ['$event'])
+  public onDragLeave(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.fileOver = false;
+  }
+
+  // Drop listener
   @HostListener('drop', ['$event'])
-  onDrop($event) {
-    console.log($event)
-    $event.preventDefault();
+  public ondrop(evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.fileOver = false;
+    let files = evt.dataTransfer.files;
+    const event = {
+      target: {
+        files
+      }
+    };
+    if (files.length > 0) {
+      this.fileDropped.emit(event);
+    }
   }
 }
+

@@ -1,10 +1,14 @@
 <div class="wrapper-8">
     <div class="row pt-10 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('1')"
+                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+                class="br-0 text-custom" mat-button>
                 Bank accounts
             </button>
-            <button (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('2')"
+                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+                class="br-0 text-custom" mat-button>
                 Cash in hand
             </button>
         </div>
@@ -15,7 +19,8 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
             </div>
-            <div class="col-md-8 p-0  d-flex align-items-center justify-content-end" *ngIf="bankAccountList.filteredData.length > 0">
+            <div class="col-md-8 p-0  d-flex align-items-center justify-content-end"
+                *ngIf="bankAccountList.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -33,10 +38,10 @@
                 </a>
 
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Bank A/c',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
-                    </button>
+                    </button> -->
                 </mat-menu>
 
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
@@ -48,13 +53,16 @@
                 <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
+                    mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
-            <table #tableEl *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="tbs" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort"
+                [dataSource]="bankAccountList" id="tbs" mat-table class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
@@ -85,7 +93,8 @@
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
+                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as
+                        on
                     </th>
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>
@@ -105,10 +114,12 @@
                         Balance mentioned
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accountBalance }}</span> </div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                appFormatNumber>{{element.accountBalance }}</span> </div>
                     </td>
                     <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalAccountBalance" appFormatNumber>{{totalAccountBalance}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalAccountBalance"
+                                appFormatNumber>{{totalAccountBalance}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="account">
@@ -149,6 +160,10 @@
                                 <button (click)="openAddEdit(element, 'bankAccount')" mat-menu-item>Edit
                                 </button>
                                 <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Bank A/c',$event)" class="uploadInput" id="file-4"
+                                        multiple type="file">
+                                </button>
                                 <button mat-menu-item>Activity</button>
                                 <button (click)="deleteModal('BANK ACCOUNT',element)" mat-menu-item>Delete</button>
                             </mat-menu>
@@ -163,7 +178,8 @@
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
+                    mat-stroked-button>ADD NEW
                 </button>
             </div>
         </div>
@@ -173,7 +189,8 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
             </div>
-            <div class="col-md-8 p-0 d-flex align-items-center justify-content-end" *ngIf="cashInHandList.filteredData.length > 0">
+            <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
+                *ngIf="cashInHandList.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -191,10 +208,10 @@
                 </a>
 
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Cash In Hand',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
-                    </button>
+                    </button> -->
                 </mat-menu>
 
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
@@ -212,7 +229,9 @@
             </div>
         </div>
         <div class=" mt-8 overflow-hidden col-md-12 p-0 real-estate">
-            <table #tableEl *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort"
+                [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br " mat-header-cell> No</th>
@@ -244,11 +263,13 @@
                         </div>
                     </td>
                     <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCashValue" appFormatNumber>{{sumOfCashValue}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCashValue"
+                                appFormatNumber>{{sumOfCashValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
-                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
+                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as
+                        on
                     </th>
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>
@@ -280,6 +301,10 @@
                                 <button mat-menu-item (click)="openAddEdit(element, 'cashInHand')">Edit</button>
                                 <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed
                                     view</button>
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Cash In Hand',$event)" class="uploadInput" id="file-4"
+                                        multiple type="file">
+                                </button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
                             </mat-menu>
@@ -294,7 +319,8 @@
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle"
+                    mat-stroked-button>ADD
                     NEW
                 </button>
             </div>

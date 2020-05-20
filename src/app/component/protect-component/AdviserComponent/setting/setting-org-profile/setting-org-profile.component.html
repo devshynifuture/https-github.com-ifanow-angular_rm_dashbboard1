@@ -1,8 +1,10 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button class="settingBtnHme" mat-button [ngClass]="orgProfile == false ? 'active-btn'  : ''" (click)="openOrg(false)">
+        <button class="settingBtnHme" mat-button [ngClass]="orgProfile == false ? 'active-btn'  : ''"
+            (click)="openOrg(false)">
             Personal profile</button>
-        <button class="settingBtnHme" mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''" (click)="openOrg(true)">
+        <button class="settingBtnHme" mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''"
+            (click)="openOrg(true)">
             Organization profile</button>
     </div>
 </div>
@@ -18,11 +20,11 @@
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter wrapper-18">
                 <div class="row w-100" *ngIf="userList">
-                    <div class="col-md-9 pl-0">
+                    <div class="col-md-11 pl-0">
                         <h2 class="m-0">{{userList.fullName}}</h2>
                     </div>
-                    <div class="col-md-3 p-0 text-right autoHeight">
-                        ADMIN
+                    <div class="col-md-1 p-0 text-right autoHeight d-flex">
+                        <p class="m-0 pt-2">ADMIN</p>
                         <mat-icon class="text-custom" [matMenuTriggerFor]="menu" class="c-p v-middle">more_vert
                         </mat-icon>
                         <mat-menu #menu="matMenu">
@@ -177,7 +179,8 @@
                                 <!-- <button (click)="OpenOrgProfile(orgDetails, '',1)">Edit Image</button> -->
                             </div>
                         </div>
-                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in mobile app etc.</p>
+                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in
+                            mobile app etc.</p>
                         <p class="m-0 text-black pt-4 bb-1 pb-16">Image dimension: 200px x 50px</p>
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> LOGO FOR REPORTS</p>
 
@@ -192,7 +195,8 @@
 
                             </div>
                             <div class="col-md-8 pl-0">
-                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial Plan etc.). If left blank, we will use the Web App Logo to show in reports.</p>
+                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial
+                                    Plan etc.). If left blank, we will use the Web App Logo to show in reports.</p>
                                 <p class="m-0 text-black pt-16">Image dimension: 200px x 200px</p>
                             </div>
                         </div>
