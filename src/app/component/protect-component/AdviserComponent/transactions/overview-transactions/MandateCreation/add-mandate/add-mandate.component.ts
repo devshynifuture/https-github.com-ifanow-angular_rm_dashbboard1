@@ -333,7 +333,7 @@ export class AddMandateComponent implements OnInit {
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
-      tpUserRequestId: 1,
+      // tpUserRequestId: 1,
       documentType: flag,
       tpMandateDetailId: this.madateResponse.id,
       // clientCode: this.detailsIIN.clientCode
@@ -348,7 +348,10 @@ export class AddMandateComponent implements OnInit {
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
-
+          this.eventService.openSnackBar('File uploaded successfully');
+        } else {
+          const responseObject = JSON.parse(response);
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
         }
       });
   }

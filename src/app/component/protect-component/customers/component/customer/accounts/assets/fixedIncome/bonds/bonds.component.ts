@@ -379,6 +379,7 @@ export class BondsComponent implements OnInit {
         ownerList: this.bonds.value.getCoOwnerName,
         amountInvested: parseInt(this.bonds.controls.amountInvest.value),
         bondName: this.bonds.controls.bondName.value,
+        bond_number: this.bonds.controls.bondNo.value,
         // couponAmount: this.bonds.controls.couponAmount.value,
         couponPayoutFrequencyId: parseInt(this.bonds.controls.couponOption.value),
         couponRate: this.bonds.controls.interestRate.value,
