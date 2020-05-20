@@ -59,6 +59,7 @@ export class AddOtherPayablesComponent implements OnInit {
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   familyMemberId: any;
   callMethod: any;
+  transactionData: any;
 
   constructor(private datePipe: DatePipe,private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }
@@ -110,7 +111,11 @@ disabledMember(value, type) {
     this.otherLiabilityForm.get('commDate').reset();
   }
 }
-
+getFormData(data) {
+  console.log(data)
+  this.transactionData = data.controls
+  return;
+}
 displayControler(con) {
   console.log('value selected', con);
   if(con.owner != null && con.owner){
@@ -136,7 +141,7 @@ get getCoOwner() {
 
 addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
-    name: [data ? data.ownerName : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '',[Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId: [data ? data.relationshipId : 0]
   }));
   if (data) {
     setTimeout(() => {
@@ -159,6 +164,16 @@ addNewCoOwner(data) {
 }
 
 removeCoOwner(item) {
+  if(item){
+    if(this.getCoOwner.controls[item].value.id){
+      let id = this.getCoOwner.controls[item].value.id;
+      this.custumService.deleteBorrower(id).subscribe(
+        data => {
+          console.log('delete',data)
+        }
+      )
+    }
+  }
   this.getCoOwner.removeAt(item);
   if (this.otherLiabilityForm.value.getCoOwnerName.length == 1) {
     this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -277,7 +292,8 @@ addNewNominee(data) {
         share: [0,[Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient:0,
+        relationshipId: 0
       })]),
       ownerName: [data.ownerName],
       dateOfReceipt: [new Date(data.dateOfReceived), [Validators.required]],
@@ -295,11 +311,14 @@ addNewNominee(data) {
     this.getCoOwner.controls['0'].get('share').setValue('100');
   }
 
-  if (data) {
+  if (data.borrowers) {
+    if(data.borrowers.length > 0){
     this.getCoOwner.removeAt(0);
-      this.addNewCoOwner(data);
+    data.borrowers.forEach(element => {
+      this.addNewCoOwner(element);
+    });
   }
-  
+}
 /***owner***/ 
 
 /***nominee***/ 
@@ -360,30 +379,22 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
   }
 
   saveFormData() {
-    // if (this.otherLiabilityForm.get('ownerName').invalid) {
-    //   this.otherLiabilityForm.get('ownerName').markAsTouched();
-    //   return;
-    //  } else if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
-    //   this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
-    //   return;
-    // } else if (this.otherLiabilityForm.get('ownerName').invalid) {
-    //   this.otherLiabilityForm.get('ownerName').markAsTouched();
-    //   return
-    // } else if (this.otherLiabilityForm.get('creditorName').invalid) {
-    //   this.otherLiabilityForm.get('creditorName').markAsTouched();
-    //   return;
-    // } else if (this.otherLiabilityForm.get('amtBorrowed').invalid) {
-    //   this.otherLiabilityForm.get('amtBorrowed').markAsTouched();
-    //   return;
-    // } else if (this.otherLiabilityForm.get('interest').invalid) {
-    //   this.otherLiabilityForm.get('interest').markAsTouched();
-    //   return;
-    // } else if (this.otherLiabilityForm.get('dateOfRepayment').invalid) {
-    //   this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
-    //   return;
-    // } else if (this.otherLiabilityForm.get('balance').invalid) {
-    //   this.otherLiabilityForm.get('balance').markAsTouched();
-    //   return;
+
+    let transactionFlag, finalTransctList = []
+    if (this.transactionData && this.transactionData.length > 0) {
+      this.transactionData.forEach(element => {
+        if(element.controls.date.value || element.controls.amount.value){
+          let obj = {
+            "partPaymentDate": (element.controls.date.value) ? this.datePipe.transform(element.controls.date.value , 'yyyy-MM-dd') : element.controls.date.value,
+            "partPayment": element.controls.amount.value,
+            "option": 0,
+            "id":(element.value.id) ? element.value.id : null,
+            'edit':(element.value.id) ? true : false
+          }
+          finalTransctList.push(obj)
+        }
+      });
+    }
     if (this.otherLiabilityForm.invalid) {
       this.otherLiabilityForm.markAllAsTouched();
       this.inputs.find(input => !input.ngControl.valid).focus();
@@ -392,7 +403,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
       const obj = {
         // ownerName: (this.ownerName == null) ? this.otherLiabilityForm.controls.ownerName.value : this.ownerName,
         ownerName:this.otherLiabilityForm.value.getCoOwnerName[0].name,
-
+        borrowers:this.otherLiabilityForm.value.getCoOwnerName,
         dateOfReceipt: this.otherLiabilityForm.controls.dateOfReceipt.value,
         creditorName: this.otherLiabilityForm.controls.creditorName.value,
         amtBorrowed: this.otherLiabilityForm.controls.amtBorrowed.value,
@@ -423,6 +434,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
           dateOfReceived: obj.dateOfReceipt,
           dateOfRepayment: obj.dateOfRepayment,
           description: obj.description,
+          borrowers:obj.borrowers
         };
         console.log('obj', obj);
         this.custumService.addOtherPayables(objToSend).subscribe(
@@ -441,6 +453,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
           dateOfRepayment: obj.dateOfRepayment,
           id: this._data.id,
           description: obj.description,
+          borrowers:obj.borrowers
         };
         this.custumService.editOtherPayables(editObj).subscribe(
           data => this.editOtherPayablesRes(data)

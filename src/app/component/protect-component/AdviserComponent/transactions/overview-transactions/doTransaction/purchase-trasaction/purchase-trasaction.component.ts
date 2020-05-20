@@ -391,11 +391,11 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data) {
       this.folioList = data;
       if (this.folioList.length == 1) {
-        this.purchaseTransaction.controls.folioSelection.setValue(this.folioList[0].folioNumber);
+        this.purchaseTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
         this.selectedFolio(this.folioList[0]);
-      }
-      if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
-        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+        if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
+          Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+        }
       }
     } else {
       this.purchaseTransaction.get('folioSelection').setValue('2');
@@ -461,6 +461,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.schemeList = null;
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
+    this.folioList = [];
+    this.folioDetails = null;
     this.onFolioChange(null);
     this.navOfSelectedScheme = 0;
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
