@@ -633,7 +633,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 'serviceBranch': this.healthInsuranceForm.get('serviceBranch').value,
                 'linkedBankAccount': this.healthInsuranceForm.get('bankAccount').value,
                 'insurerName': this.healthInsuranceForm.get('insurerName').value,
-                'policyInceptionDate': this.datePipe.transform(this.healthInsuranceForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+                'policyInceptionDate': new Date(this.healthInsuranceForm.get('inceptionDate').value),
                 'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
                 'premiumAmount': this.healthInsuranceForm.get('premium').value,
                 'policyFeatureId': this.healthInsuranceForm.get('planDetails').value,

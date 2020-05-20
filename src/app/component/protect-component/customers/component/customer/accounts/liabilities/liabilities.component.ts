@@ -407,6 +407,8 @@ export class LiabilitiesComponent implements OnInit {
     if (data && data.loans.length > 0) {
       this.filterForliabilities = data.loans;
       this.checkStatusId(data.loans);
+      this.totalLoanAmt = 0;
+      this.totalEmi = 0;
       // this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
