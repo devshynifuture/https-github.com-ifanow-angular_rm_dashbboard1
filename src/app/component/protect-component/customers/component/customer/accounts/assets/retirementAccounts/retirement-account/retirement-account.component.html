@@ -480,8 +480,9 @@
                                     <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
                                     <mat-menu #menu7="matMenu">
                                         <button mat-menu-item>Upload file
-                                            <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
-                                                multiple type="file">
+                                            <!-- PROD FIX -->
+                                            <!-- <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
+                                                multiple type="file"> -->
                                         </button>
                                     </mat-menu>
                                     <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">

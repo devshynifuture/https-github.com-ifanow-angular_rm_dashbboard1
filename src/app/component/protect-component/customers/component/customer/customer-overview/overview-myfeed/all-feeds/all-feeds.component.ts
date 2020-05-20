@@ -252,7 +252,7 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
         break;
       default:
         // this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
-        console.error("Unidentified role master id found", this.clientData.roleId);
+        console.error("Unidentified role type found", this.clientData.advisorOrClientRole);
         break;
     }
   }
@@ -262,7 +262,7 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
   loadCustomerProfile() {
     const obj = {
       advisorId: this.advisorId,
-      clientId: 1,
+      // clientId: 1,
       userId: this.clientData.userId
     }
 

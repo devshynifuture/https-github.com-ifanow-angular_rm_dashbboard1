@@ -41,7 +41,8 @@
                                     mat-menu-item>Suspend</button>
                                 <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1"
                                     mat-menu-item>Reactivate</button>
-                                <button (click)="deleteUser(user)" mat-menu-item>Delete</button>
+                                    <!-- role type 1 is admin, dont allow admin to kill himself -->
+                                <button (click)="deleteUser(user)" mat-menu-item *ngIf="user.role.advisorOrClientRole != 1">Delete</button>
                             </mat-menu>
                         </div>
 
