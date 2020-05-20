@@ -19,7 +19,6 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   folioNumberShow: any;
-  isMultiTransact: boolean = false;
   oldDefaultData;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
@@ -113,7 +112,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
     // when multi transact then disabled edit button in transaction summary
-    Object.assign(this.transactionSummary, {isMultiTransact: false});
+    Object.assign(this.transactionSummary, {multiTransact: false});
     console.log('this.transactionSummary', this.transactionSummary);
   }
 
@@ -718,8 +717,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, {isMultiTransact: true});
-    this.isMultiTransact = true;
     if (this.isEdit != true) {
       this.id++;
     }
@@ -737,6 +734,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, {multiTransact: this.multiTransact});
+
       if (this.scheme != undefined && this.schemeDetails != undefined) {
         const obj = {
           id: this.id,

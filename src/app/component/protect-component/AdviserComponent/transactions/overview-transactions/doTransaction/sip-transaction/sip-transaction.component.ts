@@ -23,7 +23,6 @@ export class SipTransactionComponent implements OnInit {
   isSuccessfulTransaction = false;
   folioNumberShow: any;
   defaultFrequency: any;
-  isMultiTransact: boolean = false;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -117,7 +116,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {transactType: 'SIP'});
     Object.assign(this.transactionSummary, {paymentMode: 1});
     Object.assign(this.transactionSummary, {allEdit: true});
-    Object.assign(this.transactionSummary, {isMultiTransact: false}); // when multi transact then disabled edit button in transaction summary
+    Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
   }
 
@@ -751,8 +750,8 @@ export class SipTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, {isMultiTransact: true});
-    this.isMultiTransact = true;
+    Object.assign(this.transactionSummary, {multiTransact: true});
+    this.multiTransact = true;
     if (this.isEdit != true) {
       this.id++;
     }

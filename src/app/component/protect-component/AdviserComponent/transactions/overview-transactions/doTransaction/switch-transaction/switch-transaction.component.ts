@@ -109,8 +109,8 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
     Object.assign(this.transactionSummary, { transactType: 'SWITCH' });
     Object.assign(this.transactionSummary, { allEdit: true });
-    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-    Object.assign(this.transactionSummary, { isMultiTransact: false });
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, {multiTransact: false});
   }
 
   backToTransact() {

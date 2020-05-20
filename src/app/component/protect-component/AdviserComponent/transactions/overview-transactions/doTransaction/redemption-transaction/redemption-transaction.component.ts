@@ -103,7 +103,7 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {transactType: 'REDEEM'});
-    Object.assign(this.transactionSummary, {isMultiTransact: false}); // when multi transact then disabled edit button in transaction summary
+    Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
   }
 
   backToTransact() {
@@ -440,7 +440,6 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, {isMultiTransact: true});
 
     if (this.isEdit != true) {
       this.id++;
@@ -463,6 +462,8 @@ export class RedemptionTransactionComponent implements OnInit {
       this.redemptionTransaction.get('employeeContry').markAsTouched();
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, {multiTransact: this.multiTransact});
+
       if (this.scheme != undefined && this.schemeDetails != undefined && this.redemptionTransaction != undefined) {
         const obj = {
           id: this.id,
