@@ -170,6 +170,11 @@ export class RedemptionTransactionComponent implements OnInit {
     if (isEdit == true) {
       this.isEdit = isEdit;
       this.editedId = data.id;
+      this.scheme = data.scheme;
+      this.schemeDetails = data.schemeDetails;
+      this.folioDetails = data.folioDetails;
+      this.navOfSelectedScheme = this.scheme.nav;
+      this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, this.folioDetails.balanceUnit).toFixed(2);
     }
     if (!data) {
       data = {};
@@ -188,7 +193,7 @@ export class RedemptionTransactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
-      schemeRedeem: [(!data) ? '' : data.schemeName, [Validators.required]],
+      schemeRedeem: [(!data) ? '' : data.scheme, [Validators.required]],
 
     });
     this.filterSchemeList = this.redemptionTransaction.controls.schemeRedeem.valueChanges.pipe(
@@ -272,8 +277,14 @@ export class RedemptionTransactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
+    this.folioList = [];
+    this.folioDetails = null;
+    this.reInvestmentOpt = [];
+    this.schemeDetails = null;
+    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
+
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -335,6 +346,8 @@ export class RedemptionTransactionComponent implements OnInit {
     if (this.folioList.length == 1) {
       this.redemptionTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
       this.selectedFolio(this.folioList[0]);
+    } else {
+      this.onFolioChange(null);
     }
     if (this.redemptionTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
@@ -352,68 +365,90 @@ export class RedemptionTransactionComponent implements OnInit {
     this.folioDetails = folio;
   }
 
-  redeem() {
-
-    if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
+  validateSingleTransaction() {
+    if (this.redemptionTransaction.get('schemeRedeem').invalid) {
+      this.redemptionTransaction.get('schemeRedeem').markAsTouched();
+    } else if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
       this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
-      return;
     } else if ((this.redemptionTransaction.get('redeemType').value) != '3' &&
       this.redemptionTransaction.get('employeeContry').invalid) {
       this.redemptionTransaction.get('employeeContry').markAsTouched();
     } else {
-      const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
-      let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
-      if (allRedeem) {
-        amountType = 'Unit';
-      }
-      const obj = {
-        productDbId: this.schemeDetails.id,
-        clientName: this.selectedFamilyMember,
-        holdingType: this.getDataSummary.defaultClient.holdingType,
-        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-        productCode: this.schemeDetails.schemeCode,
-        isin: this.schemeDetails.isin,
-        folioNo: this.folioDetails.folioNumber,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        orderType: 'REDEMPTION',
-        buySell: 'REDEMPTION',
-        transCode: 'NEW',
-        buySellType: 'FRESH',
-        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-        clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: allRedeem ?
-          this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
-        amountType,
-        qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
-        schemeCd: this.schemeDetails.schemeCode,
-        euin: this.getDataSummary.euin.euin,
-        bseDPTransType: 'PHYSICAL',
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        allRedeem,
-        bankDetailId: null,
-        nsePaymentMode: null,
-        isException: true,
-        childTransactions: [],
-        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      return true;
+    }
+    return false;
+  }
 
-        // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
-      };
-      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.bankDetailId = this.bankDetails.id;
-        obj.nsePaymentMode = 'ONLINE';
-      }
+  getSingleTransactionJson() {
+    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
+    let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
+    if (allRedeem) {
+      amountType = 'Unit';
+    }
+    const obj = {
+      productDbId: this.schemeDetails.id,
+      clientName: this.selectedFamilyMember,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      orderType: 'REDEMPTION',
+      buySell: 'REDEMPTION',
+      transCode: 'NEW',
+      buySellType: 'FRESH',
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: allRedeem ?
+        this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
+      amountType,
+      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.euin.euin,
+      bseDPTransType: 'PHYSICAL',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      allRedeem,
+      bankDetailId: null,
+      nsePaymentMode: null,
+      isException: true,
+      childTransactions: [],
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
+      schemeName: this.scheme.schemeName,
+      amcId: (this.scheme) ? this.scheme.amcId : null,
+      scheme: this.scheme,
+      schemeDetails: this.schemeDetails,
+      folioDetails: this.folioDetails,
+      redeemType: this.redemptionTransaction.controls.redeemType.value,
+    };
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.bankDetailId = this.bankDetails.id;
+      obj.nsePaymentMode = 'ONLINE';
+    }
+    return obj;
+  }
+
+  redeem() {
+    if (this.validateSingleTransaction()) {
+      const obj = this.getSingleTransactionJson();
       console.log('redeem obj json', obj);
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
+        this.childTransactions.forEach(singleTranJson => {
+          this.removeUnnecessaryDataFromJson(singleTranJson);
+        });
       }
+      this.removeUnnecessaryDataFromJson(obj);
+
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
@@ -441,47 +476,14 @@ export class RedemptionTransactionComponent implements OnInit {
 
   AddMultiTransaction() {
 
-    if (this.isEdit != true) {
-      this.id++;
-    }
-    if (this.reInvestmentOpt.length > 1) {
-      if (this.redemptionTransaction.get('reinvest').invalid) {
-        this.redemptionTransaction.get('reinvest').markAsTouched();
-      }
-    } else if (this.redemptionTransaction.get('schemeRedeem').invalid) {
-      this.redemptionTransaction.get('schemeRedeem').markAsTouched();
-      return;
-    } else if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
-      this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
-    } else if (this.redemptionTransaction.get('redeemType').invalid) {
-      this.redemptionTransaction.get('redeemType').markAsTouched();
-      return;
-
-    } else if (this.redemptionTransaction.get('employeeContry').invalid) {
-      this.redemptionTransaction.get('employeeContry').markAsTouched();
-    } else {
+    if (this.validateSingleTransaction()) {
       this.multiTransact = true;
+      if (this.isEdit != true) {
+        this.id++;
+      }
       Object.assign(this.transactionSummary, {multiTransact: this.multiTransact});
 
       if (this.scheme != undefined && this.schemeDetails != undefined && this.redemptionTransaction != undefined) {
-        const obj = {
-          id: this.id,
-          amcId: this.scheme.amcId,
-          productDbId: this.schemeDetails.id,
-          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          productCode: this.schemeDetails.schemeCode,
-          dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-          orderVal: this.redemptionTransaction.controls.employeeContry.value,
-          allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
-          amountType: (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit',
-          qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : (this.redemptionTransaction.controls.redeemType.value == 3) ? this.schemeDetails.balance_units : this.redemptionTransaction.controls.employeeContry.value,
-          bankDetailId: this.bankDetails.id,
-          schemeName: this.scheme.schemeName,
-          redeemType: this.redemptionTransaction.get('redeemType').value
-
-        };
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
@@ -489,13 +491,17 @@ export class RedemptionTransactionComponent implements OnInit {
               element.mutualFundSchemeMasterId = (this.scheme) ? this.scheme.mutualFundSchemeMasterId : null;
               element.folioNo = this.redemptionTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.redemptionTransaction.get('employeeContry').value;
-              element.schemeName = this.redemptionTransaction.get('schemeRedeem').value;
-              element.redeemType = this.redemptionTransaction.get('redeemType').value;
+              element.redeemType = this.redemptionTransaction.controls.redeemType.value;
+              element.schemeName = this.scheme.schemeName;
+              element.scheme = this.scheme;
+              element.schemeDetails = this.schemeDetails;
+              element.folioDetails = this.folioDetails;
             }
             console.log(element);
           });
           this.isEdit = false;
         } else {
+          const obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
         }
         if (this.childTransactions.length == 1) {
@@ -509,10 +515,20 @@ export class RedemptionTransactionComponent implements OnInit {
         this.folioDetails = null;
         this.folioList = [];
         this.redemptionTransaction.controls.employeeContry.reset();
-        this.redemptionTransaction.controls.investmentAccountSelection.reset();
+        this.redemptionTransaction.controls.investmentAccountSelection.setValue('');
         this.redemptionTransaction.controls.schemeRedeem.reset();
         this.showUnits = false;
       }
     }
+  }
+
+  removeUnnecessaryDataFromJson(singleTransactionJson) {
+    singleTransactionJson.schemeSelection = null;
+    singleTransactionJson.folioSelection = null;
+    singleTransactionJson.modeOfPaymentSelection = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
   }
 }
