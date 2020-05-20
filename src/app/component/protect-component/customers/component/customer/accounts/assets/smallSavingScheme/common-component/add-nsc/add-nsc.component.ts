@@ -89,6 +89,16 @@ export class AddNscComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true;
   }
 
+  tenure10:boolean=false;
+  checkDate(){
+    if(new Date(this.nscFormField.get('commDate').value).getTime() <=  new Date(2015, 11, 19).getTime()){
+      this.tenure10 =true;
+    }
+    else{
+      this.tenure10 =false;
+    }
+  }
+
   isFormValuesForAdviceValid() {
     if (this.nscFormField.valid ||
       (this.nscFormField.valid && this.nscFormField.valid && this.nomineesList.length !== 0)) {

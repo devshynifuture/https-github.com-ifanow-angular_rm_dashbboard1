@@ -59,7 +59,7 @@ export class DocumentNewFolderComponent implements OnInit {
   newFolderRes(data){
     this.showSpinner = false
     console.log(data)
-    if(data==204){
+    if(data == 'Folder name exist in given directory'){
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
     }else{
       let obj ={

@@ -31,6 +31,9 @@ export class CustomerService {
   deletePartPayment(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PART_PAYMENT, data);
   }
+  deleteBorrower(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BORROWER, data);
+  }
   getLifeInsuranceData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId).set('insuranceTypeId', data.insuranceTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_INSURANCE, httpParams);

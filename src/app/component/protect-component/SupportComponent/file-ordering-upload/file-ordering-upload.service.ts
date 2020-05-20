@@ -25,6 +25,14 @@ export class FileOrderingUploadService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_FILE_ORDER_HISTORICAL_PER_ROW, data);
     }
 
+    getFileOrderRefreshBulkPerRowData(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_FILE_ORDER_BULK_PER_ROW, data);
+    }
+
+    getFileOrderRefreshUpperRowData(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_FILE_ORDER_UPPER, data);
+    }
+
     getFileOrderHistoryListData(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_ORDER_HISTORICAL_LIST_DATA, data);
     }
