@@ -181,6 +181,45 @@ export class FileOrderingBulkComponent implements OnInit {
     return obj.name;
   }
 
+  refreshRowList(element, index) {
+    element.isLoading = true;
+    let data = {
+      bulkOrderId: element.id
+    }
+    this.fileOrderingUploadService.getFileOrderRefreshBulkPerRowData(data)
+      .subscribe(res => {
+        if (res) {
+          let obj: any = {};
+          obj['advisorName'] = element.advisorName ? element.advisorName : "-";
+          obj['rta'] = this.getRtName(element.rtId);
+          obj['orderedBy'] = element.rmName ? element.rmName : "-";
+          obj['startedOn'] = element.startedOn ? element.startedOn : "-";
+          obj['totalFiles'] = element.totalFiles ? element.totalFiles : "-";
+          obj['queue'] = element.inqueue;
+          obj['ordering'] = element.orderingFrequency
+            ? element.orderingFrequency
+            : "-",
+            obj['ordered'] = element.ordered;
+          obj['failed'] = element.skipped;
+          obj['uploaded'] = element.uploaded;
+          obj['refresh'] = "";
+          obj['rtId'] = element.rtId;
+          obj['rmId'] = element.rmId;
+          obj['days'] = this.days;
+          obj['arnRiaDetailId'] = element.arnRiaDetailId;
+          obj['description'] = element.description;
+          obj['fromDate'] = element.fromDate;
+          obj['toDate'] = element.toDate;
+          obj['id'] = element.id;
+          obj['isLoading'] = false;
+          this.dataSource.data.splice(index, 1, obj);
+          element.isLoading = false;
+        }
+      })
+
+
+  }
+
   fileOrderBulkHistoryListGet(data) {
     this.isLoading = true;
     this.fileOrderingUploadService
@@ -213,6 +252,7 @@ export class FileOrderingBulkComponent implements OnInit {
               fromDate: element.fromDate,
               toDate: element.toDate,
               id: element.id,
+              isLoading: false
             });
           });
 

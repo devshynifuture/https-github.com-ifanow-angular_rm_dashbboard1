@@ -96,7 +96,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
       this.maxArnLength = 6
     }
-    this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
+    this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)])
     this.arnRiaFG.updateValueAndValidity();
   }
 
@@ -123,7 +123,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           this.maxArnLength = 6;
         }
         this.arnRiaFG.controls.number.setValue('');
-        this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
+        this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)])
         this.arnRiaFG.updateValueAndValidity();
       })
     )

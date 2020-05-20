@@ -182,20 +182,18 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	}
 
 	refreshFileOrder(element, index) {
-		console.log(element);
-		this.dataSource.data = ELEMENT_DATA;
+		element.isLoading = true;
 		let data = {
 			arnRiaDetailId: element.arnRiaDetailId,
 			rmId: element.rmId,
 			rtId: element.rtId,
 			startedOn: element.startedOn
 		}
-		this.isLoading = true;
 		this.fileOrderingUploadService.getFileOrderRefreshPerRowData(data)
 			.subscribe(res => {
 				if (res) {
 					console.log(res);
-					let obj = {};
+					let obj: any = {};
 					obj['advisorName'] = res.advisorName;
 					obj['rta'] = this.getRtName(res.rtId);
 					obj['orderedBy'] = res.rmName;
@@ -212,11 +210,10 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					obj['rmId'] = res.rmId;
 					obj['days'] = res.days;
 					obj['arnRiaDetailId'] = res.arnRiaDetailId;
+					obj['isLoading'] = false;
 
-					this.dataSource.data = ELEMENT_DATA;
-					this.tableData[index] = obj;
-					this.dataSource.data = this.tableData;
-					this.isLoading = false;
+					this.dataSource.data.splice(index, 1, obj);
+					element.isLoading = false;
 				}
 			})
 	}
@@ -265,6 +262,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 							rmId: element.rmId,
 							days: this.days,
 							arnRiaDetailId: element.arnRiaDetailId,
+							isLoading: false
 						});
 					});
 
