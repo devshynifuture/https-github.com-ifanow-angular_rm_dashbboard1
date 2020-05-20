@@ -350,55 +350,71 @@ addNewNominee(data) {
   
       // }
       // else {
-        let objStock = {
-          'id':this.editApiData?this.editApiData.id:null,
-          "scripNameId": this.scripData?this.scripData.id:null,
-          "currentMarketValue": 0,
-          "stockType": 2,
-          "amountInvested": 0,
-          "valueAsOn": null,
-          "isDeleted":false,
-          "transactionorHoldingSummaryList": [
-            
-          ]
-        }
         const finalStocks:any = [];
         this.HoldingArray.controls.forEach(element => {
-        let objActive =  {
-            "holdingOrTransaction": 1,
-            "quantity": element.get('holdings').value,
-            "transactionTypeOrScripNameId":element.value.scripNameId?element.value.scripNameId:this.scripData.id,
-            "holdingOrTransactionDate": element.get('holdingAsOn').value,
-            "investedOrTransactionAmount": element.get('investedAmt').value,
-            // "isDeleted": element.get('isDeleted').value,
-            'id':element.get('id').value
-          }
-          if(element.get('id').value == null){
-            objStock.id = null;
-          }
-          objStock.scripNameId = element.value.scripNameId;
-          objStock.transactionorHoldingSummaryList.push(objActive);
+            let objStock = {
+              'id':null,
+              "scripNameId": element.value.scripNameId,
+              "currentMarketValue": 0,
+              "stockType": 2,
+              "amountInvested": 0,
+              "valueAsOn": null,
+              "isDeleted":false,
+              "transactionorHoldingSummaryList": [
+                  {
+                    "holdingOrTransaction": 1,
+                    "quantity": element.get('holdings').value,
+                    "transactionTypeOrScripNameId":element.value.scripNameId?element.value.scripNameId:this.scripData.id,
+                    "holdingOrTransactionDate": element.get('holdingAsOn').value,
+                    "investedOrTransactionAmount": element.get('investedAmt').value,
+                    // "isDeleted": element.get('isDeleted').value,
+                    'id':element.get('id').value
+                  }
+              ]
+
+            }
+                if(element.get('id').value != null){
+                  objStock.id = this.editApiData.id;
+                }
+          
+          
           finalStocks.push(objStock);
         })
 
         if(this.removed.length > 0){
           this.removed.forEach(d => {
             // for(let element in d.controls){
-
+              let objStock = {
+                'id':null,
+                "scripNameId": d.scripNameId,
+                "currentMarketValue": 0,
+                "stockType": 2,
+                "amountInvested": 0,
+                "valueAsOn": null,
+                "isDeleted":true,
+                "transactionorHoldingSummaryList": [
+                  {
+                    "id": d.id,
+                      "holdingOrTransaction": 2,
+                      "quantity": d.holdings,
+                      "holdingOrTransactionDate": new Date(d.holdingAsOn),
+                      "transactionTypeOrScripNameId": d.scripNameId,
+                      "investedOrTransactionAmount": d.investedAmt,
+                      // 'isDeleted':  d.isDeleted, 
+                  }
+                ]
+  
+              }
+              if(d.id != null){
+                objStock.id = this.editApiData.id;
+              }
+              finalStocks.push(objStock);
             // }
-            let deleted ={ transactionorHoldingSummaryList:{
-              "id": d.id,
-                "holdingOrTransaction": 2,
-                "quantity": d.holdings,
-                "holdingOrTransactionDate": new Date(d.holdingAsOn),
-                "transactionTypeOrScripNameId": d.scripNameId,
-                "investedOrTransactionAmount": d.investedAmt,
-                // 'isDeleted':  d.isDeleted, 
-            }}
-            objStock.isDeleted = true;
-            objStock.transactionorHoldingSummaryList[0]=Object.assign(objStock.transactionorHoldingSummaryList[0],deleted.transactionorHoldingSummaryList)
-            // objStock.transactionorHoldingSummaryList[0]= deleted.transactionorHoldingSummaryList;
-          finalStocks.push(objStock);
+            // let deleted ={ transactionorHoldingSummaryList:}
+          //   objStock.isDeleted = true;
+          //   objStock.transactionorHoldingSummaryList[0]=Object.assign(objStock.transactionorHoldingSummaryList[0],deleted.transactionorHoldingSummaryList)
+          //   // objStock.transactionorHoldingSummaryList[0]= deleted.transactionorHoldingSummaryList;
+          // finalStocks.push(objStock);
             
       });
     }

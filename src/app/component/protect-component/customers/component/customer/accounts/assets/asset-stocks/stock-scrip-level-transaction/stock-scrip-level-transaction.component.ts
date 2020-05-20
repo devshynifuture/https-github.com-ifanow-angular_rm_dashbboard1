@@ -393,29 +393,29 @@ export class StockScripLevelTransactionComponent implements OnInit {
           }
           transObj.transactionorHoldingSummaryList.push(tran);
 
-          if(this.removed.length > 0){
-            this.removed.forEach(d => {
-              // for(let element in d.controls){
-
-              // }
-              let deleted = {
-                "id": d.id,
-                  "holdingOrTransaction": 2,
-                  "quantity": d.quantity,
-                  "holdingOrTransactionDate": d.date,
-                  "transactionTypeOrScripNameId": d.transactionType,
-                  "investedOrTransactionAmount": d.transactionAmount,
-                  'isDeleted':  d.isDeleted, 
-              }
-              transObj.transactionorHoldingSummaryList.push(deleted);
-              // d.controls.forEach(d => {
-                
-              // });
-            });
-          }
-          finalStocks.push(transObj)
         })
-       
+            if(this.removed.length > 0){
+              this.removed.forEach(d => {
+                // for(let element in d.controls){
+  
+                // }
+                let deleted = {
+                  "id": d.id,
+                    "holdingOrTransaction": 2,
+                    "quantity": d.quantity,
+                    "holdingOrTransactionDate": d.date,
+                    "transactionTypeOrScripNameId": d.transactionType,
+                    "investedOrTransactionAmount": d.transactionAmount,
+                    'isDeleted':  d.isDeleted, 
+                }
+                transObj.transactionorHoldingSummaryList.push(deleted);
+                // d.controls.forEach(d => {
+                  
+                // });
+              });
+            }
+        
+      finalStocks.push(transObj)
       console.log(finalStocks)
       const obj =
       {
