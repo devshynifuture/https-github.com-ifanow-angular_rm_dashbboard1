@@ -267,13 +267,15 @@ export class ClientUploadComponent implements OnInit {
         this.addDocObj.documentType = 2;
         break;
     }
-    const obj = {
-      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    };
-    this.custumService.clientUploadFile(obj).subscribe(
-      data => this.uploadFileRes(data.preSignedUrl, data.fileName, imgType)
-    );
+    if (this.userData.userId) {
+      const obj = {
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      };
+      this.custumService.clientUploadFile(obj).subscribe(
+        data => this.uploadFileRes(data.preSignedUrl, data.fileName, imgType)
+      );
+    }
   }
   fetchData(value, fileName) {
     this.isLoadingUpload = true
@@ -294,6 +296,9 @@ export class ClientUploadComponent implements OnInit {
     }, 7000);
   }
   getFileUploadDataClient(type) {
+    if (this.userData.userId == undefined) {
+      return;
+    }
     let obj = {
       advisorId: this.advisorId,
       clientId: this.userData.clientId,

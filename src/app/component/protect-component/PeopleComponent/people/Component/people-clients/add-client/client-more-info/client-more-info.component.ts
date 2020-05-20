@@ -109,7 +109,7 @@ export class ClientMoreInfoComponent implements OnInit {
       adhaarNo: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
       occupation: [(data.occupationId == 0) ? '' : (data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
-      anniversaryDate: [data.anniversaryDate ? String(data.anniversaryDate) : ''],
+      anniversaryDate: [data.anniversaryDate ? new Date(data.anniversaryDate) : ''],
       bio: [data.bio],
       myNotes: [data.remarks],
       name: [data.name],
