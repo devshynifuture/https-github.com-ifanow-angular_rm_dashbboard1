@@ -29,7 +29,8 @@
                                     <div class="bar120">
                                         <div class="profilePhoto containerOne">
                                             <img [src]="clientOverviewData.profilePicUrl">
-                                            <div class="middleOne" (click)="OpenpersonalProfile(0)">
+                                            <div *ngIf="!letsideBarLoader" class="middleOne"
+                                                (click)="OpenpersonalProfile(0)">
                                                 <p class="c-p"> Edit Image </p>
                                             </div>
                                         </div>
