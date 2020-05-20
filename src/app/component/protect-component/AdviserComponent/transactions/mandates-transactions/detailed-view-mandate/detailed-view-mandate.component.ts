@@ -4,6 +4,7 @@ import {FileUploadService} from 'src/app/services/file-upload.service';
 import {apiConfig} from 'src/app/config/main-config';
 import {appConfig} from 'src/app/config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {EventService} from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -33,7 +34,7 @@ export class DetailedViewMandateComponent implements OnInit {
   statusDetails: any;
   file: any;
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -74,7 +75,7 @@ export class DetailedViewMandateComponent implements OnInit {
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
-      tpUserRequestId: 1,
+      // tpUserRequestId: 1,
       documentType: flag,
       tpMandateDetailId: this.details.id
     };
@@ -88,7 +89,10 @@ export class DetailedViewMandateComponent implements OnInit {
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
-
+          this.eventService.openSnackBar('File uploaded successfully');
+        } else {
+          const responseObject = JSON.parse(response);
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
         }
       });
   }
