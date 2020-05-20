@@ -465,8 +465,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         if (form == 'policyExpiryDate' && formValue) {
             let startDate = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
             let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-            let comparedDate: any = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
+            let comparedDate: any = startDate;
             comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+            comparedDate = new Date(comparedDate);
+            comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
             comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
             if (policyExpiryDate < comparedDate) {
                 this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });

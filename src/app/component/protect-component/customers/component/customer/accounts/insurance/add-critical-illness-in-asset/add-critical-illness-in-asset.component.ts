@@ -489,8 +489,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     if (form == 'policyExpiryDate' && formValue) {
       let startDate = new Date(this.critialIllnessForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.critialIllnessForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate: any = new Date(this.critialIllnessForm.controls.policyStartDate.value);
+      let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = new Date(comparedDate);
+      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
