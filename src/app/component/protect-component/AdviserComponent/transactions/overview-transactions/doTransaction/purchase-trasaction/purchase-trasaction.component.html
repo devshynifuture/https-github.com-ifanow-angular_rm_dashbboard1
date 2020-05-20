@@ -57,7 +57,7 @@
             <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
             <mat-menu #menubank="matMenu">
               <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-              <button mat-menu-item>Delete</button>
+              <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
             </mat-menu>
 
           </td>
@@ -180,7 +180,8 @@
               <mat-form-field>
                 <mat-select [(ngModel)]="folioNumberShow" class="form-control"
                             formControlName="investmentAccountSelection">
-                  <mat-option *ngIf="folioList.length > 1" disabled value=''>Select scheme folio
+                  <!--                  *ngIf="folioList.length > 1"-->
+                  <mat-option disabled value=''>Select scheme folio
                   </mat-option>
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
                               [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
