@@ -116,7 +116,7 @@ export class ClientUploadComponent implements OnInit {
 
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
-    this.getFileUploadDataClient()
+    this.getFileUploadDataClient('type')
   }
 
   saveClose() {
@@ -169,6 +169,7 @@ export class ClientUploadComponent implements OnInit {
         }
       );
     });
+    this.getFileUploadDataClient('type')
   }
 
   getFile(e, type) {
@@ -292,7 +293,7 @@ export class ClientUploadComponent implements OnInit {
       this.isLoadingUpload = false
     }, 7000);
   }
-  getFileUploadDataClient() {
+  getFileUploadDataClient(type) {
     let obj = {
       advisorId: this.advisorId,
       clientId: this.userData.clientId,
@@ -300,7 +301,14 @@ export class ClientUploadComponent implements OnInit {
     }
     this.custumService.getFileUploadDataClient(obj).subscribe(
       data => {
-        console.log('heyyy here all presign URLS ***** list =',data)
+        console.log('heyyy here all presign URLS ***** list =', data)
+        this.errProof2 = false;
+        this.viewFront = true;
+        this.fileComPanImg.view = data.pan[data.pan.length - 1];
+        this.filePerPanImg.view = data.aadhaar[data.aadhaar.length - 1];
+        this.fileProof1Img.view = data.address[data.address.length - 1];
+        this.fileProof2BackImg.view = data.bankaccount[data.bankaccount.length - 1];
+
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
