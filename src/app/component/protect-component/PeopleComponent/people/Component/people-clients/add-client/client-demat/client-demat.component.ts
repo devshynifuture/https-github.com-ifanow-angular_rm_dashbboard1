@@ -77,6 +77,7 @@ export class ClientDematComponent implements OnInit {
   ownerData: any;
   callMethod: any;
   nomineesListFM: any = [];
+  checkNomineeFlag = true;
   // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value);
@@ -85,8 +86,13 @@ export class ClientDematComponent implements OnInit {
   }
 
   lisNominee(value) {
-    this.ownerData.Fmember = value;
-    this.nomineesListFM = Object.assign([], value);
+    if (value && value.length == 0) {
+      this.checkNomineeFlag = false;
+    }
+    else {
+      this.ownerData.Fmember = value;
+      this.nomineesListFM = Object.assign([], value);
+    }
   }
 
   disabledMember(value, type) {

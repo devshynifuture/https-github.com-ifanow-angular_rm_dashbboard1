@@ -420,11 +420,14 @@ export class LiabilitiesComponent implements OnInit {
         this.outStandingAmt += element.outstandingAmount
       });
       data.loans.forEach(element => {
-        if(element.remainingMonths){
+        if(element.remainingMonths ||element.remainingMonths!=0){
           element.months=(element.remainingMonths % 12);
           element.years= ~~(element.remainingMonths / 12)
           console.log('months',element.months);
           console.log('years',element.years);
+        }else{
+          element.months=0;
+          element.years= 0
         }
       });
       this.dataStore = [];

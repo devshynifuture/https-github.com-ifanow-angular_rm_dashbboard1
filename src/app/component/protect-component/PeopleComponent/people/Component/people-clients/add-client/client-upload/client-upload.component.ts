@@ -249,7 +249,7 @@ export class ClientUploadComponent implements OnInit {
         break;
       case 'personal-pan':
         fileName = this.filePerPanImg.store;
-        this.fetchData('PAN',fileName)
+        this.fetchData('Aadhaar',e)
         this.addDocObj.proofType = 1;
         break;
       case 'proof-type1':
@@ -259,7 +259,7 @@ export class ClientUploadComponent implements OnInit {
         break;
       case 'proof-type2':
         fileName = this.fileProof2Img.store;
-        this.fetchData('Identity & address proofs',e)
+        this.fetchData('Address',e)
         this.addDocObj.documentType = 2;
         break;
     }

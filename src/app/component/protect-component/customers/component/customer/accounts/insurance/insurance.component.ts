@@ -29,6 +29,7 @@ import { FileUploadServiceService } from '../assets/file-upload-service.service'
 
 export class InsuranceComponent implements OnInit {
   personalProfileData: any;
+  isLoadingUpload: boolean;
   [x: string]: any;
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];

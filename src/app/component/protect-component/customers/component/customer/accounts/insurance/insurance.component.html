@@ -145,7 +145,7 @@
                                     <th mat-header-cell mat-sort-header="currentValue" *matHeaderCellDef class="br text-right"> Current value
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        <div class="bar">{{(!isLoading && element.currentValue != 0)? "₹" : (element.currentValue == 0) ? "" : ''}}<span appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? 'N.A.' : element.currentValue)}}</span>
+                                        <div class="bar">{{(!isLoading && element.currentValue != 0)? "₹" : (element.currentValue == 0) ? "" : ''}}<span appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span>
                                         </div>
 
                                     </td>

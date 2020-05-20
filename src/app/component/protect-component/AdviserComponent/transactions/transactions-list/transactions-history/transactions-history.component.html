@@ -28,8 +28,11 @@
   </div>
   <div class="row">
     <div class="col-md-6 pl-0">
-      <p class="m-0 f-12 text-uppercase text-primitive">AMOUNT</p>
-      <p class="m-0 text-black roboto">₹{{transactionData.amount}}</p>
+      <p class="m-0 f-12 text-uppercase text-primitive">Amount/Unit</p>
+      <span *ngIf="transactionData.amtUnitType=='Amount'">₹</span>
+      <span [shouldRoundOff]="false" appFormatNumber> {{transactionData.amount}}</span>
+      <span *ngIf="!transactionData.amtUnitType||transactionData.amtUnitType=='Unit'"> Units</span>
+      <!--      <p class="m-0 text-black roboto">₹{{transactionData.amount}}</p>-->
     </div>
     <div class="col-md-6 pr-0">
       <p class="m-0 f-12 text-uppercase text-primitive">FOLIO</p>
@@ -54,22 +57,21 @@
     </div>
     <div class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Mode of payment</p>
-      <p
-        class="m-0 text-black roboto">{{ transactionData.paymentMode ? transactionData.paymentMode : '-'}}</p>
+      <p class="m-0 text-black roboto">{{ transactionData.paymentMode ? transactionData.paymentMode : '-'}}</p>
     </div>
-    <div *ngIf="showBankDetail&&transactionData.bankAccountNumber"
-         class="col-md-6 pr-0 pt-20">
+    <div *ngIf="showBankDetail&&transactionData.bankAccountNumber" class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
-      <p
-        class="m-0 text-black roboto">{{transactionData.bankName}} {{transactionData.bankAccountType}}
+      <p class="m-0 text-black roboto">{{transactionData.bankName}} {{transactionData.bankAccountType}}
         A/c {{transactionData.bankAccountNumber}}</p>
     </div>
     <div *ngIf="!showBankDetail && transactionData.umrn" class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Mandate details</p>
-      <p class="m-0 text-black roboto">{{transactionData.umrn}} <!--{{transactionData.bankAccountType}}
-        A/c {{transactionData.bankAccountNumber}}--></p>
+      <p class="m-0 text-black roboto">{{transactionData.umrn}}
+        <!--{{transactionData.bankAccountType}}
+A/c {{transactionData.bankAccountNumber}}-->
+      </p>
     </div>
-    <div class="col-md-6 pl-0 pt-20">
+    <div class="col-md-6 pr-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
       <p class="m-0 text-black roboto">{{transactionData.transactionNumber}}
       </p>
@@ -88,8 +90,8 @@
     <div *ngIf="transactionData.perpetualFlag||(transactionData.startDate&&transactionData.endDate>0)"
          class="col-md-6 pl-0 pt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">End Date</p>
-      <p class="m-0 text-black roboto">{{transactionData.perpetualFlag ? 'Continue until cancelled'
-        : (transactionData.endDate | date:'dd/MM/yyyy')}}
+      <p
+        class="m-0 text-black roboto">{{transactionData.perpetualFlag ? 'Continue until cancelled' : (transactionData.endDate | date:'dd/MM/yyyy')}}
         <!--{{element.orderDate | date:'shortTime'}}-->
       </p>
     </div>
@@ -107,9 +109,9 @@
     <div class="col-md-5 p-0">
       <h5 class="m-0 f-500 text-black">Status</h5>
     </div>
-    <div class="col-md-5 p-0 text-right right">
-      <button (click)="refresh(transactionData)" class="primary-sm" mat-stroked-button>REFRESH</button>
-    </div>
+    <!--  <div class="col-md-5 p-0 text-right right">
+          <button (click)="refresh(transactionData)" class="primary-sm" mat-stroked-button>REFRESH</button>
+      </div>-->
     <div class="col-md-2 p-0  ">
       <mat-spinner *ngIf="isLoading==true" [diameter]="20" class=" ml-4"></mat-spinner>
     </div>
