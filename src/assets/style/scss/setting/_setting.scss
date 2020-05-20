@@ -130,6 +130,14 @@
   .mat-tab-body-content {
     min-height: 450px !important;
   }
+
+  .mat-icon {
+    margin-left: -25px;
+    position: absolute;
+    margin-top: -15px;
+    cursor: pointer;
+    color: #DADADA;
+  }
 }
 
 #ui-add-personal-profile,
@@ -288,5 +296,29 @@
 
   #table-low tbody td {
     padding: 8px;
+  }
+}
+
+.password-strength {
+  li {
+    text-align: left;
+    font-size: 12px;
+    color: #83959D;
+    letter-spacing: 0.15px;
+    line-height: 14px;
+    padding-top: 8px;
+
+    span {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #83959D;
+      color: #fff;
+      font-size: 10px;
+      padding-top: 1px;
+      text-align: center;
+      margin-right: 8px;
+      line-height: 14px;
+    }
   }
 }

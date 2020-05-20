@@ -92,7 +92,7 @@
             [formGroup]="singleHolding">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
-                    <app-scrip-field [data]="singleHolding" (scriptList)="getScriptList($event)" (valueChange1)="getScript($event)"></app-scrip-field>
+                    <app-scrip-field [data]="singleHolding" (scriptList)="getScriptList($event)" (valueChange1)="getScript($event, i)"></app-scrip-field>
                 </div>
             </div>
             <div class="col-md-2 p-0">
