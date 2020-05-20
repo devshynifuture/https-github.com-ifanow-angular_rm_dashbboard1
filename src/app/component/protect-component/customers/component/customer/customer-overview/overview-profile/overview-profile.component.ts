@@ -26,7 +26,7 @@ import { UpdateClientProfileComponent } from './update-client-profile/update-cli
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
   selectedFamilyMember: any;
-  clientOverviewData:any = {};
+  clientOverviewData: any = {};
   addressList: any;
   dematList: any;
   bankList: any;
@@ -404,7 +404,7 @@ export class OverviewProfileComponent implements OnInit {
       openTab
     };
     const fragmentData = {
-      flag:null,
+      flag: null,
       data: dataObj,
       id: 1,
       state: 'open',
@@ -414,6 +414,7 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.clientOverviewData.profilePicUrl = undefined;
             this.getClientData(this.clientData);
           }
           rightSideDataSub.unsubscribe();

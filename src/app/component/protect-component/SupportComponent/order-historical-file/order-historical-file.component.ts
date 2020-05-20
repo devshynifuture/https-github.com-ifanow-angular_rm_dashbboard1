@@ -140,10 +140,17 @@ export class OrderHistoricalFileComponent implements OnInit {
   setArnRiaId(index) {
     if (index === 0) {
       this.arnRiaDetails = this.arnRiaDetailsList[index].id;
+      this.arnRiaIdList.push(this.arnRiaDetails);
       // console.log(this.arnRiaDetails);
     } else {
-      if (!this.arnRiaIdList.includes(this.arnRiaDetailsList[index].id)) {
-        this.arnRiaIdList.push(this.arnRiaDetailsList[index].id);
+      if (this.orderHistoryFileForm.get('selectArnRia').value) {
+        this.orderHistoryFileForm.get('selectArnRia').value.forEach(item => {
+          if (item.selection) {
+            if (!this.arnRiaIdList.includes(this.arnRiaDetailsList[index].id)) {
+              this.arnRiaIdList.push(this.arnRiaDetailsList[index].id);
+            }
+          }
+        })
       }
     }
     console.log(this.arnRiaIdList);
@@ -487,6 +494,15 @@ export class OrderHistoricalFileComponent implements OnInit {
   }
 
   calculateDateAndObject() {
+    // if(this.orderHistoryFileForm.get('selectArnRia').value){
+    //   this.orderHistoryFileForm.get('selectArnRia').value.forEach(item=>{
+    //     if(item.selection){
+
+    //     }
+    //   })
+    // }
+
+
     // yearly
     let requestObj = [];
     const whichRta = (this.orderHistoryFileForm.get('selectRta').value === this.camsRtId) ? 'cams' :
@@ -961,7 +977,8 @@ export class OrderHistoricalFileComponent implements OnInit {
                     toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
                   } else {
                     fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
-                    if ((toDateIter.getMonth() === toDateValueObj.getMonth()) && (toDateIter.getFullYear() === toDateValueObj.getFullYear())) {
+                    let toDateIterTemp = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month')
+                    if (toDateIterTemp.getTime() >= toDateValueObj.getTime()) {
                       toDateIter = toDateValueObj;
                     } else {
                       toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
@@ -1133,8 +1150,8 @@ export class OrderHistoricalFileComponent implements OnInit {
             let yearDiffr = toDateValueObj.getFullYear() - fromDateValueObj.getFullYear();
             if (yearDiffr === 0) {
               let monthDiff = (toDateValueObj.getMonth() - fromDateValueObj.getMonth());
-              for (let index = 0; index < monthDiff; index++) {
-                if (index == 0) {
+              for (let index1 = 0; index1 < monthDiff; index1++) {
+                if (index1 == 0) {
                   fromDateIter = fromDateValueObj;
                   if (monthDiff === 1) {
                     if (toDateValueObj.getDate() === 1) {
@@ -1149,7 +1166,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                   fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
                   if (fromDateIter.getDate() === toDateValueObj.getDate() && fromDateIter.getMonth() === toDateValueObj.getMonth()) {
                     toDateIter = fromDateIter;
-                  } else if (index === (monthDiff - 1)) {
+                  } else if (index1 === (monthDiff - 1)) {
                     toDateIter = toDateValueObj;
                   } else {
                     toDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'month');
@@ -1183,9 +1200,10 @@ export class OrderHistoricalFileComponent implements OnInit {
                           });
                         }
                       } else if (fileTypeId === 2) {
-                        let temp = fromDateValueObj;
-                        let startDateIter;
-                        if (yearDiffr !== 0) {
+                        if (index1 === 0) {
+                          let temp = fromDateValueObj;
+                          let startDateIter;
+
                           let monthDiff = this.getMonthDifference(fromDateValueObj, toDateValueObj);
                           for (let index = 0; index <= (monthDiff / 3); index++) {
                             if (index == 0) {
@@ -1196,7 +1214,6 @@ export class OrderHistoricalFileComponent implements OnInit {
                             }
                             let days90aheadTime = this.addYearMonthOrDayToDate(startDateIter, 90, 'day');
                             if (days90aheadTime.getTime() >= toDateValueObj.getTime()) {
-
                               temp = toDateValueObj;
                               requestObj.push({
                                 advisorId: this.advisorId,
@@ -1221,8 +1238,10 @@ export class OrderHistoricalFileComponent implements OnInit {
                                 fileTypeId: fileTypeId,
                                 orderingFrequency: this.orderHistoryFileForm.get('orderingFreq').value
                               });
+
                             }
                           }
+
                         }
                       }
                       else {
@@ -1243,7 +1262,7 @@ export class OrderHistoricalFileComponent implements OnInit {
               }
             } else {
 
-              for (let index = 1; index <= yearDiffr; index++) {
+              for (let index2 = 1; index2 <= yearDiffr; index2++) {
                 // is 
                 for (let index1 = 1; index1 <= 12; index1++) {
                   if (index1 === 1) {
@@ -1251,8 +1270,8 @@ export class OrderHistoricalFileComponent implements OnInit {
                     toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
                   } else {
                     fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
-
-                    if ((toDateValueObj.getMonth() === toDateIter.getMonth()) && (toDateValueObj.getFullYear() === toDateIter.getFullYear())) {
+                    let toDateIterTemp = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
+                    if (toDateIterTemp.getTime() >= toDateValueObj.getTime()) {
                       toDateIter = toDateValueObj;
                     } else {
                       toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
@@ -1286,9 +1305,10 @@ export class OrderHistoricalFileComponent implements OnInit {
                             });
                           }
                         } else if (fileTypeId === 2) {
-                          let temp = fromDateValueObj;
-                          let startDateIter;
-                          if (yearDiffr !== 0) {
+                          if (index2 == 1) {
+
+                            let temp = fromDateValueObj;
+                            let startDateIter;
                             let monthDiff = this.getMonthDifference(fromDateValueObj, toDateValueObj);
                             for (let index = 0; index <= (monthDiff / 3); index++) {
                               if (index == 0) {
@@ -1326,6 +1346,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                                 });
                               }
                             }
+
                           }
                         }
                         else {
@@ -1398,48 +1419,6 @@ export class OrderHistoricalFileComponent implements OnInit {
                               fileTypeId: fileTypeId,
                               orderingFrequency: 3
                             });
-                          }
-                        } else if (fileTypeId === 2) {
-                          let temp = fromDateValueObj;
-                          let startDateIter;
-                          if (yearDiffr !== 0) {
-                            let monthDiff = this.getMonthDifference(fromDateValueObj, toDateValueObj);
-                            for (let index = 0; index <= (monthDiff / 3); index++) {
-                              if (index == 0) {
-                                startDateIter = fromDateValueObj;
-                              } else {
-                                temp.setDate(temp.getDate() + 1);
-                                startDateIter = temp;
-                              }
-                              let days90aheadTime = this.addYearMonthOrDayToDate(startDateIter, 90, 'day');
-                              if (days90aheadTime.getTime() >= toDateValueObj.getTime()) {
-
-                                temp = toDateValueObj;
-                                requestObj.push({
-                                  advisorId: this.advisorId,
-                                  rmId: this.rmId,
-                                  rtId,
-                                  arnRiaDetailId: this.arnRiaDetails,
-                                  fromDate: startDateIter.getFullYear() + '-' + this.util.addZeroBeforeNumber((startDateIter.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(startDateIter.getDate(), 2),
-                                  toDate: temp.getFullYear() + '-' + this.util.addZeroBeforeNumber((temp.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(temp.getDate(), 2),
-                                  fileTypeId: fileTypeId,
-                                  orderingFrequency: this.orderHistoryFileForm.get('orderingFreq').value
-                                });
-                                break;
-                              } else {
-                                temp = this.addYearMonthOrDayToDate(startDateIter, 90, 'day');
-                                requestObj.push({
-                                  advisorId: this.advisorId,
-                                  rmId: this.rmId,
-                                  rtId,
-                                  arnRiaDetailId: this.arnRiaDetails,
-                                  fromDate: startDateIter.getFullYear() + '-' + this.util.addZeroBeforeNumber((startDateIter.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(startDateIter.getDate(), 2),
-                                  toDate: temp.getFullYear() + '-' + this.util.addZeroBeforeNumber((temp.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(temp.getDate(), 2),
-                                  fileTypeId: fileTypeId,
-                                  orderingFrequency: this.orderHistoryFileForm.get('orderingFreq').value
-                                });
-                              }
-                            }
                           }
                         } else {
                           requestObj.push({
@@ -1642,16 +1621,19 @@ export class OrderHistoricalFileComponent implements OnInit {
             }
           });
 
-          requestObj = [...requestObj, ...this.moreArnRiaObj];
-          let reqObjCopy = [...requestObj];
+          requestObj = [...this.moreArnRiaObj];
+          let reqObjCopy = [];
           this.orderHistoryFileForm.get('selectArnRia').value.forEach((item, index) => {
             if (!item.selection) {
               let id = this.arnRiaDetailsList[index].id;
-              requestObj.forEach((item, index1) => {
-                if (item.arnRiaDetailId === id) {
-                  reqObjCopy.splice(index1, 1);
-                }
-              })
+              reqObjCopy = requestObj.filter(item => {
+                return this.arnRiaIdList.includes(item.arnRiaDetailId);
+              });
+              // requestObj.forEach((item, index1) => {
+              //   if (item.arnRiaDetailId === id) {
+              //     reqObjCopy.splice(0, 1);
+              //   }
+              // })
             }
           });
           this.requestJsonForOrderingFiles = reqObjCopy;

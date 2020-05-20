@@ -79,8 +79,12 @@
             <ng-container matColumnDef="advisorName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.advisorName}}
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.advisorName}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -88,8 +92,12 @@
             <ng-container matColumnDef="rta">
                 <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.rta}}
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.rta}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -97,8 +105,12 @@
             <ng-container matColumnDef="orderedBy">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.orderedBy}}
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.orderedBy}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -106,8 +118,12 @@
             <ng-container matColumnDef="startedOn">
                 <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.startedOn|date:'d/M/y, h:mm a'}}
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.startedOn|date:'d/M/y, h:mm a'}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -116,10 +132,14 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
                 <td class="c-p br" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('historical', 'total',  element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.totalFiles}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.totalFiles}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -128,10 +148,14 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
                 <td class="br" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('historical', 'inqueue', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.queue}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.queue}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -139,8 +163,12 @@
             <ng-container matColumnDef="ordering">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        {{element.ordering}}
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            {{element.ordering}}
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -149,10 +177,14 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
                 <td class="br" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('historical','ordered' ,element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.ordered}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.ordered}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -162,10 +194,14 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
                 <td class="br" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('historical', 'skipped',element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.failed}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.failed}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
@@ -175,10 +211,14 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
                 <td class="br" mat-cell *matCellDef="let element"
                     (click)="openUpperFileOrdering('historical', 'uploaded', element)">
-                    <div class="bar">
-                        <a href="javascript:void(0)">
-                            {{element.uploaded}}
-                        </a>
+                    <div *ngIf="!element.isLoading">
+                        <div class="bar">
+                            <a href="javascript:void(0)">
+                                {{element.uploaded}}
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                     </div>
                 </td>
             </ng-container>
