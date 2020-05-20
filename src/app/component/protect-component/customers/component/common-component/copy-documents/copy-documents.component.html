@@ -12,20 +12,42 @@
             <li class="breadcrumb-item c-p" (click)="reset()">
                 <span>{{tabValue || 'Documents'}}</span>
             </li>
-            <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName;index as i" [ngClass]="folder.openFolderNm ? 'breadcrumb-item active c-p' : 'none'">
-                {{folder.openFolderNm}}
+            <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)"
+                *ngFor="let folder of openFolderName;index as i"
+                [ngClass]="folder.openFolderNm && openFolderName.length > 0 && openFolderName.length <= 3 ? 'breadcrumb-item active c-p' : 'none'">
+                <span *ngIf="openFolderName.length > 0 && openFolderName.length <= 3">{{folder.openFolderNm}}</span>
+            </li>
+            <li>
+                <img *ngIf="openFolderName.length > 3" [matMenuTriggerFor]="menu4" class="c-p"
+                    src="/assets/images/svg/dark-three-dot.svg">
+                <mat-menu #menu4="matMenu">
+                    <div *ngIf="openFolderName.length > 2">
+                        <div *ngFor="let folder of openFolderName; let i = index">
+                            <button mat-menu-item *ngIf="i > 0 && i < (openFolderName.length-1)"
+                                (click)="getFolders(folder,i)">
+                                {{folder.openFolderNm}}</button>
+                        </div>
+                    </div>
+                </mat-menu>
+            </li>
+            <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index">
+                <div *ngIf="openFolderName.length > 3">
+                    <span *ngIf="i == openFolderName.length-1">{{folder.openFolderNm}}</span>
+                </div>
             </li>
         </ol>
     </div>
 
     <div class="col-md-12 p-0 copyDocumentcomp " *ngIf="showMsg == false">
-        <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
+        <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading"
+            [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
 
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell class="c-p " *matCellDef="let element" (click)="openFolder(element)">
                     <div class="bar">
-                        <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
+                        <img *ngIf="element.folderName != undefined" class="mr-12"
+                            src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
                         <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
                     </div>
                 </td>
@@ -50,7 +72,8 @@
         </table>
     </div>
 
-    <div *ngIf="showMsg == true" class="col-md-12 pt-30 pb-30 d-flex justify-content-center  flex-column align-items-center">
+    <div *ngIf="showMsg == true"
+        class="col-md-12 pt-30 pb-30 d-flex justify-content-center  flex-column align-items-center">
         <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
         <p class="m-0 f-12 text-custom">Drop files here</p>
     </div>

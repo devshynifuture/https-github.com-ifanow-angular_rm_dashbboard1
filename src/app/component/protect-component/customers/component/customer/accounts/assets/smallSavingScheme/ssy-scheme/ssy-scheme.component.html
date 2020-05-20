@@ -20,9 +20,9 @@
         </a>
 
         <mat-menu #menu7="matMenu">
-            <button mat-menu-item>Upload file
+            <!-- <button mat-menu-item>Upload file
                 <input (change)="fetchData('SSY',$event)" class="uploadInput" id="file-4" multiple type="file">
-            </button>
+            </button> -->
         </mat-menu>
 
         <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
@@ -130,6 +130,9 @@
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="addOpenSSY(element,'editSsy')">Edit</button>
                         <button mat-menu-item (click)="addOpenSSY(element,'detailedSsy')">Detailed view</button>
+                        <button mat-menu-item>Upload file
+                            <input (change)="fetchData('SSY',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                        </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('SSY',element)">Delete</button>
                     </mat-menu>

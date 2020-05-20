@@ -1,9 +1,13 @@
 <div class="wrapper-8">
     <div class="row pt-10 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button mat-button value='1' (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom">
+            <button mat-button value='1' (click)="getfixedIncomeData('1')"
+                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+                class="br-0 text-custom">
                 Gold</button>
-            <button mat-button value='2' (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom">
+            <button mat-button value='2' (click)="getfixedIncomeData('2')"
+                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+                class="br-0 text-custom">
                 Others </button>
         </div>
     </div>
@@ -12,7 +16,8 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Gold</h4>
             </div>
-            <div class="col-md-8 p-0 d-flex align-items-center justify-content-end" *ngIf="goldList.filteredData.length > 0">
+            <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
+                *ngIf="goldList.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -30,9 +35,9 @@
                 </a>
 
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Gold',$event)" class="uploadInput" id="file-4" multiple type="file">
-                    </button>
+                    </button> -->
                 </mat-menu>
 
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
@@ -45,11 +50,14 @@
 
                 <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
+                <button mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden mt-8 gold">
-            <table #tableEl *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table
+                [dataSource]="goldList" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br">
@@ -70,12 +78,14 @@
                     <td mat-footer-cell *matFooterCellDef class="text-left"> </td>
                 </ng-container>
                 <ng-container matColumnDef="grams">
-                    <th mat-sort-header="gramsOrTola" mat-header-cell *matHeaderCellDef class="br rightText w-10 text-right">
+                    <th mat-sort-header="gramsOrTola" mat-header-cell *matHeaderCellDef
+                        class="br rightText w-10 text-right">
                         Tolas/grams </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div *ngIf="isLoading" class='bar'></div>
                         <div *ngIf="!isLoading">
-                            {{element.purchasedGramsOrTola}} <span class="text-custom f-12">{{(element.gramsOrTola==1)?'tolas':'grams'}}</span>
+                            {{element.purchasedGramsOrTola}} <span
+                                class="text-custom f-12">{{(element.gramsOrTola==1)?'tolas':'grams'}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -89,10 +99,12 @@
                     <td mat-footer-cell *matFooterCellDef class=" text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="price">
-                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br rightText w-18 text-right"> Carat gold price (10 gram)
+                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef
+                        class="br rightText w-18 text-right"> Carat gold price (10 gram)
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.caratGoldPrice }}</span> </div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                appFormatNumber>{{element.caratGoldPrice }}</span> </div>
                         <div *ngIf="!isLoading" class="text-custom f-12">(as on {{currentDate | date:'dd/MM/yyyy' }})
                         </div>
                     </td>
@@ -101,25 +113,30 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br rightText w-12 text-right">
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
+                        class="br rightText w-12 text-right">
                         Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.marketValue }}</span>
                         </div>
                     </td>
                     <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMarketValue" appFormatNumber>{{sumOfMarketValue}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMarketValue"
+                                appFormatNumber>{{sumOfMarketValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
-                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef class="br rightText w-12 text-right">
+                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef
+                        class="br rightText w-12 text-right">
                         Purchase value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.approximatePurchaseValue }}</span> </div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                appFormatNumber>{{element.approximatePurchaseValue }}</span> </div>
                     </td>
                     <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPurchaseValue" appFormatNumber>{{sumOfPurchaseValue}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPurchaseValue"
+                                appFormatNumber>{{sumOfPurchaseValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
@@ -145,6 +162,10 @@
                                 <button mat-menu-item (click)="openCommodities('addGold','open',element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewGold('addGold',element)">Detailed
                                     view</button>
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Gold',$event)" class="uploadInput" id="file-4" multiple
+                                        type="file">
+                                </button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('GOLD',element)">Delete</button>
                             </mat-menu>
@@ -159,7 +180,8 @@
             <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
+                <button mat-stroked-button class="btn-primary addon v-middle  "
+                    (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
     </div>
@@ -168,7 +190,8 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Others</h4>
             </div>
-            <div class="col-md-8 p-0 d-flex align-items-center justify-content-end" *ngIf="otherCommodityList.filteredData.length > 0">
+            <div class="col-md-8 p-0 d-flex align-items-center justify-content-end"
+                *ngIf="otherCommodityList.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -187,10 +210,10 @@
                 </a>
 
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Others',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
-                    </button>
+                    </button> -->
                 </mat-menu>
 
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
@@ -202,12 +225,15 @@
 
                 <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openOthers('addOthers','open',null)">
+                <button mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openOthers('addOthers','open',null)">
                     ADD NEW</button>
             </div>
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 overflow-hidden p-0 other">
-            <table #tableEl *ngIf="otherCommodityList.filteredData.length > 0" matSort #otherListTable="matSort" mat-table [dataSource]="otherCommodityList" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl *ngIf="otherCommodityList.filteredData.length > 0" matSort #otherListTable="matSort"
+                mat-table [dataSource]="otherCommodityList" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br">
@@ -238,14 +264,16 @@
                 </ng-container>
 
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br w-11 rightText text-right">
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
+                        class="br w-11 rightText text-right">
                         Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.marketValue }}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br proximaFont amt text-right f-600 p-8">
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMarketValueOther" appFormatNumber>{{sumOfMarketValueOther}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMarketValueOther"
+                                appFormatNumber>{{sumOfMarketValueOther}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalueDate">
@@ -258,16 +286,19 @@
                     <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
-                    <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br rightText w-12 text-right">
+                    <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef
+                        class="br rightText w-12 text-right">
                         Purchase value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar">
-                            <div *ngIf="element.purchaseValue">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span> </div>
+                            <div *ngIf="element.purchaseValue">{{!isLoading ? "₹" : ""}}<span
+                                    appFormatNumber>{{element.purchaseValue? element.purchaseValue : "-"}}</span> </div>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br proximaFont amt text-right f-600 p-8">
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther" appFormatNumber>{{sumOfPurchaseValueOther}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther"
+                                appFormatNumber>{{sumOfPurchaseValueOther}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pur">
@@ -279,7 +310,8 @@
                     <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right rightText w-10">
+                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef
+                        class="br text-right rightText w-10">
                         Growth rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -312,6 +344,10 @@
                             <button mat-menu-item (click)="openOthers('addOthers','open',element)">Edit</button>
                             <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed
                                 view</button>
+                            <button mat-menu-item>Upload file
+                                <input (change)="fetchData('Others',$event,element)" class="uploadInput" id="file-4" multiple
+                                    type="file">
+                            </button>
                             <button mat-menu-item>Activity</button>
                             <button (click)="deleteModal('OTHER',element)" mat-menu-item>Delete</button>
                         </mat-menu>
@@ -325,7 +361,8 @@
             <div *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openOthers('addOthers','open',null)"> ADD
+                <button mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openOthers('addOthers','open',null)"> ADD
                     NEW</button>
             </div>
         </div>
