@@ -117,7 +117,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           this.rtTypeList = res;
           console.log("this is res for rt type list:::", res);
         } else {
-          this.eventService.openSnackBar("No Rt Type List Found", "DISMISS");
+          this.eventService.openSnackBar("No Rt Type List Found", "Dismiss");
         }
       })
   }
@@ -146,7 +146,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           this.familyMemberList = res;
           console.log(res);
         } else {
-          this.eventService.openSnackBar("No Family Member found!", "DISMISS");
+          this.eventService.openSnackBar("No Family Member found!", "Dismiss");
         }
       })
   }
@@ -203,7 +203,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           this.getSchemeLevelHoldings(this.data);
         }
       }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
+        this.eventService.openSnackBar(err, "Dismiss");
       })
   }
 
@@ -423,14 +423,14 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
                     console.log("success:: edit mutual fund", res);
                     this.Close(true);
                   } else {
-                    this.eventService.openSnackBar(res, "DISMISS");
+                    this.eventService.openSnackBar(res, "Dismiss");
                   }
                 })
             } else {
-              this.eventService.openSnackBar(res, "DISMISS");
+              this.eventService.openSnackBar(res, "Dismiss");
             }
           }, err => {
-            this.eventService.openSnackBar(err, "DISMISS");
+            this.eventService.openSnackBar(err, "Dismiss");
           })
       } else {
 
@@ -449,10 +449,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               console.log("success::", res);
               this.Close(true);
             } else {
-              this.eventService.openSnackBar(res, "DISMISS");
+              this.eventService.openSnackBar(res, "Dismiss");
             }
           }, err => {
-            this.eventService.openSnackBar(err, "DISMISS");
+            this.eventService.openSnackBar(err, "Dismiss");
           })
 
       } else if (this.data && this.data.flag == 'addTransaction') {
@@ -464,10 +464,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               this.mfService.sendUpdatedTransactionAfterAdd(res);
               this.Close(true);
             } else {
-              this.eventService.openSnackBar(res, "DISMISS");
+              this.eventService.openSnackBar(res, "Dismiss");
             }
           }, err => {
-            this.eventService.openSnackBar(err, "DISMISS");
+            this.eventService.openSnackBar(err, "Dismiss");
           })
       }
 

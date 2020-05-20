@@ -17,14 +17,15 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
   styleUrls: ['./personal-details-inn.component.scss']
 })
 export class PersonalDetailsInnComponent implements OnInit {
+  activeDetailsClass = 'first';
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private processTransaction: ProcessTransactionService,
-              private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-              private peopleService: PeopleService, private custumService: CustomerService,
-              public utils: UtilService,
-              public eventService: EventService) {
+    private processTransaction: ProcessTransactionService,
+    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
+    private peopleService: PeopleService, private custumService: CustomerService,
+    public utils: UtilService,
+    public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -32,7 +33,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    this.obj1 = {...data};
+    this.obj1 = { ...data };
     console.log('all data in per', this.inputData);
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
@@ -90,7 +91,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       }
     }
     this.holdingList = [];
-    if (this.inputData.holdingNature != 'SI') {
+    if (this.inputData.holdingType != 'SI') {
       this.getNomineeList(this.clientData);
     }
     // this.obj1 = [];
@@ -202,6 +203,8 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
+    this.activeDetailsClass = value;
+
     if (flag == true) {
       this.doneData = true;
     }
@@ -270,7 +273,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       holderList.push(this.thirdHolder);
     }
 
-    if (this.inputData.holdingNature != 'SI' && holderList.length < 2 && flag) {
+    if (this.inputData.holdingType != 'SI' && holderList.length < 2 && flag) {
       this.eventService.openSnackBar('Please enter atleast two holders.');
       return;
     }

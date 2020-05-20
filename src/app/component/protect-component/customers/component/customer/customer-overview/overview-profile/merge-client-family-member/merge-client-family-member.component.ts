@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {SubscriptionInject} from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {EventService} from '../../../../../../../../Data-service/event.service';
-import {PeopleService} from '../../../../../../PeopleComponent/people.service';
-import {MatTableDataSource} from '@angular/material';
-import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
-import {map, startWith} from 'rxjs/operators';
-import {EnumDataService} from '../../../../../../../../services/enum-data.service';
-import {ProcessTransactionService} from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
-import {UtilService} from '../../../../../../../../services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { SubscriptionInject } from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { EventService } from '../../../../../../../../Data-service/event.service';
+import { PeopleService } from '../../../../../../PeopleComponent/people.service';
+import { MatTableDataSource } from '@angular/material';
+import { MatProgressButtonOptions } from '../../../../../../../../common/progress-button/progress-button.component';
+import { map, startWith } from 'rxjs/operators';
+import { EnumDataService } from '../../../../../../../../services/enum-data.service';
+import { ProcessTransactionService } from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
+import { UtilService } from '../../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-merge-client-family-member',
@@ -43,9 +43,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   @Input() data;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private eventService: EventService,
-              private peopleService: PeopleService, private enumDataService: EnumDataService,
-              public processTransaction: ProcessTransactionService) {
+    private fb: FormBuilder, private eventService: EventService,
+    private peopleService: PeopleService, private enumDataService: EnumDataService,
+    public processTransaction: ProcessTransactionService) {
   }
 
   ngOnInit() {
@@ -54,11 +54,11 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         startWith(''),
         map(state => {
           if (state) {
-            const list = this.enumDataService.getSearchData(state);
+            const list = this.enumDataService.getClientSearchData(state);
             if (list.length == 0) {
-              this.stateCtrl.setErrors({invalid: true});
+              this.stateCtrl.setErrors({ invalid: true });
             }
-            return this.enumDataService.getSearchData(state);
+            return this.enumDataService.getClientSearchData(state);
           } else {
             return this.enumDataService.getEmptySearchStateData();
           }
@@ -98,12 +98,12 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState((data == 'close') ? {state: 'close'} : {state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
   saveFamilyMembers() {
     if (!this.selectedClient) {
-      this.eventService.openSnackBar('Please select the client to merge', 'dismiss');
+      this.eventService.openSnackBar('Please select the client to merge', 'Dismiss');
     }
     const arrayObj = {
       ownerClientId: this.data.clientId,

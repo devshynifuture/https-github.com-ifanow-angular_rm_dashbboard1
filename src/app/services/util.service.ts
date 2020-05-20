@@ -44,6 +44,30 @@ export class UtilService {
     }
   }
 
+  static getTransactionStatusFromStatusId(statusId) {
+    if (statusId == 0) {
+      return 'Unknown';
+    } else if (statusId == 1) {
+      return 'Failure';
+    } else if (statusId == 2) {
+      return 'Pending Authorization';
+    } else if (statusId == 3) {
+      return 'Otp authorized';
+    } else if (statusId == 4) {
+      return 'Pending submission to AMC';
+    } else if (statusId == 5) {
+      return 'Order submitted to AMC';
+    } else if (statusId == 6) {
+      return 'Order processed';
+    } else if (statusId == 7) {
+      return 'Transaction rejected';
+    } else if (statusId == 8) {
+      return 'Success';
+    } else {
+      return 'Other';
+    }
+  }
+
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
@@ -407,6 +431,8 @@ export class ValidatorType {
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
   static COMPULSORY_ALPHA_NUMERIC = new RegExp(/^[a-zA-Z]+[a-zA-Z0-9/-]*$/);
   static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);
+  static CAPITAL_CASE = new RegExp(/^[ A-Z0-9_@./#&+-]*$/);
+
   static EMAIL = new RegExp(/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/);
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//-]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);

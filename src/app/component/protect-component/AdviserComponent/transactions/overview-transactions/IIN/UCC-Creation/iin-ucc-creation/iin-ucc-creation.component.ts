@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {DatePipe} from '@angular/common';
 import {UtilService} from 'src/app/services/util.service';
@@ -12,6 +12,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {map, startWith} from 'rxjs/operators';
 import {EnumDataService} from 'src/app/services/enum-data.service';
 import {EnumServiceService} from '../../../../../../../../services/enum-service.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -19,20 +20,22 @@ import {EnumServiceService} from '../../../../../../../../services/enum-service.
   styleUrls: ['./iin-ucc-creation.component.scss']
 })
 export class IinUccCreationComponent implements OnInit {
-  nomineesListFM: any = [];
+  stateCtrl = new FormControl('', [Validators.required]);
+  filteredStates: any;
+
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;
   generalDetails: any;
   advisorId: any;
   clientData: any;
-  isLoading: boolean = false;
+  isLoading = false;
   taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
     {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'},
     {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private processTrasaction: ProcessTransactionService,
+              public processTransaction: ProcessTransactionService,
               private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
               private peopleService: PeopleService,
               private onlineTransact: OnlineTransactionService, public eventService: EventService,
@@ -43,25 +46,10 @@ export class IinUccCreationComponent implements OnInit {
   ngOnInit() {
     // this.getIINUCCRegistration();
     this.getDataForm('');
-    this.getClients();
-    this.nomineesListFM = this.generalDetails.controls.ownerName.valueChanges
-      .pipe(
-        startWith(''),
-        map(state => {
-          if (state) {
-            let list = this.enumDataService.getSearchData(state);
-            if (list.length == 0) {
-              this.generalDetails.controls.ownerName.setErrors({invalid: true});
-            }
-            return this.enumDataService.getSearchData(state);
-          } else {
-            return this.enumDataService.getEmptySearchStateData();
-          }
-        }),
-      );
+    // this.getClients();
 
 
-    this.processTrasaction.getCountryCodeList().subscribe((responseData) => {
+    this.processTransaction.getCountryCodeList().subscribe((responseData) => {
       console.log('country code list : ', responseData);
     }, error => {
       console.error('country code error : ', error);
@@ -87,10 +75,22 @@ export class IinUccCreationComponent implements OnInit {
 
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
-      taxStatus: [(!data) ? '' : data.ownerName, [Validators.required]],
+      holdingType: [(!data) ? '' : data.holdingType, [Validators.required]],
+      taxStatus: [(!data) ? '' : data.taxStatus, [Validators.required]],
     });
-    this.generalDetails.controls.holdingNature.valueChanges.subscribe((newValue) => {
+    this.generalDetails.controls.ownerName.valueChanges
+      .subscribe(newValue => {
+        this.filteredStates = new Observable(this.clientData).pipe(startWith(''),
+          map(value => {
+            if (newValue) {
+              return this.enumDataService.getClientAndFamilyData(newValue);
+            } else {
+              return this.enumDataService.getEmptySearchStateData();
+            }
+          }));
+      });
+    this.generalDetails.controls.ownerName.setValue('');
+    this.generalDetails.controls.holdingType.valueChanges.subscribe((newValue) => {
       if (newValue != 'SI') {
         this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}];
         this.generalDetails.controls.taxStatus.setValue('01');
@@ -107,7 +107,7 @@ export class IinUccCreationComponent implements OnInit {
 
   openPersonalDetails(data) {
 
-    const subscription = this.processTrasaction.openPersonal(data).subscribe(
+    const subscription = this.processTransaction.openPersonal(data).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
@@ -185,7 +185,6 @@ export class IinUccCreationComponent implements OnInit {
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
     console.log(value);
-    this.nomineesListFM = Object.assign([], value);
   }
 
   ownerList(value) {
@@ -224,7 +223,7 @@ export class IinUccCreationComponent implements OnInit {
     }
     const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
-      holdingNature: this.generalDetails.controls.holdingNature.value,
+      holdingType: this.generalDetails.controls.holdingType.value,
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,

@@ -43,10 +43,10 @@
                         </ng-container>
 
                         <ng-container matColumnDef="amtInvested">
-                            <th class="br text-left" mat-header-cell *matHeaderCellDef>
+                            <th class="br text-right" mat-header-cell *matHeaderCellDef>
                                 Amount invested
                             </th>
-                            <td class="br text-left" mat-cell *matCellDef="let element">
+                            <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                                 </div>
                             </td>
@@ -108,7 +108,7 @@
                             <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
 
                                 <div class="bar">
-                                    {{(grandTotal) ? (grandTotal.totalGain| number:'1.2-2') : 0}}
+                                    {{(grandTotal) ? ((grandTotal.totalGain + grandTotal.dividendPayout)| number:'1.2-2') : 0}}
 
                                 </div>
                             </td>
@@ -117,7 +117,7 @@
 
                         <ng-container matColumnDef="absReturn">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Absolute Return%
+                                Absolute Return
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
@@ -135,7 +135,7 @@
 
                         <ng-container matColumnDef="xirr">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Xirr%
+                                Xirr
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
@@ -150,7 +150,7 @@
 
                         <ng-container matColumnDef="allocation" sticky>
                             <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                                Allocation%
+                                Allocation
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
@@ -200,10 +200,10 @@
                     </ng-container>
 
                     <ng-container matColumnDef="transactionDate">
-                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                        <th class="br text-left" mat-header-cell *matHeaderCellDef>
                             Transaction date
                         </th>
-                        <td class="br text-right zIndex" mat-cell *matCellDef="let element">
+                        <td class="br text-left zIndex" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}}
                             </div>
@@ -236,8 +236,8 @@
                     <ng-container matColumnDef="units">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef>Units</th>
                         <td class="br text-right zIndex" mat-cell *matCellDef="let element">
-                            <div class="bar"><span *ngIf="element.unit">{{isLoading ? '':((element.unit)?(element.unit | number:'1.2-3'):0)}}</span>
-                                <span class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?(element.totalUnit | number:'1.2-3'):0)}}</span>
+                            <div class="bar"><span *ngIf="element.unit || element.unit == 0">{{isLoading ? '':((element.unit == 0 ) ? '0' : (element.unit | number:'1.2-3'))}}</span>
+                                <span class="f-700" *ngIf="element.totalUnit || element.totalUnit == 0">{{isLoading ? '':((element.totalUnit == 0 )? '0' : (element.totalUnit | number:'1.2-3'))}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -246,8 +246,8 @@
                             Balance units </th>
                         <td class="br text-right zIndex" mat-cell *matCellDef="let element">
                             <div class="bar">
-                                <span *ngIf="element.balanceUnits">{{isLoading ? '': (element.balanceUnits | number:'1.2-3')}}</span>
-                                <span class="f-700" *ngIf="element.totalBalanceUnit">{{isLoading ? '':  (element.totalBalanceUnit | number:'1.2-3')}}</span>
+                                <span *ngIf="element.balanceUnits || element.balanceUnits == 0">{{isLoading ? '': ((element.balanceUnits == 0) ? '0' : (element.balanceUnits | number:'1.2-3'))}}</span>
+                                <span class="f-700" *ngIf="element.totalBalanceUnit || element.totalBalanceUnit == 0">{{isLoading ? '':  ((element.totalBalanceUnit == 0 ) ? '0': (element.totalBalanceUnit | number:'1.2-3'))}}</span>
                             </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right zIndex" mat-footer-cell>

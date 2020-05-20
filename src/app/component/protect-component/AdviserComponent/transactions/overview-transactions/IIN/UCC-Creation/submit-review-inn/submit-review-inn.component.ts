@@ -228,7 +228,7 @@ export class SubmitReviewInnComponent implements OnInit {
     };
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -257,7 +257,7 @@ export class SubmitReviewInnComponent implements OnInit {
     const file = e.target.files[0];
     const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
     if (!requestMapObject) {
-      this.eventService.openSnackBar('Please create account first', 'dismiss');
+      this.eventService.openSnackBar('Please create account first', 'Dismiss');
       return;
     }
     const requestMap = {
@@ -273,7 +273,10 @@ export class SubmitReviewInnComponent implements OnInit {
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
-
+          this.eventService.openSnackBar('File uploaded successfully');
+        } else {
+          const responseObject = JSON.parse(response);
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
         }
       });
   }

@@ -2,7 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h3 class="mb-0 wrapper-20"><img (click)="backToTransact()" class="c-p mr-8"
-                                       src="/assets/images/svg/back-arrow.svg"> {{transactionType}} TRANSACTION</h3>
+                                       src="/assets/images/svg/back-arrow.svg">SIP transaction</h3>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -26,18 +26,18 @@
       <table [dataSource]="childTransactions" id="table-low" mat-table>
         <ng-container matColumnDef="no">
           <th *matHeaderCellDef class="br" mat-header-cell> No</th>
-          <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
+          <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
             <div class="bar"> {{i + 1 }} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="folio">
-          <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
+          <th *matHeaderCellDef class="br w-10" mat-header-cell> Folio</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.folioNo}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="ownerName">
-          <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
+          <th *matHeaderCellDef class="br" mat-header-cell> Scheme name</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar">
               {{element.schemeName}}
@@ -45,7 +45,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="amount">
-          <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
+          <th *matHeaderCellDef class="br w-10" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.orderVal}} </div>
           </td>
@@ -55,15 +55,13 @@
           <td *matCellDef="let element" class="t-2" mat-cell>
             <!-- ng build prod issue isLoading removed -->
             <!-- <div *ngIf="!isLoading"> -->
-            <div>
-              <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                more_vert
-              </i>
-              <mat-menu #menubank="matMenu">
-                <button (click)="getDataForm(element,true)" mat-menu-item>Edit</button>
-                <button mat-menu-item>Delete</button>
-              </mat-menu>
-            </div>
+
+            <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
+            <mat-menu #menubank="matMenu">
+              <button (click)="getDataForm(element,true)" mat-menu-item>Edit</button>
+              <button mat-menu-item>Delete</button>
+            </mat-menu>
+
           </td>
           <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
         </ng-container>
@@ -76,18 +74,16 @@
         <div class="row">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0 pb-8 text-black">Select from the following options</h5>
-            <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option" class="bigRadio"
-                             formControlName="schemeSelection">
+            <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option"
+                             class="bigRadio" formControlName="schemeSelection">
               <mat-radio-button
                 [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==1,'text-primary':sipTransaction.get('schemeSelection').value==1,'radio-border':sipTransaction.get('schemeSelection').value==2}"
-                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left"
-                value="1">
+                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left" value="1">
                 Invest in existing scheme
               </mat-radio-button>
               <mat-radio-button
                 [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==2,'text-primary':sipTransaction.get('schemeSelection').value==2,'radio-border':sipTransaction.get('schemeSelection').value==1}"
-                class="bor_top_tb_right radio-border radioBtn "
-                value="2">
+                class="bor_top_tb_right radio-border radioBtn " value="2">
                 Select a new scheme
               </mat-radio-button>
             </mat-radio-group>
@@ -105,12 +101,12 @@
               <mat-form-field appearance="standard" floatLabel="never">
                 <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto"
                        appCustomAutoComplete aria-label="Number" class="form-control"
-                       formControlName="schemeSip" matInput
-                       placeholder="Start typing to see scheme names" type="text">
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
+                       formControlName="schemeSip" matInput placeholder="Start typing to see scheme names"
+                       type="text">
+                <mat-autocomplete #auto="matAutocomplete"
+                                  (optionSelected)="selectedScheme($event.option.value)"
                                   [displayWith]="processTransaction.displaySchemeName">
-                  <mat-option
-                    *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
+                  <mat-option *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -121,7 +117,7 @@
                   This field is required
                 </mat-error>
                 <mat-error *ngIf="sipTransaction.get('schemeSip').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
+                  No schemes Found
                 </mat-error>
               </mat-form-field>
             </div>
@@ -141,7 +137,8 @@
               <mat-form-field>
                 <mat-select class="form-control" formControlName="reinvest">
                   <mat-option disabled value=''>Select re-investment</mat-option>
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
+                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
+                              value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                   </mat-option>
                 </mat-select>
@@ -152,7 +149,6 @@
             </div>
           </div>
         </div>
-
         <div class="row pt-28 ">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0 text-black pb-8">Select folio</h5>
@@ -161,15 +157,13 @@
             <mat-radio-group (ngModelChange)="selectExistingOrNew($event)" aria-label="Select an option"
                              class="smallRadio" formControlName="folioSelection">
               <mat-radio-button
-                [ngClass]="{'b-a-custom': sipTransaction.get('folioSelection').value==1,'text-primary':sipTransaction.get('folioSelection').value==1,'radio-border':sipTransaction.get('folioSelection').value==2}"
-                class="b-a-custom bor_top_tb_left radioBtn text-primary custom-radio"
-                value="1">
+                [ngClass]="{'b-a-custom-outline': sipTransaction.get('folioSelection').value==1,'text-primary':sipTransaction.get('folioSelection').value==1,'radio-border':sipTransaction.get('folioSelection').value==2}"
+                class="b-a-custom-outline bor_top_tb_left radioBtn text-primary custom-radio" value="1">
                 Existing
               </mat-radio-button>
               <mat-radio-button
-                [ngClass]="{'b-a-custom': sipTransaction.get('folioSelection').value==2,'text-primary':sipTransaction.get('folioSelection').value==2,'radio-border':sipTransaction.get('folioSelection').value==1}"
-                class="radio-border bor_top_tb_right radioBtn "
-                value="2">
+                [ngClass]="{'b-a-custom-outline': sipTransaction.get('folioSelection').value==2,'text-primary':sipTransaction.get('folioSelection').value==2,'radio-border':sipTransaction.get('folioSelection').value==1}"
+                class="radio-border bor_top_tb_right radioBtn " value="2">
                 New
               </mat-radio-button>
             </mat-radio-group>
@@ -183,8 +177,10 @@
           <div class="col-md-7 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select class="form-control" formControlName="investmentAccountSelection">
-                  <mat-option disabled value=''>Select scheme folio</mat-option>
+                <mat-select [(ngModel)]="folioNumberShow" class="form-control"
+                            formControlName="investmentAccountSelection">
+                  <mat-option *ngIf="folioList.length > 1" disabled value=''>Select scheme folio
+                  </mat-option>
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
                               [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                 </mat-select>
@@ -209,10 +205,10 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select class="form-control" formControlName="frequency">
+                <mat-select [(ngModel)]="defaultFrequency" class="form-control" formControlName="frequency">
                   <mat-option disabled value=''>Select SIP frequency</mat-option>
-                  <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of sipFrequency"
-                              [value]="frequency.frequency">
+                  <mat-option (click)="selectedFrequency(frequency)"
+                              *ngFor="let frequency of sipFrequency" [value]="frequency.frequency">
                     {{frequency.frequencyName}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
@@ -222,6 +218,7 @@
             </div>
           </div>
         </div>
+
         <div class="row pt-28">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0  text-black pb-8">Enter amount</h5>
@@ -230,10 +227,9 @@
             <div class="form-group iconRupess  ">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input #employeeContry (change)="enteredAmount($event.target.value)"
-                       [inputValidator]="validatorType.NUMBER_ONLY"
-                       appInputValueValidation class="form-control br-0 rupess"
-                       formControlName="employeeContry" matInput maxlength="10" placeholder="Enter amount"
-                       type="text">
+                       [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                       class="form-control br-0 rupess" formControlName="employeeContry" matInput
+                       maxlength="10" placeholder="Enter amount" type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount: ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minAmount }}
                 </mat-hint>
@@ -243,14 +239,77 @@
                 <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied
                 </mat-error>
-                <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.max)"
-                           class="f-12 pt-4">
+                <mat-error *ngIf="(sipTransaction.get('employeeContry').errors?.max)" class="f-12 pt-4">
                   Amount cannot be greater than mandate amount.
                 </mat-error>
               </mat-form-field>
             </div>
           </div>
         </div>
+
+        <div class="row pt-40">
+          <div class="col-md-12 p-0 text-left">
+            <h5 class="m-0  text-black pb-8">Select 1st SIP date</h5>
+          </div>
+
+          <div class="col-md-5 p-0">
+            <mat-form-field>
+              <mat-select class="form-control" formControlName="date">
+                <mat-option disabled value=''>Select 1st SIP date</mat-option>
+                <mat-option *ngFor="let date of dateDisplay" [value]="date.dateToDisplay">
+                  {{date.dateToDisplay}}</mat-option>
+              </mat-select>
+              <mat-error class="f-12 pt-4">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row pt-28">
+          <div class="col-md-12 p-0 text-left">
+            <h5 class="m-0  pb-8 text-black">Select tenure</h5>
+          </div>
+
+          <div class="col-md-5 p-0">
+            <mat-form-field>
+              <mat-select class="form-control" formControlName="tenure">
+                <mat-option disabled value=''>Select tenure</mat-option>
+                <mat-option value="1">No. of instalments</mat-option>
+                <mat-option value="2">No. of years</mat-option>
+                <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1"
+                            value="3">
+                  Continue until cancelled
+                </mat-option>
+              </mat-select>
+              <mat-error class="f-12 pt-4">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
+          <div class="col-md-12 p-0 text-left">
+            <h5 #tenureLabel class="m-0  pb-8 text-black">Enter
+              {{(sipTransaction.get('tenure').value == '2') ? 'No. of years' : 'No. of instalments'}}</h5>
+          </div>
+
+          <div class="col-md-5 inputPaddNone p-0">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #employeeContry [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4"
+                     appInputValueValidation class="form-control br-0 rupess" formControlName="installment"
+                     [placeholder]="tenureLabel.value" matInput maxlength="4" type="number">
+              <mat-error *ngIf="sipTransaction.get('installment').errors?.required" class="f-12 pt-4">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="sipTransaction.get('installment').errors?.max" class="f-12 pt-4">
+                {{installmentErrorMessage}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
         <div *ngIf="platformType == 1" class="row">
           <div class="col-md-5 p-0 text-left">
             <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
@@ -258,19 +317,20 @@
           <div class="col-md-12 p-0">
             <div class="row">
               <div class="col-md-9 p-0">
-                <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option"
-                                 class="mediumRadio" formControlName="modeOfPaymentSelection">
+                <mat-radio-group (ngModelChange)="selectPaymentMode($event)"
+                                 aria-label="Select an option" class="mediumRadio"
+                                 formControlName="modeOfPaymentSelection">
                   <mat-radio-button
-                    [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==1,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==1,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==2}"
-                    checked="true"
-                    class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left"
+                    [disabled]="isMultiTransact"
+                    [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value=='1','text-primary':sipTransaction.get('modeOfPaymentSelection').value=='1','radio-border':sipTransaction.get('modeOfPaymentSelection').value=='2'}"
+                    class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
                     value="1">
                     Net banking
                   </mat-radio-button>
                   <mat-radio-button
-                    [ngClass]="{'b-a-custom': sipTransaction.get('modeOfPaymentSelection').value==2,'text-primary':sipTransaction.get('modeOfPaymentSelection').value==2,'radio-border':sipTransaction.get('modeOfPaymentSelection').value==1}"
-                    class="b-a radioBtn bor_top_tb_right"
-                    value="2">
+                    [disabled]="isMultiTransact"
+                    [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value=='2','text-primary':sipTransaction.get('modeOfPaymentSelection').value=='2','radio-border':sipTransaction.get('modeOfPaymentSelection').value=='1'}"
+                    checked="true" class="b-a radioBtn bor_top_tb_right" value="2">
                     Debit mandate
                   </mat-radio-button>
                 </mat-radio-group>
@@ -283,69 +343,12 @@
           </div>
 
         </div>
-        <div class="row pt-40">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0  text-black pb-8">Select 1st date SIP</h5>
-          </div>
 
-          <div class="col-md-5 p-0">
-            <mat-form-field>
-              <mat-select class="form-control" formControlName="date">
-                <mat-option disabled value=''>Select 1st date SIP</mat-option>
-                <mat-option *ngFor="let date of dateDisplay" [value]="date.dateToDisplay">
-                  {{date.dateToDisplay}}</mat-option>
-              </mat-select>
-              <mat-error class="f-12 pt-4">
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-28">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0  pb-8 text-black">Select tenure</h5>
-          </div>
-
-          <div class="col-md-5 p-0">
-            <mat-form-field>
-              <mat-select class="form-control" formControlName="tenure">
-                <mat-option disabled value=''>Select tenure</mat-option>
-                <mat-option value="1">No. of installment</mat-option>
-                <mat-option value="2">No. year</mat-option>
-                <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
-                  Continue until cancelled
-                </mat-option>
-              </mat-select>
-              <mat-error class="f-12 pt-4">
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div *ngIf="(sipTransaction.get('tenure').value) != 3" class="row pt-28">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0  pb-8 text-black">Enter installment</h5>
-          </div>
-
-          <div class="col-md-5 inputPaddNone p-0">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #employeeContry [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4"
-                     appInputValueValidation class="form-control br-0 rupess"
-                     formControlName="installment" matInput maxlength="4" placeholder="Enter installment" type="number">
-              <mat-error *ngIf="sipTransaction.get('installment').errors?.required" class="f-12 pt-4">
-                This field is required
-              </mat-error>
-              <mat-error *ngIf="sipTransaction.get('installment').errors?.max"
-                         class="f-12 pt-4">
-                {{installmentErrorMessage}}
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
       </div>
       <div class="col-md-4 bg-grey lter p-0">
-        <app-transaction-summary (bankDetailsSend)='getBankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-                                 (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+        <app-transaction-summary (bankDetailsSend)='getBankDetails($event)'
+                                 (defaultDetails)='getDefaultDetails($event)' (folioChange)='onFolioChange($event)'
+                                 [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>
@@ -364,7 +367,7 @@
     <div class="col-md-8 text-right d-flex justify-content-end">
       <!-- commented for prod build -->
       <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1"
-              class="br-0 mr-12 text-success f-14" mat-raised-button>
+              class="br-0 mr-12 text-primary f-14" mat-raised-button>
         SAVE & ADD ANOTHER
       </button>
       <!-- <button mat-button  class="btn-green text-white ml-12" (click)="sip()">

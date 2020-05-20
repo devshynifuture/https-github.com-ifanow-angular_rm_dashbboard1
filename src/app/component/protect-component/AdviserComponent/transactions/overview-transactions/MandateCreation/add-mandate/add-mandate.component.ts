@@ -53,11 +53,11 @@ export class AddMandateComponent implements OnInit {
   currentDate = new Date();
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private processTrasaction: ProcessTransactionService,
-              private custumService: CustomerService, private datePipe: DatePipe,
-              public utils: UtilService,
-              private onlineTransact: OnlineTransactionService, public eventService: EventService,
-              private enumDataService: EnumDataService) {
+    private processTrasaction: ProcessTransactionService,
+    private custumService: CustomerService, private datePipe: DatePipe,
+    public utils: UtilService,
+    private onlineTransact: OnlineTransactionService, public eventService: EventService,
+    private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -70,11 +70,11 @@ export class AddMandateComponent implements OnInit {
         startWith(''),
         map(state => {
           if (state) {
-            let list = this.enumDataService.getSearchData(state);
+            let list = this.enumDataService.getClientAndFamilyData(state);
             if (list.length == 0) {
-              this.generalDetails.controls.ownerName.setErrors({invalid: true});
+              this.generalDetails.controls.ownerName.setErrors({ invalid: true });
             }
-            return this.enumDataService.getSearchData(state);
+            return this.enumDataService.getClientAndFamilyData(state);
           } else {
             return this.enumDataService.getEmptySearchStateData();
           }
@@ -83,7 +83,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   closeRightSlider(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   close() {
@@ -136,7 +136,7 @@ export class AddMandateComponent implements OnInit {
     fromDate.setMinutes(fromDate.getMinutes() + 2);
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
+      holdingType: [(!data) ? '' : data.ownerName, [Validators.required]],
       bank: [(!data) ? '' : data.bank, [Validators.required]],
       // taxStatus: [data ? '' : data.ownerName, [Validators.required]],
       fromDate: [fromDate, [Validators.required]],
@@ -167,7 +167,7 @@ export class AddMandateComponent implements OnInit {
       this.nomineesListFM = undefined;
       this.showSpinnerOwner = false;
       this.errorMsg = undefined;
-      this.generalDetails.controls.holdingNature.reset();
+      this.generalDetails.controls.holdingType.reset();
       this.generalDetails.controls.bank.reset();
     } else {
       this.showSpinnerOwner = true;
@@ -184,7 +184,7 @@ export class AddMandateComponent implements OnInit {
   saveGeneralDetails(data) {
     const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
-      holdingNature: this.generalDetails.controls.holdingNature.value,
+      holdingType: this.generalDetails.controls.holdingType.value,
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
@@ -208,7 +208,7 @@ export class AddMandateComponent implements OnInit {
           console.log(data);
           this.clientCodeData = data;
           if (this.clientCodeData.length == 1) {
-            this.generalDetails.controls.holdingNature.setValue(this.clientCodeData[0].clientCode);
+            this.generalDetails.controls.holdingType.setValue(this.clientCodeData[0].clientCode);
           }
           console.log('clientCodeData', this.clientCodeData);
         } else {
@@ -298,17 +298,17 @@ export class AddMandateComponent implements OnInit {
     }
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.toDate = new Date(this.generalDetails.controls.toDate.value);
-    Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
-    Object.assign(this.selectedMandate, {clientCode: this.detailsIIN.clientCode});
-    Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
-    Object.assign(this.selectedMandate, {toDate: (this.toDate).getTime()});
-    Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
-    Object.assign(this.selectedMandate, {tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId});
-    Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
+    Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
+    Object.assign(this.selectedMandate, { clientCode: this.detailsIIN.clientCode });
+    Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
+    Object.assign(this.selectedMandate, { toDate: (this.toDate).getTime() });
+    Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
+    Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
+    Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
     console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
         console.log('err', error);
         this.errorMsg = error;
       }

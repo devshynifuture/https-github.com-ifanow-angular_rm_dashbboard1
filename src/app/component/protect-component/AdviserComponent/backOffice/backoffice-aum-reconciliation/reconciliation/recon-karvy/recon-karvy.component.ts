@@ -54,7 +54,7 @@ export class ReconKarvyComponent implements OnInit {
           });
         } else {
           this.adminAdvisorIds = [...this.advisorId];
-          this.eventService.openSnackBar('No Team Member Found', 'DISMISS');
+          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
         }
       });
   }

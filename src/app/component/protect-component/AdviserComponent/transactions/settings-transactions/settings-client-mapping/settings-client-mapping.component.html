@@ -8,7 +8,7 @@
         <div class="form-group mb-0 mr-16 matInputClass">
           <mat-form-field appearance="standard" floatLabel="never">
             <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0"
-                   matInput placeholder="type to filter data">
+                   matInput placeholder="Type to filter data">
           </mat-form-field>
         </div>
       </div>
@@ -16,8 +16,8 @@
         <div class="form-group mb-0">
           <mat-select (selectionChange)="sortDataFilterWise()" [(ngModel)]="type" class="form-control br-0">
             <mat-option disabled value=''>Select filter option</mat-option>
-            <mat-option value="1">Mapped clients</mat-option>
             <mat-option value="2">Unmapped clients</mat-option>
+            <mat-option value="1">Mapped clients</mat-option>
           </mat-select>
         </div>
       </div>

@@ -1,8 +1,7 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo"
-           src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
       <p class="f-16 mb-0">
@@ -36,19 +35,30 @@
       </div>
       <div class="col-md-7 form-group text-center">
         <mat-form-field appearance="standard" floatLabel="never">
-          <input #searchClient [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8"
-                 formControlName="ownerName" matInput placeholder="Start typing to see investor names">
+          <input #searchClient [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client"
+                 class="form-control pl-8" formControlName="ownerName" matInput
+                 placeholder="Start typing to see investor names">
           <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="ownerDetails($event.option.value)"
-                            [displayWith]="displayFn">
-            <mat-option *ngFor="let f of nomineesListFM | async"
-                        [value]="f">
-              <span>{{f.name}}</span>
+                            [displayWith]="processTransaction.displayName" autoFocus>
+            <mat-option *ngFor="let f of filteredStates | async" [value]="f">
+              <div class="row">
+                <div class="col-md-1 p-0 d-flex align-items-center">
+                  <i class="material-icons"> person </i>
+                </div>
+                <div class="col-md-7 pl-0 d-flex align-items-center">
+                  <p class="t-left m-0">{{f.name}}</p>
+                </div>
+                <div class="col-md-4 text-right">
+                  <button *ngIf="f.userType==3" class="small-primitive" mat-stroked-button>
+                    FAMILY MEMBER
+                  </button>
+                  <button *ngIf="f.userType==2" class="small-primitive" mat-stroked-button>CLIENT
+                  </button>
+                </div>
+              </div>
             </mat-option>
           </mat-autocomplete>
-          <mat-error *ngIf="generalDetails.get('ownerName').errors?.required" class="f-12 pt-4">
-            This field is required
-          </mat-error>
-          <mat-error *ngIf="generalDetails.get('ownerName').errors?.invalid" class="f-12">
+          <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
             This family member does not exist
           </mat-error>
         </mat-form-field>
@@ -64,11 +74,11 @@
       </div>
       <div class="col-md-7 form-group">
         <mat-form-field>
-          <mat-select class="form-control" formControlName="holdingNature">
+          <mat-select class="form-control" formControlName="holdingType">
             <mat-option disabled value=''>Select holding nature</mat-option>
             <mat-option value="SI">Single</mat-option>
             <mat-option value="JO">Joint</mat-option>
-            <mat-option value="AS">Anyone or survival</mat-option>
+            <mat-option value="AS">Anyone or survivor</mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>
         </mat-form-field>
@@ -83,8 +93,8 @@
         <mat-form-field>
           <mat-select class="form-control" formControlName="taxStatus">
             <mat-option disabled value=''>Select tax status</mat-option>
-            <mat-option *ngFor="let singleTaxStatus of taxStatusList"
-                        [value]="singleTaxStatus.taxStatusCode">{{singleTaxStatus.taxStatusDesc}}
+            <mat-option *ngFor="let singleTaxStatus of taxStatusList" [value]="singleTaxStatus.taxStatusCode">
+              {{singleTaxStatus.taxStatusDesc}}
             </mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>

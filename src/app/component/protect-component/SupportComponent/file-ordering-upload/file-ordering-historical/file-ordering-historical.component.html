@@ -186,10 +186,10 @@
 
             <ng-container matColumnDef="refresh">
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
-                <td class="br" mat-cell *matCellDef="let element">
+                <td class="br" mat-cell *matCellDef="let element; index as i">
                     <div class="bar">
                         <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs"
-                            (click)="refreshFileOrder()">
+                            (click)="refreshFileOrder(element, i)">
                             <mat-icon>
                                 refresh
                             </mat-icon>

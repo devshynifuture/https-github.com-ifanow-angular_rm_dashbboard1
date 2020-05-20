@@ -20,7 +20,6 @@ export class ProcessTransactionService {
   [x: string]: any;
 
   // countryCodeList;
-  inverstorList: any;
   transactionSummary: {};
   schemeSelection: any;
 
@@ -114,18 +113,6 @@ export class ProcessTransactionService {
     }];
   }
 
-  getIINList() {
-    this.inverstorList = [
-      {
-        iin: '5011102595'
-      },
-      {
-        iin: '2011103545'
-      }
-    ];
-    return this.inverstorList;
-  }
-
   getDefaultLoginDetials() {
 
   }
@@ -165,6 +152,7 @@ export class ProcessTransactionService {
       endDate.setMonth(11);
       endDate.setFullYear(2099);
       obj.endDate = endDate.getTime();
+      obj.perpetualFlag = true;
     } else if (frequencyType == 'MONTHLY' && tenure == 2) {
       obj.noOfInstallments = noOfInstallments * 12;
     } else if (frequencyType == 'QUATERLY' && tenure == 2) {
@@ -191,6 +179,7 @@ export class ProcessTransactionService {
       endDate.setMonth(11);
       endDate.setFullYear(2099);
       obj.endDate = endDate.getTime();
+      obj.perpetualFlag = true;
     } else if (obj.frequencyType == 'MONTHLY' && tenure == 2) {
       obj.noOfInstallments = installment * 12;
     } else if (obj.frequencyType == 'QUATERLY' && tenure == 2) {
@@ -227,7 +216,7 @@ export class ProcessTransactionService {
   }
 
   calculateCurrentValue(nav, unit) {
-    const currentValue = nav * unit;
+    const currentValue = nav * parseFloat(unit);
     return currentValue;
   }
 

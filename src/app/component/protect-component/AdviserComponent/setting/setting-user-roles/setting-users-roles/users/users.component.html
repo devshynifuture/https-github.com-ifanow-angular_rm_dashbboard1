@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 d-flex align-items-center">
+    <div class="col-md-6 pl-0">
         <h4 *ngIf="!hideLabel" class="m-0 text-black">Team members</h4>
     </div>
     <div class="col-md-6 text-right">
@@ -10,7 +10,9 @@
 </div>
 <div class="row pt-20">
     <div *ngFor="let user of userList" class="col-md-3 mb-12 pl-0 ">
-        <mat-card [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}" class="b-a p-8 pr-0 br-4">
+        <mat-card
+            [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}"
+            class="b-a p-8 pr-0 br-4">
             <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="col-md-4 p-0">
                     <div class="relClass">
@@ -30,19 +32,24 @@
                             </div>
                         </div>
                         <div class="col-md-1 p-0">
-                            <img *ngIf="!isLoading" [matMenuTriggerFor]="menu" class="c-p userMenuDots" src="/assets/images/svg/dot-menu.svg">
+                            <img *ngIf="!isLoading" [matMenuTriggerFor]="menu" class="c-p userMenuDots"
+                                src="/assets/images/svg/dot-menu.svg">
 
                             <mat-menu #menu="matMenu">
                                 <button (click)="addEditTeamMember(user, false)" mat-menu-item>Edit</button>
-                                <button (click)="suspendUser(user)" *ngIf="user.isSuspended == 0" mat-menu-item>Suspend</button>
-                                <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1" mat-menu-item>Reactivate</button>
+                                <button (click)="suspendUser(user)" *ngIf="user.isSuspended == 0"
+                                    mat-menu-item>Suspend</button>
+                                <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1"
+                                    mat-menu-item>Reactivate</button>
                                 <button (click)="deleteUser(user)" mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
 
                     </div>
 
-                    <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']" routerLinkActive="router-link-active" class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
+                    <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']"
+                        routerLinkActive="router-link-active"
+                        class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
                         {{user.clientCount}} client<span *ngIf="user.clientCount>1">(s)</span></h3>
                 </div>
             </div>

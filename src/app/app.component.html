@@ -1,4 +1,17 @@
 <!--<h1>hI this is gaurav</h1>-->
+<div class="offline-alert">
+  <div *ngIf="!onlineStatus && isConnected==false" class="alert alert-primary" role="alert">
+    Connecting
+  </div>
+  <div *ngIf="!onlineStatus && isConnected==false" class="alert alert-danger" role="alert">
+    Connecting
+  </div>
+  <div *ngIf="!onlineStatus && isConnected==false" class="alert alert-warning d-flex" role="alert">
+    <p class="m-0 pt-8">Connection lost. Reconnecting in seconds {{showTimeRemaing}}...</p>
+    <!-- <button mat-stroked-button (click)="countDown(setNewTime)" class="btn-warning ml-24 mr-24">Reconnecting</button> -->
+    <div class="spinner-border text-warning"></div>
+  </div>
+</div>
 <div cdkScrollable>
   <router-outlet #mainrouter>
 

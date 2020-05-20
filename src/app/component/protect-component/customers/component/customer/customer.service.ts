@@ -28,6 +28,9 @@ export class CustomerService {
   deleteGeneralInsurance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GENERAL_INSURANCE, data);
   }
+  deletePartPayment(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PART_PAYMENT, data);
+  }
   getLifeInsuranceData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId).set('insuranceTypeId', data.insuranceTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_INSURANCE, httpParams);
@@ -862,6 +865,10 @@ export class CustomerService {
   }
   postMutualFundDelete(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_DELETE, data);
+  }
+
+  updateClientProfilePic(data){
+    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_PROFILE_PIC, data);
   }
 }
 

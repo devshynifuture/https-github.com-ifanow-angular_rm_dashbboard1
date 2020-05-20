@@ -12,7 +12,7 @@ import {ContactDetailsInnComponent} from '../contact-details-inn/contact-details
 import {MatInput} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -21,6 +21,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 })
 export class BankDetailsIINComponent implements OnInit {
   bankListArr: any;
+  activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
               private processTransaction: ProcessTransactionService,
@@ -137,10 +138,12 @@ export class BankDetailsIINComponent implements OnInit {
       }
     );
   }
-  selectedBank(bank){
-    this.firstHolderBank = bank
+
+  selectedBank(bank) {
+    this.firstHolderBank = bank;
     this.getdataForm(this.firstHolderBank);
   }
+
   getHolderList(data) {
     console.log(data);
     this.holderList = data;
@@ -218,13 +221,13 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
-      bankACNo:[(data.bankName) ? data.bankName : ''], 
+      bankACNo: [(data.bankName) ? data.bankName : ''],
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType): '1', [Validators.required]],
-      branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
+      accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType) : '1', [Validators.required]],
+      //branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
-      paymentMode: [(!data) ? '' : (data.paymentMode) ? data.paymentMode : '', [Validators.required]],
+      paymentMode: [(!data) ? '02' : (data.paymentMode) ? data.paymentMode : '02', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
@@ -323,12 +326,13 @@ export class BankDetailsIINComponent implements OnInit {
   setValueFun(value) {
     this.bankDetailsForm.controls.ifscCode.setValue(value.ifscCode);
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
+    this.bankDetailsForm.controls.bankACNo.setValue(value.bankName);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
-    this.bankDetailsForm.controls.accountType.setValue(value.accountType);
-    this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
+    this.bankDetailsForm.controls.accountType.setValue(parseInt(value.accountType));
+    //  this.bankDetailsForm.controls.branchCode.setValue(value.branchCode);
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
-    this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode);
+    this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode ? value.paymentMode : '02');
     if (value.address) {
       this.bankDetailsForm.controls.address1.setValue(value.address.address1);
       this.bankDetailsForm.controls.address2.setValue(value.address.address2);
@@ -352,54 +356,36 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
+    this.activeDetailsClass = value;
     if (value == 'first') {
-      if (this.saveBankDetails(this.formId)) {
-        this.formId = value;
-        if (this.firstHolderBank) {
-          this.setValueFun(this.firstHolderBank);
-        } else {
-          return;
-        }
-        this.formId = value;
-      } else if (this.formId == 'first') {
+      this.formId = value;
+      if (this.firstHolderBank) {
+        this.setValueFun(this.firstHolderBank);
+      } else {
         return;
       }
+      this.formId = value;
     } else if (value == 'second') {
-      if (this.saveBankDetails(this.formId)) {
-        if (this.secondHolderBank && this.secondHolderBank.bankName) {
-          this.setValueFun(this.secondHolderBank);
-        } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
-          this.secondHolderBank = this.bankList[1];
-          this.setValueFun(this.secondHolderBank);
-        } else {
-          this.reset();
-        }
-        this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
+      if (this.secondHolderBank && this.secondHolderBank.bankName) {
+        this.setValueFun(this.secondHolderBank);
+      } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
+        this.secondHolderBank = this.bankList[1];
+        this.setValueFun(this.secondHolderBank);
       } else {
-        this.secondHolderBank.validated = false;
-        this.formId = value;
+        this.reset();
       }
+      this.formId = value;
     } else if (value == 'third') {
-      if (this.saveBankDetails(this.formId)) {
-        if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
-          this.formId = value;
-          this.setValueFun(this.thirdHolderBank);
-        } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
-          this.thirdHolderBank = this.bankList[2];
-          this.setValueFun(this.thirdHolderBank);
-        } else {
-          this.reset();
-        }
+      if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
         this.formId = value;
-      } else if (this.formId == 'first') {
-        return;
+        this.setValueFun(this.thirdHolderBank);
+      } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
+        this.thirdHolderBank = this.bankList[2];
+        this.setValueFun(this.thirdHolderBank);
       } else {
-        this.thirdHolderBank.validated = false;
-        this.formId = value;
+        this.reset();
       }
-
+      this.formId = value;
     } else {
       this.saveBankDetails(value);
     }
@@ -430,7 +416,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.sendObj = {
         ...this.inputData,
         ownerName: this.generalDetails.ownerName,
-        holdingType: this.generalDetails.holdingNature,
+        holdingType: this.generalDetails.holdingType,
         taxStatus: this.generalDetails.taxStatus,
         familyMemberId: this.generalDetails.familyMemberId,
         clientId: this.generalDetails.clientId,
@@ -452,7 +438,7 @@ export class BankDetailsIINComponent implements OnInit {
       accountType: holder.accountType,
       bankName: holder.bankName,
       branchName: holder.branchName,
-      branchCode: holder.branchCode,
+      //   branchCode: holder.branchCode,
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
       paymentMode: this.bankDetailsForm.controls.paymentMode.value,

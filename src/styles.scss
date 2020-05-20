@@ -35,6 +35,7 @@
                 @import'./assets/style/scss/responsive/mobile/goal';
                 @import'./assets/style/scss/responsive/mobile/transactions';
                 @import'./assets/style/scss/responsive/mobile/profile';
+
                 @mixin heading {
                   padding-left: 20px !important;
                   padding-top: 20px !important;
@@ -130,7 +131,16 @@
                   }
                 }
 
+                #setting-menu,
+                #earphones-menu {
+                  p {
+                    font-weight: 400;
+                  }
+                }
+
                 #setting-menu {
+
+
                   .mat-menu-item {
                     height: 89px !important;
                   }
@@ -335,7 +345,8 @@
                 #ui-subscriptions,
                 #uiTransactions,
                 #ui-setting,
-                #ui-people,#ui-mareketplace-advisor {
+                #ui-people,
+                #ui-mareketplace-advisor {
                   position: fixed;
                   margin-top: 4px;
                   float: right;
@@ -931,7 +942,8 @@
                 #ui-expenses,
                 #ui-profile-plan,
                 #ui-activity,
-                #investmentPlan,#onboargings {
+                #investmentPlan,
+                #onboargings {
                   .vertical-menu {
                     height: 100vh;
                     display: block !important;
@@ -1026,7 +1038,8 @@
                   }
                 }
 
-                #ui-biller-tabs,#ui-fp-planmodule {
+                #ui-biller-tabs,
+                #ui-fp-planmodule {
                   margin-top: 40px;
                   margin-bottom: 40px;
 
@@ -1257,11 +1270,13 @@
                     padding: 6px 8px !important;
                   }
                 }
-.scss-scheme{
-  #tbs .mat-sort-header-button{
-    white-space: nowrap;
-  }
-}
+
+                .scss-scheme {
+                  #tbs .mat-sort-header-button {
+                    white-space: nowrap;
+                  }
+                }
+
                 .cashflow #table-low {
                   .mat-row:last-child {
                     font-weight: normal !important;
@@ -1628,7 +1643,7 @@
                   text-align: right;
                 }
 
-                 
+
 
                 .example-container {
                   height: auto;
@@ -1902,7 +1917,8 @@
                   }
                 }
 
-                #ui-people,#ui-mareketplace-advisor {
+                #ui-people,
+                #ui-mareketplace-advisor {
                   .mat-tab-link {
                     color: #595252 !important;
                     border-bottom: 4px solid transparent;
@@ -2076,42 +2092,42 @@
                     }
                   }
                 }
-.budget,
-.other-commitments,
-.transactions-table{
-  tr.mat-header-row{
-    height: 48px !important;
-  }
-  #table-low tbody td{
-       padding: 6px 8px !important;
-  }
-  tr.mat-row{
-    height: 40px !important;
-  }
-}
 
-.filterActive{
-  background: #ccc;
-}
- 
-ngx-slick-carousel > .slick-disabled {
-  display: none !important;
-}
+                .budget,
+                .other-commitments,
+                .transactions-table {
+                  tr.mat-header-row {
+                    height: 48px !important;
+                  }
 
-.downloadPdfIcon {
-  border: 1px solid #BCC6CA;
-    display: flex;
-    width: 42px;
-    height: 36px;
-    align-items: center;
-    justify-content: center;
-}
+                  #table-low tbody td {
+                    padding: 6px 8px !important;
+                  }
 
-.iconBorderNone{
-  border: 1px solid #BCC6CA;
-  border-left: transparent;
-  border-right: transparent;
-}
+                  tr.mat-row {
+                    height: 40px !important;
+                  }
+                }
 
+                .filterActive {
+                  background: #ccc;
+                }
 
+                ngx-slick-carousel>.slick-disabled {
+                  display: none !important;
+                }
 
+                .downloadPdfIcon {
+                  border: 1px solid #BCC6CA;
+                  display: flex;
+                  width: 42px;
+                  height: 36px;
+                  align-items: center;
+                  justify-content: center;
+                }
+
+                .iconBorderNone {
+                  border: 1px solid #BCC6CA;
+                  border-left: transparent;
+                  border-right: transparent;
+                }

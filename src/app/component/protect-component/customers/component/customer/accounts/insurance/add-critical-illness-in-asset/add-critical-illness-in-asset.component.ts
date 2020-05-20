@@ -51,7 +51,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   ownerData: any;
   nomineesListFM: any = [];
   familyMemberLifeData: any;
-  callMethod:any;
+  callMethod: any;
   critialIllnessForm: any;
   dataForEdit: any;
   nominees: any[];
@@ -67,7 +67,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   insuredMemberList: any;
   options: any;
 
-  constructor(private enumService:EnumServiceService,private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService,private dialog: MatDialog) { }
+  constructor(private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -211,7 +211,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0] 
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0], relationshipId: [data ? data.relationshipId : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -259,23 +259,23 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : ''), [Validators.required]],
+      name: [(this.dataForEdit ? this.dataForEdit.name : null)],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
-      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount :null), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
+      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : '1'],
-      additionalCovers: [this.dataForEdit ?  this.addOns.addOnId + '' : null],
+      additionalCovers: [this.dataForEdit ? this.addOns.addOnId + '' : null],
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
       sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       nominees: this.nominees,
@@ -284,14 +284,14 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         sharePercentage: [0],
         familyMemberId: [0],
         id: [0],
-        relationshipId:[0]
+        relationshipId: [0]
       })]),
       InsuredMemberForm: this.fb.array([this.fb.group({
         insuredMembers: ['', [Validators.required]],
         sumAssured: [null, [Validators.required]],
-        id:null,
-        familyMemberId:[''],
-        relationshipId:['']
+        id: null,
+        familyMemberId: [''],
+        relationshipId: ['']
       })])
     })
     // ==============owner-nominee Data ========================\\
@@ -309,46 +309,46 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
     if (this.dataForEdit) {
       this.getCoOwner.removeAt(0);
-      const data={
-        name:this.dataForEdit.policyHolderName,
-        familyMemberId:this.dataForEdit.policyHolderId
+      const data = {
+        name: this.dataForEdit.policyHolderName,
+        familyMemberId: this.dataForEdit.policyHolderId
       }
-        this.addNewCoOwner(data);
+      this.addNewCoOwner(data);
     }
 
     /***owner***/
 
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.nominees.length > 0){
-      this.getNominee.removeAt(0);
-      this.dataForEdit.nominees.forEach(element => {
-        this.addNewNominee(element);
-      });
-    }
+      if (this.dataForEdit.nominees.length > 0) {
+        this.getNominee.removeAt(0);
+        this.dataForEdit.nominees.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.insuredMembers.length > 0){
-      this.insuredMembersForm.removeAt(0);
-      this.dataForEdit.insuredMembers.forEach(element => {
-        this.addTransaction(element);
-      });
-    }
+      if (this.dataForEdit.insuredMembers.length > 0) {
+        this.insuredMembersForm.removeAt(0);
+        this.dataForEdit.insuredMembers.forEach(element => {
+          this.addTransaction(element);
+        });
+      }
     }
 
-    if(this.dataForEdit){
+    if (this.dataForEdit) {
       this.dataForEdit.insuredMembers.forEach(element => {
-          if(element.sumInsured == 0){
-           this.showinsuredMemberSum = false
-          }
-       });
-  }
-  if(this.critialIllnessForm.get('PlanType').value == '8'){
-    this.showSumAssured = true;
-}else{
-    this.showSumAssured = false;
-}
+        if (element.sumInsured == 0) {
+          this.showinsuredMemberSum = false
+        }
+      });
+    }
+    if (this.critialIllnessForm.get('PlanType').value == '8') {
+      this.showSumAssured = true;
+    } else {
+      this.showSumAssured = false;
+    }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.critialIllnessForm }
     this.bankAccountDetails = { accountList: this.accountList, controleData: this.critialIllnessForm }
 
@@ -366,107 +366,107 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     if (value == 8) {
       this.showSumAssured = true
       this.showinsuredMemberSum = false
-        let list = this.critialIllnessForm.get('InsuredMemberForm') as FormArray;
-        list.controls.forEach(element => {
-          element.get('sumAssured').setValue(null);
-          if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
-              element.get('sumAssured').setErrors(null);
-              element.get('sumAssured').setValidators(null);
-          }
-        });
-        if (!this.critialIllnessForm.controls['sumAssuredIdv'].value) {
-            this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
-            this.critialIllnessForm.get('sumAssuredIdv').setValidators([Validators.required]);
-            this.critialIllnessForm.get('sumAssuredIdv').updateValueAndValidity();
-            this.critialIllnessForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+      let list = this.critialIllnessForm.get('InsuredMemberForm') as FormArray;
+      list.controls.forEach(element => {
+        element.get('sumAssured').setValue(null);
+        if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
+          element.get('sumAssured').setErrors(null);
+          element.get('sumAssured').setValidators(null);
         }
-    } else {
-        this.showSumAssured = false
-        this.showinsuredMemberSum = true
+      });
+      if (!this.critialIllnessForm.controls['sumAssuredIdv'].value) {
         this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
-        this.critialIllnessForm.controls['sumAssuredIdv'].setErrors(null);
-        this.critialIllnessForm.controls['sumAssuredIdv'].setValidators(null);
+        this.critialIllnessForm.get('sumAssuredIdv').setValidators([Validators.required]);
+        this.critialIllnessForm.get('sumAssuredIdv').updateValueAndValidity();
+        this.critialIllnessForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+      }
+    } else {
+      this.showSumAssured = false
+      this.showinsuredMemberSum = true
+      this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
+      this.critialIllnessForm.controls['sumAssuredIdv'].setErrors(null);
+      this.critialIllnessForm.controls['sumAssuredIdv'].setValidators(null);
     }
-}
+  }
   bankAccountList(value) {
     this.bankList = value;
   }
-  getFamilyData(data){
-    if(data){
+  getFamilyData(data) {
+    if (data) {
       data.forEach(element => {
         for (let e in this.insuredMembersForm.controls) {
           let name = this.insuredMembersForm.controls[e].get('insuredMembers')
-          if(element.userName == name.value){
+          if (element.userName == name.value) {
             this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
             this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
             this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
             element.isDisabled = true;
           }
         }
-       
+
       });
     }
   }
 
   addTransaction(data) {
     this.insuredMembersForm.push(this.fb.group({
-      insuredMembers: [data ? data.name : '',[Validators.required]],
-      sumAssured: [data ? data.sumInsured : '',[Validators.required]],
-      id:[data ? data.id : ''],
-      relationshipId:[data ? data.relationshipId : ''],
-      familyMemberId:[data ? data.familyMemberId : '']
+      insuredMembers: [data ? data.name : '', [Validators.required]],
+      sumAssured: [data ? data.sumInsured : '', [Validators.required]],
+      id: [data ? data.id : ''],
+      relationshipId: [data ? data.relationshipId : ''],
+      familyMemberId: [data ? data.familyMemberId : '']
     }));
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
-    this.onChangeSetErrorsType(this.critialIllnessForm.get('PlanType').value,'planType')
+    this.onChangeSetErrorsType(this.critialIllnessForm.get('PlanType').value, 'planType')
   }
 
   removeTransaction(item) {
-    let finalMemberList = this.critialIllnessForm.get('InsuredMemberForm') as FormArray 
-    if(finalMemberList.length > 1){
-    this.insuredMembersForm.removeAt(item);
+    let finalMemberList = this.critialIllnessForm.get('InsuredMemberForm') as FormArray
+    if (finalMemberList.length > 1) {
+      this.insuredMembersForm.removeAt(item);
 
     }
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
   }
-  resetValue(data){
-    if(data){
+  resetValue(data) {
+    if (data) {
       data.forEach(item => item.isDisabled = false);
     }
-}
+  }
   /***owner***/
 
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
   }
-  changeSign(event,value,formValue) {
+  changeSign(event, value, formValue) {
     this.critialIllnessForm.get(value).setValue('');
-    if(event == '2'){
-      if(parseInt(formValue) > 100){
+    if (event == '2') {
+      if (parseInt(formValue) > 100) {
         this.critialIllnessForm.get(value).setValue('');
       }
     }
-}
-changeTheInput(form1,form2,event) {
-  if(form1 == '2'){
-    if (parseInt(event.target.value) > 100) {
-        this.critialIllnessForm.get(form2).setValue('100');
-    }
-  }else{
-    this.critialIllnessForm.get(form2).setValue(event.target.value);
   }
- 
-}
-findCompanyName(data) {
-  const inpValue = this.critialIllnessForm.get('insurerName').value;
-  this.customerService.getCompanyNames(inpValue).subscribe(
-    data => {
-      console.log(data);
-      this.options =data;
+  changeTheInput(form1, form2, event) {
+    if (form1 == '2') {
+      if (parseInt(event.target.value) > 100) {
+        this.critialIllnessForm.get(form2).setValue('100');
+      }
+    } else {
+      this.critialIllnessForm.get(form2).setValue(event.target.value);
     }
-  );
-}
+
+  }
+  findCompanyName(data) {
+    const inpValue = this.critialIllnessForm.get('insurerName').value;
+    this.customerService.getCompanyNames(inpValue).subscribe(
+      data => {
+        console.log(data);
+        this.options = data;
+      }
+    );
+  }
 
   getFamilyMemberList() {
     const obj = {
@@ -485,34 +485,34 @@ findCompanyName(data) {
   preventDefault(e) {
     e.preventDefault();
   }
-  dateChange(value,form,formValue){
-    if(form=='policyExpiryDate' && formValue){
-    let startDate =  new Date(this.critialIllnessForm.controls.policyStartDate.value);
+  dateChange(value, form, formValue) {
+    if (form == 'policyExpiryDate' && formValue) {
+      let startDate = new Date(this.critialIllnessForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.critialIllnessForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate :any = new Date(this.critialIllnessForm.controls.policyStartDate.value);
+      let comparedDate: any = new Date(this.critialIllnessForm.controls.policyStartDate.value);
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
-      if(policyExpiryDate < comparedDate){
+      if (policyExpiryDate < comparedDate) {
         this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
         this.critialIllnessForm.get('policyExpiryDate').markAsTouched();
-      }else{
+      } else {
         this.critialIllnessForm.get('policyExpiryDate').setErrors();
       }
-    }else{
-      if(formValue){
+    } else {
+      if (formValue) {
         let policyExpiryDate = this.datePipe.transform(this.critialIllnessForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
         let policyStartDate = this.datePipe.transform(this.critialIllnessForm.controls.policyStartDate.value, 'yyyy/MM/dd')
 
-        if(policyStartDate >= policyExpiryDate){
+        if (policyStartDate >= policyExpiryDate) {
           this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
           this.critialIllnessForm.get('policyExpiryDate').markAsTouched();
-        }else{
+        } else {
           this.critialIllnessForm.get('policyExpiryDate').setErrors();
 
         }
       }
     }
-  
+
   }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
@@ -535,9 +535,9 @@ findCompanyName(data) {
       {
         familyMemberId: element.get('familyMemberId').value,
         sumInsured: element.get('sumAssured').value,
-        relationshipId: element.get('relationshipId').value,  
+        relationshipId: element.get('relationshipId').value,
         insuredOrNominee: 1,
-        id:(element.get('id').value) ? element.get('id').value : null
+        id: (element.get('id').value) ? element.get('id').value : null
       }
       memberList.push(obj)
     })
@@ -555,8 +555,8 @@ findCompanyName(data) {
         "insurerName": this.critialIllnessForm.get('insurerName').value,
         "planName": this.critialIllnessForm.get('planeName').value,
         "premiumAmount": this.critialIllnessForm.get('premium').value,
-        "policyStartDate": this.critialIllnessForm.get('policyStartDate').value,
-        "policyExpiryDate": this.critialIllnessForm.get('policyExpiryDate').value,
+        "policyStartDate":this.datePipe.transform(this.critialIllnessForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate":this.datePipe.transform(this.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "cumulativeBonus": this.critialIllnessForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.critialIllnessForm.get('bonusType').value,
         "addOns": [{
@@ -564,14 +564,14 @@ findCompanyName(data) {
           "addOnSumInsured": this.critialIllnessForm.get('coversAmount').value
         }],
         "exclusion": this.critialIllnessForm.get('exclusion').value,
-        "policyInceptionDate": this.critialIllnessForm.get('inceptionDate').value,
+        "policyInceptionDate":this.datePipe.transform(this.critialIllnessForm.get('inceptionDate').value, 'yyyy-MM-dd'),
         "tpaName": this.critialIllnessForm.get('tpaName').value,
         "advisorName": this.critialIllnessForm.get('advisorName').value,
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
         "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
-        "id":(this.id) ? this.id : null,
+        "id": (this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.critialIllnessForm.value.getNomineeName,
       }
@@ -584,21 +584,21 @@ findCompanyName(data) {
         });
         obj.nominees = this.critialIllnessForm.value.getNomineeName;
         obj.nominees.forEach(element => {
-          if(element.sharePercentage){
+          if (element.sharePercentage) {
             element.sumInsured = element.sharePercentage;
           }
-           element.insuredOrNominee = 2
-         });
+          element.insuredOrNominee = 2
+        });
       } else {
         obj.nominees = [];
       }
       if (obj.insuredMembers.length > 0) {
         obj.insuredMembers.forEach(element => {
-            if (element.sumInsured == '') {
-                element.sumInsured = null
-            }
+          if (element.sumInsured == '') {
+            element.sumInsured = null
+          }
         });
-    }
+      }
       console.log(obj);
 
 
@@ -608,7 +608,7 @@ findCompanyName(data) {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Updated successfully!", 'dismiss');
+            this.eventService.openSnackBar("Updated successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
@@ -622,7 +622,7 @@ findCompanyName(data) {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Added successfully!", 'dismiss');
+            this.eventService.openSnackBar("Added successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,

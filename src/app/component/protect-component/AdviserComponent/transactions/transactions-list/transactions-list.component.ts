@@ -16,13 +16,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./transactions-list.component.scss']
 })
 export class TransactionsListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'weight', 'symbol', 'type', 'amount', 'order', 'status', 'icons'];
+  displayedColumns: string[] = ['platformName', 'transactionNumber', 'clientName', 'schemeName', 'type', 'amount', 'orderDate',
+    'status', 'icons'];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
   selectedPreviousToShowDate;
-  filterData: any;
-  selectedBroker: any;
+  selectedBroker;
   seletedPreviousDate;
   finalStartDate;
   finalEndDate;
@@ -31,7 +31,7 @@ export class TransactionsListComponent implements OnInit {
   noData: string;
   maxDate = new Date();
   dontHide: boolean;
-  credentialData: any;
+  credentialData = [{id: 0, brokerCode: 'ALL'}];
   isAdvisorSection = true;
 
   isLoading = false;
@@ -49,15 +49,17 @@ export class TransactionsListComponent implements OnInit {
       this.isAdvisorSection = false;
     }
     this.selectedPreviousToShowDate = '7';
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
-    this.finalEndDate = new Date().getTime();
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.advisorId = AuthService.getAdvisorId();
+    this.selectedBroker = this.credentialData[0];
     if (this.isAdvisorSection) {
       this.getFilterOptionData();
-    } else {
-      this.getAllTransactionList();
     }
+
+    this.refresh(false);
   }
+
 
   getFilterOptionData() {
     this.dataSource.data = [{}, {}, {}];
@@ -86,9 +88,11 @@ export class TransactionsListComponent implements OnInit {
     if (data) {
       this.isLoading = false;
       console.log(data);
-      this.filterData = data;
-      this.credentialData = data;
-      this.selectedBroker = data[0];
+      data.forEach(singleBroker => {
+        this.credentialData.push(singleBroker);
+      });
+      console.log('this.credentialData ', this.credentialData);
+      // this.selectedBroker = data[0];
       this.getAllTransactionList();
     } else {
       this.isLoading = false;
@@ -109,9 +113,12 @@ export class TransactionsListComponent implements OnInit {
     };
     if (this.isAdvisorSection) {
       obj.tpUserCredentialId = this.selectedBroker.id;
+      obj.brokerCode = this.selectedBroker.brokerCode == 'ALL' ? '' : this.selectedBroker.brokerCode;
+      // obj.aggregatorType = this.selectedBroker.id;
     } else {
       obj.clientId = AuthService.getClientId();
     }
+    console.log('getTransactionList request JSON : ', obj);
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
         if (data) {
@@ -130,15 +137,16 @@ export class TransactionsListComponent implements OnInit {
         }
       },
       err => {
+
         this.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
         this.dataSource.data = [];
-        this.errMessage = err.error.message;
+        this.errMessage = err.error;
       }
     );
   }
 
-  Close(flag) {
+  close(flag) {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
@@ -150,35 +158,27 @@ export class TransactionsListComponent implements OnInit {
 
   sortDateFilter(data) {
     console.log(this.selectedPreviousToShowDate);
-    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
-    this.finalEndDate = new Date().getTime();
-    (data.value == 'custom') ? '' : this.getAllTransactionList();
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * data.value)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
+    (data.value == 'custom') ? '' : this.refresh(true);
   }
 
   startAndEndDateEvent(data) {
-    this.finalStartDate = data.value.begin.getTime();
-    this.finalEndDate = data.value.end.getTime();
-    this.getAllTransactionList();
+    this.finalStartDate = UtilService.getStartOfTheDay(data.value.begin).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(data.value.end).getTime();
+    this.refresh(true);
     console.log(data);
   }
 
   openTransactionHistory(data) {
+    console.log('openTransactionHistory data: ', data);
     const fragmentData = {
       flag: 'addNewTransaction',
       data,
       state: 'open35',
       componentName: TransactionsHistoryComponent,
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
+    this.subInjectService.changeNewRightSliderState(fragmentData);
   }
 
   openTransaction() {
@@ -193,7 +193,10 @@ export class TransactionsListComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.refresh(true);
+          }
+          console.log('this is sidebardata transactions list in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
         }

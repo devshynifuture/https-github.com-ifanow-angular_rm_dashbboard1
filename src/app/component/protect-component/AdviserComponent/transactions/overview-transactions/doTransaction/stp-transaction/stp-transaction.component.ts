@@ -15,6 +15,20 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./stp-transaction.component.scss']
 })
 export class StpTransactionComponent implements OnInit {
+
+  isSuccessfulTransaction = false;
+  folioNumberShow: any;
+  defaultFrequency: any;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              public processTransaction: ProcessTransactionService, private eventService: EventService,
+              private fb: FormBuilder) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'TRANSACT NOW',
@@ -70,11 +84,6 @@ export class StpTransactionComponent implements OnInit {
   filterSchemeList: Observable<any[]>;
   filterNewSchemeList: Observable<any[]>;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              public processTransaction: ProcessTransactionService, private eventService: EventService,
-              private fb: FormBuilder) {
-  }
-
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -87,10 +96,6 @@ export class StpTransactionComponent implements OnInit {
     if (this.isViewInitCalled) {
       this.getDataForm('');
     }
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -153,7 +158,7 @@ export class StpTransactionComponent implements OnInit {
           this.showSpinnerTrans = false;
           this.stpTransaction.get('transferIn').setErrors({setValue: error.message});
           this.stpTransaction.get('transferIn').markAsTouched();
-          // this.eventService.openSnackBar(error, 'dismiss');
+          // this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
     }
@@ -200,7 +205,7 @@ export class StpTransactionComponent implements OnInit {
           this.stpTransaction.get('schemeStp').setErrors({setValue: error.message});
           this.stpTransaction.get('schemeStp').markAsTouched();
           (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
-          // this.eventService.openSnackBar(error, 'dismiss');
+          // this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
     } else {
@@ -218,6 +223,8 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio;
+    this.stpTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2));
+    this.stpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2));
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
     Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
@@ -239,7 +246,7 @@ export class StpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsTranferRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -250,7 +257,7 @@ export class StpTransactionComponent implements OnInit {
     // this.maiSchemeList = data
     this.showSpinnerTrans = false;
     this.schemeDetailsTransfer = data[0];
-    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.sipMinimumInstallmentAmount)]);
+    this.setMinAmount();
 
     if (data.length > 1) {
       this.reInvestmentOpt = data;
@@ -268,7 +275,7 @@ export class StpTransactionComponent implements OnInit {
 
   reinvest(scheme) {
     this.schemeDetailsTransfer = scheme;
-    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.sipMinimumInstallmentAmount)]);
+    this.setMinAmount();
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
@@ -290,7 +297,7 @@ export class StpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -325,6 +332,9 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
     this.folioList = data;
+    if (this.folioList.length == 1) {
+      this.folioNumberShow = this.folioList[0].folioNumber;
+    }
     if (this.stpTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
@@ -338,7 +348,7 @@ export class StpTransactionComponent implements OnInit {
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
       data => this.getSipFrequencyRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'dismiss');
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -350,6 +360,7 @@ export class StpTransactionComponent implements OnInit {
     if (this.switchFrequency) {
       this.switchFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
+          this.defaultFrequency = singleFrequency.frequency;
           this.stpTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }
@@ -359,12 +370,20 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFrequency(getFrerq) {
     // this.fre = getFrerq
+    console.log('selected freq : ', getFrerq);
     this.frequency = getFrerq.frequency;
-    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
+    // this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       this.dateArray(getFrerq.stpDates);
     } else {
       this.dateArray(getFrerq.sipDates);
+    }
+  }
+
+  setMinAmount() {
+    if (this.schemeDetailsTransfer) {
+      this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
+      this.stpTransaction.controls.employeeContry.updateValueAndValidity();
     }
   }
 
@@ -385,7 +404,10 @@ export class StpTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+      refreshRequired: this.isSuccessfulTransaction
+    });
   }
 
   enteredAmount(value) {
@@ -410,6 +432,8 @@ export class StpTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
+      currentValue: [data.currentValue],
+      balanceUnit: [data.balanceUnit],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
       investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],
@@ -468,7 +492,7 @@ export class StpTransactionComponent implements OnInit {
         ...obj,
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
-        holdingNature: this.getDataSummary.defaultClient.holdingType,
+        holdingType: this.getDataSummary.defaultClient.holdingType,
         toProductDbId: this.schemeDetailsTransfer.id,
         mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
         toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
@@ -514,9 +538,12 @@ export class StpTransactionComponent implements OnInit {
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.stpBSERes(data), (error) => {
+        data => {
+          this.stpBSERes(data);
+          this.isSuccessfulTransaction = true;
+        }, (error) => {
           this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'dismiss');
+          this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
     }

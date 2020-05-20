@@ -88,6 +88,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     });
     if (!this.enumDataService.searchData || this.enumDataService.searchData.length == 0) {
       this.enumDataService.searchClientList();
+      this.enumDataService.searchClientAndFamilyMember();
     }
 
     this.showRouter = true;

@@ -1,7 +1,8 @@
 <div class="popup-header-fix-35">
   <div class="row bb-1">
     <div class="col-md-10 p-0">
-      <h4 class="mb-0 wrapper-20">Investor - Detailed view</h4>
+      <h4 class="mb-0 wrapper-20">
+        Investor - Detailed view</h4>
     </div>
     <div class="col-md-2 text-left">
       <div class="wrapper-12">
@@ -60,7 +61,24 @@
   </div>
 </div>
 <div class="p-28 pb-100">
+  <div *ngIf="!statusData[1].checked&&!isLoading" class="row">
+    <button (click)="uploadFileInput1.click()" [disabled]="isFileUploading"
+            class="btnConfirm bg-primary text-white"
+            mat-button>
+      Upload AOF
+      <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file">
+    </button>
 
+    <button (click)="uploadFileInput.click()" *ngIf="details.aggregatorType==1"
+            [disabled]="isFileUploading"
+            class="btnConfirm bg-primary text-white ml-8"
+            mat-button>
+      Upload Cheque
+      <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file">
+    </button>
+    <mat-spinner *ngIf="isFileUploading" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
+
+  </div>
   <div class="row">
     <div class="col-md-9 p-0">
       <h5 class="m-0 f-500 text-black">Status</h5>
@@ -74,15 +92,6 @@
       </button>
     </div>
 
-  </div>
-  <div *ngIf="!statusData[1].checked&&!isLoading" class="row">
-    <div class="col-md-12 mt-8 p-0">
-      <div class="custom-file mb-12">
-        <input (change)="getFileDetails($event)" class="custom-file-input" id="file-3" lang="pl-Pl"
-               type="file">
-        <label class="custom-file-label" for="customFileLang">Upload form</label>
-      </div>
-    </div>
   </div>
 
 

@@ -61,7 +61,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   insuredMemberList: any;
   options: any;
 
-  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input() set data(data) {
@@ -249,11 +249,11 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
   }
-  resetValue(data){
-    if(data){
+  resetValue(data) {
+    if (data) {
       data.forEach(item => item.isDisabled = false);
     }
-}
+  }
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
       planfeatures: [data ? data.policyFeatureId + '' : ''],
@@ -273,7 +273,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     e.preventDefault();
   }
   getFamilyData(data) {
-    if(data){
+    if (data) {
       data.forEach(element => {
         for (let e in this.insuredMembersForm.controls) {
           let name = this.insuredMembersForm.controls[e].get('insuredMembers')
@@ -284,7 +284,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
             element.isDisabled = true;
           }
         }
-  
+
       });
     }
   }
@@ -363,12 +363,12 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
 
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.nominees.length > 0){
-      this.getNominee.removeAt(0);
-      this.dataForEdit.nominees.forEach(element => {
-        this.addNewNominee(element);
-      });
-    }
+      if (this.dataForEdit.nominees.length > 0) {
+        this.getNominee.removeAt(0);
+        this.dataForEdit.nominees.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
     if (this.dataForEdit) {
@@ -379,12 +379,12 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     }
 
     if (this.dataForEdit) {
-      if(this.dataForEdit.policyFeatures.length > 0){
-      this.planFeatureForm.removeAt(0);
-      this.dataForEdit.policyFeatures.forEach(element => {
-        this.addNewFeature(element);
-      });
-    }
+      if (this.dataForEdit.policyFeatures.length > 0) {
+        this.planFeatureForm.removeAt(0);
+        this.dataForEdit.policyFeatures.forEach(element => {
+          this.addNewFeature(element);
+        });
+      }
     }
     if (this.dataForEdit) {
       this.dataForEdit.insuredMembers.forEach(element => {
@@ -410,41 +410,41 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
-  dateChange(value,form,formValue){
-    if(form=='policyExpiryDate' && formValue){
-    let startDate =  new Date(this.travelInsuranceForm.controls.policyStartDate.value);
+  dateChange(value, form, formValue) {
+    if (form == 'policyExpiryDate' && formValue) {
+      let startDate = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.travelInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate :any = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
+      let comparedDate: any = new Date(this.travelInsuranceForm.controls.policyStartDate.value);
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
-      if(policyExpiryDate < comparedDate){
+      if (policyExpiryDate < comparedDate) {
         this.travelInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
         this.travelInsuranceForm.get('policyExpiryDate').markAsTouched();
-      }else{
+      } else {
         this.travelInsuranceForm.get('policyExpiryDate').setErrors();
       }
-    }else{
-      if(formValue){
+    } else {
+      if (formValue) {
         let policyExpiryDate = this.datePipe.transform(this.travelInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
         let policyStartDate = this.datePipe.transform(this.travelInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
 
-        if(policyStartDate >= policyExpiryDate){
+        if (policyStartDate >= policyExpiryDate) {
           this.travelInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
           this.travelInsuranceForm.get('policyExpiryDate').markAsTouched();
-        }else{
+        } else {
           this.travelInsuranceForm.get('policyExpiryDate').setErrors();
 
         }
       }
     }
-  
+
   }
   findCompanyName(data) {
     const inpValue = this.travelInsuranceForm.get('insurerName').value;
     this.customerService.getCompanyNames(inpValue).subscribe(
       data => {
         console.log(data);
-        this.options =data;
+        this.options = data;
       }
     );
   }
@@ -518,8 +518,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "policyNumber": this.travelInsuranceForm.get('policyNum').value,
         "planName": this.travelInsuranceForm.get('planeName').value,
         "premiumAmount": this.travelInsuranceForm.get('premium').value,
-        "policyStartDate": this.travelInsuranceForm.get('policyStartDate').value,
-        "policyExpiryDate": this.travelInsuranceForm.get('policyExpiryDate').value,
+        "policyStartDate":this.datePipe.transform(this.travelInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate":this.datePipe.transform(this.travelInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "geographyId": this.travelInsuranceForm.get('geography').value,
         "exclusion": this.travelInsuranceForm.get('exclusion').value,
         "tpaName": this.travelInsuranceForm.get('tpaName').value,
@@ -565,7 +565,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Updated successfully!", 'dismiss');
+            this.eventService.openSnackBar("Updated successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
@@ -579,7 +579,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Added successfully!", 'dismiss');
+            this.eventService.openSnackBar("Added successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,

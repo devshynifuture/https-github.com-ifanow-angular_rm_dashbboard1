@@ -229,6 +229,7 @@ export const appConfig = {
   MUTUAL_FUND_DELETE: 'mutual-fund/mutualFund/scheme/folio/delete',
   GET_DATED_REPORT_WISE_CALCULATION: 'mutual-fund/getDatedReportWiseCalculations/list/get',
   GET_NAV: 'mutual-fund/avg/nav/get',
+  UPDATE_CLIENT_PROFILE_PIC: 'user/client/profile/pic/update',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -295,7 +296,7 @@ export const appConfig = {
   ADD_EPS: 'account/asset/retirement/eps/add',
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
-
+  DELETE_PART_PAYMENT:'account/liability/part-payment/delete',
 
   ////////////////////////////// subscription////////////////////////////////////////////
 
@@ -479,11 +480,11 @@ export const appConfig = {
   GET_IIN_UCC_OVERVIEW: 'report/client-code/count/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
-  GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
+  // GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
-  TAX_MASTER: 'nse/tax-master/get',
+  TAX_MASTER: 'user/tax-master/get',
   COUNTRY_MASTER: 'user/register/country-code/all/get',
 
   INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
@@ -585,6 +586,8 @@ export const appConfig = {
   GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
   GET_COMMENT_COUNT_RM_ADMIN: 'rmdashboard/dashboard/ifa-onboard/task-level-comment/count',
   GET_FILE_ORDER_ARN_RIA_LIST: 'fileorder/arn-ria/list/get',
+  REFRESH_FILE_ORDER_HISTORICAL_PER_ROW: 'fileorder/historical/advisor/order/refresh',
+  REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

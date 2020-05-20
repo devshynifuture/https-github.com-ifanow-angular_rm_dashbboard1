@@ -69,10 +69,10 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   bankAccountDetails: { accountList: any; controleData: any; };
   accountList: any;
 
-  constructor(private dialog: MatDialog,private enumService:EnumServiceService,private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private dialog: MatDialog, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  
+
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -212,7 +212,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0], relationshipId: [data ? data.relationshipId : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -256,7 +256,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : null)],
+      name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       // additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
@@ -266,7 +266,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       declaredValue: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null), [Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
-      vehicleType: [(this.dataForEdit ? this.dataForEdit.vehicleTypeId + '' : null),[Validators.required]],
+      vehicleType: [(this.dataForEdit ? this.dataForEdit.vehicleTypeId + '' : null), [Validators.required]],
       registrationNumber: [(this.dataForEdit ? this.dataForEdit.vehicleRegNo : null)],
       registrationDate: [this.dataForEdit ? new Date(this.dataForEdit.vehicleRegistrationDate) : null],
       modelName: [(this.dataForEdit ? this.dataForEdit.vehicleModel : null)],
@@ -276,10 +276,10 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       cgGvw: [(this.dataForEdit ? this.dataForEdit.ccGvw : null)],
       claimBonus: [(this.dataForEdit ? this.dataForEdit.noClaimBonus : null)],
       discount: [(this.dataForEdit ? this.dataForEdit.specialDiscount : null)],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
-      financierName: [this.dataForEdit ? this.dataForEdit.hypothetication :null],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
+      financierName: [this.dataForEdit ? this.dataForEdit.hypothetication : null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -287,12 +287,12 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         sharePercentage: [0],
         familyMemberId: [0],
         id: [0],
-        relationshipId:[0]
+        relationshipId: [0]
       })]),
-      
+
       addOnForm: this.fb.array([this.fb.group({
-        additionalCovers :[''],
-        addOnSumInsured:null
+        additionalCovers: [''],
+        addOnSumInsured: null
       })])
     })
     // ==============owner-nominee Data ========================\\
@@ -310,33 +310,33 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
 
     if (this.dataForEdit) {
       this.getCoOwner.removeAt(0);
-      const data={
-        name:this.dataForEdit.policyHolderName,
-        familyMemberId:this.dataForEdit.policyHolderId
+      const data = {
+        name: this.dataForEdit.policyHolderName,
+        familyMemberId: this.dataForEdit.policyHolderId
       }
-        this.addNewCoOwner(data);
+      this.addNewCoOwner(data);
     }
 
     /***owner***/
 
     /***nominee***/
     if (this.dataForEdit) {
-      if(this.dataForEdit.nominees.length > 0){
-      this.getNominee.removeAt(0);
-      this.dataForEdit.nominees.forEach(element => {
-        this.addNewNominee(element);
-      });
-    }
+      if (this.dataForEdit.nominees.length > 0) {
+        this.getNominee.removeAt(0);
+        this.dataForEdit.nominees.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
-  
+
     if (this.dataForEdit) {
-      if(this.dataForEdit.addOns.length > 0){
-      this.addOnForm.removeAt(0);
-      this.dataForEdit.addOns.forEach(element => {
-        this.addNewAddOns(element);
-      });
-    }
+      if (this.dataForEdit.addOns.length > 0) {
+        this.addOnForm.removeAt(0);
+        this.dataForEdit.addOns.forEach(element => {
+          this.addNewAddOns(element);
+        });
+      }
     }
 
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.motorInsuranceForm }
@@ -348,45 +348,45 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     // this.ownerData = this.motorInsuranceForm.controls;
     // this.familyMemberId = data.familyMemberId;
   }
-  
+
   ngOnInit() {
     this.bankList = this.enumService.getBank();
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
-  dateChange(value,form,formValue){
-    if(form=='policyExpiryDate' && formValue){
-    let startDate =  new Date(this.motorInsuranceForm.controls.policyStartDate.value);
+  dateChange(value, form, formValue) {
+    if (form == 'policyExpiryDate' && formValue) {
+      let startDate = new Date(this.motorInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate :any = new Date(this.motorInsuranceForm.controls.policyStartDate.value);
+      let comparedDate: any = new Date(this.motorInsuranceForm.controls.policyStartDate.value);
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
-      if(policyExpiryDate < comparedDate){
+      if (policyExpiryDate < comparedDate) {
         this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
         this.motorInsuranceForm.get('policyExpiryDate').markAsTouched();
-      }else{
+      } else {
         this.motorInsuranceForm.get('policyExpiryDate').setErrors();
       }
-    }else{
-      if(formValue){
+    } else {
+      if (formValue) {
         let policyExpiryDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
         let policyStartDate = this.datePipe.transform(this.motorInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
 
-        if(policyStartDate >= policyExpiryDate){
+        if (policyStartDate >= policyExpiryDate) {
           this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
           this.motorInsuranceForm.get('policyExpiryDate').markAsTouched();
-        }else{
+        } else {
           this.motorInsuranceForm.get('policyExpiryDate').setErrors();
 
         }
       }
     }
-  
+
   }
-  onChange(value,event) {
+  onChange(value, event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = '100';
-        this.motorInsuranceForm.get(value).setValue(event.target.value);
-      
+      this.motorInsuranceForm.get(value).setValue(event.target.value);
+
     }
   }
   // bankAccountList(value) {
@@ -400,14 +400,14 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   }
   addNewAddOns(data) {
     this.addOnForm.push(this.fb.group({
-      additionalCovers :[data ? data.addOnId + '' : ''],
-      addOnSumInsured:null
+      additionalCovers: [data ? data.addOnId + '' : ''],
+      addOnSumInsured: null
     }));
   }
   removeNewAddOns(item) {
-    let finalFeatureList = this.motorInsuranceForm.get('addOnForm') as FormArray 
-    if(finalFeatureList.length > 1){
-    this.addOnForm.removeAt(item);
+    let finalFeatureList = this.motorInsuranceForm.get('addOnForm') as FormArray
+    if (finalFeatureList.length > 1) {
+      this.addOnForm.removeAt(item);
 
     }
   }
@@ -439,7 +439,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     this.customerService.getCompanyNames(inpValue).subscribe(
       data => {
         console.log(data);
-        this.options =data;
+        this.options = data;
       }
     );
   }
@@ -460,15 +460,15 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     let addOns = [];
     let addOnList = this.motorInsuranceForm.get('addOnForm') as FormArray
     addOnList.controls.forEach(element => {
-      if( element.get('additionalCovers').value){
+      if (element.get('additionalCovers').value) {
         let obj =
         {
-          addOnId : element.get('additionalCovers').value,
-          addOnSumInsured:null
+          addOnId: element.get('additionalCovers').value,
+          addOnSumInsured: null
         }
         addOns.push(obj)
-      } else{
-        addOns =[];
+      } else {
+        addOns = [];
       }
 
     })
@@ -485,14 +485,14 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         "policyNumber": this.motorInsuranceForm.get('policyNum').value,
         "insurerName": this.motorInsuranceForm.get('insurerName').value,
         "policyName": this.motorInsuranceForm.get('policyName').value,
-        "policyStartDate": this.motorInsuranceForm.get('policyStartDate').value,
-        "policyExpiryDate": this.motorInsuranceForm.get('policyExpiryDate').value,
+        "policyStartDate":this.datePipe.transform(this.motorInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate":this.datePipe.transform(this.motorInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "ccGvw": this.motorInsuranceForm.get('cgGvw').value,
         "sumInsuredIdv": this.motorInsuranceForm.get('declaredValue').value,
         "premiumAmount": this.motorInsuranceForm.get('premium').value,
         "vehicleTypeId": this.motorInsuranceForm.get('vehicleType').value,
         "vehicleRegNo": this.motorInsuranceForm.get('registrationNumber').value,
-        "vehicleRegistrationDate": this.motorInsuranceForm.get('registrationDate').value,
+        "vehicleRegistrationDate":this.datePipe.transform(this.motorInsuranceForm.get('registrationDate').value, 'yyyy-MM-dd'),
         "vehicleModel": this.motorInsuranceForm.get('modelName').value,
         "engineNo": this.motorInsuranceForm.get('engineNumber').value,
         "chasisNo": this.motorInsuranceForm.get('chassisNumber').value,
@@ -505,8 +505,8 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         "serviceBranch": this.motorInsuranceForm.get('serviceBranch').value,
         "linkedBankAccount": this.motorInsuranceForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
-        "id":(this.id) ? this.id : null,
-        "addOns":addOns,
+        "id": (this.id) ? this.id : null,
+        "addOns": addOns,
         nominees: this.motorInsuranceForm.value.getNomineeName,
       }
 
@@ -518,11 +518,11 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         });
         obj.nominees = this.motorInsuranceForm.value.getNomineeName;
         obj.nominees.forEach(element => {
-          if(element.sharePercentage){
+          if (element.sharePercentage) {
             element.sumInsured = element.sharePercentage;
           }
-           element.insuredOrNominee = 2
-         });
+          element.insuredOrNominee = 2
+        });
       } else {
         obj.nominees = [];
       }
@@ -535,7 +535,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Updated successfully!", 'dismiss');
+            this.eventService.openSnackBar("Updated successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,
@@ -549,7 +549,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
           data => {
             this.barButtonOptions.active = false;
             console.log(data);
-            this.eventService.openSnackBar("Added successfully!", 'dismiss');
+            this.eventService.openSnackBar("Added successfully!", 'Dismiss');
             const insuranceData =
             {
               insuranceTypeId: this.inputData.insuranceTypeId,

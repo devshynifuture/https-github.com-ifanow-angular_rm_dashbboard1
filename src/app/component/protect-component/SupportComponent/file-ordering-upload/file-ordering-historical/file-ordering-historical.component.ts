@@ -21,6 +21,7 @@ import { debounce, debounceTime } from 'rxjs/operators';
 })
 export class FileOrderingHistoricalComponent implements OnInit {
 	searchByName: { value: any; type: string };
+	tableData = [];
 
 	constructor(
 		private eventService: EventService,
@@ -105,7 +106,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					});
 					this.getRmMasterDetails();
 				} else {
-					this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
+					this.eventService.openSnackBar("Error In Fetching RTA List", "Dismiss");
 				}
 			});
 	}
@@ -180,12 +181,44 @@ export class FileOrderingHistoricalComponent implements OnInit {
 		});
 	}
 
-	refreshFileOrder() {
+	refreshFileOrder(element, index) {
+		console.log(element);
 		this.dataSource.data = ELEMENT_DATA;
-		this.fileOrderHistoryListGet({
-			days: this.days,
-			rtId: this.rtId
-		});
+		let data = {
+			arnRiaDetailId: element.arnRiaDetailId,
+			rmId: element.rmId,
+			rtId: element.rtId,
+			startedOn: element.startedOn
+		}
+		this.isLoading = true;
+		this.fileOrderingUploadService.getFileOrderRefreshPerRowData(data)
+			.subscribe(res => {
+				if (res) {
+					console.log(res);
+					let obj = {};
+					obj['advisorName'] = res.advisorName;
+					obj['rta'] = this.getRtName(res.rtId);
+					obj['orderedBy'] = res.rmName;
+					obj['startedOn'] = res.fileOrderDateTime
+					obj['totalFiles'] = res.totalFiles;
+					obj['queue'] = res.inqueue ? element.inqueue : "-";
+					obj['ordering'] = res.orderingFrequency;
+					obj['ordered'] = res.ordered ? element.ordered : "-";
+					obj['failed'] = res.skipped ? element.skipped : "-";
+					obj['uploaded'] = res.uploaded ? element.uploaded : "-";
+					obj['refresh'] = res.refresh ? element.refresh : "-";
+					obj['empty'] = res.empty ? element.empty : "-";
+					obj['rtId'] = res.rtId;
+					obj['rmId'] = res.rmId;
+					obj['days'] = res.days;
+					obj['arnRiaDetailId'] = res.arnRiaDetailId;
+
+					this.dataSource.data = ELEMENT_DATA;
+					this.tableData[index] = obj;
+					this.dataSource.data = this.tableData;
+					this.isLoading = false;
+				}
+			})
 	}
 
 	getRmMasterDetails() {
@@ -198,11 +231,10 @@ export class FileOrderingHistoricalComponent implements OnInit {
 				this.rmList = data;
 				this.defaultSelectionInFilter();
 			} else {
-				this.eventService.openSnackBar("No Rm Data Found!", "DISMISS");
+				this.eventService.openSnackBar("No Rm Data Found!", "Dismiss");
 			}
 		});
 	}
-
 	fileOrderHistoryListGet(data) {
 		this.isLoading = true;
 		this.fileOrderingUploadService
@@ -237,8 +269,9 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					});
 
 					this.dataSource.data = tableData;
+					this.tableData = tableData;
 				} else {
-					this.eventService.openSnackBar("No Data Found", "DISMISS");
+					this.eventService.openSnackBar("No Data Found", "Dismiss");
 					this.dataSource.data = null;
 				}
 			});

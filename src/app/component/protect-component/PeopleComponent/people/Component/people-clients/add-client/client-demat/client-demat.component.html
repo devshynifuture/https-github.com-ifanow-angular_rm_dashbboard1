@@ -28,7 +28,7 @@
       </mat-radio-group>
     </div>
   </div>
-  <div *ngIf="holdingMode=='1'" class="row pt-54 mob-pt-10">
+  <div *ngIf="holdingMode=='1'" class="row pt-44 mob-pt-10">
     <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10">
       <h5 class="m-0 pt-20">Holder name</h5>
     </div>
@@ -37,7 +37,8 @@
         <mat-form-field floatLabel="never" appearance="standard">
           <input (input)="capitalise($event)" placeholder="Enter holder name" autocomplete="off"
             formControlName="holderName" #holderName appInputValueValidation
-            [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
+            [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50" matInput
+            class="form-control">
           <mat-hint align="end" class="f-12">{{holderName.value.length}}/50</mat-hint>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
@@ -55,8 +56,8 @@
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter depository participant name" autocomplete="off" formControlName="depositoryPartName"
-            #nadNameme appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput
-            class="form-control">
+            #nadNameme appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
+            [maxLength]="50" matInput class="form-control">
           <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
@@ -101,7 +102,8 @@
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input autocomplete="off" placeholder="Enter broker name " #brokerName appInputValueValidation
-            [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput class="form-control">
+            [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" formControlName="brekerName" matInput
+            class="form-control">
           <mat-hint align="end" class="f-12">{{brokerName.value.length}}/50</mat-hint>
           <mat-hint>Optional</mat-hint>
         </mat-form-field>
@@ -150,9 +152,8 @@
           <p class="m-0 roboto text-custom pt-8 ws-pre">+ Add nominee</p>
       </div>
   </div> -->
-  <div *ngIf="nomineesListFM" formArrayName="getNomineeName">
-    <div class="row pt-36" *ngFor="let obj of getNominee.controls; let pointIndex=index"
-      [formGroupName]="pointIndex">
+  <div *ngIf="checkNomineeFlag" formArrayName="getNomineeName">
+    <div class="row pt-48" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right mob-pl-10 mob-text-left">
         <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
       </div>
@@ -169,9 +170,7 @@
                 <span>{{f.userName}}</span>
               </mat-option>
             </mat-select>
-            <mat-error class="f-12">
-              This field is required
-            </mat-error>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -222,8 +221,8 @@
       <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter power of attorney name" autocomplete="off" #paName appInputValueValidation
-            [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName" matInput
-            class="form-control">
+            [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50"
+            formControlName="powerOfAttName" matInput class="form-control">
           <mat-hint>Optional</mat-hint>
           <mat-hint align="end" class="f-12">{{paName.value.length}}/50</mat-hint>
         </mat-form-field>

@@ -48,16 +48,13 @@
                             keyboard_arrow_right
                         </mat-icon>
                     </a> -->
-                    <mat-accordion class="menuAccordion">
+                    <!-- <mat-accordion class="menuAccordion">
                         <mat-expansion-panel hideToggle={{arrow}} expanded={{showTabs}}>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <a mat-list-item class="sidenav-link expand-link">
                                         <img src="assets/images/svg/file-lines.svg">
                                         <span *ngIf="showTabs" class="title" mat-line>Activities</span>
-                                        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                                        keyboard_arrow_right
-                                    </mat-icon> -->
                                     </a>
                                 </mat-panel-title>
 
@@ -87,7 +84,7 @@
                                 <span *ngIf="showTabs" class="title" mat-line>calendar</span>
                             </a>
                         </mat-expansion-panel>
-                    </mat-accordion>
+                    </mat-accordion> -->
 
                     <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
                         routerLink="./emails/inbox/google-connect">
@@ -119,7 +116,7 @@
                         <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
                     </a> -->
                     <mat-accordion class="menuAccordion">
-                        <mat-expansion-panel hideToggle={{arrow}} expanded={{showTabs}}>
+                        <mat-expansion-panel hideToggle={{arrow}}>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <a mat-list-item class="sidenav-link expand-link">
@@ -337,9 +334,8 @@
                                     </div>
                                 </div>
                             </button>
-
                         </div>
-                        <p class="m-0 roboto text-primitive text-center pt-60 pb-28">Office hours: 10.00AM - 6.30PM
+                        <p class="m-0 roboto text-primitive text-center pt-40 pb-28">Office hours: 10.00AM - 6.30PM
                             (Monday to Friday)
                         </p>
                         <div class="p-20 bg-grey lter">

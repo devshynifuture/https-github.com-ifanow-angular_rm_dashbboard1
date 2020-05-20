@@ -42,16 +42,16 @@ export class LeadsClientsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clientRoles = this.enumService.getClientRole();
-    this.convertClientForm = this.fb.group({
-      clientOwner: ['', [Validators.required]],
-      confirmRole: ['', [Validators.required]],
-      sendEmailFlag: [true, [Validators.required]]
-    });
   }
 
   set data(data) {
     this.clientData = data;
+    this.clientRoles = this.enumService.getClientRole();
+    this.convertClientForm = this.fb.group({
+      clientOwner: [data.advisorId, [Validators.required]],
+      confirmRole: ['', [Validators.required]],
+      sendEmailFlag: [true, [Validators.required]]
+    });
     this.getClientList(data);
   }
 
@@ -59,7 +59,7 @@ export class LeadsClientsComponent implements OnInit {
     const obj = {
       advisorId: AuthService.getAdvisorId()
     };
-    this.peopleService.getAllClients(obj).subscribe(
+    this.peopleService.getTeamMemberList(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;
@@ -78,14 +78,15 @@ export class LeadsClientsComponent implements OnInit {
       clientId: this.clientData.clientId,
       roleId: parseInt(this.convertClientForm.get('confirmRole').value),
       status: 1, // 1- client, 2 - lead
-      advisorId: this.convertClientForm.get('clientOwner').value.advisorId,
+      advisorId: this.convertClientForm.get('clientOwner').value,
       sendEmail: this.convertClientForm.get('sendEmailFlag').value
     };
     this.peopleService.updateClientStatus(obj).subscribe(
       data => {
         console.log(data);
         this.enumDataService.searchClientList();
-        this.router.navigate(['/admin/people/clients'])
+        this.enumDataService.searchClientAndFamilyMember();
+        this.router.navigate(['/admin/people/clients']);
         this.close();
         this.barButtonOptions.active = false;
       },

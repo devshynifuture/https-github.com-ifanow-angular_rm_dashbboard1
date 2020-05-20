@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
   <div class="row bb-1">
     <div class="col-md-8 p-0">
-      <h4 class="mb-0 wrapper-20">ADD MANDATE </h4>
+      <h4 class="mb-0 wrapper-20"> Add mandate </h4>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -43,7 +43,7 @@
       </div>
       <div class="col-md-5 form-group">
         <mat-form-field>
-          <mat-select class="form-control" formControlName="holdingNature">
+          <mat-select class="form-control" formControlName="holdingType">
             <mat-option disabled value=''>Select IIN/UCC</mat-option>
             <mat-option (click)="selectIINUCC(clientCode)" *ngFor="let clientCode of clientCodeData"
                         [value]="clientCode.clientCode">
@@ -80,8 +80,8 @@
       </div>
       <div class="col-md-3 form-group">
         <mat-form-field class="ba-date">
-          <input (click)="picker.open()" [matDatepicker]="picker" autocomplete="off" class="form-control b-0"
-                 [min]="currentDate" formControlName="fromDate" matInput readonly value="dd/MM/yy">
+          <input (click)="picker.open()" [matDatepicker]="picker" [min]="currentDate" autocomplete="off"
+                 class="form-control b-0" formControlName="fromDate" matInput readonly value="dd/MM/yy">
           <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error class="f-12 pt-4">
@@ -245,7 +245,7 @@
       <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-10 right text-right">
-<!--      <h6>{{errorMsg}}</h6>-->
+      <!--      <h6>{{errorMsg}}</h6>-->
       <!-- (click)="createMandate()" removed for prod build -->
       <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
     </div>

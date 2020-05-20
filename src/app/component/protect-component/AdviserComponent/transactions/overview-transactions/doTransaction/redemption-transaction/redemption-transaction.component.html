@@ -2,7 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h3 class="mb-0 wrapper-20"><img (click)="backToTransact()" class="c-p mr-8"
-                                       src="/assets/images/svg/back-arrow.svg"> {{transactionType}} TRANSACTION</h3>
+                                       src="/assets/images/svg/back-arrow.svg"> Redemption transaction </h3>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -26,18 +26,18 @@
       <table [dataSource]="childTransactions" id="table-low" mat-table>
         <ng-container matColumnDef="no">
           <th *matHeaderCellDef class="br" mat-header-cell> No</th>
-          <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
+          <td *matCellDef="let element let i = index;" class="br w-4  " mat-cell>
             <div class="bar"> {{i + 1 }} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="folio">
-          <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
+          <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.folioNo}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="ownerName">
-          <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
+          <th *matHeaderCellDef class="br " mat-header-cell> Scheme name</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar">
               {{element.schemeName}}
@@ -45,7 +45,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="amount">
-          <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
+          <th *matHeaderCellDef class="br w-11" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br" mat-cell>
             <div class="bar"> {{element.orderVal}} </div>
           </td>
@@ -56,9 +56,10 @@
             <!-- ng build prod issue isLoading removed -->
             <!-- <div *ngIf="!isLoading"> -->
             <div>
-              <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                more_vert
-              </i>
+
+
+              <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
+
               <mat-menu #menubank="matMenu">
                 <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
                 <button mat-menu-item>Delete</button>
@@ -71,6 +72,7 @@
         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
       </table>
     </div>
+
     <div class="row pt-28 pb-44">
       <div class="col-md-8 pl-0 pr-20">
 
@@ -81,17 +83,17 @@
             <h5 class="m-0  text-black">Select scheme to redeem from</h5>
           </div>
         </div>
+
         <div class="row">
           <div class="col-md-11 p-0">
             <div class="form-group ">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input [matAutocomplete]="auto" appCustomAutoComplete
-                       aria-label="Number" class="form-control" formControlName="schemeRedeem" matInput
-                       placeholder="Start typing to see scheme names" type="text">
+                <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
+                       formControlName="schemeRedeem" matInput placeholder="Start typing to see scheme names"
+                       type="text">
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
                                   [displayWith]="processTransaction.displaySchemeName">
-                  <mat-option
-                    *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
+                  <mat-option *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -102,7 +104,7 @@
                   This field is required
                 </mat-error>
                 <mat-error *ngIf="redemptionTransaction.get('schemeRedeem').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
+                  No schemes Found
                 </mat-error>
               </mat-form-field>
             </div>
@@ -111,6 +113,7 @@
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
+
         <div class="row">
           <div class="col-md-6 p-0 text-left">
             <h5 class="mb-8 pt-28 text-black ">Select scheme folio</h5>
@@ -118,8 +121,8 @@
           <div class="col-md-7 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select class="form-control" formControlName="folioSelection">
-                  <mat-option value='' disabled>Select scheme folio</mat-option>
+                <mat-select [(ngModel)]="folioNumberShow" class="form-control" formControlName="folioSelection">
+                  <mat-option disabled value=''>Select scheme folio</mat-option>
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
                               [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                 </mat-select>
@@ -136,112 +139,121 @@
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
+
         <div *ngIf="showUnits ==true" class="row">
           <div class="col-md-12 mt-20 pl-0">
             <div *ngIf="folioDetails" class="bg-grey lter">
               <div class="row">
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Current value</p>
-                  <h3 class="f-18 roboto m-0">Rs: {{currentValue}}</h3>
+                  <p class="f-14 m-0">{{currentValue ? currentValue : '0'}}</p>
+
+                  <!--                  <mat-form-field appearance="standard" floatLabel="never">-->
+                  <!--                    <input #currentValue appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"-->
+                  <!--                           formControlName="currentValue" matInput type="text">-->
+                  <!--                  </mat-form-field>-->
                 </div>
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Balance unit</p>
-                  <h3 class="f-18 roboto m-0">{{folioDetails.balanceUnit}}</h3>
+                  <p class="f-14 m-0">{{folioDetails && folioDetails.balanceUnit ? folioDetails.balanceUnit : '0'}}</p>
+                  <!--                                    <mat-form-field appearance="standard" floatLabel="never">-->
+                  <!--                                        <input #balanceUnit appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="balanceUnit" matInput type="text">-->
+                  <!--                                    </mat-form-field>-->
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pb-12">
-                  <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This
-                    data may not be updated in NSE NMF. As a result, some transactions may not go through.</p>
+                <div class="row">
+                  <div class="col-md-12 pb-12">
+                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This
+                      data may not be updated in NSE NMF II. As a result, some transactions may not go through.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="mb-8 pt-28 text-black ">Redemption type</h5>
-          </div>
-          <div class="col-md-5 p-0">
-            <mat-form-field>
-              <mat-select (selectionChange)="redemptionType($event)" class="form-control br-0"
-                          formControlName="redeemType">
-                <mat-option value='' disabled>Select redemption type</mat-option>
-                <mat-option value="1">Amount Rs.
-                </mat-option>
-                <mat-option value="2">No. of units
-                </mat-option>
-                <mat-option value="3">All available units
-                </mat-option>
-              </mat-select>
-              <mat-error class="f-12 pt-4">
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <div *ngIf="(redemptionTransaction.get('redeemType').value) != 3" class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="mb-8 pt-28 text-black"> Amount/Units</h5>
-          </div>
-
-          <div class="col-md-5 p-0">
-            <div class="form-group  inputPaddNone iconRupess">
-              <mat-form-field appearance="standard" floatLabel="never">
-                <input placeholder="Enter Amounts/Units" #employeeContry appInputValueValidation
-                       [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)"
-                       class="form-control  rupess" formControlName="employeeContry" matInput maxlength="10"
-                       type="text">
-                <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
-                          class="f-12 text-custom">
-                  Min amount: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumPurchaseAmount }}
-                </mat-hint>
-                <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 2)" align="start"
-                          class="f-12 text-custom">
-                  Min unit: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumRedemptionQty }}
-                </mat-hint>
-                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
-                </mat-error>
-                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)" class="f-12">
-                  This field is requied
+          <div class="row">
+            <div class="col-md-12 p-0 text-left">
+              <h5 class="mb-8 pt-28 text-black ">Redemption type</h5>
+            </div>
+            <div class="col-md-12 p-0">
+              <mat-form-field>
+                <mat-select (selectionChange)="redemptionType($event)" class="form-control br-0"
+                            formControlName="redeemType">
+                  <mat-option disabled value=''>Select redemption type</mat-option>
+                  <mat-option value="1">Amount Rs.
+                  </mat-option>
+                  <mat-option value="2">No. of units
+                  </mat-option>
+                  <mat-option value="3">All available units
+                  </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                  This field is required
                 </mat-error>
               </mat-form-field>
             </div>
           </div>
+
+          <div *ngIf="(redemptionTransaction.get('redeemType').value) != 3" class="row">
+            <div class="col-md-12 p-0 text-left">
+              <h5 class="mb-8 pt-28 text-black"> Amount/Units</h5>
+            </div>
+
+            <div class="col-md-5 p-0">
+              <div class="form-group  inputPaddNone iconRupess">
+                <mat-form-field appearance="standard" floatLabel="never">
+                  <input #employeeContry (change)="enteredAmount($event.target.value)"
+                         [inputValidator]="validatorType.NUMBER_ONLY"
+                         appInputValueValidation class="form-control  rupess"
+                         formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
+                         type="text">
+                  <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
+                            class="f-12 text-custom">
+                    Min amount: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumPurchaseAmount }}
+                  </mat-hint>
+                  <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 2)" align="start"
+                            class="f-12 text-custom">
+                    Min unit: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumRedemptionQty }}
+                  </mat-hint>
+                  <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
+                    Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                  </mat-error>
+                  <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)" class="f-12">
+                    This field is requied
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
       <div class="col-md-4 bg-grey lter p-0">
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
                                  (folioChange)='onFolioChange($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
+
     </div>
+
   </div>
+  <div class="bottom-fixed wrapper-12 pt-16 w-65">
+    <div class="row">
+      <div class="col-md-4 pt-8">
+        <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
+      </div>
+      <!-- <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
 
-</div>
-<div class="bottom-fixed wrapper-12 pt-16 w-65">
-  <div class="row">
-    <div class="col-md-4 pt-8">
-      <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
-    </div>
-    <!-- <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
-
-    <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
+<h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
 </div> -->
-    <div class="col-md-8 text-right d-flex justify-content-end">
-      <!-- commented for prod build -->
-      <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1"
-              class="br-0 mr-12 text-success f-14" mat-button mat-raised-button>
-        SAVE & ADD ANOTHER
-      </button>
-      <!-- <button mat-button class="btn-green text-white ml-12" (click)="redeem()">
-    SAVE & PROCEED
+      <div class="col-md-8 text-right d-flex justify-content-end">
+        <!-- commented for prod build -->
+        <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1"
+                class="br-0 mr-12 text-success f-14" mat-button mat-raised-button>
+          SAVE & ADD ANOTHER
+        </button>
+        <!-- <button mat-button class="btn-green text-white ml-12" (click)="redeem()">
+SAVE & PROCEED
 </button> -->
-      <app-progress-button (click)="redeem()" [options]="barButtonOptions" class="btn-green text-white  ">
-      </app-progress-button>
+        <app-progress-button (click)="redeem()" [options]="barButtonOptions" class="btn-green text-white  ">
+        </app-progress-button>
+      </div>
     </div>
   </div>
-</div>
