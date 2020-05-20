@@ -64,7 +64,7 @@
                         Purchase value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" >
-                        ₹<span appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
+                        {{realEstate.purchaseValue?'₹':''}}<span appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -72,7 +72,7 @@
                         Stamp duty
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" >
-                        ₹<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
+                        {{realEstate.stampDutyCharge?'₹':''}}<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -80,7 +80,7 @@
                         Area
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹<span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span> {{realEstate.ratePerUnit?this.unit:''}}
+                        {{realEstate.ratePerUnit?'₹':''}}<span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span> {{realEstate.ratePerUnit?this.unit:''}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -88,7 +88,7 @@
                         Registration
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
+                        {{realEstate.stampDutyCharge?'₹':''}}<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -96,7 +96,7 @@
                         GST
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹<span appFormatNumber>{{realEstate.gstCharge?realEstate.gstCharge:'-'}}</span>
+                        {{realEstate.gstCharge?'₹':''}}<span appFormatNumber>{{realEstate.gstCharge?realEstate.gstCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

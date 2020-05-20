@@ -240,6 +240,7 @@ addNewNominee(data) {
           date: [new Date(element.holdingOrTransactionDate), [Validators.required]],
           transactionAmount: [element.investedOrTransactionAmount, [Validators.required]],
           quantity: [element.quantity, [Validators.required]],
+          isDeleted: [element.isDeleted, [Validators.required]],
           id: [element.id]
         }))
       });
@@ -288,10 +289,15 @@ addNewNominee(data) {
       date: [, [Validators.required]],
       transactionAmount: [, [Validators.required]],
       quantity: [, [Validators.required]],
+      isDeleted: [false],  
       id: []
     }))
   }
+  removed:any=[];
   removeTransactions(index) {
+    this.transactionArray.controls[index].get('isDeleted').setValue(true);
+    const reControls = this.transactionArray.controls[index];
+    this.removed.push(reControls.value);
     (this.transactionArray.length == 1) ? console.log("cannot remove") : this.transactionArray.removeAt(index)
   }
   getPortfolioList() {
@@ -364,8 +370,7 @@ addNewNominee(data) {
       // }
       // else {
         let finalStocks = [];
-        this.transactionArray.controls.forEach(element => {
-          let obj = {
+          let transObj = {
             "valueAsOn": null,
             "currentMarketValue": 0,
             "amountInvested": 0,
@@ -373,18 +378,41 @@ addNewNominee(data) {
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
             "id":this.editApiData?this.editApiData.id:null,
-            "transactionorHoldingSummaryList": [
-              {
-                "id": element.get('id').value,
-                "holdingOrTransaction": 2,
-                "quantity": element.get('quantity').value,
-                "holdingOrTransactionDate": element.get('date').value,
-                "transactionTypeOrScripNameId": element.get('transactionType').value,
-                "investedOrTransactionAmount": element.get('transactionAmount').value
-              }
-            ]
+            "transactionorHoldingSummaryList": []
           }
-          finalStocks.push(obj)
+        this.transactionArray.controls.forEach(element => {
+          let tran = {
+            "id": element.get('id').value,
+            "holdingOrTransaction": 2,
+            "quantity": element.get('quantity').value,
+            "holdingOrTransactionDate": element.get('date').value,
+            "transactionTypeOrScripNameId": element.get('transactionType').value,
+            "investedOrTransactionAmount": element.get('transactionAmount').value,
+            'isDeleted':  element.get('isDeleted').value,  
+          }
+          transObj.transactionorHoldingSummaryList.push(tran);
+
+          if(this.removed.length > 0){
+            this.removed.forEach(d => {
+              // for(let element in d.controls){
+
+              // }
+              let deleted = {
+                "id": d.id,
+                  "holdingOrTransaction": 2,
+                  "quantity": d.quantity,
+                  "holdingOrTransactionDate": d.date,
+                  "transactionTypeOrScripNameId": d.transactionType,
+                  "investedOrTransactionAmount": d.transactionAmount,
+                  'isDeleted':  d.isDeleted, 
+              }
+              transObj.transactionorHoldingSummaryList.push(deleted);
+              // d.controls.forEach(d => {
+                
+              // });
+            });
+          }
+          finalStocks.push(transObj)
         })
         console.log(finalStocks)
         const obj =
