@@ -5,7 +5,7 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {ValidatorType} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -27,6 +27,7 @@ export class RedemptionTransactionComponent implements OnInit {
     return this.inputData;
   }
 
+  amcId;
   isSuccessfulTransaction = false;
 
   barButtonOptions: MatProgressButtonOptions = {
@@ -201,6 +202,15 @@ export class RedemptionTransactionComponent implements OnInit {
     }
   }
 
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      this.getSchemeList();
+    }
+  }
+
   enteredAmount(value) {
     Object.assign(this.transactionSummary, {enteredAmount: value});
   }
@@ -217,8 +227,13 @@ export class RedemptionTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
     }
+    let amcId = 0;
+    if (this.childTransactions && this.childTransactions.length > 0) {
+      amcId = this.childTransactions[0].amcId;
+    }
     const obj = {
       bseOrderType: 'REDEMPTION',
+      amcId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       showOnlyNonZero: true,
@@ -244,7 +259,6 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.schemeList = data;
     this.redemptionTransaction.controls.schemeRedeem.setValue('');
-
   }
 
   getbankDetails(bank) {
@@ -483,8 +497,16 @@ export class RedemptionTransactionComponent implements OnInit {
         } else {
           this.childTransactions.push(obj);
         }
+        if (this.childTransactions.length == 1) {
+          this.getSchemeList();
+        }
+        this.amcId = this.scheme.amcId;
+        this.scheme = null;
+        this.schemeDetails = null;
         console.log(this.childTransactions);
-        this.schemeList = [];
+        this.navOfSelectedScheme = 0;
+        this.folioDetails = null;
+        this.folioList = [];
         this.redemptionTransaction.controls.employeeContry.reset();
         this.redemptionTransaction.controls.investmentAccountSelection.reset();
         this.redemptionTransaction.controls.schemeRedeem.reset();
