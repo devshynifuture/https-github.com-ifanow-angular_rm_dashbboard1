@@ -41,6 +41,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   loginType = 1;
   showDefaultDropDownOnSearch: boolean;
   isOpen: boolean;
+  roleObj:any = {};
 
   logoText = 'Your Logo here';
 
@@ -56,7 +57,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
     super(eventService, subinject, dynamicComponentService);
-
   }
 
   // getClientList(data) {
@@ -142,7 +142,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       )
   }
 
-
   getOrgProfiles() {
     // this.utilService.loader(1)
     let obj = {
@@ -169,6 +168,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       data => {
         if (data && data.hasOwnProperty('profilePic')) {
           AuthService.setProfilePic(data.profilePic);
+          AuthService.setUserRoleType(data.role || {});
+          this.roleObj = data.role || {};
         } else {
           AuthService.setProfilePic('/assets/images/svg/comment-icon.svg')
         }

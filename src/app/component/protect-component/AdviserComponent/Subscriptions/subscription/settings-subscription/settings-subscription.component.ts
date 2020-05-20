@@ -12,32 +12,13 @@ export class SettingsSubscriptionComponent implements OnInit {
   selected: any;
 
   constructor(private router: Router, private route: ActivatedRoute) {
-    // const navigation = this.router.getCurrentNavigation();
-    // if (navigation.extras.replaceUrl == false && navigation.extras.state != undefined) {
-    //   this.selected = navigation.extras.state.example;
-    // } else if (navigation.extras.replaceUrl == undefined && navigation.extras.state != undefined) {
-    //   this.selected = navigation.extras.state.example;
-    // } else {
-    //   this.selected = 0;
-    //   // this.selected = 3;
-    // }
   }
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
-
-  // @Input() set sIndex(data) {
-  //   // this.tabGroup.selectedIndex = data
-  //   this.selected = data
-  //   console.log( data, "this.label 1234");
-
-  // };
   label:any;
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.label = params.get("label")
     })
-    console.log("i was called for check 1", this.label);
-    
-    // this.label = this.route.snapshot.paramMap.get("label")
     switch (this.label) {
       case 'plans':
       this.selected = 0;
@@ -54,15 +35,11 @@ export class SettingsSubscriptionComponent implements OnInit {
       default:
       this.selected = 3;
     }
-    // this.tabGroup.selectedIndex = 0;
-    console.log(this.label, this.selected,"this.label 123");
   }
 
   
 
   navTab(){
-    // const navigation = this.router.getCurrentNavigation();
-    console.log('afterViewInit => ', this.tabGroup.selectedIndex);
     switch (this.tabGroup.selectedIndex) {
       case 0:
         this.label = 'plans'
@@ -83,10 +60,4 @@ export class SettingsSubscriptionComponent implements OnInit {
     
     this.router.navigate(['/admin/subscription/settings',this.label]);
   }
-
-
-  
-  // tabClick(value) {
-  //   this.selectedTab = value.tab.textLabel;
-  // }
 }
