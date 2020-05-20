@@ -1,13 +1,14 @@
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import {SubscriptionInject} from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
 
-import { EventService } from './../../../../../Data-service/event.service';
-import { FileOrderingDetailComponent } from '../file-ordering-detail/file-ordering-detail.component';
-import { UtilService } from 'src/app/services/util.service';
-import { FileOrderingUploadService } from '../file-ordering-upload.service';
-import { SupportService } from '../../support.service';
-import { SelectionModel } from '@angular/cdk/collections';
+import {EventService} from './../../../../../Data-service/event.service';
+import {FileOrderingDetailComponent} from '../file-ordering-detail/file-ordering-detail.component';
+import {UtilService} from 'src/app/services/util.service';
+import {FileOrderingUploadService} from '../file-ordering-upload.service';
+import {SupportService} from '../../support.service';
+import {SelectionModel} from '@angular/cdk/collections';
+
 @Component({
   selector: 'app-file-ordering-upper',
   templateUrl: './file-ordering-upper.component.html',
@@ -16,6 +17,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class FileOrderingUpperComponent implements OnInit {
   fileName: any;
   isDisableTooltip = true;
+
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -342,6 +344,8 @@ export class FileOrderingUpperComponent implements OnInit {
     );
   }
 
+  refreshList() {
+  }
 }
 const ELEMENT_DATA: fileOrderingUpperI[] = [
   { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' },
