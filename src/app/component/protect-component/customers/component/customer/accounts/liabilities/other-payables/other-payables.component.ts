@@ -182,7 +182,7 @@ export class OtherPayablesComponent implements OnInit {
   getStatusId(data){
     data.forEach(obj => {
       if (obj.dateOfRepayment < new Date()) {
-        obj.statusId = 'MATURED';
+        obj.statusId = 'CLOSED';
       } else {
         obj.statusId = 'LIVE';
       }
@@ -205,19 +205,26 @@ export class OtherPayablesComponent implements OnInit {
   }
 
   getOtherPayablesRes(data) {
-    console.log(data);
-    this.isLoading = false;
-    this.dataSource = new MatTableDataSource(data);
-    this.filterData = this.dataSource
-    this.dataSource.sort = this.sort;
-    this.OtherDataChange.emit(this.dataSource);
-    this.getStatusId(this.dataSource.data)
-    this.dataSource.data.forEach(element => {
-      this.totalAmountBorrowed += element.amountBorrowed;
-    });
-    this.dataSource.data.forEach(element => {
-      this.totalAmountOutstandingBalance += element.outstandingBalance;
-    });
+    if(data){
+      console.log(data);
+      this.isLoading = false;
+      this.dataSource = new MatTableDataSource(data);
+      this.filterData = this.dataSource
+      this.dataSource.sort = this.sort;
+      this.OtherDataChange.emit(this.dataSource);
+      this.getStatusId(this.dataSource.data)
+      this.totalAmountBorrowed =0;
+      this.totalAmountOutstandingBalance = 0;
+      this.dataSource.data.forEach(element => {
+        this.totalAmountBorrowed += element.amountBorrowed;
+      });
+      this.dataSource.data.forEach(element => {
+        this.totalAmountOutstandingBalance += element.outstandingBalance;
+      });
+    }else{
+      this.dataSource.data = []
+    }
+
   }
 
   deleteModal(value, data) {

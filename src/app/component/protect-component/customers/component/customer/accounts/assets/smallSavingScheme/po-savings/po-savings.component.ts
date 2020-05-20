@@ -64,12 +64,12 @@ export class PoSavingsComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      clientId: element.clientId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
     this.myFiles = fileName.target.files[0]

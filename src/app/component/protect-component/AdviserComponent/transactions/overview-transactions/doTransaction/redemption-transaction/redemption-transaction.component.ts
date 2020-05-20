@@ -5,7 +5,7 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {ValidatorType} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
@@ -27,6 +27,7 @@ export class RedemptionTransactionComponent implements OnInit {
     return this.inputData;
   }
 
+  amcId;
   isSuccessfulTransaction = false;
 
   barButtonOptions: MatProgressButtonOptions = {
@@ -141,6 +142,8 @@ export class RedemptionTransactionComponent implements OnInit {
     this.schemeList = null;
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
+    this.folioList = [];
+    this.folioDetails = null;
     this.onFolioChange(null);
     this.navOfSelectedScheme = 0;
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
@@ -148,7 +151,7 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {folioNumber: ''});
     this.redemptionTransaction.controls.employeeContry.reset();
     this.redemptionTransaction.controls.investmentAccountSelection.reset();
-    this.redemptionTransaction.controls.schemePurchase.reset();
+    this.redemptionTransaction.controls.schemeRedeem.reset();
   }
 
   redemptionType(value) {
@@ -183,7 +186,7 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
       schemeRedeem: [(!data) ? '' : data.schemeName, [Validators.required]],
 
@@ -196,6 +199,15 @@ export class RedemptionTransactionComponent implements OnInit {
     if (data.folioNo) {
       this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
       this.getSchemeWiseFolios();
+    }
+  }
+
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      this.getSchemeList();
     }
   }
 
@@ -215,8 +227,13 @@ export class RedemptionTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
     }
+    let amcId = 0;
+    if (this.childTransactions && this.childTransactions.length > 0) {
+      amcId = this.childTransactions[0].amcId;
+    }
     const obj = {
       bseOrderType: 'REDEMPTION',
+      amcId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       showOnlyNonZero: true,
@@ -242,7 +259,6 @@ export class RedemptionTransactionComponent implements OnInit {
     this.showSpinner = false;
     this.schemeList = data;
     this.redemptionTransaction.controls.schemeRedeem.setValue('');
-
   }
 
   getbankDetails(bank) {
@@ -251,7 +267,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   onFolioChange(folio) {
-    this.redemptionTransaction.controls.folioSelection.setValue('');
+    this.redemptionTransaction.controls.investmentAccountSelection.setValue('');
   }
 
   selectedScheme(scheme) {
@@ -317,10 +333,10 @@ export class RedemptionTransactionComponent implements OnInit {
     console.log('res scheme folio', data);
     this.folioList = data;
     if (this.folioList.length == 1) {
-      this.redemptionTransaction.controls.folioSelection.setValue(this.folioList[0].folioNumber);
+      this.redemptionTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
       this.selectedFolio(this.folioList[0]);
     }
-    if (this.redemptionTransaction.get('folioSelection').valid) {
+    if (this.redemptionTransaction.get('investmentAccountSelection').valid) {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
@@ -338,8 +354,8 @@ export class RedemptionTransactionComponent implements OnInit {
 
   redeem() {
 
-    if (this.redemptionTransaction.get('folioSelection').invalid) {
-      this.redemptionTransaction.get('folioSelection').markAsTouched();
+    if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
+      this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
       return;
@@ -436,8 +452,8 @@ export class RedemptionTransactionComponent implements OnInit {
     } else if (this.redemptionTransaction.get('schemeRedeem').invalid) {
       this.redemptionTransaction.get('schemeRedeem').markAsTouched();
       return;
-    } else if (this.redemptionTransaction.get('folioSelection').invalid) {
-      this.redemptionTransaction.get('folioSelection').markAsTouched();
+    } else if (this.redemptionTransaction.get('investmentAccountSelection').invalid) {
+      this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
       return;
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
@@ -470,7 +486,7 @@ export class RedemptionTransactionComponent implements OnInit {
             if (element.id == this.editedId) {
               element.id = this.editedId;
               element.mutualFundSchemeMasterId = (this.scheme) ? this.scheme.mutualFundSchemeMasterId : null;
-              element.folioNo = this.redemptionTransaction.get('folioSelection').value;
+              element.folioNo = this.redemptionTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.redemptionTransaction.get('employeeContry').value;
               element.schemeName = this.redemptionTransaction.get('schemeRedeem').value;
               element.redeemType = this.redemptionTransaction.get('redeemType').value;
@@ -481,10 +497,18 @@ export class RedemptionTransactionComponent implements OnInit {
         } else {
           this.childTransactions.push(obj);
         }
+        if (this.childTransactions.length == 1) {
+          this.getSchemeList();
+        }
+        this.amcId = this.scheme.amcId;
+        this.scheme = null;
+        this.schemeDetails = null;
         console.log(this.childTransactions);
-        this.schemeList = [];
+        this.navOfSelectedScheme = 0;
+        this.folioDetails = null;
+        this.folioList = [];
         this.redemptionTransaction.controls.employeeContry.reset();
-        this.redemptionTransaction.controls.folioSelection.reset();
+        this.redemptionTransaction.controls.investmentAccountSelection.reset();
         this.redemptionTransaction.controls.schemeRedeem.reset();
         this.showUnits = false;
       }

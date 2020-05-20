@@ -53,20 +53,30 @@
 
                             <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index"
                                 class="breadcrumb-item active c-p"
-                                [ngClass]="folder.openFolderNm && i<3 ? 'breadcrumb-item active c-p' : 'none'">
-                                <p class="text-black roboto f-18" *ngIf="i<3"> {{folder.openFolderNm}} </p>
+                                [ngClass]="folder.openFolderNm && openFolderName.length > 0 && openFolderName.length <= 3 ? 'breadcrumb-item active c-p' : 'none'">
+                                <p class="text-black roboto f-18"
+                                    *ngIf="openFolderName.length > 0 && openFolderName.length <= 3">
+                                    {{folder.openFolderNm}}
+                                </p>
                             </li>
                             <li>
                                 <img *ngIf="openFolderName.length > 3" [matMenuTriggerFor]="menu4" class="c-p"
-                                    src="/assets/images/svg/dot-menu.svg">
+                                    src="/assets/images/svg/dark-three-dot.svg">
                                 <mat-menu #menu4="matMenu">
                                     <div *ngIf="openFolderName.length > 2">
                                         <div *ngFor="let folder of openFolderName; let i = index">
-                                            <button mat-menu-item *ngIf="i>2" (click)="getFolders(folder,i)">
+                                            <button mat-menu-item *ngIf="i > 0 && i < (openFolderName.length-1)"
+                                                (click)="getFolders(folder,i)">
                                                 {{folder.openFolderNm}}</button>
                                         </div>
                                     </div>
                                 </mat-menu>
+                            </li>
+                            <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index">
+                                <div *ngIf="openFolderName.length > 3">
+                                    <p class="text-black roboto f-18" *ngIf="i == openFolderName.length-1">
+                                        {{folder.openFolderNm}} </p>
+                                </div>
                             </li>
                         </ol>
                     </div>
@@ -264,7 +274,7 @@
                             <p class="selectMoreDetails">
                                 Select a file to see more details
                             </p>
-                            <ngx-doc-viewer [url]="urlData" viewer="google" style="width:100%;height:350px;">
+                            <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
                             </ngx-doc-viewer>
                             <div class="row">
                                 <div class="col-md-6">

@@ -272,7 +272,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       additionalCovers: [this.dataForEdit ? this.addOns.addOnId + '' : null],
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+      // inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+      inceptionDate: [(this.dataForEdit) ?((this.dataForEdit.policyInceptionDate) ? new Date(this.dataForEdit.policyInceptionDate) : null) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
@@ -489,8 +490,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     if (form == 'policyExpiryDate' && formValue) {
       let startDate = new Date(this.critialIllnessForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.critialIllnessForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate: any = new Date(this.critialIllnessForm.controls.policyStartDate.value);
+      let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = new Date(comparedDate);
+      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });

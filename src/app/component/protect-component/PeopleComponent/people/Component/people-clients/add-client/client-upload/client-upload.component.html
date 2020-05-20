@@ -83,7 +83,7 @@
                 <p class="m-0 roboto text-black"><span *ngIf="showErr1" style="color: red;">please select Bank and Proof
                         type first</span><span *ngIf="!showErr1"> Browse</span></p>
             </div>
-            <div *ngIf="!errProof1" class="imgDiv" (click)="fileProof1.click()">
+            <div class="imgDiv" (click)="fileProof1.click()">
                 <p *ngIf="!fileProof1Img.view" class="m-0 roboto text-black"> Browse
                 </p>
                 <img [src]="fileProof1Img.view" class="img" *ngIf="fileProof1Img.view">

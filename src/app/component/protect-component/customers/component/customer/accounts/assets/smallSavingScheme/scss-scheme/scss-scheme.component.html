@@ -21,9 +21,9 @@
         </a>
 
         <mat-menu #menu7="matMenu">
-            <button mat-menu-item>Upload file
+            <!-- <button mat-menu-item>Upload file
                 <input (change)="fetchData('SCSS',$event)" class="uploadInput" id="file-4" multiple type="file">
-            </button>
+            </button> -->
         </mat-menu>
         <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
         <mat-menu #menu6="matMenu">
@@ -84,7 +84,7 @@
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br rightText w-6 text-right"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar"> {{element.rate}} {{!isLoading? "%" : ""}}</div>
+                <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</div>
             </td>
             <td mat-footer-cell class="br text-left" *matFooterCellDef> </td>
         </ng-container>
@@ -153,6 +153,9 @@
                     <mat-menu #menubank="matMenu">
                         <button mat-menu-item (click)="openAddSCSS(element,'editScss')">Edit</button>
                         <button mat-menu-item (click)="openAddSCSS(element,'detailedScss')">Detailed view</button>
+                        <button mat-menu-item>Upload file
+                            <input (change)="fetchData('SCSS',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                        </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('SCSS',element)">Delete</button>
                     </mat-menu>
