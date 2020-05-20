@@ -123,6 +123,7 @@ export class SwpTransactionComponent implements OnInit {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
     } else {
       this.getSchemeList();
+      this.setDefaultTenure();
     }
     this.oldDefaultData = data;
 
@@ -162,6 +163,7 @@ export class SwpTransactionComponent implements OnInit {
     this.swpTransaction.controls.employeeContry.reset();
     this.swpTransaction.controls.investmentAccountSelection.reset();
     this.swpTransaction.controls.schemeSwp.reset();
+    this.setDefaultTenure();
   }
 
 
@@ -394,7 +396,7 @@ export class SwpTransactionComponent implements OnInit {
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       schemeSwp: [null, [Validators.required]],
     });
@@ -403,6 +405,14 @@ export class SwpTransactionComponent implements OnInit {
       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
     );
     this.ownerData = this.swpTransaction.controls;
+  }
+
+  setDefaultTenure() {
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      this.swpTransaction.controls.tenure.setValue('3');
+    } else {
+      this.swpTransaction.controls.tenure.setValue('2');
+    }
   }
 
   getFormControl(): any {

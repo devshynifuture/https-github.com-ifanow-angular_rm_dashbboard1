@@ -599,7 +599,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.folioList.length == 1) {
       this.sipTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
       this.selectedFolio(this.folioList[0]);
-      if (this.sipTransaction('investmentAccountSelection').valid) {
+      if (this.sipTransaction.controls.investmentAccountSelection.valid) {
         Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
       }
     }
