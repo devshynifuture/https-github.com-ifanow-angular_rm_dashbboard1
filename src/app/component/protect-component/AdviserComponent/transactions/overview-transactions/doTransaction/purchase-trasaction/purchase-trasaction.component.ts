@@ -19,7 +19,6 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   folioNumberShow: any;
-  isMultiTransact: boolean = false;
   oldDefaultData;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
@@ -113,7 +112,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
     // when multi transact then disabled edit button in transaction summary
-    Object.assign(this.transactionSummary, {isMultiTransact: false});
+    Object.assign(this.transactionSummary, {multiTransact: false});
     console.log('this.transactionSummary', this.transactionSummary);
   }
 
@@ -474,7 +473,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, {folioNumber: ''});
-    this.purchaseTransaction.controls.reinvest.reset();
+    this.purchaseTransaction.controls.reinvest.setValue('');
     this.purchaseTransaction.controls.employeeContry.reset();
     this.purchaseTransaction.controls.investmentAccountSelection.reset();
     this.purchaseTransaction.controls.schemePurchase.reset();
@@ -576,6 +575,10 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (isEdit == true) {
       this.isEdit = isEdit;
       this.editedId = data.id;
+      this.scheme = data.scheme;
+      this.schemeDetails = data.schemeDetails;
+      this.reInvestmentOpt = data.reInvestmentOpt;
+      this.folioDetails = data.folioDetails;
     }
     if (!data) {
       data = {};
@@ -589,15 +592,14 @@ export class PurchaseTrasactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data.schemeSelection) ? '2' : data.schemeSelection],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
-      investmentAccountSelection: [(data.investmentAccountSelection) ? data.folioNo : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       // folioSelection: ['2'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
-      schemePurchase: [(!data) ? '' : data.schemeName, [Validators.required]],
-
+      schemePurchase: [(!data) ? '' : data.scheme, [Validators.required]],
     });
     this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
       this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
@@ -647,50 +649,68 @@ export class PurchaseTrasactionComponent implements OnInit {
     return false;
   }
 
+  getSingleTransactionJson() {
+    const obj = {
+      productDbId: this.schemeDetails.id,
+      clientName: this.selectedFamilyMember,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      orderType: 'ORDER',
+      buySell: 'PURCHASE',
+      transCode: 'NEW',
+      buySellType: (this.purchaseTransaction.controls.folioSelection.value == '1') ? 'ADDITIONAL' : 'FRESH',
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+      amountType: 'Amount',
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.purchaseTransaction.controls.employeeContry.value,
+      euin: this.getDataSummary.euin.euin,
+      bseDPTransType: 'PHYSICAL',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      mandateId: null,
+      nsePaymentMode: null,
+      bankDetailId: null,
+      isException: true,
+      childTransactions: [],
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      schemeName: this.scheme.schemeName,
+      amcId: (this.scheme) ? this.scheme.amcId : null,
+      schemeSelection: this.purchaseTransaction.get('schemeSelection').value,
+      folioSelection: this.purchaseTransaction.get('folioSelection').value,
+      modeOfPaymentSelection: this.purchaseTransaction.get('modeOfPaymentSelection').value,
+      scheme: this.scheme,
+      schemeDetails: this.schemeDetails,
+      reInvestmentOpt: this.reInvestmentOpt,
+      folioDetails: this.folioDetails,
+    };
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.mandateId = (this.selectedMandate == undefined) ? null : this.selectedMandate.id;
+      obj.bankDetailId = this.bankDetails.id;
+    }
+    obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
+
+    return obj;
+  }
+
   purchase() {
     if (this.validateSinglePurchase()) {
-      const obj = {
-        productDbId: this.schemeDetails.id,
-        clientName: this.selectedFamilyMember,
-        holdingType: this.getDataSummary.defaultClient.holdingType,
-        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-        productCode: this.schemeDetails.schemeCode,
-        isin: this.schemeDetails.isin,
-        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        orderType: 'ORDER',
-        buySell: 'PURCHASE',
-        transCode: 'NEW',
-        buySellType: (this.purchaseTransaction.controls.folioSelection.value == '1') ? 'ADDITIONAL' : 'FRESH',
-        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-        amountType: 'Amount',
-        clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: this.purchaseTransaction.controls.employeeContry.value,
-        euin: this.getDataSummary.euin.euin,
-        bseDPTransType: 'PHYSICAL',
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        mandateId: null,
-        nsePaymentMode: null,
-        bankDetailId: null,
-        isException: true,
-        childTransactions: [],
-        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-
-      };
-      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.mandateId = (this.selectedMandate == undefined) ? null : this.selectedMandate.id;
-        obj.bankDetailId = this.bankDetails.id;
-        obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
-      }
+      const obj = this.getSingleTransactionJson();
       if (this.multiTransact == true) {
         console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
+        this.childTransactions.forEach(singleTranJson => {
+          this.removeUnnecessaryDataFromJson(singleTranJson);
+        });
       }
+      this.removeUnnecessaryDataFromJson(obj);
       console.log('new purchase obj', obj);
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -718,40 +738,15 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, {isMultiTransact: true});
-    this.isMultiTransact = true;
-    if (this.isEdit != true) {
-      this.id++;
-    }
-    if (this.purchaseTransaction.get('schemePurchase').invalid) {
-      this.purchaseTransaction.get('schemePurchase').markAsTouched();
-      return;
-    } else if (this.ExistingOrNew == 1 && this.purchaseTransaction.get('investmentAccountSelection').invalid) {
-      this.purchaseTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
-    } else if (this.purchaseTransaction.get('employeeContry').invalid) {
-      this.purchaseTransaction.get('employeeContry').markAsTouched();
-      return;
-    } else if (this.reInvestmentOpt.length > 1 && this.purchaseTransaction.get('reinvest').invalid) {
-      this.purchaseTransaction.get('reinvest').markAsTouched();
-      return;
-    } else {
+    if (this.validateSinglePurchase()) {
+      if (this.isEdit != true) {
+        this.id++;
+      }
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, {multiTransact: this.multiTransact});
+
       if (this.scheme != undefined && this.schemeDetails != undefined) {
-        const obj = {
-          id: this.id,
-          amcId: (this.scheme) ? this.scheme.amcId : null,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          productCode: (this.schemeDetails) ? this.schemeDetails.schemeCode : null,
-          dividendReinvestmentFlag: (this.schemeDetails) ? this.schemeDetails.dividendReinvestmentFlag : null,
-          orderVal: this.purchaseTransaction.controls.employeeContry.value,
-          bankDetailId: (this.bankDetails) ? this.bankDetails.id : null,
-          schemeName: (this.scheme) ? this.scheme.schemeName : null,
-          productDbId: (this.schemeDetails) ? this.schemeDetails.id : null,
-          schemeSelection: this.purchaseTransaction.get('schemeSelection').value,
-          folioSelection: this.purchaseTransaction.get('folioSelection').value,
-          modeOfPaymentSelection: this.purchaseTransaction.get('modeOfPaymentSelection').value,
-        };
+
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
@@ -759,15 +754,20 @@ export class PurchaseTrasactionComponent implements OnInit {
               element.amcId = (this.scheme) ? this.scheme.amcId : null;
               element.folioNo = this.purchaseTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.purchaseTransaction.get('employeeContry').value;
-              element.schemeName = this.purchaseTransaction.get('schemePurchase').value;
               element.schemeSelection = this.purchaseTransaction.get('schemeSelection').value;
               element.folioSelection = this.purchaseTransaction.get('folioSelection').value;
               element.modeOfPaymentSelection = this.purchaseTransaction.get('modeOfPaymentSelection').value;
+              element.schemeName = this.scheme.schemeName;
+              element.scheme = this.scheme;
+              element.schemeDetails = this.schemeDetails;
+              element.reInvestmentOpt = this.reInvestmentOpt;
+              element.folioDetails = this.folioDetails;
             }
             console.log(element);
           });
           this.isEdit = false;
         } else {
+          const obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
         }
         if (this.childTransactions.length == 1) {
@@ -785,11 +785,21 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.folioDetails = null;
         this.folioList = [];
         this.onFolioChange(null);
-        this.purchaseTransaction.controls.reinvest.reset();
+        this.purchaseTransaction.controls.reinvest.setValue('');
         this.purchaseTransaction.controls.employeeContry.reset();
         this.purchaseTransaction.controls.investmentAccountSelection.reset();
         this.purchaseTransaction.controls.schemePurchase.reset();
       }
     }
+  }
+
+  removeUnnecessaryDataFromJson(singleTransactionJson) {
+    singleTransactionJson.schemeSelection = null;
+    singleTransactionJson.folioSelection = null;
+    singleTransactionJson.modeOfPaymentSelection = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
   }
 }

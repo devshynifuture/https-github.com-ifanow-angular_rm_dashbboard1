@@ -123,6 +123,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   setAdvisorId(advisor) {
     this.advisorId = advisor.id;
     this.advisorNameInput = advisor.name;
+    this.arnRiaIdList = [];
     this.getArnRiaDetails();
   }
 
@@ -140,20 +141,38 @@ export class OrderHistoricalFileComponent implements OnInit {
   setArnRiaId(index) {
     if (index === 0) {
       this.arnRiaDetails = this.arnRiaDetailsList[index].id;
-      this.arnRiaIdList.push(this.arnRiaDetails);
-      // console.log(this.arnRiaDetails);
+      if (!(this.arnRiaIdList.includes(this.arnRiaDetails))) {
+        this.arnRiaIdList.push(this.arnRiaDetails);
+      } else {
+        let index = this.arnRiaIdList.indexOf(this.arnRiaDetails);
+        this.arnRiaIdList.splice(index, 1);
+      }
+      console.log(this.arnRiaIdList);
     } else {
       if (this.orderHistoryFileForm.get('selectArnRia').value) {
-        this.orderHistoryFileForm.get('selectArnRia').value.forEach(item => {
-          if (item.selection) {
-            if (!this.arnRiaIdList.includes(this.arnRiaDetailsList[index].id)) {
-              this.arnRiaIdList.push(this.arnRiaDetailsList[index].id);
-            }
+
+        this.orderHistoryFileForm.get('selectArnRia').valueChanges.subscribe(res => {
+          if (res) {
+            // console.log(res);
+            res.forEach((item, index1) => {
+              if (item.selection) {
+                if (!this.arnRiaIdList.includes(this.arnRiaDetailsList[index].id)) {
+                  this.arnRiaIdList.push(this.arnRiaDetailsList[index].id);
+                }
+              } else {
+                if (this.arnRiaIdList.includes(this.arnRiaDetailsList[index1].id)) {
+                  let indexOfId = this.arnRiaIdList.indexOf(this.arnRiaDetailsList[index1].id);
+                  this.arnRiaIdList.splice(indexOfId, 1);
+                }
+              }
+            })
+            console.log(this.arnRiaIdList);
           }
         })
       }
     }
-    console.log(this.arnRiaIdList);
+    // remove duplocacy
+    this.arnRiaIdList = this.arnRiaIdList.filter((item, index) => this.arnRiaIdList.indexOf(item) === index);
   }
 
   getArnRiaDetails() {
@@ -281,6 +300,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   setValueChangesOnRta() {
     this.orderHistoryFileForm.get('selectRta').valueChanges
       .subscribe(res => {
+        this.arnRiaIdList = [];
         this.getArnRiaDetails();
       })
   }
@@ -544,7 +564,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                     }
                   });
 
-                  if (fileTypeId === 6 || fileTypeId === 12) {
+                  if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                     if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                       requestObj.push({
                         advisorId: this.advisorId,
@@ -653,7 +673,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                       }
                     });
 
-                    if (fileTypeId === 6 || fileTypeId === 12) {
+                    if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                       if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                         requestObj.push({
                           advisorId: this.advisorId,
@@ -718,7 +738,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                       }
                     });
 
-                    if (fileTypeId === 6 || fileTypeId === 12) {
+                    if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                       if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                         requestObj.push({
                           advisorId: this.advisorId,
@@ -824,7 +844,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                   });
 
 
-                  if (fileTypeId === 6 || fileTypeId === 12) {
+                  if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                     if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                       requestObj.push({
                         advisorId: this.advisorId,
@@ -899,7 +919,7 @@ export class OrderHistoricalFileComponent implements OnInit {
             let yearDiffr = toDateValueObj.getFullYear() - fromDateIter.getFullYear();
             if (yearDiffr === 0) {
               let monthDiff = (toDateValueObj.getMonth() - fromDateIter.getMonth());
-              for (let index = 0; index < monthDiff; index++) {
+              for (let index = 0; index <= monthDiff; index++) {
                 if (index == 0) {
                   // toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
 
@@ -915,10 +935,10 @@ export class OrderHistoricalFileComponent implements OnInit {
                 } else {
                   fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
                   // toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
-
+                  let fromDateTemp = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month')
                   if (fromDateIter.getDate() === toDateValueObj.getDate() && fromDateIter.getMonth() === toDateValueObj.getMonth()) {
                     toDateIter = fromDateIter;
-                  } else if (index === (monthDiff - 1)) {
+                  } else if (fromDateTemp.getTime() >= toDateValueObj.getTime()) {
                     toDateIter = toDateValueObj;
                   } else {
                     toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
@@ -938,7 +958,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                       });
 
 
-                      if (fileTypeId === 6 || fileTypeId === 12) {
+                      if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                         if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                           requestObj.push({
                             advisorId: this.advisorId,
@@ -951,6 +971,8 @@ export class OrderHistoricalFileComponent implements OnInit {
                             orderingFrequency: 3
                           });
                         }
+                      } else if (fileTypeId === 2) {
+                        continue;
                       }
                       else {
                         requestObj.push({
@@ -998,7 +1020,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                         });
 
 
-                        if (fileTypeId === 6 || fileTypeId === 12) {
+                        if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                           if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                             requestObj.push({
                               advisorId: this.advisorId,
@@ -1011,6 +1033,8 @@ export class OrderHistoricalFileComponent implements OnInit {
                               orderingFrequency: 3
                             });
                           }
+                        } else if (fileTypeId === 2) {
+                          continue;
                         }
                         else {
                           requestObj.push({
@@ -1070,7 +1094,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                         });
 
 
-                        if (fileTypeId === 6 || fileTypeId === 12) {
+                        if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                           if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                             requestObj.push({
                               advisorId: this.advisorId,
@@ -1164,9 +1188,10 @@ export class OrderHistoricalFileComponent implements OnInit {
                   }
                 } else {
                   fromDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'day');
+                  let fromDateTemp = this.addYearMonthOrDayToDate(toDateIter, 1, 'month')
                   if (fromDateIter.getDate() === toDateValueObj.getDate() && fromDateIter.getMonth() === toDateValueObj.getMonth()) {
                     toDateIter = fromDateIter;
-                  } else if (index1 === (monthDiff - 1)) {
+                  } else if (fromDateTemp.getTime() >= toDateValueObj.getTime()) {
                     toDateIter = toDateValueObj;
                   } else {
                     toDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'month');
@@ -1186,7 +1211,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                       });
 
 
-                      if (fileTypeId === 6 || fileTypeId === 12) {
+                      if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                         if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                           requestObj.push({
                             advisorId: this.advisorId,
@@ -1291,7 +1316,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                         });
 
 
-                        if (fileTypeId === 6 || fileTypeId === 12) {
+                        if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                           if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                             requestObj.push({
                               advisorId: this.advisorId,
@@ -1407,7 +1432,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                         });
 
 
-                        if (fileTypeId === 6 || fileTypeId === 12) {
+                        if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                           if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                             requestObj.push({
                               advisorId: this.advisorId,
@@ -1420,6 +1445,8 @@ export class OrderHistoricalFileComponent implements OnInit {
                               orderingFrequency: 3
                             });
                           }
+                        } else if (fileTypeId === 2) {
+                          continue;
                         } else {
                           requestObj.push({
                             advisorId: this.advisorId,
@@ -1463,7 +1490,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                     rtId = element.rtId;
                   }
                 });
-                if (fileTypeId === 6 || fileTypeId === 12) {
+                if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
                   if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                     requestObj.push({
                       advisorId: this.advisorId,
@@ -1657,7 +1684,7 @@ export class OrderHistoricalFileComponent implements OnInit {
               }
             });
 
-            if (fileTypeId === 6 || fileTypeId === 12) {
+            if (fileTypeId === 6 || fileTypeId === 12 || fileTypeId === 18) {
               if (!(requestObj.some(item => item.fileTypeId === fileTypeId))) {
                 requestObj.push({
                   advisorId: this.advisorId,
@@ -1674,7 +1701,58 @@ export class OrderHistoricalFileComponent implements OnInit {
           }
         }
       }
-      this.requestJsonForOrderingFiles = requestObj;
+      if (this.arnRiaIdList.length !== 0) {
+        this.orderHistoryFileForm.get('selectArnRia').value.forEach(element => {
+          console.log("select arn ria details::: value", element.selection, element);
+          if (element.selection) {
+            this.arnRiaIdList.forEach(element1 => {
+
+              requestObj.forEach(element2 => {
+                let compareObj = {
+                  advisorId: element2.advisorId,
+                  rmId: element2.rmId,
+                  rtId: element2.rtId,
+                  arnRiaDetailId: element1,
+                  fromDate: element2.fromDate,
+                  toDate: element2.toDate,
+                  fileTypeId: element2.fileTypeId,
+                  orderingFrequency: element2.orderingFrequency
+                }
+                if (!this.moreArnRiaObj.some(item => this.util.areTwoObjectsSame(item, compareObj))) {
+                  this.moreArnRiaObj.push({
+                    advisorId: element2.advisorId,
+                    rmId: element2.rmId,
+                    rtId: element2.rtId,
+                    arnRiaDetailId: element1,
+                    fromDate: element2.fromDate,
+                    toDate: element2.toDate,
+                    fileTypeId: element2.fileTypeId,
+                    orderingFrequency: element2.orderingFrequency
+                  })
+                }
+              });
+            });
+          }
+        });
+
+        requestObj = [...this.moreArnRiaObj];
+        let reqObjCopy = [];
+        this.orderHistoryFileForm.get('selectArnRia').value.forEach((item, index) => {
+          if (!item.selection) {
+            let id = this.arnRiaDetailsList[index].id;
+            reqObjCopy = requestObj.filter(item => {
+              return this.arnRiaIdList.includes(item.arnRiaDetailId);
+            });
+            // requestObj.forEach((item, index1) => {
+            //   if (item.arnRiaDetailId === id) {
+            //     reqObjCopy.splice(0, 1);
+            //   }
+            // })
+          }
+        });
+        this.requestJsonForOrderingFiles = reqObjCopy;
+      }
+      // this.requestJsonForOrderingFiles = requestObj;
     }
     console.log("this is request Obj", requestObj);
     console.log("this is request Obj", this.requestJsonForOrderingFiles);

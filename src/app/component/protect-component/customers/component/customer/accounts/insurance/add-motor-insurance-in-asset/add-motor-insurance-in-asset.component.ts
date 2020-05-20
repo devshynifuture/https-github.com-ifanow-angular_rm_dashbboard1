@@ -240,12 +240,12 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     if (data.data == null) {
       data = {};
       this.dataForEdit = data.data;
-      this.flag = "ADD";
+      this.flag = "Add";
     }
     else {
       this.dataForEdit = data.data;
       this.id = this.dataForEdit.id;
-      this.flag = "EDIT";
+      this.flag = "Edit";
     }
     this.motorInsuranceForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -360,7 +360,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = new Date(comparedDate);
-      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
+      comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.motorInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -487,14 +487,14 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         "policyNumber": this.motorInsuranceForm.get('policyNum').value,
         "insurerName": this.motorInsuranceForm.get('insurerName').value,
         "policyName": this.motorInsuranceForm.get('policyName').value,
-        "policyStartDate":this.datePipe.transform(this.motorInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        "policyExpiryDate":this.datePipe.transform(this.motorInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        "policyStartDate": this.datePipe.transform(this.motorInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate": this.datePipe.transform(this.motorInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "ccGvw": this.motorInsuranceForm.get('cgGvw').value,
         "sumInsuredIdv": this.motorInsuranceForm.get('declaredValue').value,
         "premiumAmount": this.motorInsuranceForm.get('premium').value,
         "vehicleTypeId": this.motorInsuranceForm.get('vehicleType').value,
         "vehicleRegNo": this.motorInsuranceForm.get('registrationNumber').value,
-        "vehicleRegistrationDate":this.datePipe.transform(this.motorInsuranceForm.get('registrationDate').value, 'yyyy-MM-dd'),
+        "vehicleRegistrationDate": this.datePipe.transform(this.motorInsuranceForm.get('registrationDate').value, 'yyyy-MM-dd'),
         "vehicleModel": this.motorInsuranceForm.get('modelName').value,
         "engineNo": this.motorInsuranceForm.get('engineNumber').value,
         "chasisNo": this.motorInsuranceForm.get('chassisNumber').value,

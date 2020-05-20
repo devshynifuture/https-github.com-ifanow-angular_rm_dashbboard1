@@ -240,14 +240,14 @@
             <div class="col-md-9 p-0">
               <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option"
                                class="mediumRadio" formControlName="modeOfPaymentSelection">
-                <mat-radio-button [disabled]="isMultiTransact"
+                <mat-radio-button [disabled]="multiTransact"
                                   [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'radio-border':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
                                   checked="true"
                                   class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
                                   value="1">
                   Net banking
                 </mat-radio-button>
-                <mat-radio-button [disabled]="isMultiTransact"
+                <mat-radio-button [disabled]="multiTransact"
                                   [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'radio-border':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
                                   class="b-a radioBtn bor_top_tb_right" value="2">
                   Debit mandate
