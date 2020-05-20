@@ -73,7 +73,7 @@ export class InsuranceComponent implements OnInit {
   @ViewChild('generalInsurance', { static: false }) generalInsurance: ElementRef;
   lifeInsuranceCount: any;
   generalInsuranceCount: any;
-  showType = 'plan Type';
+  showType = 'Plan Type';
   showPolicyHolder = 'Name of policy holder';
   generalInsuranceDataFilter: any;
   lifeInsuranceFilter: any;

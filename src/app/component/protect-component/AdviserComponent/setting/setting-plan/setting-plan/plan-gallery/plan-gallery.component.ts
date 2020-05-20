@@ -16,7 +16,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 })
 export class PlanGalleryComponent implements OnInit {
   advisorId: any;
-  defaultGallery: any;
+  defaultGallery: any = [];
   userId: any;
 
   constructor(private orgSetting: OrgSettingServiceService,
@@ -36,7 +36,10 @@ export class PlanGalleryComponent implements OnInit {
     }
     this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),
-      error => this.eventService.showErrorMessage(error)
+      error => {
+        this.eventService.showErrorMessage(error)
+        this.defaultGallery = undefined;
+      }
     )
 
   }

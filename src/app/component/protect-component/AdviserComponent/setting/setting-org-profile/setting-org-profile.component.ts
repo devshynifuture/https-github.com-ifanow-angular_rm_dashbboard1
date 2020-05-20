@@ -22,12 +22,15 @@ export class SettingOrgProfileComponent implements OnInit {
   counter = 0;
   isOrgProfileLoaded = false;
 
+  roleObj:any;
+
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.roleObj = AuthService.getUserRoleType();
   }
 
   ngOnInit() {
