@@ -362,7 +362,7 @@
                         <!-- *ngIf="!(insuranceTypeId==1 && insuranceSubTypeId==3)" -->
                         <div class="row pt-40" *ngIf="insuranceSubTypeId != 1  && insuranceSubTypeId != 3">
                             <div class="col-md-5 pr-0 text-right">
-                                <h5 class="m-0 pt-8">Vested bouns</h5>
+                                <h5 class="m-0 pt-8">Current value</h5>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group mb-0 iconRupess">
@@ -477,7 +477,7 @@
                                 <h5 class="m-0 pb-8">Cash inflow type</h5>
                             </div>
                             <div class="col-md-3 pr-12">
-                                <h5 class="m-0 pb-8">Year</h5>
+                                <h5 class="m-0 pb-8">Date</h5>
                             </div>
                             <div class="col-md-4 pr-12">
                                 <h5 class="m-0 pb-8">Approx amount</h5>
@@ -506,8 +506,16 @@
                                 <div class="col-md-3 pr-0">
                                     <div class="form-group ">
                                         <!-- <label class="f-16 roboto">Year</label> -->
-                                        <mat-form-field>
-                                            <input type="number" autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="4" formControlName="year" matInput class="form-control br-0">
+                                        <!-- <mat-form-field>
+                                            <input type="number" autocomplete="off"
+                                                [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                                                [maxLength]="4" formControlName="year" matInput
+                                                class="form-control br-0">
+                                        </mat-form-field> -->
+                                        <mat-form-field class="ba-date">
+                                            <input formControlName="year" (input)="preventDefault($event)" (focus)="year.open()" autocomplete="off" [matDatepicker]="year" matInput class="form-control b-0 br-0">
+                                            <mat-datepicker-toggle matSuffix [for]="year"></mat-datepicker-toggle>
+                                            <mat-datepicker #year></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>

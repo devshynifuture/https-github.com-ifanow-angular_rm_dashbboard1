@@ -17,16 +17,16 @@
 
 
     <div formArrayName="getCoOwnerName">
-        <div class="row" *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
-            <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-8 ">Owner</h5>
+        <div class="row" [ngClass]="{'pt-36': pointIndex>0}" *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8 pr-16" >{{pointIndex != 0?'Co-B' : 'B'}}orrower{{pointIndex != 0?pointIndex:''}}</h5>
             </div>
             <div class="pl-0" [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -50,8 +50,8 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
-                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
+                <i *ngIf="otherLiabilityForm.value.getCoOwnerName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="otherLiabilityForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
         </div>

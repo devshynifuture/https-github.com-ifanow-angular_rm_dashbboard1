@@ -47,8 +47,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Market value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{realEstate.marketValue?realEstate.marketValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        ₹<span appFormatNumber>{{realEstate.marketValue?realEstate.marketValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -80,7 +80,7 @@
                         Area
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{realEstate.ratePerUnit?'₹':''}}<span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span> {{realEstate.ratePerUnit?this.unit:''}}
+                        <span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span> {{realEstate.ratePerUnit?this.unit:''}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

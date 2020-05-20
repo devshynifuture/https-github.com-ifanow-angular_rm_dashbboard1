@@ -98,6 +98,11 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
         if (data && data.length > 0) {
+          data.forEach(element => {
+            if (element.name.length > 11) {
+              element['shortName'] = element.name.substr(0, element.name.indexOf(' '));
+            }
+          });
           this.familyMemberList = data;
           this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
           console.log(this.familyMemberList);

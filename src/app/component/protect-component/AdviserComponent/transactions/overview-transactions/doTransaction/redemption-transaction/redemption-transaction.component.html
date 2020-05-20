@@ -62,7 +62,7 @@
 
               <mat-menu #menubank="matMenu">
                 <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-                <button mat-menu-item>Delete</button>
+                <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
               </mat-menu>
             </div>
           </td>
@@ -121,7 +121,8 @@
           <div class="col-md-7 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select [(ngModel)]="folioNumberShow" class="form-control" formControlName="folioSelection">
+                <mat-select [(ngModel)]="folioNumberShow" class="form-control"
+                            formControlName="investmentAccountSelection">
                   <mat-option disabled value=''>Select scheme folio</mat-option>
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
                               [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
@@ -202,7 +203,7 @@
                 <mat-form-field appearance="standard" floatLabel="never">
                   <input #employeeContry (change)="enteredAmount($event.target.value)"
                          [inputValidator]="validatorType.NUMBER_ONLY"
-                         appInputValueValidation class="form-control  rupess"
+                         appInputValueValidation class="form-control rupess"
                          formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
                          type="text">
                   <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
@@ -211,7 +212,7 @@
                   </mat-hint>
                   <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 2)" align="start"
                             class="f-12 text-custom">
-                    Min unit: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumRedemptionQty }}
+                    Min unit: {{(schemeDetails == undefined) ? '-' : schemeDetails.minimumRedemptionQty }}
                   </mat-hint>
                   <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
                     Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}

@@ -364,8 +364,10 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     if (form == 'policyExpiryDate' && formValue) {
       let startDate = new Date(this.homeInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate: any = new Date(this.homeInsuranceForm.controls.policyStartDate.value);
+      let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = new Date(comparedDate);
+      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.homeInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });

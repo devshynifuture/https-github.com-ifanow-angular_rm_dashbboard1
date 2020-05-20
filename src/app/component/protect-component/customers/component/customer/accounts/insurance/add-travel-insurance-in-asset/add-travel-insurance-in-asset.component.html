@@ -163,6 +163,7 @@
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Name of insurer</h5>
+            <p class="m-0 f-12 text-custom">Start typing to see insurer names</p>
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
@@ -236,7 +237,7 @@
                 <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
                 <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
                 </mat-error>
-                <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
+                <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.max)">policy expiry date cannot be greater than policy start date
 
                 </mat-error>
             </mat-form-field>

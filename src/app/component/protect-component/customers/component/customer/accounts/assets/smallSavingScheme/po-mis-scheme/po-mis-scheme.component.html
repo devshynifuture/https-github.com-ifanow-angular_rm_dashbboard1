@@ -105,7 +105,7 @@
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
-                <div class="bar"> {{element.rate}} {{isLoading ? ' ' : '%'}}</div>
+                <div class="bar"> {{element.rate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
@@ -164,7 +164,7 @@
                         <button (click)="openAddPOMIS(element)" mat-menu-item>Edit</button>
                         <button (click)="openDetailPOMIS(element)" mat-menu-item>Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('Po MIS',$event)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('Po MIS',$event,element)" class="uploadInput" id="file-4" multiple type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button (click)="deleteModal('PO MIS',element)" mat-menu-item>Delete</button>
