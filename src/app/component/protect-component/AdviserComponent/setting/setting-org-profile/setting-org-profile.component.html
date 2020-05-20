@@ -20,11 +20,11 @@
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter wrapper-18">
                 <div class="row w-100" *ngIf="userList">
-                    <div class="col-md-11 pl-0">
+                    <div class="col-md-10 pl-0">
                         <h2 class="m-0">{{userList.fullName}}</h2>
                     </div>
-                    <div class="col-md-1 p-0 text-right autoHeight d-flex">
-                        <p class="m-0 pt-2"><span class="t-c">{{(roleObj.roleName || '')}}</span></p>
+                    <div class="col-md-2 p-0 text-right autoHeight">
+                        <span class="t-u">{{(roleObj.roleName || '')}}</span>
                         <mat-icon class="text-custom" [matMenuTriggerFor]="menu" class="c-p v-middle">more_vert
                         </mat-icon>
                         <mat-menu #menu="matMenu">
