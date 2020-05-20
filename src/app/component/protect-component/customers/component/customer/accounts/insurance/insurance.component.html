@@ -159,13 +159,15 @@
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar">
-                                            {{(!isLoading && element.currentValue != 0)? "₹" : (element.currentValue == 0) ? "" : ''}}<span
-                                                appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span>
+                                            {{(!isLoading && (element.currentValue != 0 || element.vestedBonus !=0))? "₹" : (element.currentValue == 0 || element.vestedBonus == 0) ? "" : ''}}
+                                            <!-- <span
+                                                appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span> -->
+                                            <span  appFormatNumber *ngIf="!isLoading">{{(element.vestedBonus) ? element.vestedBonus : (element.currentValue) ? element.currentValue : '-'}}</span>
                                         </div>
 
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue"
+                                        <div>{{isLoading ? ' ' : (totalCurrentValue != 0) ? '₹' : ''}}<span [value]="(totalCurrentValue) ? totalCurrentValue : (totalCurrentValue == 0) ? '-' : '-'"
                                                 appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
