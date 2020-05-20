@@ -96,7 +96,7 @@
                     <th mat-sort-header="interestRate" *matHeaderCellDef class="br rightText w-7" mat-header-cell> Rate
                     </th>
                     <td *matCellDef="let element" class="br text-right" mat-cell>
-                        <div class="bar"> {{element.interestRate}} {{!isLoading? "%" : ""}} </div>
+                        <div class="bar"> {{element.interestRate | number: '1.2-2'}} {{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>

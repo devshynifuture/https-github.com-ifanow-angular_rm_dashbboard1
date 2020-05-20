@@ -84,7 +84,7 @@
         <ng-container matColumnDef="rate">
             <th *matHeaderCellDef class="br rightText w-6 text-right" mat-header-cell mat-sort-header="rate"> Rate</th>
             <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                <div class="bar"> {{element.rate}}{{!isLoading? "%" : ""}}</div>
+                <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</div>
             </td>
             <td *matFooterCellDef class="br text-left" mat-footer-cell></td>
         </ng-container>

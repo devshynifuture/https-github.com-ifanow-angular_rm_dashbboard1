@@ -145,7 +145,7 @@
                         Interest rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{element.rate}}{{!isLoading? "%" : ""}} </div>
+                        <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>

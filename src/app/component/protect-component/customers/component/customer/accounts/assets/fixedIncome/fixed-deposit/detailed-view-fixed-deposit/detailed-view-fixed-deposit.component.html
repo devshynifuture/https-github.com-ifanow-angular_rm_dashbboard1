@@ -80,7 +80,7 @@ Description description: "this is futurewise Tech" -->
                         Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <span *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ 'Year ':fixedDeposit.tenureInYear+ 'Years '}}</span>
+                        <span *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ ' Year ':fixedDeposit.tenureInYear+ ' Years '}}</span>
                         <span *ngIf="fixedDeposit.tenureInMonth > 0">{{fixedDeposit.tenureInMonth == 1?fixedDeposit.tenureInMonth+ ' Month ':fixedDeposit.tenureInMonth+ ' Months '}}</span>
                         <span *ngIf="fixedDeposit.tenureInDay > 0">{{fixedDeposit.tenureInDay == 1?fixedDeposit.tenureInDay+ 'Day':fixedDeposit.tenureInDay+ ' Days'}}</span>
                     </div>
@@ -98,7 +98,7 @@ Description description: "this is futurewise Tech" -->
                         Rate of interest
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.interestRate?fixedDeposit.interestRate:'-'}}%
+                        {{fixedDeposit.interestRate | number: '1.2-2'}}%
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

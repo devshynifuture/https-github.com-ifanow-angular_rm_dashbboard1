@@ -283,7 +283,7 @@
                         Growth rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar"> {{element.growthRate}}{{isLoading ? ' ' : '%'}} </div>
+                        <div class="bar"> {{element.growthRate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>
