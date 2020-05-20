@@ -126,9 +126,12 @@
                                         *ngIf="singleMembers.relationshipId==7"
                                         src="/assets/images/svg/man-profile.svg">
                                     <div (click)="open('edit',singleMembers)" class="familyList">
-                                        <h4 (click)="open('edit',singleMembers)" title="{{singleMembers.displayName}}"
-                                            class="f-12 m-0">
-                                            {{singleMembers.name}}</h4>
+                                        <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
+                                            <span
+                                                *ngIf="singleMembers.shortName==undefined">{{singleMembers.name}}</span><span
+                                                title="{{singleMembers.name}}"
+                                                *ngIf="singleMembers.shortName">{{singleMembers.shortName}} ...</span>
+                                        </h4>
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             <span *ngIf="singleMembers.relationshipId==2">Wife </span>
                                             <span *ngIf="singleMembers.relationshipId==3">Son</span>
