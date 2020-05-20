@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {CustomDirectiveModule} from 'src/app/common/directives/common-directive.module';
-import {TransactionAddComponent} from './transaction-add/transaction-add.component';
 import {OnlineTransactionComponent} from './overview-transactions/doTransaction/online-transaction/online-transaction.component';
 import {AddArnRiaCredentialsComponent} from './settings-transactions/settings-manage-credentials/arn-ria-credentials/add-arn-ria-credentials/add-arn-ria-credentials.component';
 import {PurchaseTrasactionComponent} from './overview-transactions/doTransaction/purchase-trasaction/purchase-trasaction.component';
@@ -48,7 +47,6 @@ import {NoCredFoundComponent} from './noCredFound/no-cred-found/no-cred-found.co
 import {InvestorDetailComponent} from './investors-transactions/investor-detail/investor-detail.component';
 
 export const componentList = [
-  TransactionAddComponent,
   OnlineTransactionComponent,
   AddArnRiaCredentialsComponent,
   AddSubBrokerCredentialsComponent,
