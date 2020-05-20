@@ -236,7 +236,7 @@
                 <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
                 <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
                 </mat-error>
-                <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
+                <mat-error class="f-12" *ngIf="(travelInsuranceForm.get('policyExpiryDate').errors?.max)">policy expiry date cannot be greater than policy start date
 
                 </mat-error>
             </mat-form-field>

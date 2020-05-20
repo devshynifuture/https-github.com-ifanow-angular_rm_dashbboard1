@@ -465,8 +465,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         if (form == 'policyExpiryDate' && formValue) {
             let startDate = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
             let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-            let comparedDate: any = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
+            let comparedDate: any = startDate;
             comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+            comparedDate = new Date(comparedDate);
+            comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
             comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
             if (policyExpiryDate < comparedDate) {
                 this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -633,7 +635,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 'serviceBranch': this.healthInsuranceForm.get('serviceBranch').value,
                 'linkedBankAccount': this.healthInsuranceForm.get('bankAccount').value,
                 'insurerName': this.healthInsuranceForm.get('insurerName').value,
-                'policyInceptionDate': this.datePipe.transform(this.healthInsuranceForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+                'policyInceptionDate': new Date(this.healthInsuranceForm.get('inceptionDate').value),
                 'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
                 'premiumAmount': this.healthInsuranceForm.get('premium').value,
                 'policyFeatureId': this.healthInsuranceForm.get('planDetails').value,

@@ -1,13 +1,13 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import { ElementRef, Injectable, Input } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import {ElementRef, Injectable, Input} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {FormGroup} from '@angular/forms';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Injectable({
@@ -84,7 +84,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -104,6 +104,13 @@ export class UtilService {
     //   "refreshRequired": data.refreshRequired
     // }
     return data && data.state && data.state === 'close' && data.refreshRequired;
+  }
+
+  static deleteRow(element, list: any[]) {
+    const index: number = list.indexOf(element);
+    if (index !== -1) {
+      list.splice(index, 1);
+    }
   }
 
   static getStartOfTheDay(date: Date) {
@@ -303,9 +310,9 @@ export class UtilService {
       htmlInput: inputData,
       name: pdfName
     };
-    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
+    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
       data => {
-        const file = new Blob([data], { type: 'application/pdf' });
+        const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
         fragData.isSpinner = false;
         window.open(fileURL);
@@ -348,8 +355,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], { type: mimeString });
-    return new File([imageBlob], imageName, { type: 'image/png' });
+    const imageBlob = new Blob([ia], {type: mimeString});
+    return new File([imageBlob], imageName, {type: 'image/png'});
   }
 
   /**
@@ -454,12 +461,14 @@ export function escapeRegExp(s: string): string {
  * You will need to add this to the component's providers to make this function private
  */
 export class LoaderFunction {
-  private counter = 0;
-  private isLoading = false;
 
   public get loading() {
     return this.isLoading;
   }
+
+  private counter = 0;
+  private isLoading = false;
+
 
   public increaseCounter() {
     this.isLoading = true;
@@ -472,6 +481,5 @@ export class LoaderFunction {
       this.isLoading = false;
     }
   }
-
 
 }
