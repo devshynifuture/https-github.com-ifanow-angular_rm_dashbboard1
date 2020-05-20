@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.rate)?data.rate + '%':'-' }}
+                        {{data.rate | number: '1.2-2'}}{{data.rate ?'%':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -76,7 +76,7 @@
                         Monthly Payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.monthlyPayout != 0">
-                        "₹"<span appFormatNumber>{{data.monthlyPayout}}</span>
+                        ₹<span appFormatNumber>{{data.monthlyPayout}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

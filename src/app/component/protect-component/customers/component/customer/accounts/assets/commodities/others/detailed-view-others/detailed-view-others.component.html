@@ -28,8 +28,15 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                                 Type of commodity
                         </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{others.commodityTypeId}}
+                        <div class="col-md-4 text-right f-14 roboto p-0"  [ngSwitch]="others.commodityTypeId">
+                            <div *ngSwitchCase="1">Art</div>
+                            <div *ngSwitchCase="2">Antiques</div>
+                            <div *ngSwitchCase="3">Liquor</div>
+                            <div *ngSwitchCase="4">Stamps</div>
+                            <div *ngSwitchCase="5">Coins</div>
+                            <div *ngSwitchCase="6">Silver</div>
+                            <div *ngSwitchCase="7">Diamond</div>
+                            <div *ngSwitchCase="8">Other</div>
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
@@ -67,7 +74,7 @@
                                 Growth rate
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{others.growthRate?others.growthRate:'-'}}
+                            {{others.growthRate | number: '1.2-2'}}{{others.growthRate ?'%':'-'}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">

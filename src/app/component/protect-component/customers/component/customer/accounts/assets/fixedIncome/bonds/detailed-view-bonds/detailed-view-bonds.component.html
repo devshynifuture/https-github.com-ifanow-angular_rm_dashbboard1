@@ -42,8 +42,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{utils.formatter(bonds.amountInvested)}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{bonds.amountInvested? '₹':''}}<span appFormatNumber>{{(bonds.amountInvested)?bonds.amountInvested:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,7 +75,7 @@
                         Coupon rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.couponRate}}<span *ngIf="bonds.couponRate">%</span>
+                        {{bonds.couponRate | number: '1.2-2'}}<span *ngIf="bonds.couponRate">%</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -107,7 +107,7 @@
 
                 <div *ngIf="bonds.couponPayoutFrequencyId == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        {{bonds.compounding==1?"Half yearly":"Yearly"}} payout
+                        {{bonds.compounding==4?"Half yearly":"Yearly"}} payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         ₹{{bonds.couponAmount?utils.formatter(bonds.couponAmount):'-'}}
@@ -118,7 +118,7 @@
                         Payout received till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{bonds.totalAmountReceivedTillToday?utils.formatter(bonds.totalAmountReceivedTillToday):'-'}}
+                        {{bonds.totalAmountReceivedTillToday? '₹':''}}<span appFormatNumber>{{(bonds.totalAmountReceivedTillToday)?bonds.totalAmountReceivedTillToday:'-'}}</span>
                     </div>
                 </div>
                 <div *ngIf="bonds.couponPayoutFrequencyId == 2"F class="row bb p-8 b-l br">
@@ -126,7 +126,7 @@
                         Payout received till maturity
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{bonds.totalAmountReceivedTillMaturity?utils.formatter(bonds.totalAmountReceivedTillMaturity):'-'}}
+                        {{bonds.totalAmountReceivedTillMaturity? '₹':''}}<span appFormatNumber>{{(bonds.totalAmountReceivedTillMaturity)?bonds.totalAmountReceivedTillMaturity:'-'}}</span>
                     </div>
                 </div>
 
@@ -134,16 +134,16 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{utils.formatter(bonds.currentValue)}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{bonds.currentValue? '₹':''}}<span appFormatNumber>{{(bonds.currentValue)?bonds.currentValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" appFormatNumber>
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹{{utils.formatter(bonds.maturityValue)}}
+                        {{bonds.maturityValue? '₹':''}}<span appFormatNumber>{{(bonds.maturityValue)?bonds.maturityValue:'-'}}</span>
                     </div>
                 </div>
                 
@@ -153,8 +153,7 @@
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
-                        ₹{{utils.formatter(bonds.currentValue - bonds.amountInvested)}}
-
+                        {{bonds.currentValue? '₹':''}}<span appFormatNumber [value]="bonds.currentValue - bonds.amountInvested">{{(bonds.currentValue)?bonds.currentValue - bonds.amountInvested:'-'}}</span>
                     </div>
                 </div>
                 
