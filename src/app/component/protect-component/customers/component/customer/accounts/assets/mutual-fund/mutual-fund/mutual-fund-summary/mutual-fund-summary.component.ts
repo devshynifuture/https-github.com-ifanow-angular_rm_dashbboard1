@@ -19,7 +19,6 @@ import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TempserviceService } from '../../tempservice.service';
 
 
 @Component({
@@ -54,7 +53,6 @@ export class MutualFundSummaryComponent implements OnInit {
   viewMode: string;
   reponseData: any;
   inputData: any;
-  type: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -185,21 +183,6 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   asyncFilter(mutualFund) {
-    // if (this.inputData == 'investor wise') {
-    //   this.rightFilterData.reportType =[]
-    //   this.rightFilterData.reportType[0] = {
-    //     name: 'Investor wise',
-    //     selected: true
-    //   }
-
-    // } else if (this.inputData == 'category wise') {
-    //   this.rightFilterData.reportType =[]
-    //   this.rightFilterData.reportType[0] = {
-    //     name: 'Category wise',
-    //     selected: true
-    //   }
-    // }
-
     if (typeof Worker !== 'undefined') {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
@@ -212,8 +195,7 @@ export class MutualFundSummaryComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
-        this.type = []
-
+        this.customDataSource.data = data.customDataSourceData;
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
