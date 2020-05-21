@@ -37,7 +37,6 @@ export class SingleDocumentViewComponent implements OnInit {
   //     id: 1,
   //     state: 'open'
   //   };
-  //   console.log('editDocument: ', fragmentData);
   // this.eventService.changeUpperSliderState(fragmentData);
   // this.overviewDesign = 'false';
   /*  const dialogRef = this.dialog.open(ModifyFeeDialogComponent, {
@@ -64,7 +63,6 @@ export class SingleDocumentViewComponent implements OnInit {
 
   editDocument() {
     this.location.replaceState('/subscription-upper');
-    console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'documents',
       id: 1,
@@ -98,10 +96,8 @@ export class SingleDocumentViewComponent implements OnInit {
   //     positiveMethod: () => {
   //     },
   //     negativeMethod: () => {
-  //       console.log('2222222222222222222222222222222222222');
   //     }
   //   };
-  //   console.log(dialogData + '11111111111111');
 
   //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
   //     width: '400px',
@@ -138,10 +134,8 @@ export class SingleDocumentViewComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',

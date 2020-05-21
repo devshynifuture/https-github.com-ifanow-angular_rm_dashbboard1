@@ -34,7 +34,6 @@ export class OpenGalleryPlanComponent implements OnInit {
     private subInjectService : SubscriptionInject,private orgSetting : OrgSettingServiceService,
     private utilService: UtilService,) { 
       this.advisorId = AuthService.getAdvisorId()
-      console.log('data', this.dataGet);
     this.sendToCopy = this.dataGet.bank
     }
 
@@ -91,7 +90,6 @@ export class OpenGalleryPlanComponent implements OnInit {
   }
   showCroppedImage(imageAsBase64) {
     this.finalImage = imageAsBase64;
-    console.log('crop image', this.finalImage)
   }
 
   // save the changes of current page only

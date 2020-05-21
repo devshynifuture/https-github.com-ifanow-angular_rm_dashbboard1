@@ -100,7 +100,9 @@ export class OverviewProfileComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getClientData(this.clientOverviewData);
+      if (result.flag != 'cancel') {
+        this.getClientData(this.clientOverviewData);
+      }
     });
   }
   getFamilyMembersList(data) {

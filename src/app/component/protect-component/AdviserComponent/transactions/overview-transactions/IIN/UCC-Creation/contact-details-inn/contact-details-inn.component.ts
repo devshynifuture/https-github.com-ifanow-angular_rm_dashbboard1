@@ -50,7 +50,6 @@ export class ContactDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    console.log('all data in contact', this.inputData);
     this.doneData = {};
     this.list = data;
     if (data && data.firstHolder) {
@@ -64,7 +63,6 @@ export class ContactDetailsInnComponent implements OnInit {
       this.getAddressList(this.clientData);
     }
     this.generalDetails = data.generalDetails;
-    console.log('################## = ', this.list);
   }
 
   obj1: any;
@@ -101,7 +99,6 @@ export class ContactDetailsInnComponent implements OnInit {
       }
     }
     this.sendObj = {...this.inputData};
-    console.log('holding list', this.holdingList);
   }
 
   close() {
@@ -137,8 +134,6 @@ export class ContactDetailsInnComponent implements OnInit {
     };
     this.custumService.getAddressList(obj).subscribe(
       responseData => {
-        console.log(responseData);
-        console.log('address stored', responseData);
         this.addressList = this.firstHolderContact;
         this.addressList.address = responseData[0];
         this.setDataForm('indian', this.addressList);
@@ -216,10 +211,8 @@ export class ContactDetailsInnComponent implements OnInit {
     const obj = {
       zipCode: value
     };
-    console.log(value, 'check value');
     if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data);
         this.PinData(data);
       });
     } else {
@@ -324,7 +317,6 @@ export class ContactDetailsInnComponent implements OnInit {
   saveContactDetails(formId) {
     if (this.contactDetails.invalid) {
       for (const element in this.contactDetails.controls) {
-        console.log(element);
         if (this.contactDetails.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.contactDetails.controls[element].markAsTouched();

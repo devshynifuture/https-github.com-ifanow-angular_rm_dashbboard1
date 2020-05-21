@@ -187,6 +187,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
+      username: [{ value: data.userName, disabled: true }],
     });
     if (this.fieldFlag == 'client') {
       this.minorForm.controls.gEmail.setValidators([Validators.required, Validators.pattern(this.validatorType.EMAIL)]);
@@ -267,25 +268,26 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeInvestorType(event) {
     (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
     if (event.value == '1') {
-      this.invTaxStatus = '';
+      // this.invTaxStatus = '1';
       this.mobileNumberFlag = 'Mobile number';
       // this.invTaxStatusList = this.enumService.getIndividualTaxList();
       console.log(this.invTaxStatusList);
     } else if (event.value == '2' && (this.fieldFlag == 'familyMember' || this.fieldFlag == 'client')) {
-      this.invTaxStatus = '';
+      // this.invTaxStatus = '';
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
       // this.invTaxStatusList = this.enumService.getMinorTaxList();
       console.log(this.invTaxStatusList);
     } else {
-      this.invTaxStatus = '';
+      // this.invTaxStatus = '';
       this.createNonIndividualForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Company mobile number';
       // this.invTaxStatusList = this.enumService.getCorporateTaxList();
       console.log(this.invTaxStatusList);
     }
+    this.invTaxStatus = '1';
     this.taxStatusFormControl.reset();
-    this.taxStatusFormControl.setValue('');
+    this.taxStatusFormControl.setValue('1');
     this.invTypeCategory = event.value;
   }
 

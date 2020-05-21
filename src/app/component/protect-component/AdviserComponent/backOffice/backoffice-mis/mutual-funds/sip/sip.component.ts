@@ -87,7 +87,6 @@ export class SipComponent implements OnInit {
     )
   }
   getsipCountGet(data) {
-    console.log("sip count", data);
     this.sipCount = data;
   }
   getFilerrorResponse(err) {
@@ -113,7 +112,6 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.allSipGet(obj).subscribe(
       data => {
-        console.log(data);
       }
     )
   }
@@ -128,7 +126,6 @@ export class SipComponent implements OnInit {
     this.backoffice.GET_expired(obj).subscribe(
       data => {
         this.expiredSip = data;
-        console.log(data);
       }
     )
   }
@@ -142,7 +139,6 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_EXPIRING(obj).subscribe(
       data => {
-        console.log(data);
         this.expiringSip = data;
       }
     )
@@ -158,7 +154,6 @@ export class SipComponent implements OnInit {
     this.backoffice.GET_SIP_REJECTION(obj).subscribe(
       data => {
         this.rejectionSip = data;
-        console.log(data);
       }
     )
   }
@@ -172,7 +167,6 @@ export class SipComponent implements OnInit {
       data => {
         this.sipPanCount = data.sipCount;
         this.getWbrPanCount();
-        console.log(data);
       }
     )
   }
@@ -187,7 +181,6 @@ export class SipComponent implements OnInit {
         this.wbrCount = data.folioCount;
         this.clientWithoutSip = (this.sipPanCount / data.folioCount) * 100;
         this.clientWithoutSip = (!this.clientWithoutSip || this.clientWithoutSip == Infinity) ? 0 : this.clientWithoutSip;
-        console.log(data);
       }
     )
   }

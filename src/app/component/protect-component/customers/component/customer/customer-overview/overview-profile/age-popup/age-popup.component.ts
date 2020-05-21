@@ -33,14 +33,14 @@ export class AgePopupComponent implements OnInit {
     this.peopleService.editBirthDate(obj).subscribe(
       data => {
         console.log(data);
-        this.cancel();
+        this.cancel(data);
       },
       err => {
         this.eventService.openSnackBar(err, "Dismiss");
       }
     )
   }
-  cancel() {
-    this.dialogRef.close();
+  cancel(data) {
+    (data == undefined) ? this.dialogRef.close({ flag: 'cancel' }) : this.dialogRef.close({ flag: data });
   }
 }

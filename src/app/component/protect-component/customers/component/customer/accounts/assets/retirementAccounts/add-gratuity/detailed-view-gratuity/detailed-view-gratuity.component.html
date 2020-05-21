@@ -56,7 +56,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Amount Received
+                        Amount received
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="gratuity.amountReceived">
                         {{gratuity.gratuityReceived?'₹':''}}{{(gratuity.gratuityReceived)?utils.formatter(gratuity.gratuityReceived):'-'}}
@@ -68,7 +68,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.bankAccountNumber?gratuity.bankAccountNumber:'-'}}
+                        {{gratuity.linkedBankName?gratuity.linkedBankName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

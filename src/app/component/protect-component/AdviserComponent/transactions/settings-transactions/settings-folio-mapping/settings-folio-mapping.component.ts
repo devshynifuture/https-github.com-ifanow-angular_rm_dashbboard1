@@ -50,7 +50,6 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
 
   ownerDetails(value) {
-    console.log(value);
     this.clientData = value;
     this.sortDataFilterWise();
   }
@@ -60,7 +59,6 @@ export class SettingsFolioMappingComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data)
     );
@@ -68,7 +66,6 @@ export class SettingsFolioMappingComponent implements OnInit {
 
   getFilterOptionDataRes(data) {
     if (data) {
-      console.log(data);
       this.filterData = TransactionEnumService.setPlatformEnum(data);
       this.type = '1';
       this.selectedBrokerCode = data[0];
@@ -95,7 +92,6 @@ export class SettingsFolioMappingComponent implements OnInit {
     };
     this.onlineTransact.getFolioMappedData(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
@@ -122,7 +118,6 @@ export class SettingsFolioMappingComponent implements OnInit {
     };
     this.onlineTransact.getFolioUnmappedData(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
@@ -155,7 +150,6 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
 
   lisNominee(value) {
-    console.log(value);
     this.nomineesListFM = Object.assign([], value);
   }
 
@@ -173,7 +167,6 @@ export class SettingsFolioMappingComponent implements OnInit {
         };
         this.onlineTransact.unmapMappedFolios(obj).subscribe(
           data => {
-            console.log(data);
             this.sortDataFilterWise();
             dialogRef.close();
           },
@@ -181,10 +174,8 @@ export class SettingsFolioMappingComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -210,12 +201,10 @@ export class SettingsFolioMappingComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           this.sortDataFilterWise();
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();

@@ -48,7 +48,6 @@ export class ClientSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    console.log('clients');
     this.getClientSubData();
   }
 
@@ -125,7 +124,6 @@ export class ClientSubscriptionComponent implements OnInit {
 
       this.data = [];
       this.dataSource.data = data;
-      // console.log(data);
       this.dataSource.data = [];
       this.noData = 'No Data Found';
 
@@ -146,9 +144,7 @@ export class ClientSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -162,7 +158,6 @@ export class ClientSubscriptionComponent implements OnInit {
     if (!this.isLoading) {
       this.location.replaceState('/subscription-upper');
       data.flag = flag;
-      console.log('hello mf button clicked');
       const fragmentData = {
         flag: 'clietns',
         id: 1,

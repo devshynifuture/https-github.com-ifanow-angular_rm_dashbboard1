@@ -41,7 +41,6 @@ export class ReconFranklinComponent implements OnInit {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
     this.teamMemberListGet();
-    console.log('my id is ::', this.rtId);
   }
 
   teamMemberListGet() {
@@ -79,7 +78,6 @@ export class ReconFranklinComponent implements OnInit {
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
           this.isLoading = false;
-          console.log("this is some values ::::::::::", res);
           this.dataSource.data = res;
         })
     }

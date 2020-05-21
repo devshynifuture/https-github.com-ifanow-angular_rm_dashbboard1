@@ -112,20 +112,20 @@
                         {{(data.description)?data.description:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Bank name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.bankName)?data.bankName:'-'}}
+                        {{ (data.linkedBankName)?data.linkedBankName:'-'}}
                     </div>
-                </div>
+                </div> -->
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.linkedBankAccount)?data.linkedBankAccount:'-' }}
+                        {{ (data.linkedBankName)?data.linkedBankName:'-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">

@@ -36,7 +36,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
     if (this.dataToFilter.filterQuotation != undefined) {
       this.onlyDateFilter = this.dataToFilter.filterQuotation
     }
-    console.log(this.dataToFilter, this.chipStatus, this.chipDate, " dataToFilter 123 ");
 
   }
 
@@ -47,25 +46,20 @@ export class SudscriptionTableFilterComponent implements OnInit {
     } else {
       this.showFilter = true;
     }
-    // console.log('this.filterStatus: ', this.filterStatus);
-    // console.log('this.filterDate: ', this.filterDate);
 
   }
 
   addFilters(addFilters) {
 
-    console.log('addFilters', addFilters);
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       // this.lastFilterDataId = 0;
       this.filterStatus[0] = addFilters;
       this.filterDataArr = [];
-      console.log(this.filterStatus);
     } else {
 
     }
     this.filterJson.statusFilterJson = this.filterStatus;
-    console.log(this.filterStatus, 'this.filterStatus 123');
     this.filterRes.emit(this.filterJson);
   }
 
@@ -88,7 +82,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
     }
     this.filterDataArr = [];
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-    console.log(this.selectedDateFilter, 'addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -97,7 +90,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
     UtilService.getStartOfTheDay(endDate);
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
-    console.log(this.filterDate, 'this.filterDate 123');
     // this.callFilter(false);
     this.filterJson.dateFilterJson = this.selectedDateRange;
     this.filterJson.dateFilterArr = this.filterDate;
@@ -105,7 +97,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
   }
 
   removeDate(item) {
-    console.log(this.filterDate, 'this.filterDate 123 r');
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
 
@@ -114,7 +105,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
   }
 
   remove(item) {
-    console.log(item, 'item123');
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
     }
@@ -129,7 +119,6 @@ export class SudscriptionTableFilterComponent implements OnInit {
   }
 
   onClose() {
-    console.log('SudscriptionTableFilterComponent onClose event : ');
     this.orgValueChange(this.selectedDateRange);
   }
 

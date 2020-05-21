@@ -37,7 +37,6 @@ export class GmailRedirectComponent implements OnInit {
     this.emailId = AuthService.getUserInfo().emailId;
     this.route.queryParams
       .subscribe(params => {
-        console.log('GmailRedirectComponent ngOnInit ', params);
 
 
         localStorage.removeItem('googleOAuthToken');
@@ -60,20 +59,14 @@ export class GmailRedirectComponent implements OnInit {
            redirect_uri: this.REDIRECT_URI,
 
          };*/
-        console.log('GmailRedirectComponent ngOnInit bodyData: ', bodyData);
 
         this.httpService.postExternal(this.URL, bodyData, httpOptions).subscribe((responseData) => {
-          console.log('GmailRedirectComponent ngOnInit bodyData: ', bodyData);
-          console.log("this is response Data from google", responseData);
 
           const serverRequestData = { ...responseData, userId: this.advisorId, emailId: localStorage.getItem('associatedGoogleEmailId') };
           this.sendDataToServer(serverRequestData);
-          console.log('GmailRedirectComponent ngOnInit  sdsd postExternal responseData: ', responseData);
         }, (errorResponse) => {
-          console.log('GmailRedirectComponent ngOnInit postExternal errorResponse: ', errorResponse);
         });
         // this.order = params.order;
-        // console.log(this.order); // popular
       });
   }
 
@@ -85,7 +78,6 @@ export class GmailRedirectComponent implements OnInit {
 
     this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
       response => {
-        console.log('this is gmail succeed response', response);
         localStorage.setItem("successStoringToken", "true");
         this.isSuccess = true;
         window.close();

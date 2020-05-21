@@ -92,8 +92,12 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.panelOpenState = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    // this._data.forEach(element => {
+    //   element.done = false
+    // });
     // (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
     this.transactionPeriodCheck = false
     // this.amc = this._data.schemeWise;//amc wise data 

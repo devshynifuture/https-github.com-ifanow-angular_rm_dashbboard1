@@ -53,7 +53,6 @@ export class InputValueValidationDirective {
       currValue = currValue.trim();
       const convertStringTochar = currValue.split('');
       const oldValue = convertStringTochar.filter(element => this.inputValidator.test(element) == true);
-      console.log(oldValue.join(''));
       this._el.nativeElement.value = oldValue.join('');
       this.changedValue.emit(oldValue.join(''));
     }

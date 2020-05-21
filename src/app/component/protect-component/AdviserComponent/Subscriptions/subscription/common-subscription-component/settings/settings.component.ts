@@ -31,7 +31,6 @@ export class SettingsComponent implements OnInit {
   @Input() upperData;
 
   ngOnInit() {
-    console.log(this.upperData)
     this.getSettingProfileData();
   }
 
@@ -52,7 +51,6 @@ export class SettingsComponent implements OnInit {
   }
 
   setAsPrimaryRes(data) {
-    console.log('setAsPrimaryRes', data);
     this.SettingProfileData.forEach(element => {
       if (data == element.id) {
         element.isPrimary = true;
@@ -79,7 +77,6 @@ export class SettingsComponent implements OnInit {
       this.noData = 'No Data Found';
       this.SettingProfileData = []
     } else {
-      console.log('getData biller', data);
       this.SettingProfileData = data;
     }
   }
@@ -96,12 +93,10 @@ export class SettingsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.SettingProfileData = [{}];
             this.getSettingProfileData();
-            console.log('this is sidebardata in subs subs 2: ');
           }
           rightSideDataSub.unsubscribe();
         }
@@ -133,7 +128,6 @@ export class SettingsComponent implements OnInit {
         )
       },
       negativeMethod: () => {
-        console.log("negative method called");
       }
     };
 
@@ -145,7 +139,6 @@ export class SettingsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.SettingProfileData, "delete result");
 
       if (result != undefined) {
         const tempList = this.SettingProfileData.filter(p => p.id != result);
@@ -162,6 +155,5 @@ export class SettingsComponent implements OnInit {
   // }
 
   dataTosendSetting(value) {
-    console.log('data setting send by Output', value);
   }
 }

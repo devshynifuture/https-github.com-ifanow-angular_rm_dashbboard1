@@ -61,17 +61,13 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     // this.eventService.upperSliderDataObs.subscribe(
     //   data => {
 
-    //     console.log('DialogContainerComponent constructor upperSliderDataObs: ', data);
 
     //     this.fragmentDataSubsUpper = data;
-    //     console.log('UpperSlider constructor ngOnInit: ', this.fragmentDataSubsUpper);
 
     //     this.State = 'close';
 
     //     this.upperDataSubsUpper = this.fragmentDataSubsUpper.data;
 
-    //     console.log('upperDataSubsUpper: ', this.upperDataSubsUpper);
-    //     console.log(this.fragmentDataSubsUpper);
     //   }
     // );
   }
@@ -95,25 +91,21 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
 
   set data(data) {
     this.referenceData = data;
-    console.log('SubscriptionUpperSliderComponent data : ', data);
     this.fragmentDataSubsUpper = {data};
   }
 
   ngOnInit() {
-    console.log(history.state, 'hi i was called again');
     // if (this.referenceData == undefined) {
     this.referenceData = AuthService.getSubscriptionUpperSliderData();
     this.fragmentDataSubsUpper = this.referenceData;
     this.upperDataSubsUpper = this.referenceData.data;
 
-    console.log('upper data fragmentDataSubsUpper', this.fragmentDataSubsUpper);
     // }
     // this.upperState = "open";
   }
 
   dialogClose() {
     // this.dialogRef.close();
-    console.log(this.fragmentDataSubsUpper, this.referenceData, '13 this.fragmentDataSubsUpper');
 
     switch (true) {
       case (this.referenceData.flag == 'plan'):
@@ -146,7 +138,6 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     // this.addedData = event
     this.sendAddedData = event;
     this.addedData = this.fragmentDataSubsUpper.data;
-    console.log(event, this.fragmentDataSubsUpper.data, 'data overview 123');
     // this.fragmentDataSubsUpper.data = this.addedData ;
     if (event != undefined) {
       this.isRefreshData = true;
@@ -159,22 +150,18 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
 
   getUpperDataValue(data) {
     this.upperDataSubsUpper = data;
-    console.log('upperDataSubsUpper', this.upperDataSubsUpper);
   }
 
   getCancelInvoiceSubscription(data) {
-    console.log(data);
     this.ngOnInit();
   }
 
   setRightSliderFlag(data) {
     this.blankOverview = data;
     this.rightSliderFlag = data;
-    console.log('value', data);
   }
 
   tabClick(event) {
-    console.log(event);
     this.subscriptionTab = event.tab.textLabel;
     this.selectedServiceTab = event.index;
   }

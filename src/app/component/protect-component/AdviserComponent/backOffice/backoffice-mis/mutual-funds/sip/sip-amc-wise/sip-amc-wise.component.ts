@@ -271,7 +271,6 @@ export class SipAmcWiseComponent implements OnInit {
               element.showSubCategory = true;
             });
             schemeData.schemeList = data
-            console.log(data)
             this.schemeDataList = data
             if (schemeData.showCategory == false) {
               this.appendingOfValuesInExcel(this.amcList[this.selectedCategory].schemeList, index, 'schemes');
@@ -294,7 +293,6 @@ export class SipAmcWiseComponent implements OnInit {
     }
   }
   removeValuesFromExcel(whichList, clientIndex) {
-    console.log(clientIndex, this.arrayOfExcelData);
 
     switch (whichList) {
       case 'schemes':
@@ -341,7 +339,6 @@ export class SipAmcWiseComponent implements OnInit {
       case 'applicant':
         // applicant
         iterable.forEach((element, index1) => {
-          console.log(index, iterable, this.arrayOfExcelData);
           this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList[this.selectedClientIndex].applicantList.push({
             index: index1 + 1,
             name: element.investorName,
@@ -358,7 +355,6 @@ export class SipAmcWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   excelInitAmcList() {
@@ -401,7 +397,6 @@ export class SipAmcWiseComponent implements OnInit {
             });
             investorData.investorList = data;
             this.subCategory = data
-            console.log(data)
             if (investorData.showSubCategory == false) {
               this.appendingOfValuesInExcel(this.amcList[this.selectedCategory].schemeList[this.selectedAmc].investorList, index, 'investor');
             } else {
@@ -444,7 +439,6 @@ export class SipAmcWiseComponent implements OnInit {
           if (data) {
             applicantData.applicantList = data;
             this.applicantList = data
-            console.log(data)
           } else {
             applicantData.applicantList = [];
             this.applicantList = [];
@@ -473,7 +467,6 @@ export class SipAmcWiseComponent implements OnInit {
     }
     this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
       data => {
-        console.log(data);
       }
     )
   }
@@ -487,7 +480,6 @@ export class SipAmcWiseComponent implements OnInit {
     }
     this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
       data => {
-        console.log(data);
       }
     )
   }
@@ -502,7 +494,6 @@ export class SipAmcWiseComponent implements OnInit {
     }
     this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
       data => {
-        console.log(data);
       }
     )
   }
@@ -522,7 +513,6 @@ export class SipAmcWiseComponent implements OnInit {
         break;
     }
 
-    console.log(this.arrayOfExcelData);
   }
   amcWiseExcelReport() {
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {

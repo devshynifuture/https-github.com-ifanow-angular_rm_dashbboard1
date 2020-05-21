@@ -54,6 +54,15 @@ export class MutualFundSummaryComponent implements OnInit {
   reponseData: any;
   setDefaultFilterData: any;
 
+  inputData: any;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data);
+  }
+  get data() {
+    return this.inputData;
+  }
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -189,6 +198,31 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   asyncFilter(mutualFund) {
+    if(this.inputData == 'category wise'){
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Category wise',
+        selected : true
+      }
+    }else if(this.inputData == 'investor wise'){
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Investor wise',
+        selected : true
+      }
+    }else if(this.inputData == 'scheme wise'){
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Scheme wise',
+        selected : true
+      }
+    }else{
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Sub Category wise',
+        selected : true
+      }
+    }
     if (typeof Worker !== 'undefined') {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
@@ -402,7 +436,7 @@ export class MutualFundSummaryComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.utilService.htmlToPdf(para.innerHTML, 'Mutual fund summary', this.fragmentData);
   }
 
   deleteModal(value, element) {

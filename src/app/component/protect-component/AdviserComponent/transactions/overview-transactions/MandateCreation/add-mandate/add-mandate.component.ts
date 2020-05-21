@@ -118,7 +118,6 @@ export class AddMandateComponent implements OnInit {
 
   getBankDetailsNSERes(data) {
     this.isLoadingBank = false;
-    console.log(data);
     this.bankDetails = data;
     if (this.bankDetails && this.bankDetails.length == 1) {
       this.generalDetails.controls.bank.setValue(this.bankDetails[0].id);
@@ -158,7 +157,6 @@ export class AddMandateComponent implements OnInit {
       // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
-    console.log(value);
     this.nomineesListFM = Object.assign([], value);
   }
 
@@ -205,12 +203,10 @@ export class AddMandateComponent implements OnInit {
       data => {
         if (data) {
           this.isLoadingUcc = false;
-          console.log(data);
           this.clientCodeData = data;
           if (this.clientCodeData.length == 1) {
             this.generalDetails.controls.holdingType.setValue(this.clientCodeData[0].clientCode);
           }
-          console.log('clientCodeData', this.clientCodeData);
         } else {
           this.isLoadingUcc = false;
           this.clientCodeDataShow = true;
@@ -244,7 +240,6 @@ export class AddMandateComponent implements OnInit {
 
   selectIINUCC(clientCode) {
     this.detailsIIN = clientCode;
-    console.log('fg', this.detailsIIN);
     this.getBankDetails();
     //  this.getBankMandate();
   }
@@ -265,7 +260,6 @@ export class AddMandateComponent implements OnInit {
     }*/
 
   getBankDetailsMandateRes(data) {
-    console.log(data);
     this.openMandate(data);
   }
 
@@ -284,7 +278,6 @@ export class AddMandateComponent implements OnInit {
     this.selectedMandate = bank;
     this.dataSource.push(bank);
     this.showMandateTable = true;
-    console.log(this.selectedBank);
   }
 
   createMandates() {
@@ -305,18 +298,15 @@ export class AddMandateComponent implements OnInit {
     Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
     Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
     Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
-    console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
         this.eventService.openSnackBar(error, 'Dismiss');
-        console.log('err', error);
         this.errorMsg = error;
       }
     );
   }
 
   addMandateRes(data) {
-    console.log('res mandate', data);
 
     if (data) {
       this.madateResponse = data;
@@ -328,9 +318,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   getFileDetails(e, flag) {
-    console.log('file', e);
     this.file = e.target.files[0];
-    console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       // tpUserRequestId: 1,
@@ -340,14 +328,9 @@ export class AddMandateComponent implements OnInit {
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        console.log('getFileDetails uploadFileToServer callback item : ', item);
-        console.log('getFileDetails uploadFileToServer callback status : ', status);
-        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
-        console.log('getFileDetails uploadFileToServer callback response : ', response);
 
         if (status == 200) {
           const responseObject = JSON.parse(response);
-          console.log('onChange file upload success response url : ', responseObject.url);
           this.eventService.openSnackBar('File uploaded successfully');
         } else {
           const responseObject = JSON.parse(response);

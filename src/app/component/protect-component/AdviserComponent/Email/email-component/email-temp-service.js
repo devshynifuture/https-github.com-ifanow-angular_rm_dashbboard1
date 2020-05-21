@@ -55,7 +55,6 @@ function getContentFromMessage(message) {
 
 function deleteFile(id) {
   gapi.client.drive.files.delete({'fileId': id}).execute(function (data) {
-    console.log(data)
   });
 }
 
@@ -88,7 +87,6 @@ function createDraftWithAttachment(linkToPDF, callback) {
     //Create the draft and call the callback
     var email = createDraftEmail(arrayBufferToBase64(oReq.response));
     uploadDraft(email, function (data) {
-      console.log(data);
       callback(data);
     })
   };
@@ -112,7 +110,6 @@ function uploadDraft(email, callback) {
       'raw': base64EncodedEmail
     }
   };
-  console.log(JSON.stringify(payload));
   var request = gapi.client.gmail.users.drafts.create(payload);
   request.execute(callback);
 }
@@ -135,10 +132,8 @@ function processThread() {
       }
 
       insertFile("Extracted from GMail " + messageId, totalHtml, function (result) {
-        console.log(result);
         createDraftWithAttachment(result.exportLinks["application/pdf"], function (draft) {
           //open the draft in gmail window
-          console.log("new url : " + tab.url + "?compose=" + draft.message.id);
           chrome.tabs.update(tab.id, {url: tab.url + "?compose=" + draft.message.id});
           deleteFile(result.id);
         });
@@ -187,7 +182,6 @@ function insertFile(title, htmlData, callback) {
   });
   if (!callback) {
     callback = function (file) {
-      console.log(file)
     };
   }
   request.execute(callback);

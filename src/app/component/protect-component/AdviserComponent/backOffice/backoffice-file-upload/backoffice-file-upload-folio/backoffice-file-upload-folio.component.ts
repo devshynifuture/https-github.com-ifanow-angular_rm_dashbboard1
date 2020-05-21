@@ -68,7 +68,6 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
 
   ngOnDestroy() {
     this.unSubcrip.unsubscribe();
-    console.log('unsubscribe');
   }
 
 }

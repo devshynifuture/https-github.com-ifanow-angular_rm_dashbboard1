@@ -10,10 +10,10 @@ export class LeftsidebarSettingComponent implements OnInit {
 
   roleObj:any;
   constructor() {
-    this.roleObj = AuthService.getUserRoleType();
   }
 
   ngOnInit() {
+    this.roleObj = AuthService.getUserRoleType();
   }
 
 }

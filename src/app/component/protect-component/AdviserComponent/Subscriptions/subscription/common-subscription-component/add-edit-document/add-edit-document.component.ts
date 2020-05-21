@@ -57,7 +57,6 @@ export class AddEditDocumentComponent implements OnInit {
     // availableAt
     this.selectedOption = '1';
     // this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
-    console.log('AddEditDocumentComponent inputData: ', inputData);
     this.setFormData(inputData);
   }
 
@@ -115,7 +114,6 @@ export class AddEditDocumentComponent implements OnInit {
   saveDocuments() {
     if (this.blankDocumentProperties.invalid) {
       for (let element in this.blankDocumentProperties.controls) {
-        console.log(element)
         if (this.blankDocumentProperties.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.blankDocumentProperties.controls[element].markAsTouched();
@@ -138,19 +136,15 @@ export class AddEditDocumentComponent implements OnInit {
           docType: this.blankDocumentProperties.controls.docType.value
 
         };
-        // console.log(obj);
-        // console.log(obj);
 
         this.subService.addSettingDocument(obj).subscribe(
           data => {
-            console.log(data);
             this.subInjectService.changeNewRightSliderState({ state: 'close', data: { documentData: data } });
             // this.sendDataToParentUpperFrag(data);
             this.barButtonOptions.active = false;
           },
           err => {
             this.barButtonOptions.active = false;
-            console.log(err, "error changeNewRightSliderState");
           }
         );
       } else {
@@ -165,7 +159,6 @@ export class AddEditDocumentComponent implements OnInit {
         };
         this.subService.updateDocumentData(obj).subscribe(
           data => {
-            console.log(data);
             obj['id'] = data;
             this.subInjectService.changeNewRightSliderState({ state: 'close', data: { documentData: obj } });
             this.sendDataToParentUpperFrag(data);
@@ -173,7 +166,6 @@ export class AddEditDocumentComponent implements OnInit {
           },
           err => {
             this.barButtonOptions.active = false;
-            console.log(err, "error changeNewRightSliderState");
 
           }
         );
