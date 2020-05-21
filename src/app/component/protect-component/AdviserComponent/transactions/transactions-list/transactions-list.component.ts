@@ -23,7 +23,6 @@ export class TransactionsListComponent implements OnInit {
   advisorId: any;
   selectedPreviousToShowDate;
   selectedBroker;
-  seletedPreviousDate;
   finalStartDate;
   finalEndDate;
   errMessage: any;
