@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0 ">
+                                        <p class="text-black mb-0 text-right">
                                             <span appFormatNumber
                                                 *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">0</span>
@@ -158,9 +158,10 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.equityPercentage">{{(this.equityPercentage)?(this.equityPercentage | number:'1.2-2'):'0'}}%</span><span
-                                                appFormatNumber *ngIf="!this.equityPercentage && !isLoading">0%</span>
+                                                appFormatNumber
+                                                *ngIf="!this.equityPercentage && !isLoading">0.00%</span>
                                         </p>
                                     </div>
                                 </div>
@@ -174,7 +175,7 @@
                                 </div>
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading">0</span>
                                         </p>
@@ -182,9 +183,9 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.debtPercentage">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</span><span
-                                                appFormatNumber *ngIf="!this.debtPercentage && !isLoading ">0%</span>
+                                                appFormatNumber *ngIf="!this.debtPercentage && !isLoading ">0.00%</span>
                                         </p>
                                     </div>
                                 </div>
@@ -198,7 +199,7 @@
                                 </div>
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">0</span>
                                         </p>
@@ -206,9 +207,10 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.hybridPercenatge">{{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
-                                                appFormatNumber *ngIf="!this.hybridPercenatge && !isLoading ">0%</span>
+                                                appFormatNumber
+                                                *ngIf="!this.hybridPercenatge && !isLoading ">0.00%</span>
                                         </p>
                                     </div>
                                 </div>
@@ -222,7 +224,7 @@
                                 </div>
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0">
+                                        <p class="text-black mb-0 text-right">
                                             <span appFormatNumber
                                                 *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span
                                                 appFormatNumber
@@ -232,10 +234,11 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.solution_OrientedPercenatge">{{(this.solution_OrientedPercenatge) ? (solution_OrientedPercenatge | number:'1.2-2') : '0'}}%</span><span
                                                 appFormatNumber
-                                                *ngIf="!this.solution_OrientedPercenatge && !isLoading ">0%</span></p>
+                                                *ngIf="!this.solution_OrientedPercenatge && !isLoading ">0.00%</span>
+                                        </p>
 
                                     </div>
                                 </div>
@@ -249,7 +252,7 @@
                                 </div>
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading">0</span>
                                         </p>
@@ -257,9 +260,10 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24 ">
-                                        <p class="text-black mb-0"><span appFormatNumber
+                                        <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.otherPercentage">{{(this.otherPercentage) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
-                                                appFormatNumber *ngIf="!this.otherPercentage && !isLoading ">0%</span>
+                                                appFormatNumber
+                                                *ngIf="!this.otherPercentage && !isLoading ">0.00%</span>
                                         </p>
                                     </div>
                                 </div>
@@ -277,7 +281,7 @@
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
-                <div class="example-container1" id="table-low">
+                <div class="scheme-wise-allocation" id="table-low">
                     <table mat-table [dataSource]="dataSource2" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="showSchemeWise">
                         <ng-container matColumnDef="name">
@@ -368,7 +372,7 @@
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
 
                     </table>
                     <!-- <div *ngIf="dataSource2.length == 0" class="d-flex flex-column align-items-center"> -->
@@ -412,13 +416,13 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0"
                 *ngIf="showSubCategory || dataSource3.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a f-500 roboto pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
                 </div>
-                <div class="example-container" id="table-low">
+                <div class="sub-category-wise" id="table-low">
                     <table mat-table [dataSource]="dataSource3" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="showSubCategory ">
                         <ng-container matColumnDef="name">
@@ -526,7 +530,7 @@
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
 
                     </table>
                     <!-- <div *ngIf="dataSource3.length == 0" class="d-flex flex-column align-items-center"> -->
@@ -541,7 +545,7 @@
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
-                <div class="example-container" id="table-low">
+                <div class="family-member-wise-allocation" id="table-low">
                     <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="showFamilyMember">
                         <ng-container matColumnDef="name">
@@ -643,7 +647,7 @@
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
                     </table>
                     <!-- <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center"> -->
                     <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
@@ -657,7 +661,7 @@
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
-                <div class="example-container" id="table-low">
+                <div class="category-wise-allocation" id="table-low">
                     <table mat-table [dataSource]="dataSource4" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="showCategory">
                         <ng-container matColumnDef="name">
@@ -762,7 +766,7 @@
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
                     </table>
                     <!-- <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center"> -->
                     <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->

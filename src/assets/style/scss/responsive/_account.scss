@@ -4,23 +4,29 @@
     height: 40px !important;
   }
 }
-#ui-profile-plan{
+
+#ui-profile-plan {
   pointer-events: initial !important;
 }
+
 @media(max-width:1292px) {
-  .btn140{
+  .btn140 {
     width: 135px !important;
-    
+
+  }
+
+  .recommendations,
+  .btn140 {
+    font-size: 13px;
+  }
 }
-.recommendations,.btn140{
-  font-size: 13px;
-}
-}
+
 @media(max-width:1224px) {}
 
 @media(max-width:1200px) {
 
-  #ui-assets-account,#ui-profile-plan {
+  #ui-assets-account,
+  #ui-profile-plan {
     li {
       padding: 0 0px 24px 13px !important;
     }
@@ -58,6 +64,10 @@
 
   .scheme-wise {
     padding-right: 0px !important;
+
+    #table-low th {
+      background-color: #fff !important;
+    }
   }
 
   div.overflow-y {
@@ -68,6 +78,16 @@
     .w-1024 {
       width: 1024px;
     }
+  }
+}
+
+.scheme-wise-allocation#table-low,
+.category-wise-allocation#table-low,
+.family-member-wise-allocation#table-low,
+.sub-category-wise#table-low {
+  th {
+    background-color: #fff !important;
+    font-weight: 500;
   }
 }
 
@@ -102,23 +122,29 @@
       padding: 0 16px !important;
     }
   }
-  .individual-income{
+
+  .individual-income {
     .incomeSourcesBox {
       display: block !important;
       margin: 0 auto !important;
     }
-    .ws-nowrap{
+
+    .ws-nowrap {
       white-space: inherit !important;
     }
-    h5.text-custom{
+
+    h5.text-custom {
       font-size: 14px;
     }
-    .col-md-3.d-flex{
+
+    .col-md-3.d-flex {
       display: block !important;
-      .mr-28{
+
+      .mr-28 {
         margin-right: 0px !important;
       }
-      .ml-12{
+
+      .ml-12 {
         margin-left: 0px !important;
       }
     }
@@ -128,7 +154,8 @@
 @media(max-width:1092px) {
 
   #ui-assets-account,
-  #ui-liabilities,#ui-profile-plan {
+  #ui-liabilities,
+  #ui-profile-plan {
     li {
       padding: 0 0px 0px 8px !important;
       font-size: 13px;
@@ -186,12 +213,13 @@
     }
   }
 
-  #ui-assets-account,#ui-profile-plan,
+  #ui-assets-account,
+  #ui-profile-plan,
   #ui-liabilities {
     li {
-    font-size: 13px !important;
+      font-size: 13px !important;
+    }
   }
-}
 
   .tabView {
 
