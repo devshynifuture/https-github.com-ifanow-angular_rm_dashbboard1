@@ -87,7 +87,7 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity Date
+                        Maturity date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.maturityDate | date:'dd/MM/yyyy'}}
@@ -181,7 +181,7 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total Interest earned 
+                        Total interest earned 
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
@@ -203,7 +203,7 @@ Description description: "this is futurewise Tech" -->
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.bankAcNumber?fixedDeposit.bankAcNumber:'-'}}
+                        {{fixedDeposit.linkedBankName?fixedDeposit.linkedBankName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
