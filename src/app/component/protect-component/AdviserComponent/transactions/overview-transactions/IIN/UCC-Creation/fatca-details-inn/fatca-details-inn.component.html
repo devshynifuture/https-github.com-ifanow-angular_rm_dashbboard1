@@ -12,8 +12,8 @@
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
             <i (click)="close()" class="material-icons pt-16 c-p pr-16">
-        clear
-      </i>
+                clear
+            </i>
         </div>
     </div>
 </div>
@@ -78,7 +78,7 @@
 
 
                 <div class="row pt-20">
-                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                    <div class="col-md-4 d-flex flex-column text-right pr-0">
                         <h3 class="f-16   m-0"> Gross annual income in Laks </h3>
                         <p class="text-custom f-12 m-0">in Indian Rupees</p>
                     </div>
@@ -93,10 +93,9 @@
                 <div class="row pt-32">
                     <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
                         <h3 class="f-16  m-0"> Source of wealth </h3>
-
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
+                        <mat-form-field appearance="standard" floatLabel="never">
                             <mat-select class="form-control" formControlName="sourceOfWealth">
                                 <mat-option disabled value=''>Select source of wealth</mat-option>
                                 <mat-option value='01'>
@@ -121,7 +120,7 @@
                         <h3 class="f-16  m-0">Occupation </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
+                        <mat-form-field appearance="standard" floatLabel="never">
                             <mat-select class="form-control" formControlName="occupationCode">
                                 <mat-option disabled value=''>Select occupation</mat-option>
                                 <mat-option value="41">
@@ -166,8 +165,8 @@
 
 
                 <div class="row pt-32">
-                    <div class="col-md-4  d-flex align-items-center justify-content-end pr-0">
-                        <h3 class="f-16   m-0"> Are you politically exposed person </h3>
+                    <div class="col-md-4 pr-0 text-right ">
+                        <h3 class="f-16  m-0"> Are you politically exposed person </h3>
                     </div>
                     <div class="col-md-8 form-group">
                         <mat-radio-group aria-label="Select an option" class="uiClassTab" formControlName="politically">
@@ -262,8 +261,8 @@
     <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
 
         <button (click)="openNomineeDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
-      PREVIOUS
-    </button>
+            PREVIOUS
+        </button>
 
         <button (click)="SendToForm()" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT</button>
 
