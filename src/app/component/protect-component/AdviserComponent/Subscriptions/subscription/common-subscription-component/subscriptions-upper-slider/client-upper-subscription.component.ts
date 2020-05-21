@@ -53,7 +53,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   // dataSource: any;
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
   @Input() set upperData(data) {
-    console.log(data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientData = data;
     this.getSummaryDataClient();
@@ -93,15 +92,12 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       componentName: component
     };
 
-    console.log(fragmentData,  "fragmentData json");
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getSummaryDataClient();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -145,11 +141,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', UtilService.isRefreshRequired(sideBarData));
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getSummaryDataClient();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -194,7 +188,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    // console.log(data, data[0].clientName, 'hi client');
     this.subscriptionData = [];
     const planWiseMap = {};
     if (data == undefined) {
@@ -224,12 +217,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
        });*/
     } else {
     }
-    console.log('client Subscription planWiseMap **********', planWiseMap);
-    console.log('client Subscription getSubSummaryRes **********', this.subscriptionData);
   }
 
   checkAndGenerateTableSource(dataArray) {
-    // console.log('checkAndGenerateTableSource dataArray : ', dataArray);
     if (dataArray) {
       if (dataArray instanceof MatTableDataSource) {
         return dataArray;
@@ -264,17 +254,14 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, planSubArr, "delete result");
       if (result != undefined) {
         const tempList = []
         planSubArr.forEach(singleElement => {
@@ -299,7 +286,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         autoFocus: false,
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result, "cancel was close");
         if (result != undefined) {
           this.getSummaryDataClient();
         }

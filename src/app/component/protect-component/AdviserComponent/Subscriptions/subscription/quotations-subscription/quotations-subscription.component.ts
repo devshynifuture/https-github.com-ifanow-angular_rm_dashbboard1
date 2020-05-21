@@ -164,7 +164,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      // console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
@@ -203,8 +202,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const contentheight = wrapper.offsetHeight;
     const yoffset = uisubs.scrollTop;
     const y = yoffset + window.innerHeight;
-    // console.log(y >= contentheight && this.getData != undefined && this.scrollCallData, this.scrollCallData, "this.scrollCallData 123");
-    console.log(this.getData != undefined, this.scrollCallData, '|| this.statusIdList.length > 0');
 
     if ((y >= contentheight && this.getData != undefined && this.scrollCallData)) {
       this.scrollCallData = false;
@@ -214,7 +211,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
         this.scrollPosition = contentheight - window.innerHeight;
       }
 
-      console.log(this.scrollPosition, 'this.scrollPosition 123');
 
 
       if (this.statusIdList.length <= 0) {
@@ -228,7 +224,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getFiterRes(data) {
-    console.log(data, "data for filter");
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
@@ -280,11 +275,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
       this.data = [];
       this.dataSource.data = data;
-      // console.log(data);
       this.dataSource.data = [];
       this.noData = 'No Data Found';
 
-      // console.log(data);
       // this.dataSource = data;
       // this.dataSource = new MatTableDataSource(data);
       // this.dataSource.sort = this.sort;
@@ -322,7 +315,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
       },
       negativeMethod: () => {
         this.list = [];
-        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -334,7 +326,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, 'delete result');
       if (this.list.length > 0) {
         const tempList = [];
         this.dataSource.data.forEach(singleElement => {
@@ -353,12 +344,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     } else {
       this.showFilter = true;
     }
-    console.log('this.filterStatus: ', this.filterStatus);
-    console.log('this.filterDate: ', this.filterDate);
   }
 
   addFilters(addFilters) {
-    console.log('addFilters', addFilters);
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.filterStatus.push(addFilters);
@@ -370,13 +358,11 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   filterSubscriptionRes(data) {
-    console.log('filterSubscriptionRes', data);
     this.dataSource = data;
     // this.getSubSummaryRes(data);
   }
 
   addFiltersDate(dateFilter) {
-    console.log('addFilters', dateFilter);
     if (this.filterDate.length >= 1) {
       this.filterDate = [];
     }
@@ -428,11 +414,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getClientSubData(false);
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -455,11 +439,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getClientSubData(false);
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();

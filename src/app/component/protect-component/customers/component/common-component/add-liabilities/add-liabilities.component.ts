@@ -89,7 +89,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if(this._data.id == undefined){
       (inputData == 'tab1') ? this.loanTypeDetails='' :this.loanTypeDetails=inputData;
     }
-    console.log('AddLiabilitiesComponent Input data : ', this._data);
   }
   get data() {
     return this._data;
@@ -105,11 +104,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getLiability(this.data);
   }
   getFormDataNominee(data) {
-    console.log(data)
     this.nomineesList = data.controls
   }
   display(value) {
-    console.log('value selected', value)
     this.ownerName = value.userName;
     // this.familyMemberId = value.id
     this.familyMemberId = value.familyMemberId
@@ -122,7 +119,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
-    console.log('family Member', this.FamilyMember);
   }
   FamilyMember(arg0: string, FamilyMember: any) {
     throw new Error("Method not implemented.");
@@ -138,7 +134,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   displayControler(con) {
-    console.log('value selected', con);
     if (con.owner != null && con.owner) {
       this.addLiabilityForm.controls.getCoOwnerName = con.owner;
     }
@@ -189,7 +184,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         let id = this.getCoOwner.controls[item].value.id;
         this.custumService.deleteBorrower(id).subscribe(
           data => {
-            console.log('delete',data)
           }
         )
       }
@@ -321,16 +315,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     return this.addLiabilityForm.controls;
   }
   // display(value) {
-  //   console.log('value selected', value);
   //   this.ownerName = value.userName;
   //   this.familyMemberId = value.id;
   // }
   // lisNominee(value) {
-  //   console.log(value)
   //   this.nomineesListFM = Object.assign([], value.familyMembersList);
   // }
   getFormData(data) {
-    console.log(data)
     this.transactionData = data.controls
     return;
   }
@@ -368,7 +359,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         };
         this.custumService.geCalculatedEmi(obj).subscribe(
           data =>{
-            console.log(data)
               this.addLiabilityForm.controls['emi'].setValue(data);
             
           }, (error) => {
@@ -555,7 +545,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   addEditLiabilityRes(data) {
     this.barButtonOptions.active = false;
     if (data == 1) {
-      console.log(data);
       data = this.loanTypeView;
       this.close(true);
       (this._data.id == undefined) ? this.eventService.openSnackBar('Liability added successfully', 'OK') : this.eventService.openSnackBar('Liability edited successfully', 'OK');

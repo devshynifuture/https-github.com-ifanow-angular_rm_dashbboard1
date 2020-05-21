@@ -45,7 +45,6 @@ export class ArnRiaCredentialsComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getBSECredentialsRes(data), error => {
         this.isLoading = false;
@@ -57,7 +56,6 @@ export class ArnRiaCredentialsComponent implements OnInit {
 
   getBSECredentialsRes(data) {
     this.getBSESubBrokerCredentials();
-    console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
   }
 
@@ -72,7 +70,6 @@ export class ArnRiaCredentialsComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
       data => this.getBSESubBrokerCredentialsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -88,7 +85,6 @@ export class ArnRiaCredentialsComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     } else {
-      console.log('getBSESubBrokerCredentialsRes', data);
       this.brokerCredentials.forEach(function(ad) {
         const subBrokerMatch = data.find(function(tm) {
           return ad.id == tm.tpUserCredentialId;
@@ -101,7 +97,6 @@ export class ArnRiaCredentialsComponent implements OnInit {
       });
       this.dataSource.data = this.brokerCredentials;
       this.dataSource.sort = this.sort;
-      console.log('subBrokerMatch', this.dataSource);
     }
   }
 
@@ -115,11 +110,9 @@ export class ArnRiaCredentialsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getBSECredentials();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -151,10 +144,8 @@ export class ArnRiaCredentialsComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('@@@@@');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',

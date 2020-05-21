@@ -44,7 +44,6 @@ export class SubBrokerTeamMemberComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     }
-    console.log('encode', obj)
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
       data => this.getBSESubBrokerCredentialsRes(data)
     );
@@ -57,7 +56,6 @@ export class SubBrokerTeamMemberComponent implements OnInit {
   getBSESubBrokerCredentialsRes(data) {
     if(data){
       this.isLoading = false;
-      console.log('getBSESubBrokerCredentialsRes', data)
       data = data.filter(element => element.teamMemberSessionId != this.advisorId)
       this.dataSource.data = data
       this.dataSource.sort = this.sort;
@@ -78,11 +76,9 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           this.getBSESubBrokerCredentials()
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
         }
@@ -112,10 +108,8 @@ export class SubBrokerTeamMemberComponent implements OnInit {
 
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -140,10 +134,8 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
         }

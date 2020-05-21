@@ -55,7 +55,6 @@ export class InvoicesComponent implements OnInit {
 
     this.getInvoiceList();
     this.advisorId = AuthService.getAdvisorId();
-    console.log('CLIENT INVOICE ', this.upperData);
     this.invoiceDesign = 'true';
     this.dataCount = 0;
   }
@@ -93,11 +92,9 @@ export class InvoicesComponent implements OnInit {
   openEdit(edit) {
     this.invoiceDesign = edit;
     this.uperDataToClient = this.upperData
-    console.log('edit', edit);
   }
 
   selectedInvoice(ele) {
-    console.log('invoice data', ele);
     if (ele == false) {
       this.dataCount++;
     } else {
@@ -155,9 +152,7 @@ export class InvoicesComponent implements OnInit {
   //   };
   //   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
   //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
   //       if (UtilService.isDialogClose(sideBarData)) {
-  //         console.log('this is sidebardata in subs subs 2: ');
   //         rightSideDataSub.unsubscribe();
   //       }
   //     }
@@ -177,11 +172,9 @@ export class InvoicesComponent implements OnInit {
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getInvoiceList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -199,7 +192,6 @@ export class InvoicesComponent implements OnInit {
     data.forEach(singleData => {
       singleData.isChecked = false;
     });
-    console.log('Invoice data for client', data);
 
     this.dataSource = data;
   }
@@ -215,12 +207,10 @@ export class InvoicesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs a2s : ', sideBarData);
         this.dataTOget = sideBarData;
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getInvoiceList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -231,7 +221,6 @@ export class InvoicesComponent implements OnInit {
   
 
   getCancelInvoiceSubscription(data) {
-    console.log(data);
     this.ngOnInit();
   }
   openInvoicesESign(value, state) {
@@ -245,7 +234,6 @@ export class InvoicesComponent implements OnInit {
   }
 
   display(data) {
-    console.log(data);
     this.ngOnInit();
   }
 
@@ -279,10 +267,8 @@ export class InvoicesComponent implements OnInit {
 
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -292,7 +278,6 @@ export class InvoicesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, "delete result");
       if (result.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {

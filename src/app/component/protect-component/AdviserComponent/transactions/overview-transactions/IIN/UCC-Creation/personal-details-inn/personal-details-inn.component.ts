@@ -34,13 +34,11 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.inputData = data;
     this.clientData = data.clientData;
     this.obj1 = { ...data };
-    console.log('all data in per', this.inputData);
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
       this.firstHolder = data.holderList[0];
       this.secondHolder = data.holderList[1];
       this.thirdHolder = data.holderList[2];
-      console.log('return data', data);
     } else if (data && data.firstHolder) {
       this.getdataForm(data.firstHolder);
       this.firstHolder = data.firstHolder;
@@ -114,9 +112,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       };
       this.peopleService.getClientOrLeadData(this.sendObj).subscribe(
         data => {
-          console.log(data);
           this.addressList = data;
-          console.log('adrress', this.addressList);
           if (this.addressList.emailList.length > 0) {
             this.addressList.email = this.addressList.emailList[0].email;
           }
@@ -136,7 +132,6 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.custumService.getFamilyMembers(this.sendObj).subscribe(
         data => {
           this.addressList = data[0];
-          console.log('adrress', this.addressList);
           if (this.addressList.emailList.length > 0) {
             this.addressList.email = this.addressList.emailList[0].email;
           } else if (this.addressList.mobileList.length > 0) {
@@ -292,7 +287,6 @@ export class PersonalDetailsInnComponent implements OnInit {
   savePersonalDetails(value) {
     if (this.personalDetails.invalid) {
       for (const element in this.personalDetails.controls) {
-        console.log(element);
         if (this.personalDetails.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.personalDetails.controls[element].markAsTouched();
@@ -336,9 +330,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('getListOfFamilyByClientRes', data);
     this.familyClientList = data;
-    console.log('nomineeList', this.familyClientList);
   }
 
   selectedFamily(data) {

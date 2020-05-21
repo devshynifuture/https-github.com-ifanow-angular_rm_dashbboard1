@@ -247,7 +247,6 @@ export class ApplicantWiseComponent implements OnInit {
       }
     });
 
-    console.log("this is what i sent:::", copyOfExcelData);
     ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: true,
@@ -273,7 +272,6 @@ export class ApplicantWiseComponent implements OnInit {
         });
       }
     });
-    console.log("this is what i sent:::", copyOfExcelData);
     ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: true,
@@ -317,7 +315,6 @@ export class ApplicantWiseComponent implements OnInit {
         this.schemeWiseExcelSheet();
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   excelInitApplicant() {
@@ -333,7 +330,6 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
-    console.log(iterable, index, choice);
 
     switch (choice) {
       case 'category':
@@ -387,7 +383,6 @@ export class ApplicantWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   removeValuesFromExcel(whichList, index) {
@@ -408,7 +403,6 @@ export class ApplicantWiseComponent implements OnInit {
           .subCategoryList[this.selectedScheme].schemeList[index].schemeFolioList = [];
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   applicantNameGet(data) {
@@ -455,7 +449,6 @@ export class ApplicantWiseComponent implements OnInit {
             this.isLoadingCategory = false
             applicantData.categoryList = data
             this.categoryListArr = data
-            console.log(data);
             this.categoryList = data;
             this.appendingOfValuesInExcel(data, index, 'category');
           } else {
@@ -475,13 +468,11 @@ export class ApplicantWiseComponent implements OnInit {
     }
   }
   sortCategoryApplicant(data, show, applicantData) {
-    console.log("fasdfkasdf", data);
     applicantData.category = data;
     applicantData.show = (show) ? show = false : show = true;
 
   }
   subCategory(catData, index, applicantIndex) {
-    console.log(applicantIndex);
 
     this.selectedCat = index;
     this.selectedApplicant = applicantIndex;
@@ -510,7 +501,6 @@ export class ApplicantWiseComponent implements OnInit {
             });
             catData.subCatList = data;
             this.subCategoryList = data
-            console.log(data);
             this.subCategoryList = data;
             this.appendingOfValuesInExcel(data, index, 'sub-category');
           } else {
@@ -531,12 +521,10 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   getResponseSubCategoryData(data, category, showCategory) {
-    console.log(data);
     category.showCategory = (showCategory) ? showCategory = false : showCategory = true;
     category.subCategoryList = data;
   }
   getScheme(subCatData, index, catIndex, applicantIndex) {
-    console.log(applicantIndex);
     this.selectedScheme = index;
     this.selectedCat = catIndex;
     this.selectedApplicant = applicantIndex;
@@ -565,7 +553,6 @@ export class ApplicantWiseComponent implements OnInit {
             });
             subCatData.schemeList = data
             this.schemeListArr = data
-            console.log(data);
             this.schemeList = data;
             this.appendingOfValuesInExcel(data, index, 'schemes');
           }else{
@@ -593,7 +580,6 @@ export class ApplicantWiseComponent implements OnInit {
 
 
     schemeData.showFolio = !schemeData.showFolio;
-    // console.log(schemeData, this.schemeList);
     //  need to check
     if (schemeData.showFolio === false) {
       this.appendingOfValuesInExcel(this.schemeList, index, 'scheme-folio');

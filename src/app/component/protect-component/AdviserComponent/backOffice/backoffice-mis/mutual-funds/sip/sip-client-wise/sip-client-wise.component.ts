@@ -213,7 +213,6 @@ export class SipClientWiseComponent implements OnInit {
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'applicant':
-        console.log(iterable, this.arrayOfExcelData, index);
         // investor
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[index].investorList.push({
@@ -245,7 +244,6 @@ export class SipClientWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
   filterArray() {
     // No users, empty list.
@@ -296,7 +294,6 @@ export class SipClientWiseComponent implements OnInit {
             });
             applicantData.applicantList = data
             this.applicantList = data
-            console.log(data)
             if (applicantData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
             } else {

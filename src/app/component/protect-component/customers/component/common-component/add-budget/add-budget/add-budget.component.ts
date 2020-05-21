@@ -36,7 +36,6 @@ export class AddBudgetComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       if (this.isViewInitCalled) {
@@ -69,7 +68,6 @@ export class AddBudgetComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data);
     this.familyMember = data.familyMembersList;
   }
   getdataFormRec(data) {
@@ -97,7 +95,6 @@ export class AddBudgetComponent implements OnInit {
     this.expenseList = this.constantService.expenseList
   }
   selectClient(event, selected) {
-    console.log(selected)
     this.familyMemberId = selected.id
   }
   getdataForm(data) {
@@ -180,10 +177,8 @@ export class AddBudgetComponent implements OnInit {
     }
   }
   otherCommitmentsAddRes(data) {
-    console.log(data)
   }
   editRecuringExpenseRes(data) {
-    console.log(data)
   }
   saveExpenses() {
     if (this.budget.get('expenseDoneOn').invalid) {
@@ -227,12 +222,10 @@ export class AddBudgetComponent implements OnInit {
     }
   }
   addBudgetRes(data) {
-    console.log(data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editBudgetRes(data) {
-    console.log(data)
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }

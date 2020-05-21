@@ -41,7 +41,6 @@ export class ServicesComponent implements OnInit {
   isLoading = false;
   @Input()
   set upperData(upperData) {
-    console.log('FeeStructureComponent upperData set : ', this.upperData);
 
     this._upperData = upperData;
     // setTimeout(() => {
@@ -59,7 +58,6 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    console.log('plan ngOnInit', this.componentFlag);
 
     // this.getPlanServiceData();
     if (this.componentFlag === 'services') {
@@ -69,7 +67,6 @@ export class ServicesComponent implements OnInit {
     }
 
     this.mappedData = [];
-    console.log('upperdata', this.planData)
   }
 
   getPlanServiceData() {
@@ -90,7 +87,6 @@ export class ServicesComponent implements OnInit {
 
 
   getPlanServiceDataResponse(data) {
-    console.log('plan service', data);
     this.isLoading = false;
 
     this.planServiceData = data;
@@ -128,7 +124,6 @@ export class ServicesComponent implements OnInit {
   servicesMappedRes(data) {
     this.isLoading = false;
     if (data) {
-      console.log(data, "servicePricing");
       this.planServiceData = data;
       const modifiedArray = []
       this.planServiceData.forEach(element => {
@@ -140,7 +135,6 @@ export class ServicesComponent implements OnInit {
       });
 
       this.planServiceData = modifiedArray;
-      console.log('plan service getPlanServiceDataResponse : ', modifiedArray);
 
     } else {
       this.planServiceData = [];
@@ -150,7 +144,6 @@ export class ServicesComponent implements OnInit {
   selectService(data, index) {
     if (!this.isLoading) {
       (data.selected) ? this.unmapPlanToService(data) : this.mapPlanToService(data, index);
-      console.log(data);
     }
   }
 
@@ -161,13 +154,11 @@ export class ServicesComponent implements OnInit {
   mapPlanToService(data, index) {
     data.selected = true;
     this.mappedData.push(data);
-    console.log(this.mappedData.length);
   }
 
   unmapPlanToService(data) {
     data.selected = false;
     this.mappedData = this.mappedData.filter(delData => delData.id != data.id)
-    console.log(this.mappedData,data, "unmappedData");
   }
 
   
@@ -212,14 +203,12 @@ export class ServicesComponent implements OnInit {
         this.mapPlanToServiceRes(data)
       },
       err =>{
-        console.log(err,"error mapPlanToServiceRes");
         this.barButtonOptions.active = false;
       }
     );
   }
 
   mapPlanToServiceRes(data) {
-    console.log(data)
     this.changeServiceData.emit(this.planData);
     this.eventService.openSnackBar('Service is mapped', 'OK');
     this.barButtonOptions.active = false;
@@ -229,7 +218,6 @@ export class ServicesComponent implements OnInit {
     // this.dialogClose()
   }
   savePlanMapToServiceResponse(data) {
-    console.log("map plan to service Data", data)
     if (this.mappedData.length === 0) {
       this.eventService.openSnackBar('No service mapped', 'OK');
 
@@ -265,13 +253,11 @@ export class ServicesComponent implements OnInit {
       });
     }
 
-    console.log(obj);
     this.subService.mapServiceToPlanData(obj).subscribe(
       data =>{
         this.savePlanMapToServiceResponse(data);
       },
       err =>{
-        console.log(err,"error savePlanMapToServiceResponse");
         this.barButtonOptions.active = false;
       }
     );

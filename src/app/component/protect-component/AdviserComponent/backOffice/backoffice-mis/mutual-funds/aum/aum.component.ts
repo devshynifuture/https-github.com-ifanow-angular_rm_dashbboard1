@@ -63,7 +63,6 @@ export class AumComponent implements OnInit {
   changeValueOfArnRia(item) {
     this.viewMode = item.number;
     this.arnRiaValue = item.number;
-    console.log("this is arnRia value::", item, item.number);
     this.initPoint();
   }
 
@@ -82,7 +81,6 @@ export class AumComponent implements OnInit {
         if (data) {
           this.advisorId = 0;
           this.arnRiaList = data;
-          console.log("arn ria data:::", data);
 
           const obj = {
             number: 'All',
@@ -146,30 +144,24 @@ export class AumComponent implements OnInit {
   }
 
   getSubCatSchemeRes(data) {
-    console.log(data);
   }
   getFileResponseDataAum(data) {
 
-    console.log("top clients", data)
 
     this.clientTotalAum = data.clientTotalAum;
     this.amcTotalAum = data.amcTotalAum;
   }
   getFileResponseDataForMis(data) {
-    console.log("mis", data)
     this.MiscData1 = data;
   }
   getFileResponseDataForSub(data) {
-    console.log("inside", data)
     this.category = data.category;
     this.subcategory = data.subcategory;
   }
   getFileResponseDataForSubScheme(data) {
-    console.log(":", data)
     this.MiscData = data.categories;
   }
   getFileResponseDataForSubSchemeName(data) {
-    console.log("scheme Name", data)
   }
   getFilerrorResponse(err) {
     this.dataService.openSnackBar('Something went wrong', 'Dismiss')
@@ -191,7 +183,6 @@ export class AumComponent implements OnInit {
         setTimeout(() => {
           this.pieChart('pieChartAum', data);
         }, 1000);
-        console.log(data)
       }
     )
   }

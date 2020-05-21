@@ -27,11 +27,9 @@ export class ClientSearchDirective implements OnInit {
   }
 
   ngOnInit() {
-    console.log('client search');
   }
 
   getFamilyList(value) {
-    console.log('getFamilyList value: ', value);
 
     (value == '') ? this.familyMemberData = undefined : '';
     const obj = {
@@ -45,7 +43,6 @@ export class ClientSearchDirective implements OnInit {
       this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
         this.getFamilyMemberListRes(responseArray);
       }, error => {
-        console.log('getFamilyMemberListRes error : ', error);
       });
       /*this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
         debounceTime(1000)).subscribe(
@@ -53,7 +50,6 @@ export class ClientSearchDirective implements OnInit {
           this.onlineTransact.getFamilyMemberList(obj).subscribe(responseArray => {
             this.getFamilyMemberListRes(responseArray);
           }, error => {
-            console.log('getFamilyMemberListRes error : ', error);
           });
         }
       );*/
@@ -61,7 +57,6 @@ export class ClientSearchDirective implements OnInit {
   }
 
   getFamilyMemberListRes(data) {
-    console.log('getFamilyMemberListRes', data);
     this.nomineesListFM = (data) ? data : null;
     this.valueChange1.emit(this.nomineesListFM);
   }

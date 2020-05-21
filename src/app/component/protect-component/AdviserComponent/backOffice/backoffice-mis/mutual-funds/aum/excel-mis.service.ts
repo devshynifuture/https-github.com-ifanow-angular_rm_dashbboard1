@@ -39,7 +39,6 @@ export class ExcelMisService {
         // ws.columns[0].style.alignment = {horizontal: 'left'};
         ws.columns = headerData;
 
-        console.log(excelData);
         if (excelData && excelData.length !== 0) {
             excelData.forEach(element => {
                 ws.addRow([
@@ -92,7 +91,6 @@ export class ExcelMisService {
         head.font = { bold: true };
 
 
-        console.log("this is what i got", arrayOfExcelData);
 
         // get a1
 
@@ -1083,7 +1081,6 @@ export class ExcelMisService {
         // }
 
         // if (arrayOfExcelData[3] && arrayOfExcelData[3].length !== 0 && arrayOfHeaders[4]) {
-        //     console.log("hellow im here:", arrayOfHeaders[4]);
         //     currentRowPos = currentRowPos + arrayOfExcelData[3].length + 1;
         //     ws.getRow(currentRowPos).values = arrayOfHeaders[4];
         //     let head3 = ws.getRow(currentRowPos);

@@ -67,6 +67,5 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
 
   ngOnDestroy() {
     this.unSubcrip.unsubscribe();
-    console.log("unsubscribe");
   }
 }

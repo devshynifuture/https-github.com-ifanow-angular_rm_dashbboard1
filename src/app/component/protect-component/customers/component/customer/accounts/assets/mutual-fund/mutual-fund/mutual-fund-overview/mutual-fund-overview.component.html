@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="openSummaryTab == false">
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-4 pl-0 c-p">
@@ -276,7 +276,7 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" (click)="openSummary('scheme wise')"
                 *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
@@ -416,7 +416,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0"
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0" (click)="openSummary('subCategory wise')"
                 *ngIf="showSubCategory || dataSource3.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a f-500 roboto pb-10 pt-10 bb-0">Sub category wise allocation
@@ -541,7 +541,7 @@
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise"
-                *ngIf="showFamilyMember || dataSource.data.length > 0">
+                (click)="openSummary('investor wise')" *ngIf="showFamilyMember || dataSource.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
@@ -656,7 +656,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise"
+            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise" (click)="openSummary('category wise')"
                 *ngIf="showCategory || dataSource4.data.length >0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
@@ -1408,4 +1408,8 @@
         </tr>
 
     </table>
+</div>
+<div *ngIf="openSummaryTab == true">
+    <app-mutual-fund-summary [data]='inputDataToSend'>
+    </app-mutual-fund-summary>
 </div>

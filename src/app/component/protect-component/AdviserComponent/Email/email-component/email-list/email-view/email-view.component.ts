@@ -78,7 +78,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailService.gmailMessageDetail(id)
       .subscribe((response) => {
 
-        console.log("this is gmail detail message response::::", response);
 
         // gmail api explorer based integration
         const { id } = response;
@@ -94,7 +93,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           }
         }
         headers.forEach(header => {
-          console.log(header);
           if (header.name === 'Delivered-To') {
             this.deliveredTo = header.value;
           }
@@ -119,7 +117,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         if (parts !== null) {
           parts.forEach(part => {
-            console.log("this is part::::::::::::", part);
             if (part.mimeType === 'text/html') {
               this.decodedPartsDetail.push({
                 item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -145,10 +142,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
               }
             } else if (part.mimeType === 'multipart/alternative') {
               if (part.parts !== null) {
-                console.log("im here");
                 const { parts } = part;
                 parts.forEach(part => {
-                  console.log("there is something going on here:::::::::::")
                   if (part.mimeType === 'text/html') {
                     this.decodedPartsDetail.push({
                       item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -161,7 +156,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           });
         }
 
-        console.log(this.decodedPartsDetail);
 
       });
   }
@@ -181,7 +175,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         downloadUrl: url
       });
     }
-    console.log(this.attachmentArrayDetail);
   }
 
   attachmentDownload(element: any) {
@@ -204,7 +197,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           this.emailObj.idsOfMessages.forEach((element, index) => {
             const id = element;
             this.getGmailDetailMessageRaw(id);
-            //       console.log("this is result of async await", res);
             //       part.body.data = res;
           });
           // thread.messages.forEach((message) => {
@@ -213,7 +205,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           //   const newParts = message.payload.parts.map((part)=>{
           //     if(part.body.data === null){
           //       const res = this.getGmailDetailMessageRaw(id);
-          //       console.log("this is result of async await", res);
           //       part.body.data = res;
           //     }
           //     return part
@@ -225,16 +216,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           //   const newParts = message.payload.parts.map((part) => {
           //     if (part.body.data == null) {
           //       // get message object;
-          //       console.log("tghi sus to debug:::::::::::::" ,part.body.data);
           //       this.emailService.gmailMessageDetail(id)
           //         .subscribe((response) => {
           //           const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-          //           // console.log('response of detailed gmail threadL:::::::', response);
-          //           // console.log("this is raw of detail api...::::::::::::", raw);
           //           if(raw !== null){
           //             part.body.data = raw;
-          //             console.log("this is raw value of detailed gmail thread::::::::::" ,raw)
-          //             console.log("tghis is part boyd data of gmail thread :::::::::::;", part.body.data);
           //           }
           //         });
           //     }
@@ -283,29 +269,24 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         this.subject = subject[0]['value'];
         this.from = from[0]['value'];
-        // console.log(response);
 
       }
     });
   }
 
   replyToMessage(part) {
-    console.log("some values to handle", part)
   }
 
   forwardMessage(part) {
-    console.log('needs to handle', part);
   }
 
   moveMessageToTrash() {
     // id param to work on
     const messageToTrashSubscription = this.emailService.moveMessageToTrashFromView()
       .subscribe(response => {
-        console.log(response);
         messageToTrashSubscription.unsubscribe();
       },
         error => {
-          console.log(error);
         })
   }
 
@@ -313,20 +294,17 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // need to pass ids
     const messageFromTrashSubscription = this.emailService.moveMessagesFromTrashToList()
       .subscribe(response => {
-        console.log(response);
         messageFromTrashSubscription.unsubscribe();
       },
         error => {
-          console.log(error);
         });
   }
 
   deleteMessageFromView() {
     // need to pass ids
     const deleteMessageSubscription = this.emailService.deleteMessageFromView().subscribe(response => {
-      console.log(response);
       deleteMessageSubscription.unsubscribe();
-    }, error => console.log(error));
+    }, error => {});
   }
 
   openBottomSheet() {

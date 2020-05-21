@@ -301,7 +301,7 @@ export class AddGoalsComponent implements OnInit {
           }
           break;
         default:
-          console.log(element.id)
+          break;
       }
     });
     this.goalTypeFirstRowListData = data.slice(0, 5);

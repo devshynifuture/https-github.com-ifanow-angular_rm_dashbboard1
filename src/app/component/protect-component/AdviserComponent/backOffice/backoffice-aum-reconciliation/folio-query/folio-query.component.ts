@@ -66,14 +66,12 @@ export class FolioQueryComponent implements OnInit {
       )
       .subscribe(data => {
         this.arrayOfGroupHeadName = data;
-        console.log("this is group head name::::::::", data);
         if (data && data.length > 0) {
           this.arrayGroupHeadNameError = false;
         } else {
           this.arrayGroupHeadNameError = true;
           this.errorMsg = 'No data Found';
         }
-        console.log("this is some value", this.arrayOfGroupHeadName);
       });
 
     this.folioQueryInvestor.valueChanges
@@ -94,14 +92,12 @@ export class FolioQueryComponent implements OnInit {
       )
       .subscribe(data => {
         this.arrayOfInvestorName = data;
-        console.log("this is investor name list::::::::", data);
         if (data && data.length > 0) {
           this.arrayInvestorNameError = false;
         } else {
           this.arrayInvestorNameError = true;
           this.errorMsg = 'No data Found';
         }
-        console.log(this.arrayOfInvestorName);
       });
   }
 
@@ -141,7 +137,6 @@ export class FolioQueryComponent implements OnInit {
 
     this.reconService.getFolioQueryDataListValues(data)
       .subscribe(res => {
-        console.log(res);
         if (res && res.length !== 0) {
           let arrValue = [];
           res.forEach(element => {
@@ -186,10 +181,8 @@ export class FolioQueryComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
             if (sideBarData.refreshRequired) {
               // this.getDataFromObsAfterDeletingTransacn();
@@ -219,10 +212,8 @@ export class FolioQueryComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
         }

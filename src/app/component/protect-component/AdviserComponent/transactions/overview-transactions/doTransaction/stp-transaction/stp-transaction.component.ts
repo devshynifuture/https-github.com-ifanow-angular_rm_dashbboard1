@@ -90,7 +90,6 @@ export class StpTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       this.getDataForm('');
@@ -114,7 +113,6 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getDefaultDetails(data) {
-    console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
@@ -197,7 +195,6 @@ export class StpTransactionComponent implements OnInit {
 
   getNewSchemesRes(data) {
     this.showSpinnerTrans = false;
-    console.log('new schemes', data);
     this.schemeListTransfer = data;
     if (this.stpTransaction.controls.transferIn.valueChanges) {
       this.filterNewSchemeList = of(this.processTransaction.filterScheme(this.stpTransaction.controls.transferIn.value, this.schemeListTransfer));
@@ -247,7 +244,6 @@ export class StpTransactionComponent implements OnInit {
   getExistingSchemesRes(data) {
     this.showSpinner = false;
     this.existingSchemeList = data;
-    console.log('data schemelist res', data);
     this.stpTransaction.controls.schemeStp.setValue('');
 
   }
@@ -283,7 +279,6 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsTranferRes(data) {
-    console.log('getSchemeDetailsTranferRes detail : ', data);
 
     // this.maiSchemeList = data
     this.showSpinnerTrans = false;
@@ -292,7 +287,6 @@ export class StpTransactionComponent implements OnInit {
 
     if (data.length > 1) {
       this.reInvestmentOpt = data;
-      console.log('reinvestment', this.reInvestmentOpt);
     }
     if (data.length == 1) {
       this.reInvestmentOpt = [];
@@ -308,7 +302,6 @@ export class StpTransactionComponent implements OnInit {
     this.schemeDetailsTransfer = scheme;
     this.setMinAmount();
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
-    console.log('schemeDetails == ', this.schemeDetails);
   }
 
   selectedScheme(scheme) {
@@ -334,7 +327,6 @@ export class StpTransactionComponent implements OnInit {
 
   getSchemeDetailsRes(data) {
     this.showSpinner = false;
-    console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
@@ -360,7 +352,6 @@ export class StpTransactionComponent implements OnInit {
 
   getSchemeWiseFoliosRes(data) {
     this.showSpinnerFolio = false;
-    console.log('res scheme folio', data);
     this.folioList = data;
     if (this.folioList.length == 1) {
       this.stpTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
@@ -385,7 +376,6 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSipFrequencyRes(data) {
-    console.log('isin Frequency ----', data);
     // this.switchFrequency = data;
     this.switchFrequency = this.processTransaction.filterFrequencyList(data);
     if (this.switchFrequency) {
@@ -400,7 +390,6 @@ export class StpTransactionComponent implements OnInit {
 
   selectedFrequency(getFrerq) {
     // this.fre = getFrerq
-    console.log('selected freq : ', getFrerq);
     this.frequency = getFrerq.frequency;
     // this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
@@ -426,7 +415,6 @@ export class StpTransactionComponent implements OnInit {
     this.dateDisplay = this.dateDisplay.filter(element => {
       return element.date > currentDate;
     });
-    console.log('dateDisplay = ', this.dateDisplay);
   }
 
   stpType(value) {
@@ -446,7 +434,6 @@ export class StpTransactionComponent implements OnInit {
 
   getbankDetails(value) {
     this.bankDetails = value[0];
-    console.log('bank details', value);
   }
 
   getDataForm(data) {
@@ -567,9 +554,7 @@ export class StpTransactionComponent implements OnInit {
         obj.bankDetailId = this.bankDetails.id;
         obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
-      console.log('json stp', obj);
       if (this.multiTransact == true) {
-        console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
       }
@@ -588,7 +573,6 @@ export class StpTransactionComponent implements OnInit {
 
   stpBSERes(data) {
     this.barButtonOptions.active = false;
-    console.log('stp res == ', data);
     if (data == undefined) {
 
     } else {
@@ -645,7 +629,6 @@ export class StpTransactionComponent implements OnInit {
         const installment = this.stpTransaction.controls.installment.value;
         obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
-        console.log(this.childTransactions);
         this.schemeList = [];
         this.stpTransaction.controls.frequency.reset();
         this.stpTransaction.controls.date.reset();

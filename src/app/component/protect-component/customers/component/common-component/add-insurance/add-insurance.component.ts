@@ -77,7 +77,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.showInsurance = data.showInsurance;
     // this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
-    console.log(data);
   }
 
   get cashFlowEntries() {
@@ -203,11 +202,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   });
 
   getFormDataNominee(data) {
-    console.log(data)
     this.nomineesList = data.controls
   }
   display(value) {
-    console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
@@ -219,7 +216,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
-    console.log('family Member', this.FamilyMember);
   }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
@@ -244,7 +240,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
 
   displayControler(con) {
-    console.log('value selected', con);
     if (con.owner != null && con.owner) {
       this.lifeInsuranceForm.controls.getCoOwnerName = con.owner;
     }
@@ -411,10 +406,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
 
   setInsuranceDataFormField(data) {
-    console.log(data.data);
     this.editInsuranceData = data.data;
     if (this.editInsuranceData == undefined) {
-      console.log(this.insuranceTypeId, " ", this.insuranceSubTypeId)
       this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm }
       return;
     } else {
@@ -490,7 +483,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.cashFlowEntries.removeAt(0);
       }
 
-      console.log(this.cashFlowForm);
 
       this.ridersForm.controls.accidentalBenefit.setValue(this.editInsuranceData.ridersAccidentalBenifits);
       this.ridersForm.controls.doubleAccidental.setValue(this.editInsuranceData.ridersDoubleAccidentalBenefit);
@@ -538,15 +530,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
 
   getFamilyMemberListRes(data) {
-    console.log(data);
     this.FamilyMember = data.familyMembersList;
     this.ProposerData = Object.assign([], data.familyMembersList);
-    console.log('Proposer data', this.ProposerData);
   }
 
   // getFamilyMember(data, index) {
   //   this.familyMemberLifeData = data;
-  //   console.log('family Member', this.FamilyMember);
   // }
 
   getProposerData(data, index) {
@@ -561,7 +550,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     };
     this.customerService.getPolicyName(obj).subscribe(
       data => {
-        console.log(data.policyDetails);
         this.options = data.policyDetails;
       }
     );
@@ -579,7 +567,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
     this.eleRef.nativeElement.scrollTop = 200;
-    console.log(this.eleRef.nativeElement.scrollTop);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.keyDetailsForm }
 
   }
@@ -699,7 +686,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.insuranceFormFilledData.nominees = [];
       }
 
-      console.log(this.insuranceFormFilledData)
       const insuranceData =
       {
         insuranceTypeId: this.insuranceTypeId,
@@ -711,7 +697,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
             this.barButtonOptions.active = false;
-            console.log(data);
             this.eventService.openSnackBar("Updated successfully!", 'Dismiss');
             const insuranceData =
             {
@@ -725,7 +710,6 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
           data => {
             this.barButtonOptions.active = false;
-            console.log(data);
             this.eventService.openSnackBar("Added successfully!", 'Dismiss');
             this.close(insuranceData)
           }

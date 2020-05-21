@@ -72,7 +72,6 @@ export class TermsAgreementComponent implements OnInit {
   @Input()
   set upperData(upperData) {
     this._upperData = upperData;
-    console.log('Terms and agreemennt upperData: ', upperData);
     this.isRefresh = false
     this.getDataTerms(upperData);
     if (upperData && upperData.documentData) {
@@ -93,18 +92,13 @@ export class TermsAgreementComponent implements OnInit {
   //
   //   events: {
   //     focus(e, editor) {
-  //       console.log('froalaEditorContent: ', this.froalaEditorContent);
-  //       console.log('editor: ', editor);
   //
-  //       console.log('e: ', e);
   //
-  //       console.log(editor.selection.get());
   //     }
   //   }
   // };
 
   ngOnInit() {
-    console.log('quotationDesign', this._upperData);
 
   }
 
@@ -129,7 +123,6 @@ export class TermsAgreementComponent implements OnInit {
   }
 
   copyName(data) {
-    console.log(data);
     const text = data.currentTarget.childNodes[0].innerHTML;
     const tag = this.render.createElement('input');
     tag.value = text;
@@ -143,7 +136,6 @@ export class TermsAgreementComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.log(this.mailForm.value);
   }
 
   getDataTerms(data) {
@@ -155,7 +147,6 @@ export class TermsAgreementComponent implements OnInit {
     //   documentRepositoryId: this._upperData.documentData.documentRepositoryId
     // };
     // this.subService.getQuotationServiceData(obj).subscribe(
-    //   data => console.log(data)
     // );
     let d = new Date();
     this.serviceData.forEach(element => {
@@ -184,7 +175,6 @@ export class TermsAgreementComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
 
   }
@@ -216,14 +206,12 @@ export class TermsAgreementComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
             this.upperData = sideBarData.data
             this._upperData = sideBarData.data
             this.changePlanData.emit(this.upperData)
           }
-          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -248,12 +236,10 @@ export class TermsAgreementComponent implements OnInit {
       },
       err =>{
         this.barButtonOptions.active = false;
-        console.log(err, "updateDocumentData error");
       }
     );
   }
   getResponseData(data) {
-    console.log(data);
     this.barButtonOptions.active = false;
     if (data == 1) {
       this.eventService.openSnackBar('Document added successfully', 'OK');
@@ -285,7 +271,6 @@ export class TermsAgreementComponent implements OnInit {
   }
 
   saveData(data) {
-    console.log(data);
 
   }
 }

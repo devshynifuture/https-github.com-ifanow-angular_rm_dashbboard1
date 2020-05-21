@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -17,7 +17,8 @@ import {map, startWith} from 'rxjs/operators';
   templateUrl: './fatca-details-inn.component.html',
   styleUrls: ['./fatca-details-inn.component.scss']
 })
-export class FatcaDetailsInnComponent implements OnInit {
+export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
+
   fatcaDetails: any;
   inputData: any;
   allData: any;
@@ -40,7 +41,6 @@ export class FatcaDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    console.log('all data in fatca', this.inputData);
     this.allData = data;
     this.doneData = {};
     this.doneData.nominee = true;
@@ -66,6 +66,16 @@ export class FatcaDetailsInnComponent implements OnInit {
     this.processTransaction.getCountryCodeList().subscribe(responseValue => {
       this.countryList = responseValue;
     });
+  }
+
+  ngAfterViewInit(): void {
+    // TODO for testing only
+    const dataObj = {
+      income: '500000', sourceOfWealth: '01',
+      occupationCode: '41', placeOfBirth: 'India',
+      countryOfBirth: 'India'
+    };
+    this.getdataForm(dataObj);
   }
 
   close() {
@@ -97,7 +107,7 @@ export class FatcaDetailsInnComponent implements OnInit {
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
-      politically: [!data ? '1' : (data.politically) ? data.politically + '' : '1', [Validators.required]],
+      politically: [!data ? '2' : (data.politically) ? data.politically + '' : '2', [Validators.required]],
       // taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
 
     });
@@ -119,7 +129,6 @@ export class FatcaDetailsInnComponent implements OnInit {
   SendToForm() {
     if (this.fatcaDetails.invalid) {
       for (const element in this.fatcaDetails.controls) {
-        console.log(element);
         if (this.fatcaDetails.get(element).invalid) {
           // this.inputs.find(input => !input.ngControl.valid).focus();
           this.fatcaDetails.controls[element].markAsTouched();

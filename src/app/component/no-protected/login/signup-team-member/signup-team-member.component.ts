@@ -75,7 +75,6 @@ export class SignupTeamMemberComponent implements OnInit {
   }
   createAccount() {
     if (this.signUpForm.invalid) {
-      console.log('Error');
       this.signUpForm.markAllAsTouched();
       return;
     } else if (this.signUpForm.value.termsAgreement == false) {
@@ -91,7 +90,6 @@ export class SignupTeamMemberComponent implements OnInit {
       }
       this.loginService.createTeamMember(obj).subscribe(
         data => {
-          console.log(data);
           this.barButtonOptions.active = false;
           const forgotPassObjData = {
             mobileNo: this.signUpForm.get('mobile').value,

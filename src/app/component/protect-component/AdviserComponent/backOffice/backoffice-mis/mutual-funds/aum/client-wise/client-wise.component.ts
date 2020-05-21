@@ -166,7 +166,6 @@ export class ClientWiseComponent implements OnInit {
     }
     this.backoffice.getAumClientScheme(obj).subscribe(
       data => {
-        console.log('dataofClientWiseAum', data);
       }
     )
   }
@@ -213,7 +212,6 @@ export class ClientWiseComponent implements OnInit {
             });
             clientData.investorList = data
             this.investorList = data;
-            console.log(data);
             this.appendingOfValuesInExcel(data, index, 'investor');
           } else {
             this.investorList = []
@@ -297,7 +295,6 @@ export class ClientWiseComponent implements OnInit {
 
   scheme2WiseExcelSheet() {
     let schemeFolioList = this.arrayOfExcelData[this.selectedClient].investorList[this.selectedInvestor].schemeList[this.selectedScheme].schemeFolioList;
-    console.log(schemeFolioList);
     let newarr = [];
     schemeFolioList.forEach(element => {
       newarr.push({
@@ -346,7 +343,6 @@ export class ClientWiseComponent implements OnInit {
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'investor':
-        console.log(iterable, this.arrayOfExcelData, index);
         // investor
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[index].investorList.push({
@@ -384,14 +380,12 @@ export class ClientWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   clientTotalAum(data) {
     this.isLoading = false;
     if (data) {
       this.clientList = data;
-      console.log("client list ::::", data);
       this.excelInitClientList();
       this.clientList.forEach(o => {
         o.show = true;
@@ -437,7 +431,6 @@ export class ClientWiseComponent implements OnInit {
             });
             investorData.schemeList = data;
             this.scheme1ListArr = data
-            console.log(data);
             this.appendingOfValuesInExcel(data, index, 'schemes');
           }
         },
@@ -478,7 +471,6 @@ export class ClientWiseComponent implements OnInit {
             schemeData.folioList = data;
             this.scheme2List = data;
             // this.initializeExcelData();
-            console.log(data);
             this.appendingOfValuesInExcel(data, index, 'scheme-folio');
 
           }else{

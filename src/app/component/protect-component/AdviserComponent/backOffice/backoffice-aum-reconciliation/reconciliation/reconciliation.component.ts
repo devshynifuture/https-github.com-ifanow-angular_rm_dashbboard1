@@ -23,7 +23,6 @@ export class ReconciliationComponent implements OnInit {
   getRTList() {
     this.reconService.getRTListValues({})
       .subscribe(res => {
-        console.log("this is RT list:::::", res);
         res.forEach(element => {
           if (element.name === "CAMS") {
             this.camsId = element.id;
