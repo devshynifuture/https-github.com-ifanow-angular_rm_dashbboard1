@@ -47,7 +47,8 @@
         <ng-container matColumnDef="amount">
           <th *matHeaderCellDef class="br w-11" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.orderVal}} </div>
+            <div
+              class="bar"> {{element.amountType == 'Unit' ? element.orderVal + 'Unit' : '₹' + element.orderVal}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="icons">
