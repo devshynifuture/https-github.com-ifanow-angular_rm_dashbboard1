@@ -102,10 +102,6 @@ export class ClientDematComponent implements OnInit {
       disControl: type
     };
   }
-  changeHoldingType(data) {
-    // (data.value == '1') ?  : '';
-    (data.value == '1') ? this.holderList = [] : '';
-  }
   displayControler(con) {
     console.log('value selected', con);
     if (this.dematForm.value.getCoOwnerName) {
@@ -231,7 +227,7 @@ export class ClientDematComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
-      holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],
+      // holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],
       depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
       depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
       dematClientId: [data.dematClientId, [Validators.required]],
@@ -314,12 +310,13 @@ export class ClientDematComponent implements OnInit {
   }
 
   saveNext(flag) {
-    (this.dematForm.value.modeOfHolding == '1') ? this.dematForm.get('holderName').setValidators([Validators.required]) : this.dematForm.get('holderName').clearValidators();
-    this.dematForm.get('holderName').updateValueAndValidity();
+    // (this.dematForm.value.modeOfHolding == '1') ? this.dematForm.get('holderName').setValidators([Validators.required]) : this.dematForm.get('holderName').clearValidators();
+    // this.dematForm.get('holderName').updateValueAndValidity();
     if (this.dematForm.invalid) {
+      this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
-    } else if (this.dematForm.value.modeOfHolding == '2' && this.holderList.invalid) {
+    } else if (this.holderList.invalid) {
       this.holderList.markAllAsTouched();
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
@@ -336,7 +333,7 @@ export class ClientDematComponent implements OnInit {
           });
         });
       }
-      if (this.holderList && this.holderList.length > 0) {
+      if (this.holderList) {
         this.holderList.controls.forEach(element => {
           holderList.push({
             // fMDetailTypeId: 1,
@@ -345,14 +342,15 @@ export class ClientDematComponent implements OnInit {
             dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
           });
         });
-      } else {
-        holderList.push({
-          // fMDetailTypeId: 1,
-          name: this.dematForm.get('holderName').value,
-          id: (this.userData.dematList && this.userData.dematList.length > 0) ? this.userData.dematList[0].id : null,
-          dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
-        });
       }
+      //  else {
+      //   holderList.push({
+      //     // fMDetailTypeId: 1,
+      //     name: this.dematForm.get('holderName').value,
+      //     id: (this.userData.dematList && this.userData.dematList.length > 0) ? this.userData.dematList[0].id : null,
+      //     dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
+      //   });
+      // }
       for (const element in this.dematForm.controls) {
         console.log(element);
         this.dematForm.controls[element].markAsTouched();

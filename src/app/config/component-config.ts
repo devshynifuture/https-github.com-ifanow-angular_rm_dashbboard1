@@ -193,7 +193,7 @@ export const appConfig = {
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   FETCH_FILE_UPLOAD_DATA: 'document/account/document/folderid/fetch',
-  GET_FILE_UPLOAD_DATA_CLIENT:'document/account/document/people/image/get/all',
+  GET_FILE_UPLOAD_DATA_CLIENT: 'document/account/document/people/image/get/all',
   FETCH_CLIENT_FILE_UPLOAD: 'document/account/document/people/image/id/get',
   GET_COUNT_DOCS: 'document/account/document/all-file/count/get',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
@@ -297,8 +297,8 @@ export const appConfig = {
   ADD_EPS: 'account/asset/retirement/eps/add',
   EDIT_EPS: 'account/asset/retirement/eps/edit',
   OTHER_PAYABLES: 'account/liability/otherpayables/get',
-  DELETE_PART_PAYMENT:'account/liability/part-payment/delete',
-  DELETE_BORROWER:'account/liability/borrower/delete',
+  DELETE_PART_PAYMENT: 'account/liability/part-payment/delete',
+  DELETE_BORROWER: 'account/liability/borrower/delete',
 
   ////////////////////////////// subscription////////////////////////////////////////////
 
@@ -688,7 +688,7 @@ export const appConfig = {
   GET_TEAM_MEMBER_INFO: 'user/info/get',
   // CLIENT_SEARCH: 'user/client/all/names/get',
   CLIENT_SEARCH: 'user/client/all/names/count/get',
-
+  EDIT_BITHDATE: 'user/client/birth-date/update',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
