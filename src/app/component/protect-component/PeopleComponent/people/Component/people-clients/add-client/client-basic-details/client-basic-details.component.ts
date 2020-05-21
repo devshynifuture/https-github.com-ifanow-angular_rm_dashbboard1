@@ -285,6 +285,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       // this.invTaxStatusList = this.enumService.getCorporateTaxList();
       console.log(this.invTaxStatusList);
     }
+    this.invTaxStatus = '1';
     this.taxStatusFormControl.reset();
     this.taxStatusFormControl.setValue('1');
     this.invTypeCategory = event.value;
