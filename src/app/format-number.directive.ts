@@ -9,7 +9,6 @@ export class FormatNumberDirective implements AfterViewInit {
 
   @Input() set value(value) {
 
-    // console.log('FormatNumberDirective ', this.locale, this.shouldRoundOff);
     this.el.nativeElement.innerText = this.formatAndRoundOffNumber(value);
 
   }
@@ -24,7 +23,6 @@ export class FormatNumberDirective implements AfterViewInit {
   }
 
   formatAndRoundOffNumber(text) {
-    // console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
 
     if (typeof (text) === 'string') {
       if (text.includes(',')) {
@@ -34,7 +32,6 @@ export class FormatNumberDirective implements AfterViewInit {
     // if (!this.locale) {
     //   this.locale = 'en-IN';
     // }
-    // console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
     if (text && text !== '') {
       if (!isNaN(text)) {
         let numberValue: number = parseFloat(text);
@@ -51,7 +48,6 @@ export class FormatNumberDirective implements AfterViewInit {
       }
     }
 
-    // console.log(text, "check return for app formate nu");
     return text;
   }
 

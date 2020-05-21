@@ -432,6 +432,11 @@ export class MutualFundOverviewComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
+        states: {
+          hover: {
+            enabled: false
+          }
+        },
         data: [
           {
             name: 'Equity',

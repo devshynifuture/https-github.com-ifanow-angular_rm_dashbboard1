@@ -7,7 +7,7 @@ export const detailStatusObj = {
       {name: 'Pending submission to AMC', checked: false, isShow: false, status: 4},
       {name: 'Order submitted to AMC', checked: false, isShow: false, status: 5},
       {name: 'Order processed', checked: false, isShow: false, status: 6},
-      {name: 'Units alloted', checked: false, isShow: false, status: 8},
+      {name: 'Units allotted', checked: false, isShow: false, status: 8},
     ],
     REDEMPTION: [
       {name: 'Pending authorization', checked: false, status: 2},
