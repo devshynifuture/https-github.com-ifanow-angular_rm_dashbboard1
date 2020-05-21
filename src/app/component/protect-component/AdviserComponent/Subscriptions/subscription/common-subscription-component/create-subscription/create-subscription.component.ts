@@ -118,7 +118,6 @@ export class CreateSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     // this.stepper.selectedIndex = 0;
-
     this.advisorName = AuthService.getUserInfo().fullName;
     // this.isFlagPayee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
@@ -146,7 +145,7 @@ export class CreateSubscriptionComponent implements OnInit {
       return;
     }
     if (this.stepper.selectedIndex == 2) {
-      let date = new Date(this.subscriptionDetails.controls.activationDate.value)
+      let date = new Date(this.subscriptionDetails.controls.activationDate.value);
       (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly";
       if (this.clientData.feeTypeId == 1) {
         if (this.clientData.billingNature == "2") {
