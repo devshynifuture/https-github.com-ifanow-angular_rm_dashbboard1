@@ -123,7 +123,7 @@
         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of category">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">
-                        {{item.category}}
+                        {{item.category |titlecase}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
