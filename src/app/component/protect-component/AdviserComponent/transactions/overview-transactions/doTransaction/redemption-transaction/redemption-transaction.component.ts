@@ -200,7 +200,7 @@ export class RedemptionTransactionComponent implements OnInit {
     );
     this.ownerData = this.redemptionTransaction.controls;
     if (data.folioNo) {
-      this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
+      this.selectedFolio(this.folioDetails);
       this.getSchemeWiseFolios();
     }
   }
@@ -358,7 +358,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.showUnits = true;
-    folio.balanceUnit = (folio.balanceUnit).toFixed(2);
+    folio.balanceUnit = parseFloat(folio.balanceUnit).toFixed(2);
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit).toFixed(2);
     Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
     Object.assign(this.transactionSummary, {mutualFundId: folio.id});
@@ -386,8 +386,20 @@ export class RedemptionTransactionComponent implements OnInit {
   getSingleTransactionJson() {
     const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
     let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
+
+    let orderVal: any = '0';
+    let qty: any = '0';
     if (allRedeem) {
       amountType = 'Unit';
+      orderVal = this.folioDetails.balanceUnit + '';
+      qty = orderVal;
+    } else {
+      orderVal = Object.assign(orderVal, this.redemptionTransaction.controls.employeeContry.value);
+      if (amountType == 'Amount') {
+        qty = '0';
+      } else {
+        qty = orderVal;
+      }
     }
     const obj = {
       productDbId: this.schemeDetails.id,
@@ -408,10 +420,9 @@ export class RedemptionTransactionComponent implements OnInit {
       buySellType: 'FRESH',
       dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
       clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: allRedeem ?
-        this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
+      orderVal,
       amountType,
-      qty: (this.redemptionTransaction.controls.redeemType.value == 1) ? 0 : allRedeem ? this.folioDetails.balanceUnit : this.redemptionTransaction.controls.employeeContry.value,
+      qty,
       schemeCd: this.schemeDetails.schemeCode,
       euin: this.getDataSummary.euin.euin,
       bseDPTransType: 'PHYSICAL',

@@ -408,3 +408,15 @@ $fillloader: #008FFF;
       inset $fillloader 0 -2em 0 0;
   }
 }
+
+@media(max-width:1250px) {
+  .loginBox {
+    width: 70%;
+  }
+}
+
+@media(max-width:1124px) {
+  .loginBox {
+    width: 80%;
+  }
+}
