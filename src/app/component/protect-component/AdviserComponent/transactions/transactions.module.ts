@@ -33,7 +33,8 @@ import {IinCreationLoaderComponent} from './overview-transactions/IIN/UCC-Creati
     PhotoSigntureComponent,
     VideoKycComponent,
     TransactionMobileViewComponent,
-    TransactionBottomButtonComponent
+    TransactionBottomButtonComponent,
+    IinCreationLoaderComponent
   ],
   imports: [
     CommonModule,
