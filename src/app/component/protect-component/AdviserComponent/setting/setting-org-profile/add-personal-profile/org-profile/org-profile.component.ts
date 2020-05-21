@@ -46,6 +46,7 @@ export class OrgProfileComponent implements OnInit {
   dataLoaded:boolean = false;
   imgData:string = '';
   formPlaceHolder:any;
+  isLoading:boolean = false;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & NEXT',
@@ -120,35 +121,41 @@ export class OrgProfileComponent implements OnInit {
     this.subInjectService.closeNewRightSlider({ state: 'close'});
   }
 
-  getPostalPin(value) {
-    if (value != "") {
+  getPostalPin(value:string) {
+    if (value != "" && value.length == 6 ) {
+      this.isLoading = true;
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data)
         this.PinData(data)
+        this.isLoading = false;
+      }, err=> {
+        this.isLoading = false;
+        this.orgProfile.get('city').enable();
+        this.orgProfile.get('state').enable();
       })
-    }
-    else {
-      this.pinInvalid = false;
-      this.getFormControl().pincode.setErrors(this.pinInvalid);
     }
   }
 
   PinData(data) {
     if (data[0].Status == "Error") {
-      this.pinInvalid = true;
-      this.getFormControl().pincode.setErrors(this.pinInvalid);
-      this.getFormControl().city.setValue("");
-      this.getFormControl().state.setValue("");
+      this.orgProfile.controls.city.setValue("");
+      this.orgProfile.controls.state.setValue("");
+      this.orgProfile.get('city').enable();
+      this.orgProfile.get('state').enable();
     }
     else {
-      this.getFormControl().city.setValue(data[0].PostOffice[0].District);
-      this.getFormControl().state.setValue(data[0].PostOffice[0].State);
-      this.pinInvalid = false;
+      const pincodeData = (data == undefined) ? data = {} : data[0].PostOffice;
+      this.orgProfile.get('city').setValue(pincodeData[0].District);
+      this.orgProfile.get('state').setValue(pincodeData[0].State);
+      this.orgProfile.get('city').disable();
+      this.orgProfile.get('state').disable();
     }
   }
 
 
   getdataForm(data) {
+    if(data.isdCodeId == 0) {
+      data.isdCodeId = null;
+    }
     this.orgProfile = this.fb.group({
       companyName: [(!data) ? '' : (data.companyName), [Validators.required, Validators.maxLength(50)]],
       emailId: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
@@ -166,6 +173,8 @@ export class OrgProfileComponent implements OnInit {
 
     this.subscribeToGSTTypeValueChange();
     this.orgProfile.controls.gstTreatment.setValue((!data) ? '' : data.gstTreatmentId);
+    this.orgProfile.get('city').disable();
+    this.orgProfile.get('state').disable();
   }
 
   subscribeToGSTTypeValueChange() {
@@ -203,10 +212,6 @@ export class OrgProfileComponent implements OnInit {
     }
     this.orgProfile.updateValueAndValidity();
 
-  }
-
-  getFormControl(): any {
-    return this.orgProfile.controls;
   }
 
   updateOrgProfile(){

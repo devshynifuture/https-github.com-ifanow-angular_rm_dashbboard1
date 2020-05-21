@@ -50,7 +50,7 @@ export class ClientMoreInfoComponent implements OnInit {
   @Output() clientData = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
-
+  date = new Date();
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.moreInfoData = data;
@@ -109,7 +109,7 @@ export class ClientMoreInfoComponent implements OnInit {
       adhaarNo: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
       occupation: [(data.occupationId == 0) ? '' : (data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
-      anniversaryDate: [String(data.anniversaryDate)],
+      anniversaryDate: [data.anniversaryDate ? new Date(data.anniversaryDate) : ''],
       bio: [data.bio],
       myNotes: [data.remarks],
       name: [data.name],
@@ -184,7 +184,8 @@ export class ClientMoreInfoComponent implements OnInit {
         leadSource: this.moreInfoData.leadSource,
         leadRating: this.moreInfoData.leadRating,
         leadStatus: this.moreInfoData.leaadStatus,
-        guardianData: this.moreInfoData.guardianData
+        guardianData: this.moreInfoData.guardianData,
+        anniversaryDate: this.datePipe.transform((this.moreInfoForm.value.anniversaryDate == undefined) ? null : this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy'),
       };
       this.peopleService.editClient(obj).subscribe(
         data => {

@@ -20,11 +20,11 @@
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter wrapper-18">
                 <div class="row w-100" *ngIf="userList">
-                    <div class="col-md-11 pl-0">
+                    <div class="col-md-10 pl-0">
                         <h2 class="m-0">{{userList.fullName}}</h2>
                     </div>
-                    <div class="col-md-1 p-0 text-right autoHeight d-flex">
-                        <p class="m-0 pt-2">ADMIN</p>
+                    <div class="col-md-2 p-0 text-right autoHeight">
+                        <span class="t-u">{{(roleObj.roleName || '')}}</span>
                         <mat-icon class="text-custom" [matMenuTriggerFor]="menu" class="c-p v-middle">more_vert
                         </mat-icon>
                         <mat-menu #menu="matMenu">
@@ -91,13 +91,15 @@
                         <h2 class="m-0">{{orgDetails.companyName}}</h2>
                     </div>
                     <div class="col-md-3 p-0 text-right">
-                        ADMIN
-                        <button mat-icon-button [matMenuTriggerFor]="menu">
-                            <mat-icon class="text-custom">more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="OpenOrgProfile(orgDetails,'')">Edit</button>
-                        </mat-menu>
+                        <!-- ADMIN -->
+                        <ng-container  *ngIf="roleObj.advisorOrClientRole == 1">
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon class="text-custom">more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="OpenOrgProfile(orgDetails,'')">Edit</button>
+                            </mat-menu>
+                        </ng-container>
                     </div>
                 </div>
             </mat-card-header>
@@ -174,7 +176,7 @@
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
                         <div class="containerOne widthwebLogo p-0">
                             <img [src]="orgDetails.logoUrl" class="w-100">
-                            <div (click)="OpenOrgProfile(orgDetails, '',1)" class="middleTwo">
+                            <div (click)="OpenOrgProfile(orgDetails, '',1)" class="middleTwo" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <p class="c-p">Edit Image</p>
                                 <!-- <button (click)="OpenOrgProfile(orgDetails, '',1)">Edit Image</button> -->
                             </div>
@@ -188,7 +190,7 @@
                             <div class="col-md-4 pl-0 containerOne">
                                 <div class="profilePhoto containerOne">
                                     <img [src]="orgDetails.reportLogoUrl">
-                                    <div (click)="OpenOrgProfile(orgDetails, '',2)" class="middleOne">
+                                    <div (click)="OpenOrgProfile(orgDetails, '',2)" class="middleOne" *ngIf="roleObj.advisorOrClientRole == 1">
                                         <p class="c-p"> Edit Image </p>
                                     </div>
                                 </div>

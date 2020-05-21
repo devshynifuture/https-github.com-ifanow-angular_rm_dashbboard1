@@ -118,12 +118,12 @@ export class LiabilitiesComponent implements OnInit {
   //   this.footer.push(Object.assign(footerData))
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      clientId: element.clientId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
     this.myFiles = fileName.target.files[0]
@@ -407,6 +407,8 @@ export class LiabilitiesComponent implements OnInit {
     if (data && data.loans.length > 0) {
       this.filterForliabilities = data.loans;
       this.checkStatusId(data.loans);
+      this.totalLoanAmt = 0;
+      this.totalEmi = 0;
       // this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {

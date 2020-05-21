@@ -31,7 +31,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SEND INVITE',
+    text: 'SAVE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,

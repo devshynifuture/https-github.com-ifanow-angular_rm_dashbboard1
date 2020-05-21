@@ -17,8 +17,6 @@ import {map, startWith} from 'rxjs/operators';
 export class StpTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
-  folioNumberShow: any;
-  defaultFrequency: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private eventService: EventService,
@@ -61,6 +59,7 @@ export class StpTransactionComponent implements OnInit {
   navOfSelectedScheme: any;
   selectScheme = 2;
   getDataSummary: any;
+  oldDefaultData;
   scheme: any;
   folioDetails: any;
   folioList: any;
@@ -107,7 +106,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'STP'});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
-    Object.assign(this.transactionSummary, {isMultiTransact: false});
+    Object.assign(this.transactionSummary, {multiTransact: false});
   }
 
   backToTransact() {
@@ -117,17 +116,49 @@ export class StpTransactionComponent implements OnInit {
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
+    if (this.oldDefaultData) {
+      this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
+    } else {
+      this.getSchemeList();
+      this.setDefaultTenure();
+    }
+    this.oldDefaultData = data;
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
-    // this.stpTransaction.controls.investor.reset();
-    if (!(this.existingSchemeList && this.existingSchemeList.length > 0)) {
-      this.getSchemeList();
-    }
+
     this.stpTransaction.controls.transferIn.reset();
   }
 
-  onFolioChange(folio) {
-    this.stpTransaction.controls.folioSelection.reset();
+  checkAndResetForm(oldData, newData) {
+    if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
+      this.resetForm();
+      this.getSchemeList();
+    } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
+      this.resetForm();
+      this.getSchemeList();
+    } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
+    }
+  }
+
+  resetForm() {
+    this.scheme = null;
+    this.existingSchemeList = null;
+    this.reInvestmentOpt = [];
+    this.schemeListTransfer = [];
+    this.schemeDetailsTransfer = undefined;
+    this.schemeDetails = null;
+    this.folioList = [];
+    this.folioDetails = null;
+    this.navOfSelectedScheme = 0;
+    this.switchFrequency = [];
+    this.dateDisplay = [];
+    (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
+    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, {folioNumber: ''});
+    this.stpTransaction.controls.employeeContry.reset();
+    this.stpTransaction.controls.investmentAccountSelection.reset();
+    this.stpTransaction.controls.schemeStp.reset();
+    this.setDefaultTenure();
   }
 
   getSchemeListTranfer(value) {
@@ -286,7 +317,6 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = true;
     this.folioList = [];
     this.schemeDetails = null;
-    this.onFolioChange(null);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -333,10 +363,11 @@ export class StpTransactionComponent implements OnInit {
     console.log('res scheme folio', data);
     this.folioList = data;
     if (this.folioList.length == 1) {
-      this.folioNumberShow = this.folioList[0].folioNumber;
-    }
-    if (this.stpTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      this.stpTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
+      this.selectedFolio(this.folioList[0]);
+      if (this.stpTransaction.controls.investmentAccountSelection.valid) {
+        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      }
     }
   }
 
@@ -360,7 +391,6 @@ export class StpTransactionComponent implements OnInit {
     if (this.switchFrequency) {
       this.switchFrequency.forEach(singleFrequency => {
         if (singleFrequency.frequency == 'MONTHLY') {
-          this.defaultFrequency = singleFrequency.frequency;
           this.stpTransaction.controls.frequency.setValue(singleFrequency.frequency);
           this.selectedFrequency(singleFrequency);
         }
@@ -438,10 +468,9 @@ export class StpTransactionComponent implements OnInit {
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
       investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      folioSelection: [(data.folioSelection) ? data.folioSelection : '', [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
-      tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
+      tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       STPType: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       schemeStp: [null, [Validators.required]],
@@ -455,6 +484,14 @@ export class StpTransactionComponent implements OnInit {
       this.filterNewSchemeList = of(this.processTransaction.filterScheme(newValue + '', this.schemeListTransfer));
     });
     this.ownerData = this.stpTransaction.controls;
+  }
+
+  setDefaultTenure() {
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      this.stpTransaction.controls.tenure.setValue('3');
+    } else {
+      this.stpTransaction.controls.tenure.setValue('2');
+    }
   }
 
   getFormControl(): any {

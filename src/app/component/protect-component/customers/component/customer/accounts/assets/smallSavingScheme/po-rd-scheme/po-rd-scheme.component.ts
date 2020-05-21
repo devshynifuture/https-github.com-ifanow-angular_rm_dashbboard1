@@ -57,12 +57,12 @@ export class PoRdSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getPoRdSchemedata();
   }
-  fetchData(value, fileName) {
+  fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.clientData.familyMemberId,
+      clientId: element.clientId,
+      familyMemberId: element.familyMemberId,
       asset: value
     }
     this.myFiles = fileName.target.files[0]

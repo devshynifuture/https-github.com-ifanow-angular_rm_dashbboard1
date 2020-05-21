@@ -2,16 +2,22 @@
     <div class="row pt-10 pb-28">
         <div class="col-md-8 pl-0">
 
-            <button (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRecurring == '1','text-primary':showRecurring == '1'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('1')"
+                [ngClass]="{'mat-stroked-button': showRecurring == '1','text-primary':showRecurring == '1'}"
+                class="br-0 text-custom" mat-button>
                 EPF
             </button>
-            <button (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRecurring == '2','text-primary':showRecurring == '2'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('2')"
+                [ngClass]="{'mat-stroked-button': showRecurring == '2','text-primary':showRecurring == '2'}"
+                class="br-0 text-custom" mat-button>
                 NPS
             </button>
-            <button (click)="getfixedIncomeData('3')" [ngClass]="{'mat-stroked-button': showRecurring == '3','text-primary':showRecurring == '3'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('3')"
+                [ngClass]="{'mat-stroked-button': showRecurring == '3','text-primary':showRecurring == '3'}"
+                class="br-0 text-custom" mat-button>
                 Gratuity
             </button>
-            
+
         </div>
     </div>
 
@@ -21,7 +27,8 @@
             <div class="col-md-6 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Employees Provident Fund (EPF)</h4>
             </div>
-            <div class="col-md-6 p-0 d-flex d-flex align-items-center justify-content-end " *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-6 p-0 d-flex d-flex align-items-center justify-content-end "
+                *ngIf="dataSource.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -37,9 +44,9 @@
                     <img src="assets/images/svg/up-down.svg">
                 </a>
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
-                        <input (change)="fetchData('EPF',$event)" class="uploadInput" id="file-4" multiple type="file">
-                    </button>
+                    <!-- <button mat-menu-item>Upload file
+                        <input (change)="fetchData('EPF',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                    </button> -->
                 </mat-menu>
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
                 <mat-menu #menu6="matMenu">
@@ -51,13 +58,17 @@
                 <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle"><i
                         class="material-icons c-p">filter_list</i>FILTERS
                 </button>
-                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle"
+                    mat-stroked-button> ADD NEW
                 </button>
             </div>
         </div>
 
-        <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 real-estate" id="epf" #EPF #epf>
-            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table [dataSource]="dataSource" matSort id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 real-estate"
+            id="epf" #EPF #epf>
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
+                [dataSource]="dataSource" matSort id="tbs" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header mat-sort-header="no"> No</th>
@@ -82,20 +93,24 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br  w-12 rightTextHide text-right">
+                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
+                        class="br  w-12 rightTextHide text-right">
                         Current value-EPF
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentEpfValue }}</span> </div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                appFormatNumber>{{element.currentEpfValue }}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
                         <!-- *ngIf="bondTotalSum" for prod build -->
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpfBalance" appFormatNumber>{{sumOfcurrentEpfBalance}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpfBalance"
+                                appFormatNumber>{{sumOfcurrentEpfBalance}}</span></div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="bal">
-                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br w-12 rightTextHide text-right">
+                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef
+                        class="br w-12 rightTextHide text-right">
                         Current value -EPS
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right amt">
@@ -103,53 +118,63 @@
                             </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right">
-                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance" appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance"
+                                appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
                     </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="emp">
-                    <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef class="br  w-12 rightTextHide text-right">
+                    <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef
+                        class="br  w-12 rightTextHide text-right">
                         Employee's contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.employeesMonthlyContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.employeesMonthlyContribution }} </span></div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber [value]="sumOfemployeesMonthlyContribution">
+                    <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
+                        [value]="sumOfemployeesMonthlyContribution">
                         <div class="bar"> {{ sumOfemployeesMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="employer">
-                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef class="br  w-12 rightTextHide text-right">
-                        Employer's  contribution
+                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef
+                        class="br  w-12 rightTextHide text-right">
+                        Employer's contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
 
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.employersMonthlyContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.employersMonthlyContribution }} </span></div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber [value]="sumOfemployersMonthlyContribution">
+                    <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
+                        [value]="sumOfemployersMonthlyContribution">
                         <div class="bar"> {{ sumOfemployersMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="vol">
-                    <th mat-sort-header="voluntaryContribution" mat-header-cell *matHeaderCellDef class="br w-12 rightTextHide text-right">
+                    <th mat-sort-header="voluntaryContribution" mat-header-cell *matHeaderCellDef
+                        class="br w-12 rightTextHide text-right">
                         Voluntary <br>Contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.voluntaryContribution }} </span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.voluntaryContribution }} </span></div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef class="br w-13 rightText text-right">
+                    <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef
+                        class="br w-13 rightText text-right">
                         Interest rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{element.rate}}{{!isLoading? "%" : ""}} </div>
+                        <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
-                
+
 
                 <ng-container matColumnDef="desc">
                     <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description
@@ -178,9 +203,15 @@
 
 
                             <mat-menu #menubank="matMenu">
-                                <button mat-menu-item class="c-p" (click)="addDataFromSideBar(element, 'addEPF')">Edit</button>
-                                <button mat-menu-item class="c-p" (click)="openDetailedView(element,'detailedViewEpf')">Detailed
+                                <button mat-menu-item class="c-p"
+                                    (click)="addDataFromSideBar(element, 'addEPF')">Edit</button>
+                                <button mat-menu-item class="c-p"
+                                    (click)="openDetailedView(element,'detailedViewEpf')">Detailed
                                     view
+                                </button>
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('EPF',$event,element)" class="uploadInput" id="file-4" multiple
+                                        type="file">
                                 </button>
                                 <button mat-menu-item class="c-p">Activity</button>
                                 <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
@@ -197,7 +228,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">No EPF found</h4>
-                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle" mat-stroked-button>
+                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle"
+                    mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -210,7 +242,8 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
             </div>
-            <div class="col-md-8 p-0  justify-content-end d-flex align-items-center" *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-8 p-0  justify-content-end d-flex align-items-center"
+                *ngIf="dataSource.filteredData.length > 0">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -224,9 +257,9 @@
                 </a>
 
                 <mat-menu #menu7="matMenu">
-                    <button mat-menu-item>Upload file
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('NPS',$event)" class="uploadInput" id="file-4" multiple type="file">
-                    </button>
+                    </button> -->
                 </mat-menu>
 
                 <img class="c-p mr-8" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -245,22 +278,24 @@
                                 <img class="c-p" src="assets/images/svg/download-bordered.svg">
                                 <mat-menu #menu5="matMenu">
                                     <button (click)="pdf('NPS')" mat-menu-item>PDF</button>
-                    <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
-                </mat-menu>
-                <img class="" src="assets/images/svg/up-down.svg">
-                <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
-                <mat-menu #menu6="matMenu">
-                    <button mat-menu-item>Email Report</button>
-                    <button mat-menu-item>Option 2</button>
-                    <button mat-menu-item>Option 3</button>
-                </mat-menu>
-                <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+                                    <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
+                                </mat-menu>
+                                <img class="" src="assets/images/svg/up-down.svg">
+                                <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+                                <mat-menu #menu6="matMenu">
+                                    <button mat-menu-item>Email Report</button>
+                                    <button mat-menu-item>Option 2</button>
+                                    <button mat-menu-item>Option 3</button>
+                                </mat-menu>
+                                <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                                         class="material-icons">filter_list</i>FILTERS
                                 </button>
-                <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+                                <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle"
+                                    mat-stroked-button>ADD NEW
                                 </button>
-                <mat-menu #menu1="matMenu" class="add-new">
-                    <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
+                                <mat-menu #menu1="matMenu" class="add-new">
+                                    <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b"
+                                        mat-menu-item>
                                         <div class="row">
                                             <div class="col-md-2 pr-8 text-right">
                                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -273,7 +308,8 @@
                                             </div>
                                         </div>
                                     </button>
-                    <button (click)="addDataFromSideBar(null, 'addSchemeHolding')" class="b-b" mat-menu-item>
+                                    <button (click)="addDataFromSideBar(null, 'addSchemeHolding')" class="b-b"
+                                        mat-menu-item>
                                         <div class="row">
                                             <div class="col-md-2 pr-8 text-right">
                                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -286,131 +322,148 @@
                                             </div>
                                         </div>
                                     </button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                    </button>
                 </mat-menu>
             </div>
-        </div>
-        </button>
-        </mat-menu>
-    </div>
-    <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #NPS #nps>
-        <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="no">
-                <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
-                <td *matCellDef="let element; let i = index;" class="br t-2" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                </td>
-                <td *matFooterCellDef class="  pl-4 text-left" mat-footer-cell>
-                    <div class="bar">
+            <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #NPS #nps>
+                <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table
+                    [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading">
+                    <ng-container matColumnDef="no">
+                        <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
+                        <td *matCellDef="let element; let i = index;" class="br t-2" mat-cell>
+                            <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                        </td>
+                        <td *matFooterCellDef class="  pl-4 text-left" mat-footer-cell>
+                            <div class="bar">
 
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="ownerName"> Owner</th>
-                <td mat-cell *matCellDef="let element" class="br ">
-                    <div class="bar"></div>
-                    <div *ngFor="let owner of element.ownerList; let i = index">
-                        <span *ngIf="i == 0">{{owner.name}}</span>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
-                    {{ isLoading ? '': 'Total' }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="cvalue">
-                <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell *matHeaderCellDef class="br rightText text-right  "> Current value
-                </th>
-                <td mat-cell *matCellDef="let element" class="br text-right amt  ">
-                    <div class="bar">
-                        <div *ngIf="element.currentValuation > 0">{{isLoading ?'':'₹'}} <span appFormatNumber>{{isLoading ? '' : element.currentValuation || '-'}}</span>
-                        </div>
-                    </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br   p-8 f-600 amt text-right">
-                    {{isLoading ?'':'₹'}} <span [value]="totalCurrentValue" appFormatNumber>{{totalCurrentValue}}</span></td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-                <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br  rightText textRight">
-                    Total contribution
-                </th>
-                <td mat-cell *matCellDef="let element" class="br amt text-right">
-                    <div class="bar amt">
-                        <div *ngIf="element.totalAmountInvested > 0">{{isLoading ?'':'₹'}} <span appFormatNumber>{{isLoading ? '' : element.totalAmountInvested || '-'}}</span>
-                        </div>
-                    </div>
-                </td>
-                <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600   text-right">
-                    {{isLoading ?'':'₹'}} <span [value]="totalContribution" appFormatNumber>{{totalContribution}}</span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="scheme">
-                <th mat-sort-header="schemeChoice" mat-header-cell *matHeaderCellDef class="br"> Scheme choice
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' : (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
-                    </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="pran">
-                <th mat-sort-header="pran" mat-header-cell *matHeaderCellDef class="br text-left  ">PRAN</th>
-                <td mat-cell *matCellDef="let element" class="br text-left  ">
-                    <div class="bar"> {{isLoading ? '' : element.pran || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="isActive"> Status</th>
-                <td mat-cell *matCellDef="let element" class="br text-primary">
-                    <div class="bar"> {{element.statusId}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class=" " mat-header-cell></th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <div *ngIf="!isLoading">
-                        <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="owner">
+                        <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                        <td mat-cell *matCellDef="let element" class="br ">
+                            <div class="bar"></div>
+                            <div *ngFor="let owner of element.ownerList; let i = index">
+                                <span *ngIf="i == 0">{{owner.name}}</span>
+                            </div>
+                        </td>
+                        <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
+                            {{ isLoading ? '': 'Total' }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="cvalue">
+                        <th mat-sort-header="currentValuation" mat-sort-header="currentValuation" mat-header-cell
+                            *matHeaderCellDef class="br rightText text-right  "> Current value
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br text-right amt  ">
+                            <div class="bar">
+                                <div *ngIf="element.currentValuation > 0">{{isLoading ?'':'₹'}} <span
+                                        appFormatNumber>{{isLoading ? '' : element.currentValuation || '-'}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br   p-8 f-600 amt text-right">
+                            {{isLoading ?'':'₹'}} <span [value]="totalCurrentValue"
+                                appFormatNumber>{{totalCurrentValue}}</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="total">
+                        <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef
+                            class="br  rightText textRight">
+                            Total contribution
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br amt text-right">
+                            <div class="bar amt">
+                                <div *ngIf="element.totalAmountInvested > 0">{{isLoading ?'':'₹'}} <span
+                                        appFormatNumber>{{isLoading ? '' : element.totalAmountInvested || '-'}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600   text-right">
+                            {{isLoading ?'':'₹'}} <span [value]="totalContribution"
+                                appFormatNumber>{{totalContribution}}</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="scheme">
+                        <th mat-sort-header="schemeChoice" mat-header-cell *matHeaderCellDef class="br"> Scheme choice
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar">
+                                {{isLoading ? '' : (element.schemeChoice == '1') ? 'Active-choice investment' : (element.schemeChoice == '2') ? 'Auto-choice investment' : '-'}}
+                            </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="pran">
+                        <th mat-sort-header="pran" mat-header-cell *matHeaderCellDef class="br text-left  ">PRAN</th>
+                        <td mat-cell *matCellDef="let element" class="br text-left  ">
+                            <div class="bar"> {{isLoading ? '' : element.pran || '-'}} </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="desc">
+                        <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="isActive"> Status</th>
+                        <td mat-cell *matCellDef="let element" class="br text-primary">
+                            <div class="bar"> {{element.statusId}} </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                        <th *matHeaderCellDef class=" " mat-header-cell></th>
+                        <td mat-cell *matCellDef="let element" class="text-center">
+                            <div *ngIf="!isLoading">
+                                <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                                     more_vert
                                 </i> -->
-                        <img class="c-p " [matMenuTriggerFor]="menubank" src="/assets/images/svg/dot-menu.svg">
-                        <mat-menu #menubank="matMenu">
-                            <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0" (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
+                                <img class="c-p " [matMenuTriggerFor]="menubank" src="/assets/images/svg/dot-menu.svg">
+                                <mat-menu #menubank="matMenu">
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0"
+                                        (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
                                     </button>
-                            <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0" (click)="addDataFromSideBar(element, 'addSchemeHolding')">Edit
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0"
+                                        (click)="addDataFromSideBar(element, 'addSchemeHolding')">Edit
                                     </button>
-                            <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0" (click)="openDetailedView(element,'detailedViewNps')">Detailed view</button>
-                            <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0" (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0"
+                                        (click)="openDetailedView(element,'detailedViewNps')">Detailed view</button>
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0"
+                                        (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed
                                         view</button>
-                            <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
-                        </mat-menu>
-                    </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns12; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true" [hidden]="isLoading"></tr>
-        </table>
-        <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12"> No NPS found </h4>
-            <!--              [matMenuTriggerFor]="menu1"-->
-            <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>
+                                    <button mat-menu-item>Upload file
+                                        <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
+                                            multiple type="file">
+                                    </button>
+                                    <button mat-menu-item class="c-p">Activity</button>
+                                    <button mat-menu-item class="c-p"
+                                        (click)="deleteModal('NPS',element)">Delete</button>
+                                </mat-menu>
+                            </div>
+                        </td>
+                        <td *matFooterCellDef mat-footer-cell></td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns12; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true" [hidden]="isLoading"></tr>
+                </table>
+                <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No NPS found </h4>
+                    <!--              [matMenuTriggerFor]="menu1"-->
+                    <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>
                         ADD NEW
                     </button>
-            <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
+                    <mat-menu #menu1="matMenu" class="add-new">
+                        <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
                             <div class="row">
                                 <div class="col-md-4 p-0">
                                     <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
@@ -422,28 +475,30 @@
                                     <img class="c-p" src="assets/images/svg/download-bordered.svg">
                                     <mat-menu #menu5="matMenu">
                                         <button (click)="pdf('NPS')" mat-menu-item>PDF</button>
-                <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
-            </mat-menu>
-            <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
-            <mat-menu #menu7="matMenu">
-                <button mat-menu-item>Upload file
-                                            <input (change)="fetchData('NPS',$event)" class="uploadInput" id="file-4"
+                                        <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
+                                    </mat-menu>
+                                    <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                                    <mat-menu #menu7="matMenu">
+                                        <!-- <button mat-menu-item>Upload file
+                                            <input (change)="fetchData('NPS',$event,element)" class="uploadInput" id="file-4"
                                                 multiple type="file">
-                                        </button>
-            </mat-menu>
-            <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
-            <mat-menu #menu6="matMenu">
-                <button mat-menu-item>Email Report</button>
-                <button mat-menu-item>Option 2</button>
-                <button mat-menu-item>Option 3</button>
-            </mat-menu>
-            <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+                                        </button> -->
+                                    </mat-menu>
+                                    <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+                                    <mat-menu #menu6="matMenu">
+                                        <button mat-menu-item>Email Report</button>
+                                        <button mat-menu-item>Option 2</button>
+                                        <button mat-menu-item>Option 3</button>
+                                    </mat-menu>
+                                    <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                                             class="material-icons">filter_list</i>FILTERS
                                     </button>
-            <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+                                    <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle"
+                                        mat-stroked-button>ADD NEW
                                     </button>
-            <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
+                                    <mat-menu #menu1="matMenu" class="add-new">
+                                        <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b"
+                                            mat-menu-item>
                                             <div class="row">
                                                 <div class="col-md-2 pr-8 text-right">
                                                     <img src="assets/images/svg/dark-three-dot.svg">
@@ -456,7 +511,8 @@
                                                 </div>
                                             </div>
                                         </button>
-                <button (click)="addDataFromSideBar(null, 'addSchemeHolding')" class="b-b" mat-menu-item>
+                                        <button (click)="addDataFromSideBar(null, 'addSchemeHolding')" class="b-b"
+                                            mat-menu-item>
                                             <div class="row">
                                                 <div class="col-md-2 pr-8 text-right">
                                                     <img src="assets/images/svg/scheme-icon.svg">
@@ -469,279 +525,308 @@
                                                 </div>
                                             </div>
                                         </button>
-            </mat-menu>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
         </div>
-    </div>
-    </button>
-    </mat-menu>
-</div>
-</div>
-</div>
 
     </div>
 
 
     <div *ngIf="showRecurring === '3'">
-    <div class="row">
-        <div class="col-md-4 p-0">
-            <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
-        </div>
-        <div class="col-md-8 p-0  d-flex align-items-center justify-content-end " *ngIf="dataSource.filteredData.length > 0">
-            <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
             </div>
-            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
-                <img src="assets/images/svg/download-bordered.svg">
-            </a>
-            <mat-menu #menu5="matMenu">
-                <!-- <button mat-menu-item>NPS</button>
+            <div class="col-md-8 p-0  d-flex align-items-center justify-content-end "
+                *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
+                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                    <img src="assets/images/svg/download-bordered.svg">
+                </a>
+                <mat-menu #menu5="matMenu">
+                    <!-- <button mat-menu-item>NPS</button>
                     <button mat-menu-item (click)="ExportTOExcel('Gratuity')">XLS</button> -->
-                <button (click)="pdf('Gratuity')" mat-menu-item>PDF</button>
-                <button (click)="Excel('Gratuity')" mat-menu-item>XLS</button>
-            </mat-menu>
+                    <button (click)="pdf('Gratuity')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Gratuity')" mat-menu-item>XLS</button>
+                </mat-menu>
 
-            <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
-                <img src="assets/images/svg/up-down.svg">
-            </a>
+                <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+                    <img src="assets/images/svg/up-down.svg">
+                </a>
 
-            <mat-menu #menu7="matMenu">
-                <button mat-menu-item>Upload file
+                <mat-menu #menu7="matMenu">
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Gratuity',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
-                    </button>
-            </mat-menu>
-            <img class="c-p mr-8" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
-            <mat-menu #menu6="matMenu">
-                <button mat-menu-item>Email Report</button>
-                <button mat-menu-item>Option 2</button>
-                <button mat-menu-item>Option 3</button>
-            </mat-menu>
-            <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
+                    </button> -->
+                </mat-menu>
+                <img class="c-p mr-8" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+                <mat-menu #menu6="matMenu">
+                    <button mat-menu-item>Email Report</button>
+                    <button mat-menu-item>Option 2</button>
+                    <button mat-menu-item>Option 3</button>
+                </mat-menu>
+                <button class="btn-default addon mr-8 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-            <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle  " mat-stroked-button>ADD NEW
+                <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle  "
+                    mat-stroked-button>ADD NEW
                 </button>
+            </div>
         </div>
-    </div>
-    <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #GRATUITY #Gratuity>
-        <table #tableEl *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="no" sticky>
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
-                <td *matCellDef="let element let i = index" class="br" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                </td>
-                <td *matFooterCellDef class="text-right pl-4 f-600" mat-footer-cell>
-                    <div class="bar">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 p-0 overflow-hidden real-estate"
+            #GRATUITY #Gratuity>
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort"
+                [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="no" sticky>
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
+                    <td *matCellDef="let element let i = index" class="br" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                    </td>
+                    <td *matFooterCellDef class="text-right pl-4 f-600" mat-footer-cell>
+                        <div class="bar">
 
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br w-15" mat-header-cell mat-sort-header="ownerName"> Owner</th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"></div>
-                    <div *ngFor="let owner of element.ownerList; let i = index">
-                        <span *ngIf="i == 0">{{owner.name}}</span>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="text-right pl-4 br pr-20 f-600" mat-footer-cell>
-                    {{ isLoading ? '': 'Total' }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th *matHeaderCellDef class="br textLeft w-12" mat-header-cell mat-sort-header="organizationName">
-                    Name of the organization
-                </th>
-                <td *matCellDef="let element" class="br text-left  " mat-cell>
-                    <div class="bar"> {{isLoading ? ' ' : element.organizationName || '-'}} </div>
-                </td>
-                <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="joint">
-                <th *matHeaderCellDef class="br textLeft " mat-header-cell mat-sort-header="yearOfJoining">
-                    Date of joining
-                </th>
-                <td *matCellDef="let element" class="br text-left  " mat-cell>
-                    <div class="bar">{{element.yearOfJoining | date:'dd/MM/yyyy' }}</div>
-                </td>
-                <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="number">
-                <th *matHeaderCellDef class="br text-right  rightText w-13 " mat-header-cell mat-sort-header="yearsCompleted">
-                    Completed years
-                </th>
-                <td *matCellDef="let element" class="br text-right amt " mat-cell>
-                    <div class="bar"> {{element.yearsCompleted}} </div>
-                </td>
-                <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
-            </ng-container>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th *matHeaderCellDef class="br w-15" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"></div>
+                        <div *ngFor="let owner of element.ownerList; let i = index">
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="text-right pl-4 br pr-20 f-600" mat-footer-cell>
+                        {{ isLoading ? '': 'Total' }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef class="br textLeft w-12" mat-header-cell mat-sort-header="organizationName">
+                        Name of the organization
+                    </th>
+                    <td *matCellDef="let element" class="br text-left  " mat-cell>
+                        <div class="bar"> {{isLoading ? ' ' : element.organizationName || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="joint">
+                    <th *matHeaderCellDef class="br textLeft " mat-header-cell mat-sort-header="yearOfJoining">
+                        Date of joining
+                    </th>
+                    <td *matCellDef="let element" class="br text-left  " mat-cell>
+                        <div class="bar">{{element.yearOfJoining | date:'dd/MM/yyyy' }}</div>
+                    </td>
+                    <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="number">
+                    <th *matHeaderCellDef class="br text-right  rightText w-13 " mat-header-cell
+                        mat-sort-header="yearsCompleted">
+                        Completed years
+                    </th>
+                    <td *matCellDef="let element" class="br text-right amt " mat-cell>
+                        <div class="bar"> {{element.yearsCompleted}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
+                </ng-container>
 
-            <ng-container matColumnDef="amt">
-                <th *matHeaderCellDef class="br w-15 text-right  rightText " mat-header-cell mat-sort-header="amountReceived">
-                    Amount accumulated
+                <ng-container matColumnDef="amt">
+                    <th *matHeaderCellDef class="br w-15 text-right  rightText " mat-header-cell
+                        mat-sort-header="amountReceived">
+                        Amount accumulated
 
-                </th>
-                <td *matCellDef="let element" class="br amt text-right  " mat-cell>
-                    <div class="bar">
-                        <div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.gratuityReceived}}</span></div>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br amt f-600 p-8   text-right" mat-footer-cell>
-                    <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfGratuityReceived" appFormatNumber>{{sumOfGratuityReceived}}</span> </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="salary">
-                <th *matHeaderCellDef class="br   text-right  rightTextHide " mat-header-cell mat-sort-header="amountReceived">
-                    'Last drawn Salary<br /> (Basic + DA)
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right  " mat-cell>
+                        <div class="bar">
+                            <div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span
+                                    appFormatNumber>{{element.gratuityReceived}}</span></div>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br amt f-600 p-8   text-right" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfGratuityReceived"
+                                appFormatNumber>{{sumOfGratuityReceived}}</span> </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="salary">
+                    <th *matHeaderCellDef class="br   text-right  rightTextHide " mat-header-cell
+                        mat-sort-header="amountReceived">
+                        'Last drawn Salary<br /> (Basic + DA)
 
-                </th>
-                <td *matCellDef="let element" class="br amt text-right  " mat-cell>
-                    <div class="bar">
-                        <div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.amountReceived}}</span></div>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br amt f-600 p-8   text-right" mat-footer-cell>
-                    <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountReceived" appFormatNumber>{{sumOfAmountReceived}}</span> </div>
-                </td>
-            </ng-container>
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right  " mat-cell>
+                        <div class="bar">
+                            <div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span
+                                    appFormatNumber>{{element.amountReceived}}</span></div>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br amt f-600 p-8   text-right" mat-footer-cell>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountReceived"
+                                appFormatNumber>{{sumOfAmountReceived}}</span> </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="desc">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description
-                </th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="isActive"> Status</th>
-                <td *matCellDef="let element" class="br   text-primary" mat-cell>
-                    <div class="bar"> {{element.statusId}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="icons" sticky>
-                <th *matHeaderCellDef class=" " mat-header-cell></th>
-                <td *matCellDef="let element" class=" text-center " mat-cell>
-                    <div *ngIf="!isLoading">
-                        <!-- <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                <ng-container matColumnDef="desc">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description
+                    </th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="isActive"> Status</th>
+                    <td *matCellDef="let element" class="br   text-primary" mat-cell>
+                        <div class="bar"> {{element.statusId}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="icons" sticky>
+                    <th *matHeaderCellDef class=" " mat-header-cell></th>
+                    <td *matCellDef="let element" class=" text-center " mat-cell>
+                        <div *ngIf="!isLoading">
+                            <!-- <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
                                 more_vert
                             </i> -->
-                        <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
-                        <mat-menu #menubank="matMenu">
-                            <button (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p" mat-menu-item>Edit</button>
-                            <button (click)="openDetailedView(element,'detailedViewGratuity')" class="c-p" mat-menu-item>Detailed
+                            <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
+                            <mat-menu #menubank="matMenu">
+                                <button (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p"
+                                    mat-menu-item>Edit</button>
+                                <button (click)="openDetailedView(element,'detailedViewGratuity')" class="c-p"
+                                    mat-menu-item>Detailed
                                     view
                                 </button>
-                            <button class="c-p" mat-menu-item>Activity</button>
-                            <button (click)="deleteModal('GRATUITY',element)" class="c-p" mat-menu-item>Delete</button>
-                        </mat-menu>
-                    </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <tr *matHeaderRowDef="displayedColumns13; sticky: true" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns13;" mat-row></tr>
-            <tr *matFooterRowDef="displayedColumns13;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
-        </table>
-        <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">No Gratuity found</h4>
-            <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle" mat-stroked-button>
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Gratuity',$event,element)" class="uploadInput" id="file-4"
+                                        multiple type="file">
+                                </button>
+                                <button class="c-p" mat-menu-item>Activity</button>
+                                <button (click)="deleteModal('GRATUITY',element)" class="c-p"
+                                    mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns13; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns13;" mat-row></tr>
+                <tr *matFooterRowDef="displayedColumns13;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
+            </table>
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12">No Gratuity found</h4>
+                <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle"
+                    mat-stroked-button>
                     ADD NEW
                 </button>
+            </div>
         </div>
     </div>
-</div>
 
-<div *ngIf="showRecurring == '4'">
-    <div class="row">
-        <div class="col-md-4 p-0">
-            <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
-        </div>
-        <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
-            <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+    <div *ngIf="showRecurring == '4'">
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
             </div>
-            <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
-            <mat-menu #menu5="matMenu">
-                <button (click)="pdf('Superannuation')" mat-menu-item>PDF</button>
-                <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
-            </mat-menu>
-            <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
-            <mat-menu #menu7="matMenu">
-                <button mat-menu-item>Upload file
+            <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
+                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+                <mat-menu #menu5="matMenu">
+                    <button (click)="pdf('Superannuation')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
+                </mat-menu>
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Superannuation',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
-                    </button>
-            </mat-menu>
-            <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
-            <mat-menu #menu6="matMenu">
-                <button mat-menu-item>Email Report</button>
-                <button mat-menu-item>Option 2</button>
-                <button mat-menu-item>Option 3</button>
-            </mat-menu>
-            <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+                    </button> -->
+                </mat-menu>
+                <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+                <mat-menu #menu6="matMenu">
+                    <button mat-menu-item>Email Report</button>
+                    <button mat-menu-item>Option 2</button>
+                    <button mat-menu-item>Option 3</button>
+                </mat-menu>
+                <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-            <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle"
+                    mat-stroked-button>ADD
                     NEW
                 </button>
+            </div>
         </div>
-    </div>
-    <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden col-md-12 p-0 mt-8 superannuation" #SUPERANNUATION #Superannuation>
-        <table #tableEl *ngIf="dataSource.filteredData.length > 0" #superAnnuationListTable="matSort" [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="no" sticky>
-                <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="no"> No</th>
-                <td *matCellDef="let element let i = index" class="br  " mat-cell>
-                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                </td>
-                <td *matFooterCellDef class="  f-600 pl-4 text-left" mat-footer-cell>
+        <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden col-md-12 p-0 mt-8 superannuation"
+            #SUPERANNUATION #Superannuation>
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #superAnnuationListTable="matSort"
+                [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="no" sticky>
+                    <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="no"> No</th>
+                    <td *matCellDef="let element let i = index" class="br  " mat-cell>
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                    </td>
+                    <td *matFooterCellDef class="  f-600 pl-4 text-left" mat-footer-cell>
 
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
-                <td *matCellDef="let element" class="br  " mat-cell>
-                    <div class="bar"></div>
-                    <div *ngFor="let owner of element.ownerList; let i = index">
-                        <span *ngIf="i == 0">{{owner.name}}</span>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br  f-600 pr-20 text-right" mat-footer-cell>
-                    {{ isLoading ? '': 'Total' }} </td>
-            </ng-container>
-            <ng-container matColumnDef="aemp">
-                <th *matHeaderCellDef class="br textRight text-right " mat-header-cell mat-sort-header="annualEmployerContribution">
-                    Annual employer <br> contribution
-                </th>
-                <td *matCellDef="let element" class="br amt text-right " mat-cell>
-                    <div class="bar" appFormatNumber> {{element.annualEmployerContribution}} </div>
-                </td>
-                <td *matFooterCellDef [value]="sumOfAnnualEmployerContribution" appFormatNumber class="br amt f-600 p-8 text-right" mat-footer-cell>
-                    <div class="bar"> {{sumOfAnnualEmployerContribution || ' '}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="aempe">
-                <th *matHeaderCellDef class="br textRight " mat-header-cell mat-sort-header="annualEmployeeContribution">
-                    Annual employee <br> contribution
-                </th>
-                <td *matCellDef="let element" class="br amt text-right " mat-cell>
-                    <div class="bar amt" appFormatNumber> {{element.annualEmployeeContribution}} </div>
-                </td>
-                <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber class="br amt  f-600 p-8 text-right" mat-footer-cell>
-                    {{sumOfAnnualEmployeeContribution || '-'}}</td>
-            </ng-container>
-            <ng-container matColumnDef="rate">
-                <th *matHeaderCellDef class="br text-right textRight " mat-header-cell mat-sort-header="assumedRateOfReturn">
-                    Assumed rate <br> of return
-                </th>
-                <td *matCellDef="let element" class="br amt text-right " mat-cell>
-                    <div class="bar"> {{element.assumedRateOfReturn}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <!-- <ng-container matColumnDef="grate">
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                    <td *matCellDef="let element" class="br  " mat-cell>
+                        <div class="bar"></div>
+                        <div *ngFor="let owner of element.ownerList; let i = index">
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br  f-600 pr-20 text-right" mat-footer-cell>
+                        {{ isLoading ? '': 'Total' }} </td>
+                </ng-container>
+                <ng-container matColumnDef="aemp">
+                    <th *matHeaderCellDef class="br textRight text-right " mat-header-cell
+                        mat-sort-header="annualEmployerContribution">
+                        Annual employer <br> contribution
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right " mat-cell>
+                        <div class="bar" appFormatNumber> {{element.annualEmployerContribution}} </div>
+                    </td>
+                    <td *matFooterCellDef [value]="sumOfAnnualEmployerContribution" appFormatNumber
+                        class="br amt f-600 p-8 text-right" mat-footer-cell>
+                        <div class="bar"> {{sumOfAnnualEmployerContribution || ' '}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="aempe">
+                    <th *matHeaderCellDef class="br textRight " mat-header-cell
+                        mat-sort-header="annualEmployeeContribution">
+                        Annual employee <br> contribution
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right " mat-cell>
+                        <div class="bar amt" appFormatNumber> {{element.annualEmployeeContribution}} </div>
+                    </td>
+                    <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber
+                        class="br amt  f-600 p-8 text-right" mat-footer-cell>
+                        {{sumOfAnnualEmployeeContribution || '-'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="rate">
+                    <th *matHeaderCellDef class="br text-right textRight " mat-header-cell
+                        mat-sort-header="assumedRateOfReturn">
+                        Assumed rate <br> of return
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right " mat-cell>
+                        <div class="bar"> {{element.assumedRateOfReturn}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="grate">
                 <th *matHeaderCellDef class="br text-right textRight " mat-header-cell mat-sort-header="growthRateEmployerContribution">
                     Growth rate <br> employer contribution
                 </th>
@@ -750,7 +835,7 @@
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container> -->
-            <!-- <ng-container matColumnDef="grateemp">
+                <!-- <ng-container matColumnDef="grateemp">
                 <th *matHeaderCellDef class="br text-left textRight " mat-header-cell mat-sort-header="growthRateEmployeeContribution">
                     Growth rate <br> employee contribution
                 </th>
@@ -759,202 +844,227 @@
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container> -->
-            <ng-container matColumnDef="date">
-                <th *matHeaderCellDef class="br text-left " mat-header-cell mat-sort-header="firstContributionDate">
-                    Date of first <br> contribution
-                </th>
-                <td *matCellDef="let element" class="br text-left " mat-cell>
-                    <div class="bar"> {{element.firstContributionDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description
-                </th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="isActive"> Status</th>
-                <td *matCellDef="let element" class="br text-primary" mat-cell>
-                    <div class="bar"> {{element.statusId}} </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="icons" sticky>
-                <th *matHeaderCellDef class="" mat-header-cell></th>
-                <td *matCellDef="let element" class="" mat-cell>
-                    <i *ngIf="isLoading==false" [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+                <ng-container matColumnDef="date">
+                    <th *matHeaderCellDef class="br text-left " mat-header-cell mat-sort-header="firstContributionDate">
+                        Date of first <br> contribution
+                    </th>
+                    <td *matCellDef="let element" class="br text-left " mat-cell>
+                        <div class="bar"> {{element.firstContributionDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="desc">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description
+                    </th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="isActive"> Status</th>
+                    <td *matCellDef="let element" class="br text-primary" mat-cell>
+                        <div class="bar"> {{element.statusId}} </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="icons" sticky>
+                    <th *matHeaderCellDef class="" mat-header-cell></th>
+                    <td *matCellDef="let element" class="" mat-cell>
+                        <i *ngIf="isLoading==false" [matMenuTriggerFor]="menubank"
+                            class="material-icons c-p text-black">
                             more_vert
                         </i>
-                    <mat-menu #menubank="matMenu">
-                        <button (click)="addDataFromSideBar(element, 'addSuperannuation')" class="c-p" mat-menu-item>Edit</button>
-                        <button (click)="openDetailedView(element,'detailedViewSuperannuation')" class="c-p" mat-menu-item>Detailed
+                        <mat-menu #menubank="matMenu">
+                            <button (click)="addDataFromSideBar(element, 'addSuperannuation')" class="c-p"
+                                mat-menu-item>Edit</button>
+                            <button (click)="openDetailedView(element,'detailedViewSuperannuation')" class="c-p"
+                                mat-menu-item>Detailed
                                 view</button>
-                        <button class="c-p" mat-menu-item>Activity</button>
-                        <button (click)="deleteModal('SUPERANNUATION',element)" class="c-p" mat-menu-item>Delete</button>
-                    </mat-menu>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <tr *matHeaderRowDef="displayedColumns14; sticky: true" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns14;" mat-row></tr>
-            <tr *matFooterRowDef="displayedColumns14;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
-        </table>
-        <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">No Superannuation found</h4>
-            <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle" mat-stroked-button>
+                            <button mat-menu-item>Upload file
+                                <input (change)="fetchData('Superannuation',$event,element)" class="uploadInput" id="file-4"
+                                    multiple type="file">
+                            </button>
+                            <button class="c-p" mat-menu-item>Activity</button>
+                            <button (click)="deleteModal('SUPERANNUATION',element)" class="c-p"
+                                mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns14; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns14;" mat-row></tr>
+                <tr *matFooterRowDef="displayedColumns14;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
+            </table>
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12">No Superannuation found</h4>
+                <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle"
+                    mat-stroked-button>
                     ADD NEW
                 </button>
+            </div>
         </div>
     </div>
-</div>
 
-<div *ngIf="showRecurring == '5'">
-    <div class="row">
-        <div class="col-md-4 p-0">
-            <h4 class="m-0 text-black roboto pt-8">EPS</h4>
-        </div>
-        <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
-            <div class="p-0 d-flex align-items-center justify-content-center mt-8">
-                <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+    <div *ngIf="showRecurring == '5'">
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <h4 class="m-0 text-black roboto pt-8">EPS</h4>
             </div>
-            <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
-            <mat-menu #menu5="matMenu">
-                <button (click)="pdf('EPS')" mat-menu-item>PDF</button>
-                <button (click)="Excel('EPS')" mat-menu-item>XLS</button>
-            </mat-menu>
-            <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
-            <mat-menu #menu7="matMenu">
-                <button mat-menu-item>Upload file
+            <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                </div>
+                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+                <mat-menu #menu5="matMenu">
+                    <button (click)="pdf('EPS')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('EPS')" mat-menu-item>XLS</button>
+                </mat-menu>
+                <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p">
+                <mat-menu #menu7="matMenu">
+                    <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('EPS',$event)" class="uploadInput" id="file-4" multiple type="file">
-                    </button>
-            </mat-menu>
-            <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
-            <mat-menu #menu6="matMenu">
-                <button mat-menu-item>Email Report</button>
-                <button mat-menu-item>Option 2</button>
-                <button mat-menu-item>Option 3</button>
-            </mat-menu>
-            <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+                    </button> -->
+                </mat-menu>
+                <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+                <mat-menu #menu6="matMenu">
+                    <button mat-menu-item>Email Report</button>
+                    <button mat-menu-item>Option 2</button>
+                    <button mat-menu-item>Option 3</button>
+                </mat-menu>
+                <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-            <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+                <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle"
+                    mat-stroked-button> ADD NEW
                 </button>
+            </div>
         </div>
-    </div>
-    <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate" #EPS #eps>
-        <table #tableEl *ngIf="dataSource.filteredData.length > 0" #epsListTable="matSort" [dataSource]="dataSource" id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="no">
-                <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="no"> No</th>
-                <td *matCellDef="let element let i = index" class="br" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                </td>
-                <td *matFooterCellDef class=" text-left pl-4" mat-footer-cell>
-                    <div class="bar"> </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="owner">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar"></div>
-                    <div *ngFor="let owner of element.ownerList; let i = index">
-                        <span *ngIf="i == 0">{{owner.name}}</span>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br f-600 p-8 pr-20 text-right" mat-footer-cell>
-                    {{isLoading ? '' : 'Total' }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="nvalue">
-                <th *matHeaderCellDef class="br text-right textRight" mat-header-cell mat-sort-header="notionalValue">
-                    Notional value
-                </th>
-                <td *matCellDef="let element" class="br text-right amt " mat-cell>
-                    <div class="bar" appFormatNumber> {{element.notionalValue || '-'}} </div>
-                </td>
-                <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber class="br amt f-600 p-8 text-right" mat-footer-cell>
-                    <div class="bar amt"> {{totalNotionalValue}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="date">
-                <th *matHeaderCellDef class="br textLeft text-left" mat-header-cell mat-sort-header="commencementDate">
-                    Commencement <br> date
-                </th>
-                <td *matCellDef="let element" class="br text-left" mat-cell>
-                    <div class="bar"> {{element.commencementDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="amt">
-                <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="pensionAmount">
-                    Pension amount
-                </th>
-                <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                    <div class="bar" appFormatNumber> {{isLoading ? ' ' : element.pensionAmount || '-'}} </div>
-                </td>
-                <td *matFooterCellDef [value]="totalPensionAmount" appFormatNumber class="br amt f-600 p-8 text-right" mat-footer-cell>
-                    <div class="bar"> {{totalPensionAmount}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="pay">
-                <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="pensionPayoutFrequencyId">
-                    Pension payout <br> frequency
-                </th>
-                <td *matCellDef="let element" class="br" mat-cell>
-                    <div class="bar">
-                        {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Half yearly' : 'Yearly'}}
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="desc">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description
-                </th>
-                <td *matCellDef="let element" class=" br" mat-cell>
-                    <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="active"> Status</th>
-                <td *matCellDef="let element" class="br text-primary" mat-cell>
-                    <div class="bar"> {{element.statusId}} </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class="" mat-header-cell></th>
-                <td *matCellDef="let element" class="" mat-cell>
-                    <div *ngIf="!isLoading">
-                        <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+        <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate" #EPS #eps>
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #epsListTable="matSort" [dataSource]="dataSource"
+                id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="no">
+                    <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="no"> No</th>
+                    <td *matCellDef="let element let i = index" class="br" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                    </td>
+                    <td *matFooterCellDef class=" text-left pl-4" mat-footer-cell>
+                        <div class="bar"> </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"></div>
+                        <div *ngFor="let owner of element.ownerList; let i = index">
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br f-600 p-8 pr-20 text-right" mat-footer-cell>
+                        {{isLoading ? '' : 'Total' }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="nvalue">
+                    <th *matHeaderCellDef class="br text-right textRight" mat-header-cell
+                        mat-sort-header="notionalValue">
+                        Notional value
+                    </th>
+                    <td *matCellDef="let element" class="br text-right amt " mat-cell>
+                        <div class="bar" appFormatNumber> {{element.notionalValue || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber
+                        class="br amt f-600 p-8 text-right" mat-footer-cell>
+                        <div class="bar amt"> {{totalNotionalValue}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="date">
+                    <th *matHeaderCellDef class="br textLeft text-left" mat-header-cell
+                        mat-sort-header="commencementDate">
+                        Commencement <br> date
+                    </th>
+                    <td *matCellDef="let element" class="br text-left" mat-cell>
+                        <div class="bar"> {{element.commencementDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="amt">
+                    <th *matHeaderCellDef class="br textRight text-right" mat-header-cell
+                        mat-sort-header="pensionAmount">
+                        Pension amount
+                    </th>
+                    <td *matCellDef="let element" class="br amt text-right" mat-cell>
+                        <div class="bar" appFormatNumber> {{isLoading ? ' ' : element.pensionAmount || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef [value]="totalPensionAmount" appFormatNumber
+                        class="br amt f-600 p-8 text-right" mat-footer-cell>
+                        <div class="bar"> {{totalPensionAmount}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="pay">
+                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                        mat-sort-header="pensionPayoutFrequencyId">
+                        Pension payout <br> frequency
+                    </th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar">
+                            {{isLoading ? ' ' : (element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Half yearly' : 'Yearly'}}
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="desc">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description
+                    </th>
+                    <td *matCellDef="let element" class=" br" mat-cell>
+                        <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="active"> Status</th>
+                    <td *matCellDef="let element" class="br text-primary" mat-cell>
+                        <div class="bar"> {{element.statusId}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th *matHeaderCellDef class="" mat-header-cell></th>
+                    <td *matCellDef="let element" class="" mat-cell>
+                        <div *ngIf="!isLoading">
+                            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
                                 more_vert
                             </i>
-                        <mat-menu #menubank="matMenu">
-                            <button (click)="addDataFromSideBar(element, 'addEPS')" class="c-p" mat-menu-item>Edit</button>
-                            <button (click)="openDetailedView(element,'detailedViewEps')" class="c-p" mat-menu-item>Detailed
+                            <mat-menu #menubank="matMenu">
+                                <button (click)="addDataFromSideBar(element, 'addEPS')" class="c-p"
+                                    mat-menu-item>Edit</button>
+                                <button (click)="openDetailedView(element,'detailedViewEps')" class="c-p"
+                                    mat-menu-item>Detailed
                                     view</button>
-                            <button class="c-p" mat-menu-item>Activity</button>
-                            <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
-                        </mat-menu>
-                    </div>
-                </td>
-                <td *matFooterCellDef mat-footer-cell></td>
-            </ng-container>
-            <tr *matHeaderRowDef="displayedColumns15; sticky: true" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
-            <tr *matFooterRowDef="displayedColumns15;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
-        </table>
-        <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">No EPS found </h4>
-            <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('EPS',$event,element)" class="uploadInput" id="file-4" multiple
+                                        type="file">
+                                </button>
+                                <button class="c-p" mat-menu-item>Activity</button>
+                                <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef mat-footer-cell></td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns15; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
+                <tr *matFooterRowDef="displayedColumns15;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
+            </table>
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12">No EPS found </h4>
+                <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle"
+                    mat-stroked-button> ADD NEW
                 </button>
+            </div>
         </div>
     </div>
-</div>
 
 </div>

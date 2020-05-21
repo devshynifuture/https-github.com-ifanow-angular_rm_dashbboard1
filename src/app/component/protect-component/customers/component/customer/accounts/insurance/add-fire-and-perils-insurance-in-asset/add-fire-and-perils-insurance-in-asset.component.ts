@@ -235,12 +235,12 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     if (data.data == null) {
       data = {};
       this.dataForEdit = data.data;
-      this.flag = "ADD";
+      this.flag = "Add";
     }
     else {
       this.dataForEdit = data.data;
       this.id = this.dataForEdit.id;
-      this.flag = "EDIT";
+      this.flag = "Edit";
     }
     this.fireInsuranceForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -355,8 +355,10 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     if (form == 'policyExpiryDate' && formValue) {
       let startDate = new Date(this.fireInsuranceForm.controls.policyStartDate.value);
       let policyExpiryDate = this.datePipe.transform(this.fireInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
-      let comparedDate: any = new Date(this.fireInsuranceForm.controls.policyStartDate.value);
+      let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = new Date(comparedDate);
+      comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.fireInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -476,8 +478,8 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
         "policyTypeId": this.fireInsuranceForm.get('PlanType').value,
         "planName": this.fireInsuranceForm.get('planeName').value,
         "premiumAmount": this.fireInsuranceForm.get('premium').value,
-        "policyStartDate":this.datePipe.transform(this.fireInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        "policyExpiryDate":this.datePipe.transform(this.fireInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        "policyStartDate": this.datePipe.transform(this.fireInsuranceForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate": this.datePipe.transform(this.fireInsuranceForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "exclusion": this.fireInsuranceForm.get('exclusion').value,
         "hypothetication": this.fireInsuranceForm.get('financierName').value,
         "advisorName": this.fireInsuranceForm.get('advisorName').value,

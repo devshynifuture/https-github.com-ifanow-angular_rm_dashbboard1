@@ -1,9 +1,9 @@
 <div id="ui-insurance">
     <div class="row">
-        <div class="col-md-2 p-0  pt-8    pb-20 bg-grey lter">
-            <div class="vertical-menu ">
+        <div class="col-md-2 p-0  pt-8 pb-20 bg-grey lter">
+            <div class="vertical-menu sticky-top ">
                 <ul class="d-block ">
-                    <li class="b-ua pb-8 c-p" [ngClass]="{'bg-grey lt':lifeInsuranceFlag}">
+                    <li class="  pb-8 c-p" [ngClass]="{'bg-grey lt':lifeInsuranceFlag}">
                         <div (click)="getInsuranceData(1)" class="row">
                             <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
                             <div class="col-md-1 p-0 text-custom text-left">
@@ -20,7 +20,7 @@
                     </li>
                 </ul>
                 <!-- toggle('generalInsurance'); -->
-                <ul class="d-block ">
+                <ul class="d-block b-t pt-12 mt-12 ">
                     <li class="pb-8 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
                         <div (click)="getInsuranceTypeData(2,0)" class="row">
                             <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
@@ -45,8 +45,8 @@
                 <div class="wrapper-8">
 
                     <div class="row pb-12">
-                        <div class="col-md-4 p-0">
-                            <h4 class="m-0 text-black roboto pt-4">{{showInsurance}} insurance </h4>
+                        <div class="col-md-4 d-flex align-items-center p-0">
+                            <h4 class="m-0 text-black roboto ">{{showInsurance}} insurance </h4>
                         </div>
                         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="(dataSource.data.length > 0 && insuranceTypeId == 1 && !isLoading ) || (dataSourceGeneralInsurance.data.length > 0 && insuranceTypeId == 2 && !isLoading)">
                             <div>
@@ -74,10 +74,10 @@
 
                             <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
                             <mat-menu #menu7="matMenu">
-                                <button mat-menu-item>Upload file
+                                <!-- <button mat-menu-item>Upload file
                                     <input (change)="fetchData('Life Insurance',$event)" class="uploadInput" id="file-4"
                                         multiple type="file">
-                                </button>
+                                </button> -->
                             </mat-menu>
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8">
                             <button mat-stroked-button class="btn-default addon mr-8 v-middle" [matMenuTriggerFor]="insuranceMenu"><i
@@ -105,16 +105,19 @@
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
+
                                 <ng-container matColumnDef="life">
-                                    <th mat-sort-header="lifeAssuredName" *matHeaderCellDef class="br">
+                                    <th mat-sort-header="lifeAssuredName" *matHeaderCellDef class="br w-15">
                                         Life assured </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.lifeAssuredName}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="p-8 text-left"> </td>
                                 </ng-container>
+
                                 <ng-container matColumnDef="name">
-                                    <th mat-sort-header="policyName" *matHeaderCellDef class="br "> Policy name </th>
+                                    <th mat-sort-header="policyName" *matHeaderCellDef class="br w-15 "> Policy name
+                                    </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.policyName}} </div>
                                     </td>
@@ -122,7 +125,8 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="number">
-                                    <th mat-sort-header="policyNumber" *matHeaderCellDef class="br"> Policy number
+                                    <th mat-sort-header="policyNumber" *matHeaderCellDef class="br textLeft w-11">
+                                        Policy number
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.policyNumber}} </div>
@@ -131,8 +135,9 @@
                                         Total
                                     </td>
                                 </ng-container>
+
                                 <ng-container matColumnDef="sum">
-                                    <th mat-header-cell mat-sort-header="sumAssured" *matHeaderCellDef class="br text-right"> Sum assured </th>
+                                    <th mat-header-cell mat-sort-header="sumAssured" *matHeaderCellDef class="br rightTextHide text-right"> Sum assured </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span> </div>
 
@@ -142,19 +147,23 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="cvalue">
-                                    <th mat-header-cell mat-sort-header="currentValue" *matHeaderCellDef class="br text-right"> Current value
+                                    <th mat-header-cell mat-sort-header="currentValue" *matHeaderCellDef class="br rightTextHide text-right"> Current value
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        <div class="bar">{{(!isLoading && element.currentValue != 0)? "₹" : (element.currentValue == 0) ? "" : ''}}<span appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span>
+                                        <div class="bar">
+                                            {{(!isLoading && (element.currentValue != 0 || element.vestedBonus !=0))? "₹" : (element.currentValue == 0 || element.vestedBonus == 0) ? "" : ''}}
+                                            <!-- <span
+                                                appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span> -->
+                                            <span appFormatNumber *ngIf="!isLoading">{{(element.vestedBonus) ? element.vestedBonus : (element.currentValue) ? element.currentValue : '-'}}</span>
                                         </div>
 
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue" appFormatNumber></span></div>
+                                        <div>{{isLoading ? ' ' : (totalCurrentValue != 0) ? '₹' : ''}}<span [value]="(totalCurrentValue) ? totalCurrentValue : (totalCurrentValue == 0) ? '-' : '-'" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="premium">
-                                    <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br text-right">
+                                    <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br rightTextHide text-right">
                                         Premium </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <!-- <div class="bar"> <span appFormatNumber>{{element.premiumAmount}}</span> </div> -->
@@ -169,7 +178,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="term">
-                                    <th mat-header-cell mat-sort-header="premiumPayingTerm" *matHeaderCellDef class="br">
+                                    <th mat-header-cell mat-sort-header="premiumPayingTerm" *matHeaderCellDef class="br textLeft">
                                         Premium paying term
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
@@ -178,7 +187,7 @@
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="pterm">
-                                    <th mat-header-cell mat-sort-header="policyTenure" *matHeaderCellDef class="br">
+                                    <th mat-header-cell mat-sort-header="policyTenure" *matHeaderCellDef class="br textLeft">
                                         Policy term
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
@@ -187,7 +196,7 @@
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="desc">
-                                    <th mat-header-cell mat-sort-header="insuranceSubTypeId" *matHeaderCellDef class="br">
+                                    <th mat-header-cell mat-sort-header="insuranceSubTypeId" *matHeaderCellDef class="br textLeft">
                                         Plan type </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div *ngIf="!isLoading">
@@ -212,14 +221,18 @@
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                    <td mat-cell *matCellDef="let element" class="t-2">
+                                    <td mat-cell *matCellDef="let element" class="t-2 c-p">
                                         <div *ngIf="!isLoading">
-                                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                                                more_vert
-                                            </i>
+
+                                            <img class="c-p mat-menu-trigger" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
+
                                             <mat-menu #menu4="matMenu">
                                                 <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                                 <button (click)="open(element)" mat-menu-item>Detailed view</button>
+                                                <button mat-menu-item>Upload file
+                                                    <input (change)="fetchData('Life Insurance',$event,element)"
+                                                        class="uploadInput" id="file-4" multiple type="file">
+                                                </button>
                                                 <button mat-menu-item>Activity</button>
                                                 <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
                                             </mat-menu>
@@ -237,7 +250,12 @@
                                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button>
                             </div>
                         </div>
+
+
                         <!----------------------------------------------------------GENERAL INSURANCE TABLE------------------------------------------------------------------>
+
+
+
                         <div *ngIf="insuranceTypeId == 2">
                             <table #tableEl2 matSort mat-table [dataSource]="dataSourceGeneralInsurance" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" *ngIf="dataSourceGeneralInsurance.data.length > 0">
                                 <ng-container matColumnDef="no" sticky>
@@ -248,7 +266,7 @@
                                     <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
-                                    <th mat-sort-header="policyHolderName" *matHeaderCellDef class="br">
+                                    <th mat-sort-header="policyHolderName" *matHeaderCellDef class="br textLeft w-15">
                                         {{showPolicyHolder}}</th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div *ngIf="element.insuredMembers?.length > 0 && !isLoading">
@@ -267,7 +285,7 @@
                                     <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="insurerName">
-                                    <th mat-sort-header="insurerName" *matHeaderCellDef class="br ">
+                                    <th mat-sort-header="insurerName" *matHeaderCellDef class="br w-15 textLeft">
                                         {{(insuranceSubTypeId == 7) ? 'Name of insurer' : 'Name of insurer & Plan'}}
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
@@ -281,7 +299,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="sumInsured">
-                                    <th mat-sort-header="sumAssured" *matHeaderCellDef class="br"> Sum insured
+                                    <th mat-sort-header="sumAssured" *matHeaderCellDef class="br rightTextHide"> Sum insured
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <!-- <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div> -->
@@ -296,7 +314,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="premiumAmount">
-                                    <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br text-right"> Premium </th>
+                                    <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br rightTextHide text-right"> Premium </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <!-- <div class="bar"><span appFormatNumber>{{element.premiumAmount}} </span></div> -->
                                         <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.premiumAmount }}</span> </div>
@@ -307,7 +325,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="policyExpiryDate">
-                                    <th mat-header-cell mat-sort-header="policyExpiryDate" *matHeaderCellDef class="br text-right">Policy expiry date
+                                    <th mat-header-cell mat-sort-header="policyExpiryDate" *matHeaderCellDef class="br textLeft w-10">Policy expiry date
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar"> {{element.policyExpiryDate | date:'dd/MM/yyyy'}} </div>
@@ -315,14 +333,14 @@
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="Duration">
-                                    <th mat-header-cell mat-sort-header="durationRemaining" *matHeaderCellDef class="br text-right">Duration remaining </th>
+                                    <th mat-header-cell mat-sort-header="durationRemaining" *matHeaderCellDef class="br textLeft">Duration remaining </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar"> {{element.durationRemaining}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="planName">
-                                    <th mat-header-cell mat-sort-header="planName" *matHeaderCellDef class="br">
+                                    <th mat-header-cell mat-sort-header="planName" *matHeaderCellDef class="br textLeft">
                                         {{showType}}
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
@@ -332,7 +350,7 @@
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="policyNumber">
-                                    <th mat-header-cell mat-sort-header="policyNumber" *matHeaderCellDef class="br">
+                                    <th mat-header-cell mat-sort-header="policyNumber" *matHeaderCellDef class="br textLeft">
                                         Policy number
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
@@ -355,14 +373,16 @@
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                    <td mat-cell *matCellDef="let element" class="t-2">
+                                    <td mat-cell *matCellDef="let element" class="t-2 c-p">
                                         <div *ngIf="!isLoading">
-                                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                                                more_vert
-                                            </i>
+                                            <img class="c-p mat-menu-trigger" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
                                             <mat-menu #menu4="matMenu">
                                                 <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                                 <button (click)="open(element)" mat-menu-item>Detailed view</button>
+                                                <button mat-menu-item>Upload file
+                                                    <input (change)="fetchData('Life Insurance',$event,element)"
+                                                        class="uploadInput" id="file-4" multiple type="file">
+                                                </button>
                                                 <button mat-menu-item>Activity</button>
                                                 <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
                                             </mat-menu>

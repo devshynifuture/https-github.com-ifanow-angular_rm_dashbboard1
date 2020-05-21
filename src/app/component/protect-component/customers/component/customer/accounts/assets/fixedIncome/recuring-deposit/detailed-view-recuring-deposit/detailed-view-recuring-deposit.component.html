@@ -34,8 +34,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Monthly contribution
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{recuringDeposit.monthlyContribution? '₹':''}}<span appFormatNumber>{{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.interestRate)?recuringDeposit.interestRate+'%':'-'}}
+                        {{recuringDeposit.interestRate | number: '1.2-2'}}%
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -83,7 +83,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" >
-                        ₹<span appFormatNumber>{{(recuringDeposit.currentValue)?recuringDeposit.currentValue:'-'}}</span>
+                        {{recuringDeposit.currentValue? '₹':''}}<span appFormatNumber>{{(recuringDeposit.currentValue)?recuringDeposit.currentValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
