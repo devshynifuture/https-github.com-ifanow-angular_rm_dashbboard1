@@ -1174,7 +1174,7 @@ export class OrderHistoricalFileComponent implements OnInit {
             let yearDiffr = toDateValueObj.getFullYear() - fromDateValueObj.getFullYear();
             if (yearDiffr === 0) {
               let monthDiff = (toDateValueObj.getMonth() - fromDateValueObj.getMonth());
-              for (let index1 = 0; index1 < monthDiff; index1++) {
+              for (let index1 = 0; index1 <= monthDiff; index1++) {
                 if (index1 == 0) {
                   fromDateIter = fromDateValueObj;
                   if (monthDiff === 1) {
