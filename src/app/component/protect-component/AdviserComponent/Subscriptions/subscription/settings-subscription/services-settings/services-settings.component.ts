@@ -62,7 +62,6 @@ export class ServicesSettingsComponent implements OnInit {
   openFragment(singleService, data) {
     this.location.replaceState('/subscription-upper');
     (singleService == '') ? singleService = '' : singleService.flag = data;
-    console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'services',
       id: 1,
@@ -73,7 +72,6 @@ export class ServicesSettingsComponent implements OnInit {
       Name: 'service-upper-slider'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    console.log(fragmentData,"check");
     
     AuthService.setSubscriptionUpperSliderData(fragmentData)
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
@@ -107,7 +105,6 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   getServiceSettingSubResponse(data) {
-    console.log('service data', data);
     if(data != undefined){
       this.isLoading = false;
       this.feesDisplay = false

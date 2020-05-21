@@ -70,7 +70,6 @@ export class CreateSubscriptionComponent implements OnInit {
   inputData;
   @Input()
   set data(data) {
-    console.log(data, "data check anni");
     this.payeeSettingData = data
     this.totalSelectedPayeeShare = 0;
     this.getSubStartDetails(data);
@@ -119,12 +118,9 @@ export class CreateSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     // this.stepper.selectedIndex = 0;
-    console.log(AuthService.getClientData(), "123 AuthService.getUserInfo()");
-
     this.advisorName = AuthService.getUserInfo().fullName;
     // this.isFlagPayee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
-    console.log(this.feeCollectionMode, "fee mood");
   }
   getPayeeFlagData(data) {
     this.isFlagPayee = data
@@ -134,7 +130,6 @@ export class CreateSubscriptionComponent implements OnInit {
         this.getSubStartDetails(this.payeeSettingData);
       }, 1);
     }
-    console.log(data, "abc 77")
   }
 
 
@@ -150,8 +145,7 @@ export class CreateSubscriptionComponent implements OnInit {
       return;
     }
     if (this.stepper.selectedIndex == 2) {
-      let date = new Date(this.subscriptionDetails.controls.activationDate.value)
-      console.log(date, "sub DAte");
+      let date = new Date(this.subscriptionDetails.controls.activationDate.value);
       (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly";
       if (this.clientData.feeTypeId == 1) {
         if (this.clientData.billingNature == "2") {
@@ -159,15 +153,12 @@ export class CreateSubscriptionComponent implements OnInit {
         }
         else {
           if (this.clientData.billingMode == '1') {
-            console.log("start of period")
           }
           else {
             if (this.clientData.billingCycle == 1) {
-              console.log("1")
               date.setMonth(date.getMonth() + this.clientData.billEvery)
             }
             else {
-              console.log("2")
               date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
             }
           }
@@ -175,11 +166,9 @@ export class CreateSubscriptionComponent implements OnInit {
       }
       else {
         if (this.clientData.billingCycle == 1) {
-          console.log("1")
           date.setMonth(date.getMonth() + this.clientData.billEvery)
         }
         else {
-          console.log("2")
           date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
         }
       }
@@ -197,7 +186,6 @@ export class CreateSubscriptionComponent implements OnInit {
         this.stepper.selectedIndex = 3
       }
     }
-    console.log(this.subscriptionDetails);
   }
   getSharesInfo(data) {
     if (data) {
@@ -210,12 +198,10 @@ export class CreateSubscriptionComponent implements OnInit {
   }
   goBack() {
     this.stepper.previous();
-    console.log(this.stepper.selectedIndex, "check selectedIndex");
 
   }
 
   nextStep(data) {
-    console.log(data, "clientData 123");
     this.clientData = data;
     this.goForward();
   }
@@ -226,7 +212,6 @@ export class CreateSubscriptionComponent implements OnInit {
     // this.clientData = data.data;
     this.feeModeData = data;
     this.clientData = data;
-    console.log('client Data: ', this.clientData);
     if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
@@ -241,7 +226,6 @@ export class CreateSubscriptionComponent implements OnInit {
     } else {
       // this.feeModeData=data
       this.goForward();
-      console.log(this.feeStructureFormData, 'feeStructureData');
     }
   }
 
@@ -257,11 +241,9 @@ export class CreateSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           // this.getProfileBillerData()
           this.stepper.selectedIndex = 3
-          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
@@ -282,7 +264,6 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   selectPayee(data) {
-    console.log('selectPayee getSubStartDetailsResponse: ', data);
 
     this.selectedPayee = [];
     this.totalSelectedPayeeShare = 0;
@@ -306,7 +287,6 @@ export class CreateSubscriptionComponent implements OnInit {
 
 
   getSubStartDetailsResponse(data, feeModeData) {
-    console.log('getSubStartDetailsResponse: ', data, feeModeData);
     this.feeModeData = feeModeData;
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
@@ -322,10 +302,6 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   startSubscription() {
-    console.log('payee', this.selectedPayee);
-    console.log('biller', this.selectedBiller);
-    console.log('subscription', this.subscriptionDetails);
-    console.log('client', this.clientData);
     if (this.clientData.feeTypeId == 1) {
       const obj = {
         id: this.clientData.subId,
@@ -353,7 +329,6 @@ export class CreateSubscriptionComponent implements OnInit {
           ]
         }
       };
-      console.log(obj, 'start subscription');
       this.subService.startSubscription(obj).subscribe(
         data => this.startSubscriptionResponse(data)
       );
@@ -407,12 +382,10 @@ export class CreateSubscriptionComponent implements OnInit {
           ]
         }
       };
-      console.log(obj, 'start subscription');
       this.subService.startSubscription(obj).subscribe(
         data => { this.startSubscriptionResponse(data) },
         err => {
           this.barButtonOptions.active = false;
-          console.log('error on login: ', err);
         }
       );
     }
@@ -426,7 +399,6 @@ export class CreateSubscriptionComponent implements OnInit {
   startSubscriptionResponse(data) {
     this.barButtonOptions.active = false;
 
-    console.log(data);
     this.Close(true);
   }
 }

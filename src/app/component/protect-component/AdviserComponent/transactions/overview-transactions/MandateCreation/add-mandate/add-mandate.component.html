@@ -1,254 +1,245 @@
 <div class="popup-header-fix-60">
-  <div class="row bb-1">
-    <div class="col-md-8 p-0">
-      <h4 class="mb-0 wrapper-20"> Add mandate </h4>
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> Add mandate </h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="closeRightSlider(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4 text-right">
-      <div class="wrapper-12">
-        <i (click)="closeRightSlider(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="pt-90 mb-100 pb 90" [formGroup]="generalDetails">
-  <div *ngIf="showUploadSection == false && clientCodeDataShow == false">
-    <div class="row">
-      <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-20">Select client</h5>
-      </div>
-      <div class="col-md-5  form-group">
-        <mat-form-field appearance="standard" floatLabel="never">
-          <input #searchClient (valueChange1)='lisNominee($event)' [matAutocomplete]="auto1" aria-label="client"
-                 class="form-control pl-8" formControlName="ownerName" matInput
-                 placeholder="Start typing to see investor names">
-          <mat-autocomplete #auto1="matAutocomplete">
-            <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM | async" [value]="f.name">
-              <span>{{f.name}}</span>
-            </mat-option>
-          </mat-autocomplete>
-          <mat-error *ngIf="generalDetails.get('ownerName').errors?.required" class="f-12 pt-4">
-            This field is required
-          </mat-error>
-          <mat-error *ngIf="generalDetails.get('ownerName').errors?.invalid" class="f-12">
-            This family member does not exist
-          </mat-error>
-        </mat-form-field>
-      </div>
+    <div *ngIf="showUploadSection == false && clientCodeDataShow == false">
+        <div class="row">
+            <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                <h5 class="m-0 ">Select client</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #searchClient (valueChange1)='lisNominee($event)' [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" formControlName="ownerName" matInput placeholder="Start typing to see investor names">
+                    <mat-autocomplete #auto1="matAutocomplete">
+                        <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM | async" [value]="f.name">
+                            <span>{{f.name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="generalDetails.get('ownerName').errors?.required" class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-error *ngIf="generalDetails.get('ownerName').errors?.invalid" class="f-12">
+                        This family member does not exist
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-    </div>
-    <div class="row pt-32">
-      <div class="col-md-4 text-right pr-0">
-        <h5 class=" pt-8 m-0">Select IIN/UCC </h5>
-      </div>
-      <div class="col-md-5 form-group">
-        <mat-form-field>
-          <mat-select class="form-control" formControlName="holdingType">
-            <mat-option disabled value=''>Select IIN/UCC</mat-option>
-            <mat-option (click)="selectIINUCC(clientCode)" *ngFor="let clientCode of clientCodeData"
-                        [value]="clientCode.clientCode">
-              {{clientCode.clientCode}} </mat-option>
-          </mat-select>
-          <mat-error class="f-12">This field is required</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-1 p-0 ">
-        <mat-spinner *ngIf="isLoadingUcc==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
-      </div>
-    </div>
-    <div class="row pt-32">
-      <div class="col-md-4 text-right pr-0">
-        <h5 class=" pt-8 m-0">Select Bank</h5>
-      </div>
-      <div class="col-md-5 form-group">
-        <mat-form-field>
-          <mat-select class="form-control" formControlName="bank">
-            <mat-option disabled value=''>Select bank</mat-option>
-            <mat-option (click)="selectBank(bank)" *ngFor="let bank of bankDetails" [value]="bank.id">
-              {{bank.bankName}} </mat-option>
-          </mat-select>
-          <mat-error class="f-12">This field is required</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-1 p-0 ">
-        <mat-spinner *ngIf="isLoadingBank==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
-      </div>
-    </div>
-    <div class="row pt-32">
-      <div class="col-md-4 text-right pr-0">
-        <h5 class="pt-8 m-0">Select from date </h5>
-      </div>
-      <div class="col-md-3 form-group">
-        <mat-form-field class="ba-date">
-          <input (click)="picker.open()" [matDatepicker]="picker" [min]="currentDate" autocomplete="off"
-                 class="form-control b-0" formControlName="fromDate" matInput readonly value="dd/MM/yy">
-          <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row pt-32">
-      <div class="col-md-4 text-right pr-0">
-        <h5 class=" pt-8 m-0">Select to date </h5>
-      </div>
-      <div class="col-md-3">
-        <mat-form-field>
-          <mat-select (ngModelChange)="continuesTill($event)" class="form-control" formControlName="selectDateOption">
-            <mat-option disabled value=''>Select date option</mat-option>
-            <mat-option [value]="1">
-              Custom date
-            </mat-option>
-            <mat-option [value]="2">
-              Continue until canceled
-            </mat-option>
-          </mat-select>
-          <mat-error class="f-12">This field is required</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div *ngIf="customValue == 1" class="row pt-32">
-      <div class="col-md-4 text-right pr-0">
-        <h3 class="f-16 pt-20 m-0">Select from date</h3>
-      </div>
-      <div class="col-md-3 form-group">
-        <mat-form-field appearance="standard" class="ba-date" floatLabel="never">
-          <input (click)="picker1.open()" [matDatepicker]="picker1" autocomplete="off" class="form-control b-0"
-                 formControlName="toDate" matInput placeholder="Enter date" readonly>
-          <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-          <mat-error class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row pt-32">
-      <div class="col-md-4 text-right pr-0">
-        <h5 class="  pt-20 m-0">Enter mandate amount</h5>
-      </div>
-      <div class="col-md-5 form-group">
-        <mat-form-field appearance="standard" floatLabel="never">
-          <input #mandateAmount class="form-control br-0" formControlName="mandateAmount" matInput
-                 placeholder="Enter mandate amount" type="number">
-          <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.required" class="f-12 pt-4">
-            This field is required
-          </mat-error>
-          <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.min" class="f-12 pt-4">
-            Amount should be greater than 100
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="clientCodeDataShow == true" class="d-flex flex-column align-items-center">
-    <h4 class="text-center pt-12">No IIN/UCC found</h4>
-    <button (click)="openNewCustomerIIN()" class="btn-green text-white" mat-button>IIN/UCC CREATION</button>
-  </div>
-  <div *ngIf="showUploadSection == true">
-    <div class="row">
-      <div class="col-md-12">
-        <h3 class="f-16 mt-4 mb-10">Your mandate id is {{madateResponse.mandateId}}</h3>
-      </div>
-    </div>
-
-    <div class="row">
-      <div (click)="uploadMandateInput.click()" class="col-md-6 bl-1   fixed-top-right ">
-        <h3 class="f-16 mt-4 mb-10">Upload mandate form</h3>
-        <div class="dragDropCLass text-center">
-          <input #uploadMandateInput (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4"
-                 lang="pl-Pl"
-                 type="file"> Drag & drop file here <br> or <br> Browse
         </div>
-      </div>
-      <!--<div class="col-md-6 bl-1  fixed-top-right ">
+        <div class="row pt-32">
+            <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                <h5 class="   m-0">Select IIN/UCC </h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select class="form-control" formControlName="holdingType">
+                        <mat-option disabled value=''>Select IIN/UCC</mat-option>
+                        <mat-option (click)="selectIINUCC(clientCode)" *ngFor="let clientCode of clientCodeData" [value]="clientCode.clientCode">
+                            {{clientCode.clientCode}} </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">This field is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1 p-0 ">
+                <mat-spinner *ngIf="isLoadingUcc==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
+            </div>
+        </div>
+        <div class="row pt-32">
+            <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                <h5 class="   m-0">Select Bank</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select class="form-control" formControlName="bank">
+                        <mat-option disabled value=''>Select bank</mat-option>
+                        <mat-option (click)="selectBank(bank)" *ngFor="let bank of bankDetails" [value]="bank.id">
+                            {{bank.bankName}} </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">This field is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1 p-0 ">
+                <mat-spinner *ngIf="isLoadingBank==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
+            </div>
+        </div>
+        <div class="row pt-32">
+            <div class="col-md-4 text-right pr-0">
+                <h5 class="pt-10 m-0">Select from date </h5>
+            </div>
+            <div class="col-md-3 form-group">
+                <mat-form-field class="ba-date">
+                    <input (click)="picker.open()" [matDatepicker]="picker" [min]="currentDate" autocomplete="off" class="form-control b-0" formControlName="fromDate" matInput readonly value="dd/MM/yy">
+                    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-32">
+            <div class="col-md-4  d-flex align-items-center justify-content-end pr-0">
+                <h5 class="  m-0">Select to date </h5>
+            </div>
+            <div class="col-md-3 form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select (ngModelChange)="continuesTill($event)" class="form-control" formControlName="selectDateOption">
+                        <mat-option disabled value=''>Select date option</mat-option>
+                        <mat-option [value]="1">
+                            Custom date
+                        </mat-option>
+                        <mat-option [value]="2">
+                            Continue until canceled
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="customValue == 1" class="row pt-32">
+            <div class="col-md-4  text-right pr-0">
+                <h3 class="f-14 pt-10 m-0">Select from date</h3>
+            </div>
+            <div class="col-md-3 form-group">
+                <mat-form-field class="ba-date">
+                    <input (click)="picker1.open()" [matDatepicker]="picker1" autocomplete="off" class="form-control" formControlName="toDate" matInput placeholder="Enter date" readonly>
+                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-32">
+            <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                <h5 class="   m-0">Enter mandate amount</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #mandateAmount class="form-control br-0" formControlName="mandateAmount" matInput placeholder="Enter mandate amount" type="number">
+                    <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.required" class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-error *ngIf="generalDetails.get('mandateAmount').errors?.min" class="f-12 pt-4">
+                        Amount should be greater than 100
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="clientCodeDataShow == true" class="d-flex flex-column align-items-center">
+        <h4 class="text-center  ">No IIN/UCC found</h4>
+        <button (click)="openNewCustomerIIN()" class="btn-green text-white" mat-button>IIN/UCC CREATION</button>
+    </div>
+    <div *ngIf="showUploadSection == true">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="f-16 mt-4 mb-10">Your mandate id is {{madateResponse.mandateId}}</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div (click)="uploadMandateInput.click()" class="col-md-6 bl-1   fixed-top-right ">
+                <h3 class="f-16 mt-4 mb-10">Upload mandate form</h3>
+                <div class="dragDropCLass text-center">
+                    <input #uploadMandateInput (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl" type="file"> Drag & drop file here <br> or <br> Browse
+                </div>
+            </div>
+            <!--<div class="col-md-6 bl-1  fixed-top-right ">
         <h3 class="f-16 mt-4 mb-10">Upload cheque</h3>
         <div class="dragDropCLass">
           <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl"
                  type="file"> Drag & drop file here <br> or <br> Browse
         </div>
       </div>-->
+        </div>
     </div>
-  </div>
-  <div *ngIf="showMandateTable == true && showUploadSection ==false" class="row">
-    <div class="col-md-12">
-      <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-             class="mt-16 skeletonAnimation" id="table-low" mat-table matSort>
+    <div *ngIf="showMandateTable == true && showUploadSection ==false" class="row">
+        <div class="col-md-12">
+            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-16 skeletonAnimation" id="tbs" mat-table matSort>
 
-        <ng-container matColumnDef="position">
-          <th *matHeaderCellDef class="br" mat-header-cell> Investor name</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar">
-              {{isLoading ? '' : element.investorName}}
-            </div>
-          </td>
-        </ng-container>
+                <ng-container matColumnDef="position">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Investor name</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar">
+                            {{isLoading ? '' : element.investorName}}
+                        </div>
+                    </td>
+                </ng-container>
 
-        <ng-container matColumnDef="bankName">
-          <th *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar">
-              {{isLoading ? '' : element.bankName}}
-            </div>
-          </td>
-        </ng-container>
+                <ng-container matColumnDef="bankName">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar">
+                            {{isLoading ? '' : element.bankName}}
+                        </div>
+                    </td>
+                </ng-container>
 
-        <ng-container matColumnDef="accountNo">
-          <th *matHeaderCellDef class="br" mat-header-cell>Account no.</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.accountNo}}
+                <ng-container matColumnDef="accountNo">
+                    <th *matHeaderCellDef class="br" mat-header-cell>Account no.</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.accountNo}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="ifsc">
+                    <th *matHeaderCellDef class="br" mat-header-cell> IFSC code
+                    </th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.ifscCode}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="branchName">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Branch name
+                    </th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.branchName}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="accountType">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Account type</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.accountType}}</div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="hold">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Holding nature</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.holdNatureDescription}}</div>
+                    </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+            <div *ngIf="isLoading==false" class="d-flex flex-column align-items-center pt-44">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="pt-12">No data found</h4>
             </div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="ifsc">
-          <th *matHeaderCellDef class="br" mat-header-cell> IFSC code
-          </th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.ifscCode}}</div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="branchName">
-          <th *matHeaderCellDef class="br" mat-header-cell> Branch name
-          </th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.branchName}}</div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="accountType">
-          <th *matHeaderCellDef class="br" mat-header-cell> Account type</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.accountType}}</div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="hold">
-          <th *matHeaderCellDef class="br" mat-header-cell> Holding nature</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.holdNatureDescription}}</div>
-          </td>
-        </ng-container>
-        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-      </table>
-      <div *ngIf="isLoading==false" class="d-flex flex-column align-items-center pt-44">
-        <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="pt-12">No data found</h4>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <div class="bottom-fixed wrapper-12 pt-16">
-  <div class="row">
-    <div class="col-md-2">
-      <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+    <div class="row">
+        <div class="col-md-2">
+            <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-10 right text-right">
+            <!--      <h6>{{errorMsg}}</h6>-->
+            <!-- (click)="createMandate()" removed for prod build -->
+            <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button>
+        </div>
     </div>
-    <div class="col-md-10 right text-right">
-      <!--      <h6>{{errorMsg}}</h6>-->
-      <!-- (click)="createMandate()" removed for prod build -->
-      <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
-    </div>
-  </div>
 </div>

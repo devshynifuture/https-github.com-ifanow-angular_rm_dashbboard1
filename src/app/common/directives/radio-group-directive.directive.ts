@@ -11,7 +11,6 @@ export class RadioGroupDirectiveDirective {
 
   @Input()
   set appRadioGroupDirective(selected) {
-    console.log('RadioGroupDirectiveDirective _selected set : ', this._selected);
     this._selected = selected;
     if (this._selected) {
       this.removeClass('b-a');
@@ -22,10 +21,8 @@ export class RadioGroupDirectiveDirective {
       this.removeClass('text-primary');
       this.addClass('b-a');
     }
-    console.log('finalClassName : ', this.elementRef.nativeElement);
 
     // const finalClassName = this.elementRef.nativeElement.getAttribute('class');
-    // console.log('finalClassName : ', finalClassName);
     // this.elementRef.nativeElement.
   }
 

@@ -37,7 +37,6 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.tranService.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data),
       err => {
@@ -50,7 +49,6 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
 
   getFilterOptionDataRes(data) {
 
-    console.log(data);
     if (data) {
       this.credentialData = data;
       
@@ -69,7 +67,6 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     };
     this.tranService.getHiddenAmcFromAdvisorIdAmcWise(obj).subscribe(
       data => {
-        console.log(data);
         this.isLoading = false;
         this.getEmpanelledAmcDataRes(data);
         this.dataSource.data = data.amcMasterList;
@@ -88,16 +85,13 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     data.brokerList.forEach(element => {
       this.columns.push(element.brokerCode);
     });
-    console.log(this.columns);
   }
   addDeleteHiddenAmc(checkBoxValue, Amcdata, singleBrokerData) {
-    console.log(checkBoxValue, Amcdata, singleBrokerData);
     if (checkBoxValue.checked) {
       const obj = {
         id: singleBrokerData.tpHiddenAmcId
       };
       this.tranService.deleteHiddenAmc(obj).subscribe(
-        data => console.log(data),
         err => {
           singleBrokerData.selected = true;
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -111,7 +105,6 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
       };
       this.tranService.addHiddenAmc(obj).subscribe(
         data => {
-          console.log(data);
           singleBrokerData.tpHiddenAmcId = data;
         },
         err => {

@@ -53,7 +53,6 @@ export class CalendarComponent implements OnInit {
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
 
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), this.curruntDayIndex, this.currentMonth, this.month, this.year, this.currentYear, "test date");
 
   }
 
@@ -67,7 +66,6 @@ export class CalendarComponent implements OnInit {
 
         this.eventData = data;
 
-        console.log(this.eventData, data, "event data");
         this.formatedEvent = [];
         for (let e of this.eventData) {
           e["day"] = this.formateDate(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
@@ -78,7 +76,6 @@ export class CalendarComponent implements OnInit {
 
           this.formatedEvent.push(e);
         }
-        console.log(this.formatedEvent, "this.eventData 12345");
       }
     });
   }
@@ -104,9 +101,7 @@ export class CalendarComponent implements OnInit {
     this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
     this.nextMonthDays = this.getDaysCount(this.month, this.year, "nextMonthDays");
-    // console.log(this.numbersOfDays, this.lastMonthDays, this.nextMonthDays, "this.numbersOfDays");
     let firstDay = (new Date(this.year, this.month)).getDay();
-    // console.log(firstDay, "firstDay", this.month);
 
 
     for (let i = 1; i <= this.numbersOfDays; i++) {
@@ -131,7 +126,6 @@ export class CalendarComponent implements OnInit {
 
 
 
-    console.log(this.daysArr, this.addLastMonthDays, "daysArr 123");
   }
 
   persentMonth() {
@@ -147,14 +141,12 @@ export class CalendarComponent implements OnInit {
     //   this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
     // }
     this.updatecalendar();
-    console.log(this.curruntDayIndex, this.currentMonth, this.month, this.year, this.currentYear, "test date");
   }
 
   lastMonth() {
     this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
     this.daysArr = [];
     this.updatecalendar();
-    console.log(this.curruntDayIndex, this.currentMonth, this.month, this.year, this.currentYear, "test date");
   }
 
   formateDate(date) {
@@ -180,7 +172,6 @@ export class CalendarComponent implements OnInit {
     var amPm = date.getHours() > 12 ? "pm" : "am";
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
-    console.log(date, hh, mm, "time check");
     return hh + ":" + mm + amPm + " ";
 
     // var now = date;
@@ -205,7 +196,6 @@ export class CalendarComponent implements OnInit {
       year += 1;
     }
     let eventDate = month + "/" + day + "/" + year;
-    console.log(eventDate, "eventDate 123");
 
     event = {
       "eventId": "",
@@ -271,7 +261,6 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, "result 123");
       if (result != undefined) {
         this.dialogData =
         {
@@ -300,7 +289,6 @@ export class CalendarComponent implements OnInit {
         this.endTime = result.endTime;
         this.dialogData.start.dateTime = this.googleDate(result.startDateTime._d == undefined ? new Date(result.startDateTime) : result.startDateTime._d, "start");
         this.dialogData.end.dateTime = this.googleDate(result.endDateTime._d == undefined ? new Date(result.endDateTime) : result.endDateTime._d, "end");
-        console.log(this.dialogData, 'The dialog was closed');
 
         if (this.dialogData.eventId != null) {
           this.calenderService.updateEvent(this.dialogData).subscribe((data) => {
@@ -317,7 +305,6 @@ export class CalendarComponent implements OnInit {
   }
 
   googleDate(date, timeMood) {
-    console.log(date, "date 123");
 
     this.current_day = new Date();
     var current_date = date.getDate();
@@ -340,7 +327,6 @@ export class CalendarComponent implements OnInit {
     current_month = current_month < 10 ? '0' + current_month : current_month;
 
     current_secs = current_secs < 10 ? '0' + current_secs : current_secs;
-    console.log(current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs, "hi date");
 
     // Current datetime
     // String such as 2016-07-16T19:20:30
@@ -384,7 +370,6 @@ export class EventDialog implements OnInit {
     private calenderService: calendarService,
     private _bottomSheet: MatBottomSheet,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    console.log(data, "this.eventData 111");
     this.eventData = data;
   }
 
@@ -424,7 +409,6 @@ export class EventDialog implements OnInit {
     this.eventForm.get("description").setValue(this.eventData.description);
     this.eventForm.get("startDateTime").setValue(this.eventData.start.dateTime);
 
-    console.log(this.eventForm.get("attendee").value == "", "see value");
     if (this.eventData.attendees != undefined) {
       for (let att of this.eventData.attendees) {
         this.attendeesArr.push({ "email": att.email });
@@ -439,7 +423,6 @@ export class EventDialog implements OnInit {
   }
 
   descriptionData(data) {
-    console.log("description 123");
 
     this.eventForm.get("description").setValue(data);
   }
@@ -484,9 +467,7 @@ export class EventDialog implements OnInit {
 
   setTime(mood) {
     if (mood == "start" && this.eventForm.value.endTime < this.eventForm.value.startTime) {
-      console.log("hi");
 
-      console.log(this.eventForm.value.startDateTime._d, "this.eventForm.value.startDateTime_d 123");
 
       this.eventForm.get("endTime").setValue(this.timeArr[this.timeArr.indexOf(this.eventForm.value.startTime) + 2]);
       // this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
@@ -496,9 +477,6 @@ export class EventDialog implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
 
-    console.log(this.eventForm.value, "check from value");
-    console.log(this.eventDescription, "check from value2");
-    console.log(this.eventData.description, "check from value3");
 
   }
 
@@ -532,7 +510,6 @@ export class EventDialog implements OnInit {
   parentId: any;
   // upload file
   getFileDetails(e) {
-    console.log(e.target.files, "e.target.files 123");
 
     for (let i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
@@ -542,7 +519,6 @@ export class EventDialog implements OnInit {
       this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
       // this.uploadFile(this.parentId, this.filenm);
     });
-    console.log(this.myFiles, "e.target.files 123 myFiles");
     // const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
     //   data: this.myFiles,
     // });

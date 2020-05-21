@@ -55,8 +55,6 @@ export class DuplicateDataComponent implements OnInit {
     let tableData = [];
     if (this.mutualFundTransactions) {
       tableData = this.mutualFundTransactions;
-
-      console.log("this is what i am sending", this.mutualFundTransactions);
     }
     const fragmentData = {
       flag: value,
@@ -67,10 +65,8 @@ export class DuplicateDataComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
             this.dataSource.data = ELEMENT_DATA;
             this.duplicateDataList = [];
 
@@ -91,7 +87,6 @@ export class DuplicateDataComponent implements OnInit {
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         if (res) {
-          console.log("this is duplicate data values:::::::", res);
           res.forEach(item => {
             this.brokerId = item.brokerId;
             this.mutualFundTransactions = item.mutualFundTransactions;
@@ -107,7 +102,6 @@ export class DuplicateDataComponent implements OnInit {
               date: item.aumDate,
             })
           });
-          console.log(this.duplicateDataList);
           this.dataSource.data = this.duplicateDataList;
           this.isLoading = false;
         } else {

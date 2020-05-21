@@ -32,7 +32,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
     this.getDashboardResponse();
     // this.getDashboardData(this.dataObj);
     this.showLoader = true;
-    console.log(this.router.url);
   }
   getDashboardResponse() {
 
@@ -55,7 +54,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
       }
     }
     this.dataObj = data;
-    console.log(this.dataObj, "dashData 123");
     
     this.showLoader = false;
 
@@ -63,7 +61,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
 
   getSubStagesRecordResponse(data) {
     this.showLoader = false;
-    console.log(data);
   }
 
   goToSelectivePage() {
@@ -91,7 +88,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
         this.router.navigate(['admin', 'subscription', 'documents']);
         break;
       default:
-        console.log("default selection")
     }
   }
   close(){

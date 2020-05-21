@@ -75,7 +75,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     this.interval = setInterval(() => {
       if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
-        console.log("auto saved!!");
         // call update or create draft api
         const requestJson = {
           toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
@@ -84,21 +83,17 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
         };
         this.emailService.createUpdateDraft(requestJson, (this.idOfMessage !== null ? this.idOfMessage : null)).subscribe(res => {
-          console.log(res);
         });
-        console.log("this values are saved::::::::::::", this.emailForm.value);
         this.prevStateOfForm = this.emailFormValueChange;
       }
     }, 4000);
   }
 
   messageDetailApi(id) {
-    console.log(" mnessage idf::::::::::  ", id);
     this.emailService.gmailMessageDetail(id).subscribe(res => {
 
       // based on gmail api explorer response
 
-      console.log("this is something i need::::::::::", res);
       const { payload: parts } = res;
       if (parts) {
         parts.forEach(part => {
@@ -174,7 +169,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   createEmailForm() {
-    // console.log("this is data sent from draft list ->>>>  ", this.data);
     this.emailForm = this.fb.group({
       sender: [, Validators.email],
       receiver: [[], Validators.email],
@@ -282,7 +276,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   //     toEmail: [{ emailId: this._inputData.clientData.userEmailId, sendType: 'to' }],
   //     documentList: this._inputData.documentList
   //   };
-  //   console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   // }
 
   add(event: MatChipInputEvent, whichArray): void {
@@ -331,7 +324,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     }
   }
   // sendEmail() {
-  //   console.log(this.emailForm);
   // }
 
   remove(item: string, whichArray): void {
@@ -363,11 +355,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   downloadAttachment(attachment) {
-    console.log(attachment);
   }
 
   getAttachmentDetails(data) {
-    console.log("hello i have some data ::::::::::::::", data);
 
     if (data !== null) {
       // const { dataObj: { attachmentFiles } } = data;
@@ -388,8 +378,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         messageId: data.dataObj.idsOfMessages[0],
         userId: AuthService.getUserInfo().advisorId
       }
-      console.log("this are parameters that is passed :::::", obj)
-      this.emailService.getAttachmentFiles(obj).subscribe(res => console.log("attachment grabbed::::::::::::", res));
+      this.emailService.getAttachmentFiles(obj).subscribe(res => {});
     })
   }
 
@@ -400,11 +389,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
   closeWithDraftCreateOrUpdate(): void {
     clearInterval(this.interval);
-    console.log("cleared");
     if ((!this.data && this.data === null) && this.didFormChanged) {
       // call create api from compose
 
-      console.log(this.emailForm);
       const requestJson = {
         toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
         subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
@@ -413,12 +400,10 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       };
 
       this.emailService.createUpdateDraft(requestJson, null).subscribe(res => {
-        console.log(res);
       })
 
     } else if ((this.data && this.data !== null) && this.didFormChanged) {
       // call update api
-      console.log(this.emailForm);
       const requestJson = {
         toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
         subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
@@ -426,13 +411,10 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
       };
       this.emailService.createUpdateDraft(requestJson, this.idOfMessage).subscribe(res => {
-        console.log(res);
       })
-      console.log("call update api from detail view");
 
     } else if ((this.data && this.data !== null) && !this.didFormChanged) {
       // close the dialog
-      console.log("close the dialog");
     }
 
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
@@ -444,7 +426,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   // }
 
   // sendMail(): void {
-  //   console.log('send mail');
   //   this.handleCloseMail();
   // }
 
@@ -463,17 +444,14 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       fileData
     };
 
-    console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
     this.emailService.createUpdateDraft(requestJson, null)
       .subscribe((responseJson) => {
-        console.log(responseJson);
       }, (error) => {
         console.error(error);
       });
   }
 
   getFileDetails(e) {
-    console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
     const singleFile = e.target.files[0];
 
     EmailUtilService.getBase64FromFile(singleFile, (successData) => {
@@ -501,7 +479,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     });
 
     // this.emailAttachments = fileData;
-    // console.log(this.emailAttachments);
   }
 
   onSendEmail() {
@@ -518,7 +495,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
 
     this.emailService.sendEmail(body).subscribe(res => {
-      console.log(res);
       this.close();
     });
 

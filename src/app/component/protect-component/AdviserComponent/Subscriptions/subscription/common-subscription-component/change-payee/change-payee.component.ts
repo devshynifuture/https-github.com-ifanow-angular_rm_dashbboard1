@@ -40,7 +40,6 @@ export class ChangePayeeComponent implements OnInit {
   //   if (data != undefined) {
   //     this.getPayeeData(data);
   //   }
-  //   console.log('input payeeData:1', data);
 
   // }
   clientData:any;
@@ -66,13 +65,11 @@ export class ChangePayeeComponent implements OnInit {
         this.clientData = payeeData;
       }
     }
-    console.log('input payeeData:2', payeeData);
   }
 
   restrictAfter100(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = "100";
-      // console.log(typeof (event.target.value), event.target.value);
     }
   }
 
@@ -103,10 +100,8 @@ export class ChangePayeeComponent implements OnInit {
   ngOnInit() {
     if(this.clientData != undefined){
      this.getPayeeData(this.clientData);
-     console.log("hi clientData");
      
     }
-    // console.log('change payee upperData', this.upperData);
   }
 
   Close(flag) {
@@ -121,7 +116,6 @@ export class ChangePayeeComponent implements OnInit {
     };
     this.subService.getPayeerProfile(this.dataObj).subscribe(
       responseData => {
-        console.log('getPayeeProfile responseData:', responseData);
         if (responseData) {
         } else {
           this.noDataMessage = 'No payee profile found.';
@@ -129,13 +123,11 @@ export class ChangePayeeComponent implements OnInit {
         this.getPayeeProfileRes(responseData);
       }
       , error => {
-        console.log('getPayeerProfile error: ', error);
       });
 
   }
 
   getPayeeProfileRes(data) {
-    console.log('getPayeeProfileRes data', data);
     this.isLoading = false;
     this.payeeDataRes = data;
   }
@@ -149,8 +141,6 @@ export class ChangePayeeComponent implements OnInit {
   // }
 
   onInputChange(event: MatSliderChange, singlePlan) {
-    console.log('This is emitted as the thumb slides');
-    console.log(event.value);
     this.dataMatSlider = event.value;
   }
 
@@ -171,7 +161,6 @@ export class ChangePayeeComponent implements OnInit {
           obj.push(obj1);
         }
       });
-      console.log('obj ====', obj);
       this.subService.changePayeeSetting(obj).subscribe(
         data =>{
           this.barButtonOptions.active = false;
@@ -179,14 +168,12 @@ export class ChangePayeeComponent implements OnInit {
         },
         err =>{
           this.barButtonOptions.active = false;
-          console.log(err, "error changePayeeSettingRes");
         }
       );
     }
   }
 
   changePayeeSettingRes(data) {
-    console.log('changePayeeSettingRes', data);
     if (data == 1) {
       this.eventService.openSnackBar('Payee updated successfully', 'OK');
       this.Close(true);
@@ -194,7 +181,6 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   selectedPayee(data, singlePlan) {
-    console.log(data);
     if (this.clickedOnMatSlider) {
       this.clickedOnMatSlider = false;
       return;
@@ -204,7 +190,6 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   matSliderOnChange(data, singlePlan, value) {
-    console.log('matSliderOnChange', data, value);
     this.clickedOnMatSlider = true;
     if (data == 1) {
       singlePlan.selected = 0;
@@ -226,10 +211,8 @@ export class ChangePayeeComponent implements OnInit {
     // };
     // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
     //   sideBarData => {
-    //     console.log('this is sidebardata in subs subs : ', sideBarData);
     //     // this.getSettingProfileData();
     //     if (UtilService.isDialogClose(sideBarData)) {
-    //       console.log('this is sidebardata in subs subs 2: ');
     //       rightSideDataSub.unsubscribe();
     //     }
     //   }
@@ -243,7 +226,6 @@ export class ChangePayeeComponent implements OnInit {
     data.forEach(singlePayee => {
       if (singlePayee.selected == 1) {
         const tempValue = this.totalValue + singlePayee.share;
-        console.log('calculateMaxValue tempValue: ', tempValue);
         if (tempValue >= 100) {
           singlePayee.share = 100 - this.totalValue;
           this.totalValue = 100;

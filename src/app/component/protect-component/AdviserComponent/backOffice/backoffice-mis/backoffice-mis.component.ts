@@ -10,7 +10,6 @@ export class BackofficeMisComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("backoffice ");
   }
 
   tabClick(event) {

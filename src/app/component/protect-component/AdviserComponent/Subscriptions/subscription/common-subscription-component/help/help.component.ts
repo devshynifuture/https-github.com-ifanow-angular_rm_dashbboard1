@@ -20,7 +20,6 @@ export class HelpComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.inputData);
   }
   Close(value) {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });

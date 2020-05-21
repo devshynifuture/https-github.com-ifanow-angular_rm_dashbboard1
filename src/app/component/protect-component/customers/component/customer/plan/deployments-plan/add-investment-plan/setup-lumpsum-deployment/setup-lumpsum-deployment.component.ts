@@ -115,7 +115,7 @@ export class SetupLumpsumDeploymentComponent implements OnInit {
                 element.name = "EQUITY";
                 break;
               default:
-                console.log("Test")
+                break;
             }
           });
         });

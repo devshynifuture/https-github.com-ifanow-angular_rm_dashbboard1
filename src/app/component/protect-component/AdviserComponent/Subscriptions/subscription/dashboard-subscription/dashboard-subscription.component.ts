@@ -74,7 +74,6 @@ export class DashboardSubscriptionComponent implements OnInit {
     private activatedRoute: ActivatedRoute, private utilservice: UtilService) {
     const date = new Date();
     const hourOfDay = date.getHours();
-    console.log('DashboardSubscriptionComponent constructor hourOfDay : ', hourOfDay);
     if (hourOfDay < 12) {
       this.greeting = 'Good morning';
     } else if (hourOfDay < 16) {
@@ -98,7 +97,6 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   getIndex(index) {
-    console.log(index)
     this.subIndex.emit(index)
     // this.selected=index
   }
@@ -161,9 +159,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -189,9 +185,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -222,7 +216,6 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.totalSaleReceived = data;
     this.totalSales = data != undefined ? data.totalSales : '0';
     this.feeRecieved = data != undefined ? data.feeRecieved : '0';
-    console.log('getTotalRecivedRes', data, this.totalSales);
   }
 
   showSubscriptionSteps() {
@@ -232,7 +225,6 @@ export class DashboardSubscriptionComponent implements OnInit {
 
 
   changeParentsTab(selectedTab) {
-    console.log("this is selected Tab:::::::::::::", selectedTab);
     this.eventService.tabData(selectedTab);
     if (selectedTab === 3) {
       this.router.navigate(['../subscriptions'], { relativeTo: this.activatedRoute });
@@ -278,7 +270,6 @@ export class DashboardSubscriptionComponent implements OnInit {
          this.getSubSummaryRes(data);
        }
      );*/
-    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
 
     const obj = {
       advisorId: this.advisorId,
@@ -290,9 +281,7 @@ export class DashboardSubscriptionComponent implements OnInit {
       toDate: null
 
     };
-    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
     this.dataSource = [{}, {}, {}];
-    console.log('filterSubscription reqObj ', obj);
     this.isLoadingSubSummary = true;
     this.subService.filterSubscription(obj).subscribe(
       data => this.getSubSummaryRes(data), error => {
@@ -305,7 +294,6 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoadingSubSummary = false;
-    console.log('Summary Data', data);
     // data.forEach(element => {
     //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
     //   element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
@@ -333,7 +321,6 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   docSentSignedCountResponse(data) {
-    console.log('SentSignedCountResponse', data);
     if (data) {
       this.isLoadingDocsSent = false;
       this.dataSourceSingCount = data;
@@ -356,7 +343,6 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   clientWithSubscriptionRes(data) {
-    console.log('clientWithSubscriptionRes', data);
     if (data)
       this.dataSourceClientWithSub = data;
     else
@@ -379,7 +365,6 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   invoiceToBeReviewedRes(data) {
-    console.log('invoiceToBeReviewedRes', data);
     this.dataSourceInvoice = data;
   }
 

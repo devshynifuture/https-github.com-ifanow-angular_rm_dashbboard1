@@ -307,17 +307,6 @@ export class EmailServiceService {
 
   createUpdateDraft(body, id) {
     const userInfo = AuthService.getUserInfo();
-    // console.log(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, " \n http params \n", {
-    //   emailId: userInfo.emailId,
-    //   userId: userInfo.advisorId,
-    //   ...body
-    // });
-
-    // console.log("draft obj ->>>>>>>>>>", {
-    //   email: userInfo.emailId,
-    //   userId: userInfo.advisorId,
-    //   ...body
-    // });
 
     if (id) {
       return this.http.post(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
@@ -326,11 +315,6 @@ export class EmailServiceService {
         ...body
       })
     } else if (id === null) {
-      console.log("create draft api::: response", {
-        email: userInfo.emailId,
-        userId: userInfo.advisorId,
-        ...body
-      })
       return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
         email: userInfo.emailId,
         userId: userInfo.advisorId,
@@ -350,9 +334,7 @@ export class EmailServiceService {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
         }
@@ -370,9 +352,7 @@ export class EmailServiceService {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }

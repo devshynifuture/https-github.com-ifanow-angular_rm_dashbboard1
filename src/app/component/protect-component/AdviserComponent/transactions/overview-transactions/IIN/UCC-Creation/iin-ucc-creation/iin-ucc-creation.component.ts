@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -19,7 +19,8 @@ import {Observable} from 'rxjs';
   templateUrl: './iin-ucc-creation.component.html',
   styleUrls: ['./iin-ucc-creation.component.scss']
 })
-export class IinUccCreationComponent implements OnInit {
+export class IinUccCreationComponent implements OnInit, AfterViewInit {
+
   stateCtrl = new FormControl('', [Validators.required]);
   filteredStates: any;
 
@@ -50,11 +51,17 @@ export class IinUccCreationComponent implements OnInit {
 
 
     this.processTransaction.getCountryCodeList().subscribe((responseData) => {
-      console.log('country code list : ', responseData);
     }, error => {
       console.error('country code error : ', error);
 
     });
+  }
+
+  ngAfterViewInit(): void {
+    // TODO for testing only
+    // this.generalDetails.controls.ownerName.setValue('Gaurav');
+    // this.generalDetails.controlss.holdingType.setValue('SI');
+    // this.generalDetails.controlss.taxStatus.setValue('01');
   }
 
   closeRightSlider(flag) {
@@ -127,7 +134,6 @@ export class IinUccCreationComponent implements OnInit {
   }
 
   getClientListRes(data) {
-    console.log('client data', data);
     this.clientData = data[0];
   }
 
@@ -143,7 +149,6 @@ export class IinUccCreationComponent implements OnInit {
   }
 
   getIINUCCRegistrationRes(data) {
-    console.log('INN UCC CREATION DATA GET', data);
   }
 
   // getClientAndFamilyMember(data) {
@@ -176,7 +181,6 @@ export class IinUccCreationComponent implements OnInit {
   //   this.isLoading = false
 
   //   this.nomineesListFM = data
-  //   console.log('getClientAndFmListRes data', this.nomineesListFM)
   // }
   lisNominee(value) {
     // this.showSpinnerOwner = false
@@ -184,7 +188,6 @@ export class IinUccCreationComponent implements OnInit {
       // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
-    console.log(value);
   }
 
   ownerList(value) {
@@ -199,7 +202,6 @@ export class IinUccCreationComponent implements OnInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
     this.clientData = value;
-    console.log(this.enumService.getTaxStatus());
     /* if (value.guardianId && value.guardianId > 0) {
        this.taxStatusList = this.enumService.getMinorTaxList();
      } else if (value.userType == 2 && value.clientType == 3) {

@@ -33,7 +33,6 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       this.getdataForm(data);
@@ -100,7 +99,6 @@ export class AddArnRiaCredentialsComponent implements OnInit {
     this.setEuinValidator(data.accountType);
     this.setBrokerCode(data.brokerCode);
     this.addCredential.controls.accType.valueChanges.subscribe((newValue) => {
-      console.log('accTypeNew Value : ', newValue);
       this.setEuinValidator(newValue);
     });
     if (data.defaultLogin == 1) {

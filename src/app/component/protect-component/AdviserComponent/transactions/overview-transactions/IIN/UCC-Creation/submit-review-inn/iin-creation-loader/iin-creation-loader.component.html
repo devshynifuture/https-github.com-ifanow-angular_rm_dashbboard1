@@ -1,0 +1,15 @@
+<div>
+  <div *ngIf="!showNextMessage">
+    <p>Sending request to {{platformName}} for account creation</p>
+    <p *ngIf="isLoading">Loading</p>
+    <div *ngIf="!isLoading">
+      <p>An email with a link has been sent to {{emailId}}</p>
+      <p>Please click on the link, generate OTP and send it to {{platformName}} to proceed </p>
+      <p>Once done, come back here and click on proceed </p>
+      <button (click)="showMessageAfterProceed()"> Proceed</button>
+    </div>
+  </div>
+  <div *ngIf="showNextMessage">
+    <p>Success! Your account has been created successfully</p>
+  </div>
+</div>

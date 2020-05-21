@@ -123,17 +123,14 @@ export class NewTeamMemberComponent implements OnInit {
   }
   onChange(event) {
     this.imageLoader = true;
-    console.log('Biller profile logo Onchange event : ', event);
     if (event && event.target && event.target.files) {
       const fileList = event.target.files;
       if (fileList.length == 0) {
-        console.log('Biller profile logo Onchange fileList : ', fileList);
 
         return;
       }
       this.imageData = fileList[0];
 
-      console.log(this.imageData);
       this.teamMemberFG.controls.url.reset();
       this.logoImg = this.imageData;
       // this.logoImg=
@@ -149,9 +146,7 @@ export class NewTeamMemberComponent implements OnInit {
             if (status == 200) {
               this.imageLoader = false;
               const responseObject = JSON.parse(response);
-              console.log('onChange file upload success response url : ', responseObject.url);
               this.logoImg = responseObject.url;
-              console.log('uploadImage success this.imageData : ', this.imageData);
               // this.logUrl.controls.url.setValue(this.imageData);
               this.uploadedImage = JSON.stringify(responseObject);
               this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');

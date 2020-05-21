@@ -56,7 +56,6 @@ export class EmailListingComponent implements OnInit {
 
   ngOnInit() {
     let location;
-    console.log(this.router);
 
     if (this.router.url === '/') {
       location = 'inbox';
@@ -111,7 +110,6 @@ export class EmailListingComponent implements OnInit {
     }
 
     this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
-      console.log('paginator response=>>>>', response);
       if (response === undefined) {
         this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
         localStorage.removeItem('successStoringToken');
@@ -128,8 +126,6 @@ export class EmailListingComponent implements OnInit {
 
   // threads section
   deleteThreadsForeverFromTrash() {
-    console.log("this is selected threads array");
-    console.log(this.selectedThreadsArray);
     const ids: string[] = [];
     if (this.selectedThreadsArray.length !== 0) {
       this.selectedThreadsArray.forEach((selectedThread) => {
@@ -146,14 +142,12 @@ export class EmailListingComponent implements OnInit {
         positiveMethod: () => {
           const deleteFromTrashSubscription = this.emailService.deleteThreadsFromTrashForever(ids)
             .subscribe(response => {
-              console.log(response);
               deleteFromTrashSubscription.unsubscribe();
               this.ngOnInit();
             }, error => console.error(error));
 
         },
         negativeMethod: () => {
-          console.log('aborted');
         }
 
       }
@@ -174,10 +168,8 @@ export class EmailListingComponent implements OnInit {
         // btnYes: '',
         btnNo: 'CANCEL',
         positiveMethod: () => {
-          console.log('aborted')
         },
         negativeMethod: () => {
-          console.log('aborted');
         }
 
       }
@@ -206,7 +198,6 @@ export class EmailListingComponent implements OnInit {
 
   // move single thread to trash
   moveThreadToTrash(element) {
-    console.log('this needs to be deleted ->>>', element);
     const { idsOfThread: { id } } = element;
     const ids: string[] = [];
     ids.push(id);
@@ -217,16 +208,12 @@ export class EmailListingComponent implements OnInit {
 
   // move threads from trash
   moveThreadsFromTrash() {
-    console.log("this is selected threads array");
-    console.log(this.selectedThreadsArray);
     const ids: string[] = [];
     this.selectedThreadsArray.forEach((selectedThread) => {
       const { idsOfThread: { id } } = selectedThread;
       ids.push(id);
     });
-    console.log(ids);
     const untrashSubscription = this.emailService.moveThreadsFromTrashToList(ids).subscribe(response => {
-      console.log(response);
       untrashSubscription.unsubscribe();
       this.ngOnInit();
     }, error => console.error(error));
@@ -235,7 +222,6 @@ export class EmailListingComponent implements OnInit {
   threadsToTrashService(ids) {
     const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
       .subscribe(response => {
-        console.log(response);
         threadsToTrashSubscription.unsubscribe();
         this.ngOnInit();
       });
@@ -250,18 +236,14 @@ export class EmailListingComponent implements OnInit {
     }
     this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
-        console.log(responseData);
         if (responseData.nextPageToken) {
           this.nextPageToken = responseData.nextPageToken;
         }
         this.resultSizeEstimate = responseData.resultSizeEstimate;
         let tempArray1 = [];
 
-        // console.log('this is gmails inbox data ->');
-        // console.log('responseData from service ->>', responseData);
         // const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
 
-        // console.log('parsed Data from parseBase64AndDecodeGoogleUrlEncoding->> ', responseData);
         // const { gmailThreads, nextPageToken } = parsedResponseData;
         const { gmailThreads, nextPageToken } = responseData;
 
@@ -321,19 +303,14 @@ export class EmailListingComponent implements OnInit {
             date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`
           }
 
-          // console.log(Obj1);
 
           // tempArray.push(Obj);
           tempArray1.push(Obj1);
-          // console.log('headers subbect and from');
-          // console.log(extractSubjectFromHeaders);
         });
 
 
         this.messageListArray = tempArray1;
         // this.messageDetailArray = tempArray;
-        // console.log('this is decoded object data ->>>>');
-        // console.log(this.messageDetailArray);
         this.isLoading = false;
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
@@ -373,7 +350,6 @@ export class EmailListingComponent implements OnInit {
   }
 
   // getFileDetails(e): void {
-  //   console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
   //   const singleFile = e.target.files[0];
 
   //   const fileData = [];
@@ -400,12 +376,8 @@ export class EmailListingComponent implements OnInit {
   //     fileData
   //   };
 
-  //   // console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
   //   const createUpdateDraftSubscription = this.emailService.createUpdateDraft(requestJson, null)
   //     .subscribe((responseJson) => {
-  //       // console.log(requestJson);
-  //       console.log("+++++++++++++++");
-  //       console.log(responseJson);
   //       createUpdateDraftSubscription.unsubscribe();
   //     }, (error) => {
   //       console.error(error);
@@ -446,7 +418,6 @@ export class EmailListingComponent implements OnInit {
   // routing to view page
   gotoEmailView(dataObj: Object): void {
 
-    console.log("this is dataObject  =>>>>>>>>>>>>>", dataObj);
 
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
@@ -457,12 +428,9 @@ export class EmailListingComponent implements OnInit {
     if (this.selectedThreadsArray.includes(row)) {
       let indexOf = this.selectedThreadsArray.indexOf(row);
       let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
-      console.log('removed row -> ', removedRow);
     } else {
       this.selectedThreadsArray.push(row);
-      console.log('added row -> ', row);
     }
-    console.log(this.selectedThreadsArray);
   }
 
   multipleMoveToTrash(): void {

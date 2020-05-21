@@ -96,7 +96,6 @@ export class PayeeSettingsComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log(data, "check ani");
     if (!this.inputData.flag) {
       delete data.id;
     }
@@ -126,10 +125,8 @@ export class PayeeSettingsComponent implements OnInit {
     let obj = {
       zipCode: value
     }
-    console.log(value, "check value");
     if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data)
         this.PinData(data)
       })
     }
@@ -158,7 +155,6 @@ export class PayeeSettingsComponent implements OnInit {
 
 
   gstTreatmentRemove(value) {
-    console.log('gstTreatmentRemove 123', value)
     if (value == 4) {
       this.getFormControl().gstIn.setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
       this.showGstin = true;
@@ -172,7 +168,6 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data)
     if (data != undefined) {
       this.family = data.familyMembersList
     }
@@ -187,7 +182,6 @@ export class PayeeSettingsComponent implements OnInit {
   getClientPayeeSettings(data) {
     (data == 'Add') ? data = {} : data
     this.clientData = data.clientData ? data.clientData : data;
-    console.log('payee data', data);
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
@@ -232,7 +226,6 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   changePayeeSettingData(data) {
-    console.log('data', data);
   }
 
   Close(data) {
@@ -250,7 +243,6 @@ export class PayeeSettingsComponent implements OnInit {
     // this.inputData
     if (this.payeeSettingsForm.invalid) {
       for (let element in this.payeeSettingsForm.controls) {
-        console.log(element)
         if (this.payeeSettingsForm.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.payeeSettingsForm.controls[element].markAsTouched();
@@ -288,7 +280,6 @@ export class PayeeSettingsComponent implements OnInit {
             this.editSettingResData(data)
           },
           err => {
-            console.log(err, "editPayeeSettings error");
           }
         );
 
@@ -318,7 +309,6 @@ export class PayeeSettingsComponent implements OnInit {
             this.addClientBillerProfileRes(data);
           },
           err => {
-            console.log(err, "addClientBillerProfileRes error");
           }
         );
 
@@ -341,7 +331,6 @@ export class PayeeSettingsComponent implements OnInit {
     //   this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     // } else {
     if (this.inputData.flag) {
-      console.log('addClientBillerProfileRes', data);
       this.updatedData = data;
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Client profile added successfully', 'OK');

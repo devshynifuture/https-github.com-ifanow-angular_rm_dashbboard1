@@ -13,15 +13,5 @@ export class CustomFormInputComponent implements OnInit {
 
   constructor(private fb: FormBuilder) { }
   ngOnInit() {
-    console.log(JSON.stringify(this.inputValue) + ' awdqwdq');
   }
-  // getFormControl() {
-  //   return this.planDataForm.controls;
-  // }
-  // getSinglePlanData() {
-   /* this.planDataForm = this.fb.group({
-      planName: [this.inputValue.data, [Validators.required]]
-    });
-    this.getFormControl().planName.maxLength = this.inputValue.maxLength;*/
-  // }
 }

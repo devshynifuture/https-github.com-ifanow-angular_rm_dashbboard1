@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { CustomerService } from '../../../../../customer.service';
 import { MatTableDataSource } from '@angular/material';
+import { map } from 'rxjs/operators';
 import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { WebworkerService } from 'src/app/services/web-worker.service';
@@ -58,12 +59,19 @@ export class MutualFundOverviewComponent implements OnInit {
   clientId;
 
   @Output() changeInput = new EventEmitter();
+  @Output() sendData = new EventEmitter();
+
   total_net_Gain: number;
   cashFlowXirr: any;
   filterData: any;
   viewMode: string;
   mutualFund: any;
+  mfCopyData: any;
+  mfDataUnrealised: any;
+  openSummaryTab: boolean = false;
+  inputDataToSend: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
+    private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
 
@@ -175,6 +183,7 @@ export class MutualFundOverviewComponent implements OnInit {
   getMutualFundResponse(data) {
     this.getNav();
     if (data) {
+      this.mfCopyData = data
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
@@ -432,6 +441,11 @@ export class MutualFundOverviewComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
+        states: {
+          hover: {
+            enabled: false
+          }
+        },
         data: [
           {
             name: 'Equity',
@@ -511,6 +525,7 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
+  
   // openUpperFragment(data) {
   //   const fragmentData = {
   //     flag: 'app-upper-customer',
@@ -529,6 +544,10 @@ export class MutualFundOverviewComponent implements OnInit {
   //     }
   //   );
   // }
+  openSummary(flag){
+   this.openSummaryTab = true
+   this.inputDataToSend = flag
+  }
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',
@@ -590,6 +609,47 @@ export class MutualFundOverviewComponent implements OnInit {
 
   Excel(something) {
 
+  }
+  getMutualFundSummary() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+    };
+    this.custumService.getMutualFund(obj).pipe(map((data) => {
+      return this.doFilteringSum(data);
+    })).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  doFilteringSum(data) {
+    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
+  getMutualFundResponseSummary(data) {
+    if (data) {
+      this.isLoading = false;
+      this.mfData = data;
+      this.mfData.viewMode = this.viewMode;
+      if (this.mfData) {
+        this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
+      }
+    }
+    this.isLoading = false;
+  }
+  unrealiseTransaction() {
+    this.mfDataUnrealised = this.mfData;
+  }
+
+  changeViewMode(data) {
+    this.viewMode = data;
+    this.mfService.changeViewMode(this.viewMode);
+    this.sendData.emit(data);
+    // this.mfData.viewMode = data;
   }
 }
 export interface PeriodicElement1 {

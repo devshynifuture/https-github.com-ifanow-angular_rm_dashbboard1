@@ -21,7 +21,6 @@ export class TransactionsHistoryComponent implements OnInit {
   }
 
   set data(data) {
-    console.log(data);
     this.transactionData = data;
     switch (true) {
       case (this.transactionData.transactionType == 'ORDER' || this.transactionData.transactionType == 'PURCHASE'):
@@ -43,7 +42,7 @@ export class TransactionsHistoryComponent implements OnInit {
         this.transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
         break;
       default:
-        console.log('');
+        break;
     }
     this.transactionStatusList.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
@@ -57,7 +56,6 @@ export class TransactionsHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('status details', detailStatusObj);
     this.setPaymentMode();
   }
 
@@ -68,7 +66,6 @@ export class TransactionsHistoryComponent implements OnInit {
     };
     this.onlineTransact.getTransactionDetail(obj).subscribe(
       responseData => {
-        console.log(responseData);
         this.isLoading = false;
 
         this.transactionData = responseData;

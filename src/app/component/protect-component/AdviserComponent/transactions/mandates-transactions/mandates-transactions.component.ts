@@ -48,7 +48,6 @@ export class MandatesTransactionsComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data),
       err => {
@@ -61,7 +60,6 @@ export class MandatesTransactionsComponent implements OnInit {
 
   getFilterOptionDataRes(data) {
 
-    console.log(data);
     if (data) {
       this.credentialData = data;
       this.getNSEAchmandate();
@@ -74,7 +72,6 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   openTransaction() {
-    console.log('transaction');
   }
 
   getNSEAchmandate() {
@@ -98,7 +95,6 @@ export class MandatesTransactionsComponent implements OnInit {
     this.dontHide = true;
     this.isLoading = false;
     if (data && data.length > 0) {
-      console.log(data);
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
     } else {
@@ -117,7 +113,6 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   openMandateDetails(data) {
-    console.log('this is detailed potd data', data);
     const fragmentData = {
       flag: 'detailPoTd',
       data,
@@ -127,10 +122,8 @@ export class MandatesTransactionsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -150,7 +143,6 @@ export class MandatesTransactionsComponent implements OnInit {
     // }
     // this.onlineTransact.getClientCodes(obj).subscribe(
     //   data => {
-    //     console.log(data);
     //     this.clientCodeData = data;
     //   },
     //   err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -172,10 +164,8 @@ export class MandatesTransactionsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
 
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
 
         }
       }
@@ -193,10 +183,8 @@ export class MandatesTransactionsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
 
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
 
         }
         rightSideDataSub.unsubscribe();

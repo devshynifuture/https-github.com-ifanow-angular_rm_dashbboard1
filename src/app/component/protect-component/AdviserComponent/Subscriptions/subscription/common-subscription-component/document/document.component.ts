@@ -99,7 +99,6 @@ export class DocumentComponent implements OnInit {
 
   @Input()
   set upperData(upperData) {
-    console.log('FeeStructureComponent upperData set : ', this.upperData);
 
     this._upperData = upperData;
     // setTimeout(() => {
@@ -142,7 +141,6 @@ export class DocumentComponent implements OnInit {
 
 
     this.documentDesign = 'true';
-    console.log('upperData', this.upperData);
     this.dataCount = 0;
   }
 
@@ -176,21 +174,18 @@ export class DocumentComponent implements OnInit {
     this.subscription.getEsignedDocument(obj).subscribe(
       data => this.downloadEsignResponseData(data),
       error => {
-        console.log(error);
       }
     );
   }
 
   downloadEsignResponseData(data) {
 
-    console.log(data, "downloadEsign 123");
 
     window.open(data.presginedUrl);
   }
 
   // openFragment(data, singleDocument) {
   //   (singleDocument == null) ? singleDocument = data : singleDocument.flag = data
-  //   console.log('hello mf button clicked');
   //   const fragmentData = {
   //     flag: 'openUpper',
   //     id: 1,
@@ -227,7 +222,6 @@ export class DocumentComponent implements OnInit {
 
   getDocumentResponseData(data) {
     this.isLoading = false;
-    console.log(data);
 
     if (data == undefined) {
       this.dataSource.data = [];
@@ -272,14 +266,12 @@ export class DocumentComponent implements OnInit {
   mapDocumentToPlan(data) {
     data.selected = true;
     this.mappedData.push(data);
-    console.log(this.mappedData.length);
   }
 
   unmapDocumentToPlan(data) {
     data.selected = false;
     // _.remove(this.mappedData, delData => delData.documentRepositoryId === data.documentRepositoryId);
     this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId)
-    console.log(this.mappedData.length);
   }
 
   openDocumentESign(value, state) {
@@ -367,11 +359,9 @@ export class DocumentComponent implements OnInit {
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getdocumentSubData();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -400,7 +390,6 @@ export class DocumentComponent implements OnInit {
   //       if (UtilService.isDialogClose(sideBarData)) {
   //         if (UtilService.isRefreshRequired(sideBarData)) {
   //           this.getdocumentSubData();
-  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
   //         }
   //         rightSideDataSub.unsubscribe();
@@ -423,11 +412,9 @@ export class DocumentComponent implements OnInit {
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getdocumentSubData();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -556,7 +543,6 @@ export class DocumentComponent implements OnInit {
         //   'viewer.</p>\n';
       });
 
-      console.log('document Data', data);
       this.planDocumentData = data;
       this.planDocumentData.forEach(element => {
         if (element.selected == true) {
@@ -578,7 +564,6 @@ export class DocumentComponent implements OnInit {
     };
     this.subService.getMapDocumentToService(obj).subscribe(
       data => {
-        console.log(data);
         this.getServiceDocumentDataResponse(data);
       }
     );
@@ -587,7 +572,6 @@ export class DocumentComponent implements OnInit {
   getServiceDocumentDataResponse(data) {
     this.isLoading = false;
     if (data && data !== undefined) {
-      console.log('service Documents', data.documentList);
       this.serviceDocumentData = data.documentList;
       this.serviceDocumentData.forEach(element => {
         if (element.selected) {
@@ -714,7 +698,6 @@ export class DocumentComponent implements OnInit {
   }
 
   deleteModal(data) {
-    console.log(data, 'data document');
 
     let list = [];
     if (data == null) {
@@ -745,7 +728,6 @@ export class DocumentComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -772,7 +754,6 @@ export class DocumentComponent implements OnInit {
         });
         this.dataSource.data = tempList;
       }
-      console.log(result, this.dataSource.data, 'delete result');
     });
 
   }
@@ -802,7 +783,6 @@ export class DocumentComponent implements OnInit {
     }
     this.subService.mapDocumentsToPlanData(obj).subscribe(
       data => {
-        console.log("error status:::::::::::::", data);
         if (data !== 204) {
           this.saveMappingDocumentToPlansResponse(data);
         }
@@ -812,7 +792,6 @@ export class DocumentComponent implements OnInit {
         }
       },
       err => {
-        console.log("error mapDocumentsToPlanData", err);
         this.barButtonOptions.active = false;
       }
     );
@@ -820,7 +799,6 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    console.log("response status:::::::::::::::", data);
     
     this.changeServiceData.emit(this.upperData);
     // this.eventService.changeUpperSliderState({ state: 'close' });
@@ -848,14 +826,13 @@ export class DocumentComponent implements OnInit {
         obj.push(data);
       });
       this.subService.mapDocumentsToPlanData(obj).subscribe(
-        data => console.log(data)
+        data => {}
       );
 
     }
   }
 
   display(data) {
-    console.log(data);
     this.ngOnInit();
   }
 
@@ -872,7 +849,6 @@ export class DocumentComponent implements OnInit {
         advisorId: this.advisorId,
       };
       obj.push(data);
-      // console.log(obj);
     } else {
       this.mappedData.forEach(element => {
         const data = {
@@ -884,7 +860,6 @@ export class DocumentComponent implements OnInit {
           advisorId: this.advisorId,
         };
         obj.push(data);
-        // console.log(obj);
       });
     }
 
@@ -896,7 +871,6 @@ export class DocumentComponent implements OnInit {
       },
       err => {
         this.barButtonOptions.active = false;
-        console.log(err, "error mapDocumentToServiceResponse");
       }
     );
 

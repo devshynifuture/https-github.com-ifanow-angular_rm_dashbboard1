@@ -31,7 +31,6 @@ export class BackofficeFileUploadComponent implements OnInit {
     })
     this.reconService.getBackOfficeFilter({}).subscribe((data)=>{
       this.filterList = data;
-      console.log(this.filterList, "this.filterList 123");
       
     })
     this.setFilter();
@@ -41,7 +40,6 @@ export class BackofficeFileUploadComponent implements OnInit {
   targetFile:any;
   uploadButton:boolean=false;
   getFile(e) {
-    // console.log(e);
     this.fileName = e.currentTarget.files[0].name;
     this.fileSize = this.formatBytes(e.currentTarget.files[0].size, 2);
     this.targetFile =e;
@@ -99,10 +97,8 @@ export class BackofficeFileUploadComponent implements OnInit {
         .set('Content-Type', '')
     };
     this.http.putExternal(data.presignedUrl, file, httpOptions).subscribe((responseData) => {
-      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       this.successFileUpload(this.selectedFileType, data.fileName)
     }, error => {
-      console.log('DocumentsComponent uploadFileRes error : ', error);
 
     });
   }
