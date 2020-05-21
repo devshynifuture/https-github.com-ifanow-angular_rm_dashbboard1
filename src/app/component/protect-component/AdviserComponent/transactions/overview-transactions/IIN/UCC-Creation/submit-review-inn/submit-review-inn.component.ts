@@ -250,6 +250,7 @@ export class SubmitReviewInnComponent implements OnInit {
     // }, 5000);
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
+        this.dialogRef.close();
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
