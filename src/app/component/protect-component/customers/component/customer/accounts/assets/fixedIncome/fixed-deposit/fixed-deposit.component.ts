@@ -156,7 +156,8 @@ export class FixedDepositComponent implements OnInit {
     //link bank
     this.bankList = this.enumService.getBank();
     //link bank
-
+    console.log(this.bankList, "this.bankList");
+    
   }
 
   getAccountList() {

@@ -27,7 +27,7 @@
                         [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-more-info>
                     <app-company-more-info (saveNextData)="refreshFlagData($event)" (tabChange)="changeTab($event)"
-                        *ngIf="tabData.clientType && ((headingData.fieldFlag=='lead' && tabData.clientType=='2') || (headingData.fieldFlag=='client' && tabData.clientType=='3'))"
+                        *ngIf="tabData.clientType && ((headingData.fieldFlag=='lead' && tabData.clientType=='3') || (headingData.fieldFlag=='client' && tabData.clientType=='3'))"
                         [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-company-more-info>
                 </mat-tab>
