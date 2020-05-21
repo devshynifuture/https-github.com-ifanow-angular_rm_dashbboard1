@@ -93,7 +93,6 @@ export class LoginComponent implements OnInit {
 
   // @HostListener('click', ['$event.target'])
   // onclick() {
-  //   console.log("animate")
   // }
   loginForm: FormGroup;
 
@@ -135,7 +134,6 @@ export class LoginComponent implements OnInit {
         data => {
           if (data) {
             this.userName.disable();
-            console.log(data);
             this.userData = data;
             this.getOtpResponse(data);
             this.getOtpFlag = true;
@@ -161,7 +159,6 @@ export class LoginComponent implements OnInit {
   }
 
   getOtpData(outputData) {
-    console.log('login with otp', outputData);
     this.otpData = outputData;
   }
 
@@ -174,7 +171,6 @@ export class LoginComponent implements OnInit {
       data.mobileNo = data.mobileList[0].mobileNo;
       this.verifyResponseData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
     }
-    console.log(this.verifyResponseData);
     if (this.verifyResponseData.mobileNo) {
       this.verifyFlag = 'Mobile';
       const obj = { mobileNo: data.mobileNo };
@@ -189,7 +185,6 @@ export class LoginComponent implements OnInit {
   loginUsingCredential(obj) {
     this.loginService.generateOtp(obj).subscribe(
       data => {
-        console.log(data);
         this.otpResponse = data;
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -203,13 +198,7 @@ export class LoginComponent implements OnInit {
   verifyWithOtpResponse() {
     this.barButtonOptions.active = true;
     const otpString = this.otpData.toString().replace(/,/g, '');
-    console.log('LoginComponent verifyWithOtpResponse data; ', this.userData);
-    console.log('LoginComponent verifyWithOtpResponse otpData; ', this.otpData);
-    console.log('LoginComponent verifyWithOtpResponse verifyFlag; ', this.verifyFlag);
 
-    console.log('LoginComponent verifyWithOtpResponse otpString; ', otpString);
-    console.log('LoginComponent verifyWithOtpResponse verifyResponseData; ', this.verifyResponseData);
-    console.log('LoginComponent verifyWithOtpResponse this.otpResponse; ', this.otpResponse);
 
 
     if (this.userData) {
@@ -312,7 +301,6 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       // TODO comment for old login
       this.peopleService.loginWithPassword(loginData).subscribe(data => {
-        console.log('data: ', data);
         if (data) {
           if (data.forceResetPassword) {
             data['buttonFlag'] = "reset";
@@ -335,14 +323,12 @@ export class LoginComponent implements OnInit {
       }, err => {
         this.isLoading = false;
         this.barButtonOptions.active = false;
-        console.log('error on login: ', err.message);
         this.eventService.openSnackBar(err, 'Dismiss');
       });
       // this.backOfficeService.loginApi(loginData).subscribe(
       //   data => {
       //
       //     if (data) {
-      //       console.log('data: ', data);
       //       this.authService.setToken(data.token);
       //       if (!data.advisorId) {
       //         data.advisorId = data.adminAdvisorId;
@@ -366,7 +352,6 @@ export class LoginComponent implements OnInit {
       //   err => {
       //     this.isLoading = false;
       //     this.barButtonOptions.active = false;
-      //     console.log('error on login: ', err);
       //     this.eventService.openSnackBar(err, 'Dismiss');
       //   }
       // );
@@ -374,7 +359,6 @@ export class LoginComponent implements OnInit {
   }
 
   onEnterPressed() {
-    console.log(' on enter pressed sdkvjasbhkdj');
   }
 
   hardCodeLoginForTest() {
@@ -398,7 +382,6 @@ export class LoginComponent implements OnInit {
   }
 
   progressButtonClick(event) {
-    console.log(this.loginForm.value, 'this.loginForm.value.name');
     if (this.loginForm.value.name != '' && this.loginForm.value.password != '') {
       this.errorMsg = false;
       this.errorStyle = {
@@ -418,7 +401,6 @@ export class LoginComponent implements OnInit {
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
-        console.log(data);
         (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
       err => {

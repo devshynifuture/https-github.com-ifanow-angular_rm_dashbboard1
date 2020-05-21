@@ -79,7 +79,6 @@ export class LinkBankComponent implements OnInit {
     }
     this.cusService.getBankList(obj).subscribe(
       data => {
-        console.log(data);
         if (data && data.length > 0) {
           this.bankList = data[0];
           this.createBankForm(this.bankList)
@@ -138,18 +137,15 @@ export class LinkBankComponent implements OnInit {
     const obj = {
       ifsc
     };
-    console.log('ifsc 121221', obj);
 
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-        console.log('postal 121221', data);
         this.bankData(data);
         // this.PinData(data, 'bankDetailsForm')
 
       },
         err => {
-          console.log(err, 'error internet');
           this.isIfsc = false;
           this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true })
           this.bankData(err);
@@ -158,7 +154,6 @@ export class LinkBankComponent implements OnInit {
   }
 
   bankData(data) {
-    console.log(data, 'bank data');
     this.isIfsc = false;
     let address1, address2, pincode, adderessData;
     if (data) {
@@ -192,11 +187,9 @@ export class LinkBankComponent implements OnInit {
     const obj = {
       zipCode: value
     };
-    console.log(value, 'check value');
     if (value != '') {
       this.isPostal = true;
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data);
         this.PinData(data);
       });
     }
@@ -211,7 +204,6 @@ export class LinkBankComponent implements OnInit {
   }
 
   getHolderList(data) {
-    console.log(data);
     this.holderList = data;
   }
 
@@ -261,7 +253,6 @@ export class LinkBankComponent implements OnInit {
       };
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {
-          console.log(data);
           this.barButtonOptions.active = false;
           this.enumDataService.getAccountList();
           // this.valueChange.emit("get-list");

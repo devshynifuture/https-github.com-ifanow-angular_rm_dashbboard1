@@ -50,7 +50,6 @@ export class AppComponent implements AfterViewInit {
     routingState.router = _router;
     routingState.loadRouting();
     this._router.events.subscribe((event: Event) => {
-      // console.log(event);
       this.loadingBarInterceptor(event);
     });
 
@@ -70,13 +69,10 @@ export class AppComponent implements AfterViewInit {
     )
   }
   private loadingBarInterceptor(event: Event) {
-    // console.log('appComponent loadingBar event : ', event);
     if (event instanceof NavigationStart) {
       this.lBar.start();
-      // console.log('Performance navigation start', performance.getEntriesByType('navigation'));
     }
     if (event instanceof NavigationEnd) {
-      // console.log('Performance navigation end', performance.getEntriesByType('navigation'));
       this.lBar.complete();
     } else if (event instanceof NavigationCancel) {
       this.lBar.complete();
@@ -89,16 +85,4 @@ export class AppComponent implements AfterViewInit {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
-}
-
-if (typeof Worker !== 'undefined') {
-  // Create a new
-  const worker = new Worker('./app.worker', { type: 'module' });
-  worker.onmessage = ({ data }) => {
-    console.log(`page got message: ${data}`);
-  };
-  worker.postMessage('hello');
-} else {
-  // Web Workers are not supported in this environment.
-  // You should add a fallback so that your program still executes correctly.
 }

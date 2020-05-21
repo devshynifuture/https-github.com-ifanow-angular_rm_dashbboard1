@@ -67,7 +67,6 @@ export class DematOwnerNomineeDirective {
     this.ownerData = data.controleData;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if ((this.clientId || this.clientIdData) && data.Fmember.length <= 0) {
       this.getListFamilyMem();
     }
@@ -86,7 +85,6 @@ export class DematOwnerNomineeDirective {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data);
     if (data) {
       data.forEach((singleData) => {
         singleData['userName'] = singleData.displayName;
@@ -101,7 +99,6 @@ export class DematOwnerNomineeDirective {
       this.sendData = [];
     }
     this.valueChange1.emit(this.sendData);
-    console.log(this.sendData, 'sendData 123');
   }
 
   removeCoOwner(item) {
@@ -128,7 +125,6 @@ export class DematOwnerNomineeDirective {
       }
     }
 
-    console.log(controlsArr, 'controlsArr 123');
 
     this.sendData.forEach(element => {
       for (const e of controlsArr) {
@@ -173,7 +169,6 @@ export class DematOwnerNomineeDirective {
             arrayCon.get('share').setErrors({ incorrect: true });
             arrayCon.get('share').markAsTouched();
             // arrayCon.get('share').updateValueAndValidity();
-            console.log('show error Percent cannot be more than 100%', arrayCon);
           } else {
             this.showErrorOwner = false;
             // this.showErrorCoOwner = false;
@@ -200,7 +195,6 @@ export class DematOwnerNomineeDirective {
             arrayCon.get('sharePercentage').markAsTouched();
             // arrayCon.get('sharePercentage').updateValueAndValidity();
           }
-          console.log('show error Percent cannot be more than 100%');
         } else {
           this.showErrorOwner = false;
           // this.showErrorCoOwner = false;
@@ -215,7 +209,6 @@ export class DematOwnerNomineeDirective {
   }
 
   setOwnerNominee() {
-    console.log(this.getCoOwner);
 
     this.ownerNomineeJson = {
       owner: this.getCoOwner,

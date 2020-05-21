@@ -18,14 +18,12 @@ export class NumberOnlyDirective {
     let initialValue = this._el.nativeElement.value;
 
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      // console.log('initial value : ', initialValue);
       // if (initialValue > 100) {
       //   initialValue = '100';
       // } else {
       initialValue = initialValue.replace(/[^0-9.]+/g, '');
       // }
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
-      // console.log(initialValue);
       if (initialValue !== this._el.nativeElement.value) {
         event.stopPropagation();
       }
@@ -45,7 +43,6 @@ export class AlphaNumericDirective {
   }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    console.log(event);
     let initialValue = this._el.nativeElement.value;
     // const k = initialValue;
     initialValue = initialValue.replace(/[^a-z0-9]-/gi, '');
@@ -63,7 +60,6 @@ export class TextOnlyDirective {
   }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    console.log(event);
     let initialValue = this._el.nativeElement.value;
     // const k = initialValue;
     initialValue = initialValue.replace(/[^a-z]/gi, '');
@@ -80,7 +76,6 @@ export class CodeTextDirective {
   }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    console.log(event);
     let initialValue = this._el.nativeElement.value;
     // const k = initialValue;
     initialValue = initialValue.replace(/[^a-z0-9-/]/gi, '');
@@ -97,7 +92,6 @@ export class Formatter {
   }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    console.log(event);
     const initialValue = this._el.nativeElement.value;
     return Math.round(initialValue);
   }
