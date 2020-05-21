@@ -99,7 +99,9 @@ export class RightFilterComponent implements OnInit {
     // this.amc = this._data.schemeWise;//amc wise data 
     // this.folio = this._data.folioWise;//for getting all folios
     this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()];//amc wise data 
+    this.amc = this.mfService.sorting(this.amc, 'amc_name')
     this.folio = [...new Map(this._data.folioWise.map(item => [item.folioNumber, item])).values()];//for getting all folios
+    this.folio = this.mfService.sorting(this.folio, 'folioNumber')
     this.showSummaryFilterForm(this._data);//as on date and showZero folio form
 
     this.getCategoryWise(this._data.category);//get category wise data
@@ -150,7 +152,8 @@ export class RightFilterComponent implements OnInit {
       };
       filterData.push(obj);
     });
-    this.category = [...new Map(filterData.map(item => [item.categoryId, item])).values()];;
+    let sortedData = this.mfService.sorting(filterData, 'category')
+    this.category = [...new Map(sortedData.map(item => [item.categoryId, item])).values()];;
   }
 
   showSummaryFilterForm(data) {
@@ -164,7 +167,7 @@ export class RightFilterComponent implements OnInit {
       fromDate: [new Date(fromDate), [Validators.required]],
       toDate: [new Date(todayDate), [Validators.required]],
       showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
-      grandfathering: [(data.grandfathering) ? data.grandfathering+'' : '2', [Validators.required]],
+      grandfathering: [(data.grandfathering) ? data.grandfathering + '' : '2', [Validators.required]],
     });
   }
 
@@ -180,7 +183,8 @@ export class RightFilterComponent implements OnInit {
       };
       filterData.push(obj);
     });
-    this.scheme = filterData;
+    let sortedData = this.mfService.sorting(filterData, 'schemeName')
+    this.scheme = sortedData;
   }
 
   getFamilyMember(data) {
@@ -204,7 +208,8 @@ export class RightFilterComponent implements OnInit {
         filterData.push(obj);
       });
     }
-    this.familyMember = [...new Map(filterData.map(item => [item.familyMemberId, item])).values()];
+    let sortedData = this.mfService.sorting(filterData, 'name')
+    this.familyMember = [...new Map(sortedData.map(item => [item.familyMemberId, item])).values()];
   }
 
   getTransactionView(data) {
@@ -241,10 +246,10 @@ export class RightFilterComponent implements OnInit {
       let redemptionList = this._data.capitalGainData.redemptionList
       redemptionList.forEach(element => {
         let year = element.financialYear;
-        let date=new Date(element.transactionDate);
+        let date = new Date(element.transactionDate);
 
-        let finDate =new Date(year, 3, 1); 
-        if(date < finDate){
+        let finDate = new Date(year, 3, 1);
+        if (date < finDate) {
           year = (element.financialYear - 1)
         }
         const obj = {
@@ -530,7 +535,7 @@ export class RightFilterComponent implements OnInit {
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     console.log('transaction ==', this._data.transactionView);
-    if (this._data.name == 'Overview report') {
+    if (this._data.name == 'Overview Report') {
       if (this.overviewFilter != undefined) {
         this.overviewFilterCount = 0;
         this.overviewFilter.forEach(item => {
@@ -640,6 +645,11 @@ export class RightFilterComponent implements OnInit {
         }
       });
       this.financialYearsObj = filter;
+    }
+    if (this._data.name == 'Overview Report') {
+      let array = [];
+      array = this.overviewFilter.filter(item => item.selected == false);
+      (array.length == this.overviewFilter.length) ? this.showError = 'filter view' : this.showError = null;
     }
   };
 
