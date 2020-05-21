@@ -123,7 +123,6 @@ export class SipApplicantWiseComponent implements OnInit {
     this.backoffice.sipApplicantList(obj).subscribe(
       data => {
         this.isLoading = false;
-        console.log("scheme Name", data)
         if (data) {
           this.applicantList = data;
           this.excelInitClientList()
@@ -174,7 +173,6 @@ export class SipApplicantWiseComponent implements OnInit {
             } else {
               this.removeValuesFromExcel('applicant', index);
             }
-            console.log(data)
           }else{
             applicantData.schemeList = [];
             this.applicantListArr = []
@@ -240,7 +238,6 @@ export class SipApplicantWiseComponent implements OnInit {
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'applicant':
-        console.log(iterable, this.arrayOfExcelData, index);
         // investor
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[index].investorList.push({
@@ -272,7 +269,6 @@ export class SipApplicantWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
   removeValuesFromExcel(whichList, index) {
 

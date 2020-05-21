@@ -72,7 +72,6 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getTemplateDate(data) {
-    console.log(data,"storeData email");
     this.storeData = data;
   }
 
@@ -99,7 +98,6 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   setBillerPrimaryRes(data) {
-    console.log(data)
     this.billerProfileData.forEach(element => {
       if (element.id == data) {
         element.isPrimary = true
@@ -141,7 +139,6 @@ export class PreferencesSettingsComponent implements OnInit {
             this.savePrefixResponse(data);
           },
           err => {
-            console.log(err, "updatePreferenceInvoiceQuotationsSubscription error");
             this.barButtonOptions.active = false;
           }
         );
@@ -151,7 +148,6 @@ export class PreferencesSettingsComponent implements OnInit {
             this.savePrefixResponse(data);
           },
           err => {
-            console.log(err, "savePreferenceInvoiceQuotationsSubscription error");
             this.barButtonOptions.active = false;
           }
         );
@@ -160,7 +156,6 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   savePrefixResponse(data) {
-    console.log(data, "prefixData check");
     this.barButtonOptions.active = false;
     this.prefixData.get('prefix').setValue(data.prefix);
     this.prefixData.get('nextNo').setValue(data.nextNumber);
@@ -175,7 +170,6 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getProfileBillerDataResponse(data) {
     this.isLoading = false;
-    console.log('getProfileBillerDataResponse', data);
     for(let p of data){
       p['read'] = false;
     }
@@ -203,11 +197,9 @@ export class PreferencesSettingsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if(UtilService.isRefreshRequired(sideBarData)){
             this.getProfileBillerData()
-            console.log('this is sidebardata in subs subs 2: ');
           }
           rightSideDataSub.unsubscribe();
         }
@@ -244,10 +236,8 @@ export class PreferencesSettingsComponent implements OnInit {
 
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',

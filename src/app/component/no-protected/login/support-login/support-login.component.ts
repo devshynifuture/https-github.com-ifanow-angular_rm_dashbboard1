@@ -92,7 +92,6 @@ export class SupportLoginComponent implements OnInit {
 
   // @HostListener('click', ['$event.target'])
   // onclick() {
-  //   console.log("animate")
   // }
   loginForm: FormGroup;
 
@@ -145,7 +144,6 @@ export class SupportLoginComponent implements OnInit {
       this.isLoading = true;
       // TODO comment for old login
       // this.peopleService.loginWithPassword(loginData).subscribe(data => {
-      //   console.log('data: ', data);
       //   if (data) {
       //     if (data.forceResetPassword) {
       //       data['buttonFlag'] = "reset";
@@ -168,18 +166,15 @@ export class SupportLoginComponent implements OnInit {
       // }, err => {
       //   this.isLoading = false;
       //   this.barButtonOptions1.active = false;
-      //   console.log('error on login: ', err.message);
       //   this.eventService.openSnackBar(err, 'Dismiss');
       // });
 
       this.backOfficeService.loginApi(loginData)
         // .subscribe(res => {
-        //   console.log("this is some login data:::", res);
         // })
         .subscribe(
           data => {
             if (data) {
-              console.log('rm data: ', data);
               data.rmId = data.id
               delete data.id;
               // this.authService.setToken(data.token);
@@ -199,7 +194,6 @@ export class SupportLoginComponent implements OnInit {
           err => {
             this.isLoading = false;
             this.barButtonOptions1.active = false;
-            console.log('error on login: ', err);
             this.eventService.openSnackBar(err, 'Dismiss');
           }
         );
@@ -207,7 +201,6 @@ export class SupportLoginComponent implements OnInit {
   }
 
   progressButtonClick(event) {
-    console.log(this.loginForm.value, 'this.loginForm.value.name');
     if (this.loginForm.value.name != '' && this.loginForm.value.password != '') {
       this.errorMsg = false;
       this.errorStyle = {
@@ -227,7 +220,6 @@ export class SupportLoginComponent implements OnInit {
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
-        console.log(data);
         (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
       err => {

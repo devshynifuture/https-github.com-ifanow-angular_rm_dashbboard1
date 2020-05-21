@@ -154,7 +154,6 @@ export class AmcWiseComponent implements OnInit {
         break;
     }
 
-    console.log(this.arrayOfExcelData);
   }
 
   applicantWiseExcelReport(index, amcIndex) {
@@ -213,7 +212,6 @@ export class AmcWiseComponent implements OnInit {
   //     ];
   //     this.arrayOfExcelData[0].push(Object.assign(dataValue));
   //     if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
-  //       // console.log("this is something i need 2");
   //       element.schemes.forEach((element, index2) => {
   //         dataValue = [
   //           index2 + 1,
@@ -258,7 +256,6 @@ export class AmcWiseComponent implements OnInit {
   // }
 
   removeValuesFromExcel(whichList, clientIndex) {
-    console.log(clientIndex, this.arrayOfExcelData);
 
     switch (whichList) {
       case 'schemes':
@@ -287,7 +284,6 @@ export class AmcWiseComponent implements OnInit {
       case 'applicant':
         // applicant
         iterable.forEach((element, index1) => {
-          console.log(index, iterable, this.arrayOfExcelData);
           this.arrayOfExcelData[this.selectedAmc].schemeList[index].applicantList.push({
             name: element.investorName,
             balanceUnit: element.balanceUnit,
@@ -298,7 +294,6 @@ export class AmcWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   excelInitAmcList() {
@@ -317,7 +312,6 @@ export class AmcWiseComponent implements OnInit {
   getReponseAmcWiseGet(data) {
     this.isLoading = false;
     if (data) {
-      console.log("this we need", data)
       this.amcList = data;
       this.excelInitAmcList();
       this.amcList.forEach(o => {
@@ -370,7 +364,6 @@ export class AmcWiseComponent implements OnInit {
             this.isLoadingApplicant = false
             schemeData.applicantList = data
             this.applicationList = data
-            console.log(amcIndex, data);
             this.appendingOfValuesInExcel(data, index, 'applicant');
           }else{
             this.applicationList = []
@@ -397,7 +390,6 @@ export class AmcWiseComponent implements OnInit {
     }
     this.backoffice.amcWiseApplicantGet(obj).subscribe(
       data => {
-        console.log(data);
       }
     )
   }

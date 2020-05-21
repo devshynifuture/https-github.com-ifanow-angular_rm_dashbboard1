@@ -141,9 +141,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
-            console.log('onChange file upload success response url : ', responseObject.url);
             this.logoImg = responseObject.url;
-            console.log('uploadImage success this.imageData : ', this.imageData);
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
@@ -157,22 +155,18 @@ export class BillerProfileAdvisorComponent implements OnInit {
         });
 
     } else {
-      console.log('asfasdas');
     }
   }
 
   onChange(event) {
-    console.log('Biller profile logo Onchange event : ', event);
     if (event && event.target && event.target.files) {
       const fileList = event.target.files;
       if (fileList.length == 0) {
-        console.log('Biller profile logo Onchange fileList : ', fileList);
 
         return;
       }
       this.imageData = fileList[0];
 
-      console.log(this.imageData);
       this.logUrl.controls.url.reset();
       this.logoImg = this.imageData;
       // this.logoImg=
@@ -239,12 +233,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   Close(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
-    console.log("state close1", data);
 
   }
 
   nextStep(value, eventName) {
-    console.log(value);
     switch (true) {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
@@ -270,17 +262,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
     let obj = {
       ifsc: ifsc
     }
-    console.log('ifsc 121221', obj)
 
     if (ifsc != "") {
       this.subService.getBankAddress(obj).subscribe(data => {
-        console.log('postal 121221', data)
         this.bankData(data)
         // this.PinData(data, 'bankDetailsForm')
 
       },
         err => {
-          console.log(err, "error internet");
           this.bankData(err)
         })
     }
@@ -292,10 +281,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     let obj = {
       zipCode: value
     }
-    console.log(value, "check value");
     if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data)
         this.PinData(data, state)
       })
     }
@@ -329,7 +316,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlBank().pincodeB.setValue("")
     }
     else {
-      console.log(data, "bankPin 123");
       let bankPin = data.address.split('A');
       this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
       this.getFormControlBank().cityB.setValue(data.district)
@@ -343,7 +329,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   back() {
-    console.log(this.selected, "this.selected 123");
     this.selected--;
     if (this.selected == 2) {
       this.barButtonOptions.text = "UPLOAD LOGO";
@@ -365,7 +350,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
   submitBillerForm() {
     if (this.profileDetailsForm.invalid) {
       for (let element in this.profileDetailsForm.controls) {
-        console.log(element)
         if (this.profileDetailsForm.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.profileDetailsForm.controls[element].markAsTouched();
@@ -373,7 +357,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
       }
     } else if (this.bankDetailsForm.invalid) {
       for (let element in this.bankDetailsForm.controls) {
-        console.log(element)
         if (this.bankDetailsForm.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.bankDetailsForm.controls[element].markAsTouched();
@@ -404,7 +387,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
     else {
       this.barButtonOptions.active = true;
 
-      console.log("img url check", this.validURL(this.logoImg), this.logoImg);
       if (!this.validURL(this.logoImg) && this.logoImg != undefined) {
         this.uploadImage();
       }
@@ -441,7 +423,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: this.profileDetailsForm.controls.id.value,
       cloudinary_json: this.uploadedImage
     };
-    console.log("biller odj", obj);
 
     if (this.profileDetailsForm.controls.id.value == undefined) {
       this.subService.saveBillerProfileSettings(obj).subscribe(
@@ -463,10 +444,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
   getPostalRes(data) {
-    console.log('data posta 123345566')
   }
   closeTab(data) {
-    console.log(data, "closeTab data 123");
     this.barButtonOptions.active = false;
     if (data == true) {
       this.Close(data);

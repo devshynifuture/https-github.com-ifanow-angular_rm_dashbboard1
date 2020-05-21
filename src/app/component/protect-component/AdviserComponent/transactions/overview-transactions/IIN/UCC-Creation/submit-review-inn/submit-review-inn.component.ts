@@ -51,7 +51,6 @@ export class SubmitReviewInnComponent implements OnInit {
   set data(data) {
     this.doneData = {};
     this.inputData = data;
-    console.log('submit and review component inputData : ', this.inputData);
     this.allData = data;
     this.clientData = this.clientData;
     this.doneData.nominee = true;
@@ -65,7 +64,6 @@ export class SubmitReviewInnComponent implements OnInit {
       // this.firstHolder = data.firstHolder
       // this.secondHolder = data.secondHolder
       // this.thirdHolder = data.thirdHolder
-      // console.log('return data', data)
     }
     // this.generalDetails = data
   }
@@ -99,7 +97,6 @@ export class SubmitReviewInnComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getBSECredentialsRes(data)
     );
@@ -107,11 +104,8 @@ export class SubmitReviewInnComponent implements OnInit {
 
   getBSECredentialsRes(data) {
     this.isLoading = false;
-    console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
-    console.log('nse', this.nse);
-    console.log('bse', this.bse);
   }
 
   getdataForm(data) {
@@ -155,7 +149,6 @@ export class SubmitReviewInnComponent implements OnInit {
     const month = date.getMonth();
     this.fileName = (this.selectedBrokerBse.memberId).toString() + 'GAURAVD1' + date1 + month + year + '.tiff';
 
-    console.log('fileName', this.fileName);
   }
 
   selectArnNse(value) {
@@ -163,7 +156,6 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   selectPlatform(value) {
-    console.log('mat check', value);
     this.platform = value.value;
     this.BSEValue = value.value;
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
@@ -234,7 +226,6 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   createIINUCCRes(data) {
-    console.log('data respose =', data);
     this.createdBrokerMap[this.selectedBrokerBse.id] = {
       tpUserRequestId: data.id, tpUserRequest: data,
       brokerData: this.selectedBrokerBse
@@ -246,14 +237,11 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   getTokenRes(data) {
-    console.log('token', data);
     this.tokenRes = data;
   }
 
   getFileDetails(documentType, e) {
-    console.log('file', e);
     this.file = e.target.files[0];
-    console.log('file', e);
     const file = e.target.files[0];
     const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
     if (!requestMapObject) {
@@ -266,13 +254,8 @@ export class SubmitReviewInnComponent implements OnInit {
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        console.log('getFileDetails uploadFileToServer callback item : ', item);
-        console.log('getFileDetails uploadFileToServer callback status : ', status);
-        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
-        console.log('getFileDetails uploadFileToServer callback response : ', response);
         if (status == 200) {
           const responseObject = JSON.parse(response);
-          console.log('onChange file upload success response url : ', responseObject.url);
           this.eventService.openSnackBar('File uploaded successfully');
         } else {
           const responseObject = JSON.parse(response);

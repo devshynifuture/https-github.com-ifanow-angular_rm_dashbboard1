@@ -18,7 +18,6 @@ export class ModifyFeeDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ModifyFeeDialogComponent>,
               public subInjectService: SubscriptionInject, public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public fragmentData: any) {
-    console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
     if (this.fragmentData == '') {
       this.editorContent = this.fragmentData;
     } else {
@@ -39,7 +38,6 @@ export class ModifyFeeDialogComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.log(this.mailForm.value);
   }
 
   openDialog(data) {

@@ -59,7 +59,7 @@ export class AddPlanDetailComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    (this.isCheckPlanData) ? console.log('get planData') : this.createPlanForm('');
+    (this.isCheckPlanData) ? '' : this.createPlanForm('');
   }
 
   submitPlanData() {
@@ -82,7 +82,6 @@ export class AddPlanDetailComponent implements OnInit {
 
 
   getSinglePlanData(data) {
-    console.log(data.id, "editPlanData");
     
     if (data.id != undefined) {
       this.editApiCall = data;
@@ -96,7 +95,6 @@ export class AddPlanDetailComponent implements OnInit {
   addPlanData(state) {
     if (this.planDataForm.invalid) {
       for (let element in this.planDataForm.controls) {
-        console.log(element)
         if (this.planDataForm.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.planDataForm.controls[element].markAsTouched();
@@ -104,7 +102,6 @@ export class AddPlanDetailComponent implements OnInit {
       }
     }else {
       this.barButtonOptions.active = true;
-      console.log(this.editApiCall, this.editApiCall == undefined,"check editApiCall");
       
       if (this.editApiCall == undefined) {
         const obj = {
@@ -125,7 +122,6 @@ export class AddPlanDetailComponent implements OnInit {
           },
           err =>{
             this.barButtonOptions.active = false;
-            console.log(err,"error");
             
           }
         );
@@ -145,7 +141,6 @@ export class AddPlanDetailComponent implements OnInit {
           },
           err =>{
             this.barButtonOptions.active = false;
-            console.log(err,"error");
           }
         );
       }
@@ -166,7 +161,6 @@ export class AddPlanDetailComponent implements OnInit {
 
   addPlanDataResponse(data, obj, state) {
     // obj.id = (this.editApiCall == '') ? data : data.id
-    // console.log(obj);
     this.planOuputData.emit(data);
     (!this.editApiCall) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
     this.subinject.changeNewRightSliderState({ state: 'close', data: data });

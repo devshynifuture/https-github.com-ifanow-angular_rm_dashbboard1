@@ -40,7 +40,6 @@ export class FatcaDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    console.log('all data in fatca', this.inputData);
     this.allData = data;
     this.doneData = {};
     this.doneData.nominee = true;
@@ -119,7 +118,6 @@ export class FatcaDetailsInnComponent implements OnInit {
   SendToForm() {
     if (this.fatcaDetails.invalid) {
       for (const element in this.fatcaDetails.controls) {
-        console.log(element);
         if (this.fatcaDetails.get(element).invalid) {
           // this.inputs.find(input => !input.ngControl.valid).focus();
           this.fatcaDetails.controls[element].markAsTouched();

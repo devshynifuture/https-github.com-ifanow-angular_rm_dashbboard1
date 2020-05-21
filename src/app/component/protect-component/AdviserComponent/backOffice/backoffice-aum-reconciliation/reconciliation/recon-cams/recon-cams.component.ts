@@ -38,11 +38,9 @@ export class ReconCamsComponent implements OnInit {
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
 
   ngOnInit() {
-    console.log("this is parent and adminId ", this.parentId, this.adminId);
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
     this.teamMemberListGet()
-    console.log('my id is ::', this.rtId);
   }
 
   teamMemberListGet() {
@@ -85,7 +83,6 @@ export class ReconCamsComponent implements OnInit {
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
           this.isLoading = false;
-          console.log("this is some values ::::::::::", res);
           this.dataSource.data = res;
         })
     }

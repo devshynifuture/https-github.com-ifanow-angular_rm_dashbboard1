@@ -109,8 +109,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   ngOnInit() {
     this.showActivityLog = false;
-    console.log('CommonFroalaComponent ngOnInit screenType: ', this.screenType);
-    console.log(this.changeFooter);
   }
 
   ngAfterViewInit(): void {
@@ -122,7 +120,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   getcommanFroalaData(data) {
     this.storeData = data;
     let d = new Date();
-    console.log(this.storeData.documentText)
     this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
       this.storeData.clientName);
     this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
@@ -178,7 +175,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   saveData(data) {
-    console.log(data);
     this.storeData.documentText = data;
     this.storeData.docText = data;
     this.renderElement.nativeElement.innerHTML = data;
@@ -188,7 +184,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.save();
   }
   save() {
-    console.log('here is saved data', this.storeData);
     if (this.storeData.quotation == true) {
       this.updateDataQuot(this.storeData);
     } else {
@@ -226,7 +221,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   getResponseData(data) {
-    console.log(data);
     // this.Close('close');
     if (this.inputData.sendEsign) {
       this.openSendEmailEsign();
@@ -281,8 +275,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   generatePdf() {
-    // console.log('ViewContainerRef generatePDF : ', this.renderElement);
-    // console.log('ViewContainerRef generatePDF : ', this.renderElement.nativeElement);
     this.renderElement.nativeElement.innerHTML = this.storeData.documentText;
 
     // PdfService.generateTestDocument();
@@ -308,14 +300,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     //   window.html2canvas = html2canvas;
     // }
     /* html2canvas(this.renderElement.nativeElement).then(canvas => {
-       console.log('html2canvas canvas : ', canvas);
 
        PdfService.generatePdfFromCanvas(canvas, docName);
      }).catch(error => {
        console.info('html2canvas renderElement error : ', error);
      });*/
     /*html2canvas(document.querySelector("#renderElement")).then(canvas => {
-      console.log('html2canvas querySelector canvas : ', canvas);
 
       // document.body.appendChild(canvas);
     }).catch(error => {
@@ -326,12 +316,10 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       PdfService.generatePdfFromHtmlText(this.storeData.documentText, opt);
 
     } catch (e) {
-      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
     }
     /*  try {
         PdfService.generatePdfFromHtmlText(this.storeData.documentText, docName);
       } catch (e) {
-        console.log('    PdfService.generatePdfFromHtmlText(this.storeData.documentText, docName) e : ', e);
       }
   */
   }
@@ -376,7 +364,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     //     data.documentList.push(singleElement);
     //   }
     // });
-    console.log(' yoooo i catch data here ===', data)
     this.openEmail(data, 'email');
   }
 
@@ -392,9 +379,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     if (this.screenType) {
       const rightSideDataSub2 = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
         sideBarData => {
-          console.log('this is sidebardata in subs subs : ', sideBarData);
           if (UtilService.isDialogClose(sideBarData)) {
-            console.log('this is sidebardata in subs subs 2: ');
             rightSideDataSub2.unsubscribe();
           }
         }

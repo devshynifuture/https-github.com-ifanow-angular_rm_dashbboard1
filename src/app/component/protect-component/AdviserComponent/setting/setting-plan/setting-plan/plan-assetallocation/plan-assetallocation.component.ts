@@ -46,7 +46,6 @@ export class PlanAssetallocationComponent implements OnInit {
   ngOnInit() {
     this.getAssetAllocation()
     this.editMode = false
-    console.log('edit mode', this.editMode)
     this.staticAllocation = []
   }
 
@@ -54,7 +53,6 @@ export class PlanAssetallocationComponent implements OnInit {
     this.editMode = !this.editMode;
   }
   changeTableTdValue(value, field, field2, ele, index) {
-    console.log(value, field, index);
     if (value > 100) {
       value = 100;
     }
@@ -64,7 +62,6 @@ export class PlanAssetallocationComponent implements OnInit {
 
     if (ValidatorType.NUMBER_ONLY.test(value)) {
       // const updatedTable = this.orgSetting.alterTable(this.dataToMap, field, value, index);
-      // console.log("this is updated Table", updatedTable);
       // this.dataSource.data = updatedTable;
     } else {
       this.onlyNumbers = '';
@@ -126,14 +123,12 @@ export class PlanAssetallocationComponent implements OnInit {
       this.eventService.openSnackBar("Please enter value in all fields", "Dismiss");
       return;
     }
-    console.log('sgdfg == ', this.staticAllocation)
     this.orgSetting.updateAssetAllocation(this.staticAllocation).subscribe(
       data => this.updateAssetAllocationRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   updateAssetAllocationRes(data) {
-    console.log('updateAssetAllocationRes', data);
     this.toggleEditMode();
   }
   getAssetAllocation() {
@@ -152,7 +147,6 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   getAssetAllocationRes(data) {
     this.isLoading = false
-    console.log('getAssetAllocationRes', data)
     this.staticAllocationData = data.staticAllocationData
   }
 }

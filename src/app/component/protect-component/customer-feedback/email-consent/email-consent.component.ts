@@ -21,7 +21,6 @@ export class EmailConsentComponent implements OnInit {
   ngOnInit() {
     this.activateRoute.queryParams.subscribe(
       params => {
-        console.log(params)
         this.isLoading = true;
         this.getConsentDetails(params.gropID);
       }
@@ -36,7 +35,6 @@ export class EmailConsentComponent implements OnInit {
         this.isLoading = false;
         this.dataSource.data = data;
         data.forEach(element => {
-          console.log("this is some value::::::::", element);
           let obj =
           {
             id: element.adviceConsent.id,
@@ -53,8 +51,6 @@ export class EmailConsentComponent implements OnInit {
   save() {
     this.cusService.updateAssetConsent(this.consentData).subscribe(
       data => {
-        console.log("this is consent Data  after clicking ok::::", this.consentData);
-        console.log(data);
         this.eventService.openSnackBar("Consent updated", "Dismiss")
 
         setTimeout(() => {
@@ -65,10 +61,8 @@ export class EmailConsentComponent implements OnInit {
   }
 
   acceptOrDeclineConsent(index, choice) {
-    console.log(this.consentData);
     this.consentData[index].acceptedOrDeclined = choice;
     this.consentData[index].actionPerformed = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
-    console.log(this.consentData[index]);
   }
 
   dialogClose() {

@@ -19,7 +19,6 @@ export class ConfirmationTransactionComponent implements OnInit {
 
   @Input() set data(data) {
     this.inputData = data;
-    console.log('This is Input ConfirmationTransactionComponent@@  ', data);
     this.confirmData = data;
     if (this.isViewInitCalled) {
       // this.getdataForm('');

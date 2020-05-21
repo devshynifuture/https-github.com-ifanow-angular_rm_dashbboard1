@@ -64,7 +64,6 @@ export class InvestorsTransactionsComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data),
       err => {
@@ -77,7 +76,6 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   getFilterOptionDataRes(data) {
 
-    console.log(data);
     if (data) {
       this.credentialData = data;
       this.getMappedData();
@@ -103,7 +101,6 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isPendingData = false;
     this.onlineTransact.getMapppedClients(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
@@ -140,7 +137,6 @@ export class InvestorsTransactionsComponent implements OnInit {
         this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
         this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
         this.dataSource.sort = this.sort;
-        console.log('innUccPendindList', this.innUccPendindList);
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -173,7 +169,6 @@ export class InvestorsTransactionsComponent implements OnInit {
     if (this.isLoading || !this.isPendingData) {
       return;
     }
-    console.log('this is detailed potd data', data);
     const fragmentData = {
       flag: 'investorDetail',
       data,
@@ -183,10 +178,8 @@ export class InvestorsTransactionsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
         }
