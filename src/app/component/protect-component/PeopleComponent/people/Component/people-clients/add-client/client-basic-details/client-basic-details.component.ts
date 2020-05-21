@@ -448,7 +448,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
         obj.martialStatusId = this.basicDetailsData.martialStatusId;
         obj.taxStatusId = this.basicDetailsData.taxStatusId;
-
+        obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy')
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
@@ -582,7 +582,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       ],
       guardianData: gardianObj,
       invTypeCategory: 0,
-      categoryTypeflag: null
+      categoryTypeflag: null,
+      anniversaryDate: null
     };
     obj.bio = this.basicDetailsData.bio;
     obj.remarks = this.basicDetailsData.remarks;
@@ -590,6 +591,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.martialStatusId = this.basicDetailsData.martialStatusId;
     obj.occupationId = this.basicDetailsData.occupationId;
     obj.displayName = this.basicDetailsData.displayName;
+    obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy')
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
         this.disableBtn = false;
