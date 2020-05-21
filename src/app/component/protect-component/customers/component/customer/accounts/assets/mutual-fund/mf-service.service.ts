@@ -382,7 +382,60 @@ export class MfServiceService {
   sendMutualFundData(data) {
     this.mutualFundDataSource.next(data);
   }
+  setFilterData(originalData,filterData){
+    let amc = this.getReportFilterData(originalData.schemeWise,(filterData) ? filterData.schemeWise : '','amc_id','amc_id');
+    let folio = this.getReportFilterData(originalData.mutualFundList,(filterData) ? filterData.mutualFundList : '','folioNumber','folioNumber');
+    let category = this.getReportFilterData(originalData.mutualFundCategoryMastersList,(filterData) ? filterData.mutualFundCategoryMastersList : '','id','id');
+     let familyMember = this.getReportFilterData(originalData.family_member_list,(filterData) ? filterData.family_member_list:'','id','id');
+     let scheme = this.getReportFilterData(originalData.mutualFundList,(filterData) ? filterData.mutualFundList:'','schemeId','schemeId');
+    const obj={
+      schemeWise:amc,
+      folioWise:folio,
+      category:category,
+      familyMember:familyMember,
+      scheme:scheme
+    }
+    return obj;
+  }
+  getReportFilterData(orgData,filterData,orgId,FilterId){
+    orgData = orgData.filter((item: any) =>
+    (item.currentValue!=0 && item.currentValue > 0)
+    );
+ 
+    if(filterData ? (filterData.length != orgData.length) : filterData){
+      filterData = filterData.filter((item: any) =>
+      (item.currentValue!=0 && item.currentValue > 0)
+      );
+      orgData.forEach(item => item.selected = '');
+      // orgData.forEach(element => {
+      //   filterData.forEach(item => {
+      //     if(item[FilterId] == element[orgId]){
+      //       element.selected = true
+      //     }
+      //     else{
+      //       element.selected = false
+      //     }
+      //   });
+      // });
 
+      filterData.forEach(element => {
+        orgData.forEach(item => {
+          if(item[orgId] == element[FilterId]){
+            item.selected = true;
+          }
+        });
+      });
+    }else{
+      orgData.forEach(item => item.selected = true);
+    }
+      orgData.forEach(element => {
+        if(element.selected == ''){
+          element.selected = false;
+        }
+      });
+    orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
+    return orgData;
+  }
   getMutualFundData() {
     return this.mutualFundDataSource.asObservable();
   }

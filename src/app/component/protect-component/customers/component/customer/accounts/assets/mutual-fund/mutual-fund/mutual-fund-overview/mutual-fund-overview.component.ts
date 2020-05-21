@@ -63,6 +63,7 @@ export class MutualFundOverviewComponent implements OnInit {
   filterData: any;
   viewMode: string;
   mutualFund: any;
+  setDefaultFilterData: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
@@ -180,6 +181,8 @@ export class MutualFundOverviewComponent implements OnInit {
       this.filterData = this.MfServiceService.doFiltering(data);
       if (!this.rightFilterData) {
         this.mutualFund = this.filterData;
+        this.setDefaultFilterData = this.MfServiceService.setFilterData(this.filterData,this.rightFilterData);
+
         this.MfServiceService.setMfData(this.mutualFund);
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
@@ -537,14 +540,24 @@ export class MutualFundOverviewComponent implements OnInit {
       state: 'open35',
       componentName: RightFilterComponent
     };
+    // fragmentData.data = {
+    //   name: 'Overview Report',
+    //   mfData: this.mutualFund,
+    //   folioWise: this.mutualFund.mutualFundList,
+    //   schemeWise: this.mutualFund.schemeWise,
+    //   familyMember: this.mutualFund.family_member_list,
+    //   category: this.mutualFund.mutualFundCategoryMastersList,
+    //   transactionView: this.displayedColumns,
+    // };
     fragmentData.data = {
       name: 'Overview Report',
       mfData: this.mutualFund,
-      folioWise: this.mutualFund.mutualFundList,
-      schemeWise: this.mutualFund.schemeWise,
-      familyMember: this.mutualFund.family_member_list,
-      category: this.mutualFund.mutualFundCategoryMastersList,
+      folioWise: this.setDefaultFilterData.folioWise,
+      schemeWise: this.setDefaultFilterData.schemeWise,
+      category: this.setDefaultFilterData.category,
       transactionView: this.displayedColumns,
+      familyMember:this.setDefaultFilterData.familyMember,
+      scheme:this.setDefaultFilterData.scheme
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -574,6 +587,7 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+            this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData.mfData);
 
             this.isLoading = false;
             this.changeInput.emit(false);
