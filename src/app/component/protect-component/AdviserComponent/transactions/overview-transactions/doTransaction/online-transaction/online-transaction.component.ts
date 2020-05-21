@@ -95,10 +95,13 @@ export class OnlineTransactionComponent implements OnInit {
     // this.getDefaultDetails(null)
   }
 
+  isAdvisorSection;
+
   setClientFilterList() {
     if (!this.inputData || this.inputData.isAdvisorSection == null ||
       this.inputData.isAdvisorSection == undefined ||
       this.inputData.isAdvisorSection) {
+      this.isAdvisorSection = true;
       this.stateCtrl.valueChanges
         .subscribe(newValue => {
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
@@ -111,6 +114,7 @@ export class OnlineTransactionComponent implements OnInit {
             }));
         });
     } else {
+      this.isAdvisorSection = false;
       const obj = {
         clientId: AuthService.getClientId(),
       };
@@ -317,8 +321,7 @@ export class OnlineTransactionComponent implements OnInit {
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
           familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
-          isAdvisorSection: this.inputData.isAdvisorSection
-
+          isAdvisorSection: this.isAdvisorSection
         };
         this.openPurchaseTransaction(data.transactionType, data);
       } else {

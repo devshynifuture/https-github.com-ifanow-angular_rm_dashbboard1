@@ -12,6 +12,8 @@ export class ConfirmationTransactionComponent implements OnInit {
   inputData: any;
   isViewInitCalled: any;
   confirmData: any;
+  platformName;
+  salutationString;
 
   constructor(private subInjectService: SubscriptionInject,
               public router: Router,) {
@@ -20,6 +22,8 @@ export class ConfirmationTransactionComponent implements OnInit {
   @Input() set data(data) {
     this.inputData = data;
     this.confirmData = data;
+    this.platformName = this.confirmData.aggregatorType == 1 ? 'NSE NMF II' : 'BSE Star MF';
+    this.salutationString = this.confirmData.isAdvisorSection ? 'Your client' : 'You';
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }

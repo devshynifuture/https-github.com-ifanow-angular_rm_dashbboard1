@@ -106,6 +106,7 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {transactType: 'SWP'});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {multiTransact: false});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
 
   }

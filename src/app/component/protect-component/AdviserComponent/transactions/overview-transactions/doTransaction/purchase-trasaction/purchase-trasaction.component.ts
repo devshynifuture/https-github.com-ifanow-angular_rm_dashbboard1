@@ -111,6 +111,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {paymentMode: 1});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, {multiTransact: false});
   }
