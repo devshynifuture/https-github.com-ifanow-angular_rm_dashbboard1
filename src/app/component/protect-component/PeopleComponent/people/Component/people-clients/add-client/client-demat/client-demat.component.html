@@ -9,8 +9,7 @@
   </div>
 </div>
 <div class="pl-16 pb-12 mob-pl-0" [formGroup]="dematForm">
-  <div class="row pt-44" [ngClass]="{'pt-90': fieldFlag==undefined}">
-    <!-- vaibhav -->
+  <!-- <div class="row pt-44" [ngClass]="{'pt-90': fieldFlag==undefined}">
     <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
       <h5 class="m-0 pt-8 mob-pb-10">Mode of holding</h5>
     </div>
@@ -28,7 +27,7 @@
       </mat-radio-group>
     </div>
   </div>
-  <div *ngIf="holdingMode=='1'" class="row pt-44 mob-pt-10">
+  <div  class="row pt-44 mob-pt-10">
     <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10">
       <h5 class="m-0 pt-20">Holder name</h5>
     </div>
@@ -44,8 +43,8 @@
         </mat-form-field>
       </div>
     </div>
-  </div>
-  <app-add-holder-names *ngIf="dematList && holdingMode=='2'" [holderListInput]="dematList.holderNameList"
+  </div> -->
+  <app-add-holder-names *ngIf="dematList" [holderListInput]="dematList.holderNameList"
     (holderList)="getHolderList($event)">
   </app-add-holder-names>
   <div class="row pt-54">
