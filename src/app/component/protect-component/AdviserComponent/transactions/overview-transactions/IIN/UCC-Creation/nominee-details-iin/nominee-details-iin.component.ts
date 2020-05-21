@@ -1,20 +1,20 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { MatInput } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {MatInput} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -210,7 +210,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: 100,
       // percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
-      addressType: [(data.address.addressType) ? data.address.addressType : '', [Validators.required]],
+      addressType: [(data.address.addressType) ? data.address.addressType : 'Residential', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],

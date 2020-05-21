@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./transactions-list.component.scss']
 })
 export class TransactionsListComponent implements OnInit {
-  displayedColumns: string[] = ['platformName', 'transactionNumber', 'clientName', 'schemeName', 'type', 'amount', 'orderDate',
+  displayedColumns: string[] = ['platformName', 'clientName', 'schemeName', 'type', 'amount', 'orderDate',
     'status', 'icons'];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
