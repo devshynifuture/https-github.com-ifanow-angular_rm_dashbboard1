@@ -606,7 +606,7 @@
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
                                 <mat-option value='' disabled>Select roles</mat-option>
-                                <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                                <mat-option (click)="addRole(role)" [value]="role.id" *ngFor="let role of clientRoles">
                                     {{role.roleName}}</mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>
@@ -942,7 +942,7 @@
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
                                 <mat-option value='' disabled>Select roles</mat-option>
-                                <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                                <mat-option (click)="addRole(role)" [value]="role.id" *ngFor="let role of clientRoles">
                                     {{role.roleName}}</mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>

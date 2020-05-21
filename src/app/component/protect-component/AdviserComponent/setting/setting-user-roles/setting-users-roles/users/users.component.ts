@@ -102,11 +102,11 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUserWithClients(user) {
-    if(user.clientCount > 0) {
+    if (user.clientCount > 0) {
       const newUserList = this.userList.filter(nUser => nUser.id != user.id);
       const dialogData = {
-        header: 'Delete',
-        body: 'Are you sure you want to delete this user?',
+        header: 'DELETE TEAM MEMBER',
+        body: 'Choose team member to transfer the ownership.',
         body2: 'This cannot be undone.',
         userList: newUserList,
         selectKey: 'adminAdvisorId',
