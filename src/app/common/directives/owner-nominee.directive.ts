@@ -70,7 +70,6 @@ export class OwnerNomineeDirective {
     this.emitedNOminee = data.Fmember;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if ((this.clientId || this.clientIdData) && data.Fmember.length <= 0) {
       this.getListFamilyMem();
     }
@@ -89,7 +88,6 @@ export class OwnerNomineeDirective {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data);
     data.forEach((singleData) => {
       singleData['userName'] = singleData.displayName;
       setTimeout(() => {
@@ -99,7 +97,6 @@ export class OwnerNomineeDirective {
     this.sendData = data;
     this.disabledMember(null);
     this.valueChange1.emit(this.sendData);
-    console.log(this.sendData, 'sendData 123');
   }
 
   removeCoOwner(item) {
@@ -126,7 +123,6 @@ export class OwnerNomineeDirective {
       }
     }
 
-    console.log(controlsArr, 'controlsArr 123');
     if (this.sendData.length <= 0) {
       this.sendData = this.emitedNOminee;
     }
@@ -179,7 +175,6 @@ export class OwnerNomineeDirective {
             arrayCon.get('share').setErrors({incorrect: true});
             arrayCon.get('share').markAsTouched();
             // arrayCon.get('share').updateValueAndValidity();
-            console.log('show error Percent cannot be more than 100%', arrayCon);
           } else {
             this.showErrorOwner = false;
             // this.showErrorCoOwner = false;
@@ -206,7 +201,6 @@ export class OwnerNomineeDirective {
             arrayCon.get('sharePercentage').markAsTouched();
             // arrayCon.get('sharePercentage').updateValueAndValidity();
           }
-          console.log('show error Percent cannot be more than 100%');
         } else {
           this.showErrorOwner = false;
           // this.showErrorCoOwner = false;
@@ -221,7 +215,6 @@ export class OwnerNomineeDirective {
   }
 
   setOwnerNominee() {
-    console.log(this.getCoOwner);
 
     this.ownerNomineeJson = {
       owner: this.getCoOwner,

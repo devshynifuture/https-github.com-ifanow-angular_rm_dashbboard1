@@ -17,6 +17,7 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
 import { UpdateClientProfileComponent } from './update-client-profile/update-client-profile.component';
+import { AgePopupComponent } from './age-popup/age-popup.component';
 
 @Component({
   selector: 'app-overview-profile',
@@ -89,6 +90,20 @@ export class OverviewProfileComponent implements OnInit {
         console.error(err)
       }
     );
+  }
+  openAgePopup() {
+    const dialogRef = this.dialog.open(AgePopupComponent,
+      {
+        width: '400px',
+        height: '200px',
+        data: this.clientOverviewData
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.flag != 'cancel') {
+        this.getClientData(this.clientOverviewData);
+      }
+    });
   }
   getFamilyMembersList(data) {
     const obj = {

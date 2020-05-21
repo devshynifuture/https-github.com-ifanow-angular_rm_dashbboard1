@@ -1,0 +1,22 @@
+<div class="p-20 pb-20 age-popup">
+    <div mat-dialog-content class="ox-hide">
+        <h1 mat-dialog-title>Enter age</h1>
+        <mat-form-field class="ba-date">
+            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
+                class="form-control br-0 b-0" [formControl]="birthDate" matInput readonly>
+            <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
+            </mat-datepicker-toggle>
+            <mat-datepicker #dobAsPerRecord></mat-datepicker>
+            <mat-error>This field is required</mat-error>
+        </mat-form-field>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-12 text-right">
+
+        </div>
+    </div> -->
+    <div mat-dialog-actions class="pt-32 right text-right">
+        <button mat-button (click)="cancel(null)" class="text-danger">Cancel</button>
+        <button mat-button class="text-primary" (click)="editBirthDate()" cdkFocusInitial>Edit</button>
+    </div>
+</div>

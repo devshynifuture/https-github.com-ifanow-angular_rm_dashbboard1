@@ -75,7 +75,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.clientId = AuthService.getClientId();
     this.insuranceSubTypeId = data.insuranceSubTypeId;
     this.showInsurance = data.showInsurance;
-    this.getFamilyMemberList();
+    // this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
     console.log(data);
   }
@@ -477,12 +477,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.editInsuranceData.insuranceCashflowList.forEach(element => {
           (this.cashFlowForm.controls.cashFlow as FormArray).push(this.fb.group({
             cashFlowType: [element.cashFlowType + '', [Validators.required]],
-            year: [element.cashFlowYear, Validators.required],
+            year: [new Date(element.cashFlowYear), Validators.required],
             approxAmt: [(element.cashFlowApproxAmount + ''), Validators.required]
           }));
           const obj = {
             cashFlowType: element.cashFlowType,
-            cashFlowYear: element.cashFlowYear,
+            cashFlowYear: new Date(element.cashFlowYear),
             cashFlowApproxAmount: element.cashFlowApproxAmount
           };
           this.finalCashFlowData.push(obj);
@@ -510,7 +510,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm }
     }
 
-    this.getFamilyMemberList();
+    // this.getFamilyMemberList();
   }
   getFamilyData(value, data) {
 

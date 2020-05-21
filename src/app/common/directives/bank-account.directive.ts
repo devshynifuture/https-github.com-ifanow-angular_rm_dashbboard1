@@ -35,7 +35,6 @@ export class BankAccountDirective {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData();
-    console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     this.getAccountList();
   }
 
@@ -55,7 +54,6 @@ export class BankAccountDirective {
   }
 
   getBankAccountRes(data) {
-    console.log('bankAccountDetails--->', data);
     this.outputValue.emit(data);
   }
 
@@ -69,9 +67,7 @@ export class BankAccountDirective {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log(sideBarData);
           this.eventService.openSnackBar('Bank added successfully', 'Ok');
           this.getAccountList();
           rightSideDataSub.unsubscribe();

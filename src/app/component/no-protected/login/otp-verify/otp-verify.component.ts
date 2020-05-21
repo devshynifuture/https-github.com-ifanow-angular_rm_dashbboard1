@@ -30,7 +30,7 @@ export class OtpVerifyComponent implements OnInit {
 
   @Input() set otpData(data) {
     if (data.length == 0 && this.ngOtpInput.otpForm) {
-      console.log(this.ngOtpInput.otpForm.reset());
+      this.ngOtpInput.otpForm.reset()
     }
   }
 

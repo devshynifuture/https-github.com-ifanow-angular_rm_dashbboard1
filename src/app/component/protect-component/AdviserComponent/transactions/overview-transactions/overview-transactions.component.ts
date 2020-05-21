@@ -12,7 +12,7 @@ import {HttpService} from 'src/app/http-service/http-service';
 import {TransactionMobileViewComponent} from '../transaction-mobile-view/transaction-mobile-view.component';
 import {MatDialog} from '@angular/material';
 import {OnlineTransactionService} from '../online-transaction.service';
-import { TransactionsHistoryComponent } from '../transactions-list/transactions-history/transactions-history.component';
+import {TransactionsHistoryComponent} from '../transactions-list/transactions-history/transactions-history.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -101,8 +101,10 @@ export class OverviewTransactionsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getAllTransactionList();
-          this.transactionList = undefined;
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getAllTransactionList();
+            this.transactionList = undefined;
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -182,7 +184,7 @@ export class OverviewTransactionsComponent implements OnInit {
           this.doneTrasaction = [];
         } else {
           this.percentageTrasact = ((this.doneTrasaction / this.transactionCount) * 100);
-          this.percentageTrasact = (this.percentageTrasact).toFixed(2)
+          this.percentageTrasact = (this.percentageTrasact).toFixed(2);
         }
         this.pendingTransaction = this.rejectionTransaction.length;
         this.rejectionTransaction = this.rejectionTransaction.length;
