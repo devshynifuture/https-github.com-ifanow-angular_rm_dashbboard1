@@ -2,7 +2,8 @@
     <div mat-dialog-content class="ox-hide">
         <h1 mat-dialog-title>Enter age</h1>
         <mat-form-field class="ba-date">
-            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
+            <!-- prod fix -->
+            <input [matDatepicker]="dobAsPerRecord" [max]="maxDate"
                 class="form-control br-0 b-0" [formControl]="birthDate" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
             </mat-datepicker-toggle>
