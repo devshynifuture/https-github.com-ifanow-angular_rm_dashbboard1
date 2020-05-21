@@ -137,7 +137,7 @@
                         <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
                 </div>
             </div>
-            <div *ngIf="fieldFlag=='client' && basicDetailsData.userId" class="row pt-58">
+            <div *ngIf="fieldFlag!='familyMember' && basicDetailsData.userId" class="row pt-58">
                 <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
                     <h5 class="m-0 pt-12">Username</h5>
                     <p class="f-12 m-0 l-18 roboto text-custom mob-pt-10">This will be the login ID. By default, email
@@ -222,9 +222,9 @@
                                     [value]="singleClient.adminAdvisorId">
                                     {{singleClient.fullName}}
                                 </mat-option>
-                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                <!-- <mat-option *ngIf="clientOwnerList==undefined" value="1">
                                     {{advisorData.name}}
-                                </mat-option>
+                                </mat-option> -->
                             </mat-select>
                             <mat-error class="f-12">This field is required
                             </mat-error>
@@ -303,9 +303,9 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
                                 class="form-control">
-                                <mat-option *ngIf="clientOwnerList==undefined" value='1'>
+                                <!-- <mat-option *ngIf="clientOwnerList==undefined" value='1'>
                                     {{advisorData.name}}
-                                </mat-option>
+                                </mat-option> -->
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList"
                                     [value]="singleClient.adminAdvisorId">
@@ -549,6 +549,24 @@
                 <div class="col-md-4 d-flex align-items-center">
                     <!-- <p class="m-0 d-flex roboto text-primary f-400 c-p">
                         <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
+                </div>
+            </div>
+            <div *ngIf="fieldFlag!='familyMember' && basicDetailsData.userId" class="row pt-58">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
+                    <h5 class="m-0 pt-12">Username</h5>
+                    <p class="f-12 m-0 l-18 roboto text-custom mob-pt-10">This will be the login ID. By default, email
+                        is the username
+                    </p>
+                </div>
+                <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input #username [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                                autocomplete="off" class="form-control" formControlName="username" matInput>
+                            <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
             <div *ngIf="fieldFlag=='client'" class="row pt-44">
@@ -873,9 +891,9 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
                                 class="form-control">
-                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                <!-- <mat-option *ngIf="clientOwnerList==undefined" value="1">
                                     {{advisorData.name}}
-                                </mat-option>
+                                </mat-option> -->
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList"
                                     [value]="singleClient.adminAdvisorId">
