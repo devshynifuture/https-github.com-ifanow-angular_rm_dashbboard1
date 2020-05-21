@@ -187,6 +187,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
+      username: [{ value: data.userName, disabled: true }],
     });
     if (this.fieldFlag == 'client') {
       this.minorForm.controls.gEmail.setValidators([Validators.required, Validators.pattern(this.validatorType.EMAIL)]);
