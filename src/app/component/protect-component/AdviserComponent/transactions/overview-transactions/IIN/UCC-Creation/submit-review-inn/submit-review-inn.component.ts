@@ -18,6 +18,17 @@ import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loa
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
+
+  isFileUploading = false;
+
+  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
+              private eventService: EventService, public dialog: MatDialog) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   dialogRef;
 
   dataSourceNse = [];
@@ -29,10 +40,6 @@ export class SubmitReviewInnComponent implements OnInit {
   changedValue: string;
   advisorId: any;
   brokerCredentials: any;
-
-  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService, public dialog: MatDialog) {
-  }
 
   reviewSubmit: any;
   inputData: any;
@@ -54,10 +61,6 @@ export class SubmitReviewInnComponent implements OnInit {
   BSEValue = '2';
   responseMessage: any;
   statusString: any;
-
-  get data() {
-    return this.inputData;
-  }
 
   @Input()
   set data(data) {
@@ -295,12 +298,14 @@ export class SubmitReviewInnComponent implements OnInit {
       tpUserRequestId,
       documentType
     };
+    this.isFileUploading = true;
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);
         console.log('getFileDetails uploadFileToServer callback headers : ', headers);
         console.log('getFileDetails uploadFileToServer callback response : ', response);
+        this.isFileUploading = false;
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);

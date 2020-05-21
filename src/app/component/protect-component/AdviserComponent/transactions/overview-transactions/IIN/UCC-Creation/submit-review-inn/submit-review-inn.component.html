@@ -62,6 +62,7 @@
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
           <button (click)="uploadFileInput.click()"
+                  [disabled]="isFileUploading"
                   class="btnConfirm bg-primary text-white"
                   mat-button>
             Upload AOF
@@ -69,6 +70,7 @@
                    type="file">
           </button>
           <button (click)="uploadFileInput.click()"
+                  [disabled]="isFileUploading"
                   class="btnConfirm bg-primary text-white"
                   mat-button>
             Upload Cheque
@@ -120,6 +122,7 @@
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
           <button (click)="uploadFileInput.click()"
+                  [disabled]="isFileUploading"
                   class="btnConfirm bg-primary text-white"
                   mat-button>
             Upload AOF
