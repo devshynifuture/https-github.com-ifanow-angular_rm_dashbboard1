@@ -11,7 +11,6 @@ export class HowToUseDialogComponent implements OnInit {
   constructor(public dialogRef:MatDialogRef<HowToUseDialogComponent>,@Inject(MAT_DIALOG_DATA) public fragmentData: any) { }
 
   ngOnInit() {
-    console.log("fragmentData",this.fragmentData);
   }
   dialogClose() {
     this.dialogRef.close();

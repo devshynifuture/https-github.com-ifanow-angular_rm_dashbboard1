@@ -173,7 +173,6 @@ export class CategoryWiseComponent implements OnInit {
     }
     this.backoffice.getClientFolioWiseInCategory(obj).subscribe(
       data => {
-        console.log(data);
       },
       err => this.getFilerrorResponse(err)
     )
@@ -183,8 +182,6 @@ export class CategoryWiseComponent implements OnInit {
 
     this.selectedCategory = index;
     category.showCategory = !category.showCategory;
-    console.log("need to check this::", this.category[index]);
-    // console.log(category);
     if (!category.showCategory) {
       if (this.category[this.selectedCategory].hasOwnProperty('subCategoryList') && this.category[this.selectedCategory].subCategoryList.length !== 0) {
         this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, index, 'sub-category');
@@ -207,13 +204,11 @@ export class CategoryWiseComponent implements OnInit {
         this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory].schemeList[index].applicantList = [];
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   getFileResponseDataForSubSchemeName(data) {
     this.isLoading = false;
     this.showLoader = false;
-    console.log("scheme Name:::", data);
     if (data) {
       this.category = data.categories;
       this.totalAumForSubSchemeName = data.totalAum;
@@ -252,7 +247,6 @@ export class CategoryWiseComponent implements OnInit {
 
   showApplicantName(schemeData, index, catIndex) {
     this.selectedClientIndex = index;
-    console.log(this.category);
     schemeData.showScheme = !schemeData.showScheme;
     if (!schemeData.showScheme) {
       this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes[this.selectedClientIndex].clientList, index, 'applicant');
@@ -329,7 +323,6 @@ export class CategoryWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
 
   categoryWiseExcelSheet() {

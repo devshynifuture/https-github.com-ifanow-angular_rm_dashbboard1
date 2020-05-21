@@ -20,7 +20,6 @@ export class LeftSidebarComponent implements OnInit {
   ngOnInit() {
     this.emailService.getRightSideNavList().subscribe(responseData => {
       this.navList = responseData;
-      console.log('this is nav List ->>', this.navList);
     });
   }
 

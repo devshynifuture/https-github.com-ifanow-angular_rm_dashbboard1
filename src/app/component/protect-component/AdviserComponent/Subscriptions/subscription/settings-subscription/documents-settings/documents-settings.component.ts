@@ -73,7 +73,6 @@ export class DocumentsSettingsComponent implements OnInit {
       this.documentSettingData = data;
     }
     //this.showLoader = false;
-    console.log(this.documentSettingData, "documentSettingData");
     
   }
 
@@ -83,7 +82,6 @@ export class DocumentsSettingsComponent implements OnInit {
       const tempList = this.documentSettingData.filter(d => d.documentRepositoryId != data);
       this.documentSettingData = tempList;
     }
-    console.log("hi i was call 12-02", data, this.documentSettingData );
 
   }
   OpenHelp(value, state, data) {
@@ -96,9 +94,7 @@ export class DocumentsSettingsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -113,7 +109,6 @@ export class DocumentsSettingsComponent implements OnInit {
   openFragment(data, singleDocument) {
     this.location.replaceState('/subscription-upper');
     (singleDocument == null) ? singleDocument = data : singleDocument.flag = data
-    console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'documents',
       id: 1,
@@ -128,7 +123,6 @@ export class DocumentsSettingsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          console.log(upperSliderData,"upperSliderData 123")
           if (UtilService.isRefreshRequired(upperSliderData)) {
             this.getDocumentsSetting();
           }

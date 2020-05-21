@@ -90,7 +90,6 @@ export class SignUpComponent implements OnInit {
       this.signUpForm.get('companyName').updateValueAndValidity();
     }
     if (this.signUpForm.invalid) {
-      console.log('Error');
       this.signUpForm.markAllAsTouched();
       return;
     } else if (this.signUpForm.value.termsAgreement == false) {
@@ -119,7 +118,6 @@ export class SignUpComponent implements OnInit {
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
         data => {
-          console.log(data);
           if (data == 400) {
             this.barButtonOptions.active = false;
             this.confirmModal(null);
@@ -178,11 +176,9 @@ export class SignUpComponent implements OnInit {
         dialogRef.close();
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
         this.router.navigate(['login']);
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',

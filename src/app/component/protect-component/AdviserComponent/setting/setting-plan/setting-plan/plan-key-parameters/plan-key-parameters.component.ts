@@ -104,7 +104,6 @@ export class PlanKeyParametersComponent implements OnInit {
     }
   }
   updateKeyParameter(value, id) {
-    console.log('option', value)
     let obj = {
       parameter: (value.value == undefined) ? value : value.value,
       configurationTypeId: id,

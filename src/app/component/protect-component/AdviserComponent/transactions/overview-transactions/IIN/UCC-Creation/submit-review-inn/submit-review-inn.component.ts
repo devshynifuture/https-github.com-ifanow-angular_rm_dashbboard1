@@ -16,16 +16,26 @@ import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
+
+
+  dataSource = [];
+  isLoading = false;
+  selectedCount = 0;
+
   changedValue: string;
   advisorId: any;
   brokerCredentials: any;
+
+  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
+              private eventService: EventService) {
+  }
+
   reviewSubmit: any;
   inputData: any;
   nse: any;
   bse: any;
   allData: any;
   createdBrokerMap: any = {};
-  selectedBrokerBse: any;
   matValue: any;
   doneData: any;
   tokenRes: any;
@@ -40,11 +50,9 @@ export class SubmitReviewInnComponent implements OnInit {
   BSEValue = '2';
   responseMessage: any;
   statusString: any;
-  isLoading: boolean = false;
 
-
-  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
+  get data() {
+    return this.inputData;
   }
 
   @Input()
@@ -80,10 +88,6 @@ export class SubmitReviewInnComponent implements OnInit {
     this.changedValue = 'close';
   }
 
-  get data() {
-    return this.inputData;
-  }
-
   ngOnInit() {
     this.changedValue = '';
     this.advisorId = AuthService.getAdvisorId();
@@ -109,7 +113,21 @@ export class SubmitReviewInnComponent implements OnInit {
     this.isLoading = false;
     console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
+    if (this.brokerCredentials) {
+      this.brokerCredentials.forEach(singleCred => {
+        if (singleCred.defaultLogin == 1) {
+          this.dataSource.push(singleCred);
+          singleCred.selected = true;
+          this.selectedCount = this.selectedCount + 1;
+        }
+      });
+      if (this.selectedCount == 0 && this.brokerCredentials.length > 0) {
+        this.dataSource.push(this.brokerCredentials[0]);
+        this.brokerCredentials[0].selected = true;
+        this.selectedCount = this.selectedCount + 1;
+      }
+    }
+    // this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
     console.log('nse', this.nse);
     console.log('bse', this.bse);
   }
@@ -147,21 +165,6 @@ export class SubmitReviewInnComponent implements OnInit {
     return this.reviewSubmit.controls;
   }
 
-  selectArn(value) {
-    this.selectedBrokerBse = value;
-    const date = new Date();
-    const date1 = date.getDate();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    this.fileName = (this.selectedBrokerBse.memberId).toString() + 'GAURAVD1' + date1 + month + year + '.tiff';
-
-    console.log('fileName', this.fileName);
-  }
-
-  selectArnNse(value) {
-    this.selectedBrokerBse = value;
-  }
-
   selectPlatform(value) {
     console.log('mat check', value);
     this.platform = value.value;
@@ -170,7 +173,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
 
-  submit() {
+  submit(singleBrokerCred) {
     this.doneData = true;
     this.toSendObjHolderList = [];
     this.toSendObjBankList = [];
@@ -212,37 +215,28 @@ export class SubmitReviewInnComponent implements OnInit {
       bankDetailList: this.toSendObjBankList,
       nomineeList: this.toSendObjNomineeList,
       fatcaDetail: this.allData.fatcaDetail,
-      id: 2,
       divPayMode: this.allData.bankDetailList[0].paymentMode,
       occupationCode: this.allData.fatcaDetail.occupationCode,
       clientCode: this.reviewSubmit.controls.accountNumber.value,
-      aggregatorType: this.selectedBrokerBse.aggregatorType,
+      aggregatorType: singleBrokerCred.aggregatorType,
       familyMemberId: this.allData.familyMemberId,
       clientId: this.allData.clientId,
       advisorId: this.allData.advisorId,
-      tpUserCredentialId: this.selectedBrokerBse.id,
+      tpUserCredentialId: singleBrokerCred.id,
       commMode: 1,
       confirmationFlag: 1,
-      tpUserSubRequestClientId1: 2,
-
     };
     this.onlineTransact.createIINUCC(obj1).subscribe(
-      data => this.createIINUCCRes(data), (error) => {
+      data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
 
-  createIINUCCRes(data) {
+  createIINUCCRes(data, singleBrokerCred) {
     console.log('data respose =', data);
-    this.createdBrokerMap[this.selectedBrokerBse.id] = {
-      tpUserRequestId: data.id, tpUserRequest: data,
-      brokerData: this.selectedBrokerBse
-    };
-    this.responseMessage = data.responseMessage;
-    this.statusString = data.statusString;
-    // this.eventService.showErrorMessage(data.statusString);
-    // this.eventService.showErrorMessage(data.responseMessage);
+    singleBrokerCred.tpUserRequestId = data.id;
+    singleBrokerCred.tpUserRequest = data;
   }
 
   getTokenRes(data) {
@@ -250,18 +244,28 @@ export class SubmitReviewInnComponent implements OnInit {
     this.tokenRes = data;
   }
 
-  getFileDetails(documentType, e) {
+  addNewRow() {
+    this.brokerCredentials.forEach(singleCred => {
+      if (!singleCred.selected) {
+        this.dataSource.push(singleCred);
+        singleCred.selected = true;
+        this.selectedCount = this.selectedCount + 1;
+      }
+    });
+  }
+
+  getFileDetails(documentType, e, singleBrokerCred) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
-    const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
-    if (!requestMapObject) {
+    const tpUserRequestId = singleBrokerCred.tpUserRequestId;
+    if (!tpUserRequestId || tpUserRequestId == 0) {
       this.eventService.openSnackBar('Please create account first', 'Dismiss');
       return;
     }
     const requestMap = {
-      tpUserRequestId: requestMapObject.tpUserRequestId,
+      tpUserRequestId,
       documentType
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
@@ -279,5 +283,9 @@ export class SubmitReviewInnComponent implements OnInit {
           this.eventService.openSnackBar(responseObject.message, 'Dismiss');
         }
       });
+  }
+
+  openIinUccClient() {
+
   }
 }

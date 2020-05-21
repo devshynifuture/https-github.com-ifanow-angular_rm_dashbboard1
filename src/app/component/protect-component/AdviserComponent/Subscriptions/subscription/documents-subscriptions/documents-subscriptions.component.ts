@@ -220,11 +220,9 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getClientSubData(false);
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -241,13 +239,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.subscription.getEsignedDocument(obj).subscribe(
       data => this.downloadEsignResponseData(data),
       error => {
-        console.log(error);
       }
     );
   }
 
   downloadEsignResponseData(data) {
-    console.log(data, 'downloadEsign 123');
     window.open(data.presginedUrl);
   }
 
@@ -296,8 +292,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     } else {
       this.showFilter = true;
     }
-    console.log('this.filterStatus: ', this.filterStatus);
-    console.log('this.filterDate: ', this.filterDate);
   }
 
   orgValueChange(selectedDateRange) {
@@ -334,7 +328,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.isLoading = true;
     this.subService.getSubscriptionClientsList(obj).subscribe(
       (data) => {
-        console.log(data, 'clientdata');
 
       }, (error) => {
         this.eventService.openSnackBar('Something went wrong!', 'Dismiss');
@@ -343,7 +336,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   getFiterRes(data) {
-    console.log(data, "data for filter");
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
     this.selectedDateRange = data.dateFilterJson;
@@ -357,19 +349,16 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   // addFilters(addFilters) {
 
-  //   console.log('addFilters', addFilters);
   //   // !_.includes(this.filterStatus, addFilters)
   //   if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
   //     this.lastFilterDataId = 0;
   //     this.filterStatus.push(addFilters);
   //     this.filterDataArr = [];
-  //     console.log(this.filterStatus);
   //   } else {
   //     this.lastFilterDataId = 0;
   //     // _.remove(this.filterStatus, this.senddataTo);
   //   }
 
-  //   console.log(this.filterStatus, 'this.filterStatus 123');
 
   //   this.callFilter(false);
   // }
@@ -383,7 +372,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   //   this.filterDataArr = [];
   //   this.lastFilterDataId = 0;
   //   this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-  //   console.log('addFilters', dateFilter);
   //   const beginDate = new Date();
   //   beginDate.setMonth(beginDate.getMonth() - 1);
   //   UtilService.getStartOfTheDay(beginDate);
@@ -392,13 +380,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   //   UtilService.getStartOfTheDay(endDate);
 
   //   this.selectedDateRange = { begin: beginDate, end: endDate };
-  //   console.log(this.filterDate, 'this.filterDate 123');
   //   this.callFilter(false);
   // }
 
 
   // removeDate(item) {
-  //   console.log(this.filterDate, 'this.filterDate 123 r');
   //   this.selectedDateFilter = 'dateFilter';
   //   this.filterDate.splice(item, 1);
   //   this.lastFilterDataId = 0;
@@ -427,13 +413,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       this.isLoading = true;
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
-        console.log(this.statusIdList, 'this.statusIdList 1233');
       });
     } else {
       this.statusIdList = [];
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
-    console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, 'aaaa');
     const obj = {
       advisorId: this.advisorId,
       limit: 10,
@@ -443,7 +427,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       statusIdList: this.statusIdList,
       dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
-    console.log('this.callFilter req obj : ', obj, this.statusIdList);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
       this.getClientSubData(false);
     } else {
@@ -458,7 +441,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   filterSubscriptionRes(data, scrollLoader) {
     this.isLoading = false;
 
-    console.log('filterSubscriptionRes', data);
     if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
       if (!scrollLoader) {
@@ -467,7 +449,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
-      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, 'this.statusIdList.length123');
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
       //   this.statusIdLength = this.statusIdList.length;
       //   this.lastFilterDataId = 0;
@@ -475,12 +456,10 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
       this.lastFilterDataId = data[data.length - 1].id;
       // }
-      console.log(this.lastFilterDataId, 'this.lastFilterDataId');
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
       } else {
         this.filterDataArr = this.filterDataArr.concat(data);
-        console.log(this.filterDataArr, 'this.filterDataArr 123');
       }
       this.scrollCallData = true;
 
@@ -491,13 +470,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   getdocumentResponseData(data) {
     this.isLoading = false;
-    console.log(data, "document data");
 
     if (data == undefined) {
       this.dataSource.data = [];
       this.noData = 'No Data Found';
     } else {
-      console.log(data);
       data.forEach(singleData => {
         singleData.documentText = singleData.docText;
       });
@@ -509,7 +486,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   // @Output() valueChange = new EventEmitter();
   deleteModal(data) {
-    console.log(data, 'data document');
 
     let list = [];
     if (data == null) {
@@ -540,7 +516,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -567,7 +542,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         });
         this.dataSource.data = tempList;
       }
-      console.log(result, this.dataSource.data, 'delete result');
     });
 
   }

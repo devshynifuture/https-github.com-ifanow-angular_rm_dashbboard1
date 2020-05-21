@@ -62,7 +62,6 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getBSECredentialsRes(data)
     );
@@ -70,7 +69,6 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
 
   getBSECredentialsRes(data) {
     this.isLoadingBroker = false;
-    console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == 2);
     this.nse = this.brokerCredentials.filter(element => element.aggregatorType == 1);
@@ -83,7 +81,6 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
     this.settingService.getTeamMembers(obj).subscribe(
       data => {
         this.teamMemberList = data || [];
-        console.log('teamMemberList', this.teamMemberList);
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -136,11 +133,9 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
         euin: this.addSubCredential.controls.euin.value,
         subBrokerCode: this.addSubCredential.controls.memberId.value,
       };
-      console.log('sendObj', obj);
       this.onlineTransact.addSubBroker(obj).subscribe(
         data => {
           this.subBroker = data || [];
-          console.log('subBroker', this.subBroker);
           this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
         },
         err => {

@@ -30,7 +30,6 @@ export class OverviewComponent implements OnInit {
   @Input()
   set upperData(upperData) {
     this._upperData = upperData;
-    console.log('OverviewComponent upperData: ', upperData);
     if (upperData && upperData.documentData) {
       this.changeDisplay();
     }
@@ -66,18 +65,15 @@ export class OverviewComponent implements OnInit {
       state: 'open',
       componentName: component
     };
-    console.log(fragmentData,"check fragmentData");
     
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
             this.upperData = sideBarData.data
             this._upperData = sideBarData.data
             this.changePlanData.emit(this.upperData)
           }
-          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -108,10 +104,8 @@ export class OverviewComponent implements OnInit {
 
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',

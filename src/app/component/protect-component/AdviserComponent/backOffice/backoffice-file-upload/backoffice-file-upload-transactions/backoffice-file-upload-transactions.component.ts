@@ -73,6 +73,5 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
 
   ngOnDestroy() {
     this.unSubcrip.unsubscribe();
-    console.log("unsubscribe");
   }
 }

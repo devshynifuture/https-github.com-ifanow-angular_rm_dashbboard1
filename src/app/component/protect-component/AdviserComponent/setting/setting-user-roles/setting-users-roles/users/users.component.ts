@@ -47,7 +47,6 @@ export class UsersComponent implements OnInit {
     };
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
       this.loader(-1);
-      console.log('team member details', res);
       this.userList = res;
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
@@ -153,12 +152,10 @@ export class UsersComponent implements OnInit {
       btnNo: 'SUSPEND',
       btnYes: 'CANCEL',
       negativeMethod: () => {
-        console.log('aborted');
       },
       positiveMethod: () => {
         const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
           .subscribe(response => {
-            console.log(response);
             this.eventService.openSnackBar('User Suspended');
             deleteFromTrashSubscription.unsubscribe();
             this.loadUsers();
@@ -185,7 +182,6 @@ export class UsersComponent implements OnInit {
       btnNo: 'REACTIVATE',
       btnYes: 'CANCEL',
       negativeMethod: () => {
-        console.log('aborted');
       },
       positiveMethod: () => {
         const deleteFromTrashSubscription = this.settingsService.reactivateMember(user.id)

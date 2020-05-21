@@ -101,6 +101,7 @@ export class SingleGoalYearComponent implements OnInit {
         break;
       default:
         console.error('unknown goal id found');
+        break;
     }
     return obj;
   }

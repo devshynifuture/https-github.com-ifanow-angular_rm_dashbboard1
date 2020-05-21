@@ -58,7 +58,6 @@ export class AllSipComponent implements OnInit {
         this.dataSource.filteredData.forEach(element => {
           this.totalAmount += element.amount;
         });
-        console.log(data);
       },
       err => {
         this.isLoading = false;

@@ -53,8 +53,6 @@ export class calendarService {
   }
 
   deleteEvent(data) {
-    console.log(data, "calendar data");
-    
     const httpParams = new HttpParams().set('calendarId', data.calendarId).set('userId', data.userId).set('eventId', data.eventId);
     return this.http.delete(apiConfig.GMAIL_URL + appConfig.GET_DELETE, data, httpParams);
   }

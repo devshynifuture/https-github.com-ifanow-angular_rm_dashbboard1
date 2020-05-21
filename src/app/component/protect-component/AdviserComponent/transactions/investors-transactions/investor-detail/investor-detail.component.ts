@@ -39,7 +39,6 @@ export class InvestorDetailComponent implements OnInit {
 
   ngOnInit() {
     this.details = this.data;
-    console.log('investor detail', this.data);
     this.getFormUploadDetail();
     this.getDataStatus(this.details);
   }
@@ -66,7 +65,6 @@ export class InvestorDetailComponent implements OnInit {
     this.isLoading = true;
 
     this.onlineTransact.getInvestorStatusCheck(obj).subscribe(resultData => {
-      console.log('Investor is activated');
       this.statusData[2].checked = true;
       this.isLoading = false;
     }, error => {
@@ -80,7 +78,6 @@ export class InvestorDetailComponent implements OnInit {
     const obj = {id: this.details.id};
     this.isLoading = true;
     this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
-      console.log('Investor is activated');
       if (this.details.aggregatorType == 2) {
         this.statusData[1].checked = true;
       } else if (resultData.length > 1) {
@@ -96,7 +93,6 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   refresh(value) {
-    console.log(value);
     this.getDataStatus(value);
   }
 
@@ -105,9 +101,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getFileDetails(documentType, e) {
-    console.log('file', e);
     this.file = e.target.files[0];
-    console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: this.details.id,
@@ -116,14 +110,9 @@ export class InvestorDetailComponent implements OnInit {
     this.isFileUploading = true;
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        console.log('getFileDetails uploadFileToServer callback item : ', item);
-        console.log('getFileDetails uploadFileToServer callback status : ', status);
-        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
-        console.log('getFileDetails uploadFileToServer callback response : ', response);
         this.isFileUploading = false;
         if (status == 200) {
           const responseObject = JSON.parse(response);
-          console.log('onChange file upload success response url : ', responseObject.url);
           this.eventService.openSnackBar('File uploaded successfully');
           this.getFormUploadDetail();
         } else {

@@ -146,7 +146,6 @@ export class EmailOnlyComponent implements OnInit {
       subject: this._inputData.subject,
       emailTemplateTypeId: this._inputData.emailTemplateTypeId
     }
-    console.log('send email obj =',obj)
     this.orgSetting.editPreEmailTemplate(obj).subscribe(
       data => this.editEmailTempalatRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
@@ -154,7 +153,6 @@ export class EmailOnlyComponent implements OnInit {
 
   }
   editEmailTempalatRes(data) {
-    console.log(data)
     this.close(true);
   }
   getEmailTemplateFilterData(invoiceData) {
@@ -168,12 +166,10 @@ export class EmailOnlyComponent implements OnInit {
       this.emailData = responseData;
       this.subject = this.emailData.subject;
       this.emailBody = this.emailData.body;
-      console.log('Invoice Data', invoiceData.clientData.clientName);
       this.emailBody.replace('$client_name', invoiceData.clientData.clientName);
       this.emailBody.replace('$advisor_name', AuthService.getUserInfo().fullName);
     }, error => {
       this.eventService.openSnackBar(error, 'Dismiss', () => {
-        console.log('Dismiss was clicked');
       });
     });
   }
@@ -194,7 +190,6 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getTemplateData(data) {
-    console.log(data);
   }
 
   openEmailQuot(value, state) {
@@ -203,14 +198,12 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getcommanFroalaData(data) {
-    console.log(data);
     this._inputData = data;
     this.emailBody = data;
 
   }
 
   save() {
-    console.log('here is saved data', this.emailBody);
     this.updateData(this.emailBody);
     this.close(true);
   }
@@ -227,12 +220,10 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getResponseData(data) {
-    console.log(data);
     this.close(true);
   }
 
   saveData(data) {
-    console.log(data);
     this.emailBody = data;
   }
 
@@ -274,7 +265,6 @@ export class EmailOnlyComponent implements OnInit {
       this.subscription.documentEsignRequest(emailRequestData).subscribe(
         data => this.getResponseData(data)
       );
-      console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
     } else {
 
       const emailRequestData = {

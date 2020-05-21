@@ -79,7 +79,6 @@ export class OnlineTransactionComponent implements OnInit {
     if (!this.inputData) {
       this.inputData = {};
     }
-    console.log('This is Input data of Online Transaction Component ', data);
 
     if (this.isViewInitCalled) {
       this.getdataForm(data);
@@ -104,7 +103,6 @@ export class OnlineTransactionComponent implements OnInit {
         .subscribe(newValue => {
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
             map(value => {
-              console.log('12398127389127398127389172389723891273891273');
               if (newValue) {
                 return this.enumDataService.getClientAndFamilyData(newValue);
               } else {
@@ -119,7 +117,6 @@ export class OnlineTransactionComponent implements OnInit {
 
       this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
         data => {
-          console.log('getClientFamilyMemberListAsset data : ', data);
           this.familyMemberList = data;
           this.filteredStates = of(this.familyMemberList);
         }, error => {
@@ -137,11 +134,9 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   checkOwnerList(event) {
-    console.log(this.filteredStates);
   }
 
   getDefaultDetails(platform) {
-    console.log('onlineTransactionComponent platform: ', platform);
     this.selectedClientOrFamily = platform.name;
     this.showSpinnerOwner = true;
     this.noMapping = true;
@@ -165,7 +160,6 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   getDefaultDetailsRes(data) {
-    console.log('deault', data);
     if (data == undefined) {
       return;
     } else {
@@ -275,7 +269,6 @@ export class OnlineTransactionComponent implements OnInit {
     // this.selectedDiv = value;
     this.transactionAddForm.controls.transactionType.setValue(value);
 
-    console.log(this.transactionAddForm);
   }
 
 
@@ -310,7 +303,6 @@ export class OnlineTransactionComponent implements OnInit {
     if (this.noMapping) {
       return;
     }
-    console.log(this.formStep);
     if (this.stateCtrl.valid) {
 
       // if (this.formStep == 'step-1' == this.checkFamilyMem == true) {

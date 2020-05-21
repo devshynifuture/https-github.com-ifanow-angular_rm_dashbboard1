@@ -84,7 +84,7 @@ export class TransactionEnumService {
         transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
         break;
       default:
-        console.log('');
+        break;
     }
     let statusString;
     transactionStatusList.forEach(element => {

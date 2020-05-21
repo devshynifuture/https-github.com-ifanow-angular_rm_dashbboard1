@@ -27,8 +27,8 @@
    class="material-icons">filter_list</i>FILTERS
  </button>-->
             <button (click)="openMandateClient(null)" *ngIf="dataSource.filteredData.length > 0 && !isLoading" class="btn-primary addon v-middle" mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
         </div>
     </div>
     <div class="row">
@@ -82,7 +82,7 @@
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="amount"> Amount</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> <span appFormatNumber>{{(isLoading) ? '' : (element.amount) ? element.amount : '-'}}
-              </span></div>
+                            </span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
@@ -96,10 +96,11 @@
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="achMandateStatus"> Status</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">
-                            <span *ngIf="element.statusString=='PENDING'" class="text-primary t-10 f-500 c-p">{{element.statusString}}</span>
-                            <span *ngIf="element.statusString=='REJECTED'" class="text-danger t-10 f-500 c-p">{{element.statusString}}</span>
-                            <span *ngIf="element.statusString=='APPROVED'" class="text-success t-10 f-500 c-p">{{element.statusString}}</span>
-                            <span *ngIf="element.statusString=='ACCEPTED'" class="text-warning t-10 f-500 c-p">{{element.statusString}}</span>
+                            <span *ngIf="element.statusString=='PENDING'" class="text-primary t-10 f-500 c-p">Pending</span>
+                            <span *ngIf="element.statusString=='REJECTED'" class="text-danger t-10 f-500 c-p"> Rejected
+                            </span>
+                            <span *ngIf="element.statusString=='APPROVED'" class="text-success t-10 f-500 c-p">Approved</span>
+                            <span *ngIf="element.statusString=='ACCEPTED'" class="text-warning t-10 f-500 c-p">Accepted</span>
                         </div>
                     </td>
                 </ng-container>
@@ -119,11 +120,11 @@
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">{{noData}}</h4>
                 <button (click)="openTransaction()" *ngIf="noData=='No mandates found'" class="btn-primary addon v-middle  " mat-stroked-button>
-          ADD NEW
-        </button>
+                    ADD NEW
+                </button>
                 <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
-          ADD NEW
-        </button>
+                    ADD NEW
+                </button>
             </div>
         </div>
     </div>

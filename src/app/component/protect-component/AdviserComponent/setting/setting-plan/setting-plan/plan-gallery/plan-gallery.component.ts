@@ -44,7 +44,6 @@ export class PlanGalleryComponent implements OnInit {
 
   }
   getGoalGlobalDataRes(data) {
-    console.log('gallery === ', data)
     this.defaultGallery = data
   }
   openGallery(gallery) {

@@ -57,7 +57,6 @@ export class PlansSettingsComponent implements OnInit {
   getSettingsPlanResponse(data) {
     if(data != undefined){
     this.isLoading = false;
-    console.log('get plan', data);
     for(let p of data){
       p['read'] = false;
     }
@@ -107,7 +106,6 @@ export class PlansSettingsComponent implements OnInit {
   openFragment(singlePlan, data) {
     this.location.replaceState('/subscription-upper');
     (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
-    console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'plan',
       id: 1,
@@ -118,12 +116,10 @@ export class PlansSettingsComponent implements OnInit {
       Name: 'plan-upper-slider'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    console.log(fragmentData,"check fragmentData");
 
     AuthService.setSubscriptionUpperSliderData(fragmentData)
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
-        console.log(upperSliderData, 'show what happens');
         
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
