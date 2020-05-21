@@ -161,9 +161,8 @@
                                 </button>
                                 <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
                                 <button mat-menu-item>Upload file
-                                    <!-- PROD FIX -->
-                                    <!-- <input (change)="fetchData('Bank A/c',$event)" class="uploadInput" id="file-4"
-                                        multiple type="file"> -->
+                                    <input (change)="fetchData('Bank A/c',$event,element)" class="uploadInput" id="file-4"
+                                        multiple type="file">
                                 </button>
                                 <button mat-menu-item>Activity</button>
                                 <button (click)="deleteModal('BANK ACCOUNT',element)" mat-menu-item>Delete</button>

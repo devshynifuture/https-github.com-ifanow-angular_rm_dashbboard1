@@ -163,9 +163,8 @@
                                 <button mat-menu-item (click)="detailedViewGold('addGold',element)">Detailed
                                     view</button>
                                 <button mat-menu-item>Upload file
-                                    <!-- PROD FIX -->
-                                    <!-- <input (change)="fetchData('Gold',$event)" class="uploadInput" id="file-4" multiple
-                                        type="file"> -->
+                                    <input (change)="fetchData('Gold',$event,element)" class="uploadInput" id="file-4" multiple
+                                        type="file">
                                 </button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('GOLD',element)">Delete</button>
