@@ -20,7 +20,9 @@ import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loa
 export class SubmitReviewInnComponent implements OnInit {
   dialogRef;
 
-  dataSource = [];
+  dataSourceNse = [];
+  dataSourceBse = [];
+
   isLoading = false;
   selectedCount = 0;
 
@@ -118,14 +120,23 @@ export class SubmitReviewInnComponent implements OnInit {
     if (this.brokerCredentials) {
       this.brokerCredentials.forEach(singleCred => {
         if (singleCred.defaultLogin == 1) {
-          this.dataSource.push(singleCred);
+          if (singleCred.aggregatorType == 1) {
+            this.dataSourceNse.push(singleCred);
+          } else {
+            this.dataSourceBse.push(singleCred);
+          }
           singleCred.selected = true;
           this.selectedCount = this.selectedCount + 1;
         }
       });
       if (this.selectedCount == 0 && this.brokerCredentials.length > 0) {
-        this.dataSource.push(this.brokerCredentials[0]);
-        this.brokerCredentials[0].selected = true;
+        const singleCred = this.brokerCredentials[0];
+        if (singleCred.aggregatorType == 1) {
+          this.dataSourceNse.push(singleCred);
+        } else {
+          this.dataSourceBse.push(singleCred);
+        }
+        singleCred.selected = true;
         this.selectedCount = this.selectedCount + 1;
       }
     }
@@ -229,6 +240,11 @@ export class SubmitReviewInnComponent implements OnInit {
       confirmationFlag: 1,
     };
     this.openIinUccClient(singleBrokerCred, obj1);
+    // setTimeout(() => {
+    //   if (this.dialogRef) {
+    //     this.dialogRef.componentInstance.setSuccessData(obj1);
+    //   }
+    // }, 5000);
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
         this.eventService.openSnackBar(error, 'Dismiss');
@@ -254,7 +270,11 @@ export class SubmitReviewInnComponent implements OnInit {
   addNewRow() {
     this.brokerCredentials.forEach(singleCred => {
       if (!singleCred.selected) {
-        this.dataSource.push(singleCred);
+        if (singleCred.aggregatorType == 1) {
+          this.dataSourceNse.push(singleCred);
+        } else {
+          this.dataSourceBse.push(singleCred);
+        }
         singleCred.selected = true;
         this.selectedCount = this.selectedCount + 1;
       }
@@ -303,6 +323,7 @@ export class SubmitReviewInnComponent implements OnInit {
       // height:'40%',
       data: Fragmentdata,
       autoFocus: false,
+      disableClose: true
     });
     this.dialogRef.afterClosed().subscribe(result => {
       this.dialogRef = null;

@@ -59,9 +59,9 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // TODO for testing only
-    this.generalDetails.controls.ownerName.setValue('Gaurav');
-    this.generalDetails.controlss.holdingType.setValue('SI');
-    this.generalDetails.controlss.taxStatus.setValue('01');
+    // this.generalDetails.controls.ownerName.setValue('Gaurav');
+    // this.generalDetails.controlss.holdingType.setValue('SI');
+    // this.generalDetails.controlss.taxStatus.setValue('01');
   }
 
   closeRightSlider(flag) {

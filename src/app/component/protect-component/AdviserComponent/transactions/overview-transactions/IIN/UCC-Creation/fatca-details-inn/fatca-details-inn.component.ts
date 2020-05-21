@@ -70,12 +70,12 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // TODO for testing only
-    const dataObj = {
-      income: '500000', sourceOfWealth: '01',
-      occupationCode: '41', placeOfBirth: 'India',
-      countryOfBirth: 'India'
-    };
-    this.getdataForm(dataObj);
+    // const dataObj = {
+    //   income: '500000', sourceOfWealth: '01',
+    //   occupationCode: '41', placeOfBirth: 'India',
+    //   countryOfBirth: 'India'
+    // };
+    // this.getdataForm(dataObj);
   }
 
   close() {

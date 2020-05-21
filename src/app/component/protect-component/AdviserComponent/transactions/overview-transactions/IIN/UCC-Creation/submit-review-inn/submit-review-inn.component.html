@@ -28,28 +28,11 @@
       <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select
         multiple.
       </p>
+      <p *ngIf="dataSourceNse.length>0">NSE NMF II</p>
 
-      <div *ngFor="let singleBrokerCred of dataSource; index as i" class="row">
+      <div *ngFor="let singleBrokerCred of dataSourceNse; index as i" class="row">
         <div class="col-md-3 mb-12 pl-0">
-          <h5>1) Select a platform</h5>
-          <p class="f-12 text-primitive">You create IIN UCC for both platform</p>
-          <div class="form-group">
-            <p>{{singleBrokerCred.aggregatorType == 1 ? 'NSE' : 'BSE'}}</p>
-            <!-- <mat-form-field>
-               <mat-select (selectionChange)="selectPlatform($event)" class="form-control" formControlName="platform">
-                 <mat-option disabled value=''>Select platform</mat-option>
-                 <mat-option value="1">NSE
-                 </mat-option>
-                 <mat-option value="2">BSE
-                 </mat-option>
-               </mat-select>
-               <mat-error>This field is required</mat-error>
-             </mat-form-field>-->
-          </div>
-        </div>
-
-        <div class="col-md-3 mb-12 pl-0">
-          <h5>2) Select a broker code</h5>
+          <h5>1) Select a broker code</h5>
           <p class="f-12 text-primitive">You can multiple select broker code</p>
           <div class="row">
             <div class="col-md-10">
@@ -57,15 +40,59 @@
                 <p>{{singleBrokerCred.brokerCode}}</p>
               </div>
             </div>
-
             <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
               <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
             </div>
           </div>
         </div>
 
-        <div *ngIf="singleBrokerCred.aggregatorType==2" class="col-md-3 mb-12 pl-0">
-          <h5>3) Provide account number</h5>
+        <div class="col-md-3 mb-12 pl-0  ">
+          <h5>2) Confirm & submit</h5>
+          <p class="f-12 text-primitive">This will send request for IIN creation</p>
+          <button (click)="submit(singleBrokerCred)"
+                  [disabled]="singleBrokerCred.tpUserRequestId>0"
+                  class="btnConfirm bg-primary text-white" mat-button>Create
+            account
+          </button>
+          <p *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully</p>
+        </div>
+
+        <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
+          <h5>3) Upload forms</h5>
+          <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+
+          <button (click)="uploadFileInput.click()"
+                  class="btnConfirm bg-primary text-white"
+                  mat-button>
+            Upload AOF
+            <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput" id="file-4"
+                   type="file">
+          </button>
+          <button (click)="uploadFileInput.click()"
+                  class="btnConfirm bg-primary text-white"
+                  mat-button>
+            Upload Cheque
+            <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput" id="file-4"
+                   type="file">
+          </button>
+        </div>
+      </div>
+      <p *ngIf="dataSourceBse.length>0">BSE Star MF</p>
+      <div *ngFor="let singleBrokerCred of dataSourceBse; index as i" class="row">
+        <div class="col-md-3 mb-12 pl-0">
+          <h5>1) Select a broker code</h5>
+          <p class="f-12 text-primitive">You can multiple select broker code</p>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="form-group">
+                <p>{{singleBrokerCred.brokerCode}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-12 pl-0">
+          <h5>2) Provide account number</h5>
           <p class="f-12 text-primitive">This will be displayed as UCC number</p>
           <div class="form-group inputPaddingNone">
             <mat-form-field appearance="standard" floatLabel="never">
@@ -78,8 +105,7 @@
         </div>
 
         <div class="col-md-3 mb-12 pl-0  ">
-          <h5 *ngIf="singleBrokerCred.aggregatorType==1">3) Confirm & submit</h5>
-          <h5 *ngIf="singleBrokerCred.aggregatorType==2">4) Confirm & submit</h5>
+          <h5>3) Confirm & submit</h5>
           <p class="f-12 text-primitive">This will send request for UCC creation</p>
           <button (click)="submit(singleBrokerCred)"
                   [disabled]="singleBrokerCred.tpUserRequestId>0"
@@ -90,8 +116,7 @@
         </div>
 
         <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
-          <h5 *ngIf="singleBrokerCred.aggregatorType==2">4) Upload forms</h5>
-          <h5 *ngIf="singleBrokerCred.aggregatorType==2">5) Upload forms</h5>
+          <h5>4) Upload forms</h5>
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
           <button (click)="uploadFileInput.click()"
@@ -99,14 +124,6 @@
                   mat-button>
             Upload AOF
             <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput" id="file-4"
-                   type="file">
-          </button>
-          <button (click)="uploadFileInput.click()"
-                  *ngIf="singleBrokerCred.aggregatorType==1"
-                  class="btnConfirm bg-primary text-white"
-                  mat-button>
-            Upload Cheque
-            <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput" id="file-4"
                    type="file">
           </button>
         </div>
