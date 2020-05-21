@@ -29,7 +29,6 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
     if (this._logEvent == 13) {
 
       this.onClick(null);
-      console.log(this._logEvent, 'event hostlistner 2');
     }
   }
 
@@ -37,7 +36,6 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
     if (this.options.text.trim() == 'Login to your account') {
       this.islogBut = true;
     }
-    console.log(this.islogBut, this.options.customClass, 'logbutton 123');
 
   }
 
@@ -49,13 +47,10 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
 
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent) {
-    console.log(event, 'event hostlistner');
 
     if (!this.options.disabled && !this.options.active) {
       this.btnClick.emit(event);
     } else if (this.options.active) {
-      // console.log(' progressBar : ', this.progressBar);
-      // console.log(' progressBar nativeElement : ', this.progressBar.nativeElement);
     }
     this.setTimeOutRecursiveForProgressValue();
 

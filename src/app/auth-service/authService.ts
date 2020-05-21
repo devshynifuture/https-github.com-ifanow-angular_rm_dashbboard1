@@ -118,7 +118,6 @@ export class AuthService {
 
   isAdvisor() {
     if (AuthService.getUserInfo()) {
-      // console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
       return AuthService.getUserInfo().userType ? AuthService.getUserInfo().userType === 1 || AuthService.getUserInfo().userType === 8 : false;
     } else {
       return false;
@@ -148,21 +147,18 @@ export class AuthService {
     if (clientData.familyMemberId) {
       this.familyMemberId = clientData.familyMemberId
     }
-    console.log('this.family', this.familyMemberId)
     clientData.familyMemberId = this.familyMemberId
     localStorage.setItem('clientData', JSON.stringify(clientData));
 
     // if(clientData){
     //   this.selectedClient = clientData;
     // }
-    console.log('setClientData : ', clientData);
   }
 
   setProfileDetails(profileData) {
     sessionStorage.setItem('profileData', JSON.stringify(profileData));
     localStorage.setItem('profileData', JSON.stringify(profileData));
 
-    console.log('setClientData : ', profileData);
   }
 
   // getSelectedClient(){

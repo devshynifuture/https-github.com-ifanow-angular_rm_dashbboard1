@@ -8,11 +8,11 @@
                 <!-- (selectedTabChange)="tabClick($event)" for prod build-->
                 <nav mat-tab-nav-bar>
                     <a [routerLink]="['/admin/setting/orgprofile']" routerLinkActive="active" mat-tab-link>PROFILE</a>
-                    <a [routerLink]="['/admin/setting/preference']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole" >PREFERENCES</a>
-                    <a [routerLink]="['/admin/setting/activity']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole">ACTIVITY</a>
-                    <a class="minWidth70" [routerLink]="['/admin/setting/plan']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole">PLAN</a>
-                    <a [routerLink]="['/admin/setting/users&roles']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole">USER & ROLES</a>
-                    <a class="minWidth130" [routerLink]="['/admin/setting/backoffice']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole">BACK OFFICE</a>
+                    <a [routerLink]="['/admin/setting/preference']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1" >PREFERENCES</a>
+                    <a [routerLink]="['/admin/setting/activity']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1">ACTIVITY</a>
+                    <a class="minWidth70" [routerLink]="['/admin/setting/plan']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1">PLAN</a>
+                    <a [routerLink]="['/admin/setting/users&roles']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1">USER & ROLES</a>
+                    <a class="minWidth130" [routerLink]="['/admin/setting/backoffice']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1">BACK OFFICE</a>
                     <!-- <a class="minWidth80" [routerLink]="['/admin/setting/backup']" routerLinkActive="active" mat-tab-link>BACKUP</a> -->
                 </nav>
             </div>

@@ -7,7 +7,7 @@ import { Resolve } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
 
 @Injectable()
-export class AdvisorAndOrganizationInfoService implements Resolve<any> {
+export class AdvisorAndOrganizationInfoService implements Resolve<boolean> {
 
   private clientData:any;
   private advisorId:any;
@@ -18,7 +18,9 @@ export class AdvisorAndOrganizationInfoService implements Resolve<any> {
     this.clientData = AuthService.getClientData();
     this.advisorId = this.clientData.advisorId;
   }
-  resolve(): Observable<any> {
+  resolve(): Observable<boolean> {
+    this.clientData = AuthService.getClientData();
+    this.advisorId = this.clientData.advisorId;
     let orgDetail = this.settingsService.getOrgProfile({advisorId: this.advisorId})
   
     // advisor details
@@ -46,7 +48,23 @@ export class AdvisorAndOrganizationInfoService implements Resolve<any> {
     ))
     .map(([advisorDetailRes, orgDetailRes])=>{
       if(advisorDetailRes == undefined) {
-        AuthService.setAdvisorDetails({})
+        AuthService.setAdvisorDetails(
+          {
+            "id": this.advisorId,
+            "isdCodeValue": "+91",
+            "fullName": "",
+            "mobileNo": "1234567890",
+            "isdCodeId": 73,
+            "emailId": "",
+            "profilePic": "assets/images/svg/avtar-1.svg",
+            "adminAdvisorId": 2808,
+            "roleId": 0,
+            "userName": "",
+            "role": {
+              "advisorOrClientRole": 7,
+            },
+          }
+        )
       }
       if(orgDetailRes == undefined) {
         AuthService.setOrgDetails({})

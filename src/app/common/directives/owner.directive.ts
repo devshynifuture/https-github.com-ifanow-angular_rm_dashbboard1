@@ -22,7 +22,6 @@ export class OwnerDirective {
   @Input()
   set data(data) {
     this.ownerData = data;
-    console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if (data) {
       this.getListFamilyMem()
     }
@@ -42,7 +41,6 @@ export class OwnerDirective {
     // for development purpose
     this.clientId = 15545;
 
-    console.log("client id inside owner directive:::", this.clientId);
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -53,19 +51,16 @@ export class OwnerDirective {
   }
 
   getOwnerName(value) {
-    console.log('selected', value);
     value.familyList = this.family;
     this.valueChange.emit(value);
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data);
     this.sendData = data;
     if (data.familyMembersList && data.familyMembersList.length > 0) {
       data.familyMembersList.forEach((singleData) => {
         if (this.ownerData.ownerName.value && this.ownerData.ownerName.value.length > 0) {
           if (singleData.userName == this.ownerData.ownerName.value) {
-            console.log('family Member matched Value singleData : ', singleData);
           }
         }
         this.family.push(singleData);
@@ -79,7 +74,6 @@ export class OwnerDirective {
       // this.owner = this.fb.group({
       //   ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
       // });
-      console.log('OwnerColumn impossible getdataForm this.ownerData.ownerName.value : ', this.ownerData.ownerName.value);
     } else {
       this.owner = this.fb.group({
         ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
