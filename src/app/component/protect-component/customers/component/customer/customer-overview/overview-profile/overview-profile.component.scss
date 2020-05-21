@@ -10,7 +10,7 @@
     flex: 0 0 18.666667%;
     max-width: 18.666667%;
     padding-left: 15px;
-    padding-right: 15px;
+    // padding-right: 15px;
   }
 
   .col-width-79 {
@@ -385,35 +385,36 @@
 
 
 .containerOne {
-    position: relative;
+  position: relative;
 }
 
 .containerOne:hover .image {
-    opacity: 0.3;
+  opacity: 0.3;
 }
 
 .containerOne:hover .middleOne {
-    opacity: 1;
+  opacity: 1;
 }
 
 .widthwebLogo {
-    width: 270px;
-    height: 68px;
-    position: relative;
-    overflow: hidden;
+  width: 270px;
+  height: 68px;
+  position: relative;
+  overflow: hidden;
 }
 
 .middleOne {
-    position: absolute;
-    cursor: pointer;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 70px;
-    top: 60px;
-    opacity: 0;
-    p {
-        color: #ffffff;
-        margin: 15px 0px 0px 0px;
-    }
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 70px;
+  top: 60px;
+  opacity: 0;
+
+  p {
+    color: #ffffff;
+    margin: 15px 0px 0px 0px;
+  }
 }

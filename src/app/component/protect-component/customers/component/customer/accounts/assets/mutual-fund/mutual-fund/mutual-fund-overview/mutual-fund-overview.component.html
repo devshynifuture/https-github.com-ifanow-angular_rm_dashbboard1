@@ -85,7 +85,7 @@
                                 <div class="bar" [ngClass]="{'height24': isLoading}">
                                     <span appFormatNumber *ngIf="!isLoading"
                                         [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
-                                    <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading"> {{''}}</span>
                                 </div>
                             </h2>
 
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col-md-7 pl-4 pr-0">
                     <div class="row">
-                        <div class="col-md-4 p-0 b-a">
+                        <div class="col-md-4 p-0 b-a pie-chart-center">
                             <div class="highcharts-figure" id="piechartMutualFund"></div>
                         </div>
                         <div class="col-md-8 b-a bl-0 p-0">
@@ -150,9 +150,10 @@
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">
-                                            <span appFormatNumber
-                                                *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span
-                                                appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">0</span>
+                                            <span appFormatNumber *ngIf="this.equityCurrentValue">₹
+                                                {{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span
+                                                appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">₹
+                                                0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -176,8 +177,9 @@
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span
-                                                appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading">0</span>
+                                                *ngIf="this.debtCurrentValue">₹
+                                                {{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span
+                                                appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading">₹ 0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -200,8 +202,10 @@
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span
-                                                appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">0</span>
+                                                *ngIf="this.hybridCurrentValue">₹
+                                                {{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span
+                                                appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">₹
+                                                0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -225,10 +229,10 @@
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">
-                                            <span appFormatNumber
-                                                *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span
+                                            <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">₹
+                                                {{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span
                                                 appFormatNumber
-                                                *ngIf="!this.solution_OrientedCurrentValue && !isLoading">0</span>
+                                                *ngIf="!this.solution_OrientedCurrentValue && !isLoading">₹0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -253,8 +257,9 @@
                                 <div class="col-md-3 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span
-                                                appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading">0</span>
+                                                *ngIf="this.otherCurrentValue">₹
+                                                {{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span
+                                                appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading">₹ 0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -406,7 +411,7 @@
                                         [value]="element.amts"></span>
                                     <span
                                         *ngIf="element.data == 'i. Realized XIRR (All Transactions)' && !isLoading">{{element.amts | number:'1.2-2'}}</span>
-                                    <span *ngIf="isLoading">{{''}}</span>
+                                    <span *ngIf="isLoading">{{''}} %</span>
                                 </div>
                             </td>
                         </ng-container>

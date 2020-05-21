@@ -11,7 +11,7 @@
     <mat-accordion class="fliterBoxMutual">
         <mat-expansion-panel class="mb-20 boxShadowNone borderLine" [expanded]="false">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Family members<span class="text-right f-14 pl-12">{{countFamily}} of
                             {{familyMember.length}}
                             selected</span></h5>
@@ -27,7 +27,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">AMC<span class="text-right f-14 pl-12">{{countAmc}} of {{amc.length}}
                             selected</span></h5>
                 </mat-panel-title>
@@ -44,7 +44,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Schemes<span class="text-right f-14 pl-12">{{countScheme}} of {{scheme.length}}
                             selected</span></h5>
                 </mat-panel-title>
@@ -63,7 +63,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Folios<span class="text-right f-14 pl-12">{{countFolio}} of {{folio.length}}
                             selected</span>
                     </h5>
@@ -82,7 +82,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12">{{countTranView}} of
                             {{transactionView.length}} selected</span></h5>
                 </mat-panel-title>
@@ -101,7 +101,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Report Type <span class="text-right f-14 pl-12"></span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -116,7 +116,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Categories<span class="text-right f-14 pl-12">{{countCategory}} of
                             {{category.length}}
                             selected</span></h5>
@@ -136,7 +136,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Transaction Period</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -152,7 +152,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name == 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Select Filter View<span
                             class="text-right f-14 pl-12">{{(overviewFilterCount)?overviewFilterCount:0}} of
                             {{overviewFilter.length}}
@@ -169,7 +169,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name=='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Financial years</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -184,7 +184,7 @@
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name=='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title (click)="panelOpenState = true">
                     <h5 class="m-0">Report format</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
