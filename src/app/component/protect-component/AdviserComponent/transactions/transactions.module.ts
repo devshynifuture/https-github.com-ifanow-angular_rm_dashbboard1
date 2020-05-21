@@ -33,7 +33,8 @@ import { TransactionBottomButtonComponent } from './transaction-mobile-view/tran
     PhotoSigntureComponent,
     VideoKycComponent,
     TransactionMobileViewComponent,
-    TransactionBottomButtonComponent
+    TransactionBottomButtonComponent,
+    IinCreationLoaderComponent
   ],
   imports: [
     CommonModule,

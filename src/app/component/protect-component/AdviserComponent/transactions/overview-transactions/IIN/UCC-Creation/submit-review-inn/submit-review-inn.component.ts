@@ -9,6 +9,8 @@ import {FileUploadService} from '../../../../../../../../services/file-upload.se
 import {apiConfig} from '../../../../../../../../config/main-config';
 import {appConfig} from '../../../../../../../../config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {MatDialog} from '@angular/material';
+import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loader.component';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -16,7 +18,7 @@ import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
-
+  dialogRef;
 
   dataSource = [];
   isLoading = false;
@@ -27,7 +29,7 @@ export class SubmitReviewInnComponent implements OnInit {
   brokerCredentials: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
+              private eventService: EventService, public dialog: MatDialog) {
   }
 
   reviewSubmit: any;
@@ -226,6 +228,7 @@ export class SubmitReviewInnComponent implements OnInit {
       commMode: 1,
       confirmationFlag: 1,
     };
+    this.openIinUccClient(singleBrokerCred, obj1);
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
         this.eventService.openSnackBar(error, 'Dismiss');
@@ -237,6 +240,10 @@ export class SubmitReviewInnComponent implements OnInit {
     console.log('data respose =', data);
     singleBrokerCred.tpUserRequestId = data.id;
     singleBrokerCred.tpUserRequest = data;
+    if (this.dialogRef) {
+      this.dialogRef.componentInstance.setSuccessData(data);
+    }
+
   }
 
   getTokenRes(data) {
@@ -285,7 +292,24 @@ export class SubmitReviewInnComponent implements OnInit {
       });
   }
 
-  openIinUccClient() {
+  openIinUccClient(singleBrokerCred, requestJson) {
+    const data = {singleBrokerCred, requestJson};
+    const Fragmentdata = {
+      flag: data,
 
+    };
+    this.dialogRef = this.dialog.open(IinCreationLoaderComponent, {
+      width: '50%',
+      // height:'40%',
+      data: Fragmentdata,
+      autoFocus: false,
+    });
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef = null;
+      console.log(result, 'cancel was close');
+      if (result != undefined) {
+      }
+    });
   }
+
 }
