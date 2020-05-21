@@ -468,6 +468,8 @@ export class ProcessTransactionService {
       return 'Unknown';
     } else if (status == 1) {
       return 'Failure';
+    } else if (status == 7) {
+      return 'Rejected';
     }
     let transactionStatusList = [];
     switch (true) {
