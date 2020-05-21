@@ -18,7 +18,9 @@ export class MfServiceService {
   private viewMode = new BehaviorSubject('');
   private mfData = new BehaviorSubject('');
   private navValue = new BehaviorSubject('');
+  private filterValues = new BehaviorSubject('');
 
+  
 
   getPersonalDetails(data) {
     const obj = {
@@ -475,5 +477,12 @@ export class MfServiceService {
 
   getNavValue() {
     return this.navValue.asObservable();
+  }
+  setFilterValues(value) {
+    this.filterValues.next(value);
+  }
+
+  getFilterValues() {
+    return this.filterValues.asObservable();
   }
 }

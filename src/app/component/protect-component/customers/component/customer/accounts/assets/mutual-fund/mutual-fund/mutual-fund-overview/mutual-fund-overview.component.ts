@@ -182,7 +182,7 @@ export class MutualFundOverviewComponent implements OnInit {
       if (!this.rightFilterData) {
         this.mutualFund = this.filterData;
         this.setDefaultFilterData = this.MfServiceService.setFilterData(this.filterData,this.rightFilterData);
-
+        this.MfServiceService.setFilterValues(this.setDefaultFilterData);
         this.MfServiceService.setMfData(this.mutualFund);
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
@@ -588,7 +588,7 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
             this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData.mfData);
-
+            this.MfServiceService.setFilterValues(this.setDefaultFilterData);
             this.isLoading = false;
             this.changeInput.emit(false);
             // this.getMutualFundResponse(this.rightFilterData.mfData);

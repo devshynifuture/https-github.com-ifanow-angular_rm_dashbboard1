@@ -52,6 +52,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   viewMode: string;
   reponseData: any;
+  setDefaultFilterData: any;
 
 
   constructor(
@@ -78,6 +79,10 @@ export class MutualFundSummaryComponent implements OnInit {
       this.mfService.getMfData()
       .subscribe(res => {
         this.mutualFund = res;
+      })
+      this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res;
       })
     if(this.mutualFund){
       this.getMutualFundResponse(this.mutualFund)
@@ -269,11 +274,12 @@ export class MutualFundSummaryComponent implements OnInit {
     fragmentData.data = {
       name: 'SUMMARY REPORT',
       mfData: this.mutualFund,
-      folioWise: this.mutualFund.mutualFundList,
-      schemeWise: this.mutualFund.schemeWise,
+      folioWise:this.setDefaultFilterData.folioWise,
+      schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.mutualFund.family_member_list,
-      category: this.mutualFund.mutualFundCategoryMastersList,
-      transactionView: this.displayedColumns
+      category: this.setDefaultFilterData.category,
+      transactionView: this.displayedColumns,
+      scheme:this.setDefaultFilterData.scheme
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -288,6 +294,8 @@ export class MutualFundSummaryComponent implements OnInit {
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
             this.asyncFilter(this.reponseData.mutualFundList);
+            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund,this.rightFilterData.mfData);
+            this.mfService.setFilterValues(this.setDefaultFilterData);
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
           rightSideDataSub.unsubscribe();
