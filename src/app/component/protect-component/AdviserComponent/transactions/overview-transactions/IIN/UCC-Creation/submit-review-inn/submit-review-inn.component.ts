@@ -18,19 +18,28 @@ import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loa
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
+
+  isFileUploading = false;
+
+  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
+              private eventService: EventService, public dialog: MatDialog) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   dialogRef;
 
-  dataSource = [];
+  dataSourceNse = [];
+  dataSourceBse = [];
+
   isLoading = false;
   selectedCount = 0;
 
   changedValue: string;
   advisorId: any;
   brokerCredentials: any;
-
-  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService, public dialog: MatDialog) {
-  }
 
   reviewSubmit: any;
   inputData: any;
@@ -52,10 +61,6 @@ export class SubmitReviewInnComponent implements OnInit {
   BSEValue = '2';
   responseMessage: any;
   statusString: any;
-
-  get data() {
-    return this.inputData;
-  }
 
   @Input()
   set data(data) {
@@ -118,14 +123,23 @@ export class SubmitReviewInnComponent implements OnInit {
     if (this.brokerCredentials) {
       this.brokerCredentials.forEach(singleCred => {
         if (singleCred.defaultLogin == 1) {
-          this.dataSource.push(singleCred);
+          if (singleCred.aggregatorType == 1) {
+            this.dataSourceNse.push(singleCred);
+          } else {
+            this.dataSourceBse.push(singleCred);
+          }
           singleCred.selected = true;
           this.selectedCount = this.selectedCount + 1;
         }
       });
       if (this.selectedCount == 0 && this.brokerCredentials.length > 0) {
-        this.dataSource.push(this.brokerCredentials[0]);
-        this.brokerCredentials[0].selected = true;
+        const singleCred = this.brokerCredentials[0];
+        if (singleCred.aggregatorType == 1) {
+          this.dataSourceNse.push(singleCred);
+        } else {
+          this.dataSourceBse.push(singleCred);
+        }
+        singleCred.selected = true;
         this.selectedCount = this.selectedCount + 1;
       }
     }
@@ -229,6 +243,11 @@ export class SubmitReviewInnComponent implements OnInit {
       confirmationFlag: 1,
     };
     this.openIinUccClient(singleBrokerCred, obj1);
+    // setTimeout(() => {
+    //   if (this.dialogRef) {
+    //     this.dialogRef.componentInstance.setSuccessData(obj1);
+    //   }
+    // }, 5000);
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
         this.eventService.openSnackBar(error, 'Dismiss');
@@ -254,7 +273,11 @@ export class SubmitReviewInnComponent implements OnInit {
   addNewRow() {
     this.brokerCredentials.forEach(singleCred => {
       if (!singleCred.selected) {
-        this.dataSource.push(singleCred);
+        if (singleCred.aggregatorType == 1) {
+          this.dataSourceNse.push(singleCred);
+        } else {
+          this.dataSourceBse.push(singleCred);
+        }
         singleCred.selected = true;
         this.selectedCount = this.selectedCount + 1;
       }
@@ -275,12 +298,14 @@ export class SubmitReviewInnComponent implements OnInit {
       tpUserRequestId,
       documentType
     };
+    this.isFileUploading = true;
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);
         console.log('getFileDetails uploadFileToServer callback headers : ', headers);
         console.log('getFileDetails uploadFileToServer callback response : ', response);
+        this.isFileUploading = false;
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
@@ -303,6 +328,7 @@ export class SubmitReviewInnComponent implements OnInit {
       // height:'40%',
       data: Fragmentdata,
       autoFocus: false,
+      disableClose: true
     });
     this.dialogRef.afterClosed().subscribe(result => {
       this.dialogRef = null;
