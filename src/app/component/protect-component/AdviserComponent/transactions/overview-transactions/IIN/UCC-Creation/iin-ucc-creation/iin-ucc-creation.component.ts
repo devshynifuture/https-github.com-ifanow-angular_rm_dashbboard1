@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -19,7 +19,8 @@ import {Observable} from 'rxjs';
   templateUrl: './iin-ucc-creation.component.html',
   styleUrls: ['./iin-ucc-creation.component.scss']
 })
-export class IinUccCreationComponent implements OnInit {
+export class IinUccCreationComponent implements OnInit, AfterViewInit {
+
   stateCtrl = new FormControl('', [Validators.required]);
   filteredStates: any;
 
@@ -54,6 +55,13 @@ export class IinUccCreationComponent implements OnInit {
       console.error('country code error : ', error);
 
     });
+  }
+
+  ngAfterViewInit(): void {
+    // TODO for testing only
+    this.generalDetails.controls.ownerName.setValue('Gaurav');
+    this.generalDetails.controlss.holdingType.setValue('SI');
+    this.generalDetails.controlss.taxStatus.setValue('01');
   }
 
   closeRightSlider(flag) {

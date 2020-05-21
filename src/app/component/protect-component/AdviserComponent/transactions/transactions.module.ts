@@ -19,6 +19,7 @@ import {ScrollDispatchModule, ScrollingModule} from '@angular/cdk/scrolling';
 import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 import {TransactionMobileViewComponent} from './transaction-mobile-view/transaction-mobile-view.component';
 import {TransactionBottomButtonComponent} from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
+import {IinCreationLoaderComponent} from './overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {TransactionBottomButtonComponent} from './transaction-mobile-view/transa
     PhotoSigntureComponent,
     VideoKycComponent,
     TransactionMobileViewComponent,
-    TransactionBottomButtonComponent
+    TransactionBottomButtonComponent,
+    IinCreationLoaderComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +56,7 @@ import {TransactionBottomButtonComponent} from './transaction-mobile-view/transa
     ScrollingModule
   ],
   entryComponents: [TransactionMobileViewComponent,
-    TransactionBottomButtonComponent]
+    TransactionBottomButtonComponent, IinCreationLoaderComponent]
 })
 export class TransactionsModule {
 
