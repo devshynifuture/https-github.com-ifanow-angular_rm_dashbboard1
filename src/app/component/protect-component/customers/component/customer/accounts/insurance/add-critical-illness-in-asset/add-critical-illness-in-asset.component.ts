@@ -239,7 +239,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     if (data.data == null) {
       data = {};
       this.dataForEdit = data.data;
-      this.flag = "ADD";
+      this.flag = "Add";
     }
     else {
       this.dataForEdit = data.data;
@@ -248,7 +248,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
         this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
       }
-      this.flag = "EDIT";
+      this.flag = "Edit";
     }
     this.critialIllnessForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
@@ -273,7 +273,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       // inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
-      inceptionDate: [(this.dataForEdit) ?((this.dataForEdit.policyInceptionDate) ? new Date(this.dataForEdit.policyInceptionDate) : null) : null],
+      inceptionDate: [(this.dataForEdit) ? ((this.dataForEdit.policyInceptionDate) ? new Date(this.dataForEdit.policyInceptionDate) : null) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
@@ -493,7 +493,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       let comparedDate: any = startDate;
       comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
       comparedDate = new Date(comparedDate);
-      comparedDate = comparedDate.setDate(comparedDate.getDate()-1);
+      comparedDate = comparedDate.setDate(comparedDate.getDate() - 1);
       comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
       if (policyExpiryDate < comparedDate) {
         this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
@@ -558,8 +558,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         "insurerName": this.critialIllnessForm.get('insurerName').value,
         "planName": this.critialIllnessForm.get('planeName').value,
         "premiumAmount": this.critialIllnessForm.get('premium').value,
-        "policyStartDate":this.datePipe.transform(this.critialIllnessForm.get('policyStartDate').value, 'yyyy-MM-dd'),
-        "policyExpiryDate":this.datePipe.transform(this.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
+        "policyStartDate": this.datePipe.transform(this.critialIllnessForm.get('policyStartDate').value, 'yyyy-MM-dd'),
+        "policyExpiryDate": this.datePipe.transform(this.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "cumulativeBonus": this.critialIllnessForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.critialIllnessForm.get('bonusType').value,
         "addOns": [{
@@ -567,7 +567,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
           "addOnSumInsured": this.critialIllnessForm.get('coversAmount').value
         }],
         "exclusion": this.critialIllnessForm.get('exclusion').value,
-        "policyInceptionDate":this.datePipe.transform(this.critialIllnessForm.get('inceptionDate').value, 'yyyy-MM-dd'),
+        "policyInceptionDate": this.datePipe.transform(this.critialIllnessForm.get('inceptionDate').value, 'yyyy-MM-dd'),
         "tpaName": this.critialIllnessForm.get('tpaName').value,
         "advisorName": this.critialIllnessForm.get('advisorName').value,
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,

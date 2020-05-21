@@ -103,7 +103,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetailsData = data;
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
-        this.invTaxStatus = '';
+        this.invTaxStatus = '1';
         this.selectedClientOwner = '';
         this.createIndividualForm(null);
         return;
@@ -483,6 +483,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       data => {
         console.log(data);
         this.clientOwnerList = data;
+        if (this.clientOwnerList.length == 1 && this.basicDetailsData.userId == undefined) {
+          this.selectedClientOwner = this.clientOwnerList[0].adminAdvisorId;
+        }
       },
       err => {
         console.error(err);

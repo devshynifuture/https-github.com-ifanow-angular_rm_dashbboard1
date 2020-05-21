@@ -293,12 +293,12 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     if (data.data == null) {
       data = {};
       this.dataForEdit = data.data;
-      this.flag = "ADD";
+      this.flag = "Add";
     }
     else {
       this.dataForEdit = data.data;
       this.id = this.dataForEdit.id;
-      this.flag = "EDIT";
+      this.flag = "Edit";
     }
     this.travelInsuranceForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],

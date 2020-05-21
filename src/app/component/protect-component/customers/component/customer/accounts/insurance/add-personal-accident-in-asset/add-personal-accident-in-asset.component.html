@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-6 p-0">
-            <h4 class="mb-0 wrapper-20 pr-0"> {{flag}} PERSONAL ACCIDENT INSURANCE </h4>
+            <h4 class="mb-0 wrapper-20 pr-0"> {{flag}} Personal accident insurance </h4>
         </div>
         <div class="col-md-6 text-right">
             <div class="wrapper-12">
@@ -69,7 +69,7 @@
                         <mat-form-field>
                             <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData(insuredMemberList)">
                                 <mat-option value='' disabled>Select insured members</mat-option>
-                                <mat-option *ngFor="let f of insuredMemberList" [disabled]="f.isDisabled"  [value]="f.userName">
+                                <mat-option *ngFor="let f of insuredMemberList" [disabled]="f.isDisabled" [value]="f.userName">
                                     {{f.userName}}</mat-option>
                             </mat-select>
                             <mat-error>This field is required
@@ -121,14 +121,14 @@
         </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Name of insurer</h5>
+            <h5 class="m-0 pt-10 ">Name of insurer</h5>
             <p class="m-0 f-12 text-custom">Start typing to see insurer names</p>
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <input #insurerName  (keyup)="findCompanyName($event)"  autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
+                <input #insurerName (keyup)="findCompanyName($event)" autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let option of options" [value]="option.name">
                         {{option.name}}
@@ -176,7 +176,8 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input (focus)="policyStartDatePicker.open()"  (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate" matInput>
+                <input (focus)="policyStartDatePicker.open()" (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0"
+                    #policyStartDate formControlName="policyStartDate" matInput>
                 <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyStartDatePicker></mat-datepicker>
                 <mat-error>This field is required
@@ -191,16 +192,17 @@
             <h5 class="m-0 pt-8 ">Policy expiry date</h5>
         </div>
         <div class="col-md-3 form-group mb-0">
-             <mat-form-field class="ba-date">
-                        <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0" formControlName="policyExpiryDate" matInput>
-                        <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
-                        <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
-                        <mat-error class="f-12" *ngIf="(personalAccidentForm.get('policyExpiryDate').errors?.required)">This field is required
-                        </mat-error>
-                        <mat-error class="f-12" *ngIf="(personalAccidentForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
-    
-                        </mat-error>
-                    </mat-form-field>
+            <mat-form-field class="ba-date">
+                <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0"
+                    formControlName="policyExpiryDate" matInput>
+                <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
+                <mat-error class="f-12" *ngIf="(personalAccidentForm.get('policyExpiryDate').errors?.required)">This field is required
+                </mat-error>
+                <mat-error class="f-12" *ngIf="(personalAccidentForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
+
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
     <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
@@ -399,7 +401,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex" >
+            <div class="col-md-1 p-0 pt-8 d-flex">
                 <!--  [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event.value)' -->
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>

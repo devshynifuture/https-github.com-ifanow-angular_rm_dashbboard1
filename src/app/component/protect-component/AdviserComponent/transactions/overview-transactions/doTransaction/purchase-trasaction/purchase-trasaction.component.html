@@ -24,7 +24,7 @@
       </div>
     </div>
     <div *ngIf="multiTransact == true && childTransactions.length > 0" class="col-md-12 pl-0 mt-20 all-transactions">
-      <table #tableEl [dataSource]="childTransactions" appSkeletonLoading class="skeletonAnimation" id="tbs" mat-table>
+      <table #tableEl [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="tbs" mat-table>
         <ng-container matColumnDef="no">
           <th *matHeaderCellDef class="br w-4" mat-header-cell> No</th>
           <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
@@ -48,7 +48,7 @@
         <ng-container matColumnDef="amount">
           <th *matHeaderCellDef class="br w-11 text-right" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.orderVal}} </div>
+            <div class="bar">₹{{element.orderVal}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="icons">
@@ -137,7 +137,8 @@
               <mat-form-field>
                 <mat-select class="form-control" formControlName="reinvest">
                   <mat-option disabled value=''>Select re-investment</mat-option>
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
+                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
+                              [value]="flag.dividendReinvestmentFlag">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                   </mat-option>
                 </mat-select>
@@ -178,7 +179,8 @@
           <div class="col-md-7 p-0">
             <div class="form-group">
               <mat-form-field>
-                <mat-select [(ngModel)]="folioNumberShow" class="form-control"
+                <!--                [(ngModel)]="folioNumberShow"-->
+                <mat-select class="form-control"
                             formControlName="investmentAccountSelection">
                   <!--                  *ngIf="folioList.length > 1"-->
                   <mat-option disabled value=''>Select scheme folio
@@ -240,14 +242,14 @@
             <div class="col-md-9 p-0">
               <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option"
                                class="mediumRadio" formControlName="modeOfPaymentSelection">
-                <mat-radio-button [disabled]="isMultiTransact"
+                <mat-radio-button [disabled]="multiTransact"
                                   [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'radio-border':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
                                   checked="true"
                                   class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
                                   value="1">
                   Net banking
                 </mat-radio-button>
-                <mat-radio-button [disabled]="isMultiTransact"
+                <mat-radio-button [disabled]="multiTransact"
                                   [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'radio-border':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
                                   class="b-a radioBtn bor_top_tb_right" value="2">
                   Debit mandate
