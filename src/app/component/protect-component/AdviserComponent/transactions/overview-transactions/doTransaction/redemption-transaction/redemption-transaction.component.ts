@@ -174,7 +174,6 @@ export class RedemptionTransactionComponent implements OnInit {
       this.scheme = data.scheme;
       this.schemeDetails = data.schemeDetails;
       this.folioDetails = data.folioDetails;
-      this.selectedFolio(this.folioDetails);
       this.navOfSelectedScheme = this.scheme.nav;
       this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, this.folioDetails.balanceUnit).toFixed(2);
     }
@@ -201,7 +200,7 @@ export class RedemptionTransactionComponent implements OnInit {
     );
     this.ownerData = this.redemptionTransaction.controls;
     if (data.folioNo) {
-      this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
+      this.selectedFolio(this.folioDetails);
       this.getSchemeWiseFolios();
     }
   }
@@ -359,7 +358,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.showUnits = true;
-    folio.balanceUnit = (folio.balanceUnit).toFixed(2);
+    folio.balanceUnit = parseFloat(folio.balanceUnit).toFixed(2);
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit).toFixed(2);
     Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
     Object.assign(this.transactionSummary, {mutualFundId: folio.id});
