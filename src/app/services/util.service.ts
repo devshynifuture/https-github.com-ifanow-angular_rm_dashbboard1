@@ -308,7 +308,8 @@ export class UtilService {
   htmlToPdf(inputData, pdfName, fragData) {
     const obj = {
       htmlInput: inputData,
-      name: pdfName
+      name: pdfName,
+      landscape : true
     };
     return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
       data => {
