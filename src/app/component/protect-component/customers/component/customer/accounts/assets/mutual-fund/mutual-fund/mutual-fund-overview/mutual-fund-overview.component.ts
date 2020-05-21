@@ -68,6 +68,8 @@ export class MutualFundOverviewComponent implements OnInit {
   mutualFund: any;
   mfCopyData: any;
   mfDataUnrealised: any;
+  openSummaryTab: boolean = false;
+  inputDataToSend: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -542,8 +544,9 @@ export class MutualFundOverviewComponent implements OnInit {
   //     }
   //   );
   // }
-  openSummary(){
-    this.mfService.changeViewMode('Summary');
+  openSummary(flag){
+   this.openSummaryTab = true
+   this.inputDataToSend = flag
   }
   openFilter() {
     const fragmentData = {
