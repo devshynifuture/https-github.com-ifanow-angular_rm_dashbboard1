@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-6 p-0">
-            <h4 class="mb-0 wrapper-20 pr-0"> {{flag}} MOTOR INSURANCE </h4>
+            <h4 class="mb-0 wrapper-20 pr-0"> {{flag}} Motor insurance </h4>
         </div>
         <div class="col-md-6 text-right">
             <div class="wrapper-12">
@@ -67,9 +67,9 @@
                 <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
                     <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
                         {{option.policy_type}}</mat-option> -->
-                        <mat-option value='4'>Third party</mat-option>
-                        <mat-option value='5'>Comprehensive</mat-option>
-                        <mat-option value='6'>Comprehensive - Zero depreciation</mat-option>
+                    <mat-option value='4'>Third party</mat-option>
+                    <mat-option value='5'>Comprehensive</mat-option>
+                    <mat-option value='6'>Comprehensive - Zero depreciation</mat-option>
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>
@@ -95,14 +95,14 @@
         </div>
     </div>
 
-    <div class="row pt-24">
+    <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Name of insurer</h5>
+            <h5 class="m-0 pt-10 ">Name of insurer</h5>
             <p class="m-0 f-12 text-custom">Start typing to see insurer names</p>
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <input #insurerName  (keyup)="findCompanyName($event)"  autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
+                <input #insurerName (keyup)="findCompanyName($event)" autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let option of options" [value]="option.name">
                         {{option.name}}
@@ -114,23 +114,14 @@
         </div>
     </div>
 
-    <div class="row pt-40">
+    <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-10 ">Policy name</h5>
         </div>
         <div class="col-md-5 form-group">
-            <!-- <mat-form-field class="example-full-width">
-                <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
-                        {{option.policyName}}
-                    </mat-option>
-                </mat-autocomplete>
-                <mat-error>This field is required
-                </mat-error>
-            </mat-form-field> -->
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text"  [maxLength]="40" formControlName="policyName" #policyName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter policy name">
+
+            <mat-form-field>
+                <input matInput type="text" [maxLength]="40" formControlName="policyName" #policyName appInputValueValidation autocomplete="off" class="form-control br-0">
                 <mat-hint align="end" class="f-12">{{policyName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
@@ -145,7 +136,8 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input (focus)="policyStartDatePicker.open()"  (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate" matInput>
+                <input (focus)="policyStartDatePicker.open()" (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0"
+                    #policyStartDate formControlName="policyStartDate" matInput>
                 <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyStartDatePicker></mat-datepicker>
                 <mat-error>This field is required
@@ -161,7 +153,8 @@
         </div>
         <div class="col-md-3 form-group mb-0">
             <mat-form-field class="ba-date">
-                <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0" formControlName="policyExpiryDate" matInput>
+                <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0"
+                    formControlName="policyExpiryDate" matInput>
                 <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
                 <mat-error class="f-12" *ngIf="(motorInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
@@ -238,7 +231,7 @@
             </div>
             <div class="col-md-3 form-group ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text"  [maxLength]="20" formControlName="registrationNumber" #registrationNumber  autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [maxLength]="20" formControlName="registrationNumber" #registrationNumber autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{registrationNumber.value.length}}/20</mat-hint>
                 </mat-form-field>
             </div>
@@ -280,7 +273,7 @@
             </div>
             <div class="col-md-3 form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" formControlName="engineNumber"  #engineNumber autocomplete="true" [maxLength]="20" class="form-control rupess br-0">
+                    <input matInput type="text" formControlName="engineNumber" #engineNumber autocomplete="true" [maxLength]="20" class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{engineNumber.value.length}}/20</mat-hint>
                 </mat-form-field>
             </div>
@@ -293,7 +286,7 @@
             </div>
             <div class="col-md-3 form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" formControlName="chassisNumber"  appInputValueValidation #chassisNumber autocomplete="true" [maxLength]="20" class="form-control rupess br-0">
+                    <input matInput type="text" formControlName="chassisNumber" appInputValueValidation #chassisNumber autocomplete="true" [maxLength]="20" class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{chassisNumber.value.length}}/20</mat-hint>
                 </mat-form-field>
             </div>
@@ -349,7 +342,7 @@
             </div>
             <div class="col-md-3 iconPetage form-group  ">
                 <mat-form-field>
-                    <input class="form-control percentage" matInput type="text"  (keyup)="onChange('discount',$event)" formControlName="discount" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premiumdetails autocomplete="true">
+                    <input class="form-control percentage" matInput type="text" (keyup)="onChange('discount',$event)" formControlName="discount" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premiumdetails autocomplete="true">
                 </mat-form-field>
             </div>
         </div>
@@ -359,23 +352,23 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-10 ">Add ons</h5>
                 </div>
-    
+
                 <div class="col-md-5 pr-0 form-group">
                     <mat-form-field>
                         <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
                                 {{option.add_on}}</mat-option> -->
-                                <mat-option value='1'>Zero depreciation</mat-option>
-                                <mat-option value='2'>Engine and gearbox protector</mat-option>
-                                <mat-option value='3'>Return to invoice</mat-option>
-                                <mat-option value='4'>No claim bonus protection</mat-option>
-                                <mat-option value='5'>Emergency and roadside assistance</mat-option>
-                                <mat-option value='6'>Accident coverage for car passengers</mat-option>
-                                <mat-option value='7'>Daily allowance</mat-option>
-                                <mat-option value='8'>Key replacement compensation</mat-option>
-                                <mat-option value='9'>Consumables cover</mat-option>
-                                <mat-option value='10'>Others</mat-option>
-    
+                            <mat-option value='1'>Zero depreciation</mat-option>
+                            <mat-option value='2'>Engine and gearbox protector</mat-option>
+                            <mat-option value='3'>Return to invoice</mat-option>
+                            <mat-option value='4'>No claim bonus protection</mat-option>
+                            <mat-option value='5'>Emergency and roadside assistance</mat-option>
+                            <mat-option value='6'>Accident coverage for car passengers</mat-option>
+                            <mat-option value='7'>Daily allowance</mat-option>
+                            <mat-option value='8'>Key replacement compensation</mat-option>
+                            <mat-option value='9'>Consumables cover</mat-option>
+                            <mat-option value='10'>Others</mat-option>
+
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -386,8 +379,8 @@
                     <i class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
                 </div>
             </div>
-    
-        </div> 
+
+        </div>
 
         <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
@@ -526,8 +519,8 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMotorInsurance()">SAVE</button> -->
-            <app-progress-button (btnClick)="saveMotorInsurance()"  class="btn-bottom br-0 text-inherit" [options]="barButtonOptions" >
-                </app-progress-button>
+            <app-progress-button (btnClick)="saveMotorInsurance()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

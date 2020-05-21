@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EnumServiceService} from '../../../../services/enum-service.service';
+import {detailStatusObj} from './transactions-list/transactions-history/detailStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -47,9 +48,51 @@ export class TransactionEnumService {
       if (element.transactionType == 'ORDER') {
         element.transactionType = 'PURCHASE';
       }
-      element.transactionStatus = this.getTransactionStatusFromStatusId(element.status);
+      element.transactionStatus = this.getTransactionStatusString(element.status, element.transactionType);
     });
     return data;
+  }
+
+  static getTransactionStatusString(status, transactionType) {
+    if (!status || status == 0) {
+      return 'Unknown';
+    } else if (status == 1) {
+      return 'Failure';
+    } else if (status == 2) {
+      return 'Pending authorization';
+    } else if (status == 7) {
+      return 'Rejected';
+    }
+    let transactionStatusList = [];
+    switch (true) {
+      case (transactionType == 'ORDER' || transactionType == 'PURCHASE'):
+        transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
+        break;
+      case (transactionType == 'REDEMPTION'):
+        transactionStatusList = detailStatusObj.transactionDetailStatus.REDEMPTION;
+        break;
+      case (transactionType == 'SWP'):
+        transactionStatusList = detailStatusObj.transactionDetailStatus.SWP;
+        break;
+      case (transactionType == 'SWITCH'):
+        transactionStatusList = detailStatusObj.transactionDetailStatus.SWITCH;
+        break;
+      case (transactionType == 'STP'):
+        transactionStatusList = detailStatusObj.transactionDetailStatus.STP;
+        break;
+      case (transactionType == 'SIP'):
+        transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
+        break;
+      default:
+        console.log('');
+    }
+    let statusString;
+    transactionStatusList.forEach(element => {
+      // tslint:disable-next-line:align
+      (element.status == status) ? (statusString = element.name) : '';
+    });
+
+    return statusString ? statusString : 'Unknown';
   }
 
   static getTransactionStatusFromStatusId(statusId) {

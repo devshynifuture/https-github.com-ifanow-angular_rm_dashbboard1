@@ -23,7 +23,7 @@
       </div>
     </div>
     <div *ngIf="multiTransact == true && childTransactions.length>0" class="col-md-12 mt-20 all-transactions">
-      <table [dataSource]="childTransactions" id="table-low" mat-table>
+      <table [dataSource]="dataSource" id="table-low" mat-table>
         <ng-container matColumnDef="no">
           <th *matHeaderCellDef class="br" mat-header-cell> No</th>
           <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
@@ -47,7 +47,7 @@
         <ng-container matColumnDef="amount">
           <th *matHeaderCellDef class="br w-10" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.orderVal}} </div>
+            <div class="bar"> ₹{{element.orderVal}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="icons">
@@ -59,7 +59,7 @@
             <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
             <mat-menu #menubank="matMenu">
               <button (click)="getDataForm(element,true)" mat-menu-item>Edit</button>
-              <button mat-menu-item>Delete</button>
+              <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
             </mat-menu>
 
           </td>
@@ -138,7 +138,7 @@
                 <mat-select class="form-control" formControlName="reinvest">
                   <mat-option disabled value=''>Select re-investment</mat-option>
                   <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
-                              value="option">
+                              [value]="flag.dividendReinvestmentFlag+''">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                   </mat-option>
                 </mat-select>
@@ -154,7 +154,7 @@
             <h5 class="m-0 text-black pb-8">Select folio</h5>
           </div>
           <div class="col-md-12 p-0">
-            <mat-radio-group (ngModelChange)="selectExistingOrNew($event)" aria-label="Select an option"
+            <mat-radio-group (change)="selectExistingOrNew($event.value)" aria-label="Select an option"
                              class="smallRadio" formControlName="folioSelection">
               <mat-radio-button
                 [ngClass]="{'b-a-custom-outline': sipTransaction.get('folioSelection').value==1,'text-primary':sipTransaction.get('folioSelection').value==1,'radio-border':sipTransaction.get('folioSelection').value==2}"
@@ -177,7 +177,8 @@
           <div class="col-md-7 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select [(ngModel)]="folioNumberShow" class="form-control"
+                <!--                [(ngModel)]="folioNumberShow"-->
+                <mat-select class="form-control"
                             formControlName="investmentAccountSelection">
                   <mat-option *ngIf="folioList.length > 1" disabled value=''>Select scheme folio
                   </mat-option>
@@ -205,7 +206,8 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select [(ngModel)]="defaultFrequency" class="form-control" formControlName="frequency">
+                <!--                [(ngModel)]="defaultFrequency"-->
+                <mat-select class="form-control" formControlName="frequency">
                   <mat-option disabled value=''>Select SIP frequency</mat-option>
                   <mat-option (click)="selectedFrequency(frequency)"
                               *ngFor="let frequency of sipFrequency" [value]="frequency.frequency">
@@ -321,14 +323,14 @@
                                  aria-label="Select an option" class="mediumRadio"
                                  formControlName="modeOfPaymentSelection">
                   <mat-radio-button
-                    [disabled]="isMultiTransact"
+                    [disabled]="multiTransact"
                     [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value=='1','text-primary':sipTransaction.get('modeOfPaymentSelection').value=='1','radio-border':sipTransaction.get('modeOfPaymentSelection').value=='2'}"
                     class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left"
                     value="1">
                     Net banking
                   </mat-radio-button>
                   <mat-radio-button
-                    [disabled]="isMultiTransact"
+                    [disabled]="multiTransact"
                     [ngClass]="{'b-a-custom-outline': sipTransaction.get('modeOfPaymentSelection').value=='2','text-primary':sipTransaction.get('modeOfPaymentSelection').value=='2','radio-border':sipTransaction.get('modeOfPaymentSelection').value=='1'}"
                     checked="true" class="b-a radioBtn bor_top_tb_right" value="2">
                     Debit mandate
