@@ -18,7 +18,7 @@ import { CancelFlagService } from '../people-service/cancel-flag.service';
   styleUrls: ['./people-leads.component.scss']
 })
 export class PeopleLeadsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'lrating',/*'status', 'rating',*/ 'lead',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'lrating', 'status', 'lead',
     'icons'];
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
@@ -50,7 +50,8 @@ export class PeopleLeadsComponent implements OnInit {
             if (singleData.emailList && singleData.emailList.length > 0) {
               singleData.email = singleData.emailList[0].email;
             }
-            singleData['leadrating'] = (singleData.leadRating == 0) ? 'N/A' : (singleData.leadRating == 1) ? 'Cold' : "Hot"
+            singleData['leadrating'] = (singleData.leadRating == 0) ? 'N/A' : (singleData.leadRating == 1) ? 'Cold' : "Hot",
+              singleData['leadStatus'] = (singleData.leadStatus == 0) ? 'N/A' : (singleData.leadStatus == 2) ? 'New' : "In progress"
           });
           this.leadDataSource.data = data;
           this.leadDataSource.sort = this.leadTableSort;

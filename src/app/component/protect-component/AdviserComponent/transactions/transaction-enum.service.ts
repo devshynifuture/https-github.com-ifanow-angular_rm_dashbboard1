@@ -58,6 +58,10 @@ export class TransactionEnumService {
       return 'Unknown';
     } else if (status == 1) {
       return 'Failure';
+    } else if (status == 2) {
+      return 'Pending authorization';
+    } else if (status == 7) {
+      return 'Rejected';
     }
     let transactionStatusList = [];
     switch (true) {
