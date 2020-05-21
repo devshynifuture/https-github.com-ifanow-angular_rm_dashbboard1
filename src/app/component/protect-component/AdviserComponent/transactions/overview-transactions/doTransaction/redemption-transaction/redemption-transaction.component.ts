@@ -230,9 +230,9 @@ export class RedemptionTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: ''});
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       bseOrderType: 'REDEMPTION',
       amcId,

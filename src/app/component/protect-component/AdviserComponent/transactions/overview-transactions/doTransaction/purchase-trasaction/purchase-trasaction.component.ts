@@ -159,9 +159,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       searchQuery: data,
@@ -471,9 +471,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   getExistingScheme() {
     this.showSpinner = true;
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       bseOrderType: 'ORDER',
