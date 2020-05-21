@@ -12,8 +12,8 @@
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
             <i (click)="close()" class="material-icons pt-16 c-p pr-16">
-        clear
-      </i>
+                clear
+            </i>
         </div>
     </div>
 </div>
@@ -87,8 +87,8 @@
 
 
                 <div class="row pt-24">
-                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-                        <h3 class="f-16   m-0"> Nominee date of birth </h3>
+                    <div class="col-md-4  text-right pr-0">
+                        <h3 class="f-16  pt-8  m-0"> Nominee date of birth </h3>
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
@@ -129,7 +129,7 @@
                         <h3 class="f-16   m-0">Address type</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
+                        <mat-form-field appearance="standard" floatLabel="never">
                             <mat-select class="form-control" formControlName="addressType">
                                 <mat-option disabled value=''>Select address type</mat-option>
                                 <mat-option value="Residential/Business"> Residential/Business</mat-option>
@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="row pt-24">
-                    <div class="col-md-4  pr-0">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
                         <h3 class="f-16   m-0">Address line 2</h3>
                     </div>
                     <div class="col-md-5 form-group">
@@ -290,22 +290,24 @@
     </div>
 
     <div class="col-md-5 center_menu">
-        <a (click)="SendToForm('first',false);" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p"> First
-      nominee </a>
+        <a (click)="SendToForm('first',false);" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
+            First
+            nominee </a>
         <a (click)="SendToForm('second',false);" [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p">
-      Second nominee </a>
-        <a (click)="SendToForm('third',false);" [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p"> Third
-      nominee </a>
+            Second nominee </a>
+        <a (click)="SendToForm('third',false);" [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p">
+            Third
+            nominee </a>
     </div>
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
         <button (click)="openBankDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
-      PREVIOUS
-    </button>
+            PREVIOUS
+        </button>
 
         <button (click)="SendToForm(holder.type,true);" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT
-    </button>
+        </button>
 
     </div>
 
