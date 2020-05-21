@@ -40,7 +40,6 @@ export class SubscriptionDetailsComponent implements OnInit {
   @Input()
   set data(payeeData) {
     this._payeeData = payeeData;
-    console.log('input payeeData : ', this._payeeData);
   }
   restrictAfter100(event) {
     if (parseInt(event.target.value) > 100) {
@@ -72,7 +71,6 @@ export class SubscriptionDetailsComponent implements OnInit {
   feeMode: any;
   isEdite: boolean = false;
   ngOnInit() {
-    // console.log('change payee upperData', this.upperData);
     this.subscriptionDetails = this.fb.group({
       id: [this._payeeData.id],
       subscriptionNumber: [this._payeeData.subscriptionNumber, [Validators.required]],
@@ -99,7 +97,6 @@ export class SubscriptionDetailsComponent implements OnInit {
   saveChangeSubsDetails() {
     if (this.subscriptionDetails.invalid) {
       for (let element in this.subscriptionDetails.controls) {
-        console.log(element)
         if (this.subscriptionDetails.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.subscriptionDetails.controls[element].markAsTouched();
@@ -107,7 +104,6 @@ export class SubscriptionDetailsComponent implements OnInit {
       }
     } else {
       this.barButtonOptions.active = true;
-      console.log('obj ====', this.subscriptionDetails.value);
       this.subService.changeSubsDetails(this.subscriptionDetails.value).subscribe(
         data => {
           this.barButtonOptions.active = false;
@@ -115,14 +111,12 @@ export class SubscriptionDetailsComponent implements OnInit {
         },
         err => {
           this.barButtonOptions.active = false;
-          console.log(err, "error changePayeeSetting");
         }
       );
     }
   }
 
   changeSubsDetails(data) {
-    console.log('changeSubsDetails', data);
 
     this.eventService.openSnackBar('Details updated successfully', 'OK');
     this.Close(true);

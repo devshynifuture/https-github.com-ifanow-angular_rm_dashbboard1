@@ -79,7 +79,6 @@ export class SetDateFooter<Date> implements SatCalendarFooter<Date> {
         this.calendar.activeDate = this.calendar.beginDate;
         this.calendar.beginDateSelectedChange.emit(this.calendar.beginDate);
         this.calendar.dateRangesChange.emit({ begin: this.calendar.beginDate, end: this.calendar.endDate });
-        console.log({ begin: this.calendar.beginDate, end: this.calendar.endDate }, "result date range button");
         this.datePicker.close();
 
 

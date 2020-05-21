@@ -18,7 +18,6 @@ export class EmailAddTaskComponent implements OnInit {
     public eventService: EventService) { }
 
   ngOnInit() {
-    console.log('this works->>>>>>>>>>>>>>>');
   }
 
   Close(state) {
@@ -34,7 +33,6 @@ export class EmailAddTaskComponent implements OnInit {
     //   documentList: this._inputData.documentList
     // };
 
-    // console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   }
 
   close() {

@@ -68,7 +68,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    console.log('all data in nominee', this.inputData);
     this.allData = data;
     this.doneData = {};
     this.doneData.bank = true;
@@ -120,7 +119,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   onChange(value) {
-    console.log('onChange', value.checked);
 
     if (value.checked == true) {
       this.nomineeDetails.controls.address1.setValue((this.allData.holderList[0].address1) ? this.allData.holderList[0].address1 : this.allData.holderList[0].address.address1);
@@ -133,7 +131,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   selectRelation(value) {
-    console.log('relation type', value);
     if (value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister') {
       this.maxDateForAdultDob = moment().subtract(18, 'years');
     } else {
@@ -152,10 +149,8 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data, shouldSetValue) {
-    console.log('getListOfFamilyByClientRes', data);
     this.nomineeFmList = data;
     this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.clientData.familyMemberId);
-    console.log('nomineeList', this.nomineeFmList);
   }
 
   selectedNominee(value) {
@@ -171,8 +166,6 @@ export class NomineeDetailsIinComponent implements OnInit {
     };
     this.custumService.getAddressList(obj).subscribe(
       data => {
-        console.log(data);
-        console.log('address stored', data);
         //  this.addressList = this.firstHolderContact
         this.addressList.address = data[0];
         this.getdataForm(this.addressList);
@@ -192,7 +185,6 @@ export class NomineeDetailsIinComponent implements OnInit {
       data => {
         this.familyMemberList = data;
         this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
-        console.log(this.familyMemberList);
         this.firstHolderNominee = this.familyMemberList[1];
         this.secondHolderNominee = this.familyMemberList[2];
         this.getdataForm(this.firstHolderNominee);
@@ -276,11 +268,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     let obj = {
       zipCode: value
     };
-    console.log(value, 'check value');
     if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
         this.isLoading = false;
-        console.log('postal 121221', data);
         this.PinData(data);
       });
     } else {
@@ -339,7 +329,6 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else {
       this.saveNomineeDetails(value);
     }
-    console.log('contact details', this.obj1);
 
     this.obj1 = [];
     this.obj1.push(this.firstHolderNominee);
@@ -374,7 +363,6 @@ export class NomineeDetailsIinComponent implements OnInit {
         tpUserSubRequestClientId1: 2,
         clientData: this.clientData
       };
-      console.log('##### ALLL DATA ####', obj);
       this.openFatcaDetails(obj);
     }
   }
@@ -408,7 +396,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   saveNomineeDetails(value) {
     if (this.nomineeDetails.invalid) {
       for (let element in this.nomineeDetails.controls) {
-        console.log(element);
         if (this.nomineeDetails.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.nomineeDetails.controls[element].markAsTouched();
@@ -421,7 +408,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   createIINUCCRes(data) {
-    console.log('data to created', data);
   }
 
   setEditHolder(type, value) {

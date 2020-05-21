@@ -73,14 +73,12 @@ export class BillerSettingsComponent implements OnInit {
         this.changeBillerSettingData(data)
       },
       err=>{
-        console.log(err,"error changeBillerSettingData");
         this.barButtonOptions.active = false;
       } 
     );
   }
 
   changeBillerSettingData(data) {
-    console.log('data', data);
     if (data == true) {
       this.eventService.openSnackBar('Biller is updated', 'OK');
       this.Close(true);
@@ -88,7 +86,6 @@ export class BillerSettingsComponent implements OnInit {
   }
 
   getBillerProfileRes(data) {
-    console.log('getBillerProfileRes data', data);
     this.billerSettingData = data;
     if (this.billerSettingData.length == 1) {
       this.billerSettingData[0].selected = true
@@ -102,8 +99,6 @@ export class BillerSettingsComponent implements OnInit {
 
   selectedBiller(data, singlePlan) {
     singlePlan.selected = true;
-    console.log('selected value', data);
-    console.log('selected singlePlan', singlePlan);
     this.billerSettingData.forEach(element => {
       element.selected = false;
     });

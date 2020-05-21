@@ -64,7 +64,7 @@ export class AddFixedFeeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    (this.ischeckFixedData) ? console.log("fixed fee Data") : this.createFixedFeeForm('');
+    (this.ischeckFixedData) ? '' : this.createFixedFeeForm('');
   }
 
   createFixedFeeForm(data) {
@@ -104,8 +104,6 @@ export class AddFixedFeeComponent implements OnInit {
       this._data = data;
       this.serviceId = data.id;
       // data.servicePricing.billingNature = '1';
-      console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
-      console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature + '');
 
       // data.servicePricing.billingNature + ''
       this.fixedFeeData.controls.serviceName.setValue(data.serviceName);
@@ -136,7 +134,6 @@ export class AddFixedFeeComponent implements OnInit {
   saveFeeTypeData(feeType, state) {
     if (this.fixedFeeData.invalid) {
       for (let element in this.fixedFeeData.controls) {
-        console.log(element)
         if (this.fixedFeeData.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.fixedFeeData.controls[element].markAsTouched();
@@ -180,7 +177,6 @@ export class AddFixedFeeComponent implements OnInit {
           },
           err => {
             this.barButtonOptions.active = false;
-            console.log(err, "error createSettingService");
           }
         );
       } else {
@@ -191,7 +187,6 @@ export class AddFixedFeeComponent implements OnInit {
           },
           err => {
             this.barButtonOptions.active = false;
-            console.log(err, "error editSettingService");
           }
         );
       }

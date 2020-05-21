@@ -17,7 +17,6 @@ export class TransactionsComponent implements OnInit {
   _value: number;
 
   set value(value: number) {
-    console.log('now value is ->>>>', value);
     this._value = value;
   }
 

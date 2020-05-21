@@ -74,12 +74,10 @@ export class OverviewTransactionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
   openTransactionHistory(data) {
-    console.log('openTransactionHistory data: ', data);
     const fragmentData = {
       flag: 'addNewTransaction',
       data,
@@ -99,13 +97,11 @@ export class OverviewTransactionsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getAllTransactionList();
             this.transactionList = undefined;
           }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
         }
@@ -145,10 +141,8 @@ export class OverviewTransactionsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
 
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
 
         }
         rightSideDataSub.unsubscribe();
@@ -171,9 +165,7 @@ export class OverviewTransactionsComponent implements OnInit {
     };
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
-        console.log(data);
         this.isLoading = false;
-        console.log('transaction data', data);
         this.transactionList = data;
         this.transactionCount = data.length;
         this.pendingTransaction = data.filter(data => data.status == 2);
@@ -204,9 +196,7 @@ export class OverviewTransactionsComponent implements OnInit {
     };
     this.tranService.getOverviewMandate(obj).subscribe(
       data => {
-        console.log(data);
         this.isLoadingMandate = false;
-        console.log('getOverviewMandate data', data);
         this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate;
         data.statusList.forEach(element => {
           if (element.status == 1) {
@@ -239,10 +229,8 @@ export class OverviewTransactionsComponent implements OnInit {
     };
     this.tranService.getIINUCCOverview(obj).subscribe(
       data => {
-        console.log(data);
         this.isLoadingIIN = false;
         this.totalUccCount = data.length;
-        console.log('getIINUCCOverview data', data);
         this.totalPending = data.totalPending;
         this.totalClient = data.totalClient;
         this.totalClientCode = data.totalClientCode;
@@ -303,7 +291,6 @@ export class OverviewTransactionsComponent implements OnInit {
           // Here I'm getting the value contained by the <return> node.
           const response_number = parseInt(xml.getElementsByTagName('return')[0].childNodes[0].nodeValue);
           // Print result square number.
-          console.log(response_number);
         }
       }
     };
@@ -314,7 +301,6 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   uploadFile(file) {
-    console.log('2324234324', file);
     this.file = file.target.files[0];
     this.nseUpload(this.file);
   }
@@ -345,7 +331,6 @@ export class OverviewTransactionsComponent implements OnInit {
 
     };
     this.http.post(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
-      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
 
     });
   }

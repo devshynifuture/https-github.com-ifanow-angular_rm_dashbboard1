@@ -135,7 +135,6 @@ export class InvoiceComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('InvoiceComponent inputData', this.inputData);
     this.getInvoiceData(data);
     this.getRecordPayment(data);
   }
@@ -147,18 +146,13 @@ export class InvoiceComponent implements OnInit {
     this.showErr = false
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
-    console.log('this.feeCollectionMode', this.feeCollectionMode);
     // this.getPayReceive(data);
-    console.log('this.invoiceSubscription', this.invoiceInSub);
-    console.log('###########', this.clientData);
-    console.log('@@@@@@@@', this.upperData);
     this.dataInvoices = this.clientData;
     this.showRecord = false;
     this.showEdit = false;
     this.editAdd1 = false;
     this.editAdd2 = false;
     this.feeCalc = false;
-    console.log('invoiceValue+++++++++++', this.dataInvoices);
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
       this.editPayment.reset();
       this.auto = true;
@@ -173,7 +167,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   keyPress(event: any) {
-    console.log(event.target.value.length);
     const pattern = /[0-9\+\-\ ]/;
 
     const inputChar = String.fromCharCode(event.charCode);
@@ -191,7 +184,6 @@ export class InvoiceComponent implements OnInit {
     );
   }
   getInvoiceStatusRes(data){
-    console.log('getInvoiceStatusRes',data)
     this.Close('close', true);
   }
   dontAllowTyping(event, maxLength: number) {
@@ -218,7 +210,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   display(value) {
-    console.log(value)
     this.cancel(value);
   }
 
@@ -258,14 +249,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   selectClient(c, data) {
-    console.log(c);
-    console.log('ssss', data);
-    console.log('getInvoiceDataRes', data);
     this.storeData = data;
     this.storeData.billerAddress = this.defaultVal.biller.billerAddress;
     this.auto = false;
     this.storeData.auto == false;
-    console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
       clientName: [(data.clientName == undefined) ? '' : data.clientName, [Validators.required]],
@@ -303,7 +290,6 @@ export class InvoiceComponent implements OnInit {
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
-    console.log('finalAmount', this.finalAmount);
     this.taxStatus = this.editPayment.value.taxStatus;
   }
 
@@ -322,7 +308,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   getClientListRes(data) {
-    console.log('getClientListRes', data.payees);
     this.clientList = data.payees;
     this.defaultVal = data;
     this.advisorBillerProfileId = data.biller.id;
@@ -343,12 +328,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   getServicesListForInvoiceRes(data) {
-    console.log('getServicesListForInvoiceRes', data);
     this.serviceList = data;
   }
 
   saveCode(codeValue) {
-    console.log('codeValue', codeValue);
 
   }
 
@@ -376,7 +359,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoiceData(data) {
-    console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
     if(data.status==5 || data.status==6){
@@ -391,7 +373,6 @@ export class InvoiceComponent implements OnInit {
     }
     this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
-    console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
       clientName: [data.clientName, [Validators.required]],
@@ -433,7 +414,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   changeTaxStatus(changeTaxStatus) {
-    console.log('changeTaxStatus', changeTaxStatus);
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
       this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
       this.finAmountC = this.finAmountC * 9 / 100;
@@ -446,7 +426,6 @@ export class InvoiceComponent implements OnInit {
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
-    console.log('finAmount', this.finAmount);
   }
 
   updateInvoice() {
@@ -499,7 +478,6 @@ export class InvoiceComponent implements OnInit {
           services: service,
         };
 
-        console.log('this.editPayment', obj);
         this.subService.addInvoice(obj).subscribe(
           data => this.addInvoiceRes(data)
         );
@@ -544,7 +522,6 @@ export class InvoiceComponent implements OnInit {
           terms: this.editPayment.value.terms,
           services: this.service,
         };
-        console.log('this.editPayment', obj);
         this.subService.updateInvoiceInfo(obj).subscribe(
           data => this.updateInvoiceInfoRes(data)
         );
@@ -554,7 +531,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoiceInfoRes(data) {
-    console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
       this.Close('close', true);
     }
@@ -565,7 +541,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   addInvoiceRes(data) {
-    console.log('addInvoiceRes', data);
     if (data == 1) {
       this.Close('close', true);
     }
@@ -636,7 +611,6 @@ export class InvoiceComponent implements OnInit {
       this.moreStatus="";
     }   
      this.recordData = data;
-    console.log(data);
     this.storeData = data;
     const obj = {
       invoiceId: data.id
@@ -688,11 +662,9 @@ export class InvoiceComponent implements OnInit {
   }
 
   saveInvoice() {
-    console.log(this.editPayment);
   }
 
   openSendEmail(input) {
-    // console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
     const data = {
       advisorId: this.advisorId,
       clientData: this.storeData,
@@ -723,10 +695,8 @@ export class InvoiceComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -745,9 +715,7 @@ export class InvoiceComponent implements OnInit {
   //   };
   //   const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
   //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
   //       if (UtilService.isDialogClose(sideBarData)) {
-  //         console.log('this is sidebardata in subs subs 2: ');
   //         rightSideDataSub.unsubscribe();
   //       }
   //     }
@@ -767,10 +735,8 @@ export class InvoiceComponent implements OnInit {
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -799,7 +765,6 @@ export class InvoiceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('this is template result delete::', result);
 
       this.Close(result, true);
     });
@@ -807,7 +772,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   printPage(templateRef) {
-    console.log('this is template html::', templateRef);
     // window.print();
   }
 

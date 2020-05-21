@@ -68,7 +68,6 @@ export class QuotationsComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.quotationDesign = 'true';
-    console.log('quotation');
     // this.getQuotationsList();
     this.dataCount = 0;
   }
@@ -90,9 +89,7 @@ export class QuotationsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
           // this.getQuotationsList();
 
         }
@@ -114,11 +111,9 @@ export class QuotationsComponent implements OnInit {
     data.userEmailId = this._clientData.userEmailId
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getQuotationsList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -148,7 +143,6 @@ export class QuotationsComponent implements OnInit {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
-        // console.log('item item ', item);
         if (item.selected) {
           this.dataCount++;
         }
@@ -236,7 +230,6 @@ export class QuotationsComponent implements OnInit {
       },
       negativeMethod: () => {
         this.list = []
-        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -248,7 +241,6 @@ export class QuotationsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, "delete result");
       if (this.list.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {
@@ -293,11 +285,9 @@ export class QuotationsComponent implements OnInit {
   //   };
   //   const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
   //     sideBarData => {
-  //       console.log('this is sidebardata in subs subs : ', sideBarData);
   //       if (UtilService.isDialogClose(sideBarData)) {
   //         if (UtilService.isRefreshRequired(sideBarData)) {
   //           this.getQuotationsList();
-  //           console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
   //         }
   //         rightSideDataSub.unsubscribe();
@@ -315,12 +305,10 @@ export class QuotationsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getQuotationsList();
 
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();
@@ -364,13 +352,11 @@ export class QuotationsComponent implements OnInit {
   }
 
   display(data) {
-    console.log(data);
     this.ngOnInit();
   }
 
   viewQuotation(value, data) {
     // this.quotationDesign = value;
-    // console.log(data);
     // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
       flag: value,
@@ -380,9 +366,7 @@ export class QuotationsComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
         }
         rightSideDataSub.unsubscribe();
       }

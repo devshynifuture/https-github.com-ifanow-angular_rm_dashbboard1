@@ -80,7 +80,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   @Input() set data(data) {
     this.copyStoreData = data;
     this.storeData = data;
-    console.log('@@@@@@@@ yo1', data, data.id == undefined || data.flag);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     if(data.id == undefined || data.flag){
@@ -90,7 +89,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.upperData)
    
     this.advisorId = AuthService.getAdvisorId();
     this.showErr = false;
@@ -113,7 +111,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   initFormsAndVariable(data) {
-    console.log('initFormsAndVariable data : ', data);
     if (this.storeData.balanceDue == 0) {
       this.rpyment = false;
     }
@@ -121,7 +118,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.showEdit = false;
     this.editAdd1 = false;
     this.editAdd2 = false;
-    console.log(this.storeData);
     // , [Validators.required]
     this.editPayment = this.fb.group({
       clientName: [data.clientName, [Validators.required]],
@@ -188,23 +184,16 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   selectClient(event, data) {
     if (!data || !event.isUserInput) {
-      console.log('selectClient data  is null : ', data);
-      console.log('selectClient isUserInput  is false : ', event);
 
       return;
     }
-    console.log('selectClient event : ', event);
-    // console.log('ssss', data);
-    console.log('data ', data);
     this.storeData = data;
     this.storeData.billerAddress = this.defaultVal.biller.billerAddress;
     this.auto = false;
     this.storeData.auto == false;
-    console.log(this.storeData);
 
     const clientName = this.checkAndGetDefaultValue(data.clientName);
     this.clientId = this.storeData.clientId;
-    console.log('clientName : ', clientName);
     // this.editPayment.controls.clientName.setValue(clientName);
     this.editPayment.controls.billingAddress.setValue(this.checkAndGetDefaultValue(data.billingAddress));
     if (data.services) {
@@ -238,7 +227,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   changeTaxStatus(price, discount, changeTaxStatus) {
-    console.log('changeTaxStatus', changeTaxStatus);
     if (price == null) {
       price = 0;
     }
@@ -251,7 +239,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
       this.finAmountC = price - parseInt(discount);
       this.cgstTaxAmount = this.finAmountC * 9 / 100;
-      console.log('changeTaxStatus cgstTaxAmount : ', this.cgstTaxAmount);
       this.cgstTaxAmount = UtilService.roundOff(this.cgstTaxAmount, 2);
       this.sgstTaxAmount = this.finAmountC * 9 / 100;
       this.sgstTaxAmount = UtilService.roundOff(this.sgstTaxAmount, 2);
@@ -267,7 +254,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     if (this.storeData)
       this.storeData.subTotal = price;
     this.taxStatus = changeTaxStatus;
-    console.log('finAmount', this.finAmount);
   }
 
   checkDateDiff(event) {
@@ -293,12 +279,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     //   this.editPayment.get('clientName').markAsTouched();
     //   this.editPayment.get('serviceName').markAsTouched();
     //   this.editPayment.get('finalAmount').markAsTouched();
-    //   console.log(this.editPayment.controls.finalAmount.valid,this.editPayment.value, "finalAmount 123");
     // }
 
     if (this.showDateError || this.editPayment.invalid) {
       for (let element in this.editPayment.controls) {
-        console.log(element)
         if (this.editPayment.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.editPayment.controls[element].markAsTouched();
@@ -341,7 +325,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
             serviceName: this.editPayment.value.serviceName
           }];
         obj['services'] = service,
-          console.log('this.editPayment', obj);
         this.subService.addInvoice(obj).subscribe(
           data => this.addInvoiceRes(data)
         );
@@ -357,7 +340,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
           obj['auto'] = this.editPayment.value.auto,
           // finalAmount: this.editPayment.value.finalAmount,
           obj['services'] = service,
-          console.log('this.editPayment', obj);
         this.subService.updateInvoiceInfo(obj).subscribe(
           data => this.updateInvoiceInfoRes(data)
         );
@@ -366,7 +348,6 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   }
   updateInvoiceInfoRes(data) {
-    console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
       this.barButtonOptions.active = false;
       this.cancelAddInvoice.emit(true);
@@ -387,10 +368,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   
     this.editPayment.get("finalAmount").setValue(service.price)
     this.finAmount = service.price
-    // console.log(service,'pricing ====== ',service.price)
   }
   getClientListRes(data) {
-    console.log('getClientListRes', data);
     this.clientList = data.payees;
     this.billerName = data.biller.companyDisplayName
     this.defaultVal = data;
@@ -415,12 +394,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   getServicesListForInvoiceRes(data) {
-    console.log('getServicesListForInvoiceRes', data);
     this.serviceList = data;
   }
 
   addInvoiceRes(data) {
-    console.log('addInvoiceRes', data);
     if (data == 1) {
       this.barButtonOptions.active = false;
       this.cancelAddInvoice.emit(true);

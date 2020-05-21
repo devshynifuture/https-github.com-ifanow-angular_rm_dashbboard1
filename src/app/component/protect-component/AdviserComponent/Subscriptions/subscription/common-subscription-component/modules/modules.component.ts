@@ -31,7 +31,6 @@ export class ModulesComponent implements OnInit {
   }
   @Input()
   set upperData(upperData) {
-    console.log('FeeStructureComponent upperData set : ', this.upperData);
 
     this._upperData = upperData;
     // setTimeout(() => {
@@ -64,7 +63,6 @@ export class ModulesComponent implements OnInit {
   }
 
   getModuleDataResponse(data) {
-    console.log('Module data', data);
     this.ModuleData = data;
     this.ModuleData.forEach(element => {
       if (element.selected == true) {
@@ -76,20 +74,17 @@ export class ModulesComponent implements OnInit {
 
   selectModule(data) {
     (data.selected) ? this.unmapModuleToService(data) : this.mapModuleToService(data);
-    console.log(data);
   }
 
   mapModuleToService(data) {
     data.selected = true;
     this.mappedData.push(data);
-    console.log(this.mappedData.length);
   }
 
   unmapModuleToService(data) {
     data.selected = false;
     // _.remove(this.mappedData, delData => delData.subModuleId === data.subModuleId);
     this.mappedData = this.mappedData.filter(delData => delData.subModuleId != data.subModuleId)
-    console.log(this.mappedData.length);
   }
 
   mapModuleToPlan() {
@@ -122,14 +117,12 @@ export class ModulesComponent implements OnInit {
       },
       err =>{
         this.barButtonOptions.active = false;
-        console.log(err, "error mapModuleToplanData");
       }
     );
   }
 
   mapModuleToPlanResponse(data) {
     // this.dialogClose();
-    console.log('Module Map data', data);
     if (this.mappedData.length != 0) {
       this.eventService.openSnackBar('Module is mapped', 'OK');
     } else {

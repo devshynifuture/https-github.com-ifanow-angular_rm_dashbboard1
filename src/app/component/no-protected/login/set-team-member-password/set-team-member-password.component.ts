@@ -60,7 +60,6 @@ export class SetTeamMemberPasswordComponent implements OnInit {
     }
     this.loginService.getTeamMemberInfo(obj).subscribe(
       data => {
-        console.log(data);
         this.userData = data;
       }, err => {
         this.eventService.openSnackBar("Something went wrong");
@@ -105,7 +104,6 @@ export class SetTeamMemberPasswordComponent implements OnInit {
     const password = this.setNewPasswordForm.get('newPassword').value;
     const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;
     this.newPasswordLength = (password != null) ? password.length : 0;
-    console.log(this.newPasswordLength);
     if (password !== '' && confirm_new_password !== '') {
       if (confirm_new_password !== password) {
         this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });
@@ -125,7 +123,6 @@ export class SetTeamMemberPasswordComponent implements OnInit {
       };
       this.loginService.savePassword(obj).subscribe(
         data => {
-          console.log(data);
           if (data == 1) {
             const obj = {
               advisorId: this.userData.advisorId
@@ -133,9 +130,8 @@ export class SetTeamMemberPasswordComponent implements OnInit {
             this.loginService.sendWelcomeEmail(obj).subscribe(
               data => {
                 this.barButtonOptions.active = false;
-                console.log(data);
               },
-              err => { console.log(err) }
+              err => { }
             );
             this.loginService.handleUserData(this.authService, this.router, this.userData);
           } else {

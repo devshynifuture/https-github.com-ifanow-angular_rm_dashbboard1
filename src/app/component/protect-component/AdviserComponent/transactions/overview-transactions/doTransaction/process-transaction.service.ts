@@ -132,11 +132,9 @@ export class ProcessTransactionService {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
         }
@@ -223,19 +221,15 @@ export class ProcessTransactionService {
   getDateByArray = function(arr, flag) {
     let dArr = [], datesArr = [];
     const t = (flag == true) ? moment().add('days', 7) : moment().add('days', 30);
-    console.log('setting t as step date', t);
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]));
     }
-    console.log('step date array', datesArr);
     datesArr = datesArr.filter((dt) => {
       return (moment(dt).isSameOrBefore(t));
     });
-    console.log('step date array filtered isSameOrBefore of step date', datesArr);
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]).add(1, 'months'));
     }
-    console.log('after step datesArr adition of next month', datesArr);
     datesArr.forEach(_dt => {
       dArr.push({
         date: _dt.toDate(),
@@ -243,7 +237,6 @@ export class ProcessTransactionService {
         tomm: moment(_dt).add('days', 1).toDate()
       });
     });
-    console.log('dArr', dArr);
     return dArr;
   };
   formatApiDates = function(_date) {
@@ -302,8 +295,6 @@ export class ProcessTransactionService {
 
   public filterScheme(value: any, schemeList): any[] {
     const filterValue = this.normalizeValue(value + '');
-    console.log('_filter value : ', value);
-    console.log('_filter this.schemeList : ', schemeList);
 
     if (schemeList) {
       return schemeList.filter(singleScheme => this.normalizeValue(singleScheme.schemeName).includes(filterValue));
@@ -314,8 +305,6 @@ export class ProcessTransactionService {
 
   public filterName(value: any, countryList): any[] {
     const filterValue = this.normalizeValue(value + '');
-    console.log('_filter value : ', value);
-    console.log('_filter countryList : ', countryList);
 
     if (countryList) {
       return countryList.filter(singleScheme => this.normalizeValue(singleScheme.name).includes(filterValue));

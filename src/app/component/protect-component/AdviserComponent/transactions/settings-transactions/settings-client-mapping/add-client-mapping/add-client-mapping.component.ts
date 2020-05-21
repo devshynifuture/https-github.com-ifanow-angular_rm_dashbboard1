@@ -31,7 +31,6 @@ export class AddClientMappingComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.singleFolioData = data;
-    console.log(this.singleFolioData);
     this.folioForm = this.fb.group({
       ownerName: [, [Validators.required]]
     });
@@ -41,7 +40,6 @@ export class AddClientMappingComponent implements OnInit {
   }
 
   lisNominee(value) {
-    console.log(value);
     if (value == null) {
       this.folioForm.get('ownerName').setErrors({'setValue': 'family member does not exist'});
       this.folioForm.get('ownerName').markAsTouched();
@@ -57,14 +55,12 @@ export class AddClientMappingComponent implements OnInit {
   }
 
   selectedIINUCC(value) {
-    console.log(value);
     this.selectedIIN = value;
   }
 
   ownerDetails(value, type) {
     this.familyMemberId = value.id;
     this.familyMemberData = value;
-    console.log(value);
     if (type == 'folio') {
       const obj = {
         clientId: value.clientId,
@@ -80,7 +76,6 @@ export class AddClientMappingComponent implements OnInit {
       // }
       this.onlineTransact.getClientCodes(obj).subscribe(
         data => {
-          console.log(data);
           this.clientCodeData = data;
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -102,7 +97,6 @@ export class AddClientMappingComponent implements OnInit {
     };
     this.onlineTransact.mapUnmappedClient(obj).subscribe(
       data => {
-        console.log(data);
         this.close();
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -119,7 +113,6 @@ export class AddClientMappingComponent implements OnInit {
     };
     this.onlineTransact.mapUnmappedFolios(obj).subscribe(
       data => {
-        console.log(data);
         this.close();
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')

@@ -29,7 +29,6 @@ export class ClientsDashboardComponent implements OnInit {
   displayedColumns: string[] = ['date', 'invoice', 'status', 'ddate', 'amount', 'balance'];
   dataSource = ELEMENT_DATA;
   showInvoice() {
-    console.log("sarv")
   }
   Close() {
     // $('#myRightSidenav').css({ "width": "" });

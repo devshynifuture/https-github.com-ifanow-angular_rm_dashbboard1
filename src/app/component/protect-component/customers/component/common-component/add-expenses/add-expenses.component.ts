@@ -35,7 +35,6 @@ export class AddExpensesComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       if (data.isRecuring == true) {
@@ -60,15 +59,12 @@ export class AddExpensesComponent implements OnInit {
   }
 
   display(value) {
-    console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
 
   lisNominee(value) {
-    console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
-    console.log('list of family', this.nomineesListFM)
   }
 
   preventDefault(e) {
@@ -142,12 +138,10 @@ export class AddExpensesComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data);
     this.familyMember = data.familyMembersList;
   }
 
   selectClient(event, selected) {
-    console.log(selected)
     this.familyMemberId = selected.id
   }
   toggle(value) {
@@ -233,12 +227,10 @@ export class AddExpensesComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   addRecuringExpenseRes(data) {
-    console.log('addRecuringExpenseRes', data);
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   editRecuringExpenseRes(data) {
-    console.log('editRecuringExpenseRes', data);
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
@@ -317,23 +309,19 @@ export class AddExpensesComponent implements OnInit {
     }
   }
   addBudgetRes(data) {
-    console.log(data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editBudgetRes(data) {
-    console.log(data)
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   addExpenseRes(data) {
-    console.log('addExpenseRes', data);
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
 
   editExpenseRes(data) {
-    console.log('editExpenseRes', data);
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }

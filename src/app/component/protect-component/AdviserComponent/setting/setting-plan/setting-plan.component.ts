@@ -10,7 +10,6 @@ export class SettingPlanComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("setting-plan")
   }
 
 }

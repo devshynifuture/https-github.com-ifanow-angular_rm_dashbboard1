@@ -61,7 +61,6 @@ export class AddVariableFeeComponent implements OnInit {
 
   @Input() set data(data) {
     const stock = this.enumService.getOtherAssetData().filter((x) => x.subAssetClassName == 'Stocks');
-    console.log(stock, this.enumService.getOtherAssetData(), 'stock 123');
 
     if (data == '') {
       // this.otherAssetData=UtilService.
@@ -78,14 +77,11 @@ export class AddVariableFeeComponent implements OnInit {
     // if(this.enumService.getOtherAssetData().length <= 0 ){
     //   this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
     // }
-    // console.log(this.enumService.getOtherAssetData(), this.enumService.getOtherAssetData().length <= 0 , "check data variable fee");
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    (this.ischeckVariableData) ? console.log('fixed fee Data') : this.createVariableFeeForm('');
   }
 
   ngAfterViewInit() {
-    console.log(this.htmltag);
   }
 
   restrictFrom100(event) {
@@ -169,7 +165,6 @@ export class AddVariableFeeComponent implements OnInit {
           this.selectedOtherAssets.push(element.subAssetClassId);
         }
       });
-      console.log(this.otherAssetData);
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
       this.getFormControl().description.maxLength = 500;
@@ -203,7 +198,6 @@ export class AddVariableFeeComponent implements OnInit {
   saveVariableFeeData(feeType) {
     if (this.variableFeeData.invalid) {
       for (const element in this.variableFeeData.controls) {
-        console.log(element);
         if (this.variableFeeData.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.variableFeeData.controls[element].markAsTouched();
@@ -260,7 +254,6 @@ export class AddVariableFeeComponent implements OnInit {
       };
       this.dataToSend = obj;
       Object.assign(this.dataToSend, {id: this.serviceId});
-      console.log('jifsdfoisd', obj);
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
           data => {
@@ -268,7 +261,6 @@ export class AddVariableFeeComponent implements OnInit {
             this.barButtonOptions.active = false;
           },
           err => {
-            console.log('error createSettingService', err);
             this.barButtonOptions.active = false;
           }
         );
@@ -281,7 +273,6 @@ export class AddVariableFeeComponent implements OnInit {
           },
           err => {
             this.barButtonOptions.active = false;
-            console.log('error editSettingService', err);
           }
         );
       }
@@ -307,7 +298,6 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   selectAssets(data) {
-    console.log(data);
     data.isActive = 1;
     this.selectedOtherAssets.push(parseInt(data.subAssetClassId));
   }

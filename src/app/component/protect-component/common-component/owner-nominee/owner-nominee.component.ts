@@ -20,7 +20,6 @@ export class OwnerNomineeComponent implements OnInit {
   @Output() coGroup = new EventEmitter();
   @Input() set formData(formData) {
     // this.ownerData = data.controleData;
-    // console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     // if(data.Fmember.length <= 0){
     // this.getListFamilyMem();
     // }
@@ -72,7 +71,6 @@ export class OwnerNomineeComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data) {
-    console.log('family Memebers', data);
     if (data.familyMembersList && data.familyMembersList.length > 0) {
       data.familyMembersList.forEach((singleData) => {
         singleData['userName'] = singleData.displayName;
@@ -82,7 +80,6 @@ export class OwnerNomineeComponent implements OnInit {
       });
     }
     this.sendData = data.familyMembersList;
-    console.log(this.sendData, "sendData 123");
     // this.disabledMember(null);
   }
 
@@ -104,7 +101,6 @@ export class OwnerNomineeComponent implements OnInit {
       }
     }
 
-    console.log(controlsArr, test, "controlsArr 123");
 
     this.sendData.forEach(element => {
       for (let e of controlsArr) {
@@ -173,7 +169,6 @@ export class OwnerNomineeComponent implements OnInit {
             this.showErrorOwner = true;
             arrayCon.get('share').setErrors({ 'incorrect': true });
             // arrayCon.get('share').updateValueAndValidity();
-            console.log('show error Percent cannot be more than 100%', arrayCon)
           }
           else {
             this.showErrorOwner = false
@@ -206,7 +201,6 @@ export class OwnerNomineeComponent implements OnInit {
             arrayCon.controls['sharePercentage'].setErrors({ 'incorrect': true });
             // arrayCon.get('sharePercentage').updateValueAndValidity();
           }
-          console.log('show error Percent cannot be more than 100%')
         } else {
           this.showErrorOwner = false
           // this.showErrorCoOwner = false;

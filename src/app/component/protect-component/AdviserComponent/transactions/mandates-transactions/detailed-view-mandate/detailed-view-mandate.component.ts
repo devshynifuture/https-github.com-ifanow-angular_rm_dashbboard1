@@ -39,7 +39,6 @@ export class DetailedViewMandateComponent implements OnInit {
 
   ngOnInit() {
     this.details = this.data;
-    console.log('mandateDetails', this.data);
     this.getDataStatus(this.details);
   }
 
@@ -61,7 +60,6 @@ export class DetailedViewMandateComponent implements OnInit {
   }
 
   refresh(value) {
-    console.log(value);
     this.getDataStatus(value);
   }
 
@@ -70,9 +68,7 @@ export class DetailedViewMandateComponent implements OnInit {
   }
 
   getFileDetails(e, flag) {
-    console.log('file', e);
     this.file = e.target.files[0];
-    console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       // tpUserRequestId: 1,
@@ -81,14 +77,9 @@ export class DetailedViewMandateComponent implements OnInit {
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        console.log('getFileDetails uploadFileToServer callback item : ', item);
-        console.log('getFileDetails uploadFileToServer callback status : ', status);
-        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
-        console.log('getFileDetails uploadFileToServer callback response : ', response);
 
         if (status == 200) {
           const responseObject = JSON.parse(response);
-          console.log('onChange file upload success response url : ', responseObject.url);
           this.eventService.openSnackBar('File uploaded successfully');
         } else {
           const responseObject = JSON.parse(response);

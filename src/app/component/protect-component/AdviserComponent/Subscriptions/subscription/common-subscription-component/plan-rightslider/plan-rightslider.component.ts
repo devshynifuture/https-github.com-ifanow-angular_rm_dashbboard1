@@ -59,7 +59,6 @@ export class PlanRightsliderComponent implements OnInit {
         clientId: this.clientData.id,
         planName: this.selectedPlan.name
       }];
-      console.log(data);
       this.subService.createSubscription(data).subscribe(
         data => this.createSubscriptionResponse(data)
       );

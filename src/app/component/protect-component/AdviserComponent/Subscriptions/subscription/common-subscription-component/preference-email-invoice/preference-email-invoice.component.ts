@@ -36,7 +36,6 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   }
 
   set data(data) {
-    console.log('SubscriptionUpperSliderComponent data : ', data);
     this.fragmentData = { data };
     this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with esign request' : ' Documents without eSign request';
     this.storeData = this.fragmentData.data;
@@ -71,18 +70,15 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
 
 
   saveData(data) {
-    console.log(data);
     // this.storeData.documentText=data;
   }
 
   save() {
-    console.log('here is saved data', this.storeData);
     this.updateData(this.storeData);
     this.dialogClose();
   }
 
   updateData(data) {
-    console.log(data);
     const obj = {
       subject: data.subject,
       body: data.body,
@@ -97,7 +93,6 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   }
 
   getResponseData(data) {
-    console.log('getResponse', data);
   }
 
   openDialog(data) {

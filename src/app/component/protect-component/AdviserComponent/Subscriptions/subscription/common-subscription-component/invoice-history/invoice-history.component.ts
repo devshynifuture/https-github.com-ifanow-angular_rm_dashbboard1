@@ -69,12 +69,10 @@ export class InvoiceHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.showSubscription = true;
-    console.log('this.dataSub', this.dataSub);
   }
 
   showInvoice(value) {
     this.invoiceData = value;
-    console.log(this.invoiceData);
     this.showSubscription = false;
     this.subInjectService.addSingleProfile(value);
 
@@ -86,10 +84,8 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   invoiceDataGet(data) {
-    console.log('InvoiceHistory invoiceDataGet data : ', data);
 
     if (data === undefined) {
-      console.log('InvoiceHistory invoiceDataGet data : ', data);
       return;
     } else {
       const obj = {
@@ -104,7 +100,6 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
-    console.log('getInvoiceResponseData', data);
     if (data) {
       this.dataSource.data = data;
     } else {

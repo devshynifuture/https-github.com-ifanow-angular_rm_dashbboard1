@@ -140,7 +140,6 @@ export class AddNewRoleComponent implements OnInit {
       };
       this.dataModels.push(obj);
     }
-    console.log(this.dataModels);
   }
 
   mergeAllCapabilitiesAndFilterEnabled() {

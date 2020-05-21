@@ -65,7 +65,6 @@ export class TransactionSummaryComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     this.transactionSummary = data;
-    console.log('This is Input data of TransactionSummaryComponent ', data);
     this.getDefaultDetails(this.transactionSummary.aggregatorType);
     this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
   }
@@ -76,7 +75,6 @@ export class TransactionSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.transactionSummary = this.inputData;
-    console.log('transactionSummary', this.transactionSummary);
     // this.getDefaultDetails(null);
   }
 
@@ -86,7 +84,6 @@ export class TransactionSummaryComponent implements OnInit {
       data: {investor: this.clientDataList, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result == undefined) {
         return;
       }
@@ -107,7 +104,6 @@ export class TransactionSummaryComponent implements OnInit {
       if (result == undefined) {
         return;
       }
-      console.log('The dialog was closed');
       this.element = result;
       this.allData.euin = result;
       this.defaultDetails.emit(this.allData);
@@ -121,7 +117,6 @@ export class TransactionSummaryComponent implements OnInit {
       data: {platform: this.platForm, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result == undefined) {
         this.showPlatform = false;
         return;
@@ -142,7 +137,6 @@ export class TransactionSummaryComponent implements OnInit {
       if (result == undefined) {
         return;
       }
-      console.log('The dialog was closed');
       this.element = result;
       this.bankDetailsSend.emit(result);
     });
@@ -158,7 +152,6 @@ export class TransactionSummaryComponent implements OnInit {
       if (result == undefined) {
         return;
       }
-      console.log('The dialog was closed');
       this.element = result;
       this.bankDetailsSend.emit(result);
     });
@@ -176,7 +169,6 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getMandateDetailsRes(data) {
-    console.log('getNSEAchmandateRes', data);
     this.achMandateNSE = data;
   }
 
@@ -193,7 +185,6 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-    console.log('bank res', data);
     this.bankDetails = data;
     this.bankDetailsSend.emit(this.bankDetails);
     if (this.bankDetails.length > 1) {
@@ -207,7 +198,6 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getDefaultDetails(platform) {
-    console.log('transactionSummaryComponent transactionSummary: ', this.transactionSummary);
 
     const obj = {
       advisorId: this.advisorId,
@@ -224,7 +214,6 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getDefaultDetailsRes(data) {
-    console.log('deault', data);
     if (data == undefined) {
       return;
     }
@@ -275,11 +264,9 @@ export class TransactionSummaryComponent implements OnInit {
         dialogRef.close();
       },
       negativeMethod: () => {
-        console.log('');
         this.folioChange.emit(this.bankDetails);
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
