@@ -153,6 +153,9 @@ export class OrgProfileComponent implements OnInit {
 
 
   getdataForm(data) {
+    if(data.isdCodeId == 0) {
+      data.isdCodeId = null;
+    }
     this.orgProfile = this.fb.group({
       companyName: [(!data) ? '' : (data.companyName), [Validators.required, Validators.maxLength(50)]],
       emailId: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
