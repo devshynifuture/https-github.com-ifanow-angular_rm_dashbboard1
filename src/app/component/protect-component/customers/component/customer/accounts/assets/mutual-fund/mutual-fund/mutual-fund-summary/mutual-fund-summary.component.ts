@@ -75,8 +75,17 @@ export class MutualFundSummaryComponent implements OnInit {
       .subscribe(res => {
         this.viewMode = res;
       })
-    this.getMutualFund();
+      this.mfService.getMfData()
+      .subscribe(res => {
+        this.mutualFund = res;
+      })
+    if(this.mutualFund){
+      this.getMutualFundResponse(this.mutualFund)
+    }else{
+      this.getMutualFund();
+    }
   }
+
 
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
