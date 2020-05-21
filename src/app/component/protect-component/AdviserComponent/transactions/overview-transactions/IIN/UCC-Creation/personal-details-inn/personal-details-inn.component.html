@@ -12,8 +12,8 @@
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
             <i (click)="close()" class="material-icons pt-16 c-p pr-16">
-        clear
-      </i>
+                clear
+            </i>
         </div>
     </div>
 </div>
@@ -23,7 +23,8 @@
         <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
-                <h3 class="f-18 mb-28 f-600">Personal details</h3>
+
+                <h3 class="f-18 mb-10 f-600">Personal details</h3>
 
                 <div class="row pt-20">
                     <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
@@ -166,11 +167,11 @@
 
     <div class="col-md-5 center_menu">
         <a (click)="SendToForm('first',false);" *ngIf="inputData.holdingType != 'SI'" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
-      First holder </a>
+            First holder </a>
         <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingType != 'SI'" [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p"> Second
-      holder </a>
+            holder </a>
         <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingType != 'SI'" [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p">
-      {{thirdHolderButtonLabel}}</a>
+            {{thirdHolderButtonLabel}}</a>
     </div>
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
@@ -180,7 +181,7 @@
 </button> -->
 
         <button (click)="SendToForm(holder.type,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT
-    </button>
+        </button>
 
     </div>
 

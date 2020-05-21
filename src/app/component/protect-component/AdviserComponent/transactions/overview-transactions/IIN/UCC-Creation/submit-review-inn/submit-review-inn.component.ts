@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FileUploadService} from '../../../../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../../../../config/main-config';
-import {appConfig} from '../../../../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {MatDialog} from '@angular/material';
-import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loader.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FileUploadService } from '../../../../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../../../../config/main-config';
+import { appConfig } from '../../../../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { MatDialog } from '@angular/material';
+import { IinCreationLoaderComponent } from './iin-creation-loader/iin-creation-loader.component';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -22,7 +22,7 @@ export class SubmitReviewInnComponent implements OnInit {
   isFileUploading = false;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService, public dialog: MatDialog) {
+    private eventService: EventService, public dialog: MatDialog) {
   }
 
   get data() {
@@ -318,14 +318,14 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   openIinUccClient(singleBrokerCred, requestJson) {
-    const data = {singleBrokerCred, requestJson};
+    const data = { singleBrokerCred, requestJson };
     const Fragmentdata = {
       flag: data,
 
     };
     this.dialogRef = this.dialog.open(IinCreationLoaderComponent, {
-      width: '50%',
-      // height:'40%',
+      width: '600px',
+      height: '450px',
       data: Fragmentdata,
       autoFocus: false,
       disableClose: true
