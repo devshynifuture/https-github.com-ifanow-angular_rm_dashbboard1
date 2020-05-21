@@ -30,16 +30,27 @@ export class AdvisorAndOrganizationInfoService implements Resolve<any> {
          AuthService.setAdvisorDetails(data)
          return data
       }),
-      catchError(() => of(false))
+      catchError(() => {
+        AuthService.setAdvisorDetails({})
+        return of({err: true})
+      })
     ), orgDetail.pipe(
       map(data => {
         AuthService.setOrgDetails(data)
         return data
       }),
-      catchError(() => of(false))
+      catchError(() => {
+        AuthService.setOrgDetails({})
+        return of({err: true})
+      })
     ))
     .map(([advisorDetailRes, orgDetailRes])=>{
-      if(advisorDetailRes === null && orgDetailRes === null) return false
+      if(advisorDetailRes == undefined) {
+        AuthService.setAdvisorDetails({})
+      }
+      if(orgDetailRes == undefined) {
+        AuthService.setOrgDetails({})
+      }
       return true
     })
   }
