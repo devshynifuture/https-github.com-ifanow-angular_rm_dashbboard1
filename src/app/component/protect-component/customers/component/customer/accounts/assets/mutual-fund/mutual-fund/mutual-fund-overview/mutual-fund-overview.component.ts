@@ -189,7 +189,7 @@ export class MutualFundOverviewComponent implements OnInit {
       console.log(data);
       let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category')
       sortedData = sortedData.filter((item: any) =>
-      item.currentValue!=0 && item.currentValue > 0
+        item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
       this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
@@ -275,7 +275,7 @@ export class MutualFundOverviewComponent implements OnInit {
     if (this.dataSource3.data.length > 0) {
       let sortedData = this.MfServiceService.sorting(this.filteredArray, 'subCategory')
       sortedData = sortedData.filter((item: any) =>
-      item.currentValue!=0 && item.currentValue > 0
+        item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource3 = new MatTableDataSource(sortedData);
       this.isLoading = false;
@@ -289,7 +289,7 @@ export class MutualFundOverviewComponent implements OnInit {
     if (this.dataSource.data.length > 0) {
       let sortedData = this.MfServiceService.sorting(data.family_member_list, 'name');
       sortedData = sortedData.filter((item: any) =>
-      item.currentValue!=0 && item.currentValue > 0
+        item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource = new MatTableDataSource(sortedData);
       this.isLoading = false;
@@ -331,7 +331,7 @@ export class MutualFundOverviewComponent implements OnInit {
               dataToShow.push(element);
               let sortedData = this.MfServiceService.sorting(dataToShow, 'schemeName')
               sortedData = sortedData.filter((item: any) =>
-              item.currentValue!=0 && item.currentValue > 0
+                item.currentValue != 0 && item.currentValue > 0
               );
               this.dataSource2 = new MatTableDataSource(sortedData);
               this.isLoading = false;
@@ -348,7 +348,7 @@ export class MutualFundOverviewComponent implements OnInit {
         dataToShow.push(element);
         let sortedData = this.MfServiceService.sorting(dataToShow, 'schemeName');
         sortedData = sortedData.filter((item: any) =>
-        (item.currentValue!=0 && item.currentValue > 0)
+          (item.currentValue != 0 && item.currentValue > 0)
         );
         this.dataSource2 = new MatTableDataSource(sortedData);
         this.changeInput.emit(false);
@@ -432,6 +432,11 @@ export class MutualFundOverviewComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
+        states: {
+          hover: {
+            enabled: false
+          }
+        },
         data: [
           {
             name: 'Equity',
