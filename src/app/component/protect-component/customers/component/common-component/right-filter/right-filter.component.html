@@ -135,7 +135,7 @@
         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of category">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">
-                        {{item.category}}
+                        {{item.category |titlecase}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
@@ -164,7 +164,7 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Select Filter View<span
-                            class="text-right text-custom f-14 pl-12">{{overviewFilterCount}} of
+                            class="text-right text-custom f-14 pl-12">{{(overviewFilterCount)?overviewFilterCount:0}} of
                             {{overviewFilter.length}}
                             selected</span></h5>
                 </mat-panel-title>
