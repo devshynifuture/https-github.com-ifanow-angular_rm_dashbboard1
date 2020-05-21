@@ -7,6 +7,8 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-client-demat',
@@ -44,7 +46,7 @@ export class ClientDematComponent implements OnInit {
   storeTempDematData: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService) {
+    private eventService: EventService, public dialog: MatDialog) {
   }
 
   validatorType = ValidatorType;
@@ -409,6 +411,33 @@ export class ClientDematComponent implements OnInit {
     if (event.target.value != '') {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   close(data) {
     (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :

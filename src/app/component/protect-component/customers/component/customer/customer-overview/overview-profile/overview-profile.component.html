@@ -56,11 +56,11 @@
                                                 <span *ngIf="!letsideBarLoader">{{clientOverviewData.bio}}
                                                     <span *ngIf="clientOverviewData.bio">| </span>
                                                 </span>
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{clientOverviewData.age?clientOverviewData.age:0}}
+                                                <span *ngIf="!letsideBarLoader">{{clientOverviewData.age}}
                                                     Years
                                                 </span>
-                                                <a *ngIf="!letsideBarLoader" (click)="openAgePopup()"
+                                                <a *ngIf="!letsideBarLoader && clientOverviewData.age==0"
+                                                    (click)="openAgePopup()"
                                                     class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                             </h5>
                                         </div>
@@ -145,10 +145,6 @@
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}}</p>
                                     </div>
-                                    <span class="material-icons familyDelete f-20"
-                                        (click)="deleteModal('FAMILY MEMBER',singleMembers)">
-                                        delete
-                                    </span>
 
                                     <!-- <i class="material-icons familyDelete">
                                         cancel

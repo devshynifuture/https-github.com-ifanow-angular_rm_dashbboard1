@@ -3,6 +3,10 @@
         <h4 class="mb-0 l-22 wrapper-20">{{headingData.flag}}</h4>
     </div>
     <div class="col-md-2 col-2 text-right">
+        <span *ngIf="headingData.fieldFlag=='familyMember'" class="material-icons familyDelete c-p"
+            (click)="deleteModal('FAMILY MEMBER',singleMembers)">
+            delete
+        </span>
         <i (click)="close('close')" class="material-icons pt-20 c-p pr-16">
             clear
         </i>
