@@ -72,7 +72,7 @@ export class ClientAddressComponent implements OnInit {
   createAddressForm(data) {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
-      addressType: [(data.addressType) ? String(data.addressType) : '1'],
+      // addressType: [(data.addressType) ? String(data.addressType) : '1'],
       addProofType: [(data.proofType) ? String(data.proofType) : '', [Validators.required]],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
@@ -208,7 +208,7 @@ export class ClientAddressComponent implements OnInit {
         country: this.addressForm.get('country').value,
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
-        addressType: this.addressForm.get('addressType').value,
+        // addressType: this.addressForm.get('addressType').value,
         proofType: this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').value,
         userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : null,

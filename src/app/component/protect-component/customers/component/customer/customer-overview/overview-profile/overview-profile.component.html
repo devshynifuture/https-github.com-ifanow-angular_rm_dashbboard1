@@ -60,6 +60,8 @@
                                                     *ngIf="!letsideBarLoader">{{clientOverviewData.age?clientOverviewData.age:0}}
                                                     Years
                                                 </span>
+                                                <a *ngIf="!letsideBarLoader" (click)="openAgePopup()"
+                                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                             </h5>
                                         </div>
                                     </div>
