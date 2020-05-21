@@ -268,25 +268,25 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeInvestorType(event) {
     (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
     if (event.value == '1') {
-      this.invTaxStatus = '';
+      // this.invTaxStatus = '1';
       this.mobileNumberFlag = 'Mobile number';
       // this.invTaxStatusList = this.enumService.getIndividualTaxList();
       console.log(this.invTaxStatusList);
     } else if (event.value == '2' && (this.fieldFlag == 'familyMember' || this.fieldFlag == 'client')) {
-      this.invTaxStatus = '';
+      // this.invTaxStatus = '';
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
       // this.invTaxStatusList = this.enumService.getMinorTaxList();
       console.log(this.invTaxStatusList);
     } else {
-      this.invTaxStatus = '';
+      // this.invTaxStatus = '';
       this.createNonIndividualForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Company mobile number';
       // this.invTaxStatusList = this.enumService.getCorporateTaxList();
       console.log(this.invTaxStatusList);
     }
     this.taxStatusFormControl.reset();
-    this.taxStatusFormControl.setValue('');
+    this.taxStatusFormControl.setValue('1');
     this.invTypeCategory = event.value;
   }
 
