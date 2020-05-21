@@ -52,7 +52,15 @@ export class MutualFundSummaryComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   viewMode: string;
   reponseData: any;
-
+  inputData: any;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data);
+  }
+  get data() {
+    return this.inputData;
+  }
 
   constructor(
     private subInjectService: SubscriptionInject,
