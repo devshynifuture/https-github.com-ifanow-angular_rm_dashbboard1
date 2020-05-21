@@ -435,9 +435,21 @@ export class ProcessTransactionService {
     return data.filter((element) => {
       if (element.frequency) {
         if (element.frequency == 'ONCE_IN_A_WEEK') {
-          element.frequencyName = 'WEEKLY';
+          element.frequencyName = 'Weekly';
         } else if (element.frequency == 'BUSINESS_DAY') {
-          element.frequencyName = 'BUSINESS DAY';
+          element.frequencyName = 'Business day';
+        } else if (element.frequency == 'DAILY') {
+          element.frequencyName = 'Daily';
+        } else if (element.frequency == 'MONTHLY') {
+          element.frequencyName = 'Monthly';
+        } else if (element.frequency == 'QUARTERLY') {
+          element.frequencyName = 'Quarterly';
+        } else if (element.frequency == 'HALF_YEARLY') {
+          element.frequencyName = 'Half yearly';
+        } else if (element.frequency == 'YEARLY') {
+          element.frequencyName = 'Yearly';
+        } else if (element.frequency == 'TWICE_A_MONTH') {
+          element.frequencyName = 'Twice a month';
         } else {
           element.frequencyName = element.frequency;
         }
