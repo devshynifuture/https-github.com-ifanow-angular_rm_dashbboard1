@@ -24,7 +24,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Employer's Monthly Contribution
+                        Employer's monthly contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.employersMonthlyContribution?'₹':''}}<span appFormatNumber>{{epf.employersMonthlyContribution?epf.employersMonthlyContribution:'-'}}</span>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Employees Monthly Contribution
+                        Employees monthly contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.employeesMonthlyContribution?'₹':''}}<span appFormatNumber>{{epf.employeesMonthlyContribution?epf.employeesMonthlyContribution:'-'}}</span>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Annual Salary growth rate
+                        Annual salary growth rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.salaryGrowthRate | number: '1.2-2'}}{{epf.salaryGrowthRate?'%':''}}
@@ -129,7 +129,7 @@
                         Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.bankAccountNumber?epf.bankAccountNumber:'-'}}
+                        {{epf.linkedBankName?epf.linkedBankName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

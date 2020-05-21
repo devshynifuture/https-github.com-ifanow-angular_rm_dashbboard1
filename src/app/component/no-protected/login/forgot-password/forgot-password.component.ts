@@ -115,7 +115,6 @@ export class ForgotPasswordComponent implements OnInit {
     };
     this.loginService.getUsernameData(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.barButtonOptions.active = false;
           data.buttonFlag = 'reset';
@@ -176,7 +175,6 @@ export class ForgotPasswordComponent implements OnInit {
     this.loginService.generateOtp(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
-        console.log(data);
         this.otpResponse = data;
         this.isVerify = true;
       },
@@ -199,7 +197,6 @@ export class ForgotPasswordComponent implements OnInit {
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
-        console.log(data);
         (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -207,7 +204,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   getOtpData(outputData) {
-    console.log('forgot password', outputData);
     this.otpData = outputData;
   }
 
