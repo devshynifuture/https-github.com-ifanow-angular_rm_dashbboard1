@@ -8,6 +8,7 @@ import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -45,7 +46,6 @@ export class RedemptionTransactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  dataSource: any;
   ownerData: any;
   redemptionTransaction: any;
   inputData: any;
@@ -72,6 +72,7 @@ export class RedemptionTransactionComponent implements OnInit {
   id = 0;
   isEdit = false;
   childTransactions = [];
+  dataSource = new MatTableDataSource(this.childTransactions);
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   editedId: any;
   validatorType = ValidatorType;
@@ -179,9 +180,6 @@ export class RedemptionTransactionComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.dataSource) {
-      data = this.dataSource;
-    }
     this.redemptionTransaction = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
@@ -209,6 +207,7 @@ export class RedemptionTransactionComponent implements OnInit {
 
   deleteChildTran(element) {
     UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
     if (this.childTransactions.length == 0) {
       this.multiTransact = false;
       this.resetForm();
@@ -507,6 +506,7 @@ export class RedemptionTransactionComponent implements OnInit {
           const obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
         }
+        this.dataSource.data = this.childTransactions;
         if (this.childTransactions.length == 1) {
           this.getSchemeList();
         }

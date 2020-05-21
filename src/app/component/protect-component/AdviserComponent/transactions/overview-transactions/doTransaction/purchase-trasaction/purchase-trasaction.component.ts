@@ -9,6 +9,7 @@ import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -47,7 +48,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   };
   mandateDetails = [];
   purchaseTransaction: any;
-  dataSource: any;
   ownerData: any;
   inputData: any;
   existingSchemeList = [];
@@ -76,7 +76,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   callOnFolioSelection: boolean;
   showSpinnerMandate = false;
   showSpinnerFolio = false;
-  childTransactions: any[];
+  childTransactions = [];
+  dataSource = new MatTableDataSource(this.childTransactions);
+
   multiTransact = false;
   schemeInput: any;
   showError = false;
@@ -582,9 +584,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.dataSource) {
-      data = this.dataSource;
-    }
     this.purchaseTransaction = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
@@ -617,6 +616,8 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   deleteChildTran(element) {
     UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
+
     if (this.childTransactions.length == 0) {
       this.multiTransact = false;
       this.resetForm();
@@ -776,6 +777,8 @@ export class PurchaseTrasactionComponent implements OnInit {
           } else {
           }
         }
+        this.dataSource.data = this.childTransactions;
+
         console.log(this.childTransactions);
         this.navOfSelectedScheme = 0;
         this.scheme = null;

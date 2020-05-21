@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MathUtilService} from '../../../../../../../services/math-util.service';
 import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate.component';
 
 @Component({
@@ -49,7 +49,6 @@ export class SipTransactionComponent implements OnInit {
   };
   mandateAmountErrorMessage = '';
   installmentErrorMessage = '';
-  dataSource: any;
   ownerData: any;
   folioSelection: [2];
   schemeSelection: [2];
@@ -84,6 +83,8 @@ export class SipTransactionComponent implements OnInit {
   showSpinnerMandate = false;
   multiTransact = false;
   childTransactions = [];
+  dataSource = new MatTableDataSource(this.childTransactions);
+
   id = 0;
   isEdit = false;
   editedId: any;
@@ -113,7 +114,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
     Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
     Object.assign(this.transactionSummary, {transactType: 'SIP'});
-    Object.assign(this.transactionSummary, {paymentMode: 1});
+    Object.assign(this.transactionSummary, {paymentMode: 2});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
@@ -654,9 +655,6 @@ export class SipTransactionComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.dataSource) {
-      data = this.dataSource;
-    }
     this.sipTransaction = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
@@ -701,6 +699,8 @@ export class SipTransactionComponent implements OnInit {
 
   deleteChildTran(element) {
     UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
+
     if (this.childTransactions.length == 0) {
       this.multiTransact = false;
       this.resetForm();
@@ -900,6 +900,7 @@ export class SipTransactionComponent implements OnInit {
           } else {
           }
         }
+        this.dataSource.data = this.childTransactions;
         console.log(this.childTransactions);
         this.navOfSelectedScheme = 0;
         this.scheme = undefined;
