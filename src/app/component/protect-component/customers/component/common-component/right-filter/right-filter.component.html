@@ -6,11 +6,10 @@
         <i class="material-icons pt-16 right text-right c-p" (click)="Close('Close')"> clear </i>
     </div>
 </div>
-<div class="wrapper-20 pt-80 pb-44 mb-44">
 
+<div class="wrapper-20 pt-80 pb-44 mb-44">
     <mat-accordion class="fliterBoxMutual">
-        <mat-expansion-panel class="mb-20 boxShadowNone borderLine" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false">
+        <mat-expansion-panel class="mb-20 boxShadowNone borderLine" [expanded]="false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Family members<span class="text-right f-14 pl-12">{{countFamily}} of
@@ -27,8 +26,8 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false" *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
+            *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">AMC<span class="text-right f-14 pl-12">{{countAmc}} of {{amc.length}}
@@ -44,8 +43,8 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false" *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
+            *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Schemes<span class="text-right f-14 pl-12">{{countScheme}} of {{scheme.length}}
@@ -63,8 +62,8 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false" *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
+            *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Folios<span class="text-right f-14 pl-12">{{countFolio}} of {{folio.length}}
@@ -82,8 +81,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -102,8 +100,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -118,8 +115,8 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false" *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
+            *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Categories<span class="text-right f-14 pl-12">{{countCategory}} of
@@ -138,8 +135,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -155,8 +151,7 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
             *ngIf="_data.name == 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -173,8 +168,8 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false" *ngIf="_data.name=='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
+            *ngIf="_data.name=='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Financial years</h5>
@@ -188,8 +183,8 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (opened)="panelOpenState = true"
-            (closed)="panelOpenState = false" *ngIf="_data.name=='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" [expanded]="false"
+            *ngIf="_data.name=='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Report format</h5>
