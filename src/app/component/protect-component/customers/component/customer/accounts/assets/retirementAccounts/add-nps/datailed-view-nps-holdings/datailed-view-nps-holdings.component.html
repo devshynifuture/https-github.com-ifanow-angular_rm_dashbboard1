@@ -44,11 +44,7 @@
                         Linked bank account
                     </div>
                     <div class="col-md-6 text-right f-14 roboto p-0">
-                        <div [ngSwitch]="npsData.userBankMappingId">
-                            <div class="bar" *ngFor="let b of bankList"> 
-                                <span *ngSwitchCase="b.id"> {{npsData.userBankMappingId ? b.name:'-'}}</span>
-                            </div>
-                        </div>
+                       {{npsData.linkedBankName ? npsData.linkedBankName:'-'}}
                     </div>
                 </div>
               <div class="row bb p-8 b-l br">

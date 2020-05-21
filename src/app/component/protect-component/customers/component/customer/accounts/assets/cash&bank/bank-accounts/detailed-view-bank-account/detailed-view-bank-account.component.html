@@ -63,20 +63,20 @@
                         {{(bankAccount.interestCompounding==1)?'Daily':(bankAccount.interestCompounding==2)?'Monthly':(bankAccount.interestCompounding==3)?'Quarterly':(bankAccount.interestCompounding==4)?'Half yearly':'Yearly'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Account No.
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bankAccount.accountNo?bankAccount.accountNo:'-'}}
                     </div>
-                </div>
+                </div> -->
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Bank Name
+                        Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.bankName?bankAccount.bankName:'-'}}
+                        {{bankAccount.linkedBankName?bankAccount.linkedBankName:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

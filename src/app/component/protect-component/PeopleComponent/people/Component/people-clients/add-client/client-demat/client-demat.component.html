@@ -9,8 +9,8 @@
   </div>
 </div>
 <div class="pl-16 pb-12 mob-pl-0" [formGroup]="dematForm">
-  <!-- <div class="row pt-44" [ngClass]="{'pt-90': fieldFlag==undefined}">
-    <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
+  <div [ngClass]="{'pt-76': fieldFlag==undefined}">
+    <!-- <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
       <h5 class="m-0 pt-8 mob-pb-10">Mode of holding</h5>
     </div>
     <div class="col-md-7 p-0 mode-holding mob-pl-10">
@@ -42,8 +42,8 @@
           <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
-    </div>
-  </div> -->
+    </div> -->
+  </div>
   <app-add-holder-names *ngIf="dematList" [holderListInput]="dematList.holderNameList"
     (holderList)="getHolderList($event)">
   </app-add-holder-names>

@@ -26,24 +26,26 @@
                 <h3 class="f-18 mb-28 f-600">Bank details #1</h3>
 
                 <div class="row" *ngIf="bankList.length > 1">
-                    <div class="col-md-4 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Select bank account</h5>
+                    <div class="col-md-4 pr-0  d-flex align-items-center justify-content-end ">
+                        <h5 class="m-0 ">Select bank account</h5>
                     </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <mat-select class="form-control" formControlName="bankACNo" matInput>
-                                <mat-option value='' disabled>Select bank account</mat-option>
-                                <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i" [value]="option.bankName">
-                                    {{option.bankName}}</mat-option>
-                            </mat-select>
-                            <mat-error>This field is required
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="bankACNo" matInput>
+                                    <mat-option value='' disabled>Select bank account</mat-option>
+                                    <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i" [value]="option.bankName">
+                                        {{option.bankName}}</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> IFSC code </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> IFSC code </h3>
                     </div>
                     <div class="col-md-3 form-group">
 
@@ -59,8 +61,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Bank name </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> Bank name </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -71,8 +73,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0">MICR code</h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0">MICR code</h3>
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -87,8 +89,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Account number</h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> Account number</h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -101,9 +103,9 @@
                     </div>
                 </div>
 
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Account type </h3>
+                <div class="row pt-32">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0"> Account type </h3>
                     </div>
                     <div class="col-md-8">
 
@@ -126,9 +128,9 @@
                     </div>
                 </div>
 
-                <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch name </h3>
+                <div class="row pt-28">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0"> Branch name </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -151,8 +153,8 @@
                 </div> -->
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch address line 1 </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch address line 1 </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -163,8 +165,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch address line 2 </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch address line 2 </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -175,8 +177,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch Pin code </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch Pin code </h3>
                     </div>
                     <div class="col-md-3 pr-0 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -193,8 +195,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch state </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0"> Branch state </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -205,8 +207,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch city </h3>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch city </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -217,8 +219,8 @@
                 </div>
 
                 <div class="row pt-20">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-20 m-0"> Branch Country </h3>
+                    <div class="col-md-4  d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch Country </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
@@ -227,12 +229,12 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Payment mode </h3>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0">Payment mode </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
+                        <mat-form-field floatLabel="never" appearance="standard">
                             <mat-select class="form-control" formControlName="paymentMode">
                                 <mat-option value='' disabled>Select payment mode</mat-option>
                                 <mat-option value="01"> Cheque</mat-option>
@@ -245,81 +247,13 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <!--  <div class="row pt-32">
-              <div class="col-md-4 text-right pr-0">
-                  <h3 class="f-16 pt-8 m-0"> Branch proof type </h3>
-              </div>
-              <div class="col-md-5 form-group">
-                  <mat-form-field>
-                      <mat-select class="form-control" formControlName="branchProof">
-                          <mat-option value='' disabled>Select branch proof type</mat-option>
-                          <mat-option value="Resident individual"> Resident individual </mat-option>
-                      </mat-select>
-                      <mat-error class="">This field is required</mat-error>
-                  </mat-form-field>
-              </div>
-          </div>-->
 
-                <!-- <h3 class="f-18 mb-12 mt-44 f-600"> Bank mandate </h3>
-
-
-        <div class="row">
-            <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0"> Register mandate </h3>
-            </div>
-            <div class="col-md-6 form-group">
-                <mat-radio-group aria-label="Select an option" formControlName="bankMandate">
-                    <mat-radio-button value="1" [ngClass]="bankDetails.get('bankMandate').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
-                        Physical
-                    </mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="bankDetails.get('bankMandate').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
-                        Biler </mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div>
-
-
-        <div class="row pt-20">
-            <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0"> Mandate end date </h3>
-            </div>
-            <div class="col-md-3 form-group">
-                <mat-form-field class="ba-date">
-                    <input matInput class="form-control b-0" [min]="maxDate" formControlName="mandateDate" [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="">This field is required</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="row pt-20">
-            <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0"> Mandate amount </h3>
-            </div>
-            <div class="col-md-3 form-group iconRupess">
-                <mat-form-field>
-                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxlength]="10" formControlName="mandateAmount" type="number" class="form-control rupess">
-                    <mat-error class="">This field is required</mat-error>
-                </mat-form-field>
-            </div>
-        </div> -->
 
             </div>
 
         </div>
 
 
-        <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
-        <div class="row ">
-            <div class="col-md-12">
-                <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
-                <div class="dragDropCLass">
-                    Drag & drop file here <br> or <br> Browse
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     </div>
 </div>
