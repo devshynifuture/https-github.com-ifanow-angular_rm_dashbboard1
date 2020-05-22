@@ -47,7 +47,7 @@ export class AddClientComponent implements OnInit {
     this.isRefreshFlag = flag;
     this.cancelFlagService.setCancelFlag(flag);
   }
-  deleteModal(value, data) {
+  deleteModal(value) {
     const dialogData = {
       data: value,
       header: 'DELETE',

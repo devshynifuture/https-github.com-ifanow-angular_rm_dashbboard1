@@ -412,7 +412,7 @@ export class ClientDematComponent implements OnInit {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
-  deleteModal(value, data) {
+  deleteModal(value) {
     const dialogData = {
       data: value,
       header: 'DELETE',
