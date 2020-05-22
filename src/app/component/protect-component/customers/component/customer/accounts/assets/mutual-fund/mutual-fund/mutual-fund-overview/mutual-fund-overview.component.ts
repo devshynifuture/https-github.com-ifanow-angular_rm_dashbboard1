@@ -71,6 +71,7 @@ export class MutualFundOverviewComponent implements OnInit {
   mfDataUnrealised: any;
   openSummaryTab: boolean = false;
   inputDataToSend: any;
+  mfGetData: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -84,10 +85,26 @@ export class MutualFundOverviewComponent implements OnInit {
       .subscribe(res => {
         this.viewMode = res;
       })
+      this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res;
+      })
+      this.mfService.getMfData()
+      .subscribe(res => {
+        this.mutualFund = res;
+      })
     console.log(this.viewMode)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    this.getMutualFundData();
+    this.MfServiceService.getDataForMfGet()
+      .subscribe(res => {
+        this.mfGetData = res;
+      })
+    if(this.mfGetData){
+      this.getMutualFundResponse(this.mfGetData);
+    }else{
+      this.getMutualFundData();
+    }
     // setTimeout(() => {
     //  this.getMutualFundResponse(this.mutualFund);
     //  this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
@@ -189,8 +206,16 @@ export class MutualFundOverviewComponent implements OnInit {
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
       if (!this.rightFilterData) {
-        this.mutualFund = this.filterData;
-        this.setDefaultFilterData = this.MfServiceService.setFilterData(this.filterData,this.rightFilterData);
+        if(!this.setDefaultFilterData){
+          if(!this.mutualFund){
+            this.mfService.getMfData()
+            .subscribe(res => {
+              this.mutualFund = res;
+            })
+          }
+          this.mutualFund = this.filterData;
+          this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
+        }
         this.MfServiceService.setFilterValues(this.setDefaultFilterData);
         this.MfServiceService.setMfData(this.mutualFund);
       }
@@ -576,7 +601,14 @@ export class MutualFundOverviewComponent implements OnInit {
       category: this.setDefaultFilterData.category,
       transactionView: this.displayedColumns,
       familyMember:this.setDefaultFilterData.familyMember,
-      scheme:this.setDefaultFilterData.scheme
+      scheme:this.setDefaultFilterData.scheme,
+      reportType :this.setDefaultFilterData.reportType,
+      reportAsOn:this.setDefaultFilterData.reportAsOn,
+      showFolio :this.setDefaultFilterData.showFolio,
+      fromDate:this.setDefaultFilterData.fromDate,
+      toDate:this.setDefaultFilterData.toDate,
+      overviewFilter:this.setDefaultFilterData.overviewFilter
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -606,8 +638,9 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-            this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData.mfData);
+            this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);
+            this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
             this.isLoading = false;
             this.changeInput.emit(false);
             // this.getMutualFundResponse(this.rightFilterData.mfData);
