@@ -1,13 +1,46 @@
-<div class="p-16" *ngIf="!showNextMessage">
-    <p class="f-16 f-500 roboto">Sending request to {{platformName}} for account creation</p>
-    <p *ngIf="isLoading">Loading</p>
-    <div *ngIf="!isLoading">
-        <p class="mb-4">An email with a link has been sent to {{emailId}}</p>
-        <p class="mb-4">Please click on the link, generate OTP and send it to {{platformName}} to proceed </p>
-        <p class="mb-4">Once done, come back here and click on proceed </p>
-        <button class="proceedClass text-primitive" (click)="showMessageAfterProceed()"> Proceed</button>
-    </div>
+<div *ngIf="isSuccess&&!showNextMessage" class="p-16">
+  <p class="f-16 f-500 roboto">Sending request to {{platformName}} for account creation</p>
+  <p *ngIf="isLoading">Loading</p>
+  <div *ngIf="!isLoading">
+    <p class="mb-0 text-primary">An Email with a link has been sent to {{emailId}}</p>
+    <p class="mb-16">Please click on the link, generate OTP and send it to {{platformName}} to proceed </p>
+    <p class="mb-4">Once done, come back here and click on proceed </p>
+    <button (click)="showMessageAfterProceed()" class="text-primary proceedBox " mat-stroked-button>
+      PROCEED
+    </button>
+    <button class="closeClass" mat-stroked-button>CLOSE</button>
+  </div>
 </div>
+
 <div class="p-16" *ngIf="showNextMessage">
-    <p class="text-success">Success! Your account has been created successfully</p>
+  <p class="text-success">Success! Your account has been created successfully</p>
+
+  <p class="f-14 m-b text-black f-500 roboto">WHAT NEXT?</p>
+  <p class="f-14">One last step and you’re done; we promise.</p>
+
+  <p class="m-0">An Account Opening Form (AOF) has been generated. Your broker should:</p>
+  <ul class="uiCLass">
+    <li> - download it from {{platformName}}'s admin panel,</li>
+    <li> - get it signed by all applicants and</li>
+    <li> - upload it in the next screen</li>
+  </ul>
+
+</div>
+
+
+<div *ngIf="!isSuccess" class="p-16">
+  <div class="radioCLass">
+    <mat-radio-group [selected]="1" aria-label="Select an option" class="text-danger">
+      <mat-radio-button [checked]="true" [value]="1"></mat-radio-button>
+      Rejected
+    </mat-radio-group>
+  </div>
+
+
+  <div class="rejectClass bg-danger f-12 text-white p-10">
+    {{failureMessage}}
+  </div>
+</div>
+<div>
+  <button (click)="dialogClose()" class="p-16" class="closeClass" mat-stroked-button>CLOSE</button>
 </div>

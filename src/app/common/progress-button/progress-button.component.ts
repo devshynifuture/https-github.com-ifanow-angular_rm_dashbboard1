@@ -50,17 +50,26 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
 
     if (!this.options.disabled && !this.options.active) {
       this.btnClick.emit(event);
+      this.delayedCheck();
     } else if (this.options.active) {
     }
-    this.setTimeOutRecursiveForProgressValue();
-
   }
+
+  delayedCheck() {
+    setTimeout(() => {
+      this.setTimeOutRecursiveForProgressValue();
+    }, 100);
+  }
+
 
   setTimeOutRecursiveForProgressValue() {
     if (this.options.active) {
       setTimeout(() => {
         if (this.options.active && this.options.value < 100) {
           this.options.value = this.options.value + 3;
+          console.log('this.options.value : ', this.options.value);
+          console.log('this.options.value : ', new Date().getMilliseconds());
+
           this.setTimeOutRecursiveForProgressValue();
         } else {
           // this.options.value = 0;

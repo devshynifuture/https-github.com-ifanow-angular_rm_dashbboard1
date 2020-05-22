@@ -55,14 +55,19 @@
                     <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0" class="btnConfirm bg-primary text-white" mat-button>Create
                         account
                     </button>
-                    <p *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully</p>
+                    <p class="f-12 text-primary" *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully
+                    </p>
+
                 </div>
 
-                <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
+
+
+                <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-5 mb-12 pl-0  ">
+
                     <h5>3) Upload forms</h5>
                     <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
-                    <button (click)="uploadFileInput.click()" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+                    <button (click)="uploadFileInput.click()" [disabled]="isFileUploading" class="btnConfirm bg-primary mr-10 text-white" mat-button>
                         Upload AOF
                         <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
                             id="file-4" type="file">
@@ -109,7 +114,8 @@
                     <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0" class="btnConfirm bg-primary text-white" mat-button>Create
                         account
                     </button>
-                    <p *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully</p>
+                    <p class="f-12 text-primary" *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully
+                    </p>
                 </div>
 
                 <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
