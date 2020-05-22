@@ -758,8 +758,8 @@ button.primary-sm {
 
 .full-end {
   display: flex !important;
-  justify-content: end !important;
-  align-items: end !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
 }
 
 .full-left {
