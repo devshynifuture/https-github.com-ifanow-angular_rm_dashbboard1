@@ -899,9 +899,18 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.controls.investmentAccountSelection.reset();
         this.sipTransaction.controls.schemeSip.reset();
         this.setDefaultTenure();
+        this.gotoTop();
       }
 
     }
+  }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   checkAndHandleMaxInstallmentValidator() {

@@ -52,6 +52,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   @Output() tabChange = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
+  @Output() hideDematTab = new EventEmitter();
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
@@ -89,11 +90,13 @@ export class ClientBasicDetailsComponent implements OnInit {
         || this.basicDetailsData.relationshipId == 5 || this.basicDetailsData.relationshipId == 7) {
         this.familyMemberType = { name: 'Individual', value: '1' };
         this.invTypeCategory = '1';
+        this.hideDematTab.emit(true)
         this.createIndividualForm(this.basicDetailsData);
       } else {
         this.familyMemberType = { name: 'Minor', value: '2' };
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData);
+        this.hideDematTab.emit(false)
       }
       this.invTaxStatus = (this.basicDetailsData.residentFlag != undefined) ? String(this.basicDetailsData.residentFlag) : '';
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ?
@@ -105,6 +108,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTypeCategory = '1';
         this.invTaxStatus = '1';
         this.selectedClientOwner = '';
+        this.hideDematTab.emit(true)
         this.createIndividualForm(null);
         return;
       } else {
@@ -113,7 +117,18 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
         this.invTaxStatus = (this.basicDetailsData.residentFlag != undefined) ? String(this.basicDetailsData.residentFlag) : '';
       }
-      (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
+      if (this.invTypeCategory == '1') {
+        this.hideDematTab.emit(true)
+        this.createIndividualForm(this.basicDetailsData);
+      }
+      else if (this.fieldFlag == 'client' && this.invTypeCategory == '2') {
+        this.hideDematTab.emit(false)
+        this.createMinorForm(this.basicDetailsData)
+      }
+      else {
+        this.hideDematTab.emit(true)
+        this.createNonIndividualForm(this.basicDetailsData);
+      }
       if (this.fieldFlag == 'client') {
         this.clientTypeList = (this.basicDetailsData.clientType == 1) ? {
           name: 'Individual',
@@ -268,21 +283,18 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeInvestorType(event) {
     (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
     if (event.value == '1') {
-      // this.invTaxStatus = '1';
       this.mobileNumberFlag = 'Mobile number';
-      // this.invTaxStatusList = this.enumService.getIndividualTaxList();
+      this.hideDematTab.emit(true)
       console.log(this.invTaxStatusList);
     } else if (event.value == '2' && (this.fieldFlag == 'familyMember' || this.fieldFlag == 'client')) {
-      // this.invTaxStatus = '';
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
-      // this.invTaxStatusList = this.enumService.getMinorTaxList();
       console.log(this.invTaxStatusList);
+      this.hideDematTab.emit(false)
     } else {
-      // this.invTaxStatus = '';
       this.createNonIndividualForm(this.basicDetailsData);
+      this.hideDematTab.emit(true)
       this.mobileNumberFlag = 'Company mobile number';
-      // this.invTaxStatusList = this.enumService.getCorporateTaxList();
       console.log(this.invTaxStatusList);
     }
     this.invTaxStatus = '1';
