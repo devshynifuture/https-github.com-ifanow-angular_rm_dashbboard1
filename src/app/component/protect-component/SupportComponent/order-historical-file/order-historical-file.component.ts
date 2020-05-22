@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SupportService } from '../support.service';
-import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { SettingsService } from '../../AdviserComponent/setting/settings.service';
 import { UtilService } from '../../../../services/util.service';
 import { ReconciliationService } from '../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
@@ -1194,7 +1194,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                   } else if (fromDateTemp.getTime() >= toDateValueObj.getTime()) {
                     toDateIter = toDateValueObj;
                   } else {
-                    toDateIter = this.addYearMonthOrDayToDate(toDateIter, 1, 'month');
+                    toDateIter = this.addYearMonthOrDayToDate(fromDateIter, 1, 'month');
                   }
                 }
                 let fileToOrder = this.orderHistoryFileForm.get(`selectFilesToOrder.${whichRta}`).value;
@@ -1652,18 +1652,17 @@ export class OrderHistoricalFileComponent implements OnInit {
           let reqObjCopy = [];
           this.orderHistoryFileForm.get('selectArnRia').value.forEach((item, index) => {
             if (!item.selection) {
-              let id = this.arnRiaDetailsList[index].id;
               reqObjCopy = requestObj.filter(item => {
                 return this.arnRiaIdList.includes(item.arnRiaDetailId);
               });
-              // requestObj.forEach((item, index1) => {
-              //   if (item.arnRiaDetailId === id) {
-              //     reqObjCopy.splice(0, 1);
-              //   }
-              // })
+
             }
           });
-          this.requestJsonForOrderingFiles = reqObjCopy;
+          if (reqObjCopy.length !== 0) {
+            this.requestJsonForOrderingFiles = reqObjCopy;
+          } else {
+            this.requestJsonForOrderingFiles = requestObj;
+          }
         }
 
       }
@@ -1739,18 +1738,16 @@ export class OrderHistoricalFileComponent implements OnInit {
         let reqObjCopy = [];
         this.orderHistoryFileForm.get('selectArnRia').value.forEach((item, index) => {
           if (!item.selection) {
-            let id = this.arnRiaDetailsList[index].id;
             reqObjCopy = requestObj.filter(item => {
               return this.arnRiaIdList.includes(item.arnRiaDetailId);
             });
-            // requestObj.forEach((item, index1) => {
-            //   if (item.arnRiaDetailId === id) {
-            //     reqObjCopy.splice(0, 1);
-            //   }
-            // })
           }
         });
-        this.requestJsonForOrderingFiles = reqObjCopy;
+        if (reqObjCopy.length !== 0) {
+          this.requestJsonForOrderingFiles = reqObjCopy;
+        } else {
+          this.requestJsonForOrderingFiles = requestObj;
+        }
       }
       // this.requestJsonForOrderingFiles = requestObj;
     }
