@@ -391,7 +391,7 @@ export class InsuranceComponent implements OnInit {
             if (element.policyTypeId) {
               if (ele.id == element.policyTypeId) {
                 element.policyType = ele.policy_type
-                this.showType = 'plan Type'
+                this.showType = 'Plan Type'
               }
             } else {
               this.showType = 'PlanName'

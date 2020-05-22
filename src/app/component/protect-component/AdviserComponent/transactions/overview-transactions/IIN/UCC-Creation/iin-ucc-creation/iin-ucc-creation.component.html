@@ -30,10 +30,10 @@
 
     <div class="centerBox">
         <div class="row">
-            <div class="col-md-4 pr-0">
-                <h5 class="m-0 text-right pt-20">Enter name as per PAN</h5>
+            <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
+                <h5 class="m-0   ">Enter name as per PAN</h5>
             </div>
-            <div class="col-md-8 form-group text-center">
+            <div class="col-md-8 form-group">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <input #searchClient [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" formControlName="ownerName" matInput placeholder="Start typing to see investor names">
                     <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="ownerDetails($event.option.value)" [displayWith]="processTransaction.displayName" autoFocus>
@@ -65,12 +65,12 @@
             </div>
         </div>
 
-        <div class="row pt-32">
-            <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Holding nature</h3>
+        <div class="row pt-10">
+            <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
+                <h3 class="f-16 m-0">Holding nature</h3>
             </div>
             <div class="col-md-7 form-group">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control" formControlName="holdingType">
                         <mat-option disabled value=''>Select holding nature</mat-option>
                         <mat-option value="SI">Single</mat-option>
@@ -82,12 +82,12 @@
             </div>
         </div>
 
-        <div class="row pt-32">
-            <div class="col-md-4 text-right pr-0">
-                <h3 class="f-16 pt-8 m-0">Tax status</h3>
+        <div class="row pt-18">
+            <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
+                <h3 class="f-16 m-0">Tax status</h3>
             </div>
             <div class="col-md-7 form-group">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control" formControlName="taxStatus">
                         <mat-option disabled value=''>Select tax status</mat-option>
                         <mat-option *ngFor="let singleTaxStatus of taxStatusList" [value]="singleTaxStatus.taxStatusCode">
