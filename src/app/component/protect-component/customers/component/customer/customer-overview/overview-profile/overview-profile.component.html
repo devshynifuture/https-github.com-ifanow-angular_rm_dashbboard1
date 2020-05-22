@@ -332,7 +332,7 @@
                             <div *ngFor="let singleAddress of addressList" class=" col-md-12 mb-8 ">
                                 <div class="d-flex justify-content-between align-items-center mb-8">
                                     <p class=" f-12 mb-0 mt-8 text-primitive ">PERMANENT</p>
-                                    <a (click)="openAddEdit(clientData,singleAddress,'Address','Edit')"
+                                    <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
                                         class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                 </div>
                                 <p class=" f-14 ">
@@ -351,7 +351,7 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 class="text-center pt-12">No data Found</h4>
-                                    <button (click)="openAddEdit(clientData,null,'Address','Add')"
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
                                         class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                                 </div>
                             </div>
