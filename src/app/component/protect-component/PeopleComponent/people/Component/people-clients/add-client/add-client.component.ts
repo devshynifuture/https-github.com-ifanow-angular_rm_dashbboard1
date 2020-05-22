@@ -17,6 +17,7 @@ export class AddClientComponent implements OnInit {
   tabData: any = {};
   isRefreshFlag: any;
   matTabGroupFlag: boolean;
+  hideDematFlag: any;
 
   constructor(private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private cancelFlagService: CancelFlagService, public dialog: MatDialog) { }
   ngOnInit() {
@@ -25,12 +26,6 @@ export class AddClientComponent implements OnInit {
     this.headingData = data;
     console.log(data);
     this.tabData = data;
-    if (this.tabData.clientType == 2 || this.tabData.familyMemberType == 2) {
-      this.matTabGroupFlag = true;
-    }
-    else {
-      this.matTabGroupFlag = false;
-    }
   }
   selected = 0;
   close(data) {
@@ -46,6 +41,9 @@ export class AddClientComponent implements OnInit {
   refreshFlagData(flag) {
     this.isRefreshFlag = flag;
     this.cancelFlagService.setCancelFlag(flag);
+  }
+  hideDematTab(data) {
+    this.hideDematFlag = data;
   }
   deleteModal(value) {
     const dialogData = {
