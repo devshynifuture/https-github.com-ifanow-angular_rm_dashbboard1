@@ -4,8 +4,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { HttpService } from 'src/app/http-service/http-service';
 import { HttpHeaders } from '@angular/common/http';
-import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material';
+import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Injectable({
   providedIn: 'root'
@@ -59,11 +59,7 @@ export class FileUploadServiceService {
   uploadFile(fileName) {
     this.fileUploadSuccsess = false
     this.countFile++;
-    console.log('uploadFile', fileName);
-    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
-      data: this.myFiles,
-    });
-    console.log('dfh hfdgj  hhgj gfdgh hjhg  hh gfh', bottomSheetRef);
+   
     const obj = {
       clientId: this.basicDetails.clientId,
       advisorId: this.basicDetails.advisorId,
@@ -71,6 +67,11 @@ export class FileUploadServiceService {
       folderId:this.folderId,
       fileName: fileName.name
     };
+    // console.log(this.myFiles);
+    // const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+    //   data: this.myFiles,
+    // });
+    // console.log('dfh hfdgj  hhgj gfdgh hjhg  hh gfh', bottomSheetRef);
     this.custumService.uploadFile(obj).subscribe(
       data => {
         const fileuploadurl = data;
