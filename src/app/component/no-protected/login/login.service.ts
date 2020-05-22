@@ -38,6 +38,10 @@ export class LoginService {
     return this.http.putEncoded(apiConfig.USER + appConfig.SAVE_PASSWORD, data);
   }
 
+  resetPasswordPostLoggedIn(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RESET_PASSWORD, data);
+  }
+
   loginWithPassword(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
   }

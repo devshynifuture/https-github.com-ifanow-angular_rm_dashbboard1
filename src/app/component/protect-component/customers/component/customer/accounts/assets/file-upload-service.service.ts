@@ -22,6 +22,7 @@ export class FileUploadServiceService {
   getUserInfo: any;
   familyMemberId: any;
   folderId: any;
+  filenm: any;
 
   constructor(private custumService: CustomerService,
     private _bottomSheet: MatBottomSheet,
@@ -48,7 +49,11 @@ export class FileUploadServiceService {
         this.fileUploadData = data || [];
         this.folderId = data
         console.log('fileUploadData', this.fileUploadData);
-        this.uploadFile(myFiles)
+        myFiles.forEach(fileName => {
+          this.filenm = fileName;
+          this.uploadFile(this.filenm)
+        });
+       
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');

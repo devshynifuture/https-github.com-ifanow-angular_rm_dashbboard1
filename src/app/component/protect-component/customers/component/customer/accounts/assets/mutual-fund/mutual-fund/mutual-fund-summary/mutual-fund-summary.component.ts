@@ -418,7 +418,7 @@ export class MutualFundSummaryComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Mutual fund summary', this.fragmentData);
+    this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);
   }
 
   deleteModal(value, element) {

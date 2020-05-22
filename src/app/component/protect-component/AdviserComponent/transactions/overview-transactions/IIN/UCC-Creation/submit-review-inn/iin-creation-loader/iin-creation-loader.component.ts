@@ -23,6 +23,8 @@ export class IinCreationLoaderComponent implements OnInit {
   emailId = '';
   isLoading = true;
   platformName = 'BSE Star MF';
+  failureMessage;
+  isSuccess = true;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -35,6 +37,11 @@ export class IinCreationLoaderComponent implements OnInit {
   setSuccessData(data) {
     this.isLoading = false;
     console.log('data respose iin creation loader =', data);
+  }
+
+  setFailureData(message) {
+    this.isSuccess = false;
+    this.failureMessage = message;
   }
 
   showMessageAfterProceed() {
