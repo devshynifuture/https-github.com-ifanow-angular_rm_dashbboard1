@@ -356,9 +356,11 @@ export class BankDetailsIINComponent implements OnInit {
     } else if (value == 'second') {
       if (this.secondHolderBank && this.secondHolderBank.bankName) {
         this.setValueFun(this.secondHolderBank);
+        this.saveBankDetails(value);
       } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
         this.secondHolderBank = this.bankList[1];
         this.setValueFun(this.secondHolderBank);
+        this.saveBankDetails(value);
       } else {
         this.reset();
       }
@@ -367,9 +369,11 @@ export class BankDetailsIINComponent implements OnInit {
       if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
         this.formId = value;
         this.setValueFun(this.thirdHolderBank);
+        this.saveBankDetails(value);
       } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
         this.thirdHolderBank = this.bankList[2];
         this.setValueFun(this.thirdHolderBank);
+        this.saveBankDetails(value);
       } else {
         this.reset();
       }

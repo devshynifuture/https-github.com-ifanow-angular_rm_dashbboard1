@@ -1,0 +1,11 @@
+::ng-deep .mat-dialog-container {
+    position: relative;
+}
+
+.proceedClass {
+    position: absolute;
+    bottom: 0px;
+    font-size: 14px;
+    right: 0px;
+    background: transparent !important;
+}

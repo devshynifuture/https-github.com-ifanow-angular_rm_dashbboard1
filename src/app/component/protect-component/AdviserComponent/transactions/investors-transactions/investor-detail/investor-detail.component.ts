@@ -69,7 +69,7 @@ export class InvestorDetailComponent implements OnInit {
       this.isLoading = false;
     }, error => {
       this.isLoading = false;
-      this.eventService.openSnackBar(error, 'discuss');
+      this.eventService.openSnackBar(error, 'Discuss');
       this.statusData[2].checked = false;
     });
   }

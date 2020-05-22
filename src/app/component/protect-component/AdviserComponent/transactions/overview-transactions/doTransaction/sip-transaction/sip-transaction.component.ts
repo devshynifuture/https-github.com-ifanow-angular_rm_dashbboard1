@@ -113,6 +113,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
     Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
     Object.assign(this.transactionSummary, {transactType: 'SIP'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {paymentMode: 2});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
@@ -186,9 +187,9 @@ export class SipTransactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       searchQuery: data,
@@ -237,9 +238,9 @@ export class SipTransactionComponent implements OnInit {
   getExistingScheme() {
     this.showSchemeSpinner = true;
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       bseOrderType: 'SIP',
@@ -469,7 +470,7 @@ export class SipTransactionComponent implements OnInit {
     this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
 
     if (!this.mandateDetails || this.mandateDetails.length == 0) {
-      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      if (this.getDataSummary.defaultClient.aggregatorType == 1 && this.inputData.isAdvisorSection) {
         /* this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
          if (!this.mandateDetails || this.mandateDetails.length == 0) {
          }*/
@@ -898,9 +899,18 @@ export class SipTransactionComponent implements OnInit {
         this.sipTransaction.controls.investmentAccountSelection.reset();
         this.sipTransaction.controls.schemeSip.reset();
         this.setDefaultTenure();
+        this.gotoTop();
       }
 
     }
+  }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   checkAndHandleMaxInstallmentValidator() {
