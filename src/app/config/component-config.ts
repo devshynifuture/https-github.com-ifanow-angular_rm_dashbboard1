@@ -461,6 +461,7 @@ export const appConfig = {
   GET_MAPPED_CLIENTS: 'user/client/mapped/view',
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',
+  BSE_UCC_FILE_UPLOAD: 'user/bse/client/file-upload',
   MAP_UNMAP_FOLIO: 'mutual-fund/folio/map/manual',
   UNMAP_MAP_FOLIO: 'mutual-fund/folio/unmap',
   GET_FREQUENCY: 'bse/scheme/sip/view',
