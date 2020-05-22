@@ -273,6 +273,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   selectedScheme(scheme) {
+    this.redemptionTransaction.controls.employeeContry.reset();
     this.scheme = scheme;
     this.folioList = [];
     this.folioDetails = null;
