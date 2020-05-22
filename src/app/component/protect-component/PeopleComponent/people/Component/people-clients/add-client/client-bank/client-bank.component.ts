@@ -278,7 +278,7 @@ export class ClientBankComponent implements OnInit {
       );
     }
   }
-  deleteModal(value, data) {
+  deleteModal(value) {
     const dialogData = {
       data: value,
       header: 'DELETE',

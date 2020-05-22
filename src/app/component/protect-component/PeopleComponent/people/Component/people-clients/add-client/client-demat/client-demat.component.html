@@ -3,8 +3,7 @@
     <h4 class="mb-0 l-22 wrapper-20">{{userData.headerFlag}} Demat</h4>
   </div>
   <div class="col-md-2 text-right">
-    <span *ngIf="userData.dematData!=undefined" class="material-icons familyDelete c-p"
-      (click)="deleteModal('DEMAT',singleMembers)">
+    <span *ngIf="userData.dematData!=undefined" class="material-icons familyDelete c-p" (click)="deleteModal('DEMAT')">
       delete
     </span>
     <i (click)="close('close')" class="material-icons pt-20 c-p pr-16">

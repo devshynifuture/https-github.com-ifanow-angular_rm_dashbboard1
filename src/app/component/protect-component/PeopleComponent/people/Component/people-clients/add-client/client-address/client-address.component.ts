@@ -239,7 +239,7 @@ export class ClientAddressComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
+  deleteModal(value) {
     const dialogData = {
       data: value,
       header: 'DELETE',
