@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div *ngIf="dataLoaded">
+<div *ngIf="!dataloaded">
     <div [formGroup]="personalProfile" class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
         <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()"
             [(selectedIndex)]="selectedTab">
@@ -218,7 +218,7 @@
         </mat-tab-group>
     </div>
 </div>
-<div *ngIf="!dataLoaded">
+<div *ngIf="!dataloaded" class="loader-text">
     Loading data
 </div>
 <div class="bottom-fixed wrapper-12 w-60">
