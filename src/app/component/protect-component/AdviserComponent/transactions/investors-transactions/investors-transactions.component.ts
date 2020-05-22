@@ -9,6 +9,10 @@ import {IinUccCreationComponent} from '../overview-transactions/IIN/UCC-Creation
 import {UtilService} from 'src/app/services/util.service';
 import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 import {InvestorDetailComponent} from './investor-detail/investor-detail.component';
+import {FileUploadService} from '../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../config/main-config';
+import {appConfig} from '../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -16,6 +20,9 @@ import {InvestorDetailComponent} from './investor-detail/investor-detail.compone
   styleUrls: ['./investors-transactions.component.scss']
 })
 export class InvestorsTransactionsComponent implements OnInit {
+
+  isFileUploading = false;
+
   displayedColumns: string[] = ['aggregatorType', 'brokerCode', 'name', 'panNo', 'taxStatus', 'holdingType',
     'clientCode', 'status'];
   data: Array<any> = [{}, {}, {}];
@@ -29,12 +36,14 @@ export class InvestorsTransactionsComponent implements OnInit {
   dontHide: boolean;
   isPendingData = false;
 
-  // dataSource = ELEMENT_DATA;
-  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private enumServiceService: EnumServiceService, private subInjectService: SubscriptionInject) {
-  }
-
   isLoading = false;
+
+  // dataSource = ELEMENT_DATA;
+  constructor(private onlineTransact: OnlineTransactionService,
+              private eventService: EventService,
+              private enumServiceService: EnumServiceService,
+              private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -60,7 +69,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   getFilterOptionData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
@@ -163,6 +172,31 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
 
+  }
+
+  getFileDetails(e) {
+    console.log('file', e);
+    const file = e.target.files[0];
+    const requestMap = {
+      advisorId: this.advisorId
+    };
+    this.isFileUploading = true;
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.BSE_UCC_FILE_UPLOAD,
+      file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+        console.log('getFileDetails uploadFileToServer callback item : ', item);
+        console.log('getFileDetails uploadFileToServer callback status : ', status);
+        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
+        console.log('getFileDetails uploadFileToServer callback response : ', response);
+        this.isFileUploading = false;
+        if (status == 200) {
+          const responseObject = JSON.parse(response);
+          console.log('onChange file upload success response url : ', responseObject.url);
+          this.eventService.openSnackBar('File uploaded successfully');
+        } else {
+          const responseObject = JSON.parse(response);
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
+        }
+      });
   }
 
   openInvestorDetail(data) {

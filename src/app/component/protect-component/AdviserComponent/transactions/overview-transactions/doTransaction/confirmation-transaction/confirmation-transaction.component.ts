@@ -31,7 +31,9 @@ export class ConfirmationTransactionComponent implements OnInit {
 
   redirctTransaction() {
     this.close();
-    this.router.navigate(['admin', 'transactions', 'transactions']);
+    if (this.confirmData.isAdvisorSection) {
+      this.router.navigate(['admin', 'transactions', 'transactions']);
+    }
   }
 
   get data() {
