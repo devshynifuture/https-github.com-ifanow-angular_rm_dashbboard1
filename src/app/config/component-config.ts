@@ -689,6 +689,9 @@ export const appConfig = {
   // CLIENT_SEARCH: 'user/client/all/names/get',
   CLIENT_SEARCH: 'user/client/all/names/count/get',
   EDIT_BITHDATE: 'user/client/birth-date/update',
+  DELETE_ADDDRESS: 'user/client/address/delete',
+  DELETE_BANK: 'user/client/bank-details/delete',
+  DELETE_DEMAT: 'user/client/demat/delete',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -697,6 +700,7 @@ export const appConfig = {
   SAVE_PASSWORD: 'user/password/update',
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
   SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
+  RESET_PASSWORD: 'setting/reset/password',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',

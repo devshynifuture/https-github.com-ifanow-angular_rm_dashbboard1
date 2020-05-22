@@ -1,13 +1,13 @@
-import {SubscriptionInject} from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
+import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
-import {EventService} from './../../../../../Data-service/event.service';
-import {FileOrderingDetailComponent} from '../file-ordering-detail/file-ordering-detail.component';
-import {UtilService} from 'src/app/services/util.service';
-import {FileOrderingUploadService} from '../file-ordering-upload.service';
-import {SupportService} from '../../support.service';
-import {SelectionModel} from '@angular/cdk/collections';
+import { EventService } from './../../../../../Data-service/event.service';
+import { FileOrderingDetailComponent } from '../file-ordering-detail/file-ordering-detail.component';
+import { UtilService } from 'src/app/services/util.service';
+import { FileOrderingUploadService } from '../file-ordering-upload.service';
+import { SupportService } from '../../support.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-file-ordering-upper',
@@ -17,6 +17,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 export class FileOrderingUpperComponent implements OnInit {
   fileName: any;
   isDisableTooltip = true;
+  @ViewChild(MatSort, { static: true }) sortList: MatSort;
 
   constructor(
     private eventService: EventService,
@@ -56,6 +57,7 @@ export class FileOrderingUpperComponent implements OnInit {
           this.arrayOfIdsForRetry.push(row['id']);
         }
       });
+
     }
 
     console.log(this.arrayOfIdsForRetry);
@@ -136,6 +138,7 @@ export class FileOrderingUpperComponent implements OnInit {
             })
           });
           this.dataSource.data = tableData;
+          this.dataSource.sort = this.sortList;
         } else {
           this.dataSource.data = null;
           this.eventService.openSnackBarNoDuration("No Data Found", "DISMISS");
@@ -252,6 +255,7 @@ export class FileOrderingUpperComponent implements OnInit {
             })
           });
           this.dataSource.data = tableData;
+          this.dataSource.sort = this.sortList;
         } else {
           this.dataSource.data = null;
           this.eventService.openSnackBarNoDuration("No Data Found", "DISMISS");
@@ -345,6 +349,13 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   refreshList() {
+    this.dataSource.data = ELEMENT_DATA;
+    if (this.data.flag === 'historical') {
+      this.fileOrderingListData();
+    } else if (this.data.flag === 'bulk') {
+
+      this.fileOrderBulkListData();
+    }
   }
 }
 const ELEMENT_DATA: fileOrderingUpperI[] = [
