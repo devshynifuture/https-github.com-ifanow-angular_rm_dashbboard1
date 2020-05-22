@@ -163,3 +163,7 @@
     min-width: 139px;
     padding-left: 8px;
 }
+
+::ng-deep .helperBoxText .mat-form-field-wrapper {
+    padding-bottom: 4px;
+}
