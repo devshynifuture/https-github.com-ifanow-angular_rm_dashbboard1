@@ -1,7 +1,16 @@
 .h-22 {
-    height: 22px !important;
+  height: 22px !important;
 }
 
 .back-office-table #table-low tr.mat-header-row {
-    height: 40px !important;
+  height: 40px !important;
+}
+
+::ng-deep .back-office-table {
+  height: calc(100vh - 300px);
+  overflow: auto;
+
+  #table-low th {
+    top: -2px;
+  }
 }
