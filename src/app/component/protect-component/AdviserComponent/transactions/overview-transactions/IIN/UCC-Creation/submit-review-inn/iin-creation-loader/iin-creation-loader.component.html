@@ -10,6 +10,7 @@
         <button mat-stroked-button class="closeClass">CLOSE</button>
     </div>
 </div>
+
 <div class="p-16" *ngIf="showNextMessage">
     <p class="text-success">Success! Your account has been created successfully</p>
 
@@ -24,4 +25,18 @@
     </ul>
 
     <button (click)="expression" mat-stroked-button class="closeClass">CLOSE</button>
+</div>
+
+
+<div class="p-16" *ngIf="showNextMessage">
+    <div class="radioCLass">
+        <mat-radio-group class="text-danger" aria-label="Select an option">
+            <mat-radio-button value="1"> </mat-radio-button> Rejected
+        </mat-radio-group>
+    </div>
+
+
+    <div class="rejectClass bg-danger f-12 text-white p-10">
+        The failed reason will come here from BSE/NSE. It can be a long form text like this or something short.
+    </div>
 </div>

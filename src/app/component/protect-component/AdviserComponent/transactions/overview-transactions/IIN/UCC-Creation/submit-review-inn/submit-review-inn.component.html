@@ -55,7 +55,9 @@
                     <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0" class="btnConfirm bg-primary text-white" mat-button>Create
                         account
                     </button>
-                    <p *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully</p>
+                    <p class="f-12 text-primary" *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully
+                    </p>
+
                 </div>
 
                 <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
@@ -109,7 +111,8 @@
                     <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0" class="btnConfirm bg-primary text-white" mat-button>Create
                         account
                     </button>
-                    <p *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully</p>
+                    <p class="f-12 text-primary" *ngIf="singleBrokerCred.tpUserRequestId>0">Account created successfully
+                    </p>
                 </div>
 
                 <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
