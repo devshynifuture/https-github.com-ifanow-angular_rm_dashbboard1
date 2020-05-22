@@ -95,11 +95,12 @@ export class RightFilterComponent implements OnInit {
     this.panelOpenState = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    // this._data.forEach(element => {
+    // this._data.forEach(element => {()
     //   element.done = false
     // });
     // (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
-    this.transactionPeriodCheck = false
+    this.transactionPeriodCheck = (this._data.transactionPeriodCheck) ? this._data.transactionPeriodCheck : false;
+    this.transactionPeriod=(this._data.transactionPeriod) ? this._data.transactionPeriod : false;
     // this.amc = this._data.schemeWise;//amc wise data 
     // this.folio = this._data.folioWise;//for getting all folios
     this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()];//amc wise data 
@@ -109,7 +110,9 @@ export class RightFilterComponent implements OnInit {
     this.showSummaryFilterForm(this._data);//as on date and showZero folio form
 
     this.getCategoryWise(this._data.category);//get category wise data
-    this.getSchemeWise(this._data.scheme);//scheme wise data
+    if (this._data.scheme) {
+      this.getSchemeWise(this._data.scheme); // scheme wise data
+    }
     this.getFamilyMember(this._data.familyMember);//for family memeber
     this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
     this.getReportType();//get type of report categorywise,investor,sub category wise
@@ -162,16 +165,16 @@ export class RightFilterComponent implements OnInit {
   }
 
   showSummaryFilterForm(data) {
-    // let grandFatheringEffect;
-    // (data.capitalGainData.grandFatheringEffect) ? grandFatheringEffect = true : grandFatheringEffect =false;
+     let grandFatheringEffect;
+    (data.filterDataForCapital) ? (data.filterDataForCapital.grandfathering == 2 ? grandFatheringEffect = 2 : grandFatheringEffect = 1) : '2';
     const fromDate = new Date();
     fromDate.setFullYear(fromDate.getFullYear() - 1);
     var todayDate = new Date().toISOString().slice(0, 10);
     this.summaryFilerForm = this.fb.group({
-      reportAsOn: [new Date(data.reportAsOn), [Validators.required]],
+      reportAsOn: [data.reportAsOn ? new Date(data.reportAsOn) : null, [Validators.required]],
       fromDate: [data.fromDate ? new Date(data.fromDate) : null, [Validators.required]],
       toDate: [data.toDate ?  new Date(data.toDate) :null, [Validators.required]],
-      showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
+      showFolios: [(data.showFolio) ? data.showFolio+'' : '2', [Validators.required]],
       grandfathering: [(data.grandfathering) ? data.grandfathering + '' : '2', [Validators.required]],
     });
   }
@@ -202,7 +205,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   getFamilyMember(data) {
-    const filterData = [];
+    let filterData = [];
     if (this._data.name == "CAPITAL GAIN REPORT") {
       this._data.capitalGainData.mutualFundList.forEach(element => {
         const obj = {
@@ -212,6 +215,24 @@ export class RightFilterComponent implements OnInit {
         };
         filterData.push(obj);
       });
+      if(this._data.filterDataForCapital){
+        filterData.forEach(item => item.selected = '');
+        this._data.filterDataForCapital.family_member_list.forEach(element => {
+          filterData.forEach(item => {
+            if(item.familyMemberId == element.id){
+              item.selected = true;
+            }
+          });
+        });
+        filterData.forEach(element => {
+          if(element.selected == ''){
+            element.selected = false;
+          }
+        });
+        filterData = [...new Map(filterData.map(item => [item.familyMemberId, item])).values()];
+        // const familyember = this.mfService.getOtherFilter(filterData,this._data.filterDataForCapital.family_member_list,'id','id','displayName')
+      }
+
     } else {
       data.forEach(element => {
         const obj = {
@@ -293,6 +314,21 @@ export class RightFilterComponent implements OnInit {
 
       });
     }
+    if(this._data.filterDataForCapital){
+      this.financialYears.forEach(item => item.selected = '');
+      this._data.filterDataForCapital.financialYear.forEach(element => {
+        this.financialYears.forEach(item => {
+          if(item.from == element.from && item.to == element.to){
+            item.selected = true;
+          }
+        });
+      });
+      this.financialYears.forEach(element => {
+        if(element.selected == ''){
+          element.selected = false;
+        }
+      });
+    }
 
   }
   getReportFormat() {
@@ -306,7 +342,23 @@ export class RightFilterComponent implements OnInit {
       };
       filterData.push(obj);
     });
+    if(this._data.filterDataForCapital){
+      filterData.forEach(item => item.selected = '');
+      this._data.filterDataForCapital.reportFormat.forEach(element => {
+        filterData.forEach(item => {
+          if(item.name == element.name){
+            item.selected = true;
+          }
+        });
+      });
+      filterData.forEach(element => {
+        if(element.selected == ''){
+          element.selected = false;
+        }
+      });
+    }
     this.reportFormat = filterData;
+
   }
   getOverviewFilter() {
     this.overviewFilter = [{ name: 'Summary bar', selected: true },
@@ -344,16 +396,27 @@ export class RightFilterComponent implements OnInit {
         this.countReport++;
       }
     });
-    this.reportFormat.forEach(item => {
-      this.countFormat = 0;
-      if (item.name == 'Summary') {
-        item.selected = true;
-        this.countReport++;
-      }
-    });
+    if(this._data.filterDataForCapital){
+      this.reportFormat.forEach(item => {
+        this.countFormat = 0;
+        if (item.selected) {
+          this.countReport++;
+        }
+      });
+    }else{
+      this.reportFormat.forEach(item => {
+        this.countFormat = 0;
+        if (item.name == 'Summary') {
+          item.selected = true;
+          this.countReport++;
+        }
+      });
+    }
     this.countFamily = this.familyMember.length;
     this.countAmc = this.amc.length;
-    this.countScheme = this.scheme.length;
+    if(this.scheme){
+      this.countScheme = this.scheme.length;
+    }
     this.countFolio = this.folio.length;
     this.countTranView = this.transactionView.length;
     this.countCategory = this.category.length;
@@ -887,7 +950,7 @@ export class RightFilterComponent implements OnInit {
     this.barButtonOptions.active = true;
     var todayDate = new Date().toISOString().slice(0, 10);
 
-    if (this.transactionPeriod == false) {
+    if (this.transactionPeriod == false && this._data.name != 'CAPITAL GAIN REPORT') {
       if (this.summaryFilerForm.get('reportAsOn').invalid) {
         this.summaryFilerForm.get('reportAsOn').markAsTouched();
         return;
@@ -904,14 +967,15 @@ export class RightFilterComponent implements OnInit {
       financialYear: (this.financialYears) ? this.financialYearsObj : this.financialYears,
       overviewFilter: this.overviewFilter,
       transactionView: this.transactionView,
-      reportAsOn: this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd'),
+      reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ? this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd') : new Date(),
       fromDate: this.datePipe.transform(this.summaryFilerForm.controls.fromDate.value, 'yyyy-MM-dd'),
       toDate: this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
       grandfathering: parseInt(this.summaryFilerForm.controls.grandfathering.value),
       capitalGainData: this._data.capitalGainData,
       name: this._data.name,
-      transactionPeriodCheck: this.transactionPeriodCheck
+      transactionPeriodCheck: this.transactionPeriodCheck,
+      transactionPeriod:this.transactionPeriod
     };
     console.log('dataToSend---------->', this.dataToSend);
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);

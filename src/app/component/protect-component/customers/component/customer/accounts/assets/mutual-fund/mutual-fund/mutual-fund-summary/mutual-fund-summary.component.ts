@@ -354,7 +354,12 @@ export class MutualFundSummaryComponent implements OnInit {
       scheme:this.setDefaultFilterData.scheme,
       reportType :this.setDefaultFilterData.reportType,
       reportAsOn:this.setDefaultFilterData.reportAsOn,
-      showFolio :this.setDefaultFilterData.showFolio
+      showFolio :this.setDefaultFilterData.showFolio,
+      transactionPeriod:this.setDefaultFilterData.transactionPeriod,
+      transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
+      fromDate:this.setDefaultFilterData.fromDate,
+      toDate:this.setDefaultFilterData.toDate,
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

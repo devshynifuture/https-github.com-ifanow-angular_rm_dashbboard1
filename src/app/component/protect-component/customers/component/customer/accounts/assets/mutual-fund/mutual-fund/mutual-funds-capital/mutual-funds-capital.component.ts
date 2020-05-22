@@ -67,7 +67,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   objSendToDetailedCapital: any;
   redemption: any[];
   mutualFundList: any[];
-  dataToSend: { mfListData: any; grandfatheringEffect: any; fromDateYear: any; toDateYear: any; };
+  dataToSend: any;
   capitalGainData: any;
   toDate: Date;
   fromDate: Date;
@@ -98,6 +98,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
   }
   openFilter() {
+    // this.MfServiceService.getCapitalGainFilter(this.objSendToDetailedCapital,this.rightFilterData)
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -114,6 +115,8 @@ export class MutualFundsCapitalComponent implements OnInit {
       category: this.mutualFund.mutualFundCategoryMastersList,
       transactionView: this.displayedColumns,
       capitalGainData: this.objSendToDetailedCapital,
+      filterDataForCapital: (this.rightFilterData) ? this.rightFilterData : null
+      // reportFormat:reportFormat
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -135,7 +138,8 @@ export class MutualFundsCapitalComponent implements OnInit {
               mfListData: this.rightFilterData.capitalGainData.responseData,
               grandfatheringEffect: this.rightFilterData.grandfathering,
               fromDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
-              toDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
+              toDateYear: (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020,
+              filterDataForCapital:this.rightFilterData
             };
             (this.rightFilterData.grandfathering == 1) ? this.grandFatheringEffect = true : this.grandFatheringEffect = false;
             this.fromDateYear = (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019;
@@ -387,6 +391,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.toDateYear = data.toDateYear;
     this.toDate = new Date(this.toDateYear, 2, 31); 
     this.grandFatheringEffect = data.grandfatheringEffect
+    this.rightFilterData=data.filterDataForCapital
     if (data.summaryView == true) {
       this.summaryView = true;
       this.calculateCapitalGain(data.data);

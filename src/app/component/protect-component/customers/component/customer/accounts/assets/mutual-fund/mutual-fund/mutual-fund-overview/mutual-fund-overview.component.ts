@@ -72,6 +72,7 @@ export class MutualFundOverviewComponent implements OnInit {
   openSummaryTab: boolean = false;
   inputDataToSend: any;
   mfGetData: any;
+  clientIdToClearStorage: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -81,6 +82,17 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    this.MfServiceService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if(this.clientIdToClearStorage){
+      if(this.clientIdToClearStorage != this.clientId){
+        this.MfServiceService.clearStorage()
+      }
+    }
+    this.MfServiceService.setClientId(this.clientId);
     this.MfServiceService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -94,8 +106,7 @@ export class MutualFundOverviewComponent implements OnInit {
         this.mutualFund = res;
       })
     console.log(this.viewMode)
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+
     this.MfServiceService.getDataForMfGet()
       .subscribe(res => {
         this.mfGetData = res;
@@ -607,8 +618,9 @@ export class MutualFundOverviewComponent implements OnInit {
       showFolio :this.setDefaultFilterData.showFolio,
       fromDate:this.setDefaultFilterData.fromDate,
       toDate:this.setDefaultFilterData.toDate,
-      overviewFilter:this.setDefaultFilterData.overviewFilter
-
+      overviewFilter:this.setDefaultFilterData.overviewFilter,
+      transactionPeriod:this.setDefaultFilterData.transactionPeriod,
+      transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

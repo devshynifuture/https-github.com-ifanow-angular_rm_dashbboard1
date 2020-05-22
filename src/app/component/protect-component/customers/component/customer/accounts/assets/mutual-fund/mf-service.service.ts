@@ -20,7 +20,7 @@ export class MfServiceService {
   private navValue = new BehaviorSubject('');
   private filterValues = new BehaviorSubject('');
   private mfGetData = new BehaviorSubject('');
-
+  private clientIdToClearData = new BehaviorSubject('');
 
   getPersonalDetails(data) {
     const obj = {
@@ -297,10 +297,10 @@ export class MfServiceService {
        (item.balanceUnit!=0 && item.balanceUnit > 0) || item.folioNumber != 0 
       );
     }
-    if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
-      dataForFilter.reportAsOn = null;
-    }
-    if (dataForFilter.reportAsOn) {
+    // if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
+    //   dataForFilter.reportAsOn = null;
+    // }
+    if (dataForFilter.reportAsOn && (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT')) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
           this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
@@ -365,7 +365,9 @@ export class MfServiceService {
       grandfathering: dataForFilter.grandfathering,
       mfData,
       capitalGainData: dataForFilter.capitalGainData,
-      categoryWiseMfList: categoryWiseMfList
+      categoryWiseMfList: categoryWiseMfList,
+      transactionPeriodCheck:dataForFilter.transactionPeriodCheck,
+      transactionPeriod:dataForFilter.transactionPeriod
     };
     return sendData;
   }
@@ -440,7 +442,10 @@ export class MfServiceService {
       showFolio : (rightSideData) ? rightSideData.showFolio : '2',
       fromDate :(rightSideData) ? rightSideData.fromDate : new Date(date.setFullYear(date.getFullYear() - 1)),
       toDate :(rightSideData) ? rightSideData.toDate: new Date(),
-      overviewFilter:overviewFilter
+      overviewFilter:overviewFilter,
+      transactionPeriod:(rightSideData) ? rightSideData.transactionPeriod : false,
+      transactionPeriodCheck:(rightSideData) ? rightSideData.transactionPeriodCheck : false
+
     }
     return obj;
   }
@@ -496,6 +501,12 @@ export class MfServiceService {
     orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
     return orgData;
   }
+
+  clearStorage(){
+    this.setFilterValues('');
+    this.setDataForMfGet('');
+    this.setMfData('');
+  }
   getMutualFundData() {
     return this.mutualFundDataSource.asObservable();
   }
@@ -547,5 +558,11 @@ export class MfServiceService {
   }
   getDataForMfGet(){
     return this.mfGetData.asObservable();
+  }
+  setClientId(value){
+    this.clientIdToClearData.next(value);
+  }
+  getClientId(){
+    return this.clientIdToClearData.asObservable();
   }
 }
