@@ -12,7 +12,7 @@
         <mat-expansion-panel class="mb-20 boxShadowNone borderLine" [expanded]="false">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">Family members<span class="text-right f-14 pl-12">{{countFamily}} of
+                    <h5 class="m-0">Family members<span class="text-right f-14 pl-12 text-custom">{{countFamily}} of
                             {{familyMember.length}}
                             selected</span></h5>
                 </mat-panel-title>
@@ -28,11 +28,11 @@
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">AMC<span class="text-right f-14 pl-12">{{countAmc}} of {{amc.length}}
+                    <h5 class="m-0">AMC<span class="text-right f-14 pl-12 text-custom">{{countAmc}} of {{amc.length}}
                             selected</span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <!-- <mat-checkbox (change)="selectAll($event,amc,'countAmc')" name="selectAll">select/unselect All</mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of amc">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterAmc()">{{item.amc_name}}
@@ -45,11 +45,12 @@
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">Schemes<span class="text-right f-14 pl-12">{{countScheme}} of {{scheme.length}}
+                    <h5 class="m-0">Schemes<span class="text-right f-14 pl-12 text-custom">{{countScheme}} of
+                            {{scheme.length}}
                             selected</span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <!-- <mat-checkbox (change)="selectAll($event,scheme,'countScheme')" name="selectAll">select/unselect All
         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of scheme">
@@ -64,12 +65,13 @@
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">Folios<span class="text-right f-14 pl-12">{{countFolio}} of {{folio.length}}
+                    <h5 class="m-0">Folios<span class="text-right f-14 pl-12 text-custom">{{countFolio}} of
+                            {{folio.length}}
                             selected</span>
                     </h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <!-- <mat-checkbox (change)="selectAll($event,folio,'countFolio')" name="selectAll">select/unselect All
         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of folio">
@@ -83,11 +85,12 @@
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12">{{countTranView}} of
+                    <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12 text-custom">{{countTranView}}
+                            of
                             {{transactionView.length}} selected</span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <!-- <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect
           All
         </mat-checkbox> -->
@@ -102,10 +105,10 @@
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">Report Type <span class="text-right f-14 pl-12"></span></h5>
+                    <h5 class="m-0">Report Type <span class="text-right f-14 pl-12 text-custom"></span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem" *ngFor="let item of reportType">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeReportFilter(item)">{{item.name}}
                     </mat-checkbox>
@@ -117,12 +120,12 @@
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
                 <mat-panel-title (click)="panelOpenState = true">
-                    <h5 class="m-0">Categories<span class="text-right f-14 pl-12">{{countCategory}} of
+                    <h5 class="m-0">Categories<span class="text-right f-14 pl-12 text-custom">{{countCategory}} of
                             {{category.length}}
                             selected</span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <!-- <mat-checkbox (change)="selectAll($event,category,'countCategory')" name="selectAll">select/unselect All
         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of category">
@@ -140,7 +143,7 @@
                     <h5 class="m-0">Transaction Period</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem">
                     <mat-checkbox [(ngModel)]="transactionPeriodCheck"
                         (change)="changeFilterPeriod(transactionPeriodCheck)">
@@ -159,7 +162,7 @@
                             selected</span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem" *ngFor="let item of overviewFilter let i = index;">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.name}}
                     </mat-checkbox>
@@ -173,7 +176,7 @@
                     <h5 class="m-0">Financial years</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem" *ngFor="let item of financialYears">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
                         {{'FY '+item.from+' - '+item.to}}
@@ -188,7 +191,7 @@
                     <h5 class="m-0">Report format</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="borderTopbox"  *ngIf="panelOpenState == true">
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem" *ngFor="let item of reportFormat">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}}
                     </mat-checkbox>
