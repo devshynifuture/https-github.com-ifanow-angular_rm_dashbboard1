@@ -6,7 +6,6 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { map } from 'rxjs/operators';
@@ -29,13 +28,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   mfData;
   mutualFundList: any[];
   isLoading = false;
-  dataSource = new TableVirtualScrollDataSource([{}, {}, {}]);
+  dataSource = new MatTableDataSource([{}, {}, {}]);
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   type: any = { name: '' };
   isSpinner = false;
-  customDataSource = new TableVirtualScrollDataSource([{}, {}, {}]);
+  customDataSource = new MatTableDataSource([{}, {}, {}]);
   @ViewChild('tableEl', { static: false }) tableEl;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
@@ -211,8 +210,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
-        this.dataSource = new TableVirtualScrollDataSource(data.dataSourceData);
-        this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
+        this.dataSource = new MatTableDataSource(data.dataSourceData);
+        this.customDataSource = new MatTableDataSource(data.customDataSourceData);
         console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
@@ -370,8 +369,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.dataSource = new TableVirtualScrollDataSource([{}, {}, {}]);
-            this.customDataSource = new TableVirtualScrollDataSource([{}, {}, {}]);
+            this.dataSource = new MatTableDataSource([{}, {}, {}]);
+            this.customDataSource = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
