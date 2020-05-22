@@ -339,15 +339,7 @@ export class HttpService {
     url = url.trim();
     return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        if (res.status === 200) {
-          const resData = this.changeBase64ToString(res);
-          return resData;
-        } else if (res.status === 204) {
-          return null;
-        } else {
-          // this._router.navigate(['login']);
-          throw new Error(res.message);
-        }
+        return this.sendSuccessResponse(res);
       });
   }
 
