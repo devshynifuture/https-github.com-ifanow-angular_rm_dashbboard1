@@ -7,6 +7,8 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-client-address',
@@ -42,7 +44,7 @@ export class ClientAddressComponent implements OnInit {
   proofTypeData: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
-    private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService) {
+    private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService, public dialog: MatDialog) {
   }
 
   addressForm;
@@ -237,6 +239,40 @@ export class ClientAddressComponent implements OnInit {
     }
   }
 
+  deleteModal(value) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.peopleService.deleteAddress(this.userData.addressData.addressId).subscribe(
+          data => {
+            dialogRef.close();
+            this.closeAndSave();
+          },
+          err => { this.eventService.openSnackBar(err, "Dismiss") }
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   close(data) {
     (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });

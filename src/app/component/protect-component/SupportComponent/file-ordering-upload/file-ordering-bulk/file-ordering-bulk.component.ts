@@ -2,7 +2,7 @@ import { SubscriptionInject } from "./../../../AdviserComponent/Subscriptions/su
 import { Component, OnInit } from "@angular/core";
 import { EventService } from "src/app/Data-service/event.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
-import { MatChipInputEvent, MatTableDataSource } from "@angular/material";
+import { MatChipInputEvent, MatTableDataSource, MatDialog } from '@angular/material';
 import { UpperSliderBackofficeComponent } from "../../common-component/upper-slider-backoffice/upper-slider-backoffice.component";
 import { AuthService } from "src/app/auth-service/authService";
 import { UtilService } from "src/app/services/util.service";
@@ -11,6 +11,7 @@ import { FileOrderingSetupComponent } from "./file-ordering-setup/file-ordering-
 import { FileOrderingUploadService } from "../file-ordering-upload.service";
 import { FormBuilder } from "@angular/forms";
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { CustomFilterDatepickerDialogComponent } from '../custom-filter-datepicker-dialog.component';
 
 @Component({
   selector: "app-file-ordering-bulk",
@@ -19,7 +20,8 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
 })
 export class FileOrderingBulkComponent implements OnInit {
   rmList: any[] = [];
-  isLoading: boolean;
+  isLoading: boolean = false;
+  customDateFilterValue: any;
 
   constructor(
     private eventService: EventService,
@@ -27,7 +29,8 @@ export class FileOrderingBulkComponent implements OnInit {
     private fileOrderingUploadService: FileOrderingUploadService,
     private fb: FormBuilder,
     private utilService: UtilService,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
+    public dialog: MatDialog
   ) { }
   displayedColumns: string[] = [
     "rta",
@@ -59,18 +62,23 @@ export class FileOrderingBulkComponent implements OnInit {
 
   periodList = [
     {
-      name: "Last 7 Days",
-      value: 7,
+      name: "Today",
+      value: 0,
       type: "period",
     },
     {
-      name: "Last month",
-      value: 30,
+      name: "Yesterday",
+      value: 1,
       type: "period",
     },
     {
-      name: "Last year",
-      value: 365,
+      name: "Yesterday + Today",
+      value: 2,
+      type: "period",
+    },
+    {
+      name: "Custom Date",
+      value: 3,
       type: "period",
     },
   ];
@@ -105,6 +113,41 @@ export class FileOrderingBulkComponent implements OnInit {
       });
   }
 
+  openDialogCustomDateForFilter() {
+    const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent, {
+      width: '700px',
+      data: ''
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      console.log('The dialog was closed', res);
+      this.customDateFilterValue = res;
+
+      if (res) {
+        this.filterBy = [];
+        const defaultRmName = this.rmList.find((c) => c.id === this.rmId);
+        this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
+        this.filterForm.get("filterByRmName").setValue(defaultRmName);
+
+        const defaultPeriod = this.periodList.find((c) => c.value === 0);
+        this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
+        this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
+
+        const defaultRta = this.rtaList.find((c) => c.value === 0);
+        this.filterForm.get("filterByRta").setValue(defaultRta);
+        this.filterBy.push({ name: defaultRta.name, type: 'rta' });
+        this.dataSource.data = ELEMENT_DATA;
+        this.fileOrderBulkHistoryListGet({
+          fromDate: res.fromDate,
+          toDate: res.toDate
+        });
+      } else {
+        this.eventService.openSnackBar("ABORTED!!", "DISMISS");
+      }
+
+    });
+  }
+
   setFilterFormValueChanges() {
     this.filterForm.valueChanges
       .subscribe(res => {
@@ -131,8 +174,10 @@ export class FileOrderingBulkComponent implements OnInit {
           }
 
           if (!this.utilService.isEmptyObj(obj)) {
-            this.dataSource.data = ELEMENT_DATA;
-            this.fileOrderBulkHistoryListGet(obj);
+            if (obj['days'] !== 3) {
+              this.dataSource.data = ELEMENT_DATA;
+              this.fileOrderBulkHistoryListGet(obj);
+            }
           }
         }
       });
@@ -147,7 +192,7 @@ export class FileOrderingBulkComponent implements OnInit {
     this.filterForm.get("filterByRmName").setValue(defaultRmName);
     this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
 
-    const defaultPeriod = this.periodList.find((c) => c.value === 30);
+    const defaultPeriod = this.periodList.find((c) => c.value === 0);
     this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
     this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
 
@@ -427,7 +472,7 @@ export class FileOrderingBulkComponent implements OnInit {
     if (index >= 0) {
       this.filterBy.splice(index, 1);
       this.fileOrderBulkHistoryListGet({
-        days: 2,
+        days: 0,
         rmId: 2
       })
     }

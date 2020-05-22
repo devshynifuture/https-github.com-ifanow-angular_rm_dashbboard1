@@ -104,6 +104,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'STP'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {multiTransact: false});
   }

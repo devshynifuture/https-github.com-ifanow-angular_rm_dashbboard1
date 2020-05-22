@@ -185,7 +185,7 @@ export class OverviewProfileComponent implements OnInit {
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-    this.clientOverviewData['age'] = age;
+    this.clientOverviewData['age'] = isNaN(age) ? 0 : age;
   }
   getBankList(data) {
     this.bankFlag = true;
@@ -231,46 +231,6 @@ export class OverviewProfileComponent implements OnInit {
     }
   }
 
-  deleteModal(value, data) {
-    const dialogData = {
-      data: value,
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
-      btnNo: 'DELETE',
-      positiveMethod: () => {
-        let obj =
-        {
-          "familyMemberId": data.familyMemberId,
-          "userId": data.familyMemberId
-        }
-        this.cusService.deleteFamilyMember(obj).subscribe(
-          data => {
-            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
-            dialogRef.close();
-            this.getFamilyMembersList(this.clientData);
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-      },
-      negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
-      }
-    };
-    console.log(dialogData + '11111111111111');
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
-  }
 
   open(value, data) {
     let component;

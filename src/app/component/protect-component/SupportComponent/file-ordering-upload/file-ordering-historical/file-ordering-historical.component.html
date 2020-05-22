@@ -50,11 +50,17 @@
                         (selectionChange)="add($event, 'period')">
                         <mat-option>None</mat-option>
                         <mat-option [value]="period" *ngFor="let period of periodList">
-                            {{ period.name }}
+                            <div *ngIf="period.value !== 3">
+                                {{ period.name }}
+                            </div>
+                            <div *ngIf="period.value === 3" (click)="openDialogCustomDateForFilter()">
+                                {{ period.name }}
+                            </div>
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
             <div class="col-lg-3 pr-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="filterByRta"
@@ -72,177 +78,178 @@
     </div>
 </div>
 
-<div class="row pt-12">
-    <div class="col-md-12 back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading"
-            [appSkeletonLoading]="isLoading" appSkeletonLoading>
-            <ng-container matColumnDef="advisorName">
-                <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            {{element.advisorName}}
+<div class="row pt-12 pl-16 pr-16">
+    <div class="col-md-12 p-0 ">
+        <div [ngClass]="isLoading ? '': 'back-office-table'">
+            <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading"
+                [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                <ng-container matColumnDef="advisorName">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                {{element.advisorName}}
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="rta">
-                <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            {{element.rta}}
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="orderedBy">
-                <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            {{element.orderedBy}}
+                <ng-container matColumnDef="rta">
+                    <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                {{element.rta}}
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="startedOn">
-                <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            {{element.startedOn|date:'d/M/y, h:mm a'}}
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="totalFiles">
-                <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
-                <td class="c-p br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('historical', 'total',  element)">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            <a href="javascript:void(0)">
-                                {{element.totalFiles}}
-                            </a>
+                <ng-container matColumnDef="orderedBy">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                {{element.orderedBy}}
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="queue">
-                <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
-                <td class="br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('historical', 'inqueue', element)">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            <a href="javascript:void(0)">
-                                {{element.queue}}
-                            </a>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="ordering">
-                <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
-                <td class="br" mat-cell *matCellDef="let element">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            {{element.ordering}}
+                <ng-container matColumnDef="startedOn">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                {{element.startedOn|date:'d/M/y, h:mm a'}}
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="ordered">
-                <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
-                <td class="br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('historical','ordered' ,element)">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            <a href="javascript:void(0)">
-                                {{element.ordered}}
-                            </a>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-
-            <ng-container matColumnDef="failed">
-                <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
-                <td class="br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('historical', 'skipped',element)">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            <a href="javascript:void(0)">
-                                {{element.failed}}
-                            </a>
+                <ng-container matColumnDef="totalFiles">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
+                    <td class="c-p br" mat-cell *matCellDef="let element"
+                        (click)="openUpperFileOrdering('historical', 'total',  element)">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                <a href="javascript:void(0)">
+                                    {{element.totalFiles}}
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="uploaded">
-                <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
-                <td class="br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('historical', 'uploaded', element)">
-                    <div *ngIf="!element.isLoading">
-                        <div class="bar">
-                            <a href="javascript:void(0)">
-                                {{element.uploaded}}
-                            </a>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
                         </div>
-                    </div>
-                    <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
-                    </div>
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="queue">
+                    <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
+                    <td class="br" mat-cell *matCellDef="let element"
+                        (click)="openUpperFileOrdering('historical', 'inqueue', element)">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                <a href="javascript:void(0)">
+                                    {{element.queue}}
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ordering">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                {{element.ordering}}
+                            </div>
+                        </div>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ordered">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
+                    <td class="br" mat-cell *matCellDef="let element"
+                        (click)="openUpperFileOrdering('historical','ordered' ,element)">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                <a href="javascript:void(0)">
+                                    {{element.ordered}}
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
+                        </div>
+                    </td>
+                </ng-container>
 
 
-            <ng-container matColumnDef="refresh">
-                <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
-                <td class="br" mat-cell *matCellDef="let element; index as i">
-                    <div class="bar">
-                        <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs"
-                            (click)="refreshFileOrder(element, i)">
-                            <mat-icon>
-                                refresh
-                            </mat-icon>
-                            Refresh
-                        </button>
-                    </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="failed">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
+                    <td class="br" mat-cell *matCellDef="let element"
+                        (click)="openUpperFileOrdering('historical', 'skipped',element)">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                <a href="javascript:void(0)">
+                                    {{element.failed}}
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
+                        </div>
+                    </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
 
+                <ng-container matColumnDef="uploaded">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
+                    <td class="br" mat-cell *matCellDef="let element"
+                        (click)="openUpperFileOrdering('historical', 'uploaded', element)">
+                        <div *ngIf="!element.isLoading">
+                            <div class="bar">
+                                <a href="javascript:void(0)">
+                                    {{element.uploaded}}
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="element.isLoading" style="background-color: #e8e8e8;padding: 10px;">
+                        </div>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="refresh">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
+                    <td class="br" mat-cell *matCellDef="let element; index as i">
+                        <div class="bar">
+                            <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs"
+                                (click)="refreshFileOrder(element, i)">
+                                <mat-icon>
+                                    refresh
+                                </mat-icon>
+                                Refresh
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
         <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
             <h4 class="d-flex justify-content-center b-a p-44">
                 No Data Found

@@ -24,7 +24,6 @@
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600">Bank details #1</h3>
-
                 <div class="row" *ngIf="bankList.length > 1">
                     <div class="col-md-4 pr-0  d-flex align-items-center justify-content-end ">
                         <h5 class="m-0 ">Select bank account</h5>
@@ -43,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pt-20">
                     <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
                         <h3 class="f-16 m-0"> IFSC code </h3>
                     </div>
@@ -230,21 +229,25 @@
                     </div>
                 </div>
                 <div class="row pt-20">
-                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-                        <h3 class="f-16  m-0">Payment mode </h3>
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 mt-16 mb-0">Payment mode </h3>
                     </div>
-                    <div class="col-md-5 form-group">
-                        <mat-form-field floatLabel="never" appearance="standard">
-                            <mat-select class="form-control" formControlName="paymentMode">
-                                <mat-option value='' disabled>Select payment mode</mat-option>
-                                <mat-option value="01"> Cheque</mat-option>
-                                <mat-option value="02"> Direct Credit</mat-option>
-                                <mat-option value="03"> ECS</mat-option>
-                                <mat-option value="04"> NEFT</mat-option>
-                                <mat-option value="95"> RTGS</mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">This field is required</mat-error>
-                        </mat-form-field>
+                    <div class="col-md-5 ">
+                        <div class="form-group helperBoxText mb-10">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <mat-select class="form-control" formControlName="paymentMode">
+                                    <mat-option value='' disabled>Select payment mode</mat-option>
+                                    <mat-option value="01"> Cheque</mat-option>
+                                    <mat-option value="02"> Direct Credit</mat-option>
+                                    <mat-option value="03"> ECS</mat-option>
+                                    <mat-option value="04"> NEFT</mat-option>
+                                    <mat-option value="95"> RTGS</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="mb-0 f-12 c-p" matTooltip="This method of payment will be used to transfer your dividend's payout to your bank.">
+                            For dividend transfer</p>
                     </div>
                 </div>
 

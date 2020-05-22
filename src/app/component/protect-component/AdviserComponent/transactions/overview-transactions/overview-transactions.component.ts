@@ -13,6 +13,7 @@ import {TransactionMobileViewComponent} from '../transaction-mobile-view/transac
 import {MatDialog} from '@angular/material';
 import {OnlineTransactionService} from '../online-transaction.service';
 import {TransactionsHistoryComponent} from '../transactions-list/transactions-history/transactions-history.component';
+import {TransactionEnumService} from '../transaction-enum.service';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -167,6 +168,8 @@ export class OverviewTransactionsComponent implements OnInit {
       data => {
         this.isLoading = false;
         this.transactionList = data;
+        this.transactionList = TransactionEnumService.setPlatformEnum(data);
+        this.transactionList = TransactionEnumService.setTransactionStatus(data);
         this.transactionCount = data.length;
         this.pendingTransaction = data.filter(data => data.status == 2);
         this.rejectionTransaction = data.filter(data => data.status == 7);

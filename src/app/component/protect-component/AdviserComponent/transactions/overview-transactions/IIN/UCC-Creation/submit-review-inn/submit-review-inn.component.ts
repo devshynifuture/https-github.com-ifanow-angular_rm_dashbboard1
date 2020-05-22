@@ -250,7 +250,10 @@ export class SubmitReviewInnComponent implements OnInit {
     // }, 5000);
     this.onlineTransact.createIINUCC(obj1).subscribe(
       data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
-        this.eventService.openSnackBar(error, 'Dismiss');
+        if (this.dialogRef) {
+          this.dialogRef.componentInstance.setFailureData(error);
+        }
+        // this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -320,12 +323,13 @@ export class SubmitReviewInnComponent implements OnInit {
   openIinUccClient(singleBrokerCred, requestJson) {
     const data = {singleBrokerCred, requestJson};
     const Fragmentdata = {
-      flag: data,
+      flag: 'IIn',
+      ...data
 
     };
     this.dialogRef = this.dialog.open(IinCreationLoaderComponent, {
-      width: '50%',
-      // height:'40%',
+      width: '600px',
+      height: '450px',
       data: Fragmentdata,
       autoFocus: false,
       disableClose: true

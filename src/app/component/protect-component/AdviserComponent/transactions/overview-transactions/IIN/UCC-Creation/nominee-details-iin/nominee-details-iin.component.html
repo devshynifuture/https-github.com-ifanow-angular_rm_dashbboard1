@@ -45,7 +45,7 @@
                         <h3 class="f-16  m-0"> Nominee relation </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
+                        <mat-form-field appearance="standard" floatLabel="never">
                             <mat-select #relationShip (selectionChange)="selectRelation($event)" class="form-control" formControlName="relationShip">
                                 <mat-option disabled value=''>Select nominee relation</mat-option>
                                 <mat-option value="Self"> Self</mat-option>
@@ -68,8 +68,8 @@
 
 
                 <div class="row pt-24">
-                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-                        <h3 class="f-16   m-0">Nominee type</h3>
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 mt-10 mb-0">Nominee type</h3>
                     </div>
                     <div class="col-md-6 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="type">

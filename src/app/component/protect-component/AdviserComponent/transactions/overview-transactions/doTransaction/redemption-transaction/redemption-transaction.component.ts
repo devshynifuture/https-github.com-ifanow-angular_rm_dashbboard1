@@ -103,6 +103,7 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {transactType: 'REDEEM'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
   }
 
@@ -230,9 +231,9 @@ export class RedemptionTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: ''});
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       bseOrderType: 'REDEMPTION',
       amcId,
@@ -387,7 +388,7 @@ export class RedemptionTransactionComponent implements OnInit {
       orderVal = this.folioDetails.balanceUnit + '';
       qty = orderVal;
     } else {
-      orderVal = Object.assign(orderVal, this.redemptionTransaction.controls.employeeContry.value);
+      orderVal = this.redemptionTransaction.controls.employeeContry.value + '';
       if (amountType == 'Amount') {
         qty = '0';
       } else {

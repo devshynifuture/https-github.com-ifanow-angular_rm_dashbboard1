@@ -111,6 +111,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {paymentMode: 1});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, {multiTransact: false});
   }
@@ -159,9 +160,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       searchQuery: data,
@@ -471,9 +472,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   getExistingScheme() {
     this.showSpinner = true;
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       bseOrderType: 'ORDER',
