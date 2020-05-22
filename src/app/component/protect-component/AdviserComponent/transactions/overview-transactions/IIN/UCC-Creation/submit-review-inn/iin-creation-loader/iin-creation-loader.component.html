@@ -1,4 +1,4 @@
-<div *ngIf="isSuccess" class="p-16">
+<div *ngIf="isSuccess&&!showNextMessage" class="p-16">
   <p class="f-16 f-500 roboto">Sending request to {{platformName}} for account creation</p>
   <p *ngIf="isLoading">Loading</p>
   <div *ngIf="!isLoading">
@@ -20,9 +20,9 @@
 
   <p class="m-0">An Account Opening Form (AOF) has been generated. Your broker should:</p>
   <ul class="uiCLass">
-    <li> - download it from BSE StAR’s admin panel,</li>
+    <li> - download it from {{platformName}}'s admin panel,</li>
     <li> - get it signed by all applicants and</li>
-    <li>- upload it in the next screen</li>
+    <li> - upload it in the next screen</li>
   </ul>
 
 </div>
