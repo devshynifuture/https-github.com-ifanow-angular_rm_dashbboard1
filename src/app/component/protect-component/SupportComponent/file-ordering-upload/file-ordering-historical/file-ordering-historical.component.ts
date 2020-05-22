@@ -3,7 +3,7 @@ import { OrderHistoricalFileComponent } from "./../../order-historical-file/orde
 import { EventService } from "./../../../../../Data-service/event.service";
 import { Component, OnInit } from "@angular/core";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource, MatDialogRef, MatDialog } from '@angular/material';
 import { UpperSliderBackofficeComponent } from "../../common-component/upper-slider-backoffice/upper-slider-backoffice.component";
 import { AuthService } from "src/app/auth-service/authService";
 import { UtilService } from "src/app/services/util.service";
@@ -13,6 +13,7 @@ import { FormBuilder } from "@angular/forms";
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { Subscription } from 'rxjs';
 import { debounce, debounceTime } from 'rxjs/operators';
+import { CustomFilterDatepickerDialogComponent } from '../custom-filter-datepicker-dialog.component';
 
 @Component({
 	selector: "app-file-ordering-historical",
@@ -22,6 +23,7 @@ import { debounce, debounceTime } from 'rxjs/operators';
 export class FileOrderingHistoricalComponent implements OnInit {
 	searchByName: { value: any; type: string };
 	tableData = [];
+	customDateFilterValue: any;
 
 	constructor(
 		private eventService: EventService,
@@ -29,7 +31,8 @@ export class FileOrderingHistoricalComponent implements OnInit {
 		private fileOrderingUploadService: FileOrderingUploadService,
 		private fb: FormBuilder,
 		private utilService: UtilService,
-		private reconService: ReconciliationService
+		private reconService: ReconciliationService,
+		public dialog: MatDialog
 	) { }
 
 	rmId = AuthService.getRmId() ? AuthService.getRmId() : 2;
@@ -65,18 +68,23 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	});
 	periodList = [
 		{
-			name: "Last 7 Days",
-			value: 7,
+			name: "Today",
+			value: 0,
 			type: "period",
 		},
 		{
-			name: "Last month",
-			value: 30,
+			name: "Yesterday",
+			value: 1,
 			type: "period",
 		},
 		{
-			name: "Last year",
-			value: 365,
+			name: "Yesterday + Today",
+			value: 2,
+			type: "period",
+		},
+		{
+			name: "Custom Date",
+			value: 3,
 			type: "period",
 		},
 	];
@@ -111,6 +119,41 @@ export class FileOrderingHistoricalComponent implements OnInit {
 			});
 	}
 
+	openDialogCustomDateForFilter(): void {
+		const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent, {
+			width: '700px',
+			data: ''
+		});
+
+		dialogRef.afterClosed().subscribe(res => {
+			console.log('The dialog was closed', res);
+			this.customDateFilterValue = res;
+
+			if (res) {
+				this.filterBy = [];
+				const defaultRmName = this.rmList.find((c) => c.id === this.rmId);
+				this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
+				this.filterForm.get("filterByRmName").setValue(defaultRmName);
+
+				const defaultPeriod = this.periodList.find((c) => c.value === 0);
+				this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
+				this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
+
+				const defaultRta = this.rtaList.find((c) => c.value === 0);
+				this.filterForm.get("filterByRta").setValue(defaultRta);
+				this.filterBy.push({ name: defaultRta.name, type: 'rta' });
+				this.dataSource.data = ELEMENT_DATA;
+				this.fileOrderHistoryListGet({
+					fromDate: res.fromDate,
+					toDate: res.toDate
+				});
+			} else {
+				this.eventService.openSnackBar("ABORTED!!", "DISMISS");
+			}
+
+		});
+	}
+
 	getRtName(id) {
 		return this.rtaList.find(c => c.value === id).name
 	}
@@ -122,6 +165,8 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	ngOnInit() {
 		this.isLoading = true;
 		this.getRtaList();
+		let obj = {};
+
 		this.filterFormValueSubscription = this.filterForm.valueChanges
 			.pipe(
 				debounceTime(500)
@@ -129,7 +174,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
 			.subscribe(res => {
 				if (res) {
 					console.log("full filter data", res);
-					let obj = {};
 					for (const key in res) {
 						if (res.hasOwnProperty(key)) {
 							const element = res[key];
@@ -152,9 +196,10 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					}
 
 					if (!this.utilService.isEmptyObj(obj)) {
-						this.dataSource.data = ELEMENT_DATA;
-						this.fileOrderHistoryListGet(obj);
-
+						if (obj['days'] !== 3) {
+							this.dataSource.data = ELEMENT_DATA;
+							this.fileOrderHistoryListGet(obj);
+						}
 					}
 				}
 			});
@@ -166,7 +211,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 		this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
 		this.filterForm.get("filterByRmName").setValue(defaultRmName);
 
-		const defaultPeriod = this.periodList.find((c) => c.value === 30);
+		const defaultPeriod = this.periodList.find((c) => c.value === 0);
 		this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
 		this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
 
@@ -238,11 +283,12 @@ export class FileOrderingHistoricalComponent implements OnInit {
 			.getFileOrderHistoryListData(data)
 			.subscribe((data) => {
 				if (data) {
+					console.log("file ordering get value:::", data);
 					this.isLoading = false;
 					let tableData = [];
 					data.forEach((element) => {
 						tableData.push({
-							advisorName: element.advisorName ? element.advisorName : "-",
+							advisorName: element.advisorName ? element.advisorName + " | " + element.arnRiaNumber : "-",
 							rta: this.getRtName(element.rtId),
 							orderedBy: element.rmName ? element.rmName : "-",
 							startedOn: element.fileOrderDateTime

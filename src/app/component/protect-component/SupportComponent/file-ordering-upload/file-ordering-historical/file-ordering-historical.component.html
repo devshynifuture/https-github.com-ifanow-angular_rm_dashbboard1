@@ -50,11 +50,17 @@
                         (selectionChange)="add($event, 'period')">
                         <mat-option>None</mat-option>
                         <mat-option [value]="period" *ngFor="let period of periodList">
-                            {{ period.name }}
+                            <div *ngIf="period.value !== 3">
+                                {{ period.name }}
+                            </div>
+                            <div *ngIf="period.value === 3" (click)="openDialogCustomDateForFilter()">
+                                {{ period.name }}
+                            </div>
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
             <div class="col-lg-3 pr-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="filterByRta"

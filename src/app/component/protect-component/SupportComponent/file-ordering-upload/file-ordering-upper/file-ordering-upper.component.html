@@ -38,11 +38,11 @@
 
 <div class="row pt-8 pb-20">
 	<div class="col-md-12">
-		<table mat-table [dataSource]="dataSource" id="table-low" class="skeletonLoading" appSkeletonLoading
+		<table mat-table [dataSource]="dataSource" matSort id="table-low" class="skeletonLoading" appSkeletonLoading
 			[appSkeletonLoading]="isLoading">
 
 			<ng-container matColumnDef="checkbox">
-				<th class="b-a" mat-header-cell *matHeaderCellDef>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef>
 					<mat-checkbox (change)="$event ? masterToggle() : null"
 						[checked]="selection.hasValue() && isAllSelected()"
 						[indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
@@ -57,7 +57,7 @@
 
 			<!-- Name Column -->
 			<ng-container matColumnDef="advisorName">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> Advisor Name </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> Advisor Name </th>
 				<td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{element.advisorName}} </div>
@@ -69,7 +69,7 @@
 
 			<!-- Weight Column -->
 			<ng-container matColumnDef="arnRia">
-				<th mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+				<th mat-header-cell mat-sort-header *matHeaderCellDef> ARN/RIA </th>
 				<td mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{element.arnRia}} </div>
@@ -81,7 +81,7 @@
 
 			<!-- Symbol Column -->
 			<ng-container matColumnDef="fileType">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> File Type </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> File Type </th>
 				<td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{element.fileType}} </div>
@@ -92,7 +92,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="fileOrderTime">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> File Order Time </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> File Order Time </th>
 				<td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{element.fileOrderTime | date:'d/M/y, h:mm a'}} </div>
@@ -103,7 +103,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="status">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> Status </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> Status </th>
 				<td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{ element.status }} </div>
@@ -114,7 +114,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="referenceId">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> Reference Id </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> Reference Id </th>
 				<td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{ element.referenceId ? element.referenceId: '-' }} </div>
@@ -125,7 +125,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="inFileOrAdded">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> In File/Added </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> In File/Added </th>
 				<td class="b-a" mat-cell *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{ element.inFileOrAdded }} </div>
@@ -136,13 +136,13 @@
 			</ng-container>
 
 			<ng-container matColumnDef="fileName">
-				<th class="b-a" mat-header-cell *matHeaderCellDef class="w-10"> File name </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef class="w-10"> File name </th>
 				<td class="b-a brrakAll" mat-cell *matCellDef="let element">
 					<div *ngIf="!element.isLoading">
-						<div class="bar  ">
+						<div class="bar " [matTooltip]="element.fileName" matTooltipPosition="above">
 							<div class="row">
-								<div class="col-8 p-0">
-									{{ element.fileName ? element.fileName : '-' }}
+								<div class="col-8 p-0" *ngIf="!isLoading">
+									File Name
 								</div>
 								<div *ngIf="element.fileUrl" class="col-4" (click)="copyText(element.fileUrl)">
 									<img src="/assets/images/svg/copy-icon.svg" class="copy-icon" />
@@ -156,7 +156,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="fileUrl">
-				<th class="b-a" mat-header-cell *matHeaderCellDef class="w-6"> File URL </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef class="w-6"> File URL </th>
 				<td class="b-a brrakAll" mat-cell *matCellDef="let element">
 					<div *ngIf="!element.isLoading">
 						<div class="bar  ">
@@ -176,7 +176,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="errorMsg">
-				<th mat-header-cell class="b-a" *matHeaderCellDef> Failed Reason </th>
+				<th mat-header-cell mat-sort-header class="b-a" *matHeaderCellDef> Failed Reason </th>
 				<td mat-cell class="b-a" *matCellDef="let element" (click)="openDetailedView(element)">
 					<div *ngIf="!element.isLoading">
 						<div class="bar"> {{ element.errorMsg ? element.errorMsg : '-' }} </div>
@@ -187,7 +187,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="action">
-				<th class="b-a" mat-header-cell *matHeaderCellDef> </th>
+				<th class="b-a" mat-sort-header mat-header-cell *matHeaderCellDef> </th>
 				<td class="b-a" mat-cell *matCellDef="let element; index as i" class="c-p"
 					[matMenuTriggerFor]="appMenu">
 					<div class="bar">
