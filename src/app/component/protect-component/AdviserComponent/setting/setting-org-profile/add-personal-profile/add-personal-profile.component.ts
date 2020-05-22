@@ -277,12 +277,13 @@ export class AddPersonalProfileComponent implements OnInit {
         userId: this.userData.userId
       };
       this.loginService.resetPasswordPostLoggedIn(obj).subscribe(data => {
-          this.event.openSnackBar("Password changed successfully!");
-          this.Close();
-        }, err => {
-          this.event.showErrorMessage(err);
-          this.barButtonOptions.active = false;
-        });
+        this.barButtonOptions.active = false;
+        this.event.openSnackBar(data, "Dismiss");
+        this.Close();
+      }, err => {
+        this.event.showErrorMessage(err);
+        this.barButtonOptions.active = false;
+      });
     }
   }
 
