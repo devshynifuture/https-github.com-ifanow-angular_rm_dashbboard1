@@ -472,8 +472,8 @@ export class MutualFundOverviewComponent implements OnInit {
           },
           startAngle: 0,
           endAngle: 360,
-          center: ['52%', '55%'],
-          size: '120%'
+          center: ['52%', '50%'],
+          size: '125%'
         }
       },
       series: [{
