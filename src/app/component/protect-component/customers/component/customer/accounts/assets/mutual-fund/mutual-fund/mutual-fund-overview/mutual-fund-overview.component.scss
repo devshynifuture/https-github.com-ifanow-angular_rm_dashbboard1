@@ -8,8 +8,11 @@
 }
 
 ::ng-deep .pie-chart-center {
-  padding-left: 6px !important;
-  padding-top: 10px !important;
+  // padding-left: 6px !important;
+  // padding-top: 10px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 }
 

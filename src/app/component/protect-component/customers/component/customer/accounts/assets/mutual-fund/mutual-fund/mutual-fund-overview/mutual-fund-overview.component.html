@@ -427,6 +427,7 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                     </table>
                 </div>
+
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0" (click)="openSummary('subCategory wise')"
@@ -847,7 +848,8 @@
 
 <div #mfOverviewTemplate id="template" *ngIf="mfData" class="hide">
     <table cellpadding="0" cellspacing="0" border="0"
-        style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+        style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
+        align="center; page-break-before: always;">
 
         <tr>
             <td style="text-align: left;">
