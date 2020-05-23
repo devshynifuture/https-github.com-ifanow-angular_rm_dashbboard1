@@ -248,6 +248,13 @@ export class ClientAddressComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
+        this.peopleService.deleteAddress(this.userData.addressData.addressId).subscribe(
+          data => {
+            dialogRef.close();
+            this.closeAndSave();
+          },
+          err => { this.eventService.openSnackBar(err, "Dismiss") }
+        )
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

@@ -421,6 +421,13 @@ export class ClientDematComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
+        this.peopleService.deleteDemat(this.userData.dematData.dematId).subscribe(
+          data => {
+            dialogRef.close();
+            this.closeAndSave();
+          },
+          err => { this.eventService.openSnackBar(err, "Dismiss") }
+        )
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

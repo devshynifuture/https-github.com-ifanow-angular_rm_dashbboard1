@@ -4,7 +4,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 import {SettingsService} from '../../settings.service';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, FormControl, ValidationErrors, AbstractControl} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
@@ -12,6 +12,7 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { LoginService } from 'src/app/component/no-protected/login/login.service';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -27,7 +28,6 @@ export class AddPersonalProfileComponent implements OnInit {
   cropImage = false;
   selectedTab = 0;
   anyDetailsChanged: boolean; // check if any details have been updated
-  inputData: any;
   isLoading = false;
   isdCodes: Array<any> = [];
   /** control for the MatSelect filter keyword */
@@ -49,6 +49,7 @@ export class AddPersonalProfileComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  userData: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -57,29 +58,23 @@ export class AddPersonalProfileComponent implements OnInit {
     private event: EventService,
     private fb: FormBuilder,
     private peopleService: PeopleService,
+    private authService: AuthService,
+    private loginService: LoginService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.formPlaceHolder = AppConstants.formPlaceHolders;
+    this.userData = AuthService.getUserInfo();
   }
 
   personalProfile: FormGroup;
   validatorType = ValidatorType;
 
-  @Input()
-  set data(data) {
-    this.inputData = data;
-
-    this.getdataForm(data);
-  }
-
-  get data() {
-    return this.inputData;
-  }
+  @Input() data:any = {};
 
   ngOnInit() {
-    this.selectedTab = this.inputData.openTab;
-    if(this.selectedTab == 1) this.barButtonOptions.text = 'SAVE & CLOSE'; 
-    this.getdataForm(this.inputData);
+    this.selectedTab = this.data.openTab;
+    this.resetPageVariables();
+    this.createForms(this.data);
     this.getPersonalInfo();
     this.getIsdCodesData();
 
@@ -140,12 +135,14 @@ export class AddPersonalProfileComponent implements OnInit {
               this.imgURL = jsonDataObj.profilePic;
               AuthService.setProfilePic(jsonDataObj.profilePic);
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-              this.Close(this.anyDetailsChanged);
+              this.selectedTab = 2;
+              this.resetPageVariables();
             });
           }
         });
     } else {
-      this.Close(this.anyDetailsChanged);
+      this.selectedTab = 2;
+      this.resetPageVariables();
     }
   }
 
@@ -157,12 +154,15 @@ export class AddPersonalProfileComponent implements OnInit {
 
   // save the changes of current page only
   saveCurrentPage() {
-    // selected tab 1 - profile image
-    // 2 - profile details
-    if (this.selectedTab == 1) {
-      this.saveImage();
-    } else {
-      this.updatePersonalProfile();
+    switch(this.selectedTab) {
+      case 0:
+        this.updatePersonalProfile();
+        break;
+      case 1:
+        this.saveImage();
+        break;
+      case 2:
+        this.setNewPassword();
     }
   }
 
@@ -173,19 +173,26 @@ export class AddPersonalProfileComponent implements OnInit {
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
-    if(this.selectedTab == 0) {
+    if(this.selectedTab < 2) {
       this.barButtonOptions.text = 'SAVE & NEXT';
     } else {
       this.barButtonOptions.text = 'SAVE & CLOSE';
     }
   }
-  getdataForm(data) {
+
+  createForms(data) {
     this.personalProfile = this.fb.group({
       name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(40)]],
       emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       isdCodeId: [(!data) ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
+    });
+
+    this.setNewPasswordForm = this.fb.group({
+      oldPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
+      confirmPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
     });
   }
 
@@ -209,8 +216,8 @@ export class AddPersonalProfileComponent implements OnInit {
     this.settingsService.editPersonalProfile(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
-        this.barButtonOptions.text = 'SAVE & CLOSE';
-        this.selectedTab = 2; // switch tab to profile pic
+        this.selectedTab = 1; // switch tab to profile pic
+        this.resetPageVariables();
         this.subInjectService.setRefreshRequired();
         this.anyDetailsChanged = true;
       },
@@ -221,7 +228,7 @@ export class AddPersonalProfileComponent implements OnInit {
     );
   }
 
-  Close(flag: boolean) {
+  Close() {
     this.subInjectService.closeNewRightSlider({ state: 'close'});
   }
 
@@ -239,5 +246,89 @@ export class AddPersonalProfileComponent implements OnInit {
     }
     // filter the codes
     this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1))
+  }
+
+
+  //-------------------------------------RESET PASSWORD ------------------------------
+
+  newPasswordLength = 0;
+  passwordStregth = {
+    upperCase: false,
+    lowerCase: false,
+    specialCharacter: false
+  };
+  setNewPasswordForm: FormGroup;
+  hide1 = true;
+  hide2 = true;
+  hide3 = true;
+
+  setNewPassword() {
+    if(this.setNewPasswordForm.pristine) {
+      this.Close();
+    }
+    if (this.setNewPasswordForm.invalid || this.barButtonOptions.active) {
+      this.setNewPasswordForm.markAllAsTouched();
+      return;
+    } else {
+      this.barButtonOptions.active = true;
+      const obj = {
+        password: this.setNewPasswordForm.controls.oldPassword.value,
+        newPassword: this.setNewPasswordForm.controls.confirmPassword.value,
+        userId: this.userData.userId
+      };
+      this.loginService.resetPasswordPostLoggedIn(obj).subscribe(data => {
+        this.barButtonOptions.active = false;
+        this.event.openSnackBar(data, "Dismiss");
+        this.Close();
+      }, err => {
+        this.event.showErrorMessage(err);
+        this.barButtonOptions.active = false;
+      });
+    }
+  }
+
+  checkUpperCase() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (new RegExp(/(?=.*[A-Z])/).test(control.value) && control.value != null) {
+        this.passwordStregth.upperCase = true;
+        return;
+      }
+      this.passwordStregth.upperCase = false;
+      return;
+    };
+  }
+
+  checkLowerCase() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (new RegExp(/(?=.*[a-z])/).test(control.value) && control.value != null) {
+        this.passwordStregth.lowerCase = true;
+        return;
+      }
+      this.passwordStregth.lowerCase = false;
+      return;
+    };
+  }
+
+  checkSpecialCharacter() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (new RegExp(/([!@#$%^&*()])/).test(control.value) && control.value != null) {
+        this.passwordStregth.specialCharacter = true;
+        return;
+      }
+      this.passwordStregth.specialCharacter = false;
+      return;
+    };
+  }
+
+  checkPassword() {
+    const password = this.setNewPasswordForm.get('newPassword').value;
+    const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;
+    if (password !== '' && confirm_new_password !== '') {
+      if (confirm_new_password !== password) {
+        this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });
+      } else {
+        this.setNewPasswordForm.get('confirmPassword').setErrors(null);
+      }
+    }
   }
 }
