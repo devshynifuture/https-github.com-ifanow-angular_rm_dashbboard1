@@ -9,7 +9,7 @@
 
 <div class="wrapper-20 pt-80 pb-44 mb-44">
     <mat-accordion class="fliterBoxMutual">
-        <mat-expansion-panel class="mb-20 boxShadowNone borderLine"(click)="panelOpenState = true" [expanded]="false">
+        <mat-expansion-panel class="mb-20 boxShadowNone borderLine" (click)="panelOpenState = true" [expanded]="false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h5 class="m-0">Family members<span class="text-right f-14 pl-12 text-custom">{{countFamily}} of
@@ -19,15 +19,15 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem" *ngFor="let item of familyMember">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily($event.value)">{{item.name}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">AMC<span class="text-right f-14 pl-12 text-custom">{{countAmc}} of {{amc.length}}
                             selected</span></h5>
                 </mat-panel-title>
@@ -41,10 +41,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Schemes<span class="text-right f-14 pl-12 text-custom">{{countScheme}} of
                             {{scheme.length}}
                             selected</span></h5>
@@ -61,10 +61,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Folios<span class="text-right f-14 pl-12 text-custom">{{countFolio}} of
                             {{folio.length}}
                             selected</span>
@@ -81,10 +81,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12 text-custom">{{countTranView}}
                             of
                             {{transactionView.length}} selected</span></h5>
@@ -101,10 +101,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Report Type <span class="text-right f-14 pl-12 text-custom"></span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -116,10 +116,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Categories<span class="text-right f-14 pl-12 text-custom">{{countCategory}} of
                             {{category.length}}
                             selected</span></h5>
@@ -136,10 +136,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Transaction Period</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -152,10 +152,10 @@
             </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name == 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
+                <mat-panel-title>
                     <h5 class="m-0">Select Filter View<span
                             class="text-right f-14 pl-12">{{(overviewFilterCount)?overviewFilterCount:0}} of
                             {{overviewFilter.length}}
@@ -169,35 +169,49 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
-            *ngIf="_data.name=='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
+        *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header>
-                <mat-panel-title >
-                    <h5 class="m-0">Financial years</h5>
+                <mat-panel-title>
+                    <h5 class="m-0">Save Filters</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
-                        {{'FY '+item.from+' - '+item.to}}
+                <mat-list-item role="listitem" *ngFor="let item of saveFilters">
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeSaveFilterSelection(item)">{{item.value}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true"[expanded]="false"
-            *ngIf="_data.name=='CAPITAL GAIN REPORT'">
-            <mat-expansion-panel-header>
-                <mat-panel-title >
-                    <h5 class="m-0">Report format</h5>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <mat-list-item role="listitem" *ngFor="let item of reportFormat">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}}
-                    </mat-checkbox>
-                </mat-list-item>
-            </div>
-        </mat-expansion-panel>
+    <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
+        *ngIf="_data.name=='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h5 class="m-0">Financial years</h5>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="borderTopbox" *ngIf="panelOpenState == true">
+            <mat-list-item role="listitem" *ngFor="let item of financialYears">
+                <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
+                    {{'FY '+item.from+' - '+item.to}}
+                </mat-checkbox>
+            </mat-list-item>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
+        *ngIf="_data.name=='CAPITAL GAIN REPORT'">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h5 class="m-0">Report format</h5>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="borderTopbox" *ngIf="panelOpenState == true">
+            <mat-list-item role="listitem" *ngFor="let item of reportFormat">
+                <mat-checkbox [(ngModel)]="item.selected" (change)="changeFormatFilter(item)">{{item.name}}
+                </mat-checkbox>
+            </mat-list-item>
+        </div>
+    </mat-expansion-panel>
     </mat-accordion>
 
     <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
@@ -218,7 +232,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 pl-0" *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT'">
+        <div class="col-md-4 pl-0"
+            *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT'">
             <h5 class="m-0 pb-8">From date</h5>
             <div class="col-md-12 p-0">
                 <mat-form-field class="ba-date">
@@ -233,7 +248,8 @@
 
             </div>
         </div>
-        <div class="col-md-4 p-0" *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT'">
+        <div class="col-md-4 p-0"
+            *ngIf="transactionPeriod == true && _data.name!='CAPITAL GAIN REPORT' && _data.name!='SUMMARY REPORT'">
             <h5 class="m-0 pb-8">To date</h5>
             <div class="col-md-12 p-0">
                 <mat-form-field class="ba-date">

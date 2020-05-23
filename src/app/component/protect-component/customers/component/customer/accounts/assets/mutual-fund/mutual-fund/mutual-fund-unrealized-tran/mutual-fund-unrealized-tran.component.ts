@@ -81,10 +81,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         'units', 'balanceUnits', 'days', 'icons'];
     }
     console.log(this.mutualFund)
+    this.mfData =this.mfGetData;
     if (this.viewMode == 'Unrealized Transactions') {
       this.isLoading = true;
       this.getUnrealizedData();
-      this.mfData =this.mutualFund;
     } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData!='') {
       this.isLoading = true;
       this.changeInput.emit(true);
@@ -371,6 +371,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     });
   }
   openFilter() {
+    const obj = {
+      advisor_id:this.advisorId,
+      clientId: this.clientId,
+      reportId:(this.viewMode == 'Unrealized Transactions') ? 4 : 3
+    }
+    this.custumService.getSaveFilters(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
     const fragmentData = {
       flag: 'openFilter',
       data: {},

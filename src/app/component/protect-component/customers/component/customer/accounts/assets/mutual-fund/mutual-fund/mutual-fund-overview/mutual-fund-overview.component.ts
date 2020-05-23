@@ -588,6 +588,16 @@ export class MutualFundOverviewComponent implements OnInit {
    this.inputDataToSend = flag
   }
   openFilter() {
+    const obj = {
+      advisor_id:this.advisorId,
+      clientId: this.clientId,
+      reportId:1
+    }
+    this.custumService.getSaveFilters(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
     const fragmentData = {
       flag: 'openFilter',
       data: {},

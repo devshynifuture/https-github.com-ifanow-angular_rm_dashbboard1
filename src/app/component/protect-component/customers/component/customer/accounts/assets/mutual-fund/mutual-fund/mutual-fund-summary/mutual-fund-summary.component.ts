@@ -335,7 +335,16 @@ export class MutualFundSummaryComponent implements OnInit {
     //   });
     //   this.displayColArray = data;
     // }
-
+    const obj = {
+      advisor_id:this.advisorId,
+      clientId: this.clientId,
+      reportId:2
+    }
+    this.customerService.getSaveFilters(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
     const fragmentData = {
       flag: 'openFilter',
       data: {},

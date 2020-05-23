@@ -231,6 +231,8 @@ export const appConfig = {
   GET_DATED_REPORT_WISE_CALCULATION: 'mutual-fund/getDatedReportWiseCalculations/list/get',
   GET_NAV: 'mutual-fund/avg/nav/get',
   UPDATE_CLIENT_PROFILE_PIC: 'user/client/profile/pic/update',
+  SAVE_FILTERS_GET:'mutual-fund/report/config/get',
+  SAVE_FILTERS_ADD:'mutual-fund/report/config/add',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
