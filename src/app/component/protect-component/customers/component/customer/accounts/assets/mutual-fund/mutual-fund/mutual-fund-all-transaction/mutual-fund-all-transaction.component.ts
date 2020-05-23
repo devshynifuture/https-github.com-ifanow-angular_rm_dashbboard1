@@ -35,6 +35,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
   isLoading = false;
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  inputData: any;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private eventService: EventService,
@@ -44,6 +45,14 @@ export class MutualFundAllTransactionComponent implements OnInit {
   @ViewChild('allTranTemplate', { static: false }) allTranTemplate: ElementRef;
   @ViewChild('tableEl', { static: false }) tableEl;
 
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data);
+  }
+  get data() {
+    return this.inputData;
+  }
   mutualFund;
 
   ngOnInit() {
@@ -66,9 +75,19 @@ export class MutualFundAllTransactionComponent implements OnInit {
   }
 
   doFiltering(data) {
-    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
-    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    if (this.inputData == 'scheme wise') {
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name: 'Scheme wise',
+        selected: true
+      }
+      data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+      this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
+    } else {
+      data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+      data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+      data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    }
     return data;
   }
 
