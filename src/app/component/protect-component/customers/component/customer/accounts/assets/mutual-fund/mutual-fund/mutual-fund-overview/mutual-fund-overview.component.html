@@ -521,11 +521,11 @@
             </div>
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow"
-                *ngIf="showCashFlow || datasource1.data.length > 0">
-                <div class="bg-grey lter">
+                >
+                <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
-                <div class="example-container" id="table-low">
+                <div class="example-container" id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="data">

@@ -59,6 +59,8 @@ export class MutualFundSummaryComponent implements OnInit {
   displayColArray =[];
   resData: any;
   columns=[];
+  saveFilterData: any;
+  savedFilterData: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -85,6 +87,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
 
   ngOnInit() {
+    this.getFilterData(2)
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -109,9 +112,41 @@ export class MutualFundSummaryComponent implements OnInit {
       }else{
         this.getMutualFund();
       }
+
   }
-
-
+  getFilterData(value){
+    const obj = {
+     advisor_id:this.advisorId,
+     clientId: this.clientId,
+     reportId:value
+   }
+   this.customerService.getSaveFilters(obj).subscribe(
+     data => {
+       console.log(data);
+       if(data){
+        let transactionView= [];
+        // let displaycopy =[];
+        this.displayedColumns = [];
+        data.forEach(element => {
+          const obj={
+            displayName:element.columnName,
+            selected:element.selected
+          }
+          transactionView.push(obj); 
+          if(element.selected == true){
+            this.displayedColumns.push(element.columnName)
+          }
+        });
+        this.saveFilterData ={
+          transactionView : transactionView,
+          showFolio:(data[0].showZeroFolios == true) ? '1' : '2',
+          reportType:data[0].reportType,
+          selectFilter : data[0].clientId
+        }
+       }
+     }
+   );
+ }
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
@@ -335,16 +370,7 @@ export class MutualFundSummaryComponent implements OnInit {
     //   });
     //   this.displayColArray = data;
     // }
-    const obj = {
-      advisor_id:this.advisorId,
-      clientId: this.clientId,
-      reportId:2
-    }
-    this.customerService.getSaveFilters(obj).subscribe(
-      data => {
-        console.log(data);
-      }
-    );
+   
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -359,16 +385,19 @@ export class MutualFundSummaryComponent implements OnInit {
       schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.setDefaultFilterData.familyMember,
       category: this.setDefaultFilterData.category,
-      transactionView: (this.setDefaultFilterData.transactionView.length>0) ? this.setDefaultFilterData.transactionView : this.displayedColumns,
+      // transactionView: (this.setDefaultFilterData.transactionView.length>0) ? this.setDefaultFilterData.transactionView : this.displayedColumns,
+      transactionView:(this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
+      overviewFilter:(this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       scheme:this.setDefaultFilterData.scheme,
-      reportType :this.setDefaultFilterData.reportType,
+      reportType :(this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn:this.setDefaultFilterData.reportAsOn,
-      showFolio :this.setDefaultFilterData.showFolio,
+      showFolio :(this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
       transactionPeriod:this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
       fromDate:this.setDefaultFilterData.fromDate,
       toDate:this.setDefaultFilterData.toDate,
-
+      savedFilterData:this.savedFilterData,
+      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -381,6 +410,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
+            this.getFilterData(2)
             this.columns =[];
             this.rightFilterData.transactionView.forEach(element => {
               if(element.selected == true){

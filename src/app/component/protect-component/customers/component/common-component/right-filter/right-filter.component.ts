@@ -50,7 +50,7 @@ export class RightFilterComponent implements OnInit {
   reportType;
   reportFormat;
   saveFilters;
-  financialYears;
+  financialYears = [];
   countReport: any;
   countTranView: any;
   countCategory: any;
@@ -262,7 +262,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   getReportType() {
-    if (this._data.name == 'Summary report') {
+    if (this._data.name == 'SUMMARY REPORT') {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
     } else {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
@@ -281,27 +281,29 @@ export class RightFilterComponent implements OnInit {
     let calculatingYears = []
     let sortingYeras: any;
     if (this._data.capitalGainData) {
-      let redemptionList = this._data.capitalGainData.redemptionList
-      redemptionList.forEach(element => {
-        let year = element.financialYear;
-        let date = new Date(element.transactionDate);
+      // let redemptionList = this._data.capitalGainData.redemptionList
+      // redemptionList.forEach(element => {
+      //   let year = element.financialYear;
+      //   let date = new Date(element.transactionDate);
 
-        let finDate = new Date(year, 3, 1);
-        if (date < finDate) {
-          year = (element.financialYear - 1)
-        }
-        const obj = {
-          "from": year,
-          "to": (year + 1),
-        }
-        calculatingYears.push(obj);
-      });
-      console.log(calculatingYears);
-      let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
-      sortingYeras = filteredYears.sort((a, b) =>
-        a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
-      );
-      this.financialYears = sortingYeras;
+      //   let finDate = new Date(year, 3, 1);
+      //   if (date < finDate) {
+      //     year = (element.financialYear - 1)
+      //   }
+      //   const obj = {
+      //     "from": year,
+      //     "to": (year + 1),
+      //   }
+      //   calculatingYears.push(obj);
+      // });
+      // console.log(calculatingYears);
+      // let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
+      // sortingYeras = filteredYears.sort((a, b) =>
+      //   a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
+      // );
+      // this.financialYears = sortingYeras;
+      this.financialYears=[{'from':2010,'to':2011,'selected':true},{'from':2011,'to':2012,'selected':true},{'from':2012,'to':2013,'selected':true},{'from':2013,'to':2014,'selected':true},{'from':2014,'to':2015,'selected':true},
+      {'from':2015,'to':2016,'selected':true},{'from':2016,'to':2017,'selected':true},{'from':2017,'to':2018,'selected':true},{'from':2018,'to':2019,'selected':true},{'from':2019,'to':2020,'selected':true},{'from':2020,'to':2021,'selected':true}]
       this.financialYears.filter(function (element) {
         if (element.from == 2019 && element.to == 2020) {
           element.selected = true;
@@ -396,13 +398,26 @@ export class RightFilterComponent implements OnInit {
     // this.folio.forEach(item => item.selected = true);
     // this.category.forEach(item => item.selected = true);
     // this.transactionView.forEach(item => item.selected = true);
-    this.reportType.forEach(item => {
-      this.countReport = 0;
-      if (item.name == this._data.reportType) {
-        item.selected = true;
-        this.countReport++;
-      }
-    });
+      this.reportType.forEach(item => {
+        this.countReport = 0;
+        if(this._data.name == 'SUMMARY REPORT' && this._data.reportType == "Scheme wise"){
+          if (item.name == 'Sub Category wise') {
+            item.selected = true;
+            this.countReport++;
+          }
+        }else{
+          if (item.name == this._data.reportType) {
+            item.selected = true;
+            this.countReport++;
+          }
+        }
+      });
+    if(this._data.selectFilter){
+      this.saveFilters = [
+        { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, { value: 'All Client', selected: (this._data.selectFilter == 0) ? true : false }];
+  
+    }
+
     if (this._data.filterDataForCapital) {
       this.reportFormat.forEach(item => {
         this.countFormat = 0;
@@ -822,7 +837,8 @@ export class RightFilterComponent implements OnInit {
     });
     this.changeSelect('', '');
   }
-  changeSaveFilterSelection(value) {
+  saveFilterCall(){
+    let ReportFilterConfigModel = [];
     let reportId;
     switch (this._data.name) {
       case 'Overview Report':
@@ -840,37 +856,65 @@ export class RightFilterComponent implements OnInit {
     }
     let trnOrder = [];
     if(this._data.name == 'Overview Report'){
-      this.overviewFilter.forEach(element => {
+      this.overviewFilter.forEach((element,ind) => {
         const obj = {
+          advisorId: this.advisorId,
+          clientId:(this.saveFilters[0].value == 'Current Client') ? this.clientId : 0,
+          transactionOrder: ind,
           columnName: element.name,
           selected: element.selected,
+          reportType: (this.reportTypeobj.length > 0) ? this.reportTypeobj[0].name : 'Sub Category wise',
+          transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :'-',
+          showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
+          reportId:reportId,
         }
-        trnOrder.push(obj)
+        ReportFilterConfigModel.push(obj)
       });
     }else{
-      this.transactionView.forEach(element => {
+      this.transactionView.forEach((element,ind) => {
         const obj = {
+          advisorId: this.advisorId,
+          clientId:(this.saveFilters[0].value == 'Current Client') ? this.clientId : 0,
+          transactionOrder: ind,
           columnName: element.displayName,
           selected: element.selected,
+          reportType: (this.reportTypeobj.length > 0) ? this.reportTypeobj[0].name : 'Sub Category wise',
+          transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :'-',
+          showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
+          reportId:reportId,
         }
-        trnOrder.push(obj)
+        ReportFilterConfigModel.push(obj)
       });
     }
-
-    const obj = {
-      advisorId: this.advisorId,
-      clientId:(value.value == 'Current Client') ? this.clientId : 0,
-      transactionOrder: trnOrder,
-      reportType: this.reportTypeobj[0].name,
-      transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :null,
-      showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
-      reportId:reportId,
+  
+    // const ReportFilterConfigModel = [{
+    //   advisorId: this.advisorId,
+    //   clientId:(value.value == 'Current Client') ? this.clientId : 0,
+    //   transactionOrder: trnOrder,
+    //   reportType: this.reportTypeobj[0].name,
+    //   transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :null,
+    //   showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
+    //   reportId:reportId,
+    // }
+    // ]
+    const obj={
+      ReportFilterConfigModel:ReportFilterConfigModel
     }
+  //  const reportFilterConfigModelList={
+  //   ReportFilterConfigModel: [ReportFilterConfigModel]
+  //  }
     this.custumService.AddSaveFilters(obj).subscribe(
       data => {
         console.log(data);
       }
     );
+  }
+  changeSaveFilterSelection(value) {
+    this.saveFilters.forEach(element => {
+      if (element.value != value.value) {
+        element.selected = false;
+      }
+    });
   }
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
@@ -1035,6 +1079,9 @@ export class RightFilterComponent implements OnInit {
       transactionPeriod: this.transactionPeriod
     };
     console.log('dataToSend---------->', this.dataToSend);
+    if(this.saveFilters[0].selected == true || this.saveFilters[0].selected == true){
+      this.saveFilterCall();
+    }
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
     this.finalFilterData.transactionView = this.transactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
