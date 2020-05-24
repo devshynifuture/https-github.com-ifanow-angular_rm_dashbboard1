@@ -87,7 +87,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.idForscheme1 = []
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
-    this.getGlobalList();
+    
 
     //link bank
     this.bankList = this.enumService.getBank();
@@ -169,6 +169,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
 
   getdataForm(data) {
+    this.getGlobalList();
     this.flag = data;
     if (data == undefined) {
       data = {}
@@ -181,14 +182,14 @@ export class NpsSchemeHoldingComponent implements OnInit {
         id: 0,
         isClient:0
       })]),
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "",],
-      pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : data.schemeChoice ,[Validators.required]],
+      pran: [(data == undefined) ? '' : data.pran],
       // schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       holdingList: this.fb.array([this.fb.group({
-        schemeId: ['', [Validators.required]], holdingAsOn: [null, [Validators.required]],
-        totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
+        schemeId: ['', [Validators.required]], schemeName:[], holdingAsOn: [null, [Validators.required]],
+        totalUnits: [null, [Validators.required]], totalAmountInvested: [null, [Validators.required]]
       })]),
       futureContributionList: this.fb.array([this.fb.group({
         frequencyId: [null, [Validators.required]],
@@ -273,11 +274,14 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
           schemeId: [element.schemeId, [Validators.required]],
           totalUnits: [element.totalUnits, Validators.required],
-          totalNetContribution: [element.totalAmountInvested, Validators.required],
+          schemeName:[element.schemeName],
+          totalAmountInvested: [element.totalAmountInvested, Validators.required],
           holdingAsOn: [new Date(element.holdingAsOn), Validators.required],
           id: [element.id, [Validators.required]]
         }))
+        
       })
+      // this.schemeList
       // this.nominee.removeAt(0);
       this.futureContry.removeAt(0);
       this.holdings.removeAt(0);
@@ -303,8 +307,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      schemeId: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
-      totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
+      schemeId: [null, [Validators.required]], schemeName: [null], holdingAsOn: [null, [Validators.required]], 
+      totalUnits: [null, [Validators.required]], totalAmountInvested: [null, [Validators.required]]
     }));
 
   }

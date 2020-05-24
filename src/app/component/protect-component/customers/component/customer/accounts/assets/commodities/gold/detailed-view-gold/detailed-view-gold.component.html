@@ -33,18 +33,20 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Tolas/Grams
+                        Form of gold
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(gold.gramsOrTola==1)?'Entry in tolas':' Entry in grams'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" [ngSwitch]="gold.formOfGold">
+                        <div *ngSwitchCase="1">Bars</div>
+                        <div *ngSwitchCase="2">Coins</div>
+                        <div *ngSwitchCase="3">Jewelry</div>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Number of tolas/grams purchased
+                        Quantity of gold purchased
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gold.purchasedGramsOrTola}}
+                        {{gold.purchasedGramsOrTola}} {{gold.gramsOrTola == 1? 'tolas' : 'grams'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

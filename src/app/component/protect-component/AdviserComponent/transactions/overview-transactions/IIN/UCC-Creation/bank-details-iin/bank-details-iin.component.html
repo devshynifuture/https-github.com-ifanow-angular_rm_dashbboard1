@@ -33,8 +33,8 @@
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="bankACNo" matInput>
                                 <mat-option value='' disabled>Select bank account</mat-option>
-                                <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i" [value]="option.bankName">
-                                    {{option.bankName}}</mat-option>
+                                <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i" [value]="option.bankNameAndLast4Digit">
+                                    {{option.bankNameAndLast4Digit}}</mat-option>
                             </mat-select>
                             <mat-error>This field is required
                             </mat-error>

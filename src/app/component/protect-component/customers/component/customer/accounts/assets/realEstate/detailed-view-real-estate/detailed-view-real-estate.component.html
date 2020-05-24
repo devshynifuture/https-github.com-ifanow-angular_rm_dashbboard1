@@ -40,7 +40,7 @@
                         Type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(realEstate.typeId == 0)?'Land':(realEstate.typeId == 1)?'Residential':(realEstate.typeId == 2)?'Secondary':(realEstate.typeId==3)?'Commercial':'-'}}
+                        {{(realEstate.typeId == 0)?'Self Occupied property':(realEstate.typeId == 1)?'Let out property':(realEstate.typeId == 2)?'Commercial land':(realEstate.typeId==3)?'Agricultural land':(realEstate.typeId==4)?'Non agricultural land':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

@@ -17,7 +17,7 @@ export class DatailedViewNpsHoldingsComponent implements OnInit {
 
   dataSource: any = new MatTableDataSource();
   @ViewChild('epfListTable', {static: false}) holdingsTableSort: MatSort;
-  displayedColumns = ['name', 'units', 'amount', 'value'];
+  displayedColumns = ['name', 'nav', 'units', 'amount', 'value'];
   name: any;
   bankList:any =[];
   ngOnInit() {

@@ -40,11 +40,16 @@
                   </div>
               </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-6 text-left f-14 roboto p-0">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
-                    <div class="col-md-6 text-right f-14 roboto p-0">
-                       {{npsData.linkedBankName ? npsData.linkedBankName:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!npsData.userBankMappingId" *ngFor="let bank of bankList">
+                        <div [ngSwitch]="npsData.userBankMappingId">
+                            <div *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="!npsData.userBankMappingId" class="col-md-4 text-right f-14 roboto p-0">
+                        {{'-'}}
                     </div>
                 </div>
               <div class="row bb p-8 b-l br">
@@ -87,9 +92,16 @@
                 </div>
               </td>
           </ng-container>
+          
+        <ng-container matColumnDef="nav">
+            <th *matHeaderCellDef class="br " mat-header-cell mat-sort-header="units">Current nav</th>
+            <td mat-cell *matCellDef="let element" class="br text-primary text-center">
+                <div class="bar"> {{element.navOfScheme}} </div>
+            </td>
+        </ng-container>
           <ng-container matColumnDef="units">
             <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="units"> Units</th>
-            <td mat-cell *matCellDef="let element" class="br text-primary">
+            <td mat-cell *matCellDef="let element" class="br text-primary text-center">
                 <div class="bar"> {{element.totalUnits}} </div>
             </td>
         </ng-container>
@@ -99,7 +111,7 @@
                 Amount Invested 
             </th>
             <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-                <div class="bar" *ngIf="element.totalAmountInvested != 0">₹<span appFormatNumber>{{element.totalAmountInvested}}</span> </div>
+                <div class="bar" >{{element.totalAmountInvested != 0? '₹': ''}}<span appFormatNumber>{{element.totalAmountInvested != 0? element.totalAmountInvested: '-'}}</span> </div>
             </td>
             
         </ng-container>

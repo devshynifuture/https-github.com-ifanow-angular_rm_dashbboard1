@@ -29,9 +29,11 @@ export class AddPortfolioComponent implements OnInit {
   addPortfolio() {
     if (this.portfolioGroup.get('portfolioName').invalid) {
       this.portfolioGroup.get('portfolioName').markAsTouched();
-      return;
+      
     }
-    this.dialogData.positiveMethod();
+    else{
+      this.dialogRef.close(this.portfolioGroup.get('portfolioName').value);
+    }
   }
   close() {
     this.dialogRef.close();

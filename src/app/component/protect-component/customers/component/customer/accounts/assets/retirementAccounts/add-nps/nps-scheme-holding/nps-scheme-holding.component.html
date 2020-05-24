@@ -100,7 +100,7 @@
                     <label class=" f-14"> Holdings as on </label>
                 </div>
                 <div class="col-md-4 pl-2 pr-0">
-                    <label class=" f-14"> Total net contribution </label>
+                    <label class=" f-14"> Total invested amount</label>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
                       </mat-form-field> -->
                     <mat-form-field>
                         <input autocomplete="off" matInput aria-label="State" #name  [matAutocomplete]="auto" (keyup)="filterSchemeOptions(name.value)"
-                            class="form-control br-0 pl-8" >
+                            class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete" >
                             <mat-option *ngFor="let s of schemeList" (click)="setGroupValue({scheme:s, index: i})" [value]="s.name">{{s.name}}
                             </mat-option>
@@ -180,7 +180,7 @@
                             <mat-form-field>
                                 <input autocomplete="off" matInput #totalNetContribution type="text"
                                     appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
-                                    class="form-control br-0 rupess" formControlName="totalNetContribution">
+                                    class="form-control br-0 rupess" formControlName="totalAmountInvested">
                                 <mat-hint align="end" class="f-12">{{totalNetContribution.value.length}}/10</mat-hint>
                                 <mat-error class="f-12">
                                     This field is required
@@ -306,7 +306,7 @@
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
-                <mat-hint align="start" class="f-12">Permanent Retirement Account Number</mat-hint>
+                <mat-hint align="start" class="f-12">Permanent Retirement Account Number(Optional)</mat-hint>
                 <mat-hint align="end" class="f-12">{{pran.value.length}}/12</mat-hint>
             </mat-form-field>
         </div>
@@ -319,7 +319,7 @@
             <mat-form-field>
                 <mat-select class="form-control" formControlName="bankACNo" matInput>
                     <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
-                        {{option.bankName}}</mat-option>
+                        {{option.bankNameAndLast4Digit}}</mat-option>
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>

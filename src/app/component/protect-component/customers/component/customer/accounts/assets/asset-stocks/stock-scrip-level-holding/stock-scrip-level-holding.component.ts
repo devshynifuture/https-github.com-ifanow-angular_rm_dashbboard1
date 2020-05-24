@@ -62,7 +62,7 @@ lisNominee(value) {
   this.ownerData.Fmember = value;
   this.nomineesListFM = Object.assign([], value);
 }
-
+holdingData:any;
 disabledMember(value, type) {
   this.callMethod = {
     methodName : "disabledMember",
@@ -71,6 +71,7 @@ disabledMember(value, type) {
   }
 
   
+  this.holdingData=this.scipLevelHoldingForm.controls;
 setTimeout(() => {
   this.portfolioFieldData= {
     familyMemberId: this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId
@@ -227,6 +228,9 @@ addNewNominee(data) {
       })]),
       portfolioName: [data.portfolioName, [Validators.required]]
     })
+
+  this.holdingData=this.scipLevelHoldingForm.value
+
     if (data.transactionorHoldingSummaryList) {
       data.transactionorHoldingSummaryList.forEach(element => {
         let singleScripData = this.fb.group({
