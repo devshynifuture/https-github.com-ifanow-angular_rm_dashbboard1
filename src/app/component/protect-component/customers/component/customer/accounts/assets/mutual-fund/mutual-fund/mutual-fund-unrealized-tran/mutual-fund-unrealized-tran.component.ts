@@ -59,12 +59,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   mutualFund;
 
   ngOnInit() {
-    this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3)
+     this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3)
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
       })
-    this.mfService.getMfData()
+      this.mfService.getMfData()
       .subscribe(res => {
         this.mutualFund = res;
       })
@@ -83,7 +83,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
     }
-    console.log(this.mutualFund)
     this.mfData =this.mfGetData;
     if (this.viewMode == 'Unrealized Transactions') {
       this.isLoading = true;
@@ -92,7 +91,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.isLoading = true;
       this.changeInput.emit(true);
       this.getMutualFundResponse(this.mfGetData)
-    } else if (this.viewMode != 'Unrealized Transactions' || this.mutualFund) {
+    } else if (this.viewMode != 'Unrealized Transactions' && this.mutualFund) {
       this.isLoading = true;
       this.changeInput.emit(true);
       this.getMutualFundResponse(this.mutualFund)
@@ -110,9 +109,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
    }
    this.custumService.getSaveFilters(obj).subscribe(
      data => {
-       console.log(data);
        if(data){
-        let displaycopy =[];
+         this.displayedColumns = [];
         let transactionView= [];
         data.forEach(element => {
           const obj={
@@ -121,7 +119,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
           }
           transactionView.push(obj); 
           if(element.selected == true){
-          displaycopy.push(element.columnName)
+          this.displayedColumns.push(element.columnName)
           }
         });
         this.saveFilterData ={
@@ -136,7 +134,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
  }
   initValueOnInit() {
 
-    console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
@@ -201,7 +198,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const chng = changes[propName];
       const cur = JSON.stringify(chng.currentValue);
       const prev = JSON.stringify(chng.previousValue);
-      console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+      // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
     }
     if (changes.mutualFund && !!changes.mutualFund.currentValue) {
       if (this.mutualFund.mutualFundList.length > 0) {
@@ -237,7 +234,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     }
     this.custumService.getMfUnrealizedTransactions(obj).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         // this.mutualFund.mutualFundList = data;
         // this.asyncFilter(this.mutualFund.mutualFundList);
         this.asyncFilter(data);
@@ -255,7 +252,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
-      console.log(`13091830918239182390183091830912830918310938109381093809328`);
+      // console.log(`13091830918239182390183091830912830918310938109381093809328`);
       this.rightFilterData.reportType=[];
        this.rightFilterData.reportType[0]={
         name:this.setDefaultFilterData.reportType,
@@ -275,7 +272,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         this.grandTotal = data.totalValue;
         this.dataSource = new MatTableDataSource(data.dataSourceData);
         this.customDataSource = new MatTableDataSource(data.customDataSourceData);
-        console.log(`MUTUALFUND COMPONENT page got message:`, data);
+        // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
       };
@@ -317,12 +314,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         };
         const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
           sideBarData => {
-            console.log('this is sidebardata in subs subs : ', sideBarData);
+            // console.log('this is sidebardata in subs subs : ', sideBarData);
             if (UtilService.isDialogClose(sideBarData)) {
               if (UtilService.isRefreshRequired(sideBarData)) {
                 this.getMutualFund();
               }
-              console.log('this is sidebardata in subs subs 2: ', sideBarData);
+              // console.log('this is sidebardata in subs subs 2: ', sideBarData);
               rightSideDataSub.unsubscribe();
             }
           }
@@ -339,7 +336,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         }
       });
     });
-    console.log("this is what im sending:::", element);
+    // console.log("this is what im sending:::", element);
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -393,10 +390,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
+        // console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
+    // console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -450,9 +447,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.dataSource = new MatTableDataSource([{}, {}, {}]);
             this.customDataSource = new MatTableDataSource([{}, {}, {}]);

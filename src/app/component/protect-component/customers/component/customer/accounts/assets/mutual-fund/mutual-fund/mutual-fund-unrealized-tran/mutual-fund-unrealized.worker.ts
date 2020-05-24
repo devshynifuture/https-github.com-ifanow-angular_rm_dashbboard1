@@ -8,14 +8,14 @@ import {TempserviceService} from '../../tempservice.service';
 
 addEventListener('message', ({data}) => {
   const response = `worker response to ${data}`;
-  console.log(`addEventListener got message: ${data}`);
+  // console.log(`addEventListener got message: ${data}`);
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
   const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type,data.mutualFund);
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
   const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type,data.nav,data.mutualFund);
   const output = {dataSourceData, customDataSourceData, totalValue};
-  console.log('Mutual fund script output: ', output);
+  // console.log('Mutual fund script output: ', output);
   postMessage(output);
   // postMessage(response);
 });

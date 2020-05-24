@@ -7,7 +7,7 @@ import {TempserviceService} from './tempservice.service';
 
 addEventListener('message', ({data}) => {
   const response = `worker response to ${data}`;
-  console.log(`addEventListener got message:`, data);
+  // console.log(`addEventListener got message:`, data);
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
   const totalValue = mfService.getFinalTotalValue(mutualFundList);

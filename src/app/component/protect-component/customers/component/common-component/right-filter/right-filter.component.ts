@@ -859,7 +859,7 @@ export class RightFilterComponent implements OnInit {
       this.overviewFilter.forEach((element,ind) => {
         const obj = {
           advisorId: this.advisorId,
-          clientId:(this.saveFilters[0].value == 'Current Client') ? this.clientId : 0,
+          clientId:(this.saveFilters[0].selected == true) ? this.clientId : 0,
           transactionOrder: ind,
           columnName: element.name,
           selected: element.selected,
@@ -874,7 +874,7 @@ export class RightFilterComponent implements OnInit {
       this.transactionView.forEach((element,ind) => {
         const obj = {
           advisorId: this.advisorId,
-          clientId:(this.saveFilters[0].value == 'Current Client') ? this.clientId : 0,
+          clientId:(this.saveFilters[0].selected == true) ? this.clientId : 0,
           transactionOrder: ind,
           columnName: element.displayName,
           selected: element.selected,
@@ -1079,7 +1079,7 @@ export class RightFilterComponent implements OnInit {
       transactionPeriod: this.transactionPeriod
     };
     console.log('dataToSend---------->', this.dataToSend);
-    if(this.saveFilters[0].selected == true || this.saveFilters[0].selected == true){
+    if(this.saveFilters[0].selected == true || this.saveFilters[1].selected == true){
       this.saveFilterCall();
     }
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
