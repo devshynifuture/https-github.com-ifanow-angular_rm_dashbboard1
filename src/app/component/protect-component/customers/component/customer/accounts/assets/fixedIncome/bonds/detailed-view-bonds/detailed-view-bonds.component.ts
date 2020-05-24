@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-detailed-view-bonds',
@@ -10,8 +11,8 @@ import { UtilService } from 'src/app/services/util.service';
 export class DetailedViewBondsComponent implements OnInit {
   inputData: any;
   bonds: any;
-
-  constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
+  bankList:any = [];
+  constructor(public utils: UtilService,private subInjectService: SubscriptionInject, private enumService: EnumServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -20,7 +21,9 @@ export class DetailedViewBondsComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    this.bonds = this.inputData
+    this.bonds = this.inputData;
+    this.bankList = this.enumService.getBank();
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});

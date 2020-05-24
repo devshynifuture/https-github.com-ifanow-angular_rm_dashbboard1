@@ -26,11 +26,13 @@ export class PortfolioFieldComponent implements OnInit {
   ngOnInit() {
   }
   portfolioData = new FormControl();
+  ownerlist:any;
   @Input() set owner(data) {
     // this.portfolioForm = data;
     console.log("owner", data);
     if(data != undefined)
-    this.portfolioName = data.value.portfolioName
+    this.ownerlist = data.getCoOwnerName;
+    this.portfolioName = data.portfolioName;
   }
   @Input() set checkValid(checkValid){
     this.checkFrom(checkValid)
@@ -77,39 +79,51 @@ export class PortfolioFieldComponent implements OnInit {
   }
   openAddPortfolio() {
     console.log(this.portfolioData)
-    if (this.ownerIdData) {
+    if (!this.ownerIdData) {
       this.eventService.openSnackBar("please select owner", "Dismiss");
       return;
     }
-    const dialogData =
-    {
-      positiveMethod: () => {
+    
         const obj =
         {
+          "id":null,
           "clientId": this.clientId,
           "advisorId": this.advisorId,
+          "ownerList": this.ownerlist.value,
+          "familyMemberId":this.ownerIdData.familyMemberId,
+          "portfolioName":""
           // "portfolioName": this.portFolioData,
           // "familyMemberId": this.familyMemberId
         }
-        this.cusService.addPortfolio(obj).subscribe(
+        // this.cusService.addPortfolio(obj).subscribe(
+        //   data => {
+        //     dialogRef.close();
+        //     this.eventService.openSnackBar("portfolio is added", "Dismiss");
+        //     this.getPortfolioList();
+        //   },
+        //   error => this.eventService.showErrorMessage(error)
+        // )
+
+    const dialogRef = this.dialog.open(AddPortfolioComponent, {
+      width: '390px',
+      height: '220px',
+      data: ''
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result,'The dialog was closed');
+      if(result){
+        obj.portfolioName = result;
+        // obj.ownerList[0].familyMemberId = this.ownerIdData.familyMemberId;
+        this.cusService.addAssetStocks(obj).subscribe(
           data => {
-            dialogRef.close();
+           
             this.eventService.openSnackBar("portfolio is added", "Dismiss");
             this.getPortfolioList();
           },
           error => this.eventService.showErrorMessage(error)
         )
-      },
-
-    }
-    const dialogRef = this.dialog.open(AddPortfolioComponent, {
-      width: '390px',
-      height: '220px',
-      data: dialogData
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      }
     });
   }
   selectPortfolio(data) {

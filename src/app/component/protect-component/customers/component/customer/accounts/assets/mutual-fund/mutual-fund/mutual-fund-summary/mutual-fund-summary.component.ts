@@ -257,12 +257,6 @@ export class MutualFundSummaryComponent implements OnInit {
         name : 'Investor wise',
         selected : true
       }
-    }else if(this.inputData == 'scheme wise'){
-      this.rightFilterData.reportType = []
-      this.rightFilterData.reportType[0] = {
-        name : 'Scheme wise',
-        selected : true
-      }
     }else if(this.inputData == 'Sub Category wise'){
       this.rightFilterData.reportType = []
       this.rightFilterData.reportType[0] = {

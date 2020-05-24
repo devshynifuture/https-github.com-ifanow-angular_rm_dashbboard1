@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-detailed-view-bank-account',
@@ -12,8 +13,8 @@ export class DetailedViewBankAccountComponent implements OnInit {
   ownerName: any;
   bankAccount: any;
   isLoading = false;
-
-  constructor(private subInjectService: SubscriptionInject) {
+  bankList:any = [];
+  constructor(private subInjectService: SubscriptionInject,  private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -30,6 +31,7 @@ export class DetailedViewBankAccountComponent implements OnInit {
 
   ngOnInit() {
     console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
+    this.bankList = this.enumService.getBank();
   }
 
   close() {

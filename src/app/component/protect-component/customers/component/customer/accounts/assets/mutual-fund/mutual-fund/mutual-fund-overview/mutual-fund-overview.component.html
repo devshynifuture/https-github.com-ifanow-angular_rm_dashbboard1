@@ -287,7 +287,7 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" (click)="openSummary('scheme wise')"
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"(click)="openSummary('scheme wise')"
                 *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
@@ -1437,3 +1437,7 @@
     <app-mutual-fund-summary [data]='inputDataToSend'>
     </app-mutual-fund-summary>
 </div>
+<div *ngIf="openTransactionTab == true">
+    <app-mutual-fund-unrealized-tran (changeInput)="changeInput($event)">
+    </app-mutual-fund-unrealized-tran>
+  </div>

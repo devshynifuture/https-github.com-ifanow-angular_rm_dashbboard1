@@ -176,7 +176,7 @@
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="accNumber" matInput>
                         <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
-                            {{option.bankName}}</mat-option>
+                            {{option.bankNameAndLast4Digit}}</mat-option>
                     </mat-select>
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
                     <mat-error>This field is required

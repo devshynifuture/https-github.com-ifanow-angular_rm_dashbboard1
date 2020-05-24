@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-detailed-view-epf',
@@ -11,8 +12,9 @@ export class DetailedViewEPFComponent implements OnInit {
   inputData: any;
   epf: any;
   isLoading = false;
+  bankList:any = [];
 
-  constructor(public utils: UtilService, private subInjectService: SubscriptionInject) {
+  constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -26,6 +28,8 @@ export class DetailedViewEPFComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+
   }
 
   close() {

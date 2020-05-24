@@ -75,6 +75,7 @@ export class MutualFundOverviewComponent implements OnInit {
   clientIdToClearStorage: any;
   savedFilterData: any;
   saveFilterData: any;
+  openTransactionTab: boolean =  false;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -525,8 +526,8 @@ export class MutualFundOverviewComponent implements OnInit {
           },
           startAngle: 0,
           endAngle: 360,
-          center: ['52%', '55%'],
-          size: '120%'
+          center: ['52%', '50%'],
+          size: '125%'
         }
       },
       series: [{
@@ -637,8 +638,13 @@ export class MutualFundOverviewComponent implements OnInit {
   //   );
   // }
   openSummary(flag){
-   this.openSummaryTab = true
-   this.inputDataToSend = flag
+    if('scheme wise'){
+      this.openTransactionTab = true
+      this.inputDataToSend = flag
+    }else{
+      this.openSummaryTab = true
+      this.inputDataToSend = flag
+    }
   }
   openFilter() {
 

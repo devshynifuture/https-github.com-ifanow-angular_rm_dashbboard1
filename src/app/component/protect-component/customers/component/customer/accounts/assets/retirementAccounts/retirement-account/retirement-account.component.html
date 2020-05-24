@@ -377,6 +377,8 @@
                         </th>
                         <td mat-cell *matCellDef="let element" class="br amt text-right">
                             <div class="bar amt">
+                                <div *ngIf="element.totalAmountInvested <= 0">{{'-'}}
+                                </div>
                                 <div *ngIf="element.totalAmountInvested > 0">{{isLoading ?'':'₹'}} <span
                                         appFormatNumber>{{isLoading ? '' : element.totalAmountInvested || '-'}}</span>
                                 </div>
@@ -658,11 +660,12 @@
                 <ng-container matColumnDef="salary">
                     <th *matHeaderCellDef class="br   text-right  rightTextHide " mat-header-cell
                         mat-sort-header="amountReceived">
-                        'Last drawn Salary<br /> (Basic + DA)
+                        Last drawn Salary<br /> (Basic + DA)
 
                     </th>
                     <td *matCellDef="let element" class="br amt text-right  " mat-cell>
                         <div class="bar">
+                            <div *ngIf="element.gratuityReceived <= 0"> {{isLoading ? ' ' : '-'}}</div>
                             <div *ngIf="element.gratuityReceived > 0"> {{isLoading ? ' ' : '₹'}}<span
                                     appFormatNumber>{{element.amountReceived}}</span></div>
                         </div>
