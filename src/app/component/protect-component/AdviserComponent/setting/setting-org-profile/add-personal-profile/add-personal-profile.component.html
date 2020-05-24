@@ -3,17 +3,17 @@
         <h4 class="mb-0 l-22 wrapper-20">Personal profile</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close()">
             clear
         </i>
     </div>
 </div>
 
 <div *ngIf="dataLoaded">
-    <div [formGroup]="personalProfile" class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
+    <div class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
         <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()"
             [(selectedIndex)]="selectedTab">
-            <mat-tab label="Profile">
+            <mat-tab label="Profile" [formGroup]="personalProfile">
                 <div class="row pt-40">
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="mb-0 mt-20">Name</h5>
@@ -161,7 +161,7 @@
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Password">
+            <mat-tab label="Password" [formGroup]="setNewPasswordForm">
                 <div class="row pt-28">
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="m-0 roboto f-400 pt-20">Old password</h5>
@@ -169,7 +169,11 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input matInput class="form-control" placeholder="Enter old password">
+                                <input autocomplete="off" maxlength="20" placeholder="Enter old password"
+                                    [type]="hide3 ? 'password' : 'text'" formControlName="oldPassword" tabindex="2"
+                                    class="form-control br-0" matInput>
+                                <mat-error *ngIf="setNewPasswordForm.get('oldPassword').errors?.required">
+                                    This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -181,8 +185,23 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input matInput class="form-control" placeholder="Enter new password">
-                                <mat-icon matSuffix>visibility</mat-icon>
+                                <input autocomplete="off" maxlength="20" placeholder="Enter password"
+                                    [type]="hide1 ? 'password' : 'text'" (keyup)="checkPassword()"
+                                    formControlName="newPassword" tabindex="2" class="form-control br-0" matInput
+                                    type="password">
+                                <mat-icon matSuffix (click)="hide1 = !hide1" *ngIf="hide1"
+                                    class="material-icons eyesPassword c-p text-primitive">
+                                    visibility
+                                </mat-icon>
+                                <mat-icon matSuffix (click)="hide1 = !hide1" *ngIf="hide1==false"
+                                    class="material-icons eyesPassword c-p text-primitive">
+                                    visibility_off
+                                </mat-icon>
+                                <mat-error *ngIf="setNewPasswordForm.get('newPassword').errors?.required">
+                                    This field is required</mat-error>
+                                <mat-error *ngIf="setNewPasswordForm.get('newPassword').errors?.pattern">
+                                    Password not valid
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -194,23 +213,64 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input matInput class="form-control" placeholder="Re-enter new password">
-                                <mat-icon matSuffix>visibility</mat-icon>
+                                <input autocomplete="off" maxlength="20" formControlName="confirmPassword"
+                                    [placeholder]="formPlaceHolder.REENTER_NEW_PASSWORD" (keyup)="checkPassword()"
+                                    [type]="hide2 ? 'password' : 'text'" tabindex="2" class="form-control br-0" matInput
+                                    type="password">
+                                    <mat-icon matSuffix (click)="hide2 = !hide2" *ngIf="hide2"
+                                        class="material-icons eyesPassword c-p text-primitive">
+                                        visibility
+                                    </mat-icon>
+                                    <mat-icon matSuffix (click)="hide2 = !hide2" *ngIf="hide2==false"
+                                        class="material-icons eyesPassword c-p text-primitive">
+                                        visibility_off
+                                    </mat-icon>
+                                <mat-error *ngIf="setNewPasswordForm.get('confirmPassword').errors?.required">
+                                    This field is required</mat-error>
+                                <mat-error *ngIf="setNewPasswordForm.get('confirmPassword').errors?.mismatch">
+                                    Password does not match the confirm password</mat-error>
                             </mat-form-field>
                         </div>
                         <ul class="pt-28 d-grid password-strength">
-                            <li><span class="material-icons">
-                                    clear
-                                </span>Min 8 characters</li>
-                            <li><span class="material-icons">
-                                    clear
-                                </span>One upper case</li>
-                            <li><span class="material-icons">
-                                    clear
-                                </span>One lower case</li>
-                            <li><span class="material-icons">
-                                    clear
-                                </span>One special character</li>
+                            <li [ngClass]="{'text-success': setNewPasswordForm.get('newPassword').value.length > 7,'text-primitive': setNewPasswordForm.get('newPassword').value.length < 8}"
+                                class="">
+                                <i *ngIf="setNewPasswordForm.get('newPassword').value.length > 7" class="material-icons mr-4">
+                                    check_circle
+                                </i>
+                                <i *ngIf="setNewPasswordForm.get('newPassword').value.length < 8" class="material-icons mr-4">
+                                    cancel
+                                </i>
+                                Min 8 characters
+                            </li>
+                            <li [ngClass]="{'text-success':passwordStregth.upperCase,'text-primitive':passwordStregth.upperCase==false}"
+                                class="">
+                                <i *ngIf="passwordStregth.upperCase" class="material-icons mr-4">
+                                    check_circle
+                                </i>
+                                <i *ngIf="passwordStregth.upperCase==false" class="material-icons mr-4">
+                                    cancel
+                                </i>
+                                One upper case
+                            </li>
+                            <li [ngClass]="{'text-success':passwordStregth.lowerCase,'text-primitive':passwordStregth.lowerCase==false}"
+                                class="">
+                                <i *ngIf="passwordStregth.lowerCase" class="material-icons mr-4">
+                                    check_circle
+                                </i>
+                                <i *ngIf="passwordStregth.lowerCase==false" class="material-icons mr-4">
+                                    cancel
+                                </i>
+                                One lower case
+                            </li>
+                            <li [ngClass]="{'text-success': passwordStregth.specialCharacter,'text-primitive':passwordStregth.specialCharacter==false}"
+                                class="">
+                                <i *ngIf="passwordStregth.specialCharacter" class="material-icons mr-4">
+                                    check_circle
+                                </i>
+                                <i *ngIf="passwordStregth.specialCharacter==false" class="material-icons mr-4">
+                                    cancel
+                                </i>One special character
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -218,13 +278,13 @@
         </mat-tab-group>
     </div>
 </div>
-<div *ngIf="!dataLoaded">
+<div *ngIf="!dataLoaded" class="loader-text">
     Loading data
 </div>
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "

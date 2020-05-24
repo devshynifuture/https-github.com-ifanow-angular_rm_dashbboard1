@@ -16,7 +16,7 @@
       <div class="col-md-12 p-0 text-center">
         <img class="pt-28" src="/assets/images/svg/last-step.svg">
         <h3 class="m-0 text-primary pt-24">So far so good. One last step!</h3>
-        <h5 class="m-0 pt-12 pb-12 b-h-dashed">Your client needs to <b>authorize</b> the transaction
+        <h5 class="m-0 pt-12 pb-12 b-h-dashed">{{salutationString}} needs to <b>authorize</b> the transaction
           to <b>complete</b> it.</h5>
       </div>
     </div>
@@ -26,20 +26,17 @@
       <div class="col-md-12">
         <div class="p-8">
           <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your
-            client
-            should
-            review the <b>transaction
-              details</b> and click on the <b>payment link</b> provided there.</p>
-          <p class="m-0 roboto pt-28"> Next, your client will be redirected to the <b>net banking
+            client should review the <b>transaction details</b> and click on the <b>payment link</b> provided there.</p>
+          <p class="m-0 roboto pt-28"> Next, {{salutationString.toLowerCase()}} will be redirected to the <b>net banking
             page.</b> The
             client needs to login and make
             the payment.</p>
-          <p class="m-0 roboto pt-28"> Once the payment is done, NSE NMF II will send a <b>confirmation
+          <p class="m-0 roboto pt-28"> Once the payment is done, {{platformName}} will send a <b>confirmation
             email</b> to
             the registered email id.</p>
           <p class="m-0 roboto pt-28"> Additionally, the Purchase transaction has been added to the
             <u (click)="redirctTransaction()"> Transaction List.</u></p>
-<!--          <p class="m-0 roboto pt-28"> Track transaction status - <u>Track.</u></p>-->
+          <!--          <p class="m-0 roboto pt-28"> Track transaction status - <u>Track.</u></p>-->
         </div>
       </div>
     </div>
@@ -48,14 +45,14 @@
         *ngIf="(confirmData.transactType == 'PURCHASE' && confirmData.paymentMode == 2 ) || (confirmData.transactType == 'REDEEM') || (confirmData.transactType == 'SIP' && confirmData.paymentMode == 2) || (confirmData.transactType == 'SWP') || (confirmData.transactType == 'STP') || (confirmData.transactType == 'SWITCH')"
         class="col-md-12">
         <div class="p-8">
-          <p class="m-0 roboto pt-28">Your client to send an OTP to complete this
+          <p class="m-0 roboto pt-28">{{salutationString}} needs to send an OTP to complete this
             transaction
             An SMS has been sent to the registered mobile number with an OTP.</p>
-          <p class="m-0 roboto pt-28">should review the transaction details and SMS
+          <p class="m-0 roboto pt-28">{{salutationString}} should review the transaction details and SMS
             the OTP to the number provided there
-            An Email has also been sent via NSE.Your client</p>
-          <p class="m-0 roboto pt-28"> can confirm the transaction via Email as well.
-            Once the transaction is confirmed,Your client will receive a confirmation.
+            An Email has also been sent via {{platformName}}.</p>
+          <p class="m-0 roboto pt-28">{{salutationString}} can confirm the transaction via Email as well.
+            Once the transaction is confirmed,{{salutationString.toLowerCase()}} will receive a confirmation.
           </p>
           <p class="m-0 roboto pt-28"> Additionally, the transaction has been added to
             <u (click)="redirctTransaction()"> Transaction List.</u></p>
@@ -67,13 +64,13 @@
     <!-- <div class="row">
         <div class="col-md-12">
             <div class="p-8">
-                <p class="m-0 roboto pt-28"> Your client needs to authorize the transaction on 03/02/2020 at 2.30PM
+                <p class="m-0 roboto pt-28"> {{salutationString}} needs to authorize the transaction on 03/02/2020 at 2.30PM
                     to complete it.
                     An SMS has been sent to the registered mobile number with an OTP.</p>
                 <p class="m-0 roboto pt-28">An email will be sent to the registered email id on 03/02/2020 at
-                    2.30PM. On receipt of email, your client should review the transaction details and click on the
+                    2.30PM. On receipt of email, {{salutationString}} should review the transaction details and click on the
                     payment link provided there.</p>
-                <p class="m-0 roboto pt-28">Next, your client will be redirected to the net banking page. The client
+                <p class="m-0 roboto pt-28">Next, {{salutationString}} will be redirected to the net banking page. The client
                     needs to login and make the payment.
 
                     Once the payment is done, NSE will send a confirmation email to the registered email id.

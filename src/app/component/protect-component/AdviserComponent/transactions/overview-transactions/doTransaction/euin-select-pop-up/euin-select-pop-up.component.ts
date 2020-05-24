@@ -24,7 +24,6 @@ export class EuinSelectPopUpComponent implements OnInit {
   dataS = []
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;
-    console.log('investorList == ', this.data)
     this.subBrokerList = this.data.subBroker;
     this.brokerCode = this.data.brokerCode
     ELEMENT_DATA.forEach(item => item.selected = false);

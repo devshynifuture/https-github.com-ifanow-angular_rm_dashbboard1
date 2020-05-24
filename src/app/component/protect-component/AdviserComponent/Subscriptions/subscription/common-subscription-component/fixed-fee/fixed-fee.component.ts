@@ -42,7 +42,6 @@ export class FixedFeeComponent implements OnInit {
   subData:any
   getSubscribeData(data) {
     const fixedData = data
-    console.log(fixedData, "abc fix");
     this.subData = data;
     
     if (data == '') {
@@ -50,7 +49,6 @@ export class FixedFeeComponent implements OnInit {
     }
     else {
       this.singleSubscriptionData = fixedData
-      console.log('singleSubscriptionData', this.singleSubscriptionData)
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(String(fixedData.subscriptionPricing.billingNature));
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
@@ -94,7 +92,6 @@ export class FixedFeeComponent implements OnInit {
           }
         ]
       };
-      console.log(obj)
       if (this.singleSubscriptionData.isCreateSub == false) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj['clientId'] = this.singleSubscriptionData.clientId;
@@ -109,7 +106,6 @@ export class FixedFeeComponent implements OnInit {
   }
 
   saveFixedModifyFeesResponse(data) {
-    console.log(data, 'modify fixed fee data');
     this.Close(true);
   }
 

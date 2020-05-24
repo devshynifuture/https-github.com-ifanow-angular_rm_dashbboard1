@@ -188,7 +188,6 @@ export class SipSchemeWiseComponent implements OnInit {
 
   getSchemeWiseRes(data) {
     this.isLoading = false;
-    console.log("scheme Name", data);
     if (data) {
       this.category = data;
       this.excelInitClientList()
@@ -262,7 +261,6 @@ export class SipSchemeWiseComponent implements OnInit {
             } else {
               this.removeValuesFromExcel('investor', index);
             }
-            console.log(data)
           }else{
             this.subCatList = []
             schemeData.subCatList = []
@@ -277,8 +275,6 @@ export class SipSchemeWiseComponent implements OnInit {
       )
     }
 
-    console.log(this.category[index])
-    console.log(category)
   }
   removeValuesFromExcel(whichList, index) {
     switch (whichList) {
@@ -292,7 +288,6 @@ export class SipSchemeWiseComponent implements OnInit {
         this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory].schemeList[index].applicantList = [];
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
   appendingOfValuesInExcel(iterable, index, choice) {
 
@@ -341,7 +336,6 @@ export class SipSchemeWiseComponent implements OnInit {
         });
         break;
     }
-    console.log(this.arrayOfExcelData);
   }
   showSchemeName(index, subcashowSubcat, ApplicantData) {
     this.selectedCategoryApp = index
@@ -370,7 +364,6 @@ export class SipSchemeWiseComponent implements OnInit {
             } else {
               this.removeValuesFromExcel('applicant', index);
             }
-            console.log(data)
           }else{
             this.applicantListArr = []
             ApplicantData.applicantList = [];
@@ -412,7 +405,6 @@ export class SipSchemeWiseComponent implements OnInit {
         break;
     }
 
-    console.log(this.arrayOfExcelData);
   }
 
   schemeWiseExcelReport(index) {

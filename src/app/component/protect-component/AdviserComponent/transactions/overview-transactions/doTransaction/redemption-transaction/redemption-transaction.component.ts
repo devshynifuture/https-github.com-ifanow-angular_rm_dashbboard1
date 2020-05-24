@@ -86,7 +86,6 @@ export class RedemptionTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       // this.getdataForm('');
@@ -104,6 +103,7 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {transactType: 'REDEEM'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {multiTransact: false}); // when multi transact then disabled edit button in transaction summary
   }
 
@@ -112,7 +112,6 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getDefaultDetails(data) {
-    console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
 
@@ -232,9 +231,9 @@ export class RedemptionTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: ''});
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       bseOrderType: 'REDEMPTION',
       amcId,
@@ -267,7 +266,6 @@ export class RedemptionTransactionComponent implements OnInit {
 
   getbankDetails(bank) {
     this.bankDetails = bank[0];
-    console.log('bank details', bank[0]);
   }
 
   onFolioChange(folio) {
@@ -275,6 +273,7 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   selectedScheme(scheme) {
+    this.redemptionTransaction.controls.employeeContry.reset();
     this.scheme = scheme;
     this.folioList = [];
     this.folioDetails = null;
@@ -298,14 +297,12 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
-    console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.redemptionTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.redemptionAmountMinimum)]);
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = [];
-      console.log('reinvestment', this.reInvestmentOpt);
     }
     if (data.length == 1) {
       this.reInvestmentOpt = [];
@@ -316,7 +313,6 @@ export class RedemptionTransactionComponent implements OnInit {
   reinvest(scheme) {
     this.schemeDetails = scheme;
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
-    console.log('schemeDetails == ', this.schemeDetails);
   }
 
   getSchemeWiseFolios() {
@@ -340,7 +336,6 @@ export class RedemptionTransactionComponent implements OnInit {
 
   getSchemeWiseFoliosRes(data) {
     this.showSpinnerFolio = false;
-    console.log('res scheme folio', data);
     if (data) {
       this.folioList = data;
     }
@@ -394,7 +389,7 @@ export class RedemptionTransactionComponent implements OnInit {
       orderVal = this.folioDetails.balanceUnit + '';
       qty = orderVal;
     } else {
-      orderVal = Object.assign(orderVal, this.redemptionTransaction.controls.employeeContry.value);
+      orderVal = this.redemptionTransaction.controls.employeeContry.value + '';
       if (amountType == 'Amount') {
         qty = '0';
       } else {
@@ -451,9 +446,7 @@ export class RedemptionTransactionComponent implements OnInit {
   redeem() {
     if (this.validateSingleTransaction()) {
       const obj = this.getSingleTransactionJson();
-      console.log('redeem obj json', obj);
       if (this.multiTransact == true) {
-        console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
         this.childTransactions.forEach(singleTranJson => {
@@ -478,7 +471,6 @@ export class RedemptionTransactionComponent implements OnInit {
 
   redeemBSERes(data) {
     this.barButtonOptions.active = false;
-    console.log('redeem res', data);
     if (data == undefined) {
 
     } else {
@@ -510,7 +502,6 @@ export class RedemptionTransactionComponent implements OnInit {
               element.schemeDetails = this.schemeDetails;
               element.folioDetails = this.folioDetails;
             }
-            console.log(element);
           });
           this.isEdit = false;
         } else {
@@ -524,7 +515,6 @@ export class RedemptionTransactionComponent implements OnInit {
         this.amcId = this.scheme.amcId;
         this.scheme = null;
         this.schemeDetails = null;
-        console.log(this.childTransactions);
         this.navOfSelectedScheme = 0;
         this.folioDetails = null;
         this.folioList = [];

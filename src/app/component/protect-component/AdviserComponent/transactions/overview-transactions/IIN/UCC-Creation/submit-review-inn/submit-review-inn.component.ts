@@ -9,6 +9,8 @@ import {FileUploadService} from '../../../../../../../../services/file-upload.se
 import {apiConfig} from '../../../../../../../../config/main-config';
 import {appConfig} from '../../../../../../../../config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {MatDialog} from '@angular/material';
+import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loader.component';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -16,16 +18,35 @@ import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
+
+  isFileUploading = false;
+
+  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
+              private eventService: EventService, public dialog: MatDialog) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
+  dialogRef;
+
+  dataSourceNse = [];
+  dataSourceBse = [];
+
+  isLoading = false;
+  selectedCount = 0;
+
   changedValue: string;
   advisorId: any;
   brokerCredentials: any;
+
   reviewSubmit: any;
   inputData: any;
   nse: any;
   bse: any;
   allData: any;
   createdBrokerMap: any = {};
-  selectedBrokerBse: any;
   matValue: any;
   doneData: any;
   tokenRes: any;
@@ -40,12 +61,6 @@ export class SubmitReviewInnComponent implements OnInit {
   BSEValue = '2';
   responseMessage: any;
   statusString: any;
-  isLoading: boolean = false;
-
-
-  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
-  }
 
   @Input()
   set data(data) {
@@ -80,10 +95,6 @@ export class SubmitReviewInnComponent implements OnInit {
     this.changedValue = 'close';
   }
 
-  get data() {
-    return this.inputData;
-  }
-
   ngOnInit() {
     this.changedValue = '';
     this.advisorId = AuthService.getAdvisorId();
@@ -109,7 +120,30 @@ export class SubmitReviewInnComponent implements OnInit {
     this.isLoading = false;
     console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
+    if (this.brokerCredentials) {
+      this.brokerCredentials.forEach(singleCred => {
+        if (singleCred.defaultLogin == 1) {
+          if (singleCred.aggregatorType == 1) {
+            this.dataSourceNse.push(singleCred);
+          } else {
+            this.dataSourceBse.push(singleCred);
+          }
+          singleCred.selected = true;
+          this.selectedCount = this.selectedCount + 1;
+        }
+      });
+      if (this.selectedCount == 0 && this.brokerCredentials.length > 0) {
+        const singleCred = this.brokerCredentials[0];
+        if (singleCred.aggregatorType == 1) {
+          this.dataSourceNse.push(singleCred);
+        } else {
+          this.dataSourceBse.push(singleCred);
+        }
+        singleCred.selected = true;
+        this.selectedCount = this.selectedCount + 1;
+      }
+    }
+    // this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
     console.log('nse', this.nse);
     console.log('bse', this.bse);
   }
@@ -147,21 +181,6 @@ export class SubmitReviewInnComponent implements OnInit {
     return this.reviewSubmit.controls;
   }
 
-  selectArn(value) {
-    this.selectedBrokerBse = value;
-    const date = new Date();
-    const date1 = date.getDate();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    this.fileName = (this.selectedBrokerBse.memberId).toString() + 'GAURAVD1' + date1 + month + year + '.tiff';
-
-    console.log('fileName', this.fileName);
-  }
-
-  selectArnNse(value) {
-    this.selectedBrokerBse = value;
-  }
-
   selectPlatform(value) {
     console.log('mat check', value);
     this.platform = value.value;
@@ -170,7 +189,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
 
-  submit() {
+  submit(singleBrokerCred) {
     this.doneData = true;
     this.toSendObjHolderList = [];
     this.toSendObjBankList = [];
@@ -212,37 +231,41 @@ export class SubmitReviewInnComponent implements OnInit {
       bankDetailList: this.toSendObjBankList,
       nomineeList: this.toSendObjNomineeList,
       fatcaDetail: this.allData.fatcaDetail,
-      id: 2,
       divPayMode: this.allData.bankDetailList[0].paymentMode,
       occupationCode: this.allData.fatcaDetail.occupationCode,
       clientCode: this.reviewSubmit.controls.accountNumber.value,
-      aggregatorType: this.selectedBrokerBse.aggregatorType,
+      aggregatorType: singleBrokerCred.aggregatorType,
       familyMemberId: this.allData.familyMemberId,
       clientId: this.allData.clientId,
       advisorId: this.allData.advisorId,
-      tpUserCredentialId: this.selectedBrokerBse.id,
+      tpUserCredentialId: singleBrokerCred.id,
       commMode: 1,
       confirmationFlag: 1,
-      tpUserSubRequestClientId1: 2,
-
     };
+    this.openIinUccClient(singleBrokerCred, obj1);
+    // setTimeout(() => {
+    //   if (this.dialogRef) {
+    //     this.dialogRef.componentInstance.setSuccessData(obj1);
+    //   }
+    // }, 5000);
     this.onlineTransact.createIINUCC(obj1).subscribe(
-      data => this.createIINUCCRes(data), (error) => {
-        this.eventService.openSnackBar(error, 'Dismiss');
+      data => this.createIINUCCRes(data, singleBrokerCred), (error) => {
+        if (this.dialogRef) {
+          this.dialogRef.componentInstance.setFailureData(error);
+        }
+        // this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
 
-  createIINUCCRes(data) {
+  createIINUCCRes(data, singleBrokerCred) {
     console.log('data respose =', data);
-    this.createdBrokerMap[this.selectedBrokerBse.id] = {
-      tpUserRequestId: data.id, tpUserRequest: data,
-      brokerData: this.selectedBrokerBse
-    };
-    this.responseMessage = data.responseMessage;
-    this.statusString = data.statusString;
-    // this.eventService.showErrorMessage(data.statusString);
-    // this.eventService.showErrorMessage(data.responseMessage);
+    singleBrokerCred.tpUserRequestId = data.id;
+    singleBrokerCred.tpUserRequest = data;
+    if (this.dialogRef) {
+      this.dialogRef.componentInstance.setSuccessData(data);
+    }
+
   }
 
   getTokenRes(data) {
@@ -250,26 +273,42 @@ export class SubmitReviewInnComponent implements OnInit {
     this.tokenRes = data;
   }
 
-  getFileDetails(documentType, e) {
+  addNewRow() {
+    this.brokerCredentials.forEach(singleCred => {
+      if (!singleCred.selected) {
+        if (singleCred.aggregatorType == 1) {
+          this.dataSourceNse.push(singleCred);
+        } else {
+          this.dataSourceBse.push(singleCred);
+        }
+        singleCred.selected = true;
+        this.selectedCount = this.selectedCount + 1;
+      }
+    });
+  }
+
+  getFileDetails(documentType, e, singleBrokerCred) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
-    const requestMapObject = this.createdBrokerMap[this.selectedBrokerBse.id];
-    if (!requestMapObject) {
+    const tpUserRequestId = singleBrokerCred.tpUserRequestId;
+    if (!tpUserRequestId || tpUserRequestId == 0) {
       this.eventService.openSnackBar('Please create account first', 'Dismiss');
       return;
     }
     const requestMap = {
-      tpUserRequestId: requestMapObject.tpUserRequestId,
+      tpUserRequestId,
       documentType
     };
+    this.isFileUploading = true;
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);
         console.log('getFileDetails uploadFileToServer callback headers : ', headers);
         console.log('getFileDetails uploadFileToServer callback response : ', response);
+        this.isFileUploading = false;
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
@@ -280,4 +319,27 @@ export class SubmitReviewInnComponent implements OnInit {
         }
       });
   }
+
+  openIinUccClient(singleBrokerCred, requestJson) {
+    const data = {singleBrokerCred, requestJson};
+    const Fragmentdata = {
+      flag: 'IIn',
+      ...data
+
+    };
+    this.dialogRef = this.dialog.open(IinCreationLoaderComponent, {
+      width: '600px',
+      height: '450px',
+      data: Fragmentdata,
+      autoFocus: false,
+      disableClose: true
+    });
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef = null;
+      console.log(result, 'cancel was close');
+      if (result != undefined) {
+      }
+    });
+  }
+
 }

@@ -126,6 +126,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     category: this.mutualFund.mutualFundCategoryMastersList,
     transactionView: this.displayedColumns,
     capitalGainData:this.objSendToDetailedCapital,
+    filterDataForCapital: (this.rightFilterData) ? this.rightFilterData : (this.changedData) ? this.changedData.filterDataForCapital : null
   };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -139,7 +140,8 @@ export class MfCapitalDetailedComponent implements OnInit {
               summaryView:(this.rightFilterData.reportFormat[0].name == 'Detailed') ? false : true,
               grandfatheringEffect : this.rightFilterData.grandfathering,
               fromDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
-              toDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020
+              toDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020,
+              filterDataForCapital:this.rightFilterData
             }
             
             this.reponseToInput.emit(obj);

@@ -20,7 +20,6 @@ export class EmailQuotationComponent implements OnInit {
 
   ngOnInit() {
     this.showSent = 'false';
-    console.log('this.headerData', this.headerData);
   }
 
   Close(state) {
@@ -31,7 +30,6 @@ export class EmailQuotationComponent implements OnInit {
   }
 
   closeTab(state, value) {
-    console.log(state);
     this.subInjectService.rightSliderData(state);
   }
 

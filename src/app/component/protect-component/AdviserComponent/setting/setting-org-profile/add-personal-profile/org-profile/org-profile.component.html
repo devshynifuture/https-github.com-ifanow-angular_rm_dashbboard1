@@ -20,7 +20,9 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="companyName" class="form-control" [placeholder]="formPlaceHolder.ENTER_COMPANY_NAME" maxLength="50" [maxLength]="50" appInputValueValidation>
+                                <input matInput formControlName="companyName" class="form-control"
+                                    [placeholder]="formPlaceHolder.ENTER_COMPANY_NAME" maxLength="50" [maxLength]="50"
+                                    appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('companyName').value.length}}/50
                                 </mat-hint>
                                 <mat-error class="pt-4">
@@ -37,9 +39,12 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <app-email-domain-auto-suggest formControlName="emailId" [placeholder]="formPlaceHolder.ENTER_EMAIL_ID"></app-email-domain-auto-suggest>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('emailId').errors?.required">This field is required</mat-error>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
+                                <app-email-domain-auto-suggest formControlName="emailId"
+                                    [placeholder]="formPlaceHolder.ENTER_EMAIL_ID"></app-email-domain-auto-suggest>
+                                <mat-error class=" pt-4" *ngIf="orgProfile.get('emailId').errors?.required">This field
+                                    is required</mat-error>
+                                <mat-error class=" pt-4" *ngIf="orgProfile.get('emailId').errors?.pattern">Please enter
+                                    valid email</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -53,7 +58,8 @@
                             <mat-form-field appearance="standard">
                                 <mat-select formControlName="isdCodeId" class="form-control">
                                     <mat-option>
-                                        <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code..."></ngx-mat-select-search>
+                                        <ngx-mat-select-search [formControl]="filterCtrl"
+                                            placeholderLabel="ISD code..."></ngx-mat-select-search>
                                     </mat-option>
                                     <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
                                         {{code.code}}({{code.countryCode}})</mat-option>
@@ -65,11 +71,15 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="mobileNo" class="form-control" [placeholder]="formPlaceHolder.ENTER_MOBILE_NUMBER" maxLength="10" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input matInput formControlName="mobileNo" class="form-control"
+                                    [placeholder]="formPlaceHolder.ENTER_MOBILE_NUMBER" maxLength="10" [maxLength]="10"
+                                    [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('mobileNo').value.length}}/10
                                 </mat-hint>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field is required</mat-error>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('mobileNo').errors?.pattern || orgProfile.get('mobileNo').errors?.minlength || orgProfile.get('mobileNo').errors?.maxlength">
+                                <mat-error class=" pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field
+                                    is required</mat-error>
+                                <mat-error class=" pt-4"
+                                    *ngIf="orgProfile.get('mobileNo').errors?.pattern || orgProfile.get('mobileNo').errors?.minlength || orgProfile.get('mobileNo').errors?.maxlength">
                                     Please enter valid mobile number</mat-error>
                             </mat-form-field>
                         </div>
@@ -82,7 +92,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="website" class="form-control" [placeholder]="formPlaceHolder.ENTER_WEBSITE">
+                                <input matInput formControlName="website" class="form-control"
+                                    [placeholder]="formPlaceHolder.ENTER_WEBSITE">
                                 <mat-error class=" pt-4">
                                     This field is required
                                 </mat-error>
@@ -97,7 +108,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <textarea matInput formControlName="address" class="form-control" rows="5" [placeholder]="formPlaceHolder.ENTER_COMPANY_ADDRESS"></textarea>
+                                <textarea matInput formControlName="address" class="form-control" rows="5"
+                                    [placeholder]="formPlaceHolder.ENTER_COMPANY_ADDRESS"></textarea>
                                 <mat-error class=" pt-4">
                                     This field is required
                                 </mat-error>
@@ -136,9 +148,11 @@
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <mat-select formControlName="country" class="form-control br-0" id="sel1">
                                     <mat-option>
-                                        <ngx-mat-select-search [formControl]="filterCountryCtrl" placeholderLabel="Country..."></ngx-mat-select-search>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl"
+                                            placeholderLabel="Country..."></ngx-mat-select-search>
                                     </mat-option>
-                                    <mat-option [value]="code.countryName" *ngFor="let code of filteredCountryCodes | async">
+                                    <mat-option [value]="code.countryName"
+                                        *ngFor="let code of filteredCountryCodes | async">
                                         {{code.countryName}}</mat-option>
                                 </mat-select>
                                 <mat-error class=" pt-4">
@@ -155,11 +169,15 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="gstNumber" class="form-control" [placeholder]="formPlaceHolder.ENTER_GST" maxLength="15" [maxLength]="15" appInputValueValidation>
+                                <input matInput formControlName="gstNumber" class="form-control"
+                                    [placeholder]="formPlaceHolder.ENTER_GST" maxLength="15" [maxLength]="15"
+                                    appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('gstNumber').value.length}}/30
                                 </mat-hint>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('gstNumber').errors?.required">This field is required</mat-error>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('gstNumber').errors?.pattern || orgProfile.get('gstNumber').errors?.minlength || orgProfile.get('gstNumber').errors?.maxlength">
+                                <mat-error class=" pt-4" *ngIf="orgProfile.get('gstNumber').errors?.required">This field
+                                    is required</mat-error>
+                                <mat-error class=" pt-4"
+                                    *ngIf="orgProfile.get('gstNumber').errors?.pattern || orgProfile.get('gstNumber').errors?.minlength || orgProfile.get('gstNumber').errors?.maxlength">
                                     Please enter valid GSTIN number</mat-error>
                             </mat-form-field>
                         </div>
@@ -172,11 +190,16 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input (input)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" maxLength="6" [placeholder]="formPlaceHolder.ENTER_PIN_CODE" [maxLength]="6" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <input (input)="getPostalPin($event.target.value)" class="form-control br-0 text-left"
+                                    formControlName="pincode" matInput type="text" maxLength="6"
+                                    [placeholder]="formPlaceHolder.ENTER_PIN_CODE" [maxLength]="6"
+                                    [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="">{{orgProfile.get('pincode').value.length}}/6
                                 </mat-hint>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('pincode').errors?.pattern || orgProfile.get('pincode').errors?.minlength || orgProfile.get('pincode').errors?.maxlength">
+                                <mat-error class=" pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field
+                                    is required</mat-error>
+                                <mat-error class=" pt-4"
+                                    *ngIf="orgProfile.get('pincode').errors?.pattern || orgProfile.get('pincode').errors?.minlength || orgProfile.get('pincode').errors?.maxlength">
                                     Please enter valid pincode number</mat-error>
                             </mat-form-field>
                         </div>
@@ -192,7 +215,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input #city class="form-control br-0" formControlName="city" type="text" matInput readonly placeholder="City">
+                                <input #city class="form-control br-0" formControlName="city" type="text" matInput
+                                    readonly placeholder="City">
                                 <mat-error class=" pt-4">This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -205,7 +229,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input #state class="form-control br-0" type="text" formControlName="state" matInput readonly placeholder="State">
+                                <input #state class="form-control br-0" type="text" formControlName="state" matInput
+                                    readonly placeholder="State">
                                 <mat-error class=" pt-4">This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -217,14 +242,17 @@
             <div class="row pt-44" *ngIf="selectedTab == 1">
                 <div class="col-md-5 text-right pr-0" *ngIf="!cropImage">
                     <h5 class="mb-0 mt-8 f-14 ">Your logo</h5>
-                    <p class="f-12 text-primitive m-0"> This logo is visible on top left of web login, About section in mobile app etc.</p>
+                    <p class="f-12 text-primitive m-0"> This logo is visible on top left of web login, About section in
+                        mobile app etc.</p>
                 </div>
                 <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
                         <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
-                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="profileImg" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper1></app-image-cropper>
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="profileImg"
+                            [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"
+                            #cropper1></app-image-cropper>
                         <div class="zoomClassPosition" *ngIf="showCropper">
 
                             <i (click)="cropper1.zoomIn()" class="material-icons mr-12 c-p">
@@ -270,7 +298,8 @@
             <div class="row pt-44" *ngIf="selectedTab == 2">
                 <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
                     <h5 class="mb-0 mt-8 f-14">Your logo</h5>
-                    <p class="f-12 text-primitive text-primitive">This logo is visible on various reports (MF, Financial Plan etc.).
+                    <p class="f-12 text-primitive text-primitive">This logo is visible on various reports (MF, Financial
+                        Plan etc.).
                     </p>
                 </div>
                 <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
@@ -278,7 +307,8 @@
                         <h5 class="mb-0 f-14 mt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
-                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="reportImg" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper2>
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [imageURL]="reportImg"
+                            [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #cropper2>
                         </app-image-cropper>
                         <div class="zoomClassPosition" *ngIf="showCropper">
 
@@ -317,7 +347,7 @@
         </mat-tab>
     </mat-tab-group>
 </div>
-<div *ngIf="!dataLoaded">
+<div *ngIf="!dataLoaded" class="loader-text">
     Loading data
 </div>
 <div class="bottom-fixed wrapper-12 w-60">

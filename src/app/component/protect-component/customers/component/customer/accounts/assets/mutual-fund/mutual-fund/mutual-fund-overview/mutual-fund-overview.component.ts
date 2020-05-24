@@ -66,8 +66,14 @@ export class MutualFundOverviewComponent implements OnInit {
   filterData: any;
   viewMode: string;
   mutualFund: any;
+  setDefaultFilterData: any;
   mfCopyData: any;
   mfDataUnrealised: any;
+  openSummaryTab: boolean = false;
+  inputDataToSend: any;
+  mfGetData: any;
+  clientIdToClearStorage: any;
+  openTransactionTab: boolean =  false;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -77,14 +83,40 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    this.MfServiceService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if(this.clientIdToClearStorage){
+      if(this.clientIdToClearStorage != this.clientId){
+        this.MfServiceService.clearStorage()
+      }
+    }
+    this.MfServiceService.setClientId(this.clientId);
     this.MfServiceService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
       })
+      this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res;
+      })
+      this.mfService.getMfData()
+      .subscribe(res => {
+        this.mutualFund = res;
+      })
     console.log(this.viewMode)
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    this.getMutualFundData();
+
+    this.MfServiceService.getDataForMfGet()
+      .subscribe(res => {
+        this.mfGetData = res;
+      })
+    if(this.mfGetData){
+      this.getMutualFundResponse(this.mfGetData);
+    }else{
+      this.getMutualFundData();
+    }
     // setTimeout(() => {
     //  this.getMutualFundResponse(this.mutualFund);
     //  this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
@@ -186,7 +218,17 @@ export class MutualFundOverviewComponent implements OnInit {
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
       if (!this.rightFilterData) {
-        this.mutualFund = this.filterData;
+        if(!this.setDefaultFilterData){
+          if(!this.mutualFund){
+            this.mfService.getMfData()
+            .subscribe(res => {
+              this.mutualFund = res;
+            })
+          }
+          this.mutualFund = this.filterData;
+          this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
+        }
+        this.MfServiceService.setFilterValues(this.setDefaultFilterData);
         this.MfServiceService.setMfData(this.mutualFund);
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
@@ -431,8 +473,8 @@ export class MutualFundOverviewComponent implements OnInit {
           },
           startAngle: 0,
           endAngle: 360,
-          center: ['52%', '55%'],
-          size: '120%'
+          center: ['52%', '50%'],
+          size: '125%'
         }
       },
       series: [{
@@ -542,10 +584,26 @@ export class MutualFundOverviewComponent implements OnInit {
   //     }
   //   );
   // }
-  openSummary(){
-    this.mfService.changeViewMode('Summary');
+  openSummary(flag){
+    if('scheme wise'){
+      this.openTransactionTab = true
+      this.inputDataToSend = flag
+    }else{
+      this.openSummaryTab = true
+      this.inputDataToSend = flag
+    }
   }
   openFilter() {
+    const obj = {
+      advisor_id:this.advisorId,
+      clientId: this.clientId,
+      reportId:1
+    }
+    this.custumService.getSaveFilters(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -553,14 +611,32 @@ export class MutualFundOverviewComponent implements OnInit {
       state: 'open35',
       componentName: RightFilterComponent
     };
+    // fragmentData.data = {
+    //   name: 'Overview Report',
+    //   mfData: this.mutualFund,
+    //   folioWise: this.mutualFund.mutualFundList,
+    //   schemeWise: this.mutualFund.schemeWise,
+    //   familyMember: this.mutualFund.family_member_list,
+    //   category: this.mutualFund.mutualFundCategoryMastersList,
+    //   transactionView: this.displayedColumns,
+    // };
     fragmentData.data = {
       name: 'Overview Report',
       mfData: this.mutualFund,
-      folioWise: this.mutualFund.mutualFundList,
-      schemeWise: this.mutualFund.schemeWise,
-      familyMember: this.mutualFund.family_member_list,
-      category: this.mutualFund.mutualFundCategoryMastersList,
+      folioWise: this.setDefaultFilterData.folioWise,
+      schemeWise: this.setDefaultFilterData.schemeWise,
+      category: this.setDefaultFilterData.category,
       transactionView: this.displayedColumns,
+      familyMember:this.setDefaultFilterData.familyMember,
+      scheme:this.setDefaultFilterData.scheme,
+      reportType :this.setDefaultFilterData.reportType,
+      reportAsOn:this.setDefaultFilterData.reportAsOn,
+      showFolio :this.setDefaultFilterData.showFolio,
+      fromDate:this.setDefaultFilterData.fromDate,
+      toDate:this.setDefaultFilterData.toDate,
+      overviewFilter:this.setDefaultFilterData.overviewFilter,
+      transactionPeriod:this.setDefaultFilterData.transactionPeriod,
+      transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -590,7 +666,9 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-
+            this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
+            this.MfServiceService.setFilterValues(this.setDefaultFilterData);
+            this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
             this.isLoading = false;
             this.changeInput.emit(false);
             // this.getMutualFundResponse(this.rightFilterData.mfData);

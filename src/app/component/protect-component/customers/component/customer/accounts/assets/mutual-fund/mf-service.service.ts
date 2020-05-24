@@ -18,7 +18,9 @@ export class MfServiceService {
   private viewMode = new BehaviorSubject('');
   private mfData = new BehaviorSubject('');
   private navValue = new BehaviorSubject('');
-
+  private filterValues = new BehaviorSubject('');
+  private mfGetData = new BehaviorSubject('');
+  private clientIdToClearData = new BehaviorSubject('');
 
   getPersonalDetails(data) {
     const obj = {
@@ -58,6 +60,7 @@ export class MfServiceService {
     data.subCategoryData = this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     data.schemeWise = this.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.filter(data.schemeWise, 'mutualFund');
+    data.folioWise = this.filter(data.schemeWise, 'mutualFund');
     return data;
   }
   filter(data, key) {// filtering data as per category
@@ -294,10 +297,10 @@ export class MfServiceService {
        (item.balanceUnit!=0 && item.balanceUnit > 0) || item.folioNumber != 0 
       );
     }
-    if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
-      dataForFilter.reportAsOn = null;
-    }
-    if (dataForFilter.reportAsOn) {
+    // if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
+    //   dataForFilter.reportAsOn = null;
+    // }
+    if (dataForFilter.reportAsOn && (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT')) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
           this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
@@ -362,7 +365,9 @@ export class MfServiceService {
       grandfathering: dataForFilter.grandfathering,
       mfData,
       capitalGainData: dataForFilter.capitalGainData,
-      categoryWiseMfList: categoryWiseMfList
+      categoryWiseMfList: categoryWiseMfList,
+      transactionPeriodCheck:dataForFilter.transactionPeriodCheck,
+      transactionPeriod:dataForFilter.transactionPeriod
     };
     return sendData;
   }
@@ -382,7 +387,126 @@ export class MfServiceService {
   sendMutualFundData(data) {
     this.mutualFundDataSource.next(data);
   }
+  setFilterData(originalData,rightSideData,displayColumns){
+    let date = new Date();
+    let filterData;
+    let transactionView = [];
+    if(rightSideData){
+      filterData = rightSideData.mfData
+    }
+    let schemWise = []
+    let amcWiseData = originalData.schemeWise; 
+    let folio = this.getReportFilterData(originalData.mutualFundList,(filterData) ? filterData.mutualFundList : '','folioNumber','folioNumber');
+    let category = this.getReportFilterData(originalData.mutualFundCategoryMastersList,(filterData) ? filterData.mutualFundCategoryMastersList : '','id','id');
+     let familyMember = this.getReportFilterData(originalData.family_member_list,(filterData) ? filterData.family_member_list:'','id','id');
+     let amc = this.getReportFilterData(amcWiseData,(filterData) ? filterData.schemeWise : '','amc_id','amc_id');
+     displayColumns.forEach(element => {
+       if(element.displayName){
+        const obj = {
+          displayName: element.displayName,
+          selected:true
+        };
+        transactionView.push(obj);
+       }
+      });
+      transactionView = this.getOtherFilter(transactionView,(rightSideData) ? rightSideData.transactionView : '','selected','selected','displayName')
+      let overviewFilter = [{ name: 'Summary bar', selected: true },
+      { name: 'Scheme wise allocation', selected: true },
+      { name: 'Cashflow Status', selected: true },
+      { name: 'Family Member wise allocation', selected: true },
+      { name: 'Category wise allocation', selected: true },
+      { name: 'Sub Category wise allocation', selected: true }];
+      overviewFilter = this.getOtherFilter(overviewFilter,(rightSideData) ? rightSideData.overviewFilter : '','selected','selected','name')
+     originalData.mutualFundList.forEach(element => {
+        const obj = {
+        id: element.schemeId,
+        schemeName: element.schemeName,
+        amc_name: element.amcName,
+        mutualFund: element.mutualFund,
+        amc_id: element.amcId,
+        currentValue : element.currentValue,
+     
+      };
+      schemWise.push(obj);
+     });
+     let scheme = this.getReportFilterData(schemWise,(filterData) ? filterData.schemeWise:'','id','id');
+    const obj={
+      schemeWise:amc,
+      folioWise:folio,
+      category:category,
+      familyMember:familyMember,
+      scheme:scheme,
+      transactionView:transactionView,
+      reportType :(rightSideData) ? rightSideData.reportType[0].name : 'Sub Category wise',
+      reportAsOn:(rightSideData) ? rightSideData.reportAsOn : new Date(),
+      showFolio : (rightSideData) ? rightSideData.showFolio : '2',
+      fromDate :(rightSideData) ? rightSideData.fromDate : new Date(date.setFullYear(date.getFullYear() - 1)),
+      toDate :(rightSideData) ? rightSideData.toDate: new Date(),
+      overviewFilter:overviewFilter,
+      transactionPeriod:(rightSideData) ? rightSideData.transactionPeriod : false,
+      transactionPeriodCheck:(rightSideData) ? rightSideData.transactionPeriodCheck : false
 
+    }
+    return obj;
+  }
+  getOtherFilter(orgData,filterData,orgId,FilterId,name){
+    if(filterData){
+      // orgData.forEach(item => item.selected = '');
+      filterData.forEach(element => {
+        orgData.forEach(item => {
+          if((item[orgId] != element[FilterId]) && item[name] == element[name]){
+            item.selected = false;
+          }
+        });
+      });
+    }else{
+      orgData.forEach(item => item.selected = true);
+    }
+      // orgData.forEach(element => {
+      //   if(element.selected == ''){
+      //     element.selected = false;
+      //   }
+      // });
+    // orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
+    return orgData;
+  }
+  getReportFilterData(orgData,filterData,orgId,FilterId){
+    // if(rightSideData){
+    //   filterData = rightSideData.mfData;
+    // }
+    orgData = orgData.filter((item: any) =>
+    (item.currentValue!=0 && item.currentValue > 0)
+    );
+ 
+    if(filterData ? (filterData.length != orgData.length) : filterData){
+      filterData = filterData.filter((item: any) =>
+      (item.currentValue!=0 && item.currentValue > 0)
+      );
+      orgData.forEach(item => item.selected = '');
+      filterData.forEach(element => {
+        orgData.forEach(item => {
+          if(item[orgId] == element[FilterId]){
+            item.selected = true;
+          }
+        });
+      });
+    }else{
+      orgData.forEach(item => item.selected = true);
+    }
+      orgData.forEach(element => {
+        if(element.selected == ''){
+          element.selected = false;
+        }
+      });
+    orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
+    return orgData;
+  }
+
+  clearStorage(){
+    this.setFilterValues('');
+    this.setDataForMfGet('');
+    this.setMfData('');
+  }
   getMutualFundData() {
     return this.mutualFundDataSource.asObservable();
   }
@@ -422,5 +546,23 @@ export class MfServiceService {
 
   getNavValue() {
     return this.navValue.asObservable();
+  }
+  setFilterValues(value) {
+    this.filterValues.next(value);
+  }
+  getFilterValues() {
+    return this.filterValues.asObservable();
+  }
+  setDataForMfGet(value){
+    this.mfGetData.next(value);
+  }
+  getDataForMfGet(){
+    return this.mfGetData.asObservable();
+  }
+  setClientId(value){
+    this.clientIdToClearData.next(value);
+  }
+  getClientId(){
+    return this.clientIdToClearData.asObservable();
   }
 }

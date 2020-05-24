@@ -13,7 +13,6 @@ export class DocumentPreviewComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() {
-    console.log(this.data)
   }
   downloadDocumentAsPDF() {
     this.data.cancelButton()

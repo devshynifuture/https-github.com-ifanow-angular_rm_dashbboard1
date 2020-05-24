@@ -1,87 +1,98 @@
 .k-pdf-export .k-filterable .k-grid-filter {
-    display: none;
+  display: none;
 }
 
 #piechartMutualFund {
-    height: 200px;
-    width: 200px;
+  height:185px;
+  width:185px;
+}
+
+::ng-deep .pie-chart-center {
+  // padding-left: 6px !important;
+  // padding-top: 10px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .highcharts-data-table table {
-    font-family: Verdana, sans-serif;
-    border-collapse: collapse;
-    border: 1px solid #EBEBEB;
-    margin: 10px auto;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
 }
 
 ::ng-deep .highcharts-credits {
-    display: none !important;
+  display: none !important;
 }
 
 .highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
 }
 
 .highcharts-data-table th {
-    font-weight: 600;
-    padding: 0.5em;
+  font-weight: 600;
+  padding: 0.5em;
 }
 
 .highcharts-data-table td,
 .highcharts-data-table th,
 .highcharts-data-table caption {
-    padding: 0.5em;
+  padding: 0.5em;
 }
 
 .highcharts-data-table thead tr,
 .highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
+  background: #f8f8f8;
 }
 
 .highcharts-data-table tr:hover {
-    background: #f1f7ff;
+  background: #f1f7ff;
 }
 
 .skeletonAnimation .relClass {
-    position: relative;
-    .bar {
-        background-color: #E7E7E7;
-        width: 100%;
-        &:after {
-            position: absolute;
-            transform: translateY(-50%);
-            top: 50%;
-            left: 0;
-            content: "";
-            display: block;
-            width: 100%;
-            height: 24px;
-            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
-            background-size: 100px 24px;
-            background-position: -10px 0;
-            background-repeat: no-repeat;
-            animation: loading 1s infinite;
-        }
+  position: relative;
+
+  .bar {
+    background-color: #E7E7E7;
+    width: 100%;
+
+    &:after {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 0;
+      content: "";
+      display: block;
+      width: 100%;
+      height: 24px;
+      background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+      background-size: 100px 24px;
+      background-position: -10px 0;
+      background-repeat: no-repeat;
+      animation: loading 1s infinite;
     }
+  }
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .height24 {
-    height: 24px;
+  height: 24px;
 }
 
 .pdfClass {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    margin-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-right: 10px;
 }

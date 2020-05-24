@@ -79,7 +79,6 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       advisorId: this.advisorId
     }
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
-      console.log('team member details', res)
       this.showSpinner = false;
       if(res && res.length > 0) {
         this.teamMembers = res;
@@ -96,7 +95,6 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
   selectTeamMember(teamMember) {
-    console.log(teamMember)
     this.selectedMember = teamMember
   }
   saveTeamMember(){
@@ -117,7 +115,6 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       roleName: this.selectedMember.role.roleName,
     }
     this.orgSetting.updateAccessControl(obj).subscribe((res) => {
-      console.log('team member details', res)
       this.teamMembers = res;
       this.eventService.openSnackBar("Reporting Manager Updated Successfully");
       this.close(true);

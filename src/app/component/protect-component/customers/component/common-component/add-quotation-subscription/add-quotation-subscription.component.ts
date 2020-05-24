@@ -63,7 +63,6 @@ createSubscription(value,data) {
   };
   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
     sideBarData => {
-      console.log('this is sidebardata in subs subs : ', sideBarData);
       if (UtilService.isRefreshRequired(sideBarData)) {
         // this.getQuotationsData(false);
         // console.log('this is sidebardata in subs subs 2: ');

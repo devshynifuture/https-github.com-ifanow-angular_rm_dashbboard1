@@ -28,7 +28,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MutualFundSummaryComponent implements OnInit {
 
-  displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
+  displayedColumns= ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
   mfData: any;
   grandTotal: any = {};
@@ -52,7 +52,21 @@ export class MutualFundSummaryComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   viewMode: string;
   reponseData: any;
+  setDefaultFilterData: any;
 
+  inputData: any;
+  mfGetData: string;
+  displayColArray =[];
+  resData: any;
+  columns=[];
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data);
+  }
+  get data() {
+    return this.inputData;
+  }
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -75,14 +89,35 @@ export class MutualFundSummaryComponent implements OnInit {
       .subscribe(res => {
         this.viewMode = res;
       })
-    this.getMutualFund();
+      this.mfService.getMfData()
+      .subscribe(res => {
+        this.mutualFund = res;
+      })
+      this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res;
+      })
+      this.mfService.getDataForMfGet()
+      .subscribe(res => {
+        this.mfGetData = res;
+      })
+
+      if(this.mfGetData){
+        this.getMutualFundResponse(this.mfGetData)
+      }else if(this.mutualFund){
+        this.getMutualFundResponse(this.mutualFund)
+      }else{
+        this.getMutualFund();
+      }
   }
+
 
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
-      this.mutualFundList = this.mutualFund.mutualFundList;
+      // this.mutualFundList = this.mutualFund.mutualFundList;
+      this.mutualFundList = this.mfData.mutualFundList;
       this.advisorData = this.mutualFund.advisorData;
       // this.getListForPdf(this.displayedColumns);
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
@@ -130,7 +165,7 @@ export class MutualFundSummaryComponent implements OnInit {
   getMutualFundResponse(data) {
     if (data) {
       this.mfData = data;
-      this.mutualFund = data;
+      // this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();
     } else {
@@ -175,11 +210,43 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   asyncFilter(mutualFund) {
+    if(this.inputData == 'category wise'){
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Category wise',
+        selected : true
+      }
+    }else if(this.inputData == 'investor wise'){
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Investor wise',
+        selected : true
+      }
+    }else if(this.inputData == 'Sub Category wise'){
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name : 'Sub Category wise',
+        selected : true
+      }
+    }else {
+        console.log('do nothing')
+      // this.rightFilterData.reportType = []
+      // this.rightFilterData.reportType[0] = {
+      //   name : 'Sub Category wise',
+      //   selected : true
+      // }
+    }
     if (typeof Worker !== 'undefined') {
+       this.rightFilterData.reportType=[];
+       this.rightFilterData.reportType[0]={
+        name:this.setDefaultFilterData.reportType,
+        selected:true
+      }
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
         mutualFundList: mutualFund,
-        mutualFund: this.mfData,
+        // mutualFund: this.mfData,
+        mutualFund: this.mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         // mfService: this.mfService
       };
@@ -250,6 +317,28 @@ export class MutualFundSummaryComponent implements OnInit {
   // }
 
   openFilter() {
+    // if(!this.resData){
+    //   this.displayColArray = this.displayedColumns;
+    //   let data =[];
+    //   this.displayColArray.forEach(element => {
+    //     const obj = {
+    //       displayName: element,
+    //       selected:true
+    //     };
+    //     data.push(obj);
+    //   });
+    //   this.displayColArray = data;
+    // }
+    const obj = {
+      advisor_id:this.advisorId,
+      clientId: this.clientId,
+      reportId:2
+    }
+    this.customerService.getSaveFilters(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -260,11 +349,20 @@ export class MutualFundSummaryComponent implements OnInit {
     fragmentData.data = {
       name: 'SUMMARY REPORT',
       mfData: this.mutualFund,
-      folioWise: this.mutualFund.mutualFundList,
-      schemeWise: this.mutualFund.schemeWise,
-      familyMember: this.mutualFund.family_member_list,
-      category: this.mutualFund.mutualFundCategoryMastersList,
-      transactionView: this.displayedColumns
+      folioWise:this.setDefaultFilterData.folioWise,
+      schemeWise: this.setDefaultFilterData.schemeWise,
+      familyMember: this.setDefaultFilterData.familyMember,
+      category: this.setDefaultFilterData.category,
+      transactionView: (this.setDefaultFilterData.transactionView.length>0) ? this.setDefaultFilterData.transactionView : this.displayedColumns,
+      scheme:this.setDefaultFilterData.scheme,
+      reportType :this.setDefaultFilterData.reportType,
+      reportAsOn:this.setDefaultFilterData.reportAsOn,
+      showFolio :this.setDefaultFilterData.showFolio,
+      transactionPeriod:this.setDefaultFilterData.transactionPeriod,
+      transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
+      fromDate:this.setDefaultFilterData.fromDate,
+      toDate:this.setDefaultFilterData.toDate,
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -275,10 +373,30 @@ export class MutualFundSummaryComponent implements OnInit {
             this.customDataSource = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
+            this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
+            this.columns =[];
+            this.rightFilterData.transactionView.forEach(element => {
+              if(element.selected == true){
+                this.columns.push(element.displayName)
+              }
+            });
+            this.displayedColumns =[];
+            this.displayedColumns = this.columns;
+            this.displayColArray=[];
+            this.rightFilterData.transactionView.forEach(element => {
+              const obj = {
+                displayName: element.displayName,
+                selected:true
+              };
+              this.displayColArray.push(obj);
+            });
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
+            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund,this.rightFilterData,this.displayColArray);
             this.asyncFilter(this.reponseData.mutualFundList);
+            this.mfService.setFilterValues(this.setDefaultFilterData);
+            this.mfService.setDataForMfGet(this.rightFilterData.mfData);
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
           rightSideDataSub.unsubscribe();
@@ -385,7 +503,7 @@ export class MutualFundSummaryComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);
   }
 
   deleteModal(value, element) {

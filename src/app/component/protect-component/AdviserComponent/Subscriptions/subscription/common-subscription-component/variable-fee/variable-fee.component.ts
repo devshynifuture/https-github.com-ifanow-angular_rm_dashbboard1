@@ -84,7 +84,6 @@ export class VariableFeeComponent implements OnInit {
   }
 
   getSubscribeData(data) {
-    console.log(data, "createVariableForm 123");
     (data.isCreateSub) ? this.isSave = true : this.isSave = false;
     if (data == undefined) {
       this.createVariableForm('');
@@ -92,10 +91,8 @@ export class VariableFeeComponent implements OnInit {
     } else {
       this.singleSubscriptionData = data;
       this.outputData.emit(this.singleSubscriptionData);
-      console.log('getSubscribeData : ', this.singleSubscriptionData);
     /* this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);*/
       this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery + "");
-      console.log(this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery))
       /*(this.singleSubscriptionData.subscriptionPricing.billingCycle == 0) ?
         this.getVariableFee().Duration.setValue(1) : this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);*/
       /*//TODO commented for now*/
@@ -141,13 +138,11 @@ export class VariableFeeComponent implements OnInit {
   selectAssets(data) {
     data.selected = true;
     this.selectedOtherAssets.push(parseInt(data.subAssetClassId));
-    console.log(this.selectedOtherAssets);
   }
 
   unselectAssets(data) {
     data.selected = false;
     this.selectedOtherAssets = this.selectedOtherAssets.filter(delData => delData != data.subAssetClassId)
-    console.log(this.selectedOtherAssets);
   }
 
   setValidation(flag) {
@@ -158,7 +153,6 @@ export class VariableFeeComponent implements OnInit {
   }
 
   saveVariableModifyFees() {
-    console.log();
    /*if (this.getVariableFee().billEvery.invalid) {
       this.isBillValid = true;
       return;
@@ -203,14 +197,11 @@ export class VariableFeeComponent implements OnInit {
         obj['feeTypeId'] = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj['clientId'] = this.singleSubscriptionData.clientId;
         obj['subId'] = this.singleSubscriptionData.id;
-        console.log(obj, "this.outputData 123");
         this.outputData.emit(obj);
 
         // const rightSideDataSub = this.subInjectService.addSingleProfile(fragmentData).subscribe(
         //   sideBarData => {
-        //     console.log('this is sidebardata in subs subs : ', sideBarData);
         //     if (UtilService.isDialogClose(sideBarData)) {
-        //       console.log('this is sidebardata in subs subs 2: ', sideBarData);
         //       rightSideDataSub.unsubscribe();
         //     }
         //   }
@@ -241,7 +232,6 @@ export class VariableFeeComponent implements OnInit {
     if (this.singleSubscriptionData.isCreateSub) {
 
     }
-    console.log('modify variable data', data);
     this.close(true);
   }
 }

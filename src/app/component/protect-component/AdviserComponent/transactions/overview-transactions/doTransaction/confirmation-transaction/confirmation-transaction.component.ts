@@ -12,6 +12,8 @@ export class ConfirmationTransactionComponent implements OnInit {
   inputData: any;
   isViewInitCalled: any;
   confirmData: any;
+  platformName;
+  salutationString;
 
   constructor(private subInjectService: SubscriptionInject,
               public router: Router,) {
@@ -19,8 +21,9 @@ export class ConfirmationTransactionComponent implements OnInit {
 
   @Input() set data(data) {
     this.inputData = data;
-    console.log('This is Input ConfirmationTransactionComponent@@  ', data);
     this.confirmData = data;
+    this.platformName = this.confirmData.aggregatorType == 1 ? 'NSE NMF II' : 'BSE Star MF';
+    this.salutationString = this.confirmData.isAdvisorSection ? 'Your client' : 'You';
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
@@ -28,7 +31,9 @@ export class ConfirmationTransactionComponent implements OnInit {
 
   redirctTransaction() {
     this.close();
-    this.router.navigate(['admin', 'transactions', 'transactions']);
+    if (this.confirmData.isAdvisorSection) {
+      this.router.navigate(['admin', 'transactions', 'transactions']);
+    }
   }
 
   get data() {

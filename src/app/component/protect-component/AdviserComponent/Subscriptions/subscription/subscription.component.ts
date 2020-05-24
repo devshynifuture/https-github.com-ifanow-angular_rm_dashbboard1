@@ -21,7 +21,6 @@ export class SubscriptionComponent implements OnInit {
   settingIndex: number;
   _value: number;
   set value(value: number) {
-    console.log('now value is ->>>>', value);
     this._value = value;
   }
 
@@ -50,12 +49,10 @@ export class SubscriptionComponent implements OnInit {
     //     params.get("label")
     //   }
     // })
-    console.log('i was called for check', this.label);
 
     // this.currentState = 'close';
     this.enumDataService.getDataForSubscriptionEnumService();
     this.selected = 1;
-    console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     if (this.router.url.split('/')[3] === 'dashboard') {
       this._value = 1;
     } else if (this.router.url.split('/')[3] === 'clients') {
@@ -81,24 +78,17 @@ export class SubscriptionComponent implements OnInit {
   }
 
   getFileDetails(e) {
-    console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: 1,
       documentType: 1
     };
     // this.byte = this.file.arrayBuffer();
-    // console.log('array byte', this.byte);
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        console.log('getFileDetails uploadFileToServer callback item : ', item);
-        console.log('getFileDetails uploadFileToServer callback status : ', status);
-        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
-        console.log('getFileDetails uploadFileToServer callback response : ', response);
 
         if (status == 200) {
           const responseObject = JSON.parse(response);
-          console.log('onChange file upload success response url : ', responseObject.url);
 
         }
 
@@ -109,7 +99,6 @@ export class SubscriptionComponent implements OnInit {
   // getActiveParam(){
   //  this.activeParam = this.eventService.activeParam.subscribe((active)=>{
   //     this.label = active;
-  //     console.log("i was called for check2", this.label, active);
   //   })
   // }
 
@@ -127,14 +116,12 @@ export class SubscriptionComponent implements OnInit {
   //       params.get("label")
   //     }
   //   })
-  //   console.log("i was called for check", this.label);
   // }
   advisorId(advisorId: any) {
     throw new Error('Method not implemented.');
   }
 
   getIndex(value) {
-    console.log(this.tabGroup);
     if (value.selectedSettingTab) {
       this.tabGroup.selectedIndex = value.selectedTab;
       this.settingIndex = value;

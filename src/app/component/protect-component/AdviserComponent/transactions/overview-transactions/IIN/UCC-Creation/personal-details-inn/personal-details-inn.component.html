@@ -1,167 +1,142 @@
 <div class="dialogclose">
-  <div class="row popup-header-fix-100">
-    <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-    </div>
-    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
-      <p class="f-16 mb-0">
-        Investment onboarding - IIN/UCC
-      </p>
+            <p class="f-16 mb-0">
+                Investment onboarding - IIN/UCC
+            </p>
+        </div>
+        <!-- (click)="dialogClose()" for prod build  -->
+        <div class="col-md-2 text-right">
+            <i (click)="close()" class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
     </div>
-    <!-- (click)="dialogClose()" for prod build  -->
-    <div class="col-md-2 text-right">
-      <i (click)="close()" class="material-icons pt-16 c-p pr-16">
-        clear
-      </i>
-    </div>
-  </div>
 </div>
 
 <div class="pt-60 mb-100" [formGroup]="personalDetails">
-  <div class="row">
-    <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
-    <div class="col-md-7 offset-2 p-0 bl-1 ">
-      <div class="p-20">
-        <h3 class="f-18 mb-28 f-600">Personal details</h3>
+    <div class="row">
+        <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
+        <div class="col-md-7 offset-2 p-0 bl-1 ">
+            <div class="p-20">
 
-        <div class="row pt-20">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? ' Name as per PAN' : ''}}</h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.TEXT_ONLY" [matAutocomplete]="auto1" appInputValueValidation
-                     class="form-control"
-                     formControlName="clientName" matInput maxlength="30"
-                     placeholder="Start typing to see nominee name" type="text">
-              <mat-autocomplete #auto1="matAutocomplete">
-                <mat-option (click)="selectedFamily(fm)" *ngFor="let fm of familyClientList" [value]="fm.name">
-                  {{fm.name}} </mat-option>
-              </mat-autocomplete>
-              <mat-error class="f-12">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-20">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0">{{inputData.taxStatus != '02' ? 'PAN' : 'Guardian PAN'}} </h3>
-          </div>
-          <div class="col-md-3 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #panNumber [inputValidator]="validatorType.ALPHA_NUMERIC" [upperCaseOnly]="true"
-                     appInputValueValidation class="form-control" formControlName="panNumber" matInput maxlength="10"
-                     placeholder="Enter Pan Number" type="text">
-              <mat-hint align="end" class=" text-custom">
-                {{panNumber.value.length}} / 10
-              </mat-hint>
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <h3 class="f-18 mb-10 f-600">Personal details</h3>
+
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0">{{inputData.taxStatus != '02' ? ' Name as per PAN' : 'Name'}}</h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [inputValidator]="validatorType.TEXT_ONLY" [matAutocomplete]="auto1" appInputValueValidation class="form-control" formControlName="clientName" matInput maxlength="30" placeholder="Start typing to see nominee name" type="text">
+                            <mat-autocomplete #auto1="matAutocomplete">
+                                <mat-option (click)="selectedFamily(fm)" *ngFor="let fm of familyClientList" [value]="fm.name">
+                                    {{fm.name}} </mat-option>
+                            </mat-autocomplete>
+                            <mat-error class="f-12">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0">{{inputData.taxStatus != '02' ? 'PAN' : 'Guardian PAN'}} </h3>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #panNumber [inputValidator]="validatorType.ALPHA_NUMERIC" [upperCaseOnly]="true" appInputValueValidation class="form-control" formControlName="panNumber" matInput maxlength="10" placeholder="Enter Pan Number" type="text">
+                            <mat-hint align="end" class=" text-custom">
+                                {{panNumber.value.length}} / 10
+                            </mat-hint>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
 
-        <div class="row pt-20">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0">
-              {{inputData.taxStatus != '02' ? "Father/Spouse's name" : 'Guardian name as per PAN'}}
-            </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #fatherName [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control"
-                     formControlName="fatherName" matInput placeholder="Enter Father/Spouse name" type="text">
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-20">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-20 m-0">Mother's name</h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #motherName [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control"
-                     formControlName="motherName" matInput placeholder="Enter Mother name" type="text">
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-32">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-8 m-0"> Date of birth</h3>
-          </div>
-          <div class="col-md-3 form-group">
-            <mat-form-field class="ba-date">
-              <input [matDatepicker]="picker" [max]="maxDate" class="form-control b-0" formControlName="dateOfBirth"
-                     matInput>
-              <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-32">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-8 m-0"> Gender</h3>
-          </div>
-          <div class="col-md-8 disabledCursor">
-            <mat-radio-group aria-label="Select an option" class="genderRadioButton" formControlName="gender">
-              <mat-radio-button
-                [ngClass]="personalDetails.get('gender').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
-                class="f-14"
-                value="1">
-                Male
-              </mat-radio-button>
-              <mat-radio-button
-                [ngClass]="personalDetails.get('gender').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
-                class="f-14"
-                value="2">
-                Female
-              </mat-radio-button>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0">
+                            {{inputData.taxStatus != '02' ? "Father/Spouse's name" : 'Guardian name as per PAN'}}
+                        </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #fatherName [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control" formControlName="fatherName" matInput placeholder="Enter Father/Spouse name" type="text">
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0">Mother's name</h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #motherName [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation class="form-control" formControlName="motherName" matInput placeholder="Enter Mother name" type="text">
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 pt-8 m-0"> Date of birth</h3>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <mat-form-field class="ba-date">
+                            <input [matDatepicker]="picker" [max]="maxDate" class="form-control b-0" formControlName="dateOfBirth" matInput>
+                            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end  pr-0">
+                        <h3 class="f-16   m-0"> Gender</h3>
+                    </div>
+                    <div class="col-md-8 disabledCursor">
+                        <mat-radio-group aria-label="Select an option" class="genderRadioButton" formControlName="gender">
+                            <mat-radio-button [ngClass]="personalDetails.get('gender').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'" class="f-14" value="1">
+                                Male
+                            </mat-radio-button>
+                            <mat-radio-button [ngClass]="personalDetails.get('gender').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'" class="f-14" value="2">
+                                Female
+                            </mat-radio-button>
 
-              <mat-radio-button
-                [ngClass]="personalDetails.get('gender').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
-                class="f-14"
-                value="3">
-                Other
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div>
-        <div class="row pt-32">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 pt-8 m-0"> Marital status</h3>
-          </div>
-          <div class="col-md-8">
-            <mat-radio-group aria-label="Select an option" class="genderRadioButton" formControlName="maritalStatus">
-              <mat-radio-button
-                [ngClass]="personalDetails.get('maritalStatus').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
-                class="f-14"
-                value="1">
-                Married
-              </mat-radio-button>
-              <mat-radio-button
-                [ngClass]="personalDetails.get('maritalStatus').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
-                class="f-14"
-                value="2">
-                Unmarried
-              </mat-radio-button>
+                            <mat-radio-button [ngClass]="personalDetails.get('gender').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'" class="f-14" value="3">
+                                Other
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> Marital status</h3>
+                    </div>
+                    <div class="col-md-8">
+                        <mat-radio-group aria-label="Select an option" class="genderRadioButton" formControlName="maritalStatus">
+                            <mat-radio-button [ngClass]="personalDetails.get('maritalStatus').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'" class="f-14" value="1">
+                                Married
+                            </mat-radio-button>
+                            <mat-radio-button [ngClass]="personalDetails.get('maritalStatus').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'" class="f-14" value="2">
+                                Unmarried
+                            </mat-radio-button>
 
-              <mat-radio-button
-                [ngClass]="personalDetails.get('maritalStatus').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
-                class="f-14"
-                value="3">
-                Other
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
+                            <mat-radio-button [ngClass]="personalDetails.get('maritalStatus').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'" class="f-14" value="3">
+                                Other
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
 
-    <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
+        <!-- <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
     <div class="row ">
         <div class="col-md-12">
             <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
@@ -181,37 +156,33 @@
     </div>
 </div> -->
 
-  </div>
+    </div>
 </div>
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-  <div class="col-md-3 p-0 d-flex align-items-center ">
-    <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
-  </div>
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
+    </div>
 
-  <div class="col-md-5 center_menu">
-    <a (click)="SendToForm('first',false);" *ngIf="inputData.holdingType != 'SI'"
-       [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
-      First holder </a>
-    <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingType != 'SI'"
-       [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p"> Second
-      holder </a>
-    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingType != 'SI'"
-       [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p">
-      {{thirdHolderButtonLabel}}</a>
-  </div>
+    <div class="col-md-5 center_menu">
+        <a (click)="SendToForm('first',false);" *ngIf="inputData.holdingType != 'SI'" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p">
+            First holder </a>
+        <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingType != 'SI'" [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p"> Second
+            holder </a>
+        <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingType != 'SI'" [ngClass]="{'activeLink': activeDetailsClass=='third'}" class="c-p">
+            {{thirdHolderButtonLabel}}</a>
+    </div>
 
-  <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-    <!-- <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+        <!-- <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
     PREVIOUS
 </button> -->
 
-    <button (click)="SendToForm(holder.type,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
-            mat-button>NEXT
-    </button>
+        <button (click)="SendToForm(holder.type,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT
+        </button>
 
-  </div>
+    </div>
 
 </div>

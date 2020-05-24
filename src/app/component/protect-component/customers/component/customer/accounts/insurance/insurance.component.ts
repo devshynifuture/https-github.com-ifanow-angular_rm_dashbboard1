@@ -114,7 +114,10 @@ export class InsuranceComponent implements OnInit {
       familyMemberId: element.familyMemberId,
       asset: value
     }
-    this.myFiles = fileName.target.files[0]
+    this.myFiles = [];
+    for (let i = 0; i < fileName.target.files.length; i++) {
+      this.myFiles.push(fileName.target.files[i]);
+    }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
@@ -388,7 +391,7 @@ export class InsuranceComponent implements OnInit {
             if (element.policyTypeId) {
               if (ele.id == element.policyTypeId) {
                 element.policyType = ele.policy_type
-                this.showType = 'plan Type'
+                this.showType = 'Plan Type'
               }
             } else {
               this.showType = 'PlanName'

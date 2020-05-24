@@ -19,7 +19,6 @@ export class ArnRiaSelectionService {
             data => {
                 if (data) {
                     this.arnRiaList = data;
-                    console.log("arn ria data:::", data);
                     const obj = {
                         number: 'All',
                         value: -1

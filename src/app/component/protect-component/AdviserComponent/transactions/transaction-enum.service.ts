@@ -46,7 +46,11 @@ export class TransactionEnumService {
   static setTransactionStatus(data) {
     data.forEach(element => {
       if (element.transactionType == 'ORDER') {
-        element.transactionType = 'PURCHASE';
+        element.transactionTypeString = 'Purchase';
+      } else if (element.transactionType == 'REDEMPTION') {
+        element.transactionTypeString = 'Redemption';
+      } else {
+        element.transactionTypeString = element.transactionType;
       }
       element.transactionStatus = this.getTransactionStatusString(element.status, element.transactionType);
     });
@@ -84,7 +88,7 @@ export class TransactionEnumService {
         transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;
         break;
       default:
-        console.log('');
+        break;
     }
     let statusString;
     transactionStatusList.forEach(element => {

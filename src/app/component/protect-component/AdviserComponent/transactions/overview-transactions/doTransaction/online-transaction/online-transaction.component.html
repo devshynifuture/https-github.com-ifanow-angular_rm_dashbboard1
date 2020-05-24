@@ -61,12 +61,11 @@ This field is required
         <p class="f-16 f-500 roboto">It looks like {{selectedName}} does not have an investment account opened yet.
         </p>
         <p class="f-16 text-black roboto">Would you like to open a new investment account?</p>
-        <button class="newAcBtn bg-primary" mat-button>
+        <button (click)="openNewCustomerIIN()" class="newAcBtn bg-primary" mat-button>
           Open new investment account <i class="material-icons text-right ml-16"> arrow_forward </i>
         </button>
         <p class="f-12 lh-16 text-primitive">Depending on your registration with NSE NMF II <br>of BSE Star MF, you will
-          be
-          able to create a new IIN/UCC</p>
+          be able to create a new IIN/UCC</p>
       </div>
     </div>
   </div>
@@ -90,8 +89,8 @@ This field is required
           </div>
           <div class="col-md-8 pl-0">
             <h3 [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0"> Purchase</h3>
-            <p [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0 roboto text-custom pt-4 f-13">Invest
-              a lumpsum amount in a jiffy
+            <p [ngClass]="{ 'text-primary': selectedDiv == 'PURCHASE' }" class="m-0 f-400 roboto text-custom pt-4 f-13">
+              Invest a lumpsum amount in a jiffy
             </p>
           </div>
         </div>
@@ -107,8 +106,8 @@ This field is required
           </div>
           <div class="col-md-8 pl-0">
             <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0"> Switch</h3>
-            <p [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0 roboto text-custom pt-4 f-13">Switch
-              lumpsum from one scheme to another
+            <p [ngClass]="{ 'text-primary': selectedDiv == 'SWITCH' }" class="m-0 f-400 roboto text-custom pt-4 f-13">
+              Switch lumpsum from one scheme to another
             </p>
           </div>
         </div>
@@ -125,7 +124,8 @@ This field is required
           </div>
           <div class="col-md-8 pl-0">
             <h3 [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }" class="m-0"> Redeem</h3>
-            <p [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }" class="m-0 roboto text-custom pt-4 f-13">
+            <p [ngClass]="{ 'text-primary': selectedDiv == 'REDEMPTION' }"
+               class="m-0 f-400 roboto text-custom pt-4 f-13">
               Redeem from your existing schemes
             </p>
           </div>
@@ -144,8 +144,8 @@ This field is required
           </div>
           <div class="col-md-8 pl-0">
             <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0"> SIP</h3>
-            <p [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0 roboto text-custom pt-4 f-13">Start a
-              systematic investment plan</p>
+            <p [ngClass]="{ 'text-primary': selectedDiv == 'SIP' }" class="m-0 f-400 roboto text-custom pt-4 f-13">Start
+              a systematic investment plan</p>
           </div>
         </div>
       </div>
@@ -160,8 +160,8 @@ This field is required
           </div>
           <div class="col-md-8 pl-0">
             <h3 [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0"> STP</h3>
-            <p [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0 roboto text-custom pt-4 f-13">Systematic
-              transfer from one scheme to another
+            <p [ngClass]="{ 'text-primary': selectedDiv == 'STP' }" class="m-0 f-400 roboto text-custom pt-4 f-13">
+              Systematic transfer from one scheme to another
             </p>
           </div>
         </div>
@@ -177,8 +177,8 @@ This field is required
           </div>
           <div class="col-md-8 pl-0">
             <h3 [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0"> SWP</h3>
-            <p [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0 roboto text-custom pt-4 f-13">Systematic
-              withdrawal from a scheme
+            <p [ngClass]="{ 'text-primary': selectedDiv == 'SWP' }" class="m-0 f-400 roboto text-custom pt-4 f-13">
+              Systematic withdrawal from a scheme
             </p>
           </div>
         </div>
@@ -186,10 +186,10 @@ This field is required
     </div>
   </div>
   <!-- <div *ngIf="noMapping==true" class="pt-90 pr-20 pl-20 pb-44 text-center">
-     <p>No mapping found</p>
-     <button (click)="noMapFunction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
-     </button>
-   </div>-->
+   <p>No mapping found</p>
+   <button (click)="noMapFunction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
+   </button>
+ </div>-->
   <div *ngIf="noSubBroker" class="pt-90 pr-20 pl-20 pb-44 text-center">
     <p>No broker found</p>
     <button (click)="noBroakerFun()" class="btn-primary addon v-middle" mat-stroked-button> ADD

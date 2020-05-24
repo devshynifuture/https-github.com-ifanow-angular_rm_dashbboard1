@@ -55,7 +55,6 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
 
   // Begin ControlValueAccesor methods.
   onChange = (data) => {
-    // console.log(data)
     // this.plainText = data.replace(/<[^>]*>/g, '');
     this.save(data);
   }
@@ -77,13 +76,10 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   }
 
   save(data) {
-    console.log('this is froala data ->>>>>');
-    console.log(data);
     this.modelChange.emit(data);
   }
 
   // saveData(data) {
-  //   // console.log(data);
   //   this.modelChange.emit(data);
   // }
 }

@@ -77,7 +77,6 @@ export class ResetPasswordComponent implements OnInit {
       };
       this.loginService.savePassword(obj).subscribe(
         data => {
-          console.log(data);
           if (data == 1) {
             if (!this.userData.buttonFlag) {
               const obj = {
@@ -86,9 +85,8 @@ export class ResetPasswordComponent implements OnInit {
               this.loginService.sendWelcomeEmail(obj).subscribe(
                 data => {
                   this.barButtonOptions.active = false;
-                  console.log(data);
                 },
-                err => { console.log(err) }
+                err => { {} }
               );
             }
             // this.authService.setToken(data.token);
@@ -150,7 +148,6 @@ export class ResetPasswordComponent implements OnInit {
     const password = this.setNewPasswordForm.get('newPassword').value;
     const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;
     this.newPasswordLength = (password != null) ? password.length : 0;
-    console.log(this.newPasswordLength);
     if (password !== '' && confirm_new_password !== '') {
       if (confirm_new_password !== password) {
         this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });

@@ -37,6 +37,27 @@ export class HttpService {
     }
   });
 
+  /**
+   * @description - This method will send back payload/response or throw error as per the status received 
+   * @param res - the response object received from the api calls
+   */
+  sendSuccessResponse(res){
+    if (res.status === 200 || res.status === 201) {
+      if(res.payLoad) {
+        const resData = this.changeBase64ToString(res);
+        return resData;
+      } else {
+        return res.message;
+      }
+    } else if (res.status == 'active') {
+      return res
+    } else if (res.status === 304 || 204) {
+      throw new Error(res.message);
+    } else {
+      throw new Error(res.message);
+    }
+  }
+
   authToken: any = '';
   private baseUrl = '';
   cacheMap = new Map<string, CacheEntry>();
@@ -64,20 +85,7 @@ export class HttpService {
     return this._http
       .post(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-
-        if (res.status === 200 || res.status === 201) {
-
-          const resData = this.changeBase64ToString(res);
-          return resData;
-        } else if (res.status == 'active') {
-          return res
-        } else if (res.status === 304 || 204) {
-          return res.message;
-        } else {
-
-          // this._router.navigate(['login']);
-          throw new Error(res.message);
-        }
+        return this.sendSuccessResponse(res);
       });
   }
 
@@ -294,7 +302,7 @@ export class HttpService {
           return resData;
         } else {
           // this._router.navigate(['login']);
-          throw new Error(res.message);
+          // throw new Error(res.message);
         }
       });
   }
@@ -331,15 +339,7 @@ export class HttpService {
     url = url.trim();
     return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        if (res.status === 200) {
-          const resData = this.changeBase64ToString(res);
-          return resData;
-        } else if (res.status === 204) {
-          return null;
-        } else {
-          // this._router.navigate(['login']);
-          throw new Error(res.message);
-        }
+        return this.sendSuccessResponse(res);
       });
   }
 

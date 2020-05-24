@@ -79,7 +79,7 @@ export class SetNewPasswordComponent implements OnInit {
                 data => {
                   this.barButtonOptions.active = false;
                 },
-                err => { console.log(err) }
+                err => { }
               );
             }
             // this.authService.setToken(data.token);

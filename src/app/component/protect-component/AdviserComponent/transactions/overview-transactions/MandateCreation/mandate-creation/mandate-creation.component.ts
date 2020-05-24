@@ -31,7 +31,6 @@ export class MandateCreationComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('all data in per', this.inputData);
     this.dataSource = this.inputData;
   }
 
@@ -52,10 +51,8 @@ export class MandateCreationComponent implements OnInit {
     const obj = {
       zipCode: value
     };
-    console.log(value, 'check value');
     if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data);
         this.PinData(data);
       });
     } else {
@@ -180,7 +177,6 @@ export class MandateCreationComponent implements OnInit {
         firstHolder: this.bankDetails.controls.firstHolder.value,
         address
       };
-      console.log('mandate details', value);
     }
   }
 }

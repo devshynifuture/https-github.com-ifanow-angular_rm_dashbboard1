@@ -36,7 +36,6 @@ export class BankDetailsIINComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    console.log('all data in bank', this.inputData);
     this.allData = data;
     this.holdingList = data;
     this.doneData = {};
@@ -56,7 +55,6 @@ export class BankDetailsIINComponent implements OnInit {
     if (this.clientData) {
       this.getBankList(this.clientData, !(!!this.firstHolderBank));
     }
-    console.log('#######', this.holdingList);
   }
 
   get data() {
@@ -123,10 +121,8 @@ export class BankDetailsIINComponent implements OnInit {
     };
     this.cusService.getBankList(obj).subscribe(
       data => {
-        console.log(data);
         if (data && data.length > 0) {
           this.bankList = data;
-          console.log('bank == ', this.bankList);
           if (shouldSetValue) {
             this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : [];
             this.getdataForm(this.firstHolderBank);
@@ -145,7 +141,6 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   getHolderList(data) {
-    console.log(data);
     this.holderList = data;
   }
 
@@ -161,22 +156,18 @@ export class BankDetailsIINComponent implements OnInit {
     const obj = {
       ifsc
     };
-    console.log('ifsc 121221', obj);
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-          console.log('postal 121221', data);
           this.bankData(data);
         },
         err => {
-          console.log(err, 'error internet');
           this.isIfsc = false;
         });
     }
   }
 
   bankData(data) {
-    console.log(data, 'bank data');
     this.isIfsc = false;
     let address1, address2, pincode, adderessData;
     if (data.address) {
@@ -285,10 +276,8 @@ export class BankDetailsIINComponent implements OnInit {
     const obj = {
       zipCode: value
     };
-    console.log(value, 'check value');
     if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
-        console.log('postal 121221', data);
         this.PinData(data);
       });
     } else {
@@ -320,7 +309,6 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   selectPaymentMode(value) {
-    console.log(value);
   }
 
   setValueFun(value) {
@@ -368,9 +356,11 @@ export class BankDetailsIINComponent implements OnInit {
     } else if (value == 'second') {
       if (this.secondHolderBank && this.secondHolderBank.bankName) {
         this.setValueFun(this.secondHolderBank);
+        this.saveBankDetails(value);
       } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
         this.secondHolderBank = this.bankList[1];
         this.setValueFun(this.secondHolderBank);
+        this.saveBankDetails(value);
       } else {
         this.reset();
       }
@@ -379,9 +369,11 @@ export class BankDetailsIINComponent implements OnInit {
       if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
         this.formId = value;
         this.setValueFun(this.thirdHolderBank);
+        this.saveBankDetails(value);
       } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
         this.thirdHolderBank = this.bankList[2];
         this.setValueFun(this.thirdHolderBank);
+        this.saveBankDetails(value);
       } else {
         this.reset();
       }
@@ -399,7 +391,6 @@ export class BankDetailsIINComponent implements OnInit {
     }
     if (flag == true) {
       this.doneData = true;
-      console.log('contact details', this.obj1);
       value = 'first';
       this.obj1.forEach(element => {
         if (!element.address) {
@@ -426,7 +417,6 @@ export class BankDetailsIINComponent implements OnInit {
         generalDetails: this.generalDetails,
         clientData: this.clientData
       };
-      console.log('##### bank ######', this.sendObj);
       this.openNomineeDetails(this.sendObj);
     }
   }
@@ -461,7 +451,6 @@ export class BankDetailsIINComponent implements OnInit {
   saveBankDetails(value) {
     if (this.bankDetailsForm.invalid) {
       for (const element in this.bankDetailsForm.controls) {
-        console.log(element);
         if (this.bankDetailsForm.get(element).invalid) {
           // this.inputs.find(input => !input.ngControl.valid).focus();
           this.bankDetailsForm.controls[element].markAsTouched();

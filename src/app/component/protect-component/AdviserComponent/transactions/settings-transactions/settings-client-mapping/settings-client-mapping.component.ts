@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { TransactionEnumService } from '../../transaction-enum.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AddClientMappingComponent} from './add-client-mapping/add-client-mapping.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {TransactionEnumService} from '../../transaction-enum.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -56,7 +56,6 @@ export class SettingsClientMappingComponent implements OnInit {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
-    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data), error => {
         this.isLoading = false;
@@ -68,7 +67,6 @@ export class SettingsClientMappingComponent implements OnInit {
   }
 
   getFilterOptionDataRes(data) {
-    console.log(data);
     if (data) {
       this.credentialsData = data;
       this.filterData = TransactionEnumService.setPlatformEnum(data);
@@ -95,7 +93,6 @@ export class SettingsClientMappingComponent implements OnInit {
     };
     this.tranService.getMapppedClients(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
@@ -145,7 +142,6 @@ export class SettingsClientMappingComponent implements OnInit {
     };
     this.tranService.getUnmappedClients(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
@@ -177,11 +173,10 @@ export class SettingsClientMappingComponent implements OnInit {
         const obj = {
           tpUserCredentialId: this.selectedBrokerCode.id,
           tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
-          aggregatorType: this.selectedPlatform.aggregatorType
+          aggregatorType: this.selectedBrokerCode.aggregatorType
         };
         this.onlineTransact.unmapMappedClient(obj).subscribe(
           data => {
-            console.log(data);
             this.sortDataFilterWise();
             dialogRef.close();
           },
@@ -193,10 +188,8 @@ export class SettingsClientMappingComponent implements OnInit {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -211,7 +204,6 @@ export class SettingsClientMappingComponent implements OnInit {
   }
 
   getDefaultDetailsRes(data) {
-    console.log('deault', data);
     this.allData = data;
     this.brokerCodeList = data.credentialList;
     // this.clientDataList = data.clientDataList
@@ -237,12 +229,10 @@ export class SettingsClientMappingComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           this.sortDataFilterWise();
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
           rightSideDataSub.unsubscribe();

@@ -23,7 +23,6 @@ export class PlatformPopUpComponent implements OnInit {
   dataS = []
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;
-    console.log('platformList == ', this.data)
     this.platformList = this.data.platform;
     ELEMENT_DATA.forEach(item => item.selected = false);
   }

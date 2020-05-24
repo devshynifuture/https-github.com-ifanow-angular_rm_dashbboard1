@@ -20,12 +20,12 @@
 
         <div formArrayName="getCoOwnerName">
             <div class="row" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8 ">Life assured</h5>
+                <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end">
+                    <h5 class="m-0">Life assured</h5>
                 </div>
                 <div [ngClass]="getCoOwner.controls.length > 1?'col-md-3' : 'col-md-5'">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
+                    <div class="form-group">
+                        <mat-form-field floatLabel="never" appearance="standard">
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
@@ -59,13 +59,13 @@
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Proposer</h5>
+            <div class="col-md-5 pr-0 justify-content-end flex-column d-flex text-right">
+                <h5 class="m-0  ">Proposer</h5>
                 <p class="m-0 f-12 text-custom">Who has proposed this policy</p>
             </div>
             <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
+                <div class="form-group ">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select matInput formControlName="proposer" #lifeAssured autocomplete="true" class="form-control br-0">
                             <mat-option (click)="getProposerData(option,i)" *ngFor="let option of nomineesListFM;index as i" [value]="option.userName">
                                 {{option.userName}}</mat-option>
@@ -76,34 +76,15 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Proposer</h5>
-                <p class="m-0 f-12 text-custom">Who has proposed this policy</p>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select matInput formControlName="proposer" #lifeAssured autocomplete="true"
-                            class="form-control br-0">
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                    [value]="f.userName">
-                                {{option.userName}}</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div> -->
+
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Policy name</h5>
+            <div class="col-md-5 pr-0 justify-content-end flex-column d-flex text-right">
+                <h5 class="m-0 ">Policy name</h5>
                 <p class="m-0 f-12 text-custom">Start typing to see policy names</p>
             </div>
             <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field class="example-full-width">
+                <div class="form-group ">
+                    <mat-form-field floatLabel="never" appearance="standard" class="example-full-width">
                         <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
@@ -118,12 +99,12 @@
         </div>
 
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Policy number</h5>
+            <div class="col-md-5 pr-0 align-items-center  d-flex justify-content-end">
+                <h5 class="m-0">Policy number</h5>
             </div>
             <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
+                <div class="form-group">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off" class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
@@ -151,12 +132,12 @@
         </div>
 
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Sum assured</h5>
+            <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end ">
+                <h5 class="m-0">Sum assured</h5>
             </div>
             <div class="col-md-3">
-                <div class="form-group mb-0 iconRupess">
-                    <mat-form-field>
+                <div class="form-group iconRupess">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="10" formControlName="sumAssured" [maxLength]="10" #sumassured autocomplete="off" class="form-control rupess br-0">
                         <mat-error>This field is required
                         </mat-error>

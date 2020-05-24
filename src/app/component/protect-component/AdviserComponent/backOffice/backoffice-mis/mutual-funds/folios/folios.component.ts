@@ -139,7 +139,6 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
-              console.log(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -159,7 +158,6 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
-              console.log(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {

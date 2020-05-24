@@ -1,20 +1,20 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { MatInput } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {MatInput} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -68,7 +68,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData;
-    console.log('all data in nominee', this.inputData);
     this.allData = data;
     this.doneData = {};
     this.doneData.bank = true;
@@ -120,7 +119,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   onChange(value) {
-    console.log('onChange', value.checked);
 
     if (value.checked == true) {
       this.nomineeDetails.controls.address1.setValue((this.allData.holderList[0].address1) ? this.allData.holderList[0].address1 : this.allData.holderList[0].address.address1);
@@ -133,7 +131,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   selectRelation(value) {
-    console.log('relation type', value);
     if (value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister') {
       this.maxDateForAdultDob = moment().subtract(18, 'years');
     } else {
@@ -152,10 +149,8 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data, shouldSetValue) {
-    console.log('getListOfFamilyByClientRes', data);
     this.nomineeFmList = data;
     this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.clientData.familyMemberId);
-    console.log('nomineeList', this.nomineeFmList);
   }
 
   selectedNominee(value) {
@@ -171,8 +166,6 @@ export class NomineeDetailsIinComponent implements OnInit {
     };
     this.custumService.getAddressList(obj).subscribe(
       data => {
-        console.log(data);
-        console.log('address stored', data);
         //  this.addressList = this.firstHolderContact
         this.addressList.address = data[0];
         this.getdataForm(this.addressList);
@@ -192,7 +185,6 @@ export class NomineeDetailsIinComponent implements OnInit {
       data => {
         this.familyMemberList = data;
         this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
-        console.log(this.familyMemberList);
         this.firstHolderNominee = this.familyMemberList[1];
         this.secondHolderNominee = this.familyMemberList[2];
         this.getdataForm(this.firstHolderNominee);
@@ -218,7 +210,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: 100,
       // percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
-      addressType: [(data.address.addressType) ? data.address.addressType : '', [Validators.required]],
+      addressType: [(data.address.addressType) ? data.address.addressType : 'Residential', [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
@@ -276,11 +268,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     let obj = {
       zipCode: value
     };
-    console.log(value, 'check value');
     if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
         this.isLoading = false;
-        console.log('postal 121221', data);
         this.PinData(data);
       });
     } else {
@@ -339,7 +329,6 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else {
       this.saveNomineeDetails(value);
     }
-    console.log('contact details', this.obj1);
 
     this.obj1 = [];
     this.obj1.push(this.firstHolderNominee);
@@ -374,7 +363,6 @@ export class NomineeDetailsIinComponent implements OnInit {
         tpUserSubRequestClientId1: 2,
         clientData: this.clientData
       };
-      console.log('##### ALLL DATA ####', obj);
       this.openFatcaDetails(obj);
     }
   }
@@ -408,7 +396,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   saveNomineeDetails(value) {
     if (this.nomineeDetails.invalid) {
       for (let element in this.nomineeDetails.controls) {
-        console.log(element);
         if (this.nomineeDetails.get(element).invalid) {
           this.inputs.find(input => !input.ngControl.valid).focus();
           this.nomineeDetails.controls[element].markAsTouched();
@@ -421,7 +408,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   createIINUCCRes(data) {
-    console.log('data to created', data);
   }
 
   setEditHolder(type, value) {

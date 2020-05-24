@@ -28,8 +28,8 @@
                         <mat-icon class="text-custom" [matMenuTriggerFor]="menu" class="c-p v-middle">more_vert
                         </mat-icon>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="OpenpersonalProfile(userList, '')">Edit</button>
-                            <button mat-menu-item (click)="resetPassword()">Reset Password</button>
+                            <button mat-menu-item (click)="OpenpersonalProfile(userList, '',0)">Edit</button>
+                            <button mat-menu-item (click)="OpenpersonalProfile(userList, '',2)">Reset Password</button>
                         </mat-menu>
                     </div>
                 </div>

@@ -126,6 +126,17 @@ export class PeopleService {
 
   editBirthDate(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_BITHDATE, data);
+  }
 
+  deleteAddress(data) {
+    return this.http.put(apiConfig.USER + appConfig.DELETE_ADDDRESS, data);
+  }
+
+  deleteBank(data) {
+    return this.http.put(apiConfig.USER + appConfig.DELETE_BANK, data);
+  }
+
+  deleteDemat(data) {
+    return this.http.put(apiConfig.USER + appConfig.DELETE_DEMAT, data);
   }
 }

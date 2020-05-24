@@ -90,7 +90,6 @@ export class SwpTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       this.getdataForm('');
@@ -107,6 +106,7 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {transactType: 'SWP'});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {multiTransact: false});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
 
   }
@@ -116,7 +116,6 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   getDefaultDetails(data) {
-    console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     if (this.oldDefaultData) {
@@ -207,17 +206,14 @@ export class SwpTransactionComponent implements OnInit {
 
   getbankDetails(value) {
     this.bankDetails = value[0];
-    console.log('bank details', value);
   }
 
   getSchemeDetailsRes(data) {
-    console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data;
-      console.log('reinvestment', this.reInvestmentOpt);
     }
     if (data.length == 1) {
       this.reInvestmentOpt = [];
@@ -229,12 +225,10 @@ export class SwpTransactionComponent implements OnInit {
   reinvest(scheme) {
     this.schemeDetails = scheme;
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
-    console.log('schemeDetails == ', this.schemeDetails);
   }
 
   getExistingSchemesRes(data) {
     this.showSpinner = false;
-    console.log('getExistingSchemesRes =', data);
     this.schemeList = data;
     this.swpTransaction.controls.schemeSwp.setValue('');
 
@@ -282,7 +276,6 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   getSchemeWiseFoliosRes(data) {
-    console.log('res scheme folio', data);
     this.showSpinnerFolio = false;
     if (data) {
       this.folioList = data;
@@ -332,7 +325,6 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   getSipFrequencyRes(data) {
-    console.log('isin Frequency ----', data);
     // this.swpFrequency = data;
     this.swpFrequency = this.processTransaction.filterFrequencyList(data);
     if (this.swpFrequency) {
@@ -364,7 +356,6 @@ export class SwpTransactionComponent implements OnInit {
     this.dateDisplay = this.dateDisplay.filter(element => {
       return element.date > currentDate;
     });
-    console.log('dateDisplay = ', this.dateDisplay);
   }
 
   close() {
@@ -476,11 +467,9 @@ export class SwpTransactionComponent implements OnInit {
         // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
       }
       if (this.multiTransact == true) {
-        console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
       }
-      console.log('swp json obj', obj);
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
@@ -497,7 +486,6 @@ export class SwpTransactionComponent implements OnInit {
 
   swpBSERes(data) {
     this.barButtonOptions.active = false;
-    console.log('swp res == ', data);
     if (data == undefined) {
 
     } else {
@@ -546,7 +534,6 @@ export class SwpTransactionComponent implements OnInit {
         const installment = this.swpTransaction.controls.installment.value;
         obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
-        console.log(this.childTransactions);
         this.swpTransaction.controls.date.reset();
         this.swpTransaction.controls.employeeContry.reset();
         this.swpTransaction.controls.tenure.reset();

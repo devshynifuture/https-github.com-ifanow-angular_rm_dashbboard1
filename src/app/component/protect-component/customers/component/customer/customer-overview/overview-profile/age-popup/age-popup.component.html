@@ -1,6 +1,6 @@
 <div class="p-20 pb-20 age-popup">
     <div mat-dialog-content class="ox-hide">
-        <h1 mat-dialog-title>Enter age</h1>
+        <h1 mat-dialog-title>Enter DOB</h1>
         <mat-form-field class="ba-date">
             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
                 class="form-control br-0 b-0" [formControl]="birthDate" matInput readonly>
@@ -16,7 +16,7 @@
         </div>
     </div> -->
     <div mat-dialog-actions class="pt-32 right text-right">
-        <button mat-button (click)="cancel(null)" class="text-danger">Cancel</button>
-        <button mat-button class="text-primary" (click)="editBirthDate()" cdkFocusInitial>Edit</button>
+        <button mat-button (click)="cancel(null)" class="text-danger">CANCEL</button>
+        <button mat-button class="text-primary" (click)="editBirthDate()" cdkFocusInitial>SAVE</button>
     </div>
 </div>

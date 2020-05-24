@@ -653,6 +653,12 @@ export class CustomerService {
   getMfUnrealizedTransactions(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }
+  getSaveFilters(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_GET, data);
+  }
+  AddSaveFilters(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, data);
+  }
   getDatedReportWiseCalculations(data) {
     const obj ={
       lastDate : data.lastDate,

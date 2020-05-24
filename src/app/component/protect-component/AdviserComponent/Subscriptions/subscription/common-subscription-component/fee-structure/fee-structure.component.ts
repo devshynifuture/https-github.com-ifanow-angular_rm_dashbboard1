@@ -27,17 +27,14 @@ export class FeeStructureComponent implements OnInit {
   selectedFee;
   singleService;
   ngOnInit() {
-    // console.log('FeeStructureComponent init', this.upperData);
     if(this.enumService.getOtherAssetData().length <= 0 ){
       this.enumDataService.getDataForSubscriptionEnumService();
       // this.otherAssetData = Object.assign([], this.enumService.getOtherAssetData());
     }
-    console.log(this.enumService.getOtherAssetData(), this.enumService.getOtherAssetData().length <= 0 , "check data variable fee");
   }
   @Output() changeServiceData = new EventEmitter();
   @Input()
   set upperData(upperData) {
-    console.log('FeeStructureComponent upperData set : ', this.upperData);
     this.advisorId = AuthService.getAdvisorId();
     this._upperData = upperData;
     // setTimeout(() => {
@@ -66,14 +63,12 @@ export class FeeStructureComponent implements OnInit {
     
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
             this.upperData = sideBarData.data
             this._upperData = sideBarData.data
             this.changeServiceData.emit(this.upperData)
           }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -105,10 +100,8 @@ export class FeeStructureComponent implements OnInit {
         )
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',

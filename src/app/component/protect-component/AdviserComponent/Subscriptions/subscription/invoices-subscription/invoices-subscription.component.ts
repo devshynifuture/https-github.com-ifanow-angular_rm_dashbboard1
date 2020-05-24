@@ -117,7 +117,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSubscription = 'false';
     this.invoiceDesign = 'true';
     this.dataCount = 0;
-    console.log(this.router.url, "this.router.isActive");
 
   }
   getClientSubData(boolean) {
@@ -190,8 +189,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const contentheight = wrapper.offsetHeight;
     const yoffset = uisubs.scrollTop;
     const y = yoffset + window.innerHeight;
-    // console.log(y >= contentheight && this.getData != undefined && this.scrollCallData, this.scrollCallData, "this.scrollCallData 123");
-    console.log(this.getData != undefined, this.scrollCallData, '|| this.statusIdList.length > 0');
 
     if ((y >= contentheight && this.getData != undefined && this.scrollCallData)) {
       this.scrollCallData = false;
@@ -201,7 +198,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
         this.scrollPosition = contentheight - window.innerHeight;
       }
 
-      console.log(this.scrollPosition, 'this.scrollPosition 123');
 
 
       if (this.statusIdList.length <= 0) {
@@ -232,7 +228,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     this.invoiceSubscription = edit;
     // this.invoiceDesign = edit;
-    console.log('edit', edit);
   }
 
   getInvoiceResponseData(data) {
@@ -241,7 +236,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
     //   this.dataSource.data = [];
     //   this.noData = 'No Data Found';
     // } else {
-    //   console.log(data);
     //   const ELEMENT_DATA = data;
     //   this.invoiceClientData = data;
     //   ELEMENT_DATA.forEach(item => item.selected = false);
@@ -253,7 +247,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     const uisubs = document.getElementById('ui-subs');
     this.isLoading = false;
-    console.log('  ho ho: ', data);
 
     if (data && data.length > 0) {
       this.data = data;
@@ -263,14 +256,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
       if(this.scrollPosition!=undefined){
         uisubs.scrollTo(0, this.scrollPosition);
       }
-      // console.log(uisubs.scrollTop, this.scrollPosition, 'this.yoffset');
 
       this.scrollCallData = true;
       // this.DataToSend = data;
     } else {
       this.data = [];
       this.dataSource.data = data;
-      // console.log(data);
       this.dataSource.data = [];
       const ELEMENT_DATA = data;
       // this.invoiceClientData = data;
@@ -289,13 +280,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
   // this.showPdfInvoice=true;
   // }
   openInvoice(data, value, state) {
-    console.log(' openInvoice this.loading : ', this.isLoading);
-    console.log(' openInvoice data : ', data);
-    console.log(' openInvoice value : ', value);
-    console.log(' openInvoice state : ', state);
 
     if (this.isLoading) {
-      console.log(' openInvoice this.loading : ', this.isLoading);
       return;
     }
     this.invoiceSub = value;
@@ -311,7 +297,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
   selectAll(event) {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
-      console.log(this.dataSource.filteredData, this.dataSource.data, "data check api 123");
 
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
@@ -346,7 +331,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   display(data) {
 
-    console.log(data, "edited data invoice");
     if (data.closingState) {
       this.dataSource.data = [{}, {}, {}]
       this.tableData = [];
@@ -365,7 +349,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.getClientSubData(false);
       this.dataCount = 0;
     }
-    console.log(data, "cancel data invoice");
     // this.ngOnInit();
   }
 
@@ -375,8 +358,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
     } else {
       this.showFilter = true;
     }
-    console.log('this.filterStatus: ', this.filterStatus);
-    console.log('this.filterDate: ', this.filterDate);
 
   }
 
@@ -389,13 +370,11 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.statusIdList = [];
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
-        console.log(this.statusIdList, 'this.statusIdList 1233');
       });
     } else {
       this.statusIdList = [];
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
-    console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, 'aaaa');
 
     const obj = {
       Id: this.advisorId,
@@ -407,7 +386,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
       statusIdList: this.statusIdList,
       dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
-    console.log('this.callFilter req obj : ', obj);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
       this.getClientSubData(false);
     } else {
@@ -421,7 +399,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
 
   filterSubscriptionRes(data, scrollLoader) {
-    console.log('filterSubscriptionRes', data);
     this.isLoading = false;
 
     if (data == undefined && this.statusIdLength < 1) {
@@ -433,7 +410,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
-      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
       //   this.statusIdLength = this.statusIdList.length;
       //   this.lastFilterDataId = 0;
@@ -441,13 +417,11 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
       this.lastFilterDataId = data[data.length - 1].id;
       // }
-      console.log(this.lastFilterDataId, "this.lastFilterDataId");
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
       }
       else {
         this.filterDataArr = this.filterDataArr.concat(data);
-        console.log(this.filterDataArr, "this.filterDataArr 123");
       }
       this.scrollCallData = true;
 
@@ -458,19 +432,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   addFilters(addFilters) {
 
-    console.log('addFilters', addFilters);
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       this.lastFilterDataId = 0;
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];
-      console.log(this.filterStatus);
     } else {
       this.lastFilterDataId = 0;
       // _.remove(this.filterStatus, this.senddataTo);
     }
 
-    console.log(this.filterStatus, 'this.filterStatus 123');
 
     this.callFilter(false);
   }
@@ -486,7 +457,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.filterDataArr = [];
     this.lastFilterDataId = 0;
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
-    console.log(this.selectedDateFilter, 'addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -495,12 +465,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(endDate);
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
-    console.log(this.filterDate, 'this.filterDate 123');
     this.callFilter(false);
   }
 
   removeDate(item) {
-    console.log(this.filterDate, 'this.filterDate 123 r');
     this.dataSource.data = [{}, {}, {}];
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
@@ -509,7 +477,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   remove(item) {
-    console.log(item, 'item123');
     this.dataSource.data = [{}, {}, {}];
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
@@ -525,7 +492,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getFiterRes(data) {
-    console.log(data, "data for filter");
     this.filterDataArr = [];
     this.filterStatus = data.statusFilterJson;
     this.filterDate = data.dateFilterArr;
@@ -572,10 +538,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -585,7 +549,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, "delete result");
       if (result.length > 0) {
         const tempList = []
         this.dataSource.data.forEach(singleElement => {

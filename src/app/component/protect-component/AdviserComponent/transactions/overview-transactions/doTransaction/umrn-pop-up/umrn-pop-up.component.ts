@@ -24,7 +24,6 @@ export class UmrnPopUpComponent implements OnInit {
   dataS = []
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;
-    console.log('investorList == ', this.data)
     this.mandateList = this.data.mandate;
     ELEMENT_DATA.forEach(item => item.selected = false);
   }

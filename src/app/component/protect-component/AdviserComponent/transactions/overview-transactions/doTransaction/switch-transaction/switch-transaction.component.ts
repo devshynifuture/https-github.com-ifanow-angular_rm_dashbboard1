@@ -97,7 +97,6 @@ export class SwitchTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
@@ -111,6 +110,7 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
     Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
     Object.assign(this.transactionSummary, {transactType: 'SWITCH'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {multiTransact: false});
@@ -121,7 +121,6 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   getDefaultDetails(data) {
-    console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
@@ -250,12 +249,10 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   getbankDetails(event) {
-    console.log(event);
   }
 
   getSchemeDetailsRes(data) {
     this.showSpinner = false;
-    console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     Object.assign(this.transactionSummary, {schemeName: this.schemeDetails.schemeName});
@@ -269,7 +266,6 @@ export class SwitchTransactionComponent implements OnInit {
     this.schemeDetailsTransfer = scheme;
 
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
-    console.log('schemeDetails == ', this.schemeDetails);
   }
 
   getSchemeWiseFolios() {
@@ -293,7 +289,6 @@ export class SwitchTransactionComponent implements OnInit {
 
   getSchemeWiseFoliosRes(data) {
     this.showSpinnerFolio = false;
-    console.log('res scheme folio', data);
     if (data) {
       this.folioList = data;
     }
@@ -337,7 +332,6 @@ export class SwitchTransactionComponent implements OnInit {
     this.schemeDetailsTransfer = data[0];
     if (data.length > 1) {
       this.reInvestmentOpt = data;
-      console.log('reinvestment', this.reInvestmentOpt);
     } else if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
@@ -382,7 +376,6 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switchType(event) {
-    console.log('switch transaction switchType: ', event.value);
     if (event.value == '3') {
       this.switchTransaction.controls.employeeContry.setValidators([]);
     } else if (event.value == '2') {
@@ -398,7 +391,6 @@ export class SwitchTransactionComponent implements OnInit {
 
   getNewSchemesRes(data, inputData) {
     this.showSpinnerTran = false;
-    console.log('new schemes', data);
     this.schemeListTransfer = data;
     if (this.switchTransaction.controls.transferIn.value) {
       this.filterNewSchemeList = of(this.processTransaction.filterScheme(this.switchTransaction.controls.transferIn.value, this.schemeListTransfer));
@@ -508,9 +500,7 @@ export class SwitchTransactionComponent implements OnInit {
 
       };
 
-      console.log('switch', obj);
       if (this.multiTransact == true) {
-        console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
       }
@@ -530,7 +520,6 @@ export class SwitchTransactionComponent implements OnInit {
 
   switchBSERes(data) {
     this.barButtonOptions.active = false;
-    console.log('switch res == ', data);
     if (data == undefined) {
 
     } else {
@@ -598,13 +587,11 @@ export class SwitchTransactionComponent implements OnInit {
               element.switchType = this.switchTransaction.get('switchType').value;
               element.modeOfPaymentSelection = this.switchTransaction.get('modeOfPaymentSelection').value;
             }
-            console.log(element);
           });
           this.isEdit = false;
         } else {
           this.childTransactions.push(obj);
         }
-        console.log(this.childTransactions);
         // this.schemeList = [];
         this.showUnits = false;
         this.switchTransaction.controls.switchType.reset();

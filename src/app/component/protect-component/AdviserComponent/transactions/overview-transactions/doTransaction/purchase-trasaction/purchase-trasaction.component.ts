@@ -96,7 +96,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    console.log('This is Input data of purchaseTransaction', data);
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
     }
@@ -112,9 +111,9 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {paymentMode: 1});
     Object.assign(this.transactionSummary, {allEdit: true});
     Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
+    Object.assign(this.transactionSummary, {isAdvisorSection: this.inputData.isAdvisorSection});
     // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, {multiTransact: false});
-    console.log('this.transactionSummary', this.transactionSummary);
   }
 
   selectSchemeOption(value) {
@@ -124,7 +123,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.selectExistingOrNewFolio(value);
     this.scheme = undefined;
     this.schemeList = undefined;
-    console.log('value selction scheme', value);
     this.purchaseTransaction.controls.schemePurchase.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
@@ -162,9 +160,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       searchQuery: data,
@@ -208,7 +206,6 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getNewSchemesRes(responseData, inputData) {
     this.showSpinner = false;
-    console.log('new schemes', responseData);
     this.schemeList = responseData;
     this.filterSchemeList = new Observable().pipe(startWith(''),
       map(value => this.processTransaction.filterScheme(this.purchaseTransaction.controls.schemePurchase.value, this.schemeList)));
@@ -232,7 +229,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.schemeDetails = scheme;
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     this.setMinAmount();
-    console.log('schemeDetails == ', this.schemeDetails);
   }
 
   selectExistingOrNewFolio(value) {
@@ -250,7 +246,6 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getbankDetails(bank) {
     this.bankDetails = bank[0];
-    console.log('bank details', bank);
   }
 
   onFolioChange(folio) {
@@ -281,14 +276,12 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getSchemeDetailsRes(data) {
     this.showSpinner = false;
-    console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.setMinAmount();
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data;
-      console.log('reinvestment', this.reInvestmentOpt);
     }
     if (data.length == 1) {
       this.reInvestmentOpt = [];
@@ -380,10 +373,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     // };
     // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
     //   sideBarData => {
-    //     console.log('this is sidebardata in subs subs : ', sideBarData);
     //     if (UtilService.isDialogClose(sideBarData)) {
     //       if (UtilService.isRefreshRequired(sideBarData)) {
-    //         console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
     //       }
     //       rightSideDataSub.unsubscribe();
     //     }
@@ -393,7 +384,6 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getFoliosAmcWiseRes(data) {
     this.showSpinnerFolio = false;
-    console.log('getFoliosAmcWiseRes', data);
     if (data) {
       this.folioList = data;
       if (this.folioList.length == 1) {
@@ -423,7 +413,6 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getDefaultDetails(data) {
-    console.log('get default here yupeeee', data);
     this.getDataSummary = data;
 
     if (this.oldDefaultData) {
@@ -483,9 +472,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   getExistingScheme() {
     this.showSpinner = true;
     let amcId = 0;
-    if (this.childTransactions && this.childTransactions.length > 0) {
-      amcId = this.childTransactions[0].amcId;
-    }
+    // if (this.childTransactions && this.childTransactions.length > 0) {
+    //   amcId = this.childTransactions[0].amcId;
+    // }
     const obj = {
       amcId,
       bseOrderType: 'ORDER',
@@ -545,9 +534,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getMandateDetailsRes(data) {
-    console.log('mandate res unfiltered : ', data);
     this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
-    console.log('mandate res filtered : ', this.mandateDetails);
     if (!this.mandateDetails || this.mandateDetails.length == 0) {
       this.handleMandateFailure();
       return;
@@ -703,7 +690,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (this.validateSinglePurchase()) {
       const obj = this.getSingleTransactionJson();
       if (this.multiTransact == true) {
-        console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
         this.childTransactions.forEach(singleTranJson => {
@@ -711,7 +697,6 @@ export class PurchaseTrasactionComponent implements OnInit {
         });
       }
       this.removeUnnecessaryDataFromJson(obj);
-      console.log('new purchase obj', obj);
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
@@ -728,7 +713,6 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   purchaseRes(data) {
     this.barButtonOptions.active = false;
-    console.log('purchase transaction ==', data);
     if (data == undefined) {
 
     } else {
@@ -763,7 +747,6 @@ export class PurchaseTrasactionComponent implements OnInit {
               element.reInvestmentOpt = this.reInvestmentOpt;
               element.folioDetails = this.folioDetails;
             }
-            console.log(element);
           });
           this.isEdit = false;
         } else {
@@ -779,7 +762,6 @@ export class PurchaseTrasactionComponent implements OnInit {
         }
         this.dataSource.data = this.childTransactions;
 
-        console.log(this.childTransactions);
         this.navOfSelectedScheme = 0;
         this.scheme = null;
         this.schemeDetails = null;

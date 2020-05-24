@@ -38,6 +38,10 @@ export class LoginService {
     return this.http.putEncoded(apiConfig.USER + appConfig.SAVE_PASSWORD, data);
   }
 
+  resetPasswordPostLoggedIn(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RESET_PASSWORD, data);
+  }
+
   loginWithPassword(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
   }
@@ -66,18 +70,16 @@ export class LoginService {
 
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
+    authService.setUserInfo(userData);
     if (userData.userType == 1 || userData.userType == 8) {
-      authService.setUserInfo(userData);
       router.navigate(['admin', 'subscription', 'dashboard']);
     } else if (userData.isRmLogin) {
       authService.setToken('authTokenInLoginComponent');
-      authService.setUserInfo(userData);
       router.navigate(['support', 'dashboard']);
     } else {
       authService.setToken('authTokenInLoginComponent');
       userData.id = userData.clientId;
       authService.setClientData(userData);
-      authService.setUserInfo(userData);
       router.navigate(['customer', 'detail', 'overview', 'myfeed']);
     }
     // when changing routers, make changes to authservice gohome() method
