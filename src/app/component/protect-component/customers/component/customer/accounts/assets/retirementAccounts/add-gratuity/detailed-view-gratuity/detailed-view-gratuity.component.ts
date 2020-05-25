@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-detailed-view-gratuity',
@@ -11,11 +12,13 @@ export class DetailedViewGratuityComponent implements OnInit {
 
   inputData: any;
   gratuity: any;
-
-  constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
-
+  bankList:any = [];
+  constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private enumService: EnumServiceService) {
+  }
   ngOnInit() {
     this.gratuity = this.inputData
+    this.bankList = this.enumService.getBank();
+
   }
   @Input()
   set data(data) {
