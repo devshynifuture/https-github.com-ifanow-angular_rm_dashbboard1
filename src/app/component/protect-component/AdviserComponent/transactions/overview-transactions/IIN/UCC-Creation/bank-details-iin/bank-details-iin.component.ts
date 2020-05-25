@@ -141,8 +141,7 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   selectedBank(bank) {
-    this.firstHolderBank = bank;
-    this.getdataForm(this.firstHolderBank);
+    this.getdataForm(bank);
   }
 
   getHolderList(data) {
@@ -319,7 +318,7 @@ export class BankDetailsIINComponent implements OnInit {
   setValueFun(value) {
     this.bankDetailsForm.controls.ifscCode.setValue(value.ifscCode);
     this.bankDetailsForm.controls.bankName.setValue(value.bankName);
-    this.bankDetailsForm.controls.bankACNo.setValue(value.bankName);
+    this.bankDetailsForm.controls.bankACNo.setValue(value.bankACNo);
     this.bankDetailsForm.controls.micrNo.setValue(value.micrNo);
     this.bankDetailsForm.controls.accountNumber.setValue(value.accountNumber);
     this.bankDetailsForm.controls.accountType.setValue(parseInt(value.accountType));
@@ -433,6 +432,7 @@ export class BankDetailsIINComponent implements OnInit {
       accountType: holder.accountType,
       bankName: holder.bankName,
       branchName: holder.branchName,
+      bankACNo: holder.bankACNo,
       //   branchCode: holder.branchCode,
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
