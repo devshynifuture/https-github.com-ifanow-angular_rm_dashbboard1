@@ -38,8 +38,6 @@ export class ContactDetailsInnComponent implements OnInit {
   contactDetails: any;
   formId = 'first';
   inputData: any;
-  holdingList: any;
-  list: any;
   firstHolderContact: any;
   secondHolderContact: any;
   thirdHolderContact: any;
@@ -48,15 +46,21 @@ export class ContactDetailsInnComponent implements OnInit {
     return this.inputData;
   }
 
+  doneData: any = {};
+
   @Input()
   set data(data) {
     this.inputData = data;
+    // this.doneData.nominee = true;
+    // this.doneData.bank = true;
+    // this.doneData.contact = true;
+    this.doneData.personal = true;
+    // this.doneData.fatca = false;
     console.log('Data in contact detail : ', data);
-    this.clientData = data.clientData;
-    this.doneData = {};
-    this.list = data;
     if (data && data.holderList) {
       this.firstHolderContact = data.holderList[0];
+      this.setDataForm(this.formId, this.firstHolderContact);
+
       if (data.holderList.length > 1) {
         this.secondHolderContact = data.holderList[1];
       }
@@ -67,18 +71,14 @@ export class ContactDetailsInnComponent implements OnInit {
     if (!this.firstHolderContact.address || !this.firstHolderContact.address.address1) {
       this.getAddressList(this.firstHolderContact);
     }
-    this.generalDetails = data.generalDetails;
   }
 
   obj1: any;
   sendObj: any;
   changedValue: string;
-  generalDetails: any;
-  doneData: any;
   isdCodes: Array<any> = [];
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  clientData: any;
   addressList: any;
 
   @ViewChild('dynamic', {
@@ -93,15 +93,12 @@ export class ContactDetailsInnComponent implements OnInit {
       this.countryList = responseValue;
     });
     if (this.firstHolderContact) {
-      /* if (this.firstHolderContact.address) {
-         this.firstHolderContact.address = undefined;
-       }*/
       this.setDataForm(this.formId, this.firstHolderContact);
     } else {
-      this.setDataForm(this.formId, null);
+      /*this.setDataForm(this.formId, null);
       if (this.clientData) {
         this.getAddressList(this.clientData);
-      }
+      }*/
     }
     this.sendObj = {...this.inputData};
   }
@@ -262,9 +259,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   SendToForm(formId, flag) {
-    if (flag == true) {
-      this.doneData = true;
-    }
+
     if (this.saveContactDetails(this.formId)) {
       this.formId = formId;
       if (this.formId == 'second') {
@@ -303,14 +298,8 @@ export class ContactDetailsInnComponent implements OnInit {
           return;
         }
       }
-      this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
+      // this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
       this.sendObj.holderList = this.obj1;
-      // Object.assign(this.sendObj.holderList[0], this.firstHolderContact);
-      this.sendObj.bankDetailList = this.inputData.bankDetailList;
-      this.sendObj.nomineeList = this.inputData.nomineeList;
-      this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
-      this.sendObj.generalDetails = this.inputData.generalDetails;
-      this.sendObj.clientData = this.clientData;
       this.openBankDetails(this.sendObj);
     }
   }
@@ -372,8 +361,14 @@ export class ContactDetailsInnComponent implements OnInit {
       }
       return false;
     } else {
+      if (formId == 'second') {
+        this.setObject(formId, this.secondHolderContact, this.contactDetails.value);
+      } else if (formId == 'third') {
+        this.setObject(formId, this.thirdHolderContact, this.contactDetails.value);
+      } else {
+        this.setObject(formId, this.firstHolderContact, this.contactDetails.value);
+      }
 
-      this.setObject(formId, this.firstHolderContact, this.contactDetails.value);
       return true;
     }
   }

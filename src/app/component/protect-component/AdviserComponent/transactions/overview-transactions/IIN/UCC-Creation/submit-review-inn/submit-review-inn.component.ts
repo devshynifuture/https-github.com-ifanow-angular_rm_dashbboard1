@@ -20,6 +20,7 @@ import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loa
 export class SubmitReviewInnComponent implements OnInit {
 
   isFileUploading = false;
+  isSuccessful = false;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
               private eventService: EventService, public dialog: MatDialog) {
@@ -265,6 +266,7 @@ export class SubmitReviewInnComponent implements OnInit {
     if (this.dialogRef) {
       this.dialogRef.componentInstance.setSuccessData(data);
     }
+    this.isSuccessful = true;
 
   }
 

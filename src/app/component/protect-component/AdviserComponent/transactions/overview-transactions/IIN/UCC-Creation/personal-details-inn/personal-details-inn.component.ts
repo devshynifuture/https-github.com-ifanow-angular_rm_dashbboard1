@@ -213,7 +213,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       } else {
         if (this.firstHolder && this.firstHolder.panNumber) {
           this.holder.type = value;
-          this.personalDetails.setValue(this.firstHolder);
+          this.getdataForm(this.firstHolder);
         } else {
           return;
         }
@@ -225,7 +225,9 @@ export class PersonalDetailsInnComponent implements OnInit {
         if (this.savePersonalDetails(this.holder.type)) {
           if (this.secondHolder && this.secondHolder.panNumber) {
             this.holder.type = value;
-            this.personalDetails.setValue(this.secondHolder);
+            this.getdataForm(this.secondHolder);
+
+            // this.personalDetails.setValue(this.secondHolder);
           } else {
             this.reset();
           }
@@ -242,7 +244,9 @@ export class PersonalDetailsInnComponent implements OnInit {
         if (this.savePersonalDetails(this.holder.type)) {
           this.thirdHolderButtonLabel = 'Third Holder';
           if (this.thirdHolder && this.thirdHolder.panNumber) {
-            this.personalDetails.setValue(this.thirdHolder);
+            this.getdataForm(this.thirdHolder);
+
+            // this.personalDetails.setValue(this.thirdHolder);
           } else {
             this.reset();
           }
@@ -300,17 +304,17 @@ export class PersonalDetailsInnComponent implements OnInit {
   setEditHolder(type, value) {
     switch (type) {
       case 'first':
-        this.firstHolder = this.personalDetails.value;
+        Object.assign(this.firstHolder, this.personalDetails.value);
         this.holder.type = value;
         break;
 
       case 'second':
-        this.secondHolder = this.personalDetails.value;
+        Object.assign(this.secondHolder, this.personalDetails.value);
         this.holder.type = value;
         break;
 
       case 'third':
-        this.thirdHolder = this.personalDetails.value;
+        Object.assign(this.thirdHolder, this.personalDetails.value);
         this.holder.type = value;
         break;
 
