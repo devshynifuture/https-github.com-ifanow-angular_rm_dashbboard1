@@ -35,6 +35,8 @@ export class RightFilterComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  customCollapsedHeight: string = '45px';
+  customExpandedHeight: string = '45px';
   panelOpenState = false;
   _data: any;
   familyMember: any;

@@ -5,6 +5,12 @@
   }
 }
 
+.remove-padding-matfield {
+  .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+  }
+}
+
 #ui-profile-plan {
   pointer-events: initial !important;
 }

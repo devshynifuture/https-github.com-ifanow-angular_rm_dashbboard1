@@ -527,6 +527,7 @@ export class MutualFundOverviewComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
+        animation: false,
         states: {
           hover: {
             enabled: false
@@ -629,13 +630,14 @@ export class MutualFundOverviewComponent implements OnInit {
   //   );
   // }
   openSummary(flag){
-    if('scheme wise'){
+    if(flag == 'scheme wise'){
       this.openTransactionTab = true
       this.inputDataToSend = flag
     }else{
       this.openSummaryTab = true
       this.inputDataToSend = flag
     }
+
   }
   openFilter() {
 
