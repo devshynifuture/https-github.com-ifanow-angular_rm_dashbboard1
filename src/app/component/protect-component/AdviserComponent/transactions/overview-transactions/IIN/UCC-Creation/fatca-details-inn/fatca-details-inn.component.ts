@@ -40,6 +40,7 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('Data in fatca detail : ', data);
     this.clientData = data.clientData;
     this.allData = data;
     this.doneData = {};

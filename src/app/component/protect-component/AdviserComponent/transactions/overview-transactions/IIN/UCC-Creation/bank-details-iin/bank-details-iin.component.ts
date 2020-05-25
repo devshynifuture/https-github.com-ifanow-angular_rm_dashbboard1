@@ -35,6 +35,7 @@ export class BankDetailsIINComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('Data in bank detail : ', data);
     this.clientData = data.clientData;
     this.allData = data;
     this.holdingList = data;
@@ -122,6 +123,10 @@ export class BankDetailsIINComponent implements OnInit {
     this.cusService.getBankList(obj).subscribe(
       data => {
         if (data && data.length > 0) {
+          data.forEach(singleBank => {
+            singleBank.bankACNo = singleBank.bankName + '-' +
+              singleBank.accountNumber.substring(singleBank.accountNumber.length - 5);
+          });
           this.bankList = data;
           if (shouldSetValue) {
             this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : [];
@@ -212,7 +217,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
-      bankACNo: [(data.bankName) ? data.bankName : ''],
+      bankACNo: [(data.bankACNo) ? data.bankACNo : data.bankName],
       micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       accountType: [this.inputData.taxStatus == '21' ? '3' : data.accountType ? parseInt(data.accountType) : '1', [Validators.required]],

@@ -36,11 +36,13 @@ export class ContactDetailsInnComponent implements OnInit {
   isLoading = false;
   pinInvalid = false;
   contactDetails: any;
-  formId = 'indian';
+  formId = 'first';
   inputData: any;
   holdingList: any;
   list: any;
   firstHolderContact: any;
+  secondHolderContact: any;
+  thirdHolderContact: any;
 
   get data() {
     return this.inputData;
@@ -49,18 +51,21 @@ export class ContactDetailsInnComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('Data in contact detail : ', data);
     this.clientData = data.clientData;
     this.doneData = {};
     this.list = data;
-    if (data && data.firstHolder) {
-      this.doneData.personal = true;
-      this.doneData.contact = false;
-      this.firstHolderContact = data.firstHolder;
-    } else if (data.holderList) {
+    if (data && data.holderList) {
       this.firstHolderContact = data.holderList[0];
+      if (data.holderList.length > 1) {
+        this.secondHolderContact = data.holderList[1];
+      }
+      if (data.holderList.length > 2) {
+        this.thirdHolderContact = data.holderList[2];
+      }
     }
-    if (!this.firstHolderContact.address1) {
-      this.getAddressList(this.clientData);
+    if (!this.firstHolderContact.address || !this.firstHolderContact.address.address1) {
+      this.getAddressList(this.firstHolderContact);
     }
     this.generalDetails = data.generalDetails;
   }
@@ -128,20 +133,21 @@ export class ContactDetailsInnComponent implements OnInit {
   getAddressList(data) {
     this.addressList = {};
     this.addressList.address = {};
-    const obj = {
-      userId: data.clientId,
-      userType: 2
-    };
-    this.custumService.getAddressList(obj).subscribe(
-      responseData => {
-        this.addressList = this.firstHolderContact;
-        this.addressList.address = responseData[0];
-        this.setDataForm('indian', this.addressList);
-      },
-      err => {
-        this.addressList = {};
-      }
-    );
+    if (data.clientId || data.familyMemberId) {
+      const obj = {
+        userId: data.clientId && data.clientId > 0 ? data.clientId : data.familyMemberId,
+        userType: data.userType
+      };
+      this.custumService.getAddressList(obj).subscribe(
+        responseData => {
+          data.address = responseData[0];
+          this.setDataForm(this.formId, data);
+        },
+        err => {
+        }
+      );
+    }
+
   }
 
   setDataForm(formId, data) {
@@ -152,7 +158,7 @@ export class ContactDetailsInnComponent implements OnInit {
       };
     }
     let address;
-    if (formId == 'indian') {
+    if (formId == 'first') {
       address = data.address;
     } else {
       address = data.foreignAddress;
@@ -166,12 +172,12 @@ export class ContactDetailsInnComponent implements OnInit {
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       foreignMobileNo: [!data ? '' : data.foreignMobileNo,
         this.inputData.taxStatus == '21' ? [Validators.required] : []],
-      address1: [!data.address ? data.address1 : (address.address1), [Validators.required]],
-      address2: [!data.address ? data.address2 : (address.address2), [Validators.required]],
-      pinCode: [!data.address ? data.pinCode : address.pinCode, [Validators.required]],
-      city: [!data.address ? data.city : address.city, [Validators.required]],
-      state: [!data.address ? data.state : address.state, [Validators.required]],
-      country: [!data.address ? data.country : address.country, [Validators.required]],
+      address1: [(address.address1), [Validators.required]],
+      address2: [(address.address2), [Validators.required]],
+      pinCode: [address.pinCode, [Validators.required]],
+      city: [address.city, [Validators.required]],
+      state: [address.state, [Validators.required]],
+      country: [address.country, [Validators.required]],
       address: [address],
     });
 
@@ -179,6 +185,18 @@ export class ContactDetailsInnComponent implements OnInit {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
         return this.processTransaction.filterName(newValue, this.countryList);
       }));
+    });
+  }
+
+  setSecondaryDataForm(formId, data) {
+
+    if (!data) {
+      data = {};
+    }
+    this.contactDetails = this.fb.group({
+      email: [(!data) ? '' : data.email, [Validators.required]],
+      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
+      mobileNo: [!data ? '' : data.mobileNo, [Validators.required]]
     });
   }
 
@@ -247,20 +265,36 @@ export class ContactDetailsInnComponent implements OnInit {
     if (flag == true) {
       this.doneData = true;
     }
-
     if (this.saveContactDetails(this.formId)) {
       this.formId = formId;
-      this.setDataForm(formId, this.firstHolderContact);
+      if (this.formId == 'second') {
+        this.setSecondaryDataForm(formId, this.secondHolderContact);
+      } else if (this.formId == 'third') {
+        this.setSecondaryDataForm(formId, this.thirdHolderContact);
+      } else {
+        this.setDataForm(formId, this.firstHolderContact);
+      }
     } else {
       return;
     }
 
-    this.obj1 = [];
-    this.firstHolderContact = (this.firstHolderContact) ? this.firstHolderContact : [];
-    this.obj1.push(this.firstHolderContact);
-    // this.obj1.push(this.secondHolderContact);
-    // this.obj1.push(this.thirdHolderContact);
+
     if (flag == true) {
+      this.obj1 = [];
+      this.firstHolderContact = (this.firstHolderContact) ? this.firstHolderContact : [];
+      this.obj1.push(this.firstHolderContact);
+      if (this.validateSecondaryObject(this.secondHolderContact)) {
+        this.obj1.push(this.secondHolderContact);
+      } else if (this.secondHolderContact) {
+        this.eventService.openSnackBar('Please fill second holder details');
+        return;
+      }
+      if (this.validateSecondaryObject(this.thirdHolderContact)) {
+        this.obj1.push(this.thirdHolderContact);
+      } else if (this.thirdHolderContact) {
+        this.eventService.openSnackBar('Please fill third holder details');
+        return;
+      }
       if (this.inputData.taxStatus == '21') {
         if (!this.firstHolderContact || !this.firstHolderContact.address ||
           !this.firstHolderContact.address.address1 || !this.firstHolderContact.foreignAddress ||
@@ -270,8 +304,8 @@ export class ContactDetailsInnComponent implements OnInit {
         }
       }
       this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
-      this.sendObj.holderList = this.inputData.holderList;
-      Object.assign(this.sendObj.holderList[0], this.firstHolderContact);
+      this.sendObj.holderList = this.obj1;
+      // Object.assign(this.sendObj.holderList[0], this.firstHolderContact);
       this.sendObj.bankDetailList = this.inputData.bankDetailList;
       this.sendObj.nomineeList = this.inputData.nomineeList;
       this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
@@ -281,7 +315,15 @@ export class ContactDetailsInnComponent implements OnInit {
     }
   }
 
-  setObj(formId, holder, formValue) {
+  validateSecondaryObject(obj) {
+    if (obj && obj.email && obj.mobileNo && obj.aadharNumber) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  setObject(formId, holder, formValue) {
 
     holder = {
       ...holder,
@@ -291,7 +333,17 @@ export class ContactDetailsInnComponent implements OnInit {
       foreignMobileNo: formValue.foreignMobileNo,
       phoneNo: formValue.phoneNo,
     };
-    if (formId == 'indian') {
+    if (formId == 'overseas') {
+      holder.foreignAddress = {
+        address1: formValue.address1,
+        address2: formValue.address2,
+        pinCode: formValue.pinCode,
+        city: formValue.city,
+        state: formValue.state,
+        country: formValue.country,
+      };
+      this.firstHolderContact = holder;
+    } else if (formId == 'first') {
       holder.address = {
 
         address1: formValue.address1,
@@ -301,15 +353,11 @@ export class ContactDetailsInnComponent implements OnInit {
         state: formValue.state,
         country: formValue.country,
       };
-    } else {
-      holder.foreignAddress = {
-        address1: formValue.address1,
-        address2: formValue.address2,
-        pinCode: formValue.pinCode,
-        city: formValue.city,
-        state: formValue.state,
-        country: formValue.country,
-      };
+      this.firstHolderContact = holder;
+    } else if (formId == 'second') {
+      this.secondHolderContact = holder;
+    } else if (formId == 'third') {
+      this.thirdHolderContact = holder;
     }
     return holder;
   }
@@ -324,7 +372,8 @@ export class ContactDetailsInnComponent implements OnInit {
       }
       return false;
     } else {
-      this.firstHolderContact = this.setObj(formId, this.firstHolderContact, this.contactDetails.value);
+
+      this.setObject(formId, this.firstHolderContact, this.contactDetails.value);
       return true;
     }
   }

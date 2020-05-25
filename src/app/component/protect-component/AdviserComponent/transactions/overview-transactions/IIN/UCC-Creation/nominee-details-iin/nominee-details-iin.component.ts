@@ -67,6 +67,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('Data in nominee detail : ', data);
     this.clientData = data.clientData;
     this.allData = data;
     this.doneData = {};

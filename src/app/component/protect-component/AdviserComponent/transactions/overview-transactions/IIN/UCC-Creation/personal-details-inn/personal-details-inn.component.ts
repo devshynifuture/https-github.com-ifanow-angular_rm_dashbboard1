@@ -21,19 +21,20 @@ export class PersonalDetailsInnComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTransaction: ProcessTransactionService,
-    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-    private peopleService: PeopleService, private custumService: CustomerService,
-    public utils: UtilService,
-    public eventService: EventService) {
+              private processTransaction: ProcessTransactionService,
+              private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
+              private peopleService: PeopleService, private custumService: CustomerService,
+              public utils: UtilService,
+              public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('Data in personal detail : ', data);
     this.clientData = data.clientData;
-    this.obj1 = { ...data };
+    this.obj1 = {...data};
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
       this.firstHolder = data.holderList[0];
@@ -134,7 +135,8 @@ export class PersonalDetailsInnComponent implements OnInit {
           this.addressList = data[0];
           if (this.addressList.emailList.length > 0) {
             this.addressList.email = this.addressList.emailList[0].email;
-          } else if (this.addressList.mobileList.length > 0) {
+          }
+          if (this.addressList.mobileList.length > 0) {
             this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo;
           }
           this.getdataForm(this.addressList);
@@ -156,6 +158,9 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
 
     this.personalDetails = this.fb.group({
+      clientId: [data && data.clientId ? (data.clientId) : '0'],
+      familyMemberId: [data && data.familyMemberId ? (data.familyMemberId) : '0'],
+      userType: [data && data.userType ? (data.userType) : 1],
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
       // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
@@ -288,7 +293,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     if (this.personalDetails.invalid) {
       for (const element in this.personalDetails.controls) {
         if (this.personalDetails.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
+          // this.inputs.find(input => !input.ngControl.valid).focus();
           this.personalDetails.controls[element].markAsTouched();
         }
       }
