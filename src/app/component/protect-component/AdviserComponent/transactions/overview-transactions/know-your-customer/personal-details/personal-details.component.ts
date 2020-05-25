@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-personal-details',
@@ -15,11 +15,13 @@ export class PersonalDetailsComponent implements OnInit {
   personalDetails: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+  }
 
   ngOnInit() {
-    this.getdataForm('')
+    this.getdataForm('');
   }
+
   close() {
     const fragmentData = {
       direction: 'top',
@@ -29,6 +31,7 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+
   getdataForm(data) {
 
     this.personalDetails = this.fb.group({
@@ -44,9 +47,11 @@ export class PersonalDetailsComponent implements OnInit {
       maritalStatus: [data ? '' : data.maritalStatus, [Validators.required]],
     });
   }
+
   getFormControl(): any {
     return this.personalDetails.controls;
   }
+
   savePersonalDetails() {
     if (this.personalDetails.get('inverstorType').invalid) {
       this.personalDetails.get('inverstorType').markAsTouched();
@@ -56,7 +61,7 @@ export class PersonalDetailsComponent implements OnInit {
       return;
     } else if (this.personalDetails.get('pan').invalid) {
       this.personalDetails.get('pan').markAsTouched();
-      return
+      return;
     } else if (this.personalDetails.get('nameAsPan').invalid) {
       this.personalDetails.get('nameAsPan').markAsTouched();
       return;
@@ -90,7 +95,7 @@ export class PersonalDetailsComponent implements OnInit {
         dateOfBirth: this.personalDetails.controls.dateOfBirth.value,
         gender: this.personalDetails.controls.gender.value,
         maritalStatus: this.personalDetails.controls.maritalStatus.value,
-      }
+      };
     }
   }
 }

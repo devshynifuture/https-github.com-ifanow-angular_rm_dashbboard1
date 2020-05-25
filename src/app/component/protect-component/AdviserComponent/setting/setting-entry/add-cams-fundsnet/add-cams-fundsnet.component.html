@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="pt-100" [formGroup]="camsFundFG">
+<div class="pt-100 pb-48" [formGroup]="camsFundFG">
     <div class="row ">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-20">ARN/RIA number</h5>
@@ -34,7 +34,8 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" [placeholder]="formPlaceHolders.ENTER_LOGIN_ID" matInput formControlName="loginId" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolders.ENTER_LOGIN_ID" matInput
+                        formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -47,7 +48,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" [placeholder]="formPlaceHolders.ENTER_PASSWORD" formControlName="loginPassword" matInput class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolders.ENTER_PASSWORD" formControlName="loginPassword"
+                        matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -63,17 +65,18 @@
 
 
         <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of getRtaControlArray(); let i = index;">
-            <div class="row">
+            <div class="row pb-20">
                 <!-- <div class="col-md-4 pr-0" *ngIf="i > 0"></div> -->
-                <div class="col-md-6  ">
-                    <h5 class="m-0 pt-12 text-right">
+                <div class="col-md-6  full-end">
+                    <h5 class="m-0 text-right">
                         {{data.globalData.rta_cams_fund_net_security_questions_list[i].question}}
                     </h5>
                 </div>
-                <div class="col-md-2 pl-0">
+                <div class="col-md-3 pl-0">
                     <div class="form-group mb-24">
-                        <mat-form-field>
-                            <input [formControlName]="'answer'" [placeholder]="formPlaceHolders.ENTER_ANSWER" class="form-control" matInput type="text">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input [formControlName]="'answer'" [placeholder]="formPlaceHolders.ENTER_ANSWER"
+                                class="form-control" matInput type="text">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -89,8 +92,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit"
-                [options]="barButtonOptions">
+            <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

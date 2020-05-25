@@ -331,8 +331,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
-        this.dataSource = new MatTableDataSource(data.dataSourceData);
-        this.customDataSource = new MatTableDataSource(data.customDataSourceData);
+        this.dataSource.data = (data.dataSourceData);
+        this.customDataSource.data = (data.customDataSourceData);
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
@@ -525,8 +525,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         if (UtilService.isDialogClose(sideBarData)) {
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource.data = ([{}, {}, {}]);
+            this.customDataSource.data = ([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
