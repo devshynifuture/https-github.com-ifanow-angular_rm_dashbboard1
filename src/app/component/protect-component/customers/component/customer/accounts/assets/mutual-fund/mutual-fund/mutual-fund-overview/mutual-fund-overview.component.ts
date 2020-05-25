@@ -131,19 +131,34 @@ export class MutualFundOverviewComponent implements OnInit {
        if(data){
         let displaycopy =[];
         let overviewFilter= [];
+        let allClient = [] ;
+        let currentClient = [] ;
         data.forEach(element => {
-          const obj={
-            name:element.columnName,
-            selected:element.selected
+          if(element.clientId == 0){
+            const obj={
+              name:element.columnName,
+              selected:element.selected
+            }
+            allClient.push(obj); 
+          }else{
+            const obj={
+              name:element.columnName,
+              selected:element.selected
+            }
+            currentClient.push(obj); 
           }
-          overviewFilter.push(obj); 
-          displaycopy.push(element.columnName)
+
         });
+        if(allClient.length > 0){
+          overviewFilter = allClient;
+        }else{
+          overviewFilter = currentClient;
+        }
         this.saveFilterData ={
           overviewFilter : overviewFilter,
           showFolio:(data[0].showZeroFolios == true) ? '1' : '2',
           reportType:data[0].reportType,
-          selectFilter : data[0].clientId
+          selectFilter : (allClient.length > 0)  ? 0 : this.clientId
         }
         
             this.showHideTable = overviewFilter;
@@ -663,6 +678,7 @@ export class MutualFundOverviewComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data && sideBarData.data != 'Close') {
+            this.getFilterData(1);
             this.totalValue = {};
             this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
             this.dataSource4 = new MatTableDataSource([{}, {}, {}]);
@@ -671,7 +687,6 @@ export class MutualFundOverviewComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.getFilterData(1);
             this.getMutualFundResponse(this.rightFilterData.mfData);
             this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);

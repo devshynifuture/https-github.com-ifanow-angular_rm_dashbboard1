@@ -412,7 +412,7 @@ export class RightFilterComponent implements OnInit {
           }
         }
       });
-    if(this._data.selectFilter){
+    if(this._data.selectFilter || this._data.selectFilter == 0){
       this.saveFilters = [
         { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, { value: 'All Client', selected: (this._data.selectFilter == 0) ? true : false }];
   
@@ -918,7 +918,6 @@ export class RightFilterComponent implements OnInit {
   }
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
-    console.log('transaction ==', this._data.transactionView);
     if (this._data.name == 'Overview Report') {
       if (this.overviewFilter != undefined) {
         this.overviewFilterCount = 0;

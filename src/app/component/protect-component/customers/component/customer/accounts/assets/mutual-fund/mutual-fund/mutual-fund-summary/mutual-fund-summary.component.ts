@@ -124,24 +124,50 @@ export class MutualFundSummaryComponent implements OnInit {
      data => {
        console.log(data);
        if(data){
-        let transactionView= [];
+        let allClient= [];
+        let currentClient = [];
+        let transactionView = [];
         // let displaycopy =[];
         this.displayedColumns = [];
         data.forEach(element => {
-          const obj={
-            displayName:element.columnName,
-            selected:element.selected
-          }
-          transactionView.push(obj); 
-          if(element.selected == true){
-            this.displayedColumns.push(element.columnName)
+          if(element.clientId == 0){
+            const obj={
+              displayName:element.columnName,
+              selected:element.selected
+            }
+            allClient.push(obj); 
+            // if(element.selected == true){
+            //   this.displayedColumns.push(element.columnName)
+            // }
+          }else{
+            const obj={
+              displayName:element.columnName,
+              selected:element.selected
+            }
+            currentClient.push(obj); 
+            // if(element.selected == true){
+            //   this.displayedColumns.push(element.columnName)
+            // }
           }
         });
+        if(allClient.length > 0)
+        {
+          transactionView = allClient
+        }else{
+          transactionView = currentClient
+        }
+        transactionView.forEach(element => {
+          if(element.selected==true){
+            this.displayedColumns.push(element.displayName)
+          }
+        });
+
+
         this.saveFilterData ={
           transactionView : transactionView,
           showFolio:(data[0].showZeroFolios == true) ? '1' : '2',
           reportType:data[0].reportType,
-          selectFilter : data[0].clientId
+          selectFilter :(allClient.length > 0)  ? 0 : this.clientId
         }
        }
      }
@@ -399,12 +425,12 @@ export class MutualFundSummaryComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
+            this.getFilterData(2)
             this.customDataSource = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
-            this.getFilterData(2)
             this.columns =[];
             this.rightFilterData.transactionView.forEach(element => {
               if(element.selected == true){
