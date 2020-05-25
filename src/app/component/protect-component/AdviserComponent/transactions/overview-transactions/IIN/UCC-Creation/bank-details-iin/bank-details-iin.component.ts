@@ -417,9 +417,7 @@ export class BankDetailsIINComponent implements OnInit {
         clientId: this.generalDetails.clientId,
         advisorId: this.generalDetails.advisorId,
         paymentMode: this.bankDetailsForm.controls.paymentMode.value,
-        bankDetailList: this.bank,
-        generalDetails: this.generalDetails,
-        clientData: this.clientData
+        bankDetailList: this.bank
       };
       this.openNomineeDetails(this.sendObj);
     }

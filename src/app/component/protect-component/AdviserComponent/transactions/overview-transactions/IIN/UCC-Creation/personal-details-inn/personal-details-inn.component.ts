@@ -46,7 +46,6 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.secondHolder = data.secondHolder;
       this.thirdHolder = data.thirdHolder;
     }
-    this.generalDetails = data;
   }
 
   get data() {
@@ -57,7 +56,6 @@ export class PersonalDetailsInnComponent implements OnInit {
   personalDetails: any;
   holdingList: any;
   inputData: any;
-  generalDetails: any;
   obj1: any;
   firstHolder: any = {};
   secondHolder: any = {};
@@ -278,12 +276,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       return;
     }
 
-    this.obj1.generalDetails = this.generalDetails;
     this.obj1.holderList = holderList;
-    this.obj1.bankDetailList = this.inputData.bankDetailList;
-    this.obj1.nomineeList = this.inputData.nomineeList;
-    this.obj1.fatcaDetail = this.inputData.fatcaDetail;
-    this.obj1.clientData = this.clientData;
     if (flag == true) {
       this.openContactDetails(this.obj1);
     }
