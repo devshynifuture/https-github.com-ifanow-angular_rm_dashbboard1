@@ -13,7 +13,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
+  displayedColumns: string[] = ['position', 'type', 'name', 'weight', 'symbol', 'del'];
   advisorRoles: any = new MatTableDataSource([{}, {}, {}]);
   clientRoles: any = new MatTableDataSource([{}, {}, {}]);
   advisorId: any;
@@ -22,6 +22,15 @@ export class RolesComponent implements OnInit {
   counter = 0;
   hasError = false;
   hasData = false;
+  roleTypes = [
+    {id: 1, type: 'Admin'},
+    {id: 2, type: 'Back office'},
+    {id: 3, type: 'Planner'},
+    {id: 4, type: 'Mutual fund only'},
+    {id: 5, type: 'MF + Multi asset'},
+    {id: 6, type: 'MF + Multi asset + Basic Plan'},
+    {id: 7, type: 'MF + Multi asset + Advanced Plan'},
+  ]
 
   constructor(
     private eventService: EventService,
@@ -59,29 +68,8 @@ export class RolesComponent implements OnInit {
 
   addEditNewRoles(roleType, is_add_flag, data) {
     let roleTypeText = '';
-    switch (roleType) {
-      case 1:
-        roleTypeText = 'Admin';
-        break;
-      case 2:
-        roleTypeText = 'Back office';
-        break;
-      case 3:
-        roleTypeText = 'Planner';
-        break;
-      case 4:
-        roleTypeText = 'Mutual fund only';
-        break;
-      case 5:
-        roleTypeText = 'MF + Multi asset';
-        break;
-      case 6:
-        roleTypeText = 'MF + Multi asset + Basic Plan';
-        break;
-      case 7:
-        roleTypeText = 'MF + Multi asset + Advanced Plan';
-        break;
-    }
+    const role = this.roleTypes.find(role => role.id == roleType);
+    roleTypeText = role.type;
     const dataObj = {
       mainData: data || {},
       roleType,
@@ -145,6 +133,15 @@ export class RolesComponent implements OnInit {
       this.isLoading = false;
     } else {
       this.isLoading = true;
+    }
+  }
+
+  getRoleType(roleType) {
+    const role = this.roleTypes.find(role => role.id == roleType);
+    if(role) {
+      return role.type;
+    } else {
+      return '';
     }
   }
 }

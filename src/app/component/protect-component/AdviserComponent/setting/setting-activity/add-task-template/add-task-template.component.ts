@@ -103,10 +103,10 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.taskTemplate = this.fb.group({
       id: [this.data.id, []],
       advisorId: this.advisorId,
-      categoryId: [this.data.categoryId || (this.data.templateType == 1 ? null : 0)],
-      subcategoryId: [this.data.subcategoryId || (this.data.templateType == 1 ? null : 0)],
-      subSubCategoryId: [this.data.subSubCategoryId || (this.data.templateType == 1 ? null : 0)],
-      adviceTypeId: [this.data.adviceTypeId || (this.data.templateType == 1 ? null : 0)],
+      categoryId: [this.data.categoryId || (this.data.templateType == 1 ? '' : 0)],
+      subcategoryId: [this.data.subcategoryId || (this.data.templateType == 1 ? '' : 0)],
+      subSubCategoryId: [this.data.subSubCategoryId || (this.data.templateType == 1 ? '' : 0)],
+      adviceTypeId: [this.data.adviceTypeId || (this.data.templateType == 1 ? '' : 0)],
       templateType: this.data.templateType,
       taskDescription: [this.data.taskDescription || ''],
       assignedTo: this.data.assignedTo || 0,
@@ -145,7 +145,8 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.taskTemplate.controls.categoryId.valueChanges.subscribe(value => {
         this.category = value == 1 ? 'Asset' : value == 3 ? 'Insurance' : 'Liability';
-        this.taskTemplate.controls.subcategoryId.setValue(0);
+        this.taskTemplate.controls.subcategoryId.setValue('');
+        this.taskTemplate.controls.subcategoryId.markAsUntouched();
         this.dataEdited = true;
         this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
       })
@@ -155,9 +156,11 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.dataEdited = true;
         if (value != '') {
           this.listOfSub = this.categoryList.find(subCategory => subCategory.subcategoryId == value).taskTempSubcattoSubCategories;
-          this.taskTemplate.controls.subSubCategoryId.setValue(0);
+          this.taskTemplate.controls.subSubCategoryId.setValue('');
+          this.taskTemplate.controls.subSubCategoryId.markAsUntouched();
           if (this.listOfSub.length == 0) {
             this.hideSubcategory = true;
+            this.taskTemplate.controls.subSubCategoryId.setValue(0);
             this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
           } else {
             this.hideSubcategory = false;
@@ -174,7 +177,8 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         if(this.data.id)
           this.dataEdited = true;
         
-        this.taskTemplate.controls.adviceTypeId.setValue(0);
+        this.taskTemplate.controls.adviceTypeId.setValue('');
+        this.taskTemplate.controls.adviceTypeId.markAsUntouched();
         if(value) {
           this.adviceTypeMasterList = this.listOfSub.find(subSubCat => subSubCat.subSubCategoryId == value).adviceTypeMasterList || this.globalData.system_generated_advice_map_key;
         }
