@@ -231,8 +231,8 @@ addNewNominee(data) {
 
   this.holdingData=this.scipLevelHoldingForm.value
 
-    if (data.transactionorHoldingSummaryList) {
-      data.transactionorHoldingSummaryList.forEach(element => {
+    if (data.transactionOrHoldingSummaryList) {
+      data.transactionOrHoldingSummaryList.forEach(element => {
         let singleScripData = this.fb.group({
           scripName: [element.scripName, [Validators.required]],
           holdings: [element.quantity, [Validators.required]],
@@ -340,7 +340,7 @@ addNewNominee(data) {
       //   let obj = {
       //     "stockList": [
       //       {
-      //         "transactionorHoldingSummaryList": finalStocks
+      //         "transactionOrHoldingSummaryList": finalStocks
       //       }
       //     ]
       //   }
@@ -364,7 +364,7 @@ addNewNominee(data) {
               "amountInvested": 0,
               "valueAsOn": null,
               "isDeleted":false,
-              "transactionorHoldingSummaryList": [
+              "transactionOrHoldingSummaryList": [
                   {
                     "holdingOrTransaction": 1,
                     "quantity": element.get('holdings').value,
@@ -396,7 +396,7 @@ addNewNominee(data) {
                 "amountInvested": 0,
                 "valueAsOn": null,
                 "isDeleted":true,
-                "transactionorHoldingSummaryList": [
+                "transactionOrHoldingSummaryList": [
                   {
                     "id": d.id,
                       "holdingOrTransaction": 2,
@@ -414,10 +414,10 @@ addNewNominee(data) {
               }
               finalStocks.push(objStock);
             // }
-            // let deleted ={ transactionorHoldingSummaryList:}
+            // let deleted ={ transactionOrHoldingSummaryList:}
           //   objStock.isDeleted = true;
-          //   objStock.transactionorHoldingSummaryList[0]=Object.assign(objStock.transactionorHoldingSummaryList[0],deleted.transactionorHoldingSummaryList)
-          //   // objStock.transactionorHoldingSummaryList[0]= deleted.transactionorHoldingSummaryList;
+          //   objStock.transactionOrHoldingSummaryList[0]=Object.assign(objStock.transactionOrHoldingSummaryList[0],deleted.transactionOrHoldingSummaryList)
+          //   // objStock.transactionOrHoldingSummaryList[0]= deleted.transactionOrHoldingSummaryList;
           // finalStocks.push(objStock);
             
       });

@@ -233,8 +233,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
         id: [0]
       })]),
     })
-    if (data.transactionorHoldingSummaryList) {
-      data.transactionorHoldingSummaryList.forEach(element => {
+    if (data.transactionOrHoldingSummaryList) {
+      data.transactionOrHoldingSummaryList.forEach(element => {
         this.transactionArray.push(this.fb.group({
           transactionType: [element.transactionTypeOrScripNameId, [Validators.required]],
           date: [new Date(element.holdingOrTransactionDate), [Validators.required]],
@@ -356,7 +356,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
       //   let obj = {
       //     "stocks": [
       //       {
-      //         "transactionorHoldingSummaryList": finalStocks
+      //         "transactionOrHoldingSummaryList": finalStocks
       //       }
       //     ]
       //   }
@@ -379,7 +379,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             // "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
             "stockType": 3,
             "id":this.editApiData?this.editApiData.id:null,
-            "transactionorHoldingSummaryList": []
+            "transactionOrHoldingSummaryList": []
           }
         this.transactionArray.controls.forEach(element => {
           let tran = {
@@ -391,7 +391,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             "investedOrTransactionAmount": element.get('transactionAmount').value,
             'isDeleted':  element.get('isDeleted').value,  
           }
-          transObj.transactionorHoldingSummaryList.push(tran);
+          transObj.transactionOrHoldingSummaryList.push(tran);
 
         })
             if(this.removed.length > 0){
@@ -408,7 +408,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
                     "investedOrTransactionAmount": d.transactionAmount,
                     'isDeleted':  d.isDeleted, 
                 }
-                transObj.transactionorHoldingSummaryList.push(deleted);
+                transObj.transactionOrHoldingSummaryList.push(deleted);
                 // d.controls.forEach(d => {
                   
                 // });
