@@ -167,9 +167,9 @@ export class ContactDetailsInnComponent implements OnInit {
       address = {};
     }
     this.contactDetails = this.fb.group({
-      email: [(!data) ? '' : data.email, [Validators.required]],
-      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
-      mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
+      email: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
+      mobileNo: [!data ? '' : data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       foreignMobileNo: [!data ? '' : data.foreignMobileNo,
         this.inputData.taxStatus == '21' ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],

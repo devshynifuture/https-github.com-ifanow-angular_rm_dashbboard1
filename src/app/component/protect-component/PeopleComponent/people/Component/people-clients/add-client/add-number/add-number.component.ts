@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ValidatorType, UtilService } from 'src/app/services/util.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {ReplaySubject, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-number',
@@ -29,8 +29,8 @@ export class AddNumberComponent implements OnInit {
     code: 'col-md-3 pl-0 col-4 mob-pl-10',
     mobile: 'col-md-3 p-0 col-6',
     addRemove: 'col-md-1 col-2 mob-pr-10',
-  }
-  placeHolderObj = ['Enter primary number', 'Enter secondary number']
+  };
+  placeHolderObj = ['Enter primary number', 'Enter secondary number'];
   isdCodes: any;
   countryCode: any;
   lengthControl: number;
@@ -52,7 +52,8 @@ export class AddNumberComponent implements OnInit {
       });
   }
 
-  constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService, private enumService: EnumServiceService) {
+  constructor(private fb: FormBuilder, private utilService: UtilService,
+              private peopleService: PeopleService, private enumService: EnumServiceService) {
   }
 
   // if this input not used anywhere then remove it
@@ -79,7 +80,7 @@ export class AddNumberComponent implements OnInit {
               element.get('code').setValue(73);
             });
           } else {
-            data.sort(function (a, b) {
+            data.sort(function(a, b) {
               return a.countryCode.localeCompare(b.countryCode);
             });
             this.isdCodes = data;
@@ -87,7 +88,7 @@ export class AddNumberComponent implements OnInit {
           this.filteredIsdCodes.next(this.isdCodes);
         }
       }
-    )
+    );
   }
 
   @Input() set numberList(data) {
@@ -144,14 +145,15 @@ export class AddNumberComponent implements OnInit {
       this.numberArray.emit(this.getMobileNumList);
     }
   }
+
   checkUniqueNumber() {
     if (this.getMobileNumList.length == 2) {
       if (this.getMobileNumList.controls[0].value.number == this.getMobileNumList.controls[1].value.number) {
-        this.getMobileNumList.controls[0].get('number').setErrors({ notUnique: true });
-      }
-      else {
+        this.getMobileNumList.controls[0].get('number').setErrors({notUnique: true});
+      } else {
         this.getMobileNumList.controls[0].get('number').setErrors(null);
-      };
+      }
+      ;
     }
   }
 
@@ -168,6 +170,6 @@ export class AddNumberComponent implements OnInit {
       search = search.toLowerCase();
     }
     // filter the codes
-    this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1))
+    this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1));
   }
 }
