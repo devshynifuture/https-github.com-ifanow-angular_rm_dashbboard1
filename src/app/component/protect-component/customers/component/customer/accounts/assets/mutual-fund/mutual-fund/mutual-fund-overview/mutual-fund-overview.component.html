@@ -1,4 +1,4 @@
-<div *ngIf="openSummaryTab == false">
+<div *ngIf="changeViewModeValue == false">
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-4 pl-0 c-p">
@@ -111,10 +111,14 @@
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24" *ngIf="isLoading"></div>
-                                        <span appFormatNumber [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}" [value]="mfData.total_unrealized_gain ? mfData.total_unrealized_gain : 0"
+                                        <span appFormatNumber
+                                            [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}"
+                                            [value]="mfData.total_unrealized_gain ? mfData.total_unrealized_gain : 0"
                                             *ngIf="!isLoading"></span>
-                                        <span *ngIf="!isLoading" class="left"  [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}">{{'₹'}} </span>
-                                         <span *ngIf="isLoading">{{''}}</span>
+                                        <span *ngIf="!isLoading" class="left"
+                                            [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}">{{'₹'}}
+                                        </span>
+                                        <span *ngIf="isLoading">{{''}}</span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
@@ -182,8 +186,8 @@
                                 </div>
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span appFormatNumber
-                                                *ngIf="this.debtCurrentValue">
+                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
+                                                appFormatNumber *ngIf="this.debtCurrentValue">
                                                 {{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading"> 0</span>
                                         </p>
@@ -207,8 +211,8 @@
                                 </div>
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span appFormatNumber
-                                                *ngIf="this.hybridCurrentValue">
+                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
+                                                appFormatNumber *ngIf="this.hybridCurrentValue">
                                                 {{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">
                                                 0</span>
@@ -262,8 +266,8 @@
                                 </div>
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span appFormatNumber
-                                                *ngIf="this.otherCurrentValue">
+                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
+                                                appFormatNumber *ngIf="this.otherCurrentValue">
                                                 {{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading"> 0</span>
                                         </p>
@@ -287,7 +291,7 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise"(click)="openSummary('scheme wise')"
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" (click)="openSummary('scheme wise')"
                 *ngIf="showSchemeWise || dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
@@ -376,7 +380,7 @@
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                <div class="bar" >
+                                <div class="bar">
                                     <span appFormatNumber [value]="totalValue.allocationPer"></span>
                                 </div>
                             </td>
@@ -501,9 +505,9 @@
                                 <div class="bar">{{7800}}</div>
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar" >
+                                    <div class="bar">
                                         <span appFormatNumber [value]="totalValue.allocationPer"></span>
-                                    </div>    
+                                    </div>
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -520,8 +524,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow"
-                >
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow">
                 <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
@@ -544,8 +547,8 @@
                                         [value]="element.amts"></span>
                                     <span
                                         *ngIf="element.data == 'i. Lifetime XIRR (All Transactions)'">{{element.amts | number:'1.2-2'}}{{(isLoading) ? '' : '%'}}</span>
-                                    <span *ngIf="isLoading">{{''}} </span> 
-                                    
+                                    <span *ngIf="isLoading">{{''}} </span>
+
                                 </div>
                             </td>
                         </ng-container>
@@ -654,9 +657,9 @@
                                 <div class="bar">{{7800}}</div>
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar" >
+                                    <div class="bar">
                                         <span appFormatNumber [value]="totalValue.allocationPer"></span>
-                                    </div>    
+                                    </div>
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -774,9 +777,9 @@
                                 <div class="bar">{{7800}}</div>
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar" >
+                                    <div class="bar">
                                         <span appFormatNumber [value]="totalValue.allocationPer"></span>
-                                    </div>    
+                                    </div>
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -1079,8 +1082,8 @@
                         <td
                             style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{mfData.total_xirr | number:'1.2-2'}}</td>
-                        <td
-                            style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                            appFormatNumber>
                             {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
@@ -1253,8 +1256,8 @@
                         <td
                             style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                            appFormatNumber>
                             {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
@@ -1337,8 +1340,8 @@
                         <td
                             style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                            appFormatNumber>
                             {{(totalValue.allocationPer) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
@@ -1420,8 +1423,8 @@
                         <td
                             style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
-                        <td
-                            style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                            appFormatNumber>
                             {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
 
@@ -1433,11 +1436,16 @@
 
     </table>
 </div>
-<div *ngIf="openSummaryTab == true">
+<!-- <div *ngIf="openSummaryTab == true">
     <app-mutual-fund-summary [data]='inputDataToSend'>
     </app-mutual-fund-summary>
 </div>
 <div *ngIf="openTransactionTab == true">
-    <app-mutual-fund-unrealized-tran (changeInput)="changeInput($event)">
+    <app-mutual-fund-unrealized-tran [data]='inputDataToSend' >
     </app-mutual-fund-unrealized-tran>
-  </div>
+  </div> -->
+
+<div *ngIf="changeViewModeValue == true">
+    <app-mutual-fund [data]='changeViewModeSet'>
+    </app-mutual-fund>
+</div>

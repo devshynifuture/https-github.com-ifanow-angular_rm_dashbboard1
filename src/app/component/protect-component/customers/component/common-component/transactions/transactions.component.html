@@ -2,7 +2,7 @@
 
   <div class="row second-fix">
     <div class="col-md-12 bg-dark">
-      <h2 class="m-0 wrapper-24 text-white text-center">Aditya Birla Sun Life Equity Fund Direct Growth</h2>
+      <h2 class="m-0 wrapper-24 text-white text-center">{{data.schemeName}}</h2>
     </div>
   </div>
 
@@ -12,8 +12,8 @@
       <div class="col-md-6">
         <div class="d-flex">
           <mat-chip-list aria-label="Fish selection">
-            <mat-chip>Equity</mat-chip>
-            <mat-chip>Multi Cap</mat-chip>
+            <mat-chip>{{data.categoryName}}</mat-chip>
+            <mat-chip>{{data.subCategoryName}}</mat-chip>
           </mat-chip-list>
           <div class="pl-20">
             <img src="/assets/images/svg/yellow-star.svg" class="c-p">
@@ -36,16 +36,16 @@
             <p class="m-0 f-12 text-white">CURRENT VALUE</p>
             <div class="row">
               <div class="col-md-7 p-0">
-                <h1 class="m-0 text-white f-26 proxima">₹ {{ currentValue }}</h1>
+                <h1 class="m-0 text-white f-26 proxima">₹ {{data.currentValue | number:'1.2-2'}}</h1>
               </div>
               <div class="col-md-5 p-0">
-                <h5 class="m-0 text-white pt-8 proxima"> {{ xirrValue }}%</h5>
+                <h5 class="m-0 text-white pt-8 proxima"> {{data.xirrValue | number:'1.2-2'}}%</h5>
               </div>
             </div>
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-white">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-white proxima f-26">₹ {{ profitOrLossValue }}</h1>
+            <h1 class="m-0 text-white proxima f-26">₹ {{profitOrLossValue | number:'1.2-2'}}</h1>
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-white">INVESTOR NAME</p>
