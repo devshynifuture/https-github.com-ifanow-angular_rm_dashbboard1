@@ -1,4 +1,4 @@
-<div *ngIf="openSummaryTab == false">
+<div *ngIf="openSummaryTab == false && openTransactionTab == false">
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-4 pl-0 c-p">
@@ -1438,6 +1438,6 @@
     </app-mutual-fund-summary>
 </div>
 <div *ngIf="openTransactionTab == true">
-    <app-mutual-fund-unrealized-tran (changeInput)="changeInput($event)">
+    <app-mutual-fund-unrealized-tran [data]='inputDataToSend' >
     </app-mutual-fund-unrealized-tran>
   </div>
