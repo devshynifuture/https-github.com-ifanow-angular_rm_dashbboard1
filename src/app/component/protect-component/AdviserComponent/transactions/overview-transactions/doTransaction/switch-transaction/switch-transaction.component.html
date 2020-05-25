@@ -227,7 +227,8 @@
           </div>
           <div class="col-md-5 p-0">
             <mat-form-field>
-              <mat-select (selectionChange)="switchType($event)" class="form-control br-0" formControlName="switchType">
+              <mat-select (selectionChange)="switchType($event.value)" class="form-control br-0"
+                          formControlName="switchType">
                 <mat-option disabled value=''>Select Switch type</mat-option>
                 <mat-option value="1">Amount Rs.
                 </mat-option>
@@ -257,7 +258,8 @@
                        type="text">
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value) == 1" align="start"
                           class="f-12 text-custom">
-                  Min amount: ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
+                  Min amount:
+                  ₹{{(schemeDetailsTransfer == undefined) ? '0' : schemeDetailsTransfer.minimumPurchaseAmount }}
                 </mat-hint>
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value == 2)" align="start"
                           class="f-12 text-custom">
@@ -265,7 +267,7 @@
                 </mat-hint>
                 <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.min)" class="f-12">
                   Should be greater than or equal
-                  to {{switchTransaction.get('switchType').value == 1 ? schemeDetails.minimumPurchaseAmount : schemeDetails.minimumRedemptionQty}}
+                  to {{switchTransaction.get('switchType').value == 1 ? schemeDetailsTransfer.minimumPurchaseAmount : schemeDetails.minimumRedemptionQty}}
                 </mat-error>
                 <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied

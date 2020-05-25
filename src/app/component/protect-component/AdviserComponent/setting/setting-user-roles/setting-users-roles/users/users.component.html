@@ -31,9 +31,8 @@
                                 <p class="text-custom roboto m-0">{{user.role.roleName}}</p>
                             </div>
                         </div>
-                        <div class="col-md-1 p-0">
-                            <img *ngIf="!isLoading" [matMenuTriggerFor]="menu" class="c-p userMenuDots"
-                                src="/assets/images/svg/dot-menu.svg">
+                        <div class="col-md-1 p-0" [matMenuTriggerFor]="menu">
+                            <img *ngIf="!isLoading" class="c-p userMenuDots" src="/assets/images/svg/dot-menu.svg">
 
                             <mat-menu #menu="matMenu">
                                 <button (click)="addEditTeamMember(user, false)" mat-menu-item>Edit</button>

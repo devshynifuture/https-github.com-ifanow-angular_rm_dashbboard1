@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix w-60">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">Personal profile</h4>
+        <h4 class="mb-0 l-22 wrapper-20">Client profile</h4>
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-20 c-p pr-16" (click)="Close()">
@@ -24,7 +24,9 @@
                         <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
-                        <app-image-cropper [imageURL]="imgURL" [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper></app-image-cropper>
+                        <app-image-cropper [imageURL]="imgURL" [imageChangedEvent]="imageUploadEvent"
+                            [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)" #imageCropper>
+                        </app-image-cropper>
                         <!-- <div *ngIf="showCropper">
                             <button (click)="imageCropper.zoomIn()">ZoomIn</button>
                             <button (click)="imageCropper.zoomOut()">ZoomIn</button>
@@ -74,7 +76,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  " [options]="barButtonOptions">
+            <app-progress-button (btnClick)="saveCurrentPage()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

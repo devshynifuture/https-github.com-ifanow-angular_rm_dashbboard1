@@ -55,6 +55,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   inputData: any;
   schemeWise: any[];
   subCategoryData: any;
+  returnValue: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
@@ -322,8 +323,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
-        this.dataSource = new MatTableDataSource(data.dataSourceData);
-        this.customDataSource = new MatTableDataSource(data.customDataSourceData);
+        this.dataSource.data = (data.dataSourceData);
+        this.customDataSource.data = (data.customDataSourceData);
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
@@ -503,8 +504,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         if (UtilService.isDialogClose(sideBarData)) {
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource.data = ([{}, {}, {}]);
+            this.customDataSource.data = ([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
@@ -584,7 +585,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
     // if(data){
     //   this.isSpinner = false;
     // }

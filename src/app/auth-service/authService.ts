@@ -1,22 +1,20 @@
-
-import { Injectable } from '@angular/core';
-
+import {Injectable} from '@angular/core';
 // import {Router} from '@angular/router';
-import { EventService } from '../Data-service/event.service';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
   familyMemberId: any;
+
   constructor(
-      private router: Router
-  ) {}
+    private router: Router
+  ) {
+  }
 
   static getAdminStatus() {
     if (this.getUserInfo().hasOwnProperty('isAdmin')) {
       return this.getUserInfo().isAdmin;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -34,14 +32,13 @@ export class AuthService {
   }
 
   static getAdminId() {
-    return this.getUserInfo().adminId;
+    return this.getUserInfo().adminAdvisorId;
   }
 
   static getRmId() {
     if (this.getUserInfo().hasOwnProperty('rmId')) {
       return this.getUserInfo().rmId;
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -63,6 +60,7 @@ export class AuthService {
     let clientDataString = localStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+
   static getProfileDetails() {
     let clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
@@ -87,7 +85,7 @@ export class AuthService {
   }
 
   static getAdvisorDetails() {
-    const advisorDetail = localStorage.getItem('advisorDetail')
+    const advisorDetail = localStorage.getItem('advisorDetail');
     return advisorDetail ? JSON.parse(advisorDetail) : '';
   }
 
@@ -140,19 +138,11 @@ export class AuthService {
   setUserInfo(info) {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
+
   selectedClient: any;
 
-  setClientData(clientData) {
-    sessionStorage.setItem('clientData', JSON.stringify(clientData));
-    if (clientData.familyMemberId) {
-      this.familyMemberId = clientData.familyMemberId
-    }
-    clientData.familyMemberId = this.familyMemberId
-    localStorage.setItem('clientData', JSON.stringify(clientData));
-
-    // if(clientData){
-    //   this.selectedClient = clientData;
-    // }
+  static setSubscriptionUpperSliderData(data) {
+    sessionStorage.setItem('subUpperData', JSON.stringify(data));
   }
 
   setProfileDetails(profileData) {
@@ -165,22 +155,31 @@ export class AuthService {
   //   return this.selectedClient;
   // }
 
-  static setSubscriptionUpperSliderData(data) {
-    sessionStorage.setItem("subUpperData", JSON.stringify(data))
-  }
-
   static getSubscriptionUpperSliderData() {
-    return JSON.parse(sessionStorage.getItem('subUpperData'))
+    return JSON.parse(sessionStorage.getItem('subUpperData'));
   }
 
-  static goHome(router: Router){
+  static goHome(router: Router) {
     const userInfo = AuthService.getUserInfo();
-    if(userInfo.userType == 1 || userInfo.userType == 8) {
+    if (userInfo.userType == 1 || userInfo.userType == 8) {
       router.navigate(['admin', 'subscription', 'dashboard']);
-    } else if(userInfo.isRmLogin) {
+    } else if (userInfo.isRmLogin) {
       router.navigate(['support', 'dashboard']);
     } else {
       router.navigate(['customer', 'detail', 'overview', 'myfeed']);
     }
+  }
+
+  setClientData(clientData) {
+    sessionStorage.setItem('clientData', JSON.stringify(clientData));
+    if (clientData.familyMemberId) {
+      this.familyMemberId = clientData.familyMemberId;
+    }
+    clientData.familyMemberId = this.familyMemberId;
+    localStorage.setItem('clientData', JSON.stringify(clientData));
+
+    // if(clientData){
+    //   this.selectedClient = clientData;
+    // }
   }
 }

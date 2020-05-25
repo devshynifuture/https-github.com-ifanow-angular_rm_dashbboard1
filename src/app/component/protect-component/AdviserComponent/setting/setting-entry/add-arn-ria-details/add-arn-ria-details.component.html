@@ -224,7 +224,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="gstApplicableId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
                         <mat-option [value]="gst_applicable_list.id"
@@ -242,7 +242,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <input matInput type="text" [placeholder]="formPlaceHolders.ENTER_GST" formControlName="gstNumber"
                         class="form-control br-0" maxlength="15">
                     <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.required">This field is required</mat-error>
