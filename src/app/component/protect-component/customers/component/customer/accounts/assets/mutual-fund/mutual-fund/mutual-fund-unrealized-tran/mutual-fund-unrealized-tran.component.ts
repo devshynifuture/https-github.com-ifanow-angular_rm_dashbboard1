@@ -52,12 +52,22 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   displayColArray: any[];
   saveFilterData: any;
   savedFilterData: any;
+  inputData: any;
+  schemeWise: any[];
+  subCategoryData: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
   mutualFund;
-
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data);
+  }
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
      this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3)
     this.mfService.getViewMode()
@@ -197,10 +207,25 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   doFiltering(data) {
-    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
-    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    if (this.inputData == 'scheme wise') {
+      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType[0] = {
+        name: 'Scheme wise',
+        selected: true
+      }
+      data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+      this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
+    } else {
+      data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+      data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+      data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    }
     return data;
+
+    // data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    // data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    // data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    // return data;
   }
 
   getMutualFundResponse(data) {
