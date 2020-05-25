@@ -171,7 +171,7 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="_data.name!='CAPITAL GAIN REPORT' && _data.name != 'Overview Report' &&  _data.name!='UNREALIZED TRANSACTION REPORT'" class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false">
+        <mat-expansion-panel *ngIf="_data.name!='SUMMARY REPORT'  && _data.name!='CAPITAL GAIN REPORT' && _data.name != 'Overview Report' &&  _data.name!='UNREALIZED TRANSACTION REPORT'" class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false">
         <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
             <mat-panel-title>
                 <h5 class="m-0">Select Transaction Type</h5>

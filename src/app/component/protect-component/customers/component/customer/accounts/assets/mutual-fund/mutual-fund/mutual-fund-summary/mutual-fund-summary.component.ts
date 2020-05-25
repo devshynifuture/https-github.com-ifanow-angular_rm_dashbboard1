@@ -28,7 +28,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MutualFundSummaryComponent implements OnInit {
 
-  displayedColumns= ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
+  displayedColumns = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
   mfData: any;
   grandTotal: any = {};
@@ -56,9 +56,9 @@ export class MutualFundSummaryComponent implements OnInit {
 
   inputData: any;
   mfGetData: string;
-  displayColArray =[];
+  displayColArray = [];
   resData: any;
-  columns=[];
+  columns = [];
   saveFilterData: any;
   savedFilterData: any;
   returnValue: any;
@@ -93,87 +93,88 @@ export class MutualFundSummaryComponent implements OnInit {
       .subscribe(res => {
         this.viewMode = res;
       })
-      this.mfService.getMfData()
+    this.mfService.getMfData()
       .subscribe(res => {
         this.mutualFund = res;
       })
-      this.mfService.getFilterValues()
+    this.mfService.getFilterValues()
       .subscribe(res => {
         this.setDefaultFilterData = res;
       })
-      this.mfService.getDataForMfGet()
+    this.mfService.getDataForMfGet()
       .subscribe(res => {
         this.mfGetData = res;
       })
 
-      if(this.mfGetData){
-        this.getMutualFundResponse(this.mfGetData)
-      }else if(this.mutualFund){
-        this.getMutualFundResponse(this.mutualFund)
-      }else{
-        this.getMutualFund();
-      }
+
 
   }
-  getFilterData(value){
+  getFilterData(value) {
     const obj = {
-     advisor_id:this.advisorId,
-     clientId: this.clientId,
-     reportId:value
-   }
-   this.customerService.getSaveFilters(obj).subscribe(
-     data => {
-       console.log(data);
-       if(data){
-        let allClient= [];
-        let currentClient = [];
-        let transactionView = [];
-        // let displaycopy =[];
-        this.displayedColumns = [];
-        data.forEach(element => {
-          if(element.clientId == 0){
-            const obj={
-              displayName:element.columnName,
-              selected:element.selected
+      advisor_id: this.advisorId,
+      clientId: this.clientId,
+      reportId: value
+    }
+    this.customerService.getSaveFilters(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          let allClient = [];
+          let currentClient = [];
+          let transactionView = [];
+          // let displaycopy =[];
+          this.displayedColumns = [];
+          data.forEach(element => {
+            if (element.clientId == 0) {
+              const obj = {
+                displayName: element.columnName,
+                selected: element.selected
+              }
+              allClient.push(obj);
+              // if(element.selected == true){
+              //   this.displayedColumns.push(element.columnName)
+              // }
+            } else {
+              const obj = {
+                displayName: element.columnName,
+                selected: element.selected
+              }
+              currentClient.push(obj);
+              // if(element.selected == true){
+              //   this.displayedColumns.push(element.columnName)
+              // }
             }
-            allClient.push(obj); 
-            // if(element.selected == true){
-            //   this.displayedColumns.push(element.columnName)
-            // }
-          }else{
-            const obj={
-              displayName:element.columnName,
-              selected:element.selected
+          });
+          if (allClient.length > 0) {
+            transactionView = allClient
+          } else {
+            transactionView = currentClient
+          }
+          transactionView.forEach(element => {
+            if (element.selected == true) {
+              this.displayedColumns.push(element.displayName)
             }
-            currentClient.push(obj); 
-            // if(element.selected == true){
-            //   this.displayedColumns.push(element.columnName)
-            // }
-          }
-        });
-        if(allClient.length > 0)
-        {
-          transactionView = allClient
-        }else{
-          transactionView = currentClient
-        }
-        transactionView.forEach(element => {
-          if(element.selected==true){
-            this.displayedColumns.push(element.displayName)
-          }
-        });
+          });
 
 
-        this.saveFilterData ={
-          transactionView : transactionView,
-          showFolio:(data[0].showZeroFolios == true) ? '1' : '2',
-          reportType:data[0].reportType,
-          selectFilter :(allClient.length > 0)  ? 0 : this.clientId
+          this.saveFilterData = {
+            transactionView: transactionView,
+            showFolio: (data[0].showZeroFolios == true) ? '1' : '2',
+            reportType: data[0].reportType,
+            selectFilter: (allClient.length > 0) ? 0 : this.clientId
+          }
         }
-       }
-     }
-   );
- }
+      }
+
+    );
+    if (this.mfGetData) {
+      this.getMutualFundResponse(this.mfGetData)
+    } else if (this.mutualFund) {
+      this.getMutualFundResponse(this.mutualFund)
+    } else {
+      this.getMutualFund();
+    }
+  }
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
@@ -272,26 +273,26 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   asyncFilter(mutualFund) {
-    if(this.inputData == 'category wise'){
+    if (this.inputData == 'category wise') {
       this.rightFilterData.reportType = []
       this.rightFilterData.reportType[0] = {
-        name : 'Category wise',
-        selected : true
+        name: 'Category wise',
+        selected: true
       }
-    }else if(this.inputData == 'investor wise'){
+    } else if (this.inputData == 'investor wise') {
       this.rightFilterData.reportType = []
       this.rightFilterData.reportType[0] = {
-        name : 'Investor wise',
-        selected : true
+        name: 'Investor wise',
+        selected: true
       }
-    }else if(this.inputData == 'Sub Category wise'){
+    } else if (this.inputData == 'Sub Category wise') {
       this.rightFilterData.reportType = []
       this.rightFilterData.reportType[0] = {
-        name : 'Sub Category wise',
-        selected : true
+        name: 'Sub Category wise',
+        selected: true
       }
-    }else {
-        console.log('do nothing')
+    } else {
+      console.log('do nothing')
       // this.rightFilterData.reportType = []
       // this.rightFilterData.reportType[0] = {
       //   name : 'Sub Category wise',
@@ -299,10 +300,12 @@ export class MutualFundSummaryComponent implements OnInit {
       // }
     }
     if (typeof Worker !== 'undefined') {
-       this.rightFilterData.reportType=[];
-       this.rightFilterData.reportType[0]={
-        name:this.setDefaultFilterData.reportType,
-        selected:true
+      if (!this.inputData) {
+        this.rightFilterData.reportType = [];
+        this.rightFilterData.reportType[0] = {
+          name: (this.saveFilterData) ? this.saveFilterData.reportType :this.setDefaultFilterData.reportType,
+          selected: true
+        }
       }
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
@@ -391,7 +394,7 @@ export class MutualFundSummaryComponent implements OnInit {
     //   });
     //   this.displayColArray = data;
     // }
-   
+
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -402,23 +405,23 @@ export class MutualFundSummaryComponent implements OnInit {
     fragmentData.data = {
       name: 'SUMMARY REPORT',
       mfData: this.mutualFund,
-      folioWise:this.setDefaultFilterData.folioWise,
+      folioWise: this.setDefaultFilterData.folioWise,
       schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.setDefaultFilterData.familyMember,
       category: this.setDefaultFilterData.category,
       // transactionView: (this.setDefaultFilterData.transactionView.length>0) ? this.setDefaultFilterData.transactionView : this.displayedColumns,
-      transactionView:(this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
-      overviewFilter:(this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
-      scheme:this.setDefaultFilterData.scheme,
-      reportType :(this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
-      reportAsOn:this.setDefaultFilterData.reportAsOn,
-      showFolio :(this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
-      transactionPeriod:this.setDefaultFilterData.transactionPeriod,
-      transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
-      fromDate:this.setDefaultFilterData.fromDate,
-      toDate:this.setDefaultFilterData.toDate,
-      savedFilterData:this.savedFilterData,
-      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
+      overviewFilter: (this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
+      scheme: this.setDefaultFilterData.scheme,
+      reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
+      reportAsOn: this.setDefaultFilterData.reportAsOn,
+      showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
+      transactionPeriod: this.setDefaultFilterData.transactionPeriod,
+      transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
+      fromDate: this.setDefaultFilterData.fromDate,
+      toDate: this.setDefaultFilterData.toDate,
+      savedFilterData: this.savedFilterData,
+      selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -433,25 +436,25 @@ export class MutualFundSummaryComponent implements OnInit {
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
-            this.columns =[];
+            this.columns = [];
             this.rightFilterData.transactionView.forEach(element => {
-              if(element.selected == true){
+              if (element.selected == true) {
                 this.columns.push(element.displayName)
               }
             });
-            this.displayedColumns =[];
+            this.displayedColumns = [];
             this.displayedColumns = this.columns;
-            this.displayColArray=[];
+            this.displayColArray = [];
             this.rightFilterData.transactionView.forEach(element => {
               const obj = {
                 displayName: element.displayName,
-                selected:true
+                selected: true
               };
               this.displayColArray.push(obj);
             });
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
-            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund,this.rightFilterData,this.displayColArray);
+            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
             this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);

@@ -314,7 +314,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // console.log(`13091830918239182390183091830912830918310938109381093809328`);
       this.rightFilterData.reportType=[];
        this.rightFilterData.reportType[0]={
-        name:this.setDefaultFilterData.reportType,
+        name: (this.saveFilterData) ? this.saveFilterData.reportType :this.setDefaultFilterData.reportType,
         selected:true,
       }
       const input = {

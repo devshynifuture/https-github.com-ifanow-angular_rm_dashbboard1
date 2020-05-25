@@ -60,6 +60,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   @Output() changeInput = new EventEmitter();
   @Output() sendData = new EventEmitter();
+  @Output() changeAsPerCategory = new EventEmitter();
 
   total_net_Gain: number;
   cashFlowXirr: any;
@@ -662,6 +663,13 @@ export class MutualFundOverviewComponent implements OnInit {
        this.changeViewModeSet = 'Summary'
        this.changeViewModeValue = true
     }
+    const obj={
+      viewMode:this.changeViewModeSet,
+      flag:flag
+    }
+    this.changeAsPerCategory.emit(obj);
+
+    
   }
   openFilter() {
 

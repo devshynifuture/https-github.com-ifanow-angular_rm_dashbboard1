@@ -222,7 +222,7 @@ export class TempserviceService {
         }
       });
     });
-    return filterData;
+    return (filterData.length > 0) ? filterData : data;
   }
   getFinalTotalValue(data) { // grand total values
     let totalValue: any = {};
