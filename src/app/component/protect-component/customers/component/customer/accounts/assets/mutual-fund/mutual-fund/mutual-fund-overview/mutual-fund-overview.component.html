@@ -1,8 +1,8 @@
-<div *ngIf="openTransactionTab ==false || openSummaryTab == false">
+<div *ngIf="openSummaryTab == false && openTransactionTab == false">
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-4 pl-0 c-p">
-                <h4 class="m-0 text-black roboto pt-8">Mutual fund overview{{openTransactionTab}}{{openSummaryTab}}</h4>
+                <h4 class="m-0 text-black roboto pt-8">Mutual fund overview</h4>
             </div>
             <div class="col-md-8 p-0 justify-content-end d-flex align-items-center vaibhav " *ngIf="!isLoading">
                 <div class="pdfClass">
