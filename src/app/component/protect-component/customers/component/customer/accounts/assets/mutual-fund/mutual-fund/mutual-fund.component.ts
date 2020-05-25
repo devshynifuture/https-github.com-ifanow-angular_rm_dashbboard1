@@ -30,6 +30,7 @@ export class MutualFundComponent implements OnInit {
   capitalGainData: any;
   inputData: any;
   showSelector: boolean = false;
+  typeWiseData: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -124,6 +125,10 @@ export class MutualFundComponent implements OnInit {
 
   changeInput(value) {
     this.isShow = value;
+  }
+  OutputData(data){
+    this.viewMode =data.viewMode;
+    this.typeWiseData = data.flag
   }
 
   refreshMFData(value) {
