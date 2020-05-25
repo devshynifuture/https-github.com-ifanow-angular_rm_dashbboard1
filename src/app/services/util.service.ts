@@ -17,6 +17,7 @@ export class UtilService {
   @Input()
   public positiveMethod: Function;
   fragmentData: any;
+  fileURL: any;
 
   constructor(
     private eventService: EventService,
@@ -315,13 +316,14 @@ export class UtilService {
       data => {
         const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
+        this.fileURL = URL.createObjectURL(file);
         fragData.isSpinner = false;
         window.open(fileURL);
         const a = document.createElement('a');
         a.download = fileURL;
+        return (this.fileURL) ? this.fileURL : null;
       }
     );
-    // return (this.fileURL) ? this.fileURL : null;
   }
 
   /**
