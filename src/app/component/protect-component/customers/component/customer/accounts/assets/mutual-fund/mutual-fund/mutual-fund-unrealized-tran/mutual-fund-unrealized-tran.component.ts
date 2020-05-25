@@ -55,6 +55,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   inputData: any;
   schemeWise: any[];
   subCategoryData: any;
+  transactionTypeList: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
@@ -69,7 +70,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     return this.inputData;
   }
   ngOnInit() {
-     this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3)
+     this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
+     this.getTransactionTypeData();
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -109,6 +111,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.getMutualFund();
     }
 
+  }
+  getTransactionTypeData() {
+    this.custumService.getTransactionTypeData({})
+      .subscribe(res => {
+        if (res) {
+          this.transactionTypeList = res;
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      })
   }
 
   getFilterData(value){
@@ -495,7 +507,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       toDate:this.setDefaultFilterData.toDate,
       transactionPeriod:this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
-      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null
+      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      transactionTypeList:this.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

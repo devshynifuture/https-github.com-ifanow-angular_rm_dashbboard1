@@ -80,6 +80,7 @@ export class RightFilterComponent implements OnInit {
   showGrandfathering = true;
   advisorId: any;
   clientId: any;
+  selectUnselctAllFlag:true;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
@@ -121,6 +122,7 @@ export class RightFilterComponent implements OnInit {
     this.getReportType();//get type of report categorywise,investor,sub category wise
     this.getReportFormat();//get capital gain report
     this.getSaveFilters(); //forSaving filters
+    // this.getTransactionType();//for transaction type in all transactions
     this.getFinancialYears(this.summaryFilerForm);//for getting financial years for capital gain
     this.overviewFilter = this._data.overviewFilter;
     // this.getOverviewFilter();//used for overview filter to show specific tables
@@ -366,6 +368,9 @@ export class RightFilterComponent implements OnInit {
     this.reportFormat = filterData;
 
   }
+  // getTransactionType(){
+    
+  // }
   getSaveFilters() {
     this.saveFilters = [
       { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
@@ -1038,13 +1043,33 @@ export class RightFilterComponent implements OnInit {
     }
   };
 
-  selectAll(event, array, someString) {
-    if (array != undefined) {
-      array.forEach(item => {
-        item.selected = event.checked;
-      });
-      this.changeSelect('', '');
+  selectAll(value) {
+    if(value.checked){
+      this.selectUnselctAllFlag = value.checked
+      this.familyMember.forEach(item => item.selected = true);
+      this.amc.forEach(item => item.selected = true);
+      this.scheme.forEach(item => item.selected = true);
+      this.folio.forEach(item => item.selected = true);
+      this.transactionView.forEach(item => item.selected = true);
+      this.category.forEach(item => item.selected = true);
+
+    }else{
+      this.familyMember.forEach(item => item.selected = false);
+      this.amc.forEach(item => item.selected = false);
+      this.scheme.forEach(item => item.selected = false);
+      this.folio.forEach(item => item.selected = false);
+      this.transactionView.forEach(item => item.selected = false);
+      this.category.forEach(item => item.selected = false);
+      this.selectUnselctAllFlag = value.checked
+
     }
+    this.changeSelect('', '');
+    // if (array != undefined) {
+    //   array.forEach(item => {
+    //     item.selected = event.checked;
+    //   });
+    //   this.changeSelect('', '');
+    // }
 
   }
 
