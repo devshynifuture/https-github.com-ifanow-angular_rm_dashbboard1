@@ -24,7 +24,7 @@ export class AddNumberComponent implements OnInit {
   // @Input() isResidential = false;
   @Output() numberArray = new EventEmitter();
   @Input() classObj = {
-    topPadding: 'pt-40',
+    topPadding: 'pt-0',
     label: 'col-md-4',
     code: 'col-md-3 pl-0 col-4 mob-pl-10',
     mobile: 'col-md-3 p-0 col-6',
