@@ -46,7 +46,8 @@
       </div>
     </div>
     <div *ngIf="familyMemberData && singleFolioData.flag=='client'" class="col-md-12 pt-48 p-0">
-      <h5 class="m-0 f-500 pb-12">Following are the details of Sneha Vishal Shah</h5>
+      <h5 class="m-0 f-500 pb-12">Following are the details
+        of {{familyMemberData.name ? familyMemberData.name : ''}}</h5>
       <div class="row b-a">
         <div class="col-md-6 p-0 b-b">
           <p class="m-0 p-8">Full name</p>
