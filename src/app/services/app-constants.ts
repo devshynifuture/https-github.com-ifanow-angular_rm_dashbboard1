@@ -32,6 +32,8 @@ export class AppConstants {
     ENTER_COMPANY_ADDRESS: 'Enter office address',
     ENTER_PIN_CODE: 'Enter pin code',
     REENTER_NEW_PASSWORD: 'Re-enter new password',
+    TEMPLATE_NAME: 'Template name',
+    SELECT_OWNER: 'Select ownwer',
   }
 
   public static EMAIL_DOMAINS = ['gmail.com','hotmail.com','mail.com','outlook.com','yahoo.com','yahoo.co.in','rediffmail.com'];
