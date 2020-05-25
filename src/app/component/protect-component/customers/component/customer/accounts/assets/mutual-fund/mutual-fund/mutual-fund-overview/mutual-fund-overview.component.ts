@@ -77,6 +77,8 @@ export class MutualFundOverviewComponent implements OnInit {
   saveFilterData: any;
   openTransactionTab: boolean =  false;
   returnValue: any;
+  changeViewModeSet: any;
+  changeViewModeValue: boolean = false;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -633,13 +635,12 @@ export class MutualFundOverviewComponent implements OnInit {
   // }
   openSummary(flag){
     if(flag == 'scheme wise'){
-      this.openTransactionTab = true
-      this.inputDataToSend = flag
+       this.changeViewModeSet = 'All Transactions'
+       this.changeViewModeValue = true
     }else{
-      this.openSummaryTab = true
-      this.inputDataToSend = flag
+       this.changeViewModeSet = 'Summary'
+       this.changeViewModeValue = true
     }
-
   }
   openFilter() {
 
@@ -747,6 +748,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.viewMode = data;
     this.mfService.changeViewMode(this.viewMode);
     this.sendData.emit(data);
+    
   }
 }
 export interface PeriodicElement1 {

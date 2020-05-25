@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, SimpleChanges, EventEmitter, Output, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -28,7 +28,20 @@ export class MutualFundComponent implements OnInit {
   dataHolder: any = {};
   isShow;
   capitalGainData: any;
-
+  inputData: any;
+  showSelector: boolean = false;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.showSelector = true
+    console.log('This is Input data ', data);
+  }
+  get data() {
+    this.changeViewMode(this.inputData)
+    return this.inputData;
+    
+  }
+  
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
     private mfService: MfServiceService, private settingService: SettingsService) {
@@ -41,7 +54,12 @@ export class MutualFundComponent implements OnInit {
       })
 
     this.viewMode = 'Overview Report';
-    this.mfService.changeViewMode(this.viewMode);
+    if(this.inputData){
+      this.changeViewMode(this.inputData)
+      this.viewMode = this.inputData
+    }else{
+      this.mfService.changeViewMode(this.viewMode);
+    }
     this.advisorId = AuthService.getAdvisorId();
     // // this.advisorId = 2929;
 
