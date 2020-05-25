@@ -114,7 +114,7 @@ export class OverviewProfileComponent implements OnInit {
       data => {
         if (data && data.length > 0) {
           data.forEach(element => {
-            if (element.name.length > 11) {
+            if (element.name.length > 22) {
               element['shortName'] = element.name.substr(0, element.name.indexOf(' '));
             }
           });

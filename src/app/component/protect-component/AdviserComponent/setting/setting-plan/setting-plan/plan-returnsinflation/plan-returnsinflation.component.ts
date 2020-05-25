@@ -132,7 +132,7 @@ export class PlanReturnsinflationComponent implements OnInit {
       return;
     }
     this.orgSetting.updateReturns(obj).subscribe(res => {
-      this.eventService.openSnackBar("Data Updated Successfully");
+      this.eventService.openSnackBar("Updated successfully");
       this.toggleEditMode();
     }, err => {
       this.eventService.openSnackBar("Error Occured");

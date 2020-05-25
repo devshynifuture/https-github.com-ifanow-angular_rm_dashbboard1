@@ -1,4 +1,4 @@
-<div *ngIf="mobileListResponse" [formGroup]="numberFormGroup">
+<div *ngIf="mobileListResponse" class="pt-28" [formGroup]="numberFormGroup">
     <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row"
         [ngClass]="classObj.topPadding">
         <div class="text-right mob-text-left mob-pl-10 full-end" [ngClass]="classObj.label">

@@ -76,6 +76,7 @@ export class MutualFundOverviewComponent implements OnInit {
   savedFilterData: any;
   saveFilterData: any;
   openTransactionTab: boolean =  false;
+  returnValue: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -461,7 +462,8 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData)
+    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData)
+    console.log('return value ====',this.returnValue)
   }
   getReportWiseCalculation(data) {
     let xirr;
@@ -527,6 +529,7 @@ export class MutualFundOverviewComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
+        animation: false,
         states: {
           hover: {
             enabled: false
@@ -629,13 +632,14 @@ export class MutualFundOverviewComponent implements OnInit {
   //   );
   // }
   openSummary(flag){
-    if('scheme wise'){
+    if(flag == 'scheme wise'){
       this.openTransactionTab = true
       this.inputDataToSend = flag
     }else{
       this.openSummaryTab = true
       this.inputDataToSend = flag
     }
+
   }
   openFilter() {
 

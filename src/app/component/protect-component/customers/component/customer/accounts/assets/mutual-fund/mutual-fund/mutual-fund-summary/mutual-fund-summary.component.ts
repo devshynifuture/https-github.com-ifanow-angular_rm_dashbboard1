@@ -61,6 +61,7 @@ export class MutualFundSummaryComponent implements OnInit {
   columns=[];
   saveFilterData: any;
   savedFilterData: any;
+  returnValue: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -559,7 +560,7 @@ export class MutualFundSummaryComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);
+    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);
   }
 
   deleteModal(value, element) {

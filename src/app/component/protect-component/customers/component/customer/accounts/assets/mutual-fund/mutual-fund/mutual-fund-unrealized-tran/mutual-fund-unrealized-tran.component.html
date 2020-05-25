@@ -365,8 +365,9 @@
 
                     <ng-container matColumnDef="groupHeader2">
                         <td class="zIndex" *matCellDef="let group" [attr.colspan]="displayedColumns.length">
-                            <div class="bar">{{group.schemeName}}
-                                <p class="text-right">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
+                            <div class="bar d-flex w-100">
+                                <p class="w-50 m-0">{{group.schemeName}}</p>
+                                <p class="text-right w-50 m-0">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
                             </div>
                         </td>
                     </ng-container>
