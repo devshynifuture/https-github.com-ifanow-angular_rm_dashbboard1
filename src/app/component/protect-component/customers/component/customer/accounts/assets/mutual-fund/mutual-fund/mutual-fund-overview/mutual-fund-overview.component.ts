@@ -629,13 +629,14 @@ export class MutualFundOverviewComponent implements OnInit {
   //   );
   // }
   openSummary(flag){
-    if('scheme wise'){
+    if(flag == 'scheme wise'){
       this.openTransactionTab = true
       this.inputDataToSend = flag
     }else{
       this.openSummaryTab = true
       this.inputDataToSend = flag
     }
+
   }
   openFilter() {
 
