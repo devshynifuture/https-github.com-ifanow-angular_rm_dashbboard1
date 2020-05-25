@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-8 pl-10 pr-0">
                     <div class="row">
-                        <div class="col-md-11 p-0 relClass">
+                        <div class="col-md-11 p-0 relClass overflow-text-users">
                             <div class="bar" [ngClass]="{'height23': isLoading}">
                                 <h5 class="m-0 text-black">{{user.fullName}}</h5>
                             </div>
@@ -41,8 +41,9 @@
                                     mat-menu-item>Suspend</button>
                                 <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1"
                                     mat-menu-item>Reactivate</button>
-                                    <!-- role type 1 is admin, dont allow admin to kill himself -->
-                                <button (click)="deleteUser(user)" mat-menu-item *ngIf="user.role.advisorOrClientRole != 1">Delete</button>
+                                <!-- role type 1 is admin, dont allow admin to kill himself -->
+                                <button (click)="deleteUser(user)" mat-menu-item
+                                    *ngIf="user.role.advisorOrClientRole != 1">Delete</button>
                             </mat-menu>
                         </div>
 
