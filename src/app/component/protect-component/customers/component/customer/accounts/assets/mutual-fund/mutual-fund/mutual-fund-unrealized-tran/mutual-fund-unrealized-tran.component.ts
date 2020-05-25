@@ -55,6 +55,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   inputData: any;
   schemeWise: any[];
   subCategoryData: any;
+  returnValue: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
@@ -584,7 +585,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
     // if(data){
     //   this.isSpinner = false;
     // }
