@@ -19,7 +19,7 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-list-item role="listitem" *ngFor="let item of familyMember">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily($event.value)">{{item.name}}
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
