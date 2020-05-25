@@ -854,6 +854,9 @@ export class CustomerService {
   getTransactionTypeData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST, data)
   }
+  getTransactionTypeInMF(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_TYPE, data)
+  }
   postAddTransactionMutualFund(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_ADD, data);
   }

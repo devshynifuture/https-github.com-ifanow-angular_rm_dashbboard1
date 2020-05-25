@@ -72,7 +72,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
   ngOnInit() {
      this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
-     this.getTransactionTypeData();
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -88,6 +87,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.mfService.getDataForMfGet()
       .subscribe(res => {
         this.mfGetData = res;
+      })
+      this.mfService.getTransactionType()
+      .subscribe(res => {
+        this.getTransactionType(res);
       })
     if (this.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
@@ -113,16 +116,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     }
 
   }
-  getTransactionTypeData() {
-    this.custumService.getTransactionTypeData({})
-      .subscribe(res => {
-        if (res) {
-          this.transactionTypeList = res;
-        }
-      }, err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-      })
-  }
+
 
   getFilterData(value){
     const obj = {
@@ -321,14 +315,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.rightFilterData.reportType=[];
        this.rightFilterData.reportType[0]={
         name:this.setDefaultFilterData.reportType,
-        selected:true
+        selected:true,
       }
       const input = {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         nav: this.mutualFund.nav,
         // mutualFund:this.mfData,
-        mutualFund:this.mutualFund
+        mutualFund:this.mutualFund,
+        transactionType:this.rightFilterData.transactionType,
+        viewMode:this.viewMode
         // mfService: this.mfService
       };
       // Create a new
@@ -471,7 +467,19 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
     });
   }
+  getTransactionType(res){
+    let filterData = [];
+    res.forEach(element => {
+      const obj={
+        name: element,
+        selected:false
+      }
+      filterData.push(obj);
+    });
+    this.transactionTypeList = filterData;
+  }
   openFilter() {
+
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -509,7 +517,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       transactionPeriod:this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
       selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null,
-      transactionTypeList:this.transactionTypeList
+      transactionTypeList:(this.rightFilterData.transactionType) ? this.rightFilterData.transactionType :this.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

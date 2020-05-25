@@ -125,7 +125,7 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type,nav,allData) {
+  getSubCategoryArrayForTransaction(mutualFundList, type,nav,allData,trnType,viewMode) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
@@ -148,8 +148,14 @@ export class TempserviceService {
       }
       catObj[key].forEach((singleData) => {
         if(singleData.balanceUnit > 0 && singleData.balanceUnit != 0){
+          if(viewMode =='All Transactions'){
+            if(trnType){
+              totalObj = {};
+              singleData.mutualFundTransactions = this.getUnrealizedDataTransaction(singleData.mutualFundTransactions,trnType)
+            }
+          }
           if(singleData.mutualFundTransactions.length>0){
-         
+            
             if(nav){
               nav.forEach(element => {
                 if(element.schemeCode == singleData.schemeCode){
@@ -186,6 +192,12 @@ export class TempserviceService {
           totalObj.totalCagr=data.xirr;
           totalObj.trnAbsoluteReturn=data.absoluteReturn;
           filteredData.push(totalObj);
+          }else{
+            if(filteredData.length > 0){
+              if(filteredData[filteredData.length - 1].groupName){
+                filteredData.pop();
+              }
+            }
           }
         }else{
           if(filteredData.length > 0){
@@ -199,7 +211,19 @@ export class TempserviceService {
     return filteredData;
   }
 
-
+  getUnrealizedDataTransaction(data,trnData){
+    let filterData = [];
+    data.forEach(element => {
+      trnData.forEach(ele => {
+        if(ele.selected == true){
+          if(ele.name == element.fwTransactionType){
+            filterData.push(element)
+          }
+        }
+      });
+    });
+    return filterData;
+  }
   getFinalTotalValue(data) { // grand total values
     let totalValue: any = {};
     data.forEach(element => {

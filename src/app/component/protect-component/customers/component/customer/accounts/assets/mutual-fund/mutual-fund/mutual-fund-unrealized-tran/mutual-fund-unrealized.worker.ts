@@ -13,7 +13,7 @@ addEventListener('message', ({data}) => {
   const mutualFundList = data.mutualFundList;
   const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type,data.mutualFund);
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
-  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type,data.nav,data.mutualFund);
+  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type,data.nav,data.mutualFund,data.transactionType,data.viewMode);
   const output = {dataSourceData, customDataSourceData, totalValue};
   // console.log('Mutual fund script output: ', output);
   postMessage(output);

@@ -77,6 +77,7 @@ export class MutualFundOverviewComponent implements OnInit {
   saveFilterData: any;
   openTransactionTab: boolean =  false;
   returnValue: any;
+  transactionTypeList: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -120,6 +121,25 @@ export class MutualFundOverviewComponent implements OnInit {
       this.getMutualFundData();
     }
     this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
+  }
+  getTransactionTypeData() {
+    const obj = {
+      advisorIds: [this.advisorId],
+      clientId: this.clientId,
+      parentId: 0
+
+    };
+    this.custumService.getTransactionTypeInMF(obj).subscribe(
+      data => {
+        if(data){
+            
+            this.MfServiceService.setTransactionType(data);
+            // this.setDefaultFilterData.transactionTypeList = filterData
+          
+        }
+        // this.transactionTypeList = data;
+      }
+    );
   }
   getFilterData(value){
     const obj = {
@@ -264,6 +284,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getMutualFundResponse(data) {
     this.getNav();
+    this.getTransactionTypeData();
     if (data) {
       this.mfCopyData = data
       this.MfServiceService.sendMutualFundData(data);
@@ -676,7 +697,8 @@ export class MutualFundOverviewComponent implements OnInit {
       overviewFilter:(this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       transactionPeriod:this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
-      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null
+      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      // transactionTypeList:this.setDefaultFilterData.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
