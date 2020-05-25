@@ -180,9 +180,10 @@ export class AssetsComponent implements OnInit {
       real_estate,
       retirementAccounts,
       smallSavingSchemes,
-      commodities
+      commodities,
+      mutual_fund
     } = data;
-
+    this.assetSideBarData[0].count = mutual_fund;
     this.assetSideBarData[2].count = fixedIncome;
     this.assetSideBarData[3].count = real_estate;
     this.assetSideBarData[4].count = retirementAccounts;
