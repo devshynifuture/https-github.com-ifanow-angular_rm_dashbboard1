@@ -244,7 +244,7 @@
                                 <ng-container matColumnDef="icons" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                     <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p">
-                                        <img class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                        <img class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
                                         <mat-menu #menu4="matMenu">
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                             <button (click)="open(element)" mat-menu-item>Detailed view</button>
@@ -393,7 +393,7 @@
                                 <ng-container matColumnDef="icons" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                                     <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="t-2 text-center mat-menu-trigger  c-p">
-                                        <img class="mat-menu-trigger c-p" src="/assets/images/svg/dot-menu.svg">
+                                        <img class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
                                         <mat-menu #menu4="matMenu">
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                             <button (click)="open(element)" mat-menu-item>Detailed view</button>
