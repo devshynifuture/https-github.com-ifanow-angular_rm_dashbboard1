@@ -5,10 +5,42 @@
   }
 }
 
+// .mutualfunds-capital-equity#tabele-low {
+
+//   #table-low th.mat-column-header-row-first-group,
+//   #table-low th.mat-column-header-row-second-group,
+//   #table-low th.mat-column-header-row-third-group {
+//     background-color: #fff !important;
+//   }
+
+//   .th.mat-header-cell
+// }
+#table-low th.header-tables {
+  background-color: #fff !important;
+  border-bottom: 0px !important;
+}
+
 .remove-padding-matfield {
   .mat-form-field-appearance-standard .mat-form-field-flex {
     padding-top: 0px !important;
   }
+}
+
+.account-empty-state {
+  height: 150px;
+  justify-content: center;
+  border: 1px solid #e8ecef;
+}
+
+.gain-loss {
+  width: calc(100% - 62.24%);
+  padding-left: 5px;
+  border-left: 1px solid #dee5e7;
+}
+
+.redemption {
+  width: calc(100% - 54.50%);
+  border-right: 1px solid #dee5e7;
 }
 
 #ui-profile-plan {
@@ -61,6 +93,7 @@
     }
 
   }
+
 
   .cashflow,
   .familymember-wise {

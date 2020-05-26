@@ -140,12 +140,24 @@ export class LoginComponent implements OnInit {
             this.getOtpBtnOption.active = false;
           } else {
             this.getOtpBtnOption.active = false;
-            this.eventService.openSnackBar('error found', 'Dismiss');
+            // this.eventService.openSnackBar('error found', 'Dismiss');
+            this.userName.setErrors({ incorrect: true });
           }
         },
         err => {
           this.getOtpBtnOption.active = false;
-          this.eventService.openSnackBar(err, 'Dismiss')
+          // this.eventService.openSnackBar(err, 'Dismiss')
+          if (err == "Username not found.") {
+            this.userName.setErrors({ incorrect: true });
+          }
+          else {
+            if (err.type == undefined) {
+              this.userName.setErrors({ incorrect: true });
+            }
+            else {
+              this.eventService.openSnackBar(err.type, 'Dismiss');
+            }
+          }
         }
       );
       if (this.resendOtpFlag) {
@@ -206,8 +218,7 @@ export class LoginComponent implements OnInit {
       if (this.verifyFlag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
         const obj = {
           email: this.userData.email,
-          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userId: this.userData.userId,
           userType: this.userData.userType
         };
         this.saveAfterVerifyCredential(obj);
@@ -217,8 +228,7 @@ export class LoginComponent implements OnInit {
       } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
         const obj = {
           mobileNo: this.userData.mobileNo,
-          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userId: this.userData.userId,
           userType: this.userData.userType,
           otp: otpString
         };

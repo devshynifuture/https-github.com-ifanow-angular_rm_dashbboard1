@@ -29,6 +29,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
+  clientId;
   filterData: any;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
@@ -53,6 +54,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
+      this.clientId = AuthService.getClientId();
     }
     this.advisorId = AuthService.getAdvisorId();
     this.isLoading = true;
@@ -71,7 +73,11 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   refresh(flag) {
     this.dontHide = true;
-    this.getIINUCC();
+    if (this.isPendingData) {
+      this.getIINUCC();
+    } else {
+      this.getMappedData();
+    }
   }
 
   getFilterOptionData() {
@@ -110,39 +116,61 @@ export class InvestorsTransactionsComponent implements OnInit {
   getMappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
+    this.isPendingData = false;
+
     const obj = {
       advisorId: this.advisorId,
+      clientId: this.isAdvisorSection ? 0 : this.clientId
       // tpUserCredentialId: this.selectedBrokerCode.id,
       // aggregatorType: this.selectedPlatform.aggregatorType
     };
-    this.isPendingData = false;
-    this.onlineTransact.getMapppedClients(obj).subscribe(
-      data => {
-        console.log('getIINUCC data :', data);
-        if (data) {
-          data.forEach(singleData => {
-            if (singleData.activationStatus == 'YES') {
-              singleData.statusStringTemp = 'Investment ready';
-            } else {
-              singleData.statusStringTemp = 'Pending';
-            }
-          });
-          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
-          this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
-          this.dataSource.sort = this.sort;
-        } else if (data == undefined) {
+
+    if (this.isAdvisorSection) {
+      this.onlineTransact.getMapppedClients(obj).subscribe(
+        data => {
+          console.log('getIINUCC data :', data);
+          this.handleMappedClientRes(data);
+        },
+        err => {
+          this.isLoading = false;
           this.noData = 'No investors found';
           this.dataSource.data = [];
+          this.eventService.openSnackBar(err, 'Dismiss');
         }
-        this.isLoading = false;
-      },
-      err => {
-        this.isLoading = false;
-        this.noData = 'No investors found';
-        this.dataSource.data = [];
-        this.eventService.openSnackBar(err, 'Dismiss');
-      }
-    );
+      );
+    } else {
+      this.onlineTransact.getMapppedClientsFilterClientWise(obj).subscribe(
+        data => {
+          console.log('getIINUCC data :', data);
+          this.handleMappedClientRes(data);
+        },
+        err => {
+          this.isLoading = false;
+          this.noData = 'No investors found';
+          this.dataSource.data = [];
+          this.eventService.openSnackBar(err, 'Dismiss');
+        }
+      );
+    }
+  }
+
+  handleMappedClientRes(data) {
+    if (data) {
+      data.forEach(singleData => {
+        if (singleData.activationStatus == 'YES') {
+          singleData.statusStringTemp = 'Investment ready';
+        } else {
+          singleData.statusStringTemp = 'Pending';
+        }
+      });
+      this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+      this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
+      this.dataSource.sort = this.sort;
+    } else if (data == undefined) {
+      this.noData = 'No investors found';
+      this.dataSource.data = [];
+    }
+    this.isLoading = false;
   }
 
   getIINUCC() {
@@ -150,7 +178,8 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      clientId: this.isAdvisorSection ? 0 : this.clientId
     };
     this.isPendingData = true;
 
@@ -224,7 +253,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   }
 
   openInvestorDetail(data) {
-    if (this.isLoading || !this.isPendingData) {
+    if (this.isLoading || !this.isPendingData || !this.isAdvisorSection) {
       return;
     }
     const fragmentData = {

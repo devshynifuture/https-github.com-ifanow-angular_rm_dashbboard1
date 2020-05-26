@@ -38,10 +38,10 @@
       </div>
     </div>
 
-    <div class="row pt-24">
+    <div class="row pt-24" *ngIf="data.flag == 'addMutualFund'">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-12">Scheme name</h5>
-        <p class="m-0 text-custom f-12 text-right">Last closing NAV: 390.27</p>
+        <p class="m-0 text-custom f-12 text-right">Last closing NAV: {{data.nav}}</p>
       </div>
       <div class="col-md-5">
         <div class="form-group">
@@ -67,6 +67,28 @@
               {{errorMsg}}
             </span>
           </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-24" *ngIf="data.flag == 'editTransaction'">
+      <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-12">Scheme name</h5>
+        <p class="m-0 text-custom f-12 text-right">Last closing NAV: {{data.nav}}</p>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+            <!-- [matAutocomplete]="auto" -->
+          <mat-form-field floatLabel="never" appearance="standard">
+            <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
+              aria-label="schemeName"  [(ngModel)]="data.schemeName"
+              [formControl]="schemeNameControl">
+            <br>
+            <ng-container *ngIf="filteredSchemeError">
+              <span class="f-12">
+                {{errorMsg}}
+              </span>
+            </ng-container>
+          </mat-form-field>
         </div>
       </div>
     </div>

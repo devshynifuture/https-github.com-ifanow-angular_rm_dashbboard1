@@ -166,16 +166,4 @@ export class SettingsService {
   deleteMFRTA(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA, data);
   }
-
-  updateAnswer(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_MF_RTA_QUESTION, data);
-  }
-
-  deleteQuestion(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA_QUESTION, data);
-  }
-
-  addQuestion(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MF_RTA_QUESTION, data);
-  }
 }

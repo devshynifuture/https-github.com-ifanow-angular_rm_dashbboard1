@@ -38,11 +38,10 @@ export class MandatesTransactionsComponent implements OnInit {
   ngOnInit() {
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
+      this.clientId = AuthService.getClientId();
       this.isAdvisorSection = false;
     }
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    // this.getNSEAchmandate();
     this.getFilterOptionData();
     this.dontHide = true;
   }
@@ -86,8 +85,9 @@ export class MandatesTransactionsComponent implements OnInit {
     this.isLoading = true;
     const obj1 = {
       advisorId: this.advisorId,
+      clientId: this.clientId,
     };
-    this.onlineTransact.getMandateList(obj1).subscribe(
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateListRes(data), (error) => {
         this.isLoading = false;
         this.dataSource.data = [];
@@ -98,6 +98,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   getMandateListRes(data) {
+    console.log('mandate data : ', data);
     this.dontHide = true;
     this.isLoading = false;
     if (data && data.length > 0) {
@@ -119,6 +120,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   openMandateDetails(data) {
+    data.isAdvisorSection = this.isAdvisorSection;
     const fragmentData = {
       flag: 'detailPoTd',
       data,
@@ -130,7 +132,7 @@ export class MandatesTransactionsComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.refresh(null);
           }
           rightSideDataSub.unsubscribe();
         }
