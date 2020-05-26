@@ -5,14 +5,16 @@
         </div>
         <!-- *ngIf="!isLoading" prod -->
         <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
-            <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
+            <div class="downloadPdfIcon">
+                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
+            </div>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item>PDF</button>
                 <button mat-menu-item>XLS</button>
             </mat-menu>
             <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
-            <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
+            <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
                 (click)="openFilter()">
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                 <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
@@ -24,7 +26,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 pl-0 mb-8">
+        <div class="col-md-12 p-0 mb-8">
             <div class="b-a bb-0">
                 <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                     EQUITY
@@ -362,7 +364,7 @@
     </div>
 
     <div class="row  ">
-        <div class="col-md-12 pl-0 mb-8">
+        <div class="col-md-12 p-0 mb-8">
             <div class="b-a bb-0">
                 <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                     DEBT
@@ -600,7 +602,7 @@
                             <span
                                 *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
                             <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0"
-                                class="br f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                                class="f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
