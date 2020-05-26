@@ -86,8 +86,8 @@
                                 <button mat-menu-item (click)="filterInsurance('statusId', 'LIVE')">
                                     STATUS - LIVE
                                 </button>
-                                <button mat-menu-item (click)="filterInsurance('statusId', 'MATURED')">
-                                    STATUS - MATURED
+                                <button mat-menu-item (click)="(insuranceTypeId == 1) ? filterInsurance('statusId', 'MATURED') : filterInsurance('statusId', 'EXPIRED')">
+                                  {{(insuranceTypeId == 1 ) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}  
                                 </button>
                             </mat-menu>
                             <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)" *ngIf="showAdd"> ADD NEW</button>
@@ -365,8 +365,8 @@
                                         <div class="bar">
                                             <span class="text-primary" *ngIf="element.statusId == 'LIVE'">
                                                 {{'LIVE'}} </span>
-                                            <span class="text-success" *ngIf="element.statusId == 'MATURED'">
-                                                {{'MATURED'}} </span>
+                                            <span class="text-success" *ngIf="element.statusId == 'EXPIRED'">
+                                                {{'EXPIRED'}} </span>
                                         </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
@@ -591,8 +591,8 @@
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
                     {{'LIVE'}} </span>
-                <span class="text-success" *ngIf="item.statusId == 'MATURED'">
-                    {{'MATURED'}} </span>
+                <span class="text-success" *ngIf="item.statusId == 'EXPIRED'">
+                    {{'EXPIRED'}} </span>
             </td>
 
         </tr>

@@ -269,7 +269,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : '1'],
-      additionalCovers: [this.dataForEdit ? this.addOns.addOnId + '' : null],
+      // additionalCovers: [this.dataForEdit ? this.addOns.addOnId + '' : null],
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       // inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
@@ -562,10 +562,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         "policyExpiryDate": this.datePipe.transform(this.critialIllnessForm.get('policyExpiryDate').value, 'yyyy-MM-dd'),
         "cumulativeBonus": this.critialIllnessForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.critialIllnessForm.get('bonusType').value,
-        "addOns": [{
-          "addOnId": this.critialIllnessForm.get('additionalCovers').value,
-          "addOnSumInsured": this.critialIllnessForm.get('coversAmount').value
-        }],
+        // "addOns": [{
+        //   "addOnId": this.critialIllnessForm.get('additionalCovers').value,
+        //   "addOnSumInsured": this.critialIllnessForm.get('coversAmount').value
+        // }],
         "exclusion": this.critialIllnessForm.get('exclusion').value,
         "policyInceptionDate": this.datePipe.transform(this.critialIllnessForm.get('inceptionDate').value, 'yyyy-MM-dd'),
         "tpaName": this.critialIllnessForm.get('tpaName').value,

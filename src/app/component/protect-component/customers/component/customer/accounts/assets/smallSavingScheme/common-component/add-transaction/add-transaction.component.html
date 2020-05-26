@@ -13,7 +13,7 @@
 <div class="widthBox" [formGroup]="transactionForm">
     <div *ngIf="addTransactionList>0" class="row  add-liabilities">
         <div class="col-md-3 pl-0">
-            <label class="f-14"> {{'Transaction type'}} </label>
+            <label class="f-14"> {{transactionViewData.transactionHeader[0]}} </label>
         </div>
         <div class="col-md-3 pl-0">
             <label class="f-14"> {{transactionViewData.transactionHeader[1]}}</label>

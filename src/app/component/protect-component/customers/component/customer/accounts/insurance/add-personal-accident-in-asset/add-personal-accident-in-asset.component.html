@@ -353,7 +353,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{tpaName.value.length}}/40</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
@@ -368,7 +368,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
@@ -380,7 +380,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>

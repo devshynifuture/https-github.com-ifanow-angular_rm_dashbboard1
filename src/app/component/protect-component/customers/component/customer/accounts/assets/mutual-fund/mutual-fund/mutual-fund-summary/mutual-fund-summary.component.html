@@ -93,16 +93,16 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span appFormatNumber class="text-right"
-                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? element.amountInvested : 0}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? element.totalAmountInvested : 0}}</span>
+                        <div class="bar"> <span class="text-right"
+                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested | number :'1.0-0') : 0}}</span>
+                            <span  class="f-700"
+                                *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? (element.totalAmountInvested | number:'1.0-0') : 0}}</span>
                         </div>
                     </td>
 
-                    <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_amount_invested) : 0"
+                    <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
-
+                        <span>{{(mfData) ? (mfData.total_amount_invested | number :'1.0-0') : 0}}</span>
                     </td>
                 </ng-container>
 
@@ -110,16 +110,16 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Current value</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber
-                                *ngIf="element.currentValue || element.currentValue == 0">{{(element.currentValue)?element.currentValue:0}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{(element.totalCurrentValue) ? element.totalCurrentValue : 0}}</span>
+                        <div class="bar"><span 
+                                *ngIf="element.currentValue || element.currentValue == 0">{{(element.currentValue)?(element.currentValue | number :'1.0-0'):0}}</span>
+                            <span  class="f-700"
+                                *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{(element.totalCurrentValue) ? (element.totalCurrentValue | number :'1.0-0') : 0}}</span>
                         </div>
                     </td>
 
-                    <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_current_value) : 0"
+                    <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
-                        <!--                  <div>{{ grandTotal.currentValue }}</div>-->
+                                         <div>{{(mfData) ? (mfData.total_current_value | number :'1.0-0') : 0}}</div>
                     </td>
 
                 </ng-container>
@@ -129,15 +129,16 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Unrealized profit</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber
-                                *ngIf="element.unrealizedGain || element.unrealizedGain == 0">{{(element.unrealizedGain)?element.unrealizedGain:0}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalUnrealizedGain || element.totalUnrealizedGain == 0">{{(element.totalUnrealizedGain) ? element.totalUnrealizedGain : 0}}</span>
+                        <div class="bar"><span 
+                                *ngIf="element.unrealizedGain || element.unrealizedGain == 0">{{(element.unrealizedGain)?(element.unrealizedGain | number :'1.0-0'):0}}</span>
+                            <span   class="f-700"
+                                *ngIf="element.totalUnrealizedGain || element.totalUnrealizedGain == 0">{{(element.totalUnrealizedGain) ? (element.totalUnrealizedGain | number :'1.0-0') : 0}}</span>
                         </div>
                     </td>
 
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                        <div class="bar" appFormatNumber [value]="(mfData) ? (mfData.total_unrealized_gain) : 0">
+                        <div class="bar">
+                            <span>{{(mfData) ? (mfData.total_unrealized_gain | number :'1.0-0') : 0}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -180,16 +181,16 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Dividend payout</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber
-                                *ngIf="element.dividendPayout || element.dividendPayout == 0">{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalDividendPayout || element.totalDividendPayout == 0">{{(element.totalDividendPayout) ? element.totalDividendPayout : 0}}</span>
+                        <div class="bar"><span 
+                                *ngIf="element.dividendPayout || element.dividendPayout == 0">{{(element.dividendPayout) ? (element.dividendPayout | number) : 0}}</span>
+                            <span  class="f-700"
+                                *ngIf="element.totalDividendPayout || element.totalDividendPayout == 0">{{(element.totalDividendPayout) ? (element.totalDividendPayout | number) : 0}}</span>
                         </div>
                     </td>
 
-                    <td *matFooterCellDef appFormatNumber [value]="(mfData) ? (mfData.total_dividend_payout) : 0"
+                    <td *matFooterCellDef 
                         class="br p-8 f-600 text-right" mat-footer-cell>
-
+                        <span>{{(mfData) ? (mfData.total_dividend_payout | number :'1.0-0') : 0}}</span>
                     </td>
                 </ng-container>
 
@@ -197,16 +198,16 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Withdrawal Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber
-                                *ngIf="element.switchOut || element.switchOut == 0">{{(element.switchOut) ? element.switchOut : 0}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalSwitchOut || element.totalSwitchOut == 0">{{(element.totalSwitchOut) ? element.totalSwitchOut : 0}}</span>
+                        <div class="bar"><span 
+                                *ngIf="element.switchOut || element.switchOut == 0">{{(element.switchOut) ? (element.switchOut | number :'1.0-0') : 0}}</span>
+                            <span  class="f-700"
+                                *ngIf="element.totalSwitchOut || element.totalSwitchOut == 0">{{(element.totalSwitchOut) ? (element.totalSwitchOut | number :'1.0-0') : 0}}</span>
                         </div>
                     </td>
 
-                    <td *matFooterCellDef appFormatNumber [value]="(grandTotal) ? (grandTotal.withdrawals) : 0"
+                    <td *matFooterCellDef 
                         class="br p-8 f-600 text-right" mat-footer-cell>
-
+                        <span>{{(grandTotal) ? (grandTotal.withdrawals) : 0}}</span>
                     </td>
                 </ng-container>
 
@@ -244,7 +245,7 @@
                         <div class="bar">{{(mutualFund)?mutualFund.navDate:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber class="br p-8 f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef  class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -252,18 +253,19 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef> SIP
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber
-                                *ngIf="element.sipAmount  || element.sipAmount == 0">{{(element.sipAmount) ? element.sipAmount : 0}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalSipAmount || element.totalSipAmount == 0">{{(element.totalSipAmount) ? element.totalSipAmount : 0}}</span>
+                        <div class="bar"><span 
+                                *ngIf="element.sipAmount  || element.sipAmount == 0">{{(element.sipAmount) ? (element.sipAmount | number) : 0}}</span>
+                            <span  class="f-700"
+                                *ngIf="element.totalSipAmount || element.totalSipAmount == 0">{{(element.totalSipAmount) ? (element.totalSipAmount | number) : 0}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="(grandTotal) ? (grandTotal.sip) : 0"
+                    <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
+                        <span>{{(grandTotal) ? (grandTotal.sip) : 0}}</span>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -490,20 +492,20 @@
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.amountInvested}}
+                                        >
+                                        {{item.amountInvested | number :'1.0-0'}}
                                     </td>
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.currentValue}}
+                                        >
+                                        {{item.currentValue | number :'1.0-0'}}
                                     </td>
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.unrealizedGain}}
+                                        >
+                                        {{item.unrealizedGain | number :'1.0-0'}}
                                     </td>
 
                                     <td valign="top"
@@ -518,18 +520,18 @@
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.dividendPayout}}
+                                        >
+                                        {{item.dividendPayout | number :'1.0-0'}}
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.switchOut}}
+                                        >
+                                        {{item.switchOut | number :'1.0-0'}}
                                     </td>
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
+                                        >
                                         {{item.balanceUnit | number:'1.2-3'}}
                                     </td>
 
@@ -540,8 +542,8 @@
 
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.sipAmount}}
+                                    >
+                                        {{item.sipAmount | number :'1.0-0'}}
                                     </td>
 
 
@@ -554,18 +556,18 @@
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalAmountInvested}}
+                                        >
+                                        {{item.totalAmountInvested | number :'1.0-0'}}
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalCurrentValue}}
+                                        >
+                                        {{item.totalCurrentValue | number :'1.0-0'}}
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalUnrealizedGain}}
+                                        >
+                                        {{item.totalUnrealizedGain | number :'1.0-0'}}
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
@@ -577,17 +579,17 @@
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalDividendPayout}}
+                                        >
+                                        {{item.totalDividendPayout | number :'1.0-0'}}
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalSwitchOut}}
+                                        >
+                                        {{item.totalSwitchOut | number :'1.0-0'}}
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
+                                        >
                                         {{item.totalBalanceUnit | number:'1.2-3'}}
                                     </td>
                                     <td valign="top"
@@ -596,8 +598,8 @@
                                     </td>
                                     <td valign="top"
                                         style="width: 20%;font-size: 13px; padding: 8px;font-weight: 500; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalSipAmount}}
+                                        >
+                                        {{item.totalSipAmount | number :'1.0-0'}}
                                     </td>
                                 </tr>
                             </table>
@@ -610,13 +612,13 @@
                             Grand Total</td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="(mfData) ? mfData.total_amount_invested : 0"></td>
+                            >{{(mfData) ? mfData.total_amount_invested : 0}}</td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="(mfData) ? mfData.total_current_value : 0"></td>
+                           >{{(mfData) ? mfData.total_current_value : 0}}</td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="(mfData) ? mfData.total_unrealized_gain : 0"></td>
+                           >{{(mfData) ? mfData.total_unrealized_gain : 0}}</td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;">
                             {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} </td>
                         <td valign="top"
@@ -624,20 +626,20 @@
                             {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} </td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="(mfData) ? mfData.dividendPayout : 0"></td>
+                            >{{(mfData) ? mfData.dividendPayout : 0}}</td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="grandTotal.withdrawals"></td>
+                           >{{grandTotal.withdrawals}}</td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
                         </td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="grandTotal.totalNav"></td>
+                           >{{grandTotal.totalNav}}</td>
                         <td valign="top"
                             style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="grandTotal.sip"></td>
+                           >{{grandTotal.sip}}</td>
                     </tr>
 
                 </table>
