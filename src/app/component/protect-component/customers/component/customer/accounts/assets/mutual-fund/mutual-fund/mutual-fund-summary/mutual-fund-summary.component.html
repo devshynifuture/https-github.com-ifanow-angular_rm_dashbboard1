@@ -302,8 +302,8 @@
                                         transaction</button>
                                 </div>
                                 <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
-                                     matTooltipPosition="below">
-                                    <button mat-menu-item 
+                                    [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14"
                                         (click)="openMutualEditFund('editTransaction',element)">Edit
                                         Transaction</button>
                                 </div>
