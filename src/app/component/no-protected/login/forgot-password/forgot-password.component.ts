@@ -6,7 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { setInterval } from 'timers';
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -169,7 +169,6 @@ export class ForgotPasswordComponent implements OnInit {
 
   verifyWithCredential(obj, flag) {
     this.resendOtpFlag = flag;
-    this.showTimeRemaing = 30;
     this.otpResendCountDown();
     if (this.resendOtpFlag) {
       this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
@@ -184,10 +183,11 @@ export class ForgotPasswordComponent implements OnInit {
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
-  intervallTimer;
+  intervallTimer = new Subscription();
   otpResendCountDown() {
     let timeLeft = 30;
-    this.intervallTimer = interval(1000).subscribe(
+    this.intervallTimer.unsubscribe();
+    this.intervallTimer.add(interval(1000).subscribe(
       data => {
         if (data == 31) {
           this.intervallTimer.unsubscribe();
@@ -195,7 +195,7 @@ export class ForgotPasswordComponent implements OnInit {
           this.showTimeRemaing = timeLeft--;
         }
       }
-    )
+    ))
   }
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
@@ -226,7 +226,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.saveAfterVerifyCredential(obj);
       this.intervallTimer.unsubscribe();
       this.otpResendCountDown();
-      this.showTimeRemaing = 30;
       this.signUpBarList[1].flag = true;
       this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
