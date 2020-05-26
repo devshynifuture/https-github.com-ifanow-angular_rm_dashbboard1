@@ -56,6 +56,9 @@ export class DetailedViewMandateComponent implements OnInit {
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
+    if (this.details.formUploadFlag == 1) {
+      this.statusDetails[1].checked = true;
+    }
     this.isLoading = false;
   }
 
