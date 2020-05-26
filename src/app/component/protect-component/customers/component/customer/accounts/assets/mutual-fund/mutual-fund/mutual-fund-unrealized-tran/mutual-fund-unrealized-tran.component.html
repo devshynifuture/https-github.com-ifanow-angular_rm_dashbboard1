@@ -416,7 +416,7 @@
                     <ng-container matColumnDef="groupHeader3">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                             class="text-center zIndex text-primary">
-                            <div class="bar" >{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
+                            <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="icons" sticky>
@@ -425,8 +425,12 @@
                             <div *ngIf="!isLoading">
                                 <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu25="matMenu">
-                                    <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
-                                        Transaction</button>
+                                    <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
+                                        [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                        <button mat-menu-item [disabled]="element.rtMasterId !== 14"
+                                            (click)="openMutualEditFund('editTransaction',element)">Edit
+                                            Transaction</button>
+                                    </div>
                                     <button mat-menu-item (click)="deleteModal('TRANSACTION', element)">Delete
                                         Transaction</button>
 
