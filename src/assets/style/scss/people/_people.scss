@@ -119,6 +119,12 @@
     }
   }
 
+  .tabHeaderPadding {
+    .form-group {
+      margin-bottom: 0px !important;
+    }
+  }
+
   .p-address {
     .mat-radio-button:nth-child(1) {
       min-width: 143px;

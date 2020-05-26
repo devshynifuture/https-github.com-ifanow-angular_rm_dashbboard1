@@ -476,7 +476,7 @@ export class SwpTransactionComponent implements OnInit {
           this.isSuccessfulTransaction = true;
           this.swpBSERes(data);
         }, (error) => {
-          this.eventService.openSnackBar(error, 'Dismiss');
+          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
           this.barButtonOptions.active = false;
         }
       );

@@ -37,14 +37,14 @@
   </div> -->
   <div [ngSwitch]="viewMode">
     <div *ngSwitchCase="'Overview Report'">
-      <app-mutual-fund-overview (changeInput)="changeInput($event)"></app-mutual-fund-overview>
+      <app-mutual-fund-overview (changeInput)="changeInput($event)" (changeAsPerCategory)="OutputData($event)"></app-mutual-fund-overview>
     </div>
     <div *ngSwitchCase="'Summary'">
-      <app-mutual-fund-summary (changeInput)="changeInput($event)" (refreshMFData)="refreshMFData($event)">
+      <app-mutual-fund-summary (changeInput)="changeInput($event)" [data]="typeWiseData" (refreshMFData)="refreshMFData($event)">
       </app-mutual-fund-summary>
     </div>
     <div *ngSwitchCase="'All Transactions'">
-      <app-mutual-fund-unrealized-tran (changeInput)="changeInput($event)">
+      <app-mutual-fund-unrealized-tran [data]="typeWiseData"  (changeInput)="changeInput($event)">
       </app-mutual-fund-unrealized-tran>
     </div>
     <div *ngSwitchCase="'Unrealized Transactions'">

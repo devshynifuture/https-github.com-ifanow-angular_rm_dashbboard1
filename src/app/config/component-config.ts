@@ -222,7 +222,7 @@ export const appConfig = {
   MUTUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
   MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
   MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
-
+  GET_TRANSACTION_TYPE:'mutual-fund/transaction/type/get',
   MUTUAL_FUND_ADD: 'mutual-fund/mutualFund/add',
   MUTUAL_FUND_EDIT: 'mutual-fund/mutualFund/edit',
   FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID: 'family/name/by/clientId/get',

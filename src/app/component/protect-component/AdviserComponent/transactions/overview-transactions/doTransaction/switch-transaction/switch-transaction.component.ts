@@ -335,6 +335,7 @@ export class SwitchTransactionComponent implements OnInit {
     } else if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
+    this.switchType(this.switchTransaction.controls.switchType.value);
   }
 
   getSchemeListTranfer(inputData) {
@@ -375,13 +376,17 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
 
-  switchType(event) {
-    if (event.value == '3') {
+  switchType(eventValue) {
+    if (eventValue == '3') {
       this.switchTransaction.controls.employeeContry.setValidators([]);
-    } else if (event.value == '2') {
-      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumRedemptionQty)]);
-    } else if (event.value == '1') {
-      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)]);
+    } else if (eventValue == '2') {
+      if (this.schemeDetails) {
+        this.switchTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumRedemptionQty)]);
+      }
+    } else if (eventValue == '1') {
+      if (this.schemeDetailsTransfer) {
+        this.switchTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
+      }
     }
   }
 
@@ -512,7 +517,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.switchBSERes(data);
         }, (error) => {
           this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss');
+          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
         }
       );
     }

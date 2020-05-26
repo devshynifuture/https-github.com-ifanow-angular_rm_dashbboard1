@@ -105,7 +105,7 @@
                     cancel
                 </i>
             </div>
-            <button mat-button *ngIf="imageLoader==false" class="btn-bottom br-0 text-inherit"
+            <button mat-button *ngIf="imageLoader==false" class="btn-bottom br-0 text-inherit" [ngClass]="{'mt-20': logoImg}"
                 (click)="file.click()">UPLOAD</button>
             <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url"
                 type="file">

@@ -80,6 +80,8 @@ export class RightFilterComponent implements OnInit {
   showGrandfathering = true;
   advisorId: any;
   clientId: any;
+  selectUnselctAllFlag = true;
+  transactionType: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
@@ -121,6 +123,7 @@ export class RightFilterComponent implements OnInit {
     this.getReportType();//get type of report categorywise,investor,sub category wise
     this.getReportFormat();//get capital gain report
     this.getSaveFilters(); //forSaving filters
+    this.transactionType = this._data.transactionTypeList;//for transaction type in all transactions
     this.getFinancialYears(this.summaryFilerForm);//for getting financial years for capital gain
     this.overviewFilter = this._data.overviewFilter;
     // this.getOverviewFilter();//used for overview filter to show specific tables
@@ -366,6 +369,9 @@ export class RightFilterComponent implements OnInit {
     this.reportFormat = filterData;
 
   }
+  // getTransactionType(){
+    
+  // }
   getSaveFilters() {
     this.saveFilters = [
       { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
@@ -1031,20 +1037,43 @@ export class RightFilterComponent implements OnInit {
       });
       this.financialYearsObj = filter;
     }
+
     if (this._data.name == 'Overview Report') {
       let array = [];
       array = this.overviewFilter.filter(item => item.selected == false);
-      (array.length == this.overviewFilter.length) ? this.showError = 'filter view' : this.showError = null;
+      if(array.length == this.overviewFilter.length) {
+        this.showError = 'filter view'
+      } 
     }
   };
 
-  selectAll(event, array, someString) {
-    if (array != undefined) {
-      array.forEach(item => {
-        item.selected = event.checked;
-      });
-      this.changeSelect('', '');
+  selectAll(value) {
+    if(value.checked){
+      this.selectUnselctAllFlag = value.checked
+      this.familyMember.forEach(item => item.selected = true);
+      this.amc.forEach(item => item.selected = true);
+      this.scheme.forEach(item => item.selected = true);
+      this.folio.forEach(item => item.selected = true);
+      this.transactionView.forEach(item => item.selected = true);
+      this.category.forEach(item => item.selected = true);
+
+    }else{
+      this.familyMember.forEach(item => item.selected = false);
+      this.amc.forEach(item => item.selected = false);
+      this.scheme.forEach(item => item.selected = false);
+      this.folio.forEach(item => item.selected = false);
+      this.transactionView.forEach(item => item.selected = false);
+      this.category.forEach(item => item.selected = false);
+      this.selectUnselctAllFlag = value.checked;
+      this.showError ='filter'
     }
+    this.changeSelect('', '');
+    // if (array != undefined) {
+    //   array.forEach(item => {
+    //     item.selected = event.checked;
+    //   });
+    //   this.changeSelect('', '');
+    // }
 
   }
 
@@ -1077,7 +1106,8 @@ export class RightFilterComponent implements OnInit {
       capitalGainData: this._data.capitalGainData,
       name: this._data.name,
       transactionPeriodCheck: this.transactionPeriodCheck,
-      transactionPeriod: this.transactionPeriod
+      transactionPeriod: this.transactionPeriod,
+      transactionType:this.transactionType
     };
     console.log('dataToSend---------->', this.dataToSend);
     if(this.saveFilters[0].selected == true || this.saveFilters[1].selected == true){
