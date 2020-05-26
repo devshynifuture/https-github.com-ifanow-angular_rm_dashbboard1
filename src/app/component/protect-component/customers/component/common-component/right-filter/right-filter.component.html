@@ -18,6 +18,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
+                    <mat-checkbox (change)="selectAll($event)" [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                        </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of familyMember">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}
                     </mat-checkbox>
@@ -33,8 +35,9 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <!-- <mat-checkbox (change)="selectAll($event,amc,'countAmc')" name="selectAll">select/unselect All</mat-checkbox> -->
-                <mat-list-item role="listitem" *ngFor="let item of amc">
+                    <mat-checkbox (change)="selectAll($event)"  [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                        </mat-checkbox>
+                    <mat-list-item role="listitem" *ngFor="let item of amc">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterAmc()">{{item.amc_name}}
                     </mat-checkbox>
                 </mat-list-item>
@@ -51,8 +54,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <!-- <mat-checkbox (change)="selectAll($event,scheme,'countScheme')" name="selectAll">select/unselect All
-        </mat-checkbox> -->
+                    <mat-checkbox (change)="selectAll($event)"  [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                        </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of scheme">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterScheme()" class="wb">
                         {{item.schemeName}}
@@ -72,8 +75,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <!-- <mat-checkbox (change)="selectAll($event,folio,'countFolio')" name="selectAll">select/unselect All
-        </mat-checkbox> -->
+                    <mat-checkbox (change)="selectAll($event)"  [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                        </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of folio">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio()">{{item.folioNumber}}
                     </mat-checkbox>
@@ -91,9 +94,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <!-- <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect
-          All
-        </mat-checkbox> -->
+                    <mat-checkbox (change)="selectAll($event)"   [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                        </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}
                     </mat-checkbox>
@@ -126,8 +128,8 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <!-- <mat-checkbox (change)="selectAll($event,category,'countCategory')" name="selectAll">select/unselect All
-        </mat-checkbox> -->
+                    <mat-checkbox (change)="selectAll($event)"   [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                        </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of category">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">
                         {{item.category |titlecase}}
@@ -169,6 +171,19 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="_data.name!='SUMMARY REPORT'  && _data.name!='CAPITAL GAIN REPORT' && _data.name != 'Overview Report' &&  _data.name!='UNREALIZED TRANSACTION REPORT'" class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false">
+        <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
+            <mat-panel-title>
+                <h5 class="m-0">Select Transaction Type</h5>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="borderTopbox" *ngIf="panelOpenState == true">
+            <mat-list-item role="listitem" *ngFor="let item of transactionType">
+                <mat-checkbox [(ngModel)]="item.selected" >{{item.name}}
+                </mat-checkbox>
+            </mat-list-item>
+        </div>
+    </mat-expansion-panel>
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
         *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
@@ -212,6 +227,7 @@
             </mat-list-item>
         </div>
     </mat-expansion-panel>
+   
     </mat-accordion>
 
     <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
@@ -298,7 +314,7 @@
         </div>
         <div class="col-md-8 right pr-10 text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button> -->
-            <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="(!showError) ? generateReport() : null"
+            <app-progress-button class="mb-0 pt-8 text-white c-p"  (click)="(!showError) ? generateReport() : null"
                 [options]="barButtonOptions">
             </app-progress-button>
         </div>

@@ -21,19 +21,20 @@ export class PersonalDetailsInnComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTransaction: ProcessTransactionService,
-    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-    private peopleService: PeopleService, private custumService: CustomerService,
-    public utils: UtilService,
-    public eventService: EventService) {
+              private processTransaction: ProcessTransactionService,
+              private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
+              private peopleService: PeopleService, private custumService: CustomerService,
+              public utils: UtilService,
+              public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
   @Input()
   set data(data) {
     this.inputData = data;
+    console.log('Data in personal detail : ', data);
     this.clientData = data.clientData;
-    this.obj1 = { ...data };
+    this.obj1 = {...data};
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
       this.firstHolder = data.holderList[0];
@@ -45,7 +46,6 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.secondHolder = data.secondHolder;
       this.thirdHolder = data.thirdHolder;
     }
-    this.generalDetails = data;
   }
 
   get data() {
@@ -56,7 +56,6 @@ export class PersonalDetailsInnComponent implements OnInit {
   personalDetails: any;
   holdingList: any;
   inputData: any;
-  generalDetails: any;
   obj1: any;
   firstHolder: any = {};
   secondHolder: any = {};
@@ -134,7 +133,8 @@ export class PersonalDetailsInnComponent implements OnInit {
           this.addressList = data[0];
           if (this.addressList.emailList.length > 0) {
             this.addressList.email = this.addressList.emailList[0].email;
-          } else if (this.addressList.mobileList.length > 0) {
+          }
+          if (this.addressList.mobileList.length > 0) {
             this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo;
           }
           this.getdataForm(this.addressList);
@@ -156,6 +156,9 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
 
     this.personalDetails = this.fb.group({
+      clientId: [data && data.clientId ? (data.clientId) : '0'],
+      familyMemberId: [data && data.familyMemberId ? (data.familyMemberId) : '0'],
+      userType: [data && data.userType ? (data.userType) : 1],
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
       // maidenName: [!data ? '' : data.maidenName, [Validators.required]],
@@ -210,7 +213,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       } else {
         if (this.firstHolder && this.firstHolder.panNumber) {
           this.holder.type = value;
-          this.personalDetails.setValue(this.firstHolder);
+          this.getdataForm(this.firstHolder);
         } else {
           return;
         }
@@ -222,7 +225,9 @@ export class PersonalDetailsInnComponent implements OnInit {
         if (this.savePersonalDetails(this.holder.type)) {
           if (this.secondHolder && this.secondHolder.panNumber) {
             this.holder.type = value;
-            this.personalDetails.setValue(this.secondHolder);
+            this.getdataForm(this.secondHolder);
+
+            // this.personalDetails.setValue(this.secondHolder);
           } else {
             this.reset();
           }
@@ -239,7 +244,9 @@ export class PersonalDetailsInnComponent implements OnInit {
         if (this.savePersonalDetails(this.holder.type)) {
           this.thirdHolderButtonLabel = 'Third Holder';
           if (this.thirdHolder && this.thirdHolder.panNumber) {
-            this.personalDetails.setValue(this.thirdHolder);
+            this.getdataForm(this.thirdHolder);
+
+            // this.personalDetails.setValue(this.thirdHolder);
           } else {
             this.reset();
           }
@@ -273,12 +280,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       return;
     }
 
-    this.obj1.generalDetails = this.generalDetails;
     this.obj1.holderList = holderList;
-    this.obj1.bankDetailList = this.inputData.bankDetailList;
-    this.obj1.nomineeList = this.inputData.nomineeList;
-    this.obj1.fatcaDetail = this.inputData.fatcaDetail;
-    this.obj1.clientData = this.clientData;
     if (flag == true) {
       this.openContactDetails(this.obj1);
     }
@@ -288,7 +290,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     if (this.personalDetails.invalid) {
       for (const element in this.personalDetails.controls) {
         if (this.personalDetails.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
+          // this.inputs.find(input => !input.ngControl.valid).focus();
           this.personalDetails.controls[element].markAsTouched();
         }
       }
@@ -302,17 +304,17 @@ export class PersonalDetailsInnComponent implements OnInit {
   setEditHolder(type, value) {
     switch (type) {
       case 'first':
-        this.firstHolder = this.personalDetails.value;
+        Object.assign(this.firstHolder, this.personalDetails.value);
         this.holder.type = value;
         break;
 
       case 'second':
-        this.secondHolder = this.personalDetails.value;
+        Object.assign(this.secondHolder, this.personalDetails.value);
         this.holder.type = value;
         break;
 
       case 'third':
-        this.thirdHolder = this.personalDetails.value;
+        Object.assign(this.thirdHolder, this.personalDetails.value);
         this.holder.type = value;
         break;
 

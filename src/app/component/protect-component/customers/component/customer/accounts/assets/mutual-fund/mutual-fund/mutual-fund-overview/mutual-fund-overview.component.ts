@@ -60,6 +60,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   @Output() changeInput = new EventEmitter();
   @Output() sendData = new EventEmitter();
+  @Output() changeAsPerCategory = new EventEmitter();
 
   total_net_Gain: number;
   cashFlowXirr: any;
@@ -77,6 +78,7 @@ export class MutualFundOverviewComponent implements OnInit {
   saveFilterData: any;
   openTransactionTab: boolean =  false;
   returnValue: any;
+  transactionTypeList: any;
   changeViewModeSet: any;
   changeViewModeValue: boolean = false;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
@@ -122,6 +124,25 @@ export class MutualFundOverviewComponent implements OnInit {
       this.getMutualFundData();
     }
     this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
+  }
+  getTransactionTypeData() {
+    const obj = {
+      advisorIds: [this.advisorId],
+      clientId: this.clientId,
+      parentId: 0
+
+    };
+    this.custumService.getTransactionTypeInMF(obj).subscribe(
+      data => {
+        if(data){
+            
+            this.MfServiceService.setTransactionType(data);
+            // this.setDefaultFilterData.transactionTypeList = filterData
+          
+        }
+        // this.transactionTypeList = data;
+      }
+    );
   }
   getFilterData(value){
     const obj = {
@@ -266,6 +287,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getMutualFundResponse(data) {
     this.getNav();
+    this.getTransactionTypeData();
     if (data) {
       this.mfCopyData = data
       this.MfServiceService.sendMutualFundData(data);
@@ -641,6 +663,13 @@ export class MutualFundOverviewComponent implements OnInit {
        this.changeViewModeSet = 'Summary'
        this.changeViewModeValue = true
     }
+    const obj={
+      viewMode:this.changeViewModeSet,
+      flag:flag
+    }
+    this.changeAsPerCategory.emit(obj);
+
+    
   }
   openFilter() {
 
@@ -677,7 +706,8 @@ export class MutualFundOverviewComponent implements OnInit {
       overviewFilter:(this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       transactionPeriod:this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
-      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null
+      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      // transactionTypeList:this.setDefaultFilterData.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

@@ -77,6 +77,11 @@ export class FileOrderingBulkComponent implements OnInit {
       type: "period",
     },
     {
+      name: "Last 7 Days",
+      value: 7,
+      type: "period",
+    },
+    {
       name: "Custom Date",
       value: 3,
       type: "period",
@@ -192,7 +197,7 @@ export class FileOrderingBulkComponent implements OnInit {
     this.filterForm.get("filterByRmName").setValue(defaultRmName);
     this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
 
-    const defaultPeriod = this.periodList.find((c) => c.value === 0);
+    const defaultPeriod = this.periodList.find((c) => c.value === 2);
     this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
     this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
 
@@ -356,7 +361,7 @@ export class FileOrderingBulkComponent implements OnInit {
               this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
               this.fileOrderBulkHistoryListGet({
                 days: 2,
-                rmId: 2
+                rmId: this.rmId
               })
             }
           }
@@ -396,7 +401,7 @@ export class FileOrderingBulkComponent implements OnInit {
               this.filterForm.patchValue({ filterByName: undefined, filterByRmName: undefined, filterByPeriod: undefined, filterByRta: undefined });
               this.fileOrderBulkHistoryListGet({
                 days: 2,
-                rmId: 2,
+                rmId: this.rmId,
               });
             }
             console.log(
@@ -473,7 +478,7 @@ export class FileOrderingBulkComponent implements OnInit {
       this.filterBy.splice(index, 1);
       this.fileOrderBulkHistoryListGet({
         days: 0,
-        rmId: 2
+        rmId: this.rmId
       })
     }
   }

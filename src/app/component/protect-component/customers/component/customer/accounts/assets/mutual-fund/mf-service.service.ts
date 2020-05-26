@@ -21,6 +21,7 @@ export class MfServiceService {
   private filterValues = new BehaviorSubject('');
   private mfGetData = new BehaviorSubject('');
   private clientIdToClearData = new BehaviorSubject('');
+  private transactionType = new BehaviorSubject('');
 
   getPersonalDetails(data) {
     const obj = {
@@ -367,7 +368,8 @@ export class MfServiceService {
       capitalGainData: dataForFilter.capitalGainData,
       categoryWiseMfList: categoryWiseMfList,
       transactionPeriodCheck:dataForFilter.transactionPeriodCheck,
-      transactionPeriod:dataForFilter.transactionPeriod
+      transactionPeriod:dataForFilter.transactionPeriod,
+      transactionType:dataForFilter.transactionType
     };
     return sendData;
   }
@@ -444,7 +446,8 @@ export class MfServiceService {
       toDate :(rightSideData) ? rightSideData.toDate: new Date(),
       overviewFilter:overviewFilter,
       transactionPeriod:(rightSideData) ? rightSideData.transactionPeriod : false,
-      transactionPeriodCheck:(rightSideData) ? rightSideData.transactionPeriodCheck : false
+      transactionPeriodCheck:(rightSideData) ? rightSideData.transactionPeriodCheck : false,
+      transactionTypeList:(rightSideData) ? rightSideData.transactionType : []
 
     }
     return obj;
@@ -564,5 +567,11 @@ export class MfServiceService {
   }
   getClientId(){
     return this.clientIdToClearData.asObservable();
+  }
+  setTransactionType(value){
+    this.transactionType.next(value);
+  }
+  getTransactionType(){
+    return this.transactionType.asObservable();
   }
 }
