@@ -11,6 +11,12 @@
   }
 }
 
+.account-empty-state {
+  height: 150px;
+  justify-content: center;
+  border: 1px solid #ddd;
+}
+
 #ui-profile-plan {
   pointer-events: initial !important;
 }

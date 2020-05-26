@@ -21,7 +21,8 @@
 
       <input #uploadFileInput (change)="getFileDetails($event)" [hidden]="true"
              class="uploadInput" id="file-4" type="file">
-      <img (click)="uploadFileInput.click()" class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg">
+      <img (click)="uploadFileInput.click()" *ngIf="isAdvisorSection" class="b-a p-5 c-p"
+           src="/assets/images/svg/download-black.svg">
       <img (click)="refresh(true)" class="b-a p-8 c-p" src="/assets/images/svg/reload.svg">
       <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i
         class="material-icons">filter_list</i>FILTERS
@@ -34,7 +35,7 @@
           INVESTMENT READY
         </button>
       </mat-menu>
-      <button (click)="openNewCustomerIIN()" *ngIf="dataSource.filteredData.length > 0"
+      <button (click)="openNewCustomerIIN()" *ngIf="dataSource.filteredData.length > 0&&isAdvisorSection"
               class="btn-primary addon v-middle" mat-stroked-button> ADD
         NEW
       </button>
@@ -98,11 +99,12 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="status">
-          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="activationStatus"> Status</th>
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="statusStringTemp"> Status</th>
           <td *matCellDef="let element" class="br" mat-cell>
+
             <div class="bar">
-              <span *ngIf="element.activationStatus=='YES'"
-                    class="text-success  f-400 c-p">{{'Investment ready'}}</span>
+              <span
+                class="text-success  f-400 c-p">{{element.statusStringTemp}}</span>
             </div>
           </td>
         </ng-container>
@@ -125,7 +127,8 @@
            class="d-flex flex-column align-items-center pt-44">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">{{noData}}</h4>
-        <button *ngIf="noData=='No investors found'" class="btn-primary addon v-middle  " mat-stroked-button>
+        <button *ngIf="noData=='No investors found'&&isAdvisorSection" class="btn-primary addon v-middle  "
+                mat-stroked-button>
           <!-- (click)="openTransaction()"for prod build -->
 
           ADD NEW

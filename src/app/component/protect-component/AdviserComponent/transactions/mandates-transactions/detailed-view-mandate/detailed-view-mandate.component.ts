@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 import {FileUploadService} from 'src/app/services/file-upload.service';
 import {apiConfig} from 'src/app/config/main-config';
@@ -12,7 +12,7 @@ import {EventService} from '../../../../../../Data-service/event.service';
   styleUrls: ['./detailed-view-mandate.component.scss']
 })
 export class DetailedViewMandateComponent implements OnInit {
-  data;
+  @Input() data;
   details: any;
   transactionData: any;
   isLoading = false;
@@ -25,7 +25,7 @@ export class DetailedViewMandateComponent implements OnInit {
       name: 'Form uploaded', checked: false, status: 4
     },
     {
-      name: 'Accpted authorization', checked: false, status: 2
+      name: 'Accepted authorization', checked: false, status: 2
     },
     {
       name: 'Rejected authorization', checked: false, status: 3
