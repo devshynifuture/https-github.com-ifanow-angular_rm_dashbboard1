@@ -186,6 +186,7 @@ export class ForgotPasswordComponent implements OnInit {
   intervallTimer = new Subscription();
   otpResendCountDown() {
     let timeLeft = 30;
+    this.showTimeRemaing = timeLeft;
     this.intervallTimer.unsubscribe();
     this.intervallTimer.add(interval(1000).subscribe(
       data => {
