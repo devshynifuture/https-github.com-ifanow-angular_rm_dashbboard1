@@ -517,7 +517,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.switchBSERes(data);
         }, (error) => {
           this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss');
+          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
         }
       );
     }
