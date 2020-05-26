@@ -138,6 +138,8 @@
                                     <mat-error *ngIf="userName.hasError('required')" class="mobilerightText">Username
                                         required
                                     </mat-error>
+                                    <mat-error align="end" *ngIf="userName.errors?.incorrect">Username invalid
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
