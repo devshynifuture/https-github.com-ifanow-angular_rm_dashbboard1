@@ -13,6 +13,7 @@ import {FileUploadService} from '../../../../../services/file-upload.service';
 import {apiConfig} from '../../../../../config/main-config';
 import {appConfig} from '../../../../../config/component-config';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -38,14 +39,21 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   isLoading = false;
 
+  isAdvisorSection = true;
+
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
               private eventService: EventService,
               private enumServiceService: EnumServiceService,
-              private subInjectService: SubscriptionInject) {
+              private subInjectService: SubscriptionInject,
+              private router: Router) {
   }
 
   ngOnInit() {
+    const routeName = this.router.url.split('/')[1];
+    if (routeName == 'customer') {
+      this.isAdvisorSection = false;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.isLoading = true;
     // this.getMappedData();
@@ -110,7 +118,15 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isPendingData = false;
     this.onlineTransact.getMapppedClients(obj).subscribe(
       data => {
+        console.log('getIINUCC data :', data);
         if (data) {
+          data.forEach(singleData => {
+            if (singleData.activationStatus == 'YES') {
+              singleData.statusStringTemp = 'Investment ready';
+            } else {
+              singleData.statusStringTemp = 'Pending';
+            }
+          });
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
           this.dataSource.sort = this.sort;
@@ -140,6 +156,14 @@ export class InvestorsTransactionsComponent implements OnInit {
 
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
+        data.forEach(singleData => {
+          if (singleData.tpUserCredFamilyMappingId && singleData.tpUserCredFamilyMappingId > 0) {
+            singleData.statusStringTemp = 'Investment ready';
+          } else {
+            singleData.statusStringTemp = 'Pending';
+          }
+        });
+        console.log('getIINUCC data :', data);
         this.isLoading = false;
         this.dontHide = true;
         this.innUccPendindList = data || [];

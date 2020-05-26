@@ -8,6 +8,7 @@ import {SubscriptionInject} from '../../Subscriptions/subscription-inject.servic
 import {UtilService} from 'src/app/services/util.service';
 import {MandateCreationComponent} from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
 import {AddMandateComponent} from '../overview-transactions/MandateCreation/add-mandate/add-mandate.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -26,14 +27,19 @@ export class MandatesTransactionsComponent implements OnInit {
   credentialData: any;
   noData: string;
   dontHide: boolean;
+  isLoading = false;
+  isAdvisorSection = true;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private subInjectService: SubscriptionInject) {
+              private subInjectService: SubscriptionInject, private router: Router) {
   }
 
-  isLoading = false;
 
   ngOnInit() {
+    const routeName = this.router.url.split('/')[1];
+    if (routeName == 'customer') {
+      this.isAdvisorSection = false;
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     // this.getNSEAchmandate();
