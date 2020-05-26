@@ -5,14 +5,16 @@
         </div>
         <!-- *ngIf="!isLoading" prod -->
         <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
-            <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
+            <div class="downloadPdfIcon">
+                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
+            </div>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item>PDF</button>
                 <button mat-menu-item>XLS</button>
             </mat-menu>
             <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
-            <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
+            <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
                 (click)="openFilter()">
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                 <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
@@ -24,7 +26,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 pl-0 mb-8">
+        <div class="col-md-12 p-0 mb-8">
             <div class="b-a bb-0">
                 <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                     EQUITY
@@ -279,7 +281,7 @@
                             <span
                                 *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
                             <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0"
-                                class="br f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                                class="f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -353,7 +355,8 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
 
             </table>
-            <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}" class="w-100 d-flex flex-column align-items-center ">
+            <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
+                class="w-100 d-flex flex-column align-items-center ">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                 <h4 class="text-center pt-12">No Data Found</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -362,7 +365,7 @@
     </div>
 
     <div class="row  ">
-        <div class="col-md-12 pl-0 mb-8">
+        <div class="col-md-12 p-0 mb-8">
             <div class="b-a bb-0">
                 <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                     DEBT
@@ -507,7 +510,7 @@
                         </div>
 
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right"></td>
 
                 </ng-container>
                 <ng-container matColumnDef="ratePurchase">
@@ -519,7 +522,7 @@
                                 *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8  text-right"></td>
 
 
                 </ng-container>
@@ -536,7 +539,7 @@
 
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
                         {{(debtObj) ? ((debtObj.totalStGain == 0 ) ? 0 : (debtObj.totalStGain | number:'1.2-2')) : '0'}}
                     </td>
 
@@ -553,7 +556,7 @@
                                 class=" f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
                         {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
                     </td>
 
@@ -571,7 +574,7 @@
                                 {{(isLoading) ? '' : ((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
                         {{(debtObj) ? ((debtObj.totalLtGain == 0 ) ? 0 : (debtObj.totalLtGain | number:'1.2-2')) : '0'}}
                     </td>
 
@@ -587,7 +590,7 @@
                                 class=" f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
                         {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
                     </td>
 
@@ -600,10 +603,10 @@
                             <span
                                 *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
                             <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0"
-                                class="br f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                                class="f-600 p-8 amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
                         {{(debtObj) ? ((debtObj.totalIndexGain == 0 ) ? 0 : (debtObj.totalIndexGain | number:'1.2-2')) : '0'}}
                     </td>
 
@@ -621,7 +624,7 @@
                                 {{(isLoading) ? '' : ((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
                         {{(debtObj) ? ((debtObj.totalIndexLoss == 0 ) ? 0 : (debtObj.totalIndexLoss | number:'1.2-2')) : '0'}}
                     </td>
 
@@ -671,7 +674,8 @@
                 <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
+            <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"
+                class="w-100 d-flex flex-column align-items-center">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                 <h4 class="text-center pt-12">No Data Found</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -786,7 +790,9 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource2.data.length == 0" [ngClass]="{'account-empty-state': dataSource2.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource2.data.length == 0"
+                    [ngClass]="{'account-empty-state': dataSource2.data.length == 0}"
+                    class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->

@@ -10,8 +10,8 @@
 </div>
 <div class="pt-90 pl-28 pb-90 pr-28 mob-pl-0 mob-pr-0" [formGroup]="teamMemberFG" *ngIf="!isLoading">
     <div class="row pt-28">
-        <div class="col-md-3 text-right pr-0 mob-pl-10 mob-pr-10 mob-text-left">
-            <h5 class="m-0 pt-20">Full name</h5>
+        <div class="col-md-3 text-right pr-0 mob-pl-10 mob-pr-10 mob-text-left full-end">
+            <h5 class="m-0">Full name</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
@@ -27,8 +27,8 @@
         </div>
     </div>
     <div class="row pt-28">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-20">Email</h5>
+        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 full-end">
+            <h5 class="m-0">Email</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
@@ -43,8 +43,8 @@
         </div>
     </div>
     <div class="row pt-28">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
-            <h5 class="m-0 pt-20">Mobile</h5>
+        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10 full-end">
+            <h5 class="m-0">Mobile</h5>
         </div>
 
         <div class="col-md-3 col-4 pr-0">
@@ -77,8 +77,8 @@
         </div>
     </div>
     <div class="row pt-28">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
-            <h5 class="m-0 pt-20">Role</h5>
+        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10 full-end">
+            <h5 class="m-0">Role</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="form-group role">
@@ -105,8 +105,8 @@
                     cancel
                 </i>
             </div>
-            <button mat-button *ngIf="imageLoader==false" class="btn-bottom br-0 text-inherit" [ngClass]="{'mt-20': logoImg}"
-                (click)="file.click()">UPLOAD</button>
+            <button mat-button *ngIf="imageLoader==false" class="btn-bottom br-0 text-inherit"
+                [ngClass]="{'mt-20': logoImg}" (click)="file.click()">UPLOAD</button>
             <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' formControlName="url"
                 type="file">
         </div>

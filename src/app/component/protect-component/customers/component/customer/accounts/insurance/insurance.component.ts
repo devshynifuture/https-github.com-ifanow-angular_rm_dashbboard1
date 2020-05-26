@@ -35,6 +35,7 @@ export class InsuranceComponent implements OnInit {
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
 
+  showTabs = true;
   dataSource1;
   isLoading = false;
   advisorId: any;
