@@ -206,8 +206,7 @@ export class LoginComponent implements OnInit {
       if (this.verifyFlag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
         const obj = {
           email: this.userData.email,
-          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userId: this.userData.userId,
           userType: this.userData.userType
         };
         this.saveAfterVerifyCredential(obj);
@@ -217,8 +216,7 @@ export class LoginComponent implements OnInit {
       } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
         const obj = {
           mobileNo: this.userData.mobileNo,
-          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userId: this.userData.userId,
           userType: this.userData.userType,
           otp: otpString
         };

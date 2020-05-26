@@ -87,6 +87,10 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_CLIENTS, data, 1);
   }
 
+  getMapppedClientsFilterClientWise(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_CLIENTS_FILTER, data, 1);
+  }
+
   mapUnmappedClient(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.MAP_UNMAP_CLIENT, data);
   }

@@ -30,7 +30,7 @@ export class ReconCamsComponent implements OnInit {
   });
 
   isBrokerSelected: boolean = false;
-  parentId = AuthService.getParentId();
+  parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   adminId = AuthService.getAdminId();
   adminAdvisorIds: any[] = [];
 
@@ -78,7 +78,8 @@ export class ReconCamsComponent implements OnInit {
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,
-        parentId: this.adminId == 0 ? this.advisorId : this.parentId
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId,
+        isParent: this.parentId === 0 ? true : false
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {

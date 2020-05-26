@@ -160,6 +160,9 @@ export class ForgotPasswordComponent implements OnInit {
   ///////////////////////////////////// signup process///////////////////////////////
   verify(flag, resendFlag) {
     let verifyObj;
+    if (resendFlag == true) {
+      this.intervallTimer.unsubscribe();
+    }
     (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email, otp: (this.otpResponse) ? (this.otpResponse) : null } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo, otp: (this.otpResponse) ? (this.otpResponse) : null };
     this.verifyWithCredential(verifyObj, resendFlag);   //// verify Email Address
   }
@@ -216,8 +219,8 @@ export class ForgotPasswordComponent implements OnInit {
     if (flag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
       const obj = {
         email: this.saveVerifyData.email,
-        userId: this.saveVerifyData.userId,
-        userType: this.saveVerifyData.userType
+        userId: this.saveVerifyData.userData.userId,
+        userType: this.saveVerifyData.userData.userType
       };
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
@@ -233,12 +236,13 @@ export class ForgotPasswordComponent implements OnInit {
         return;
       }
       this.verify('Mobile', false);
+      this.intervallTimer.unsubscribe();
       this.verifyFlag = 'Mobile';
     } else if (flag == 'Mobile' && this.otpData.length == 4) {
       this.signUpBarList[2].flag = true;
       const obj = {
-        userId: this.saveVerifyData.userId,
-        userType: this.saveVerifyData.userType,
+        userId: this.saveVerifyData.userData.userId,
+        userType: this.saveVerifyData.userData.userType,
         mobileNo: this.saveVerifyData.mobileNo,
         otp: otpString
       };

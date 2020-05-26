@@ -84,7 +84,7 @@
       <h5 class="m-0 f-500 text-black">Status</h5>
     </div>
     <div class="col-md-1 p-0 ">
-      <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
+      <mat-spinner *ngIf="isLoading" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
     </div>
     <div class="col-md-2 p-0 text-right right">
       <button (click)="getInvestorStatus()" *ngIf="!statusDetails[2].checked" class="primary-sm" mat-stroked-button>
