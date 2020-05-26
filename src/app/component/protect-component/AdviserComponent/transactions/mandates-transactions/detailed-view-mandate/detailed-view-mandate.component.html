@@ -118,40 +118,25 @@
       <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
     </div>
     <div class="col-md-2 p-0 text-right right">
-      <button (click)="refresh(details)" class="primary-sm" mat-stroked-button>REFRESH</button>
+      <!--      <button (click)="refresh(details)" class="primary-sm" mat-stroked-button>REFRESH</button>-->
     </div>
 
   </div>
-  <div *ngIf="details" class="row">
+  <div *ngIf="details&&data.isAdvisorSection" class="row">
     <div class="col-md-12 mt-8 p-0">
 
-      <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.chequeUploadFlag == 0"
+      <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0"
            appFileDragDrop class="custom-file mb-12">
-        <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl" multiple
+        <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl"
                type="file">
         <label class="custom-file-label" for="customFileLang">Upload check</label>
       </div>
 
       <div *ngIf="details.formUploadFlag == 0 && details.status != 0" class="custom-file">
-        <input (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl" multiple
+        <input (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl"
                type="file">
         <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
       </div>
-
-      <!-- <button *ngIf="details.chequeUploadFlag == 0">
-      <input (change)="getFileDetails($event,4)" class="inputfile inputfile-3" id="file-3" multiple
-      type="file">
-      <label class="uploadLabel c-p f-14 c-p" for="file-3">
-          <img class="mr-8" src="assets/images/svg/new-upload.svg">
-          <span>Upload check</span></label>
-  </button>
-  <button *ngIf="details.formUploadFlag == 0">
-      <input (change)="getFileDetails($event,2)" class="inputfile inputfile-3" id="file-4" multiple
-      type="file">
-      <label class="uploadLabel c-p f-14 c-p" for="file-4">
-          <img class="mr-8" src="assets/images/svg/new-upload.svg">
-          <span>Upload mandate form</span></label>
-  </button> -->
     </div>
   </div>
 

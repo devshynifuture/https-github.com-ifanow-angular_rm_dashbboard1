@@ -461,6 +461,8 @@ export const appConfig = {
   GET_MANDATE_DETAILS: 'mandate/view',
   GET_UNMAPPED_CLIENTS: 'user/client/unmapped/view',
   GET_MAPPED_CLIENTS: 'user/client/mapped/view',
+  GET_MAPPED_CLIENTS_FILTER: 'user/client/mapped/filter/client-wise/view',
+
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',
   BSE_UCC_FILE_UPLOAD: 'user/bse/client/file-upload',
