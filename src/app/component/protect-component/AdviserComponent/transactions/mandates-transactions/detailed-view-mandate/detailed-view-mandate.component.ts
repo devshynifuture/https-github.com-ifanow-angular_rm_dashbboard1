@@ -83,7 +83,7 @@ export class DetailedViewMandateComponent implements OnInit {
           this.eventService.openSnackBar('File uploaded successfully');
         } else {
           const responseObject = JSON.parse(response);
-          this.eventService.openSnackBar(responseObject.message, 'Dismiss');
+          this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
         }
       });
   }

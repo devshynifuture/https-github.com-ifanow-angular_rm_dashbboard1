@@ -176,9 +176,10 @@ export class OnlineTransactionService {
     return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE, data, 1);
   }
 
-  mandateUpload(data) {
-    return this.http.post(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD, data, 1);
-  }
+  //
+  // mandateUpload(data) {
+  //   return this.http.post(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD, data, 1);
+  // }
 
   createIINUCC(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.CREATE_IIN_UCC, data, 1);
