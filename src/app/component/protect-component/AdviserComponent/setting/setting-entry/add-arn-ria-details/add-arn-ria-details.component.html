@@ -110,15 +110,15 @@
             </div>
         </div>
     </div>
-    <div class="row pt-28 commencement-date">
+    <div class="row pt-28">
         <div class="col-md-4 pr-0 full-end">
             <h5 class="m-0 text-right">Commencement date</h5>
         </div>
         <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 commencement-date">
                 <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
                     <input class="form-control b-0" formControlName="commencementDate" (focus)="picker.open()" matInput
-                        [matDatepicker]="picker" [max]="yesterdaysDate" readonly placeholder="Enter Commencement date
+                        [matDatepicker]="picker" [max]="yesterdaysDate" readonly placeholder="Enter date
                         ">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -137,15 +137,15 @@
             </i>
         </div>
     </div>
-    <div class="row pt-40 renewal-date">
+    <div class="row pt-40">
         <div class="col-md-4 pr-0 full-end">
             <h5 class="m-0 text-right">Renewal date</h5>
         </div>
         <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 renewal-date">
                 <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
                     <input class="form-control b-0" formControlName="renewalDate" matInput (focus)="picker1.open()"
-                        [matDatepicker]="picker1" [min]="tomrrowsDate" readonly placeholder="Enter Renewal date
+                        [matDatepicker]="picker1" [min]="tomrrowsDate" readonly placeholder="Enter date
                         ">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
