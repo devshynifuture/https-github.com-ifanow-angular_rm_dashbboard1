@@ -75,9 +75,10 @@
       </div>
       <div class="col-md-5">
         <div class="form-group">
+            <!-- [matAutocomplete]="auto" -->
           <mat-form-field floatLabel="never" appearance="standard">
             <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
-              aria-label="schemeName" [matAutocomplete]="auto" [(ngModel)]="data.schemeName"
+              aria-label="schemeName"  [(ngModel)]="data.schemeName"
               [formControl]="schemeNameControl">
             <br>
             <ng-container *ngIf="filteredSchemeError">

@@ -378,7 +378,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
   }
 
-  openMutualEditFund(flag, element, group) {
+  openMutualEditFund(flag, element) {
 
     this.mutualFundList.forEach(ele => {
       ele.mutualFundTransactions.forEach(tran => {  

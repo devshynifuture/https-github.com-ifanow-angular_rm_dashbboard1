@@ -58,7 +58,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   addEditMutualFund = '';
   schemeObj = {};
   rtTypeList = [];
-  @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
+  // @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
 
   ngOnInit() {
     console.log('ttra data',this.data)
