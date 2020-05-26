@@ -243,22 +243,19 @@
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                    <td mat-cell *matCellDef="let element" class="t-2 c-p">
-                                        <div *ngIf="!isLoading">
+                                    <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p">
+                                        <img class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                        <mat-menu #menu4="matMenu">
+                                            <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
+                                            <button (click)="open(element)" mat-menu-item>Detailed view</button>
+                                            <button mat-menu-item>Upload file
+                                                <input (change)="fetchData('Life Insurance',$event,element)"
+                                                    class="uploadInput" id="file-4" multiple type="file">
+                                            </button>
+                                            <button mat-menu-item>Activity</button>
+                                            <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
+                                        </mat-menu>
 
-                                            <img class="c-p mat-menu-trigger" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
-
-                                            <mat-menu #menu4="matMenu">
-                                                <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
-                                                <button (click)="open(element)" mat-menu-item>Detailed view</button>
-                                                <button mat-menu-item>Upload file
-                                                    <input (change)="fetchData('Life Insurance',$event,element)"
-                                                        class="uploadInput" id="file-4" multiple type="file">
-                                                </button>
-                                                <button mat-menu-item>Activity</button>
-                                                <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
-                                            </mat-menu>
-                                        </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
@@ -395,20 +392,19 @@
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                    <td mat-cell *matCellDef="let element" class="t-2 text-center c-p">
-                                        <div *ngIf="!isLoading">
-                                            <img class="mat-menu-trigger c-p" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
-                                            <mat-menu #menu4="matMenu">
-                                                <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
-                                                <button (click)="open(element)" mat-menu-item>Detailed view</button>
-                                                <button mat-menu-item>Upload file
-                                                    <input (change)="fetchData('Life Insurance',$event,element)"
-                                                        class="uploadInput" id="file-4" multiple type="file">
-                                                </button>
-                                                <button mat-menu-item>Activity</button>
-                                                <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
-                                            </mat-menu>
-                                        </div>
+                                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="t-2 text-center mat-menu-trigger  c-p">
+                                        <img class="mat-menu-trigger c-p" src="/assets/images/svg/dot-menu.svg">
+                                        <mat-menu #menu4="matMenu">
+                                            <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
+                                            <button (click)="open(element)" mat-menu-item>Detailed view</button>
+                                            <button mat-menu-item>Upload file
+                                                <input (change)="fetchData('Life Insurance',$event,element)"
+                                                    class="uploadInput" id="file-4" multiple type="file">
+                                            </button>
+                                            <button mat-menu-item>Activity</button>
+                                            <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
+                                        </mat-menu>
+
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
