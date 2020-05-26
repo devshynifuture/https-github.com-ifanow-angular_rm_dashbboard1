@@ -56,12 +56,12 @@ export class MyIfasComponent implements OnInit {
           data.forEach((element) => {
             tableArray.push({
               adminName: element.name,
-              email: element.email_id,
-              mobile: element.mobile_number,
+              email: element.emailId,
+              mobile: element.mobileNo,
               usingSince:
-                element.using_since_year +
+                element.usingSinceYear +
                 "Y " +
-                element.using_since_month +
+                element.usingSinceMonth +
                 "M",
               lastLogin: element.last_login ? element.last_login : " - ",
               accStatus: element.account_status
@@ -69,8 +69,8 @@ export class MyIfasComponent implements OnInit {
                 : " - ",
               // plan: element.plan ? element.plan : ' - ',
               //nextBilling: element.next_billing ? element.next_billing : ' - ',
-              team: element.team_count,
-              arn: element.arn_ria_count,
+              team: element.teamMemberCount,
+              arn: element.arnRiaDetailCount,
               logout: element.logout ? element.logout : " - ",
               adminAdvisorId: element.admin_advisor_id,
               menu: "",
@@ -111,14 +111,11 @@ export class MyIfasComponent implements OnInit {
     console.log(value);
     if (value !== "") {
       this.dataSource.data = this.tableData.filter((item) => {
-        console.log(
-          item.adminName.toLowerCase().includes(value.toLowerCase())
+        if (item.hasOwnProperty('adminName')) {
+          return item.adminName.toLowerCase().includes(value.toLowerCase())
             ? item
-            : null
-        );
-        return item.adminName.toLowerCase().includes(value.toLowerCase())
-          ? item
-          : null;
+            : null;
+        }
       });
     } else {
       this.dataSource.data = this.tableData;

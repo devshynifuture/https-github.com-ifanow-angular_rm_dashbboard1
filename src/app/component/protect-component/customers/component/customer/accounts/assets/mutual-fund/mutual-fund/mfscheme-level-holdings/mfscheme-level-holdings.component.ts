@@ -122,21 +122,21 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       })
   }
 
-  displayWith(scheme: Scheme) {
+  displayFn(scheme?): string | undefined {
     return scheme ? scheme.schemeName : undefined;
   }
 
   getFilteredSchemesList(value) {
-    if (value !== '') {
+    if (value !== '' && (typeof value === 'string')) {
       return this.customerService.getSchemeNameList({ schemeName: value })
+    } else if (typeof (value) === 'object') {
+      return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
     }
   }
 
   mapSchemeWithForm(scheme) {
     this.schemeObj = scheme;
-    this.schemeNameControl.setValue(scheme.schemeName);
-
-    console.log(this.schemeObj)
+    console.log("this is scheme obj", this.schemeObj);
   }
 
   getFamilyMemberList() {

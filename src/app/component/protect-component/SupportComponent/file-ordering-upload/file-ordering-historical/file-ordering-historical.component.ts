@@ -141,8 +141,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
 				this.filterForm.patchValue({ filterByRmName: undefined });
 
-				this.filterForm.patchValue({ filterByPeriod: undefined });
-
 				this.filterForm.patchValue({ filterByRta: undefined });
 
 				this.dataSource.data = ELEMENT_DATA;

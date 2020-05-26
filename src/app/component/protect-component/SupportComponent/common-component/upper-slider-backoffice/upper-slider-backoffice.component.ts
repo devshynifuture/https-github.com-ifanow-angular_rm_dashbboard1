@@ -44,7 +44,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   aumListReportValue: any[] = [];
   adminAdvisorIds: any[] = [];
   adminId = AuthService.getAdminId();
-  parentId = AuthService.getParentId();
+  parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   isLoadingForDuplicate: boolean = false;
   canExportExcelSheet = 'false';
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
@@ -176,7 +176,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
       advisorIds: [...this.adminAdvisorIds],
       brokerId: this.brokerId,
       rt: this.data.rtId,
-      parentId: (this.adminId == 0 && this.adminId) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId)
+      parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
+      isParent: (this.parentId == 0 && this.parentId === this.advisorId) ? true : false
     }
     // 
     this.supportService.getAumReconListGetValues(data)
@@ -353,9 +354,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
     const data = {
       id: this.aumReconId,
       brokerId: this.brokerId,
-      advisorId: this.advisorId,
+      advisorIds: [this.advisorId],
       rtId: this.data.rtId,
-      mutualFundIds: this.mutualFundIds
+      mutualFundIds: this.mutualFundIds,
+      parentId: this.parentId,
+      isParent: (this.parentId == 0 && this.parentId === this.advisorId) ? true : false
     }
     console.log("this is requestjson for delete and reorder:::: ", data)
     this.reconService.deleteAndReorder(data)
@@ -568,9 +571,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   deleteUnfreezeTransaction() {
     let data = {
-      advisorId: this.advisorId,
+      id: this.data.id,
+      advisorIds: [this.advisorId],
+      parentId: this.parentId,
+      isParent: (this.parentId === 0 && this.parentId === this.advisorId) ? true : false,
       brokerId: this.brokerId,
-      rt: this.rtId
+      rtId: this.rtId,
+      mutualFundIds: this.mutualFundIds
     }
 
     this.reconService.deleteUnfreezeTransaction(data)
