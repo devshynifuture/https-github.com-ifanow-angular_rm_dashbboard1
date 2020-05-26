@@ -215,7 +215,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     if (data && data.hasOwnProperty('mutualFundTransactions') && data.mutualFundTransactions.length !== 0 && this.data.flag === 'editTransaction') {
       data.mutualFundTransactions.forEach(element => {
         this.transactionArray.push(this.fb.group({
-          transactionType: [element.transactionTypeId, [Validators.required]],
+          transactionType: [element.transactionTypeMasterId, [Validators.required]],
           date: [new Date(element.transactionDate), [Validators.required]],
           transactionAmount: [element.amount, [Validators.required]],
           Units: [element.unit, [Validators.required]],
