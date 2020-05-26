@@ -1,5 +1,5 @@
 import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { Component, OnInit, ViewChildren, QueryList, ViewChild, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild, AfterViewInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { MatInput, MatAutocompleteTrigger, MatAutocompleteSelectedEvent, MatDatepickerInputEvent } from '@angular/material';
@@ -37,6 +37,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   validatorType = ValidatorType;
   schemeNameControl = new FormControl();
   @Output() dateChange: EventEmitter<MatDatepickerInputEvent<Date>>
+  @Input() data;
 
   @ViewChild(MatAutocompleteTrigger, { static: false }) trigger: MatAutocompleteTrigger;
 
@@ -49,7 +50,6 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     private mfService: MfServiceService,
     private reconService: ReconciliationService
   ) { }
-  data;
   familyMemberList = [];
   errorMsg = '';
   filteredSchemes = [];
@@ -61,8 +61,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
 
   ngOnInit() {
+    console.log('ttra data',this.data)
     this.getRtTypeIdList();
-    this.setFormValue();
+    this.setFormValue(this.data);
     if (this.data && this.data.hasOwnProperty('family_member_list')) {
       this.familyMemberList = this.data.family_member_list;
       this.setValueChangeForScheme();
@@ -150,7 +151,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         }
       })
   }
-  setFormValue() {
+  setFormValue(data) {
 
     if (this.data) {
       // this.schemeLevelHoldingForm = this.fb.group({
@@ -161,7 +162,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue(this.data.sipAmount);
+      this.schemeLevelHoldingForm.get('sip').setValue(this.data.amount);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -185,6 +186,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       this.schemeLevelHoldingForm.get('folioNumber').disable();
       this.schemeLevelHoldingForm.get('sip').disable();
       this.schemeLevelHoldingForm.get('tag').disable();
+      this.schemeNameControl.disable();
+    }else if(this.data && this.data.flag === 'editTransaction'){
       this.schemeNameControl.disable();
     }
 
@@ -212,7 +215,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     if (data && data.hasOwnProperty('mutualFundTransactions') && data.mutualFundTransactions.length !== 0 && this.data.flag === 'editTransaction') {
       data.mutualFundTransactions.forEach(element => {
         this.transactionArray.push(this.fb.group({
-          transactionType: [element.transactionTypeId, [Validators.required]],
+          transactionType: [element.transactionTypeMasterId, [Validators.required]],
           date: [new Date(element.transactionDate), [Validators.required]],
           transactionAmount: [element.amount, [Validators.required]],
           Units: [element.unit, [Validators.required]],
