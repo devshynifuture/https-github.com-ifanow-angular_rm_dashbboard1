@@ -183,12 +183,11 @@ export class ForgotPasswordComponent implements OnInit {
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
-  intervallTimer = new Subscription();
+  intervallTimer;
   otpResendCountDown() {
     let timeLeft = 30;
     this.showTimeRemaing = timeLeft;
-    this.intervallTimer.unsubscribe();
-    this.intervallTimer.add(interval(1000).subscribe(
+    this.intervallTimer = interval(1000).subscribe(
       data => {
         if (data == 31) {
           this.intervallTimer.unsubscribe();
@@ -196,7 +195,7 @@ export class ForgotPasswordComponent implements OnInit {
           this.showTimeRemaing = timeLeft--;
         }
       }
-    ))
+    )
   }
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(

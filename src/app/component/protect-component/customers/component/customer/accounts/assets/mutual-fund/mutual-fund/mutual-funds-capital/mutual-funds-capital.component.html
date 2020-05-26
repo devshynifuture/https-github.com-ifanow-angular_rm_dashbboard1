@@ -162,7 +162,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource.data.length == 0" class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -304,7 +304,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource1.data.length == 0" class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"  class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -393,7 +393,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource2.data.length == 0" class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource2.data.length == 0" [ngClass]="{'account-empty-state': dataSource2.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->

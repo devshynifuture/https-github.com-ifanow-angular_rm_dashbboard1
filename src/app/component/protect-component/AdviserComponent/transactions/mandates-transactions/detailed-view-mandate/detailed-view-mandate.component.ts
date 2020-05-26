@@ -27,9 +27,6 @@ export class DetailedViewMandateComponent implements OnInit {
     },
     {
       name: 'Accepted authorization', checked: false, status: 2
-    },
-    {
-      name: 'Rejected authorization', checked: false, status: 3
     }
   ];
   statusDetails: any;
@@ -46,9 +43,16 @@ export class DetailedViewMandateComponent implements OnInit {
   getDataStatus(data) {
     this.isLoading = true;
     this.statusDetails = this.statusData;
+    if (this.details.status == 3) {
+      this.statusDetails = [{
+        name: 'Rejected authorization', checked: true, status: 3
+      }];
+    }
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
+
+
     if (this.details.formUploadFlag == 1) {
       this.statusDetails[1].checked = true;
     }

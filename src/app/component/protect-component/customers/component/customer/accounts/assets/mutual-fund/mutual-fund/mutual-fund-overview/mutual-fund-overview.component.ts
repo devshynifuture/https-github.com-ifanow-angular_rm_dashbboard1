@@ -153,10 +153,10 @@ export class MutualFundOverviewComponent implements OnInit {
    this.custumService.getSaveFilters(obj).subscribe(
      data => {
        if(data){
-        let displaycopy =[];
         let overviewFilter= [];
         let allClient = [] ;
         let currentClient = [] ;
+        let getList = [];
         data.forEach(element => {
           if(element.clientId == 0){
             const obj={
@@ -169,14 +169,15 @@ export class MutualFundOverviewComponent implements OnInit {
               name:element.columnName,
               selected:element.selected
             }
+            getList.push(element);
             currentClient.push(obj); 
           }
 
         });
-        if(allClient.length > 0){
-          overviewFilter = allClient;
-        }else{
+        if(getList.length > 0){
           overviewFilter = currentClient;
+        }else{
+          overviewFilter = allClient;
         }
         this.saveFilterData ={
           overviewFilter : overviewFilter,
