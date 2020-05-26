@@ -62,6 +62,7 @@ export class MutualFundSummaryComponent implements OnInit {
   saveFilterData: any;
   savedFilterData: any;
   returnValue: any;
+  selectedDataLoad: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -627,11 +628,18 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   openMutualEditFund(flag, element) {
+    this.mutualFundList.forEach(ele => {
+      ele.mutualFundTransactions.forEach(trsn => {
+        if(trsn.id == element.id){
+          this.selectedDataLoad = ele
+        }
+      });
+    });
     this.mfService.getMutualFundData()
       .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: { family_member_list: res['family_member_list'], flag, ...element },
+          data: { family_member_list: res['family_member_list'], flag, ...element,...this.selectedDataLoad },
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent

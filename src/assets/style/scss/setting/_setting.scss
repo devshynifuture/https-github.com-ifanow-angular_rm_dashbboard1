@@ -146,9 +146,18 @@
     overflow: hidden;
     white-space: nowrap;
 
-    &:hover {
-      overflow: visible;
-    }
+    // &:hover {
+    //   overflow: visible;
+    // }
+  }
+}
+
+.commencement-date,
+.renewal-date {
+
+  .mat-form-field-infix {
+    top: -4px;
+    padding-top: 0px;
   }
 }
 

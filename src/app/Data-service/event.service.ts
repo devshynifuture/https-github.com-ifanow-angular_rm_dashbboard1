@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { BehaviorSubject, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -66,9 +66,9 @@ export class EventService {
     this.overlayVisibleValue.next(isVisible);
   }
 
-  openSnackBar(message: string, action: string = null, actionCallback = null) {
+  openSnackBar(message: string, action: string = null, actionCallback = null, duration = 2000) {
     const snackBbarref = this.snackBar.open(message, action, {
-      duration: 2000,
+      duration,
       panelClass: ['app-bottom-snackbar']
     });
     if (actionCallback) {

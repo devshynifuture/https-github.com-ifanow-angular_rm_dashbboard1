@@ -566,7 +566,7 @@ export class StpTransactionComponent implements OnInit {
           this.isSuccessfulTransaction = true;
         }, (error) => {
           this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss');
+          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
         }
       );
     }

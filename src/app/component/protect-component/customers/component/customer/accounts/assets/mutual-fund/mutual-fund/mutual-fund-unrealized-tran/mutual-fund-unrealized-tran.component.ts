@@ -57,6 +57,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   subCategoryData: any;
   transactionTypeList: any;
   returnValue: any;
+  selectedLoadData: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
@@ -377,12 +378,20 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
   }
 
-  openMutualEditFund(flag, element) {
+  openMutualEditFund(flag, element, group) {
+
+    this.mutualFundList.forEach(ele => {
+      ele.mutualFundTransactions.forEach(tran => {  
+        if (tran.id == element.id){
+          this.selectedLoadData = ele
+        }
+      });
+    })
     this.mfService.getMutualFundData()
       .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: { family_member_list: res['family_member_list'], flag, ...element },
+          data: { family_member_list: res['family_member_list'], flag, ...element, ...this.selectedLoadData },
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent
@@ -523,7 +532,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       category: this.setDefaultFilterData.category,
       transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
       scheme: this.setDefaultFilterData.scheme,
-      reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : this.saveFilterData.reportType,
+      reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,

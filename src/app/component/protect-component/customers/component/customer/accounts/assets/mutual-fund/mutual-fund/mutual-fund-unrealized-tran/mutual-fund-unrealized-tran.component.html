@@ -423,11 +423,14 @@
                         <th *matHeaderCellDef class="" mat-header-cell></th>
                         <td *matCellDef="let element" class="zIndex" mat-cell>
                             <div *ngIf="!isLoading">
-
                                 <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu25="matMenu">
-                                    <button mat-menu-item (click)="openMutualEditFund('editTransaction',element)">Edit
-                                        Transaction</button>
+                                    <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
+                                        [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                        <button mat-menu-item [disabled]="element.rtMasterId !== 14"
+                                        (click)="openMutualEditFund('editTransaction',element)">Edit
+                                            Transaction</button>
+                                    </div>
                                     <button mat-menu-item (click)="deleteModal('TRANSACTION', element)">Delete
                                         Transaction</button>
 
