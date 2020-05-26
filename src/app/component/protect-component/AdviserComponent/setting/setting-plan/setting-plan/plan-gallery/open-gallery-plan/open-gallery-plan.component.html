@@ -19,7 +19,12 @@
             </div>
             <div class="col-md-5">
                 <i class="material-icons c-p" (click)="cropImage = true" style="font-size: 100px;">
-                    <img [src]="imgURL" class="w-100">
+                    <div class="profilePhoto containerOne">
+                        <img [src]="imgURL" class="w-100">
+                        <div class="middleOne">
+                            <p class="c-p"> Edit Image </p>
+                        </div>
+                    </div>
                 </i>
             </div>
         </div>
@@ -33,7 +38,8 @@
 
                 <div class="d-flex">
                     <div class="image-cropper" style="width: 50%;">
-                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper"
+                            (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper" style="width: 50%;">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
@@ -53,13 +59,14 @@
 
 
 
-    <div class="row pt-16 pb-16">
+    <div class="row pt-32 pb-16">
         <div class="col-md-12  d-flex alig-items-center  justify-content-center">
             <!--    // TODo [mat-dialog-close]="data"-->
             <button class="br-0 text-inherit f-14" mat-button (click)="Close(false)">
                 CANCEL
             </button>
-            <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>UPLOAD
+            <button class="btn-primary text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
+                cdkFocusInitial>UPLOAD
             </button>
 
         </div>

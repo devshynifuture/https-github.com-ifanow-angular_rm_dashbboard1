@@ -8,6 +8,7 @@ import {SubscriptionInject} from '../../Subscriptions/subscription-inject.servic
 import {UtilService} from 'src/app/services/util.service';
 import {MandateCreationComponent} from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
 import {AddMandateComponent} from '../overview-transactions/MandateCreation/add-mandate/add-mandate.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -26,17 +27,21 @@ export class MandatesTransactionsComponent implements OnInit {
   credentialData: any;
   noData: string;
   dontHide: boolean;
+  isLoading = false;
+  isAdvisorSection = true;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private subInjectService: SubscriptionInject) {
+              private subInjectService: SubscriptionInject, private router: Router) {
   }
 
-  isLoading = false;
 
   ngOnInit() {
+    const routeName = this.router.url.split('/')[1];
+    if (routeName == 'customer') {
+      this.clientId = AuthService.getClientId();
+      this.isAdvisorSection = false;
+    }
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    // this.getNSEAchmandate();
     this.getFilterOptionData();
     this.dontHide = true;
   }
@@ -80,8 +85,9 @@ export class MandatesTransactionsComponent implements OnInit {
     this.isLoading = true;
     const obj1 = {
       advisorId: this.advisorId,
+      clientId: this.clientId,
     };
-    this.onlineTransact.getMandateList(obj1).subscribe(
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateListRes(data), (error) => {
         this.isLoading = false;
         this.dataSource.data = [];
@@ -92,6 +98,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   getMandateListRes(data) {
+    console.log('mandate data : ', data);
     this.dontHide = true;
     this.isLoading = false;
     if (data && data.length > 0) {
@@ -113,6 +120,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   openMandateDetails(data) {
+    data.isAdvisorSection = this.isAdvisorSection;
     const fragmentData = {
       flag: 'detailPoTd',
       data,
@@ -124,7 +132,7 @@ export class MandatesTransactionsComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.refresh(null);
           }
           rightSideDataSub.unsubscribe();
         }

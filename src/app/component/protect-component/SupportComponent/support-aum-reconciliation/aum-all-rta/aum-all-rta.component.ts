@@ -21,7 +21,9 @@ export class AumAllRtaComponent implements OnInit {
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   rtaList = [];
 
-  advisorId = 2808;
+  advisorId = AuthService.getAdvisorId();
+
+
 
   constructor(
     public eventService: EventService,
