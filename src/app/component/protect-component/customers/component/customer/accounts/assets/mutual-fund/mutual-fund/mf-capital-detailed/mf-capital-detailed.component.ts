@@ -35,7 +35,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   equityObj: any;
   debtObj: any;
   rightFilterData: any;
-  fromDateYear: number;
+  fromDateYear: number = 0;
   toDateYear: number;
   grandFatheringEffect = false;
   redemption: any[];
