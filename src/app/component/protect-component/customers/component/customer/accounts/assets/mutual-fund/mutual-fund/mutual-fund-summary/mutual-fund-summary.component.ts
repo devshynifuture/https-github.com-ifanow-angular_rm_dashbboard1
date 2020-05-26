@@ -88,28 +88,27 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
 
   ngOnInit() {
-    this.getFilterData(2)
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
       })
-    this.mfService.getMfData()
-      .subscribe(res => {
-        this.mutualFund = res;
-      })
-    this.mfService.getFilterValues()
-      .subscribe(res => {
-        this.setDefaultFilterData = res;
-      })
-    this.mfService.getDataForMfGet()
-      .subscribe(res => {
-        this.mfGetData = res;
-      })
-
-
-
+      this.getFilterData(2);
   }
   getFilterData(value) {
+    this.isLoading = true;
+      this.changeInput.emit(true);
+    this.mfService.getMfData()
+    .subscribe(res => {
+      this.mutualFund = res;
+    })
+  this.mfService.getFilterValues()
+    .subscribe(res => {
+      this.setDefaultFilterData = res;
+    })
+  this.mfService.getDataForMfGet()
+    .subscribe(res => {
+      this.mfGetData = res;
+    })
     const obj = {
       advisor_id: this.advisorId,
       clientId: this.clientId,
@@ -122,6 +121,7 @@ export class MutualFundSummaryComponent implements OnInit {
           let allClient = [];
           let currentClient = [];
           let transactionView = [];
+          let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
           data.forEach(element => {
@@ -139,16 +139,17 @@ export class MutualFundSummaryComponent implements OnInit {
                 displayName: element.columnName,
                 selected: element.selected
               }
+              getList.push(element);
               currentClient.push(obj);
               // if(element.selected == true){
               //   this.displayedColumns.push(element.columnName)
               // }
             }
           });
-          if (allClient.length > 0) {
-            transactionView = allClient
-          } else {
+          if (getList.length > 0) {
             transactionView = currentClient
+          } else {
+            transactionView = allClient
           }
           transactionView.forEach(element => {
             if (element.selected == true) {
@@ -159,21 +160,31 @@ export class MutualFundSummaryComponent implements OnInit {
 
           this.saveFilterData = {
             transactionView: transactionView,
-            showFolio: (data[0].showZeroFolios == true) ? '1' : '2',
-            reportType: data[0].reportType,
-            selectFilter: (allClient.length > 0) ? 0 : this.clientId
+            showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') :  (data[0].showZeroFolios == true) ? '1' : '2',
+            reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
+            selectFilter: (currentClient.length > 0) ? this.clientId : 0
           }
+          if (this.mfGetData) {
+            this.getMutualFundResponse(this.mfGetData)
+          } else if (this.mutualFund) {
+            this.getMutualFundResponse(this.mutualFund)
+          } else {
+            this.getMutualFund();
+          }
+        }
+      },
+      (error)=>{
+        if (this.mfGetData) {
+          this.getMutualFundResponse(this.mfGetData)
+        } else if (this.mutualFund) {
+          this.getMutualFundResponse(this.mutualFund)
+        } else {
+          this.getMutualFund();
         }
       }
 
     );
-    if (this.mfGetData) {
-      this.getMutualFundResponse(this.mfGetData)
-    } else if (this.mutualFund) {
-      this.getMutualFundResponse(this.mutualFund)
-    } else {
-      this.getMutualFund();
-    }
+
   }
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
@@ -303,7 +314,7 @@ export class MutualFundSummaryComponent implements OnInit {
       if (!this.inputData) {
         this.rightFilterData.reportType = [];
         this.rightFilterData.reportType[0] = {
-          name: (this.saveFilterData) ? this.saveFilterData.reportType :this.setDefaultFilterData.reportType,
+          name:(this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
           selected: true
         }
       }
@@ -413,7 +424,7 @@ export class MutualFundSummaryComponent implements OnInit {
       transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
       overviewFilter: (this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       scheme: this.setDefaultFilterData.scheme,
-      reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
+      reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : this.saveFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
@@ -430,7 +441,6 @@ export class MutualFundSummaryComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.getFilterData(2)
             this.customDataSource = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
@@ -455,9 +465,10 @@ export class MutualFundSummaryComponent implements OnInit {
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
             this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
-            this.asyncFilter(this.reponseData.mutualFundList);
+            // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
+            this.getFilterData(2)
             // this.getListForPdf(this.rightFilterData.transactionView);
           }
           rightSideDataSub.unsubscribe();
