@@ -98,6 +98,7 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   getMandateListRes(data) {
+    console.log('mandate data : ', data);
     this.dontHide = true;
     this.isLoading = false;
     if (data && data.length > 0) {
@@ -131,7 +132,7 @@ export class MandatesTransactionsComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.refresh(null);
           }
           rightSideDataSub.unsubscribe();
         }
