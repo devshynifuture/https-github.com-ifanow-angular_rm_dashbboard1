@@ -38,7 +38,7 @@
               <div class="col-md-7 p-0">
                 <h1 class="m-0 text-white f-26 proxima">₹ {{data.currentValue | number:'1.2-2'}}</h1>
               </div>
-              <div class="col-md-5 p-0">
+              <div class="col-md-5 p-0" *ngIf="data.xirrValue">
                 <h5 class="m-0 text-white pt-8 proxima"> {{data.xirrValue | number:'1.2-2'}}%</h5>
               </div>
             </div>

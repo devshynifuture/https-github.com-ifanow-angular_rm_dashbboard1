@@ -915,6 +915,8 @@ export class RightFilterComponent implements OnInit {
       data => {
         console.log(data);
       }
+
+      
     );
   }
   changeSaveFilterSelection(value) {
@@ -923,6 +925,9 @@ export class RightFilterComponent implements OnInit {
         element.selected = false;
       }
     });
+    if(this.saveFilters[0].selected == true || this.saveFilters[1].selected == true){
+      this.saveFilterCall();
+    }
   }
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
@@ -1110,9 +1115,7 @@ export class RightFilterComponent implements OnInit {
       transactionType:this.transactionType
     };
     console.log('dataToSend---------->', this.dataToSend);
-    if(this.saveFilters[0].selected == true || this.saveFilters[1].selected == true){
-      this.saveFilterCall();
-    }
+
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
     this.finalFilterData.transactionView = this.transactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
