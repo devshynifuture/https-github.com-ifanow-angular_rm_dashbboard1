@@ -18,7 +18,8 @@
                 </mat-menu>
                 <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
-                <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button="" (click)="openFilter()">
+                <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base"
+                    mat-stroked-button="" (click)="openFilter()">
                     <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                     <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
                         ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
@@ -35,7 +36,10 @@
                         EQUITY
                     </h5>
                 </div>
-                <table #tableEl mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
+
+                <table #tableEl mat-table [dataSource]="dataSource" id="table-low"
+                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
@@ -175,7 +179,9 @@
                         DEBT
                     </h5>
                 </div>
-                <table #tableEl2 mat-table [dataSource]="dataSource1" id="table-low" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
+                <table #tableEl2 mat-table [dataSource]="dataSource1" id="table-low"
+                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
@@ -314,7 +320,9 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
-                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
+                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low"
+                    class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
@@ -396,5 +404,6 @@
     </div>
 </div>
 <div *ngIf="!summaryView">
-    <app-mf-capital-detailed [responseData]="capitalGainData" [mutualFund]="mutualFund" [changedData]="dataToSend" (reponseToInput)="outputResponse($event)"></app-mf-capital-detailed>
+    <app-mf-capital-detailed [responseData]="capitalGainData" [mutualFund]="mutualFund" [changedData]="dataToSend"
+        (reponseToInput)="outputResponse($event)"></app-mf-capital-detailed>
 </div>
