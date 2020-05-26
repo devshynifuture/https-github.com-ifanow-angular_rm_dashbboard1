@@ -729,9 +729,6 @@ export const appConfig = {
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
-  DELETE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/delete',
-  UPDATE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/update',
-  ADD_MF_RTA_QUESTION: 'setting/arn-ria/rta-sec/answer/add',
 
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 
