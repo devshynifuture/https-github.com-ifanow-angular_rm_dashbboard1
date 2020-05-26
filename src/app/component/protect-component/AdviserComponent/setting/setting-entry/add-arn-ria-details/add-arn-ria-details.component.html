@@ -141,7 +141,7 @@
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
                     <input class="form-control b-0" formControlName="renewalDate" matInput (focus)="picker1.open()"
-                        [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
+                        [matDatepicker]="picker1" [min]="tomrrowsDate" readonly placeholder="Enter Date">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-hint>Optional</mat-hint>
