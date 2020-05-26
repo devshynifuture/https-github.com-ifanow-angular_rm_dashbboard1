@@ -125,7 +125,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                                *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -139,7 +139,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                                *ngIf="element.redeemRate == 0 || element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -330,7 +330,7 @@
 
 
                 <ng-container matColumnDef="header-row-first-group">
-                    <th mat-header-cell *matHeaderCellDef [style.text-align]="center" class="header-tables br"
+                    <th mat-header-cell *matHeaderCellDef [style.text-align]="'center'" class="header-tables br"
                         [attr.colspan]="6">
                         REDEMPTION DETAILS
                     </th>
@@ -341,7 +341,7 @@
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
                         AGAINST
                         (PURCHASES)<br>
-                        <span *ngIf="fromDate >= 2018">AS ON 31 JAN 2018</span></th>
+                        <span *ngIf="fromDate.getFullYear() >= 2018">{{fromDate.getFullYear() > 2018}}AS ON 31 JAN 2018</span></th>
                 </ng-container>
                 <ng-container matColumnDef="header-row-third-group">
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="7" class="header-tables"> GAIN/LOSS </th>
@@ -447,7 +447,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                                *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -461,7 +461,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                                *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -650,7 +650,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="header-row-first-group">
-                    <th mat-header-cell *matHeaderCellDef [style.text-align]="center" class="header-tables br"
+                    <th mat-header-cell *matHeaderCellDef [style.text-align]="'center'" class="header-tables br"
                         [attr.colspan]="6">
                         REDEMPTION DETAILS
                     </th>

@@ -6,7 +6,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { setInterval } from 'timers';
-import { Observable, interval, Subscription } from 'rxjs';
+import { interval, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forgot-password',
@@ -160,9 +161,8 @@ export class ForgotPasswordComponent implements OnInit {
   ///////////////////////////////////// signup process///////////////////////////////
   verify(flag, resendFlag) {
     let verifyObj;
-    if (resendFlag == true) {
-      this.intervallTimer.unsubscribe();
-    }
+    // if (resendFlag == true) {
+    // this.intervallTimer.unsubscribe();
     (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email, otp: (this.otpResponse) ? (this.otpResponse) : null } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo, otp: (this.otpResponse) ? (this.otpResponse) : null };
     this.verifyWithCredential(verifyObj, resendFlag);   //// verify Email Address
   }
@@ -187,13 +187,18 @@ export class ForgotPasswordComponent implements OnInit {
   otpResendCountDown() {
     let timeLeft = 30;
     this.showTimeRemaing = timeLeft;
-    this.intervallTimer = interval(1000).subscribe(
+    this.intervallTimer = interval(1000).pipe(takeUntil(timer(32000))).subscribe(
       data => {
-        if (data == 31) {
-          this.intervallTimer.unsubscribe();
-        } else {
-          this.showTimeRemaing = timeLeft--;
-        }
+        // if (data == 31) {
+        //   this.intervallTimer.unsubscribe();
+        //   return;
+        // } else if (data < 31) {
+        this.showTimeRemaing = timeLeft--;
+        // }
+        // else {
+        //   this.intervallTimer.unsubscribe();
+        //   return;
+        // }
       }
     )
   }
