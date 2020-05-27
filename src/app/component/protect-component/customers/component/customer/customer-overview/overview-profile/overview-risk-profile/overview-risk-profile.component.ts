@@ -273,11 +273,9 @@ export class OverviewRiskProfileComponent implements OnInit {
       });
       if (this.checkFamilyMem == false && this.statusArray.length < 15) {
         this.statusArray.push(item)
-        this.progressBar = this.statusArray.length * 7
       }
     } else if (this.statusArray.length == 0) {
       this.statusArray.push(item)
-      this.progressBar = this.statusArray.length * 7
     }
     const index = item.id
     this.riskAssessmentQuestionList[index].done = true
