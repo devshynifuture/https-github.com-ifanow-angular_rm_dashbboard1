@@ -1,10 +1,9 @@
 <div [ngClass]="{'pe-none': isLoading}" (window:resize)="onResize()" class="row pt-150">
     <div class="col-md-4 d-flex align-items-center">
-        <!--        <h4 class="m-0">Clients</h4>-->
+        <!-- <h4 class="m-0">Clients</h4> -->
     </div>
 
-    <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
-        class="col-md-8 d-flex align-items-center justify-content-end pb-10">
+    <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end pb-10">
 
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
@@ -32,9 +31,7 @@
 <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients">
         <div [ngClass]="{'table-scroll':isLoading==false }">
-            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
-                [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                class="skeletonAnimation">
+            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
                 <ng-container matColumnDef="position" sticky>
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20"> Group head name
                     </th>
@@ -81,8 +78,7 @@
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
-                        <div class="bar"> {{element.lastLoginString}} <span
-                                *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
+                        <div class="bar"> {{element.lastLoginString}} <span *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
@@ -115,12 +111,22 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-        <div *ngIf="clientDatasource.data.length==0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">No Clients found</h4>
-            <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
-                ADD NEW
-            </button>
+        <div *ngIf="clientDatasource.data.length==0" class="row pt-32">
+            <div class="col-md-7 d-flex align-items-center  flex-column ">
+                <img src="assets/images/svg/clients-empty-states.svg">
+                <h4 class="mt-24 mb-12">No clients added yet</h4>
+                <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
+                    ADD NEW
+                </button>
+            </div>
+
+            <div class="col-md-5">
+                <div class="dashedClass">
+                    <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio master files. Once you do, all the clients will automatically reflect here.</p>
+                    <p> How to do it: You can manually upload your folio master file from here. Or share your RTA details with us here, we will upload them for you quickly.</p>
+                    <p class="mb-0">Still have questions? Watch this video:</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

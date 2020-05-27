@@ -12,15 +12,20 @@ import {map} from 'rxjs/operators';
 import {DatePipe} from '@angular/common';
 import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
   templateUrl: './mutual-fund-unrealized-tran.component.html',
-  styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
+  styleUrls: ['./mutual-fund-unrealized-tran.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class MutualFundUnrealizedTranComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
+  displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+    'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal', 'xirrTotal', 'iconsTotal'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
     'gain', 'absReturn', 'xirr', 'allocation'];
   // subCategoryData: any[];
@@ -35,7 +40,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   type: any = {name: ''};
   isSpinner = false;
   customDataHolder = [];
-  customDataSource = new MatTableDataSource([{}, {}, {}]);
+  customDataSource = new TableVirtualScrollDataSource([]);
   @ViewChild('tableEl', {static: false}) tableEl;
   rightFilterData: any = {reportType: ''};
   adviorData: any;
@@ -59,9 +64,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   transactionTypeList: any;
   returnValue: any;
   selectedLoadData: any;
+  showDownload: boolean = false;
 
-  constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
+  constructor(public dialog: MatDialog, private datePipe: DatePipe,
+              private subInjectService: SubscriptionInject, private utilService: UtilService,
+              private mfService: MfServiceService, private excel: ExcelGenService,
+              private custumService: CustomerService, private eventService: EventService,
+              /*private changeDetectorRef: ChangeDetectorRef*/) {
   }
 
   mutualFund;
@@ -86,6 +95,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (this.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
+      this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+        'unitsTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal',
+        'xirrTotal'];
+
     } else {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
@@ -126,6 +139,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
+          this.displayedColumnsTotal = [];
           data.forEach(element => {
             if (element.clientId == 0) {
               const obj = {
@@ -150,6 +164,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           transactionView.forEach(element => {
             if (element.selected == true) {
               this.displayedColumns.push(element.displayName);
+              this.displayedColumnsTotal.push(element.displayName + 'Total');
             }
           });
 
@@ -157,8 +172,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             transactionView: transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
-            selectFilter: (currentClient.length > 0) ? this.clientId : 0
-          };
+            selectFilter: (getList.length > 0) ? this.clientId : 0
+          }
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions') {
             this.isLoading = true;
@@ -215,8 +230,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     } else {
       this.isLoading = false;
       this.changeInput.emit(false);
-      this.customDataSource.data = [];
+      // this.customDataSource.data = [];
+      this.customDataSource = new TableVirtualScrollDataSource([]);
       this.customDataHolder = [];
+      // this.changeDetectorRef.detectChanges();
     }
   }
 
@@ -323,10 +340,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }, (error) => {
         this.isLoading = false;
         this.dataSource.data = [];
-        this.customDataSource.data = [];
+        // this.customDataSource.data = [];
+        this.customDataSource = new TableVirtualScrollDataSource([]);
         this.customDataHolder = [];
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
+        // this.changeDetectorRef.detectChanges();
       }
     );
   }
@@ -353,13 +372,17 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
+        console.log('startTime ', new Date());
+        console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
         this.dataSource.data = (data.dataSourceData);
-        this.customDataSource.data = (data.customDataSourceData);
+        // this.customDataSource.data = (data.customDataSourceData);
+        this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
         this.customDataHolder = data.customDataHolder;
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
+        // this.changeDetectorRef.detectChanges();
       };
       worker.postMessage(input);
     } else {
@@ -369,12 +392,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    this.fragmentData.isSpinner = true;
-    const rows = this.tableEl._elementRef.nativeElement.rows;
-    const data = this.excel.generateExcel(rows, tableTitle);
-    if (data) {
-      this.fragmentData.isSpinner = false;
-    }
+    this.showDownload = true;
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+      });
+      saveAs(blob, tableTitle + '.xls');
+    }, 200);
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
   }
 
   mfSchemes() {// get last mf list
@@ -562,7 +589,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.dataSource.data = ([{}, {}, {}]);
-            this.customDataSource.data = ([{}, {}, {}]);
+            // this.customDataSource.data = ([{}, {}, {}]);
+            this.customDataSource = new TableVirtualScrollDataSource([]);
+
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
@@ -603,7 +632,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             // this.rightFilterData.reportType, this.mfService);
             // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
-
+            // this.changeDetectorRef.detectChanges();
           }
           rightSideDataSub.unsubscribe();
         }
@@ -611,6 +640,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     );
   }
 
+  isTotal = (index, item) => item.total == 'Total';
   isGroup = (index, item) => item.groupName;// group category wise
   //   return item.groupName;
   // }
@@ -641,9 +671,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   // }
 
   generatePdf() {
+    this.showDownload = true;
     this.fragmentData.isSpinner = true;
-    const para = document.getElementById('template');
-    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    setTimeout(() => {
+      const para = document.getElementById('template');
+    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData,'','');
+    }, 200);
+   
     // if(data){
     //   this.isSpinner = false;
     // }

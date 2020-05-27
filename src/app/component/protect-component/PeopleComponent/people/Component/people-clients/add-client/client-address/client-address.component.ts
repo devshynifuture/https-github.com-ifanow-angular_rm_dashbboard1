@@ -42,6 +42,7 @@ export class ClientAddressComponent implements OnInit {
   disableBtn = false;
   maxLength: number;
   proofTypeData: any;
+  firstTimeEditFlag: boolean = false;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService, public dialog: MatDialog) {
@@ -75,8 +76,8 @@ export class ClientAddressComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       // addressType: [(data.addressType) ? String(data.addressType) : '1'],
-      addProofType: [(data.proofType) ? String(data.proofType) : '', [Validators.required]],
-      proofIdNum: [data.proofIdNumber, [Validators.required]],
+      addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : '', [Validators.required]],
+      proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2],
       pinCode: [data.pinCode, [Validators.required]],
@@ -84,11 +85,14 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-    this.changeAddrProofNumber({ value: String(data.proofType) }, data);
+    (data) ? this.proofTypeData = data : ''
+    this.changeAddrProofNumber({ value: String(data.proofType) });
   }
-  changeAddrProofNumber(data, addressData = null) {
+  changeAddrProofNumber(data) {
     let regexPattern;
-    (addressData) ? this.proofTypeData = addressData : ''
+    if (this.firstTimeEditFlag) {
+      this.proofTypeData.proofIdNumber = null
+    }
     if (data.value == '1') {
       regexPattern = this.validatorType.PASSPORT;
       this.maxLength = 8;
@@ -96,7 +100,7 @@ export class ClientAddressComponent implements OnInit {
     }
     else if (data.value == '2') {
       regexPattern = this.validatorType.ADHAAR;
-      this.addressForm.get('proofIdNum').setValue((addressData) ? addressData.proofIdNumber : this.userData.aadhaarNumber);
+      this.addressForm.get('proofIdNum').setValue((this.proofTypeData.proofType == '2' && !this.proofTypeData.proofIdNumber) ? this.userData.aadhaarNumber : (this.proofTypeData.proofType == '2') ? this.proofTypeData.proofIdNumber : '');
       this.maxLength = 12;
     }
     else if (data.value == '3') {
@@ -111,10 +115,19 @@ export class ClientAddressComponent implements OnInit {
     }
     else {
       this.maxLength = undefined
-      this.addressForm.get('proofIdNum').setValue(addressData ? this.proofTypeData.proofIdNumber : '');
+      this.addressForm.get('proofIdNum').setValue(this.proofTypeData ? this.proofTypeData.proofIdNumber : '');
     }
     this.addressForm.get('proofIdNum').setValidators([(regexPattern) ? Validators.pattern(regexPattern) : Validators.required]);
+    if (this.userMappingIdFlag == false) {
+      this.addressForm.get('proofIdNum').setValidators([Validators.required]);
+      this.addressForm.get('proofIdNum').setValue(undefined);
+      this.addressForm.get('addProofType').setValue('');
+      this.maxLength = undefined;
+      this.firstTimeEditFlag = true;
+    }
+    this.userMappingIdFlag = true;
     this.addressForm.get('proofIdNum').updateValueAndValidity();
+
   }
 
   toUpperCase(formControl, event) {
@@ -213,8 +226,8 @@ export class ClientAddressComponent implements OnInit {
         // addressType: this.addressForm.get('addressType').value,
         proofType: this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').value,
-        userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : null,
-        addressId: (this.userData.addressData) ? this.userData.addressData.addressId : (this.addressList) ? this.addressList.addressId : null
+        userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.firstTimeEditFlag == false) ? this.addressList.userAddressMappingId : null,
+        addressId: (this.userData.addressData) ? this.userData.addressData.addressId : (this.addressList && this.firstTimeEditFlag == false) ? this.addressList.addressId : null
       };
 
       this.peopleService.addEditClientAddress(obj).subscribe(

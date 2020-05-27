@@ -200,45 +200,45 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.personalDetails.reset();
   }
 
-  SendToForm(value, flag) {
-    this.activeDetailsClass = value;
+  SendToForm(formId, flag) {
+    this.activeDetailsClass = formId;
 
     if (flag == true) {
       this.doneData = true;
     }
-    if (value == 'first') {
+    if (formId == 'first') {
 
       this.savePersonalDetails(this.holder.type);
       if (this.holder.type == 'first') {
       } else {
         if (this.firstHolder && this.firstHolder.panNumber) {
-          this.holder.type = value;
+          this.holder.type = formId;
           this.getdataForm(this.firstHolder);
         } else {
           return;
         }
       }
 
-    } else if (value == 'second') {
+    } else if (formId == 'second') {
       if (this.holder.type == 'second' && !flag) {
       } else {
         if (this.savePersonalDetails(this.holder.type)) {
           if (this.secondHolder && this.secondHolder.panNumber) {
-            this.holder.type = value;
+            this.holder.type = formId;
             this.getdataForm(this.secondHolder);
 
             // this.personalDetails.setValue(this.secondHolder);
           } else {
             this.reset();
           }
-          this.holder.type = value;
+          this.holder.type = formId;
         } else if (this.holder.type == 'third') {
           this.reset();
           this.thirdHolderButtonLabel = '+ Add Holder';
-          this.holder.type = value;
+          this.holder.type = formId;
         }
       }
-    } else if (value == 'third') {
+    } else if (formId == 'third') {
       if (this.holder.type == 'third' && !flag) {
       } else {
         if (this.savePersonalDetails(this.holder.type)) {
@@ -250,11 +250,11 @@ export class PersonalDetailsInnComponent implements OnInit {
           } else {
             this.reset();
           }
-          this.holder.type = value;
+          this.holder.type = formId;
         }
       }
     } else {
-      this.savePersonalDetails(value);
+      this.savePersonalDetails(formId);
     }
 
     this.obj1.firstHolder = this.firstHolder;

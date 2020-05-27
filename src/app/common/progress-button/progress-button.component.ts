@@ -67,8 +67,8 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
       setTimeout(() => {
         if (this.options.active && this.options.value < 100) {
           this.options.value = this.options.value + 3;
-          console.log('this.options.value : ', this.options.value);
-          console.log('this.options.value : ', new Date().getMilliseconds());
+          // console.log('this.options.value : ', this.options.value);
+          // console.log('this.options.value : ', new Date().getMilliseconds());
 
           this.setTimeOutRecursiveForProgressValue();
         } else {

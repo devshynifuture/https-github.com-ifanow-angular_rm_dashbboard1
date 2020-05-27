@@ -1202,6 +1202,9 @@ export class RightFilterComponent implements OnInit {
         toDate: (this.finalFilterData.reportAsOn) ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList
       }
+      if(this._data.name == 'Overview Report'){
+      this.obj.toDate = todayDate;
+      }
       this.custumService.getMutualFund(this.obj).subscribe(
         data => {
           console.log(data);

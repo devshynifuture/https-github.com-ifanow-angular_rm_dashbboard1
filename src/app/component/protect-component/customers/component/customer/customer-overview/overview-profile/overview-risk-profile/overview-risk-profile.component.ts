@@ -1,58 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import more from 'highcharts/highcharts-more';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../../plan/plan.service';
 import { HistoryRiskProfileComponent } from '../../../plan/profile-plan/history-risk-profile/history-risk-profile.component';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 more(Highcharts);
 
 @Component({
   selector: 'app-overview-risk-profile',
   templateUrl: './overview-risk-profile.component.html',
-  styleUrls: ['./overview-risk-profile.component.scss']
+  styleUrls: ['./overview-risk-profile.component.scss'],
+  providers: [LoaderFunction]
 })
 export class OverviewRiskProfileComponent implements OnInit {
-  [x: string]: any;
-
   riskAssessments: any;
   riskAssessmentQuestionList: any;
   riskProfile: any;
   public selection: string;
   sendRiskList: any;
   flag: boolean;
+  gaugeOptions: any;
   advisorId: any;
   score;
-  showRisk = false;
+  showResults = false;
   clickMessage = '';
   name = 'Angular';
   showLoader: boolean;
   isLoading = false
-  statusArray: any;
+  statusArray: any[] = [];
   showErrorMsg
   checkFamilyMem;
   showButton;
-  progressBar;
   scoreStatus;
   equityAllocationLowerLimit;
+  equityAllocationUpperLimit;
+  hasError: boolean = false;
 
   clientRiskAssessmentResults;
-  ClickMe(referenceKeyName) {
-    alert(referenceKeyName.id);
-  }
-  onClick(referenceKeyName1) {
-    alert(referenceKeyName1.id);
-  }
-  constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
+
+  globalRiskProfile:any;
+  feedsRiskProfile:any = {};
+  clientId;
+  clientInfo:any;
+  count:number = 0;
+  showRetakeTestsButton: boolean = false;
+  
+  constructor(
+    private fb: FormBuilder,
+    public planService: PlanService,
+    private customerService: CustomerService,
+    public loaderFn: LoaderFunction,
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService
+  ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.clientInfo = AuthService.getClientData();
   }
 
   ngOnInit() {
-    this.getRiskProfileList(true);
+    this.loadGlobalRiskProfile();
+    this.loadRiskProfile();
     this.getdataForm('');
     this.sendRiskList = [];
     // this.progressBar = [];
@@ -63,7 +76,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.count = 0
   }
 
-  percentage(chartId) {
+  percentage(data) {
     Highcharts.setOptions({
       chart: {
         type: 'bar',
@@ -124,9 +137,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         }
       }
     });
-    this.callFun()
+    this.callFun(data)
   }
-  callFun() {
+  callFun(data) {
     var chart1 = new Highcharts.Chart({
 
       chart: { renderTo: 'container1' },
@@ -139,14 +152,15 @@ export class OverviewRiskProfileComponent implements OnInit {
         tickLength: 4,
         labels: { y: 10, format: '{value}%', style: { fontSize: '12px', fontWeight: 'bold', color: 'black' } },
         plotBands: [
-          { from: 0, to: this.equityAllocationLowerLimit, color: '#CACFD2' },
-          { from: this.equityAllocationLowerLimit, to: this.equityAllocationUpperLimit, color: '#4790ff' },
-          { from: this.equityAllocationUpperLimit, to: 100, color: '#CACFD2' },]
+          { from: 0, to: data.equityAllocationLowerLimit, color: '#D9DEE1' },
+          { from: data.equityAllocationLowerLimit, to: data.equityAllocationUpperLimit, color: '#4790ff' },
+          { from: data.equityAllocationUpperLimit, to: 100, color: '#D9DEE1' },]
       },
       series: [{ name: 'Measure', pointWidth: 10, data: [0], type: undefined },
       { name: 'Target', type: 'scatter', }]
     });
   }
+
   guageFun(chartId) {
     this.gaugeOptions = {
       chart: {
@@ -224,6 +238,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     };
     this.container()
   }
+
   container() {
     var chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(this.gaugeOptions, {
       yAxis: {
@@ -245,7 +260,12 @@ export class OverviewRiskProfileComponent implements OnInit {
 
     }));
   }
-  checkState(item, i) {
+
+  checkState(item, i, choice) {
+    item.selectedChoiceId = choice.id;
+    item.weight = choice.weight;
+    item.done = false;
+    item.choice = choice.choice;
     if (this.statusArray.length > 0 && item.question) {
       this.statusArray.forEach(element => {
         this.checkFamilyMem = item.question.includes(element.question);
@@ -253,11 +273,9 @@ export class OverviewRiskProfileComponent implements OnInit {
       });
       if (this.checkFamilyMem == false && this.statusArray.length < 15) {
         this.statusArray.push(item)
-        this.progressBar = this.statusArray.length * 7
       }
     } else if (this.statusArray.length == 0) {
       this.statusArray.push(item)
-      this.progressBar = this.statusArray.length * 7
     }
     const index = item.id
     this.riskAssessmentQuestionList[index].done = true
@@ -283,6 +301,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   getRiskProfilRes(data, flag) {
     this.showButton = true
     this.isLoading = false
+    this.statusArray = [];
     console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
@@ -331,31 +350,36 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   submitRiskRes(data) {
     this.isLoading = false
-    this.showRisk = true;
+    this.showResults = true;
     setTimeout(() => {
-      this.guageFun('Gauge');
-      this.percentage('container1')
+      this.guageFun(data);
+      this.percentage(data)
     }, 300);
     if (data) {
-      console.log(data);
-      this.score = data.score;
       if (this.score <= 180) {
         this.scoreStatus = 'conservative'
-      } else if (this.score <= 290) {
+      } else if (data.score <= 290) {
         this.scoreStatus = 'Moderately conservative'
-      } else if (this.score <= 400) {
+      } else if (data.score <= 400) {
         this.scoreStatus = 'Moderate'
-      } else if (this.score <= 510) {
+      } else if (data.score <= 510) {
         this.scoreStatus = 'Moderately aggressive'
-      } else if (this.score <= 600) {
+      } else if (data.score <= 600) {
         this.scoreStatus = 'Aggressive'
       } else {
         this.scoreStatus = ''
       }
       this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
       this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
+
+      this.feedsRiskProfile = {
+        "riskAssessmentScore": data.score,
+        "riskProfileId": data.id,
+        "riskProfileStatus": data.riskProfileName,
+      }
     }
   }
+
   open(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
@@ -374,34 +398,81 @@ export class OverviewRiskProfileComponent implements OnInit {
       }
     );
   }
-  getResultData(data) {
-    console.log(data)
 
+  getResultData(data) {
     if (data != undefined) {
-      this.showRisk = false
+      this.showResults = false
       if (data.refreshRequired == false) {
-        this.reset(true);
+        this.reset();
       } else if (data.refreshRequired) {
         this.riskAssessmentQuestionList = data.refreshRequired
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-        this.progressBar = this.statusArray.length * 7
         this.showButton = false
+        this.showRetakeTestsButton = true;
       } else {
-        this.reset(true);
+        this.reset();
       }
     }
-    // this.riskAssessmentQuestionList.forEach(element => {
-    //   element.done = true
-    // });
   }
-  reset(flag) {
-    this.statusArray = []
-    this.progressBar = this.statusArray.length * 0
-    if (flag == true) {
-      this.getRiskProfileList(true);
+
+  reset() {
+    this.showRetakeTestsButton = false;
+    // this.statusArray = []
+    this.getRiskProfileList(true);
+    this.showResults = false;
+  }
+
+
+
+
+  loadGlobalRiskProfile() {
+    this.customerService.getGlobalRiskProfile({}).subscribe(res => {
+      if (res == null) {
+        this.globalRiskProfile = [];
+      } else {
+        this.globalRiskProfile = res;
+      }
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadRiskProfile() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.loaderFn.increaseCounter();
+    this.customerService.getRiskProfile(obj).subscribe(res => {
+      if (res) {
+        this.feedsRiskProfile = res[0];
+        this.showResults = true;
+      }
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+
+  riskProfileMaxScore(id) {
+    if (this.globalRiskProfile.length > 0) {
+      return this.globalRiskProfile.find(data => data.id == id).scoreUpperLimit;
+    } else {
+      return 0;
     }
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+
+  riskProfileDesc(id) {
+    if (this.globalRiskProfile.length > 0) {
+      return this.globalRiskProfile.find(data => data.id == id).description;
+    } else {
+      return '';
+    }
   }
 }

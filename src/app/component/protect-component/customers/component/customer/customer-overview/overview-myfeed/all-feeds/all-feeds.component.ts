@@ -468,6 +468,7 @@ export class AllFeedsComponent implements OnInit, OnDestroy {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
+    this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res == null) {
         this.riskProfile = [];

@@ -52,7 +52,7 @@ export class NscSchemeComponent implements OnInit {
       this.clientData = AuthService.getClientData()
     }
 
-  displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
+  displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'invested', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
 
 
   ngOnInit() {

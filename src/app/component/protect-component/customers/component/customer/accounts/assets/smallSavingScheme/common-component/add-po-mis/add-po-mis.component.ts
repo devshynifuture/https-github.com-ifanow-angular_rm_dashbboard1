@@ -54,7 +54,7 @@ export class AddPoMisComponent implements OnInit {
   familyMemberId: any;
   nominees: any;
   nomineesList: any[] = [];
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   pomisData: any;
   flag: any;
   callMethod:any;
@@ -64,7 +64,7 @@ export class AddPoMisComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
+  constructor(public utils: UtilService, private fb: FormBuilder, private dateFormatPipe: DatePipe, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
@@ -142,7 +142,9 @@ get getCoOwner() {
 }
 
 addNewCoOwner(data) {
-  this.pomisForm.controls["amtInvested"].setValue("");
+  if(!data){
+    this.pomisForm.controls["amtInvested"].setValue("");
+  }
   this.getCoOwner.push(this.fb.group({
     name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
@@ -265,6 +267,7 @@ addNewNominee(data) {
       poBranch: [data.postOfficeBranch],
       nominees: [data.nominees],
       accNumber: [(data.userBankMappingId)],
+      poMisNumber: [(data.poMisNumber)],
       description: [data.description],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
       getNomineeName: this.fb.array([this.fb.group({
@@ -362,8 +365,9 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
           ownerList: this.pomisForm.value.getCoOwnerName,
           // ownerName: (this.ownerName == undefined) ? this.pomisForm.controls.ownerName.value : this.ownerName.userName,
           amountInvested: this.pomisForm.controls.amtInvested.value,
-          commencementDate: this.pomisForm.controls.commencementdate.value,
+          commencementDate: this.dateFormatPipe.transform(this.pomisForm.controls.commencementdate.value, 'dd/MM/yyyy'),
           postOfficeBranch: this.pomisForm.controls.poBranch.value,
+          poMisNumber: this.pomisForm.controls.poMisNumber.value,
           bankAccountNumber: this.pomisForm.controls.accNumber.value,
           userBankMappingId: this.pomisForm.controls.accNumber.value,
           ownerTypeId: this.pomisForm.controls.ownershipType.value,

@@ -113,7 +113,8 @@ export class AddFamilyMemberComponent implements OnInit {
         arrayObj.push({
           advisorId: this.advisorId,
           isKycCompliant: 0,
-          taxStatusId: 0,
+          taxStatusId: 1,
+          residentFlag: 1,
           emailList: [
             {
               verificationStatus: 0,
