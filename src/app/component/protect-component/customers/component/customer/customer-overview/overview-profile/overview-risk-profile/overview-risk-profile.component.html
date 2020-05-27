@@ -40,11 +40,13 @@
                                     query_builder
                                 </i>
                             </div> -->
-                            <mat-icon *ngIf="!(item.selectedChoiceId || item.riskAssessmentChoice)"
-                                class="text-primary"> query_builder </mat-icon>
-                            <mat-icon *ngIf="(item.selectedChoiceId || item.riskAssessmentChoice)"
-                                class="text-success">check_circle_outline
-                            </mat-icon>
+                            <mat-panel-description>
+                                <mat-icon *ngIf="!(item.selectedChoiceId || item.riskAssessmentChoice)"
+                                    class="text-primary"> query_builder </mat-icon>
+                                <mat-icon *ngIf="(item.selectedChoiceId || item.riskAssessmentChoice)"
+                                    class="text-success">check_circle_outline
+                                </mat-icon>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
 
 
@@ -61,9 +63,9 @@
 
                     </mat-expansion-panel>
                 </mat-accordion>
-                <div class="mt-10 pl-20 pr-20">
+                <!-- <div class="mt-10 pl-20 pr-20">
                     {{item.choice}}{{item.riskAssessmentChoice}}
-                </div>
+                </div> -->
             </div>
             <div *ngIf="showErrorMsg" class="errorClass"> Please complete all questions for test result
             </div>
@@ -71,7 +73,7 @@
                 (click)="submitRiskAnalysis(item)">SUBMIT</button>
         </div>
         <div class="col-md-3 pr-0">
-            <div class="sticky-now">
+            <div class="sticky-risk-pofile">
                 <div class="row">
                     <div class="col-md-12 p-0 d-flex justify-content-between">
                         <button mat-flat-button class="b-a-custom text-primary" (click)="reset()" *ngIf="showRetakeTestsButton">Retake

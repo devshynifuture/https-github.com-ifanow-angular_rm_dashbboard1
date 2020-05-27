@@ -24,7 +24,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   public selection: string;
   sendRiskList: any;
   flag: boolean;
-  gaugeOptions:any;
+  gaugeOptions: any;
   advisorId: any;
   score;
   showResults = false;
@@ -39,7 +39,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   scoreStatus;
   equityAllocationLowerLimit;
   equityAllocationUpperLimit;
-  hasError:boolean = false;
+  hasError: boolean = false;
 
   clientRiskAssessmentResults;
 
@@ -51,8 +51,8 @@ export class OverviewRiskProfileComponent implements OnInit {
   showRetakeTestsButton: boolean = false;
   
   constructor(
-    private fb: FormBuilder, 
-    public planService: PlanService, 
+    private fb: FormBuilder,
+    public planService: PlanService,
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
     private subInjectService: SubscriptionInject,
@@ -152,9 +152,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         tickLength: 4,
         labels: { y: 10, format: '{value}%', style: { fontSize: '12px', fontWeight: 'bold', color: 'black' } },
         plotBands: [
-          { from: 0, to: data.equityAllocationLowerLimit, color: '#CACFD2' },
+          { from: 0, to: data.equityAllocationLowerLimit, color: '#D9DEE1' },
           { from: data.equityAllocationLowerLimit, to: data.equityAllocationUpperLimit, color: '#4790ff' },
-          { from: data.equityAllocationUpperLimit, to: 100, color: '#CACFD2' },]
+          { from: data.equityAllocationUpperLimit, to: 100, color: '#D9DEE1' },]
       },
       series: [{ name: 'Measure', pointWidth: 10, data: [0], type: undefined },
       { name: 'Target', type: 'scatter', }]
@@ -376,7 +376,7 @@ export class OverviewRiskProfileComponent implements OnInit {
 
       this.feedsRiskProfile = {
         "riskAssessmentScore": data.score,
-        "riskProfileId": data.riskProfileId || 4,
+        "riskProfileId": data.id,
         "riskProfileStatus": data.riskProfileName,
       }
     }
