@@ -64,7 +64,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   transactionTypeList: any;
   returnValue: any;
   selectedLoadData: any;
-  showDownload: boolean;
+  showDownload: boolean = false;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
               private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -372,6 +372,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
+        console.log('startTime ', new Date());
+        console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
         this.dataSource.data = (data.dataSourceData);
         // this.customDataSource.data = (data.customDataSourceData);

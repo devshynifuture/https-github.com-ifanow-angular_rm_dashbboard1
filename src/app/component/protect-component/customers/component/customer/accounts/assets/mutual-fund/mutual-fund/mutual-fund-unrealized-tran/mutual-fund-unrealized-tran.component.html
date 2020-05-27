@@ -512,7 +512,7 @@
         <!--      </div>-->
       </cdk-virtual-scroll-viewport>
 
-      <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
+      <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12"> No data found</h4>
       </div>
@@ -773,15 +773,14 @@
         {{item.transactionDate | date:'dd/MM/yyyy'}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
-        <span *ngIf="item.amount">{{item.amount}}</span></td>
+        <span>{{item.amount}}</span></td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
-                    <span
-                      *ngIf="item.transactionNav">{{item.transactionNav}}</span>
+        <span>{{item.transactionNav}}</span>
       </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-        <span *ngIf="item.unit">{{item.unit}}</span></td>
+        <span>{{item.unit}}</span></td>
       <td
         appFormatNumber
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;"> {{item.currentAmount}} </td>
@@ -796,7 +795,7 @@
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;"> {{item.currentAmount}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-        {{item.currentAmount - item.amount}} </td>
+        {{item.gain}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
         {{item.absReturn}} </td>
