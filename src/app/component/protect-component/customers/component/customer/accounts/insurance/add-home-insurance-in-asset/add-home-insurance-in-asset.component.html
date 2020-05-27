@@ -282,7 +282,7 @@
             </div>
             <div class="col-md-5 form-group ">
                 <mat-form-field>
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
@@ -294,7 +294,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field>
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10" formControlName="financierName" #financierName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="financierName" #financierName appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{financierName.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>

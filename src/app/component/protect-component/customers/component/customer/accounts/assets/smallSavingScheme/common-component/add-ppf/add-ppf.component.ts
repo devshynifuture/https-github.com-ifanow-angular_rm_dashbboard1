@@ -72,7 +72,7 @@ export class AddPpfComponent implements OnInit {
         { name: 'Deposit', value: 1 },
         { name: 'Withdrawal', value: 2 }
       ],
-      transactionHeader: ['Transaction Type', 'Date', 'Amount']
+      transactionHeader: ['Transaction type', 'Date', 'Amount']
     }
   adviceShowHeaderAndFooter: boolean = true;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };

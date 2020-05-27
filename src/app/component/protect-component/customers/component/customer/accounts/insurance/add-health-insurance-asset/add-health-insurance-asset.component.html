@@ -79,7 +79,7 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select #planDetails autocomplete="off" (selectionChange)="onChangeSetErrors($event.value,'planDetails')" class="form-control br-0" formControlName="planDetails" matInput>
+                        <mat-select #planDetails autocomplete="off" (selectionChange)="onChangeSetErrors($event.value,'planDetails');showDeductible()" class="form-control br-0" formControlName="planDetails" matInput>
                             <mat-option value='0'>Standard</mat-option>
                             <mat-option value='1'>Top up</mat-option>
                             <mat-option value='2'>Super top up</mat-option>
@@ -135,7 +135,7 @@
 
         <div class="row pt-40" *ngIf="planType.value =='8' || showSumAssured">
             <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-8">sum insured</h5>
+                <h5 class="m-0 pt-8">Sum insured</h5>
             </div>
             <div class="col-md-3">
                 <div class="form-group  iconRupess">

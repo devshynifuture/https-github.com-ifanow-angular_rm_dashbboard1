@@ -1059,7 +1059,7 @@ export class RightFilterComponent implements OnInit {
       this.amc.forEach(item => item.selected = true);
       this.scheme.forEach(item => item.selected = true);
       this.folio.forEach(item => item.selected = true);
-      this.transactionView.forEach(item => item.selected = true);
+      // this.transactionView.forEach(item => item.selected = true);
       this.category.forEach(item => item.selected = true);
 
     }else{
@@ -1067,7 +1067,7 @@ export class RightFilterComponent implements OnInit {
       this.amc.forEach(item => item.selected = false);
       this.scheme.forEach(item => item.selected = false);
       this.folio.forEach(item => item.selected = false);
-      this.transactionView.forEach(item => item.selected = false);
+      // this.transactionView.forEach(item => item.selected = false);
       this.category.forEach(item => item.selected = false);
       this.selectUnselctAllFlag = value.checked;
       this.showError ='filter'
