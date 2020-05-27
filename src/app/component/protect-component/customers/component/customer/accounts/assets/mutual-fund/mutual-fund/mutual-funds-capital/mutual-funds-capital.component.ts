@@ -72,6 +72,9 @@ export class MutualFundsCapitalComponent implements OnInit {
   toDate: Date;
   fromDate: Date;
   finalValue={};
+  GTReinvesment=0;
+  GTdividendPayout=0;
+  GTdividendReinvestment=0;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -245,7 +248,11 @@ export class MutualFundsCapitalComponent implements OnInit {
     if (data) {
       let filterObj = []
       this.totalReinvesment = 0;
+      let flag = false;
       let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
+      if(this.rightFilterData){
+        mutualFund = this.MfServiceService.filterArray(mutualFund , 'familyMemberId', this.rightFilterData.family_member_list, 'id');
+      }
       mutualFund.forEach(element => {
        if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
@@ -263,16 +270,28 @@ export class MutualFundsCapitalComponent implements OnInit {
                 this.totaldividendReinvestment += ((ele.dividendReinvestment) ? ele.dividendReinvestment : 0);
               
               }
+              flag = true;
+           
             }
+
           });
-          const obj={
-            schemeName :element.schemeName,
-            folioNumber:element.folioNumber,
-            dividendPayout:this.totaldividendPayout,
-            dividendReinvestment:this.totaldividendReinvestment,
-            totalReinvesment:this.totalReinvesment
+          if(flag){
+            const obj={
+              schemeName :element.schemeName,
+              folioNumber:element.folioNumber,
+              dividendPayout:this.totaldividendPayout,
+              dividendReinvestment:this.totaldividendReinvestment,
+              totalReinvesment:this.totalReinvesment
+            }
+            filterObj.push(obj);  
+            this.GTReinvesment+= (this.totalReinvesment) ? this.totalReinvesment : 0;
+            this.GTdividendPayout+=(this.totaldividendPayout) ? this.totaldividendPayout  :0;
+            this.GTdividendReinvestment+=(this.totaldividendReinvestment) ? this.totaldividendReinvestment : 0;
+            this.totalReinvesment=0;
+            this.totaldividendPayout=0;
+            this.totaldividendReinvestment=0;
           }
-          filterObj.push(obj);
+
         } 
       });
       return filterObj;
@@ -280,9 +299,15 @@ export class MutualFundsCapitalComponent implements OnInit {
   }
   filterCategoryWise(data, category) {
     if (data) {
+      this.GTReinvesment=0;
+      this.GTdividendPayout=0;
+      this.GTdividendReinvestment= 0;
       this.finalValue;
       let fiterArray=[];
       this.mfList = this.MfServiceService.filter(data, 'mutualFund');
+      if(this.rightFilterData){
+        this.mfList  = this.MfServiceService.filterArray( this.mfList , 'familyMemberId', this.rightFilterData.family_member_list, 'id');
+      }
       this.mfList.forEach(element => {
         if (element.redemptionTransactions) {
           element.redemptionTransactions.forEach(ele => {

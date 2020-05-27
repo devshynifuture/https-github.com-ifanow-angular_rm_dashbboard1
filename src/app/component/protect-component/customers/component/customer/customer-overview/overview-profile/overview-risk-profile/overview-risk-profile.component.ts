@@ -1,28 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import more from 'highcharts/highcharts-more';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../../plan/plan.service';
 import { HistoryRiskProfileComponent } from '../../../plan/profile-plan/history-risk-profile/history-risk-profile.component';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 more(Highcharts);
 
 @Component({
   selector: 'app-overview-risk-profile',
   templateUrl: './overview-risk-profile.component.html',
-  styleUrls: ['./overview-risk-profile.component.scss']
+  styleUrls: ['./overview-risk-profile.component.scss'],
+  providers: [LoaderFunction]
 })
 export class OverviewRiskProfileComponent implements OnInit {
-  [x: string]: any;
-
   riskAssessments: any;
   riskAssessmentQuestionList: any;
   riskProfile: any;
   public selection: string;
   sendRiskList: any;
   flag: boolean;
+  gaugeOptions:any;
   advisorId: any;
   score;
   showRisk = false;
@@ -37,23 +39,33 @@ export class OverviewRiskProfileComponent implements OnInit {
   progressBar;
   scoreStatus;
   equityAllocationLowerLimit;
+  equityAllocationUpperLimit;
+  hasError:boolean = false;
 
   clientRiskAssessmentResults;
-  ClickMe(referenceKeyName) {
-    alert(referenceKeyName.id);
-  }
-  onClick(referenceKeyName1) {
-    alert(referenceKeyName1.id);
-  }
-  constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
+
+  globalRiskProfile:any;
+  feedsRiskProfile:any;
+  clientId;
+  count:number = 0;
+  
+  constructor(
+    private fb: FormBuilder, 
+    public planService: PlanService, 
+    private customerService: CustomerService,
+    public loaderFn: LoaderFunction,
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService
+  ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
   }
 
   ngOnInit() {
     this.getRiskProfileList(true);
     this.getdataForm('');
+    this.loadGlobalRiskProfile();
+    this.loadRiskProfile();
     this.sendRiskList = [];
     // this.progressBar = [];
     this.statusArray = [];
@@ -63,7 +75,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.count = 0
   }
 
-  percentage(chartId) {
+  percentage(data) {
     Highcharts.setOptions({
       chart: {
         type: 'bar',
@@ -124,9 +136,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         }
       }
     });
-    this.callFun()
+    this.callFun(data)
   }
-  callFun() {
+  callFun(data) {
     var chart1 = new Highcharts.Chart({
 
       chart: { renderTo: 'container1' },
@@ -139,14 +151,15 @@ export class OverviewRiskProfileComponent implements OnInit {
         tickLength: 4,
         labels: { y: 10, format: '{value}%', style: { fontSize: '12px', fontWeight: 'bold', color: 'black' } },
         plotBands: [
-          { from: 0, to: this.equityAllocationLowerLimit, color: '#CACFD2' },
-          { from: this.equityAllocationLowerLimit, to: this.equityAllocationUpperLimit, color: '#4790ff' },
-          { from: this.equityAllocationUpperLimit, to: 100, color: '#CACFD2' },]
+          { from: 0, to: data.equityAllocationLowerLimit, color: '#CACFD2' },
+          { from: data.equityAllocationLowerLimit, to: data.equityAllocationUpperLimit, color: '#4790ff' },
+          { from: data.equityAllocationUpperLimit, to: 100, color: '#CACFD2' },]
       },
       series: [{ name: 'Measure', pointWidth: 10, data: [0], type: undefined },
       { name: 'Target', type: 'scatter', }]
     });
   }
+
   guageFun(chartId) {
     this.gaugeOptions = {
       chart: {
@@ -333,8 +346,8 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.isLoading = false
     this.showRisk = true;
     setTimeout(() => {
-      this.guageFun('Gauge');
-      this.percentage('container1')
+      this.guageFun(data);
+      this.percentage(data)
     }, 300);
     if (data) {
       console.log(data);
@@ -356,6 +369,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
     }
   }
+
   open(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
@@ -374,6 +388,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       }
     );
   }
+
   getResultData(data) {
     console.log(data)
 
@@ -394,6 +409,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     //   element.done = true
     // });
   }
+
   reset(flag) {
     this.statusArray = []
     this.progressBar = this.statusArray.length * 0
@@ -401,7 +417,42 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.getRiskProfileList(true);
     }
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+
+
+
+
+  loadGlobalRiskProfile() {
+    this.customerService.getGlobalRiskProfile({}).subscribe(res => {
+      if (res == null) {
+        this.globalRiskProfile = [];
+      } else {
+        this.globalRiskProfile = res;
+      }
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadRiskProfile() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.loaderFn.increaseCounter();
+    this.customerService.getRiskProfile(obj).subscribe(res => {
+      if (res == null) {
+        this.feedsRiskProfile = [];
+      } else {
+        this.feedsRiskProfile = res;
+      }
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
 }

@@ -1,4 +1,12 @@
-.pe-none
-{
- pointer-events: none;
+.pe-none {
+    pointer-events: none;
+}
+
+.dashedClass {
+    border: 1px dashed #BCC6CA;
+    height: 420px;
+    padding: 20px;
+    p {
+        color: #484848;
+    }
 }

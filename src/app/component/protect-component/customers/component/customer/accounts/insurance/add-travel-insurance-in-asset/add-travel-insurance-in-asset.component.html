@@ -113,10 +113,10 @@
             </div>
 
             <div class="col-md-3 pr-0" *ngIf="planDetails.value == ''  || planDetails.value !='1' && showinsuredMemberSum">
-                <div class="form-group  iconRupess">
+                <div class="form-group  iconDollar">
                     <h5 class="mb-8 f-14">Sum insured </h5>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="sumAssured" #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                        <input matInput type="number" formControlName="sumAssured" #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control dollar br-0">
                         <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/10</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
