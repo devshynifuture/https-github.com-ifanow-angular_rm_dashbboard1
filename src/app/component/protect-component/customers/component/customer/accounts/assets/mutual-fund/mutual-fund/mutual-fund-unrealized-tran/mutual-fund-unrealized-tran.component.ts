@@ -360,12 +360,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    this.fragmentData.isSpinner = true;
-    const rows = this.tableEl._elementRef.nativeElement.rows;
-    const data = this.excel.generateExcel(rows, tableTitle);
-    if (data) {
-      this.fragmentData.isSpinner = false;
-    }
+    var blob = new Blob([document.getElementById('template').innerHTML], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+  });
+  saveAs(blob, tableTitle+".xls");
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
   }
 
   mfSchemes() {// get last mf list
