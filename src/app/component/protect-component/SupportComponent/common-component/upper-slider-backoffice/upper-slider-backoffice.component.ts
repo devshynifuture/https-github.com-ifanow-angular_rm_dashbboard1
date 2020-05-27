@@ -37,7 +37,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isLoading: boolean = false;
   aumList: any;
   mutualFundIds: any[] = [];
-  advisorId;
+  advisorId = AuthService.getAdvisorId();
 
   rtId: any;
   didAumReportListGot: boolean = false;
@@ -182,6 +182,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
       parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
       isParent,
     }
+
+    console.log(data);
     // 
     this.supportService.getAumReconListGetValues(data)
       .subscribe(res => {

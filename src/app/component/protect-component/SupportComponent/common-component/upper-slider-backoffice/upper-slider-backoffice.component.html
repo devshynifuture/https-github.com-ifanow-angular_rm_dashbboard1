@@ -46,7 +46,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                    <div class="col-md-12 p-0 overflow-hidden"
+                        [ngClass]="{'back-office-table': dataSource.data !== null}">
                         <!-- summary table -->
                         <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading
                             [appSkeletonLoading]="isLoading">
@@ -164,7 +165,8 @@
                         </p>
                     </div>
 
-                    <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                    <div class="col-md-12 p-0 overflow-hidden"
+                        [ngClass]="{'back-office-table': dataSource1.data !== null}">
                         <!-- manual recon all folio -->
                         <div *ngIf="subTabState == 1">
 
@@ -346,7 +348,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 overflow-hidden back-office-table">
+                    <div class="col-md-12 overflow-hidden" [ngClass]="{'back-office-table': dataSource3.data !== null}">
                         <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8">
 
                             <!-- Symbol Column -->
