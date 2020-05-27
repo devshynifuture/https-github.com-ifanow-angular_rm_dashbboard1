@@ -21,6 +21,8 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 export class MutualFundUnrealizedTranComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
+  displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+    'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal', 'xirrTotal', 'iconsTotal'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
     'gain', 'absReturn', 'xirr', 'allocation'];
   // subCategoryData: any[];
@@ -86,6 +88,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (this.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
+      this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+        'unitsTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal',
+        'xirrTotal'];
+
     } else {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
@@ -126,6 +132,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
+          this.displayedColumnsTotal = [];
           data.forEach(element => {
             if (element.clientId == 0) {
               const obj = {
@@ -150,6 +157,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           transactionView.forEach(element => {
             if (element.selected == true) {
               this.displayedColumns.push(element.displayName);
+              this.displayedColumnsTotal.push(element.displayName + 'Total');
             }
           });
 
@@ -369,12 +377,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    this.fragmentData.isSpinner = true;
-    const rows = this.tableEl._elementRef.nativeElement.rows;
-    const data = this.excel.generateExcel(rows, tableTitle);
-    if (data) {
-      this.fragmentData.isSpinner = false;
-    }
+    var blob = new Blob([document.getElementById('template').innerHTML], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+  });
+  saveAs(blob, tableTitle+".xls");
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
   }
 
   mfSchemes() {// get last mf list
@@ -611,6 +620,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     );
   }
 
+  isTotal = (index, item) => item.total == 'Total';
   isGroup = (index, item) => item.groupName;// group category wise
   //   return item.groupName;
   // }
