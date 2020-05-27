@@ -49,6 +49,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   canExportExcelSheet = 'false';
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   upperHeaderName;
+  isRmLogin: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -172,12 +173,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getBackofficeAumReconListSummary(doStartRecon) {
+    this.isRmLogin = AuthService.getUserInfo().isRmLogin;
+    let isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
     const data = {
       advisorIds: [...this.adminAdvisorIds],
       brokerId: this.brokerId,
       rt: this.data.rtId,
       parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
-      isParent: (this.parentId === this.advisorId) ? true : false
+      isParent,
     }
     // 
     this.supportService.getAumReconListGetValues(data)
