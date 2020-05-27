@@ -673,8 +673,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   generatePdf() {
     this.showDownload = true;
     this.fragmentData.isSpinner = true;
-    const para = document.getElementById('template');
+    setTimeout(() => {
+      const para = document.getElementById('template');
     this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData,'','');
+    }, 200);
+   
     // if(data){
     //   this.isSpinner = false;
     // }
