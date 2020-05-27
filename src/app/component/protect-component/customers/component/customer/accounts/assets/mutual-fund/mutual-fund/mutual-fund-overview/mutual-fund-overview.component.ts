@@ -86,6 +86,7 @@ export class MutualFundOverviewComponent implements OnInit {
   changeViewModeValue: boolean = false;
   svg: string;
   chart: Highcharts.Chart;
+  reponseData: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -230,6 +231,7 @@ export class MutualFundOverviewComponent implements OnInit {
         mutualFundList: mutualFund,
         mutualFund: this.mutualFund,
         type: '',
+        showFolio:(this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
       };
       // Create a new
@@ -744,6 +746,7 @@ export class MutualFundOverviewComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
+            this.reponseData = this.mfService.doFiltering(this.rightFilterData.mfData)
             this.getMutualFundResponse(this.rightFilterData.mfData);
             this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
             if(this.rightFilterData){

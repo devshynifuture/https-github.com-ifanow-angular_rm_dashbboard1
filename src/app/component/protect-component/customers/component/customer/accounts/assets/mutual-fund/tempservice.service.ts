@@ -2,7 +2,7 @@ export class TempserviceService {
 
   // decimalPipe = new DecimalPipe('en-IN');
 
-  subCatArrayForSummary = (mutualFundList, type, allData) => {
+  subCatArrayForSummary = (mutualFundList, type, allData,folio) => {
     let reportType;
     let array = [];
     let sortedData = [];
@@ -20,7 +20,7 @@ export class TempserviceService {
         (reportType == 'ownerName') ? filteredArray.push({groupName: key, pan: catObj[key][0].pan}) : filteredArray.push({groupName: key});
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
-          if (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) {
+          if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0): (singleData.balanceUnit < 0 || singleData.balanceUnit ==0 || singleData.balanceUnit > 0)) {
             array.push(singleData);
             totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
             const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
@@ -88,7 +88,7 @@ export class TempserviceService {
     return obj;
   }
 
-  getCategoryForTransaction(mutualFundList, type, allData) { // first table category wise
+  getCategoryForTransaction(mutualFundList, type, allData,folio) { // first table category wise
     const isSummaryTabValues = true;
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
@@ -105,7 +105,7 @@ export class TempserviceService {
     Object.keys(catObj).map(key => {
       let totalObj: any = {};
       catObj[key].forEach((singleData) => {
-        if (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) {
+        if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0): (singleData.balanceUnit < 0 || singleData.balanceUnit ==0 || singleData.balanceUnit > 0)) {
           // this.totalObj = this.this.getEachTotalValue(singleData);
           totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, {total: true});
           totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
@@ -130,7 +130,7 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type, nav, allData, trnType, viewMode) {
+  getSubCategoryArrayForTransaction(mutualFundList, type, nav, allData, trnType, viewMode,folio) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
@@ -152,7 +152,7 @@ export class TempserviceService {
 
       }
       catObj[key].forEach((singleData) => {
-        if (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) {
+        if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0): (singleData.balanceUnit < 0 || singleData.balanceUnit ==0 || singleData.balanceUnit > 0)) {
           if (viewMode == 'All Transactions') {
             if (trnType) {
               totalObj = {};
@@ -227,7 +227,7 @@ export class TempserviceService {
         }
       });
     });
-    return (filterData.length > 0) ? filterData : data;
+    return filterData;
   }
 
   getFinalTotalValue(data) { // grand total values

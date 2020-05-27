@@ -127,7 +127,7 @@
           </table>
         </div>
       </div>
-      <div class="col-md-2 pl-0 text-center pt-48">
+      <div class="col-md-2 pl-0 text-center pt-48" *ngIf="data.rtMasterId == 14">
         <button mat-button class="btn-black br-0" (click)="openMutualFund('addTransaction',null)">ADD
           TRANSACTION</button>
         <p class="m-0 text-primitive pt-12">you can add transactions to this folio manually too. </p>

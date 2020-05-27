@@ -465,9 +465,14 @@
                                             Transaction
                                         </button>
                                     </div>
-                                    <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
+                                    <div [matTooltipDisabled]="element.rtMasterId === 14" [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
+                                        <button  (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtMasterId !== 14" mat-menu-item>Delete
+                                            Transaction
+                                        </button>
+                                    </div>
+                                    <!-- <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
                                         Transaction
-                                    </button>
+                                    </button> -->
 
                                 </mat-menu>
                             </div>
