@@ -36,7 +36,7 @@ export class AddMandateComponent implements OnInit {
   detailsIIN: any;
   showMandateTable = false;
   selectedMandate: any;
-  customValue: any;
+  customValue: any = 2;
   toDate: any;
   formDate: Date;
   isLoading;
@@ -53,11 +53,11 @@ export class AddMandateComponent implements OnInit {
   currentDate = new Date();
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTrasaction: ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe,
-    public utils: UtilService,
-    private onlineTransact: OnlineTransactionService, public eventService: EventService,
-    private enumDataService: EnumDataService) {
+              private processTrasaction: ProcessTransactionService,
+              private custumService: CustomerService, private datePipe: DatePipe,
+              public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, public eventService: EventService,
+              private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -72,7 +72,7 @@ export class AddMandateComponent implements OnInit {
           if (state) {
             let list = this.enumDataService.getClientAndFamilyData(state);
             if (list.length == 0) {
-              this.generalDetails.controls.ownerName.setErrors({ invalid: true });
+              this.generalDetails.controls.ownerName.setErrors({invalid: true});
             }
             return this.enumDataService.getClientAndFamilyData(state);
           } else {
@@ -83,7 +83,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   closeRightSlider(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
   close() {
@@ -141,7 +141,7 @@ export class AddMandateComponent implements OnInit {
       fromDate: [fromDate, [Validators.required]],
       toDate: [endDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(100)]],
-      selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
+      selectDateOption: [this.customValue, [Validators.required]],
     });
   }
 
@@ -291,13 +291,13 @@ export class AddMandateComponent implements OnInit {
     }
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.toDate = new Date(this.generalDetails.controls.toDate.value);
-    Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
-    Object.assign(this.selectedMandate, { clientCode: this.detailsIIN.clientCode });
-    Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
-    Object.assign(this.selectedMandate, { toDate: (this.toDate).getTime() });
-    Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
-    Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
-    Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
+    Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
+    Object.assign(this.selectedMandate, {clientCode: this.detailsIIN.clientCode});
+    Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
+    Object.assign(this.selectedMandate, {toDate: (this.toDate).getTime()});
+    Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
+    Object.assign(this.selectedMandate, {tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId});
+    Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
         this.eventService.openSnackBar(error, 'Dismiss');
