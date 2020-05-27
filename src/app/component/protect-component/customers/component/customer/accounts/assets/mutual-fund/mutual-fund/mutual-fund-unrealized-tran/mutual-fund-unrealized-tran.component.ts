@@ -1,5 +1,5 @@
 import {AuthService} from './../../../../../../../../../../auth-service/authService';
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MatDialog, MatTableDataSource} from '@angular/material';
@@ -16,7 +16,9 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
   templateUrl: './mutual-fund-unrealized-tran.component.html',
-  styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
+  styleUrls: ['./mutual-fund-unrealized-tran.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class MutualFundUnrealizedTranComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
@@ -63,8 +65,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   selectedLoadData: any;
   showDownload: boolean;
 
-  constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
+  constructor(public dialog: MatDialog, private datePipe: DatePipe,
+              private subInjectService: SubscriptionInject, private utilService: UtilService,
+              private mfService: MfServiceService, private excel: ExcelGenService,
+              private custumService: CustomerService, private eventService: EventService,
+              private changeDetectorRef: ChangeDetectorRef) {
   }
 
   mutualFund;
@@ -226,6 +231,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.changeInput.emit(false);
       this.customDataSource.data = [];
       this.customDataHolder = [];
+      this.changeDetectorRef.detectChanges();
     }
   }
 
@@ -336,6 +342,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.customDataHolder = [];
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
+        this.changeDetectorRef.detectChanges();
       }
     );
   }
@@ -369,6 +376,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
+        this.changeDetectorRef.detectChanges();
       };
       worker.postMessage(input);
     } else {
@@ -616,7 +624,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             // this.rightFilterData.reportType, this.mfService);
             // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
-
+            this.changeDetectorRef.detectChanges();
           }
           rightSideDataSub.unsubscribe();
         }

@@ -191,8 +191,10 @@
 
   <div class="row secoundTable">
     <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-      <div *ngIf="customDataSource.data.length>0" class="wrapper">
-        <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="customDataSource" appSkeletonLoading
+      <!--      <cdk-virtual-scroll-viewport tvsItemSize class="wrapper" *ngIf="customDataSource.data.length>0">-->
+
+      <!--      <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
+      <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="customDataSource" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table
                matSort>
           <ng-container matColumnDef="no" sticky>
@@ -507,7 +509,8 @@
           <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
 
         </table>
-      </div>
+      <!--      </div>-->
+      <!--      </cdk-virtual-scroll-viewport>-->
 
       <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
