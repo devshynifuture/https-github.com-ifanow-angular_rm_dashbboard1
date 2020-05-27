@@ -80,6 +80,7 @@ export class IfasDetailsComponent implements OnInit {
 
   }
   @Input() set data(data) {
+    console.log("this is admin ifas data::::", data)
     this.ifasData = data;
   }
 

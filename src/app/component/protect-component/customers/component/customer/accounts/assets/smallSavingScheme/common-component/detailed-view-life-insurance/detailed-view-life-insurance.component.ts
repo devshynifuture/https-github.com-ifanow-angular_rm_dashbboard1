@@ -19,7 +19,7 @@ export class DetailedViewLifeInsuranceComponent implements OnInit {
   set data(inputData) {
     this._data = inputData.data;
     this.insuranceSubTypeId =this._data.insuranceSubTypeId;
-    this.showInsurance =(this._data.insuranceSubTypeId == '1') ? 'Term' : (this._data.insuranceSubTypeId == '2') ? 'Traditional' : (this._data.insuranceSubTypeId == '2') ?'ULIP' : 'Life';
+    this.showInsurance =(this._data.insuranceSubTypeId == '1') ? 'Term' : (this._data.insuranceSubTypeId == '2') ? 'Traditional' : (this._data.insuranceSubTypeId == '3') ?'ULIP' : 'Life';
     console.log('AddLiabilitiesCompon.insuranceSubTypeIdent.insuranceSubTypeId Input data : ', this._data);
     this.nominee = this._data.nominees;
     this.cashFlowList = this._data.insuranceCashflowList

@@ -282,6 +282,13 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
 
     }
+    showDeductible(){
+        if(this.healthInsuranceForm.get('planDetails').value == '1' || this.healthInsuranceForm.get('planDetails').value == '2'){
+            this.showDeductibleSum = true;
+        }else{
+            this.showDeductibleSum = false;
+        }
+    }
     onChangeSetErrorsType(value, formName) {
         if (value == 8) {
             this.showSumAssured = true

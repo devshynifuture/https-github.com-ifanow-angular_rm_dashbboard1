@@ -66,9 +66,12 @@
                         [placeholder]="formPlaceHolders.ENTER_ARN_RIA_NUMBER"
                         class="form-control br-0 inputBorderTransparent" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" maxlength="{{maxArnLength}}">
-                    <mat-hint *ngIf="arnRiaFG.get('arnOrRia').value == 1 || arnRiaFG.get('arnOrRia').value == 2" align="end">{{arnRiaFG.get('number').value.length}}/{{maxArnLength}}</mat-hint>
+                    <mat-hint *ngIf="arnRiaFG.get('arnOrRia').value == 1 || arnRiaFG.get('arnOrRia').value == 2"
+                        align="end">{{arnRiaFG.get('number').value.length}}/{{maxArnLength}}</mat-hint>
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.get('number').errors?.pattern || arnRiaFG.get('number').errors?.maxlength || arnRiaFG.get('number').errors?.minlength">Please enter valid number</mat-error>
+                    <mat-error
+                        *ngIf="arnRiaFG.get('number').errors?.pattern || arnRiaFG.get('number').errors?.maxlength || arnRiaFG.get('number').errors?.minlength">
+                        Please enter valid number</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -108,14 +111,15 @@
         </div>
     </div>
     <div class="row pt-28">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">Commencement date</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">Commencement date</h5>
         </div>
         <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
+            <div class="form-group mb-0 commencement-date">
+                <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
                     <input class="form-control b-0" formControlName="commencementDate" (focus)="picker.open()" matInput
-                        [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
+                        [matDatepicker]="picker" [max]="yesterdaysDate" readonly placeholder="Enter date
+                        ">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-hint>Optional</mat-hint>
@@ -134,14 +138,15 @@
         </div>
     </div>
     <div class="row pt-40">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">Renewal date</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">Renewal date</h5>
         </div>
         <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
+            <div class="form-group mb-0 renewal-date">
+                <mat-form-field class="ba-date" appearance="standard" floatLabel="never">
                     <input class="form-control b-0" formControlName="renewalDate" matInput (focus)="picker1.open()"
-                        [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
+                        [matDatepicker]="picker1" [min]="tomrrowsDate" readonly placeholder="Enter date
+                        ">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-hint>Optional</mat-hint>
@@ -162,8 +167,8 @@
 
     </div>
     <div class="row pt-40">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-20">Registered email</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">Registered email</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group p-0">
@@ -179,8 +184,8 @@
         </div>
     </div>
     <div class="row pt-28">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-20">Registered PAN</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">Registered PAN</h5>
         </div>
         <div class="col-md-3 pr-0">
             <div class="form-group p-0">
@@ -200,8 +205,8 @@
         </div>
     </div>
     <div class="row pt-28 pb-44">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">Registered address</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">Registered address</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group p-0">
@@ -219,12 +224,12 @@
         </div>
     </div>
     <div class="row pt-90">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">GST Treatment</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">GST Treatment</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
-                <mat-form-field>
+            <div class="form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="gstApplicableId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
                         <mat-option [value]="gst_applicable_list.id"
@@ -236,13 +241,13 @@
             </div>
         </div>
     </div>
-    <div class="row pt-40" [hidden]="arnRiaFG.get('gstApplicableId').value != 1">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">GST Number</h5>
+    <div class="row pt-28" [hidden]="arnRiaFG.get('gstApplicableId').value != 1">
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">GST Number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
-                <mat-form-field>
+            <div class="form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
                     <input matInput type="text" [placeholder]="formPlaceHolders.ENTER_GST" formControlName="gstNumber"
                         class="form-control br-0" maxlength="15">
                     <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.required">This field is required</mat-error>
@@ -255,8 +260,8 @@
         </div>
     </div>
     <div class="row pt-40 pb-90">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">Data upload</h5>
+        <div class="col-md-4 pr-0 full-end">
+            <h5 class="m-0 text-right">Data upload</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">

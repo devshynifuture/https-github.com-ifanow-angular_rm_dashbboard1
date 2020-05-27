@@ -15,7 +15,6 @@ import { UtilService } from 'src/app/services/util.service';
 export class ReconKarvyComponent implements OnInit {
   adminAdvisorIds: any[] = [];
   adminId = AuthService.getAdminId();
-  parentId = AuthService.getParentId();
 
 
   constructor(
@@ -27,6 +26,7 @@ export class ReconKarvyComponent implements OnInit {
   brokerList: any[] = [];
   dataSource;
   advisorId = AuthService.getAdvisorId();
+  parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   isLoading: boolean = false;
   isBrokerSelected: boolean = false;
   selectBrokerForm = this.fb.group({
@@ -77,7 +77,8 @@ export class ReconKarvyComponent implements OnInit {
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,
-        parentId: this.adminId == 0 ? this.advisorId : this.parentId
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId,
+        isParent: (this.parentId === this.advisorId) ? true : false
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {

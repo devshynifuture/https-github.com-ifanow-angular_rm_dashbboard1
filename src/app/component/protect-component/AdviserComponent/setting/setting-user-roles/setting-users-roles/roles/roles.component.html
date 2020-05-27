@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 d-flex align-items-center p-0">
-        <h4 class="mb-8 text-black">Roles Types</h4>
+        <h4 class="mb-0 text-black">Roles types</h4>
     </div>
     <div class="col-md-6 text-right p-0" *ngIf="!hasError">
         <button [matMenuTriggerFor]="menu" class="btn-primary" mat-stroked-button>
@@ -157,7 +157,7 @@
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
-<div *ngIf="!hasData && !utilService.isLoading" class="d-flex flex-column align-items-center">
+<div *ngIf="!hasData && !utilService.isLoading && !hasError" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No ARN/RIA details found</h4>
+    <h4 class="text-center pt-12">No data found</h4>
 </div>

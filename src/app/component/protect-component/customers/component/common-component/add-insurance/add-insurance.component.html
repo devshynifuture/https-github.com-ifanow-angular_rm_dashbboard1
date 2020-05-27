@@ -85,7 +85,7 @@
             <div class="col-md-5">
                 <div class="form-group ">
                     <mat-form-field floatLabel="never" appearance="standard" class="example-full-width">
-                        <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
+                        <input matInput class="form-control br-0" [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
                                 {{option.policyName}}

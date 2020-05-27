@@ -35,6 +35,7 @@ export class InsuranceComponent implements OnInit {
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
 
+  showTabs = true;
   dataSource1;
   isLoading = false;
   advisorId: any;
@@ -73,7 +74,7 @@ export class InsuranceComponent implements OnInit {
   @ViewChild('generalInsurance', { static: false }) generalInsurance: ElementRef;
   lifeInsuranceCount: any;
   generalInsuranceCount: any;
-  showType = 'Plan Type';
+  showType = 'Plan type';
   showPolicyHolder = 'Name of policy holder';
   generalInsuranceDataFilter: any;
   lifeInsuranceFilter: any;
@@ -345,7 +346,7 @@ export class InsuranceComponent implements OnInit {
   getStatusId(data) {
     data.forEach(obj => {
       if (obj.policyExpiryDate < new Date()) {
-        obj.statusId = 'MATURED';
+        obj.statusId = (this.insuranceTypeId == 1) ? 'MATURED' : 'EXPIRED';
       } else {
         obj.statusId = 'LIVE';
       }
@@ -391,7 +392,7 @@ export class InsuranceComponent implements OnInit {
             if (element.policyTypeId) {
               if (ele.id == element.policyTypeId) {
                 element.policyType = ele.policy_type
-                this.showType = 'Plan Type'
+                this.showType = 'Plan type'
               }
             } else {
               this.showType = 'PlanName'
@@ -407,11 +408,15 @@ export class InsuranceComponent implements OnInit {
         //   });
         //   element.sumAssured = this.sumAssured
         // } else 
+        this.sumAssured=0;
         if (element.policyFeatures.length > 0) {
           element.policyFeatures.forEach(ele => {
             this.sumAssured += ele.featureSumInsured
           });
           element.sumAssured = this.sumAssured
+          if(element.sumAssured == 0) {
+            element.sumAssured = element.sumInsuredIdv
+          }
         } else {
           element.sumAssured = element.sumInsuredIdv
         }

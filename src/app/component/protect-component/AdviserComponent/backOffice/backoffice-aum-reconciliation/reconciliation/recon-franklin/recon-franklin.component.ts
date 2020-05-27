@@ -15,7 +15,6 @@ import { UtilService } from 'src/app/services/util.service';
 export class ReconFranklinComponent implements OnInit {
   adminAdvisorIds: any[] = [];
   adminId: number = AuthService.getAdminId();
-  parentId = AuthService.getParentId();
 
   constructor(
     private reconService: ReconciliationService,
@@ -26,6 +25,7 @@ export class ReconFranklinComponent implements OnInit {
   brokerList: any[] = [];
   dataSource;
   advisorId = AuthService.getAdvisorId();
+  parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   isBrokerSelected: boolean = false;
   isLoading: boolean = false;
   selectBrokerForm = this.fb.group({
@@ -73,7 +73,8 @@ export class ReconFranklinComponent implements OnInit {
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,
-        parentId: this.adminId == 0 ? this.advisorId : this.parentId
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId,
+        isParent: (this.parentId === this.advisorId) ? true : false
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {

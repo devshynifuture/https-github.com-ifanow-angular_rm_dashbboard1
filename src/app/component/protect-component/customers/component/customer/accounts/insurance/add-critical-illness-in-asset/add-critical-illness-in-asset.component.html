@@ -267,7 +267,7 @@
             </div>
         </div>
 
-        <div class="row pt-28">
+        <!-- <div class="row pt-28">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-32">Additional covers</h5>
             </div>
@@ -276,8 +276,6 @@
                 <h5 class="mb-8 f-14">Add-ons</h5>
                 <mat-form-field>
                     <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                        <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                            {{option.add_on}}</mat-option> -->
                         <mat-option value='12'>Personal accident</mat-option>
                         <mat-option value='13'>Critical illness
                         </mat-option>
@@ -296,7 +294,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div>
+        </div> -->
 
         <div class="row pt-28">
             <div class="col-md-4 pr-0 text-right">
@@ -371,7 +369,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{tpaName.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
@@ -384,7 +382,7 @@
             <div class="col-md-5 form-group">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
                         <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
@@ -399,7 +397,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>

@@ -28,7 +28,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   holdingList: any[];
   nomineeDetails: any;
   inputData: any;
-  allData: any;
   nomineeList: any;
   holderList: any;
   bankDetailList: any;
@@ -45,7 +44,6 @@ export class NomineeDetailsIinComponent implements OnInit {
   changedValue: string;
   doneData: any;
   familyMemberList: any;
-  clientData: any;
   advisorId: any;
   nomineeFmList: any;
   addressList: any;
@@ -57,18 +55,17 @@ export class NomineeDetailsIinComponent implements OnInit {
   activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private onlineTransact: OnlineTransactionService, private postalService: PostalService,
-    private processTransaction: ProcessTransactionService, private custumService: CustomerService,
-    private peopleService: PeopleService,
-    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+              private onlineTransact: OnlineTransactionService, private postalService: PostalService,
+              private processTransaction: ProcessTransactionService, private custumService: CustomerService,
+              private peopleService: PeopleService,
+              private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   @Input()
   set data(data) {
     this.inputData = data;
-    this.clientData = data.clientData;
-    this.allData = data;
+    console.log('Data in nominee detail : ', data);
     this.doneData = {};
     this.doneData.bank = true;
     this.doneData.contact = true;
@@ -81,8 +78,8 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm(this.firstHolderNominee);
     } else {
     }
-    if (this.clientData && !this.firstHolderNominee) {
-      this.getNomineeList(this.clientData, !this.firstHolderNominee);
+    if (this.inputData && !this.firstHolderNominee) {
+      this.getNomineeList(this.inputData.holderList[0], !this.firstHolderNominee);
     }
   }
 
@@ -121,12 +118,18 @@ export class NomineeDetailsIinComponent implements OnInit {
   onChange(value) {
 
     if (value.checked == true) {
-      this.nomineeDetails.controls.address1.setValue((this.allData.holderList[0].address1) ? this.allData.holderList[0].address1 : this.allData.holderList[0].address.address1);
-      this.nomineeDetails.controls.address2.setValue((this.allData.holderList[0].address2) ? this.allData.holderList[0].address2 : this.allData.holderList[0].address.address2);
-      this.nomineeDetails.controls.pinCode.setValue((this.allData.holderList[0].pinCode) ? this.allData.holderList[0].pinCode : this.allData.holderList[0].address.pinCode);
-      this.nomineeDetails.controls.city.setValue((this.allData.holderList[0].city) ? this.allData.holderList[0].city : this.allData.holderList[0].address.city);
-      this.nomineeDetails.controls.state.setValue((this.allData.holderList[0].state) ? this.allData.holderList[0].state : this.allData.holderList[0].address.state);
-      this.nomineeDetails.controls.country.setValue((this.allData.holderList[0].country) ? this.allData.holderList[0].country : this.allData.holderList[0].address.country);
+      this.nomineeDetails.controls.address1.setValue((this.inputData.holderList[0].address1) ?
+        this.inputData.holderList[0].address1 : this.inputData.holderList[0].address.address1);
+      this.nomineeDetails.controls.address2.setValue((this.inputData.holderList[0].address2)
+        ? this.inputData.holderList[0].address2 : this.inputData.holderList[0].address.address2);
+      this.nomineeDetails.controls.pinCode.setValue((this.inputData.holderList[0].pinCode) ?
+        this.inputData.holderList[0].pinCode : this.inputData.holderList[0].address.pinCode);
+      this.nomineeDetails.controls.city.setValue((this.inputData.holderList[0].city) ?
+        this.inputData.holderList[0].city : this.inputData.holderList[0].address.city);
+      this.nomineeDetails.controls.state.setValue((this.inputData.holderList[0].state) ?
+        this.inputData.holderList[0].state : this.inputData.holderList[0].address.state);
+      this.nomineeDetails.controls.country.setValue((this.inputData.holderList[0].country) ?
+        this.inputData.holderList[0].country : this.inputData.holderList[0].address.country);
     }
   }
 
@@ -150,7 +153,7 @@ export class NomineeDetailsIinComponent implements OnInit {
 
   getListOfFamilyByClientRes(data, shouldSetValue) {
     this.nomineeFmList = data;
-    this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.clientData.familyMemberId);
+    // this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.inputData.holderList[0].familyMemberId);
   }
 
   selectedNominee(value) {
@@ -342,26 +345,24 @@ export class NomineeDetailsIinComponent implements OnInit {
     });
     if (flag == true) {
       this.doneData = true;
-      const value = {};
+      value = {};
       let obj = {
-        ownerName: this.allData.ownerName,
-        holdingType: this.allData.holdingType,
-        taxStatus: this.allData.taxStatus,
-        holderList: this.allData.holderList,
-        bankDetailList: this.allData.bankDetailList,
+        ownerName: this.inputData.ownerName,
+        holdingType: this.inputData.holdingType,
+        taxStatus: this.inputData.taxStatus,
+        holderList: this.inputData.holderList,
+        bankDetailList: this.inputData.bankDetailList,
         nomineeList: this.nominee,
         id: 2,
         aggregatorType: 1,
-        familyMemberId: this.allData.familyMemberId,
-        clientId: this.allData.clientId,
-        advisorId: this.allData.advisorId,
-        generalDetails: this.allData.generalDetails,
+        familyMemberId: this.inputData.familyMemberId,
+        clientId: this.inputData.clientId,
+        advisorId: this.inputData.advisorId,
+        generalDetails: this.inputData.generalDetails,
         fatcaDetail: this.inputData.fatcaDetail,
         commMode: 1,
         confirmationFlag: 1,
-        allData: this.inputData,
-        tpUserSubRequestClientId1: 2,
-        clientData: this.clientData
+        inputData: this.inputData,
       };
       this.openFatcaDetails(obj);
     }

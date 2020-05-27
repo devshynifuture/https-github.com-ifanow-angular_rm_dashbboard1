@@ -21,6 +21,7 @@ export class MfServiceService {
   private filterValues = new BehaviorSubject('');
   private mfGetData = new BehaviorSubject('');
   private clientIdToClearData = new BehaviorSubject('');
+  private transactionType = new BehaviorSubject('');
 
   getPersonalDetails(data) {
     const obj = {
@@ -300,13 +301,31 @@ export class MfServiceService {
     // if (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT') {
     //   dataForFilter.reportAsOn = null;
     // }
-    if (dataForFilter.reportAsOn && (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT')) {
+    // if (dataForFilter.reportAsOn && (dataForFilter.name == 'ALL TRANSACTION REPORT' || dataForFilter.name == 'UNREALIZED TRANSACTION REPORT')) {
+    //   mutualFundList.forEach(element => {
+    //     element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
+    //       this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
+    //     );
+    //   });
+    // }
+    if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
       mutualFundList.forEach(element => {
-        element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
+        element = element.mutualFundTransactions.find((item: any) =>
+        this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= dataForFilter.reportAsOn || this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn
         );
       });
     }
+    // if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
+    //   let array = [];
+    //   mutualFundList.forEach(element => {
+    //     element.mutualFundTransactions.forEach(ele => {
+    //       if(this.datePipe.transform(ele.transactionDate, 'yyyy-MM-dd') >= dataForFilter.reportAsOn || this.datePipe.transform(ele.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn){
+    //         array.push(element)
+    //       }
+    //     });
+    //   });
+    //   mutualFundList = array;
+    // }
     if (dataForFilter.transactionPeriodCheck) {
       if (dataForFilter.fromDate && dataForFilter.toDate) {
         mutualFundList.forEach(element => {
@@ -367,7 +386,8 @@ export class MfServiceService {
       capitalGainData: dataForFilter.capitalGainData,
       categoryWiseMfList: categoryWiseMfList,
       transactionPeriodCheck:dataForFilter.transactionPeriodCheck,
-      transactionPeriod:dataForFilter.transactionPeriod
+      transactionPeriod:dataForFilter.transactionPeriod,
+      transactionType:dataForFilter.transactionType
     };
     return sendData;
   }
@@ -444,7 +464,8 @@ export class MfServiceService {
       toDate :(rightSideData) ? rightSideData.toDate: new Date(),
       overviewFilter:overviewFilter,
       transactionPeriod:(rightSideData) ? rightSideData.transactionPeriod : false,
-      transactionPeriodCheck:(rightSideData) ? rightSideData.transactionPeriodCheck : false
+      transactionPeriodCheck:(rightSideData) ? rightSideData.transactionPeriodCheck : false,
+      transactionTypeList:(rightSideData) ? rightSideData.transactionType : []
 
     }
     return obj;
@@ -564,5 +585,11 @@ export class MfServiceService {
   }
   getClientId(){
     return this.clientIdToClearData.asObservable();
+  }
+  setTransactionType(value){
+    this.transactionType.next(value);
+  }
+  getTransactionType(){
+    return this.transactionType.asObservable();
   }
 }

@@ -83,6 +83,11 @@ export class FileOrderingHistoricalComponent implements OnInit {
 			type: "period",
 		},
 		{
+			name: "Last 7 Days",
+			value: 7,
+			type: "period",
+		},
+		{
 			name: "Custom Date",
 			value: 3,
 			type: "period",
@@ -92,7 +97,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	rtaList = [];
 
 	days = 2;
-	rtId;
+	rtId = 0;
 
 	getRtaList() {
 		this.reconService.getRTListValues({})
@@ -131,21 +136,19 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
 			if (res) {
 				this.filterBy = [];
-				const defaultRmName = this.rmList.find((c) => c.id === this.rmId);
-				this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
-				this.filterForm.get("filterByRmName").setValue(defaultRmName);
 
-				const defaultPeriod = this.periodList.find((c) => c.value === 0);
-				this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
-				this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
+				this.filterForm.patchValue({ filterByName: undefined });
 
-				const defaultRta = this.rtaList.find((c) => c.value === 0);
-				this.filterForm.get("filterByRta").setValue(defaultRta);
-				this.filterBy.push({ name: defaultRta.name, type: 'rta' });
+				this.filterForm.patchValue({ filterByRmName: undefined });
+
+				this.filterForm.patchValue({ filterByRta: undefined });
+
 				this.dataSource.data = ELEMENT_DATA;
 				this.fileOrderHistoryListGet({
 					fromDate: res.fromDate,
-					toDate: res.toDate
+					toDate: res.toDate,
+					rmId: this.rmId,
+					rtId: this.rtId
 				});
 			} else {
 				this.eventService.openSnackBar("ABORTED!!", "DISMISS");
@@ -155,7 +158,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 	}
 
 	getRtName(id) {
-		return this.rtaList.find(c => c.value === id).name
+		return this.rtaList.find(c => c.value === id).name;
 	}
 
 	getRtIdOfName(name) {
@@ -211,7 +214,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 		this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
 		this.filterForm.get("filterByRmName").setValue(defaultRmName);
 
-		const defaultPeriod = this.periodList.find((c) => c.value === 0);
+		const defaultPeriod = this.periodList.find((c) => c.value === 2);
 		this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
 		this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
 

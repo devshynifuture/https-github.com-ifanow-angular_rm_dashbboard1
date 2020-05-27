@@ -1,4 +1,4 @@
-<div *ngIf="changeViewModeValue == false">
+<div>
     <div class="p-8">
         <div class="row pt-0">
             <div class="col-md-4 pl-0 c-p">
@@ -673,7 +673,7 @@
                     </div> -->
                     </div>
                 </div>
-                <div class="p-0 mb-20 familymember-wise" (click)="openSummary('category wise')"
+                <div class="p-0 mt-20 mb-20 familymember-wise" (click)="openSummary('category wise')"
                     *ngIf="showCategory || dataSource4.data.length >0">
                     <div class="bg-grey lter">
                         <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
@@ -1445,7 +1445,7 @@
     </app-mutual-fund-unrealized-tran>
   </div> -->
 
-<div *ngIf="changeViewModeValue == true">
+<!-- <div *ngIf="changeViewModeValue == true">
     <app-mutual-fund [data]='changeViewModeSet'>
     </app-mutual-fund>
-</div>
+</div> -->

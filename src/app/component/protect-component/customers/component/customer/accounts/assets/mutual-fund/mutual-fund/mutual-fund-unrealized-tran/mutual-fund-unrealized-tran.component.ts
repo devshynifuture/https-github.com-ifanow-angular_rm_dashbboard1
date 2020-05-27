@@ -1,24 +1,24 @@
-import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { MfServiceService } from '../../mf-service.service';
-import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { CustomerService } from '../../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { map } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
-import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {AuthService} from './../../../../../../../../../../auth-service/authService';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MfServiceService} from '../../mf-service.service';
+import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import {CustomerService} from '../../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {map} from 'rxjs/operators';
+import {DatePipe} from '@angular/common';
+import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
   templateUrl: './mutual-fund-unrealized-tran.component.html',
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
 })
-export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
+export class MutualFundUnrealizedTranComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
@@ -32,13 +32,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
-  type: any = { name: '' };
+  type: any = {name: ''};
   isSpinner = false;
+  customDataHolder = [];
   customDataSource = new MatTableDataSource([{}, {}, {}]);
-  @ViewChild('tableEl', { static: false }) tableEl;
-  rightFilterData: any = { reportType: '' };
+  @ViewChild('tableEl', {static: false}) tableEl;
+  rightFilterData: any = {reportType: ''};
   adviorData: any;
-  fragmentData = { isSpinner: false };
+  fragmentData = {isSpinner: false};
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   // displayedColumns: string[];
@@ -47,46 +48,41 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   viewMode: string;
   reponseData: any;
   setDefaultFilterData: any;
-  mfGetData:any;
-  columns =[];
+  mfGetData: any;
+  columns = [];
   displayColArray: any[];
   saveFilterData: any;
   savedFilterData: any;
   inputData: any;
   schemeWise: any[];
   subCategoryData: any;
+  transactionTypeList: any;
   returnValue: any;
+  selectedLoadData: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
+              private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
   }
+
   mutualFund;
+
   @Input()
   set data(data) {
     this.inputData = data;
     console.log('This is Input data ', data);
   }
+
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
-     this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3)
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
-      })
-      this.mfService.getMfData()
-      .subscribe(res => {
-        this.mutualFund = res;
-      })
-      this.mfService.getFilterValues()
-      .subscribe(res => {
-        this.setDefaultFilterData = res;
-      })
-      this.mfService.getDataForMfGet()
-      .subscribe(res => {
-        this.mfGetData = res;
-      })
+      });
+    this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
+
     if (this.viewMode == 'Unrealized Transactions') {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
@@ -94,82 +90,113 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
     }
-    this.mfData =this.mfGetData;
-    if (this.viewMode == 'Unrealized Transactions') {
-      this.isLoading = true;
-      this.getUnrealizedData();
-    } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData!='') {
-      this.isLoading = true;
-      this.changeInput.emit(true);
-      this.getMutualFundResponse(this.mfGetData)
-    } else if (this.viewMode != 'Unrealized Transactions' && this.mutualFund) {
-      this.isLoading = true;
-      this.changeInput.emit(true);
-      this.getMutualFundResponse(this.mutualFund)
-    } else {
-      this.getMutualFund();
-    }
+  }
+
+
+  getFilterData(value) {
+    this.mfService.getMfData()
+      .subscribe(res => {
+        this.mutualFund = res;
+      });
+    this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res;
+      });
+    this.mfService.getDataForMfGet()
+      .subscribe(res => {
+        this.mfGetData = res;
+      });
+    this.mfService.getTransactionType()
+      .subscribe(res => {
+        this.getTransactionType(res);
+      });
+    this.isLoading = true;
+    this.changeInput.emit(true);
+    const obj = {
+      advisor_id: this.advisorId,
+      clientId: this.clientId,
+      reportId: value
+    };
+    this.custumService.getSaveFilters(obj).subscribe(
+      data => {
+        if (data) {
+          let allClient = [];
+          let currentClient = [];
+          let transactionView = [];
+          let getList = [];
+          // let displaycopy =[];
+          this.displayedColumns = [];
+          data.forEach(element => {
+            if (element.clientId == 0) {
+              const obj = {
+                displayName: element.columnName,
+                selected: element.selected
+              };
+              allClient.push(obj);
+            } else {
+              const obj = {
+                displayName: element.columnName,
+                selected: element.selected
+              };
+              getList.push(element);
+              currentClient.push(obj);
+            }
+          });
+          if (getList.length > 0) {
+            transactionView = currentClient;
+          } else {
+            transactionView = allClient;
+          }
+          transactionView.forEach(element => {
+            if (element.selected == true) {
+              this.displayedColumns.push(element.displayName);
+            }
+          });
+
+          this.saveFilterData = {
+            transactionView: transactionView,
+            showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
+            reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
+            selectFilter: (currentClient.length > 0) ? this.clientId : 0
+          };
+          this.mfData = this.mfGetData;
+          if (this.viewMode == 'Unrealized Transactions') {
+            this.isLoading = true;
+            this.getUnrealizedData();
+          } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
+            this.isLoading = true;
+            this.changeInput.emit(true);
+            this.getMutualFundResponse(this.mfGetData);
+          } else if (this.viewMode != 'Unrealized Transactions' && this.mutualFund) {
+            this.isLoading = true;
+            this.changeInput.emit(true);
+            this.getMutualFundResponse(this.mutualFund);
+          } else {
+            this.getMutualFund();
+          }
+        }
+      },
+      (error) => {
+        this.mfData = this.mfGetData;
+        if (this.viewMode == 'Unrealized Transactions') {
+          this.isLoading = true;
+          this.getUnrealizedData();
+        } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
+          this.isLoading = true;
+          this.changeInput.emit(true);
+          this.getMutualFundResponse(this.mfGetData);
+        } else if (this.viewMode != 'Unrealized Transactions' && this.mutualFund) {
+          this.isLoading = true;
+          this.changeInput.emit(true);
+          this.getMutualFundResponse(this.mutualFund);
+        } else {
+          this.getMutualFund();
+        }
+      }
+    );
 
   }
 
-  getFilterData(value){
-    const obj = {
-     advisor_id:this.advisorId,
-     clientId: this.clientId,
-     reportId:value
-   }
-   this.custumService.getSaveFilters(obj).subscribe(
-     data => {
-      if(data){
-        let allClient= [];
-        let currentClient = [];
-        let transactionView = [];
-        // let displaycopy =[];
-        this.displayedColumns = [];
-        data.forEach(element => {
-          if(element.clientId == 0){
-            const obj={
-              displayName:element.columnName,
-              selected:element.selected
-            }
-            allClient.push(obj); 
-            // if(element.selected == true){
-            //   this.displayedColumns.push(element.columnName)
-            // }
-          }else{
-            const obj={
-              displayName:element.columnName,
-              selected:element.selected
-            }
-            currentClient.push(obj); 
-            // if(element.selected == true){
-            //   this.displayedColumns.push(element.columnName)
-            // }
-          }
-        });
-        if(allClient.length > 0)
-        {
-          transactionView = allClient
-        }else{
-          transactionView = currentClient
-        }
-        transactionView.forEach(element => {
-          if(element.selected==true){
-            this.displayedColumns.push(element.displayName)
-          }
-        });
-
-
-        this.saveFilterData ={
-          transactionView : transactionView,
-          showFolio:(data[0].showZeroFolios == true) ? '1' : '2',
-          reportType:data[0].reportType,
-          selectFilter :  (allClient.length > 0)  ? 0 : this.clientId
-        }
-       }
-     }
-   );
- }
   initValueOnInit() {
 
     if (this.mutualFund.mutualFundList.length > 0) {
@@ -189,6 +216,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.isLoading = false;
       this.changeInput.emit(false);
       this.customDataSource.data = [];
+      this.customDataHolder = [];
     }
   }
 
@@ -209,11 +237,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   doFiltering(data) {
     if (this.inputData == 'scheme wise') {
-      this.rightFilterData.reportType = []
+      this.rightFilterData.reportType = [];
       this.rightFilterData.reportType[0] = {
         name: 'Scheme wise',
         selected: true
-      }
+      };
       data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
       this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
     } else {
@@ -234,9 +262,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       this.mfData = data;
       // this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
-      this.mutualFundList = this.mutualFund.mutualFundList
+      this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
-      this.asyncFilter(this.mfData.mutualFundList)
+      this.asyncFilter(this.mfData.mutualFundList);
 
       // this.initValueOnInit();
       // if (this.mfData) {
@@ -245,33 +273,33 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  // ngOnChanges(changes: SimpleChanges) {
 
-    for (const propName in changes) {
-      const chng = changes[propName];
-      const cur = JSON.stringify(chng.currentValue);
-      const prev = JSON.stringify(chng.previousValue);
-      // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-    }
-    if (changes.mutualFund && !!changes.mutualFund.currentValue) {
-      if (this.mutualFund.mutualFundList.length > 0) {
-        if (this.mutualFund.viewMode == 'Unrealized Transactions') {
-          this.getUnrealizedData();
-        } else {
-          this.mutualFundList = this.mutualFund.mutualFundList;
-          this.asyncFilter(this.mutualFundList);
-        }
-      } else {
-        this.dataSource.data = [];
-        this.customDataSource.data = [];
-      }
+  //   for (const propName in changes) {
+  //     const chng = changes[propName];
+  //     const cur = JSON.stringify(chng.currentValue);
+  //     const prev = JSON.stringify(chng.previousValue);
+  //     // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+  //   }
+  //   if (changes.mutualFund && !!changes.mutualFund.currentValue) {
+  //     if (this.mutualFund.mutualFundList.length > 0) {
+  //       if (this.mutualFund.viewMode == 'Unrealized Transactions') {
+  //         this.getUnrealizedData();
+  //       } else {
+  //         this.mutualFundList = this.mutualFund.mutualFundList;
+  //         this.asyncFilter(this.mutualFundList);
+  //       }
+  //     } else {
+  //       this.dataSource.data = [];
+  //       this.customDataSource.data = [];
+  //     }
 
-    }
-  }
+  //   }
+  // }
 
   getUnrealizedData() {
-    const myArray= (this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
-    const list = []; 
+    const myArray = (this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
+    const list = [];
     myArray.forEach(val => list.push(Object.assign({}, val)));
     // let list =[];
     // list =(this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
@@ -284,7 +312,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     });
     const obj = {
       mutualFundList: list
-    }
+    };
     this.custumService.getMfUnrealizedTransactions(obj).subscribe(
       data => {
         // console.log(data);
@@ -296,6 +324,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         this.isLoading = false;
         this.dataSource.data = [];
         this.customDataSource.data = [];
+        this.customDataHolder = [];
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
       }
@@ -306,25 +335,28 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
       // console.log(`13091830918239182390183091830912830918310938109381093809328`);
-      this.rightFilterData.reportType=[];
-       this.rightFilterData.reportType[0]={
-        name:this.setDefaultFilterData.reportType,
-        selected:true
-      }
+      this.rightFilterData.reportType = [];
+      this.rightFilterData.reportType[0] = {
+        name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+        selected: true,
+      };
       const input = {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
         nav: this.mutualFund.nav,
         // mutualFund:this.mfData,
-        mutualFund:this.mutualFund
+        mutualFund: this.mutualFund,
+        transactionType: this.rightFilterData.transactionType,
+        viewMode: this.viewMode
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
-      worker.onmessage = ({ data }) => {
+      const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
+      worker.onmessage = ({data}) => {
         this.grandTotal = data.totalValue;
-        this.dataSource = new MatTableDataSource(data.dataSourceData);
-        this.customDataSource = new MatTableDataSource(data.customDataSourceData);
+        this.dataSource.data = (data.dataSourceData);
+        this.customDataSource.data = (data.customDataSourceData);
+        this.customDataHolder = data.customDataHolder;
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
@@ -356,11 +388,19 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   openMutualEditFund(flag, element) {
+
+    this.mutualFundList.forEach(ele => {
+      ele.mutualFundTransactions.forEach(tran => {
+        if (tran.id == element.id) {
+          this.selectedLoadData = ele;
+        }
+      });
+    });
     this.mfService.getMutualFundData()
       .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: { family_member_list: res['family_member_list'], flag, ...element },
+          data: {family_member_list: res['family_member_list'], flag, ...element, ...this.selectedLoadData},
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent
@@ -377,15 +417,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
             }
           }
         );
-      })
+      });
 
   }
+
   deleteModal(value, element) {
     let deletedId;
     this.mutualFund.mutualFundList.forEach(obj => {
       element.mutualFundTransactions.forEach(ele => {
-        if(ele.id == element.id){
-          deletedId=obj.id
+        if (ele.id == element.id) {
+          deletedId = obj.id;
         }
       });
     });
@@ -409,13 +450,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         // );
         // dialogRef.close(listIndex);
         if (value === 'mutualFund') {
-          const obj = { id: deletedId }
+          const obj = {id: deletedId};
           this.custumService.postMutualFundDelete(obj)
             .subscribe(res => {
               if (res) {
-                this.eventService.openSnackBar('Deleted Successfully', "DISMISS");
+                this.eventService.openSnackBar('Deleted Successfully', 'DISMISS');
               }
-            })
+            });
         } else if (value === 'deleteTransaction') {
 
           // let requestJsonObj;
@@ -459,7 +500,21 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
     });
   }
+
+  getTransactionType(res) {
+    let filterData = [];
+    res.forEach(element => {
+      const obj = {
+        name: element,
+        selected: false
+      };
+      filterData.push(obj);
+    });
+    this.transactionTypeList = filterData;
+  }
+
   openFilter() {
+
     const fragmentData = {
       flag: 'openFilter',
       data: {},
@@ -483,20 +538,22 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     fragmentData.data = {
       name: (this.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
       mfData: this.mutualFund,
-      folioWise:this.setDefaultFilterData.folioWise,
+      folioWise: this.setDefaultFilterData.folioWise,
       schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.mutualFund.family_member_list,
       category: this.setDefaultFilterData.category,
-      transactionView:(this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
-      scheme:this.setDefaultFilterData.scheme,
-      reportType :(this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
-      reportAsOn:this.setDefaultFilterData.reportAsOn,
-      showFolio :(this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
-      fromDate:this.setDefaultFilterData.fromDate,
-      toDate:this.setDefaultFilterData.toDate,
-      transactionPeriod:this.setDefaultFilterData.transactionPeriod,
-      transactionPeriodCheck:this.setDefaultFilterData.transactionPeriodCheck,
-      selectFilter:(this.saveFilterData) ? this.saveFilterData.selectFilter : null
+      transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
+      scheme: this.setDefaultFilterData.scheme,
+      reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+      // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
+      reportAsOn: this.setDefaultFilterData.reportAsOn,
+      showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
+      fromDate: this.setDefaultFilterData.fromDate,
+      toDate: this.setDefaultFilterData.toDate,
+      transactionPeriod: this.setDefaultFilterData.transactionPeriod,
+      transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
+      selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -504,12 +561,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         if (UtilService.isDialogClose(sideBarData)) {
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            this.dataSource.data = ([{}, {}, {}]);
+            this.customDataSource.data = ([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3)
+            this.saveFilterData = {};
             // this.columns =[];
             // this.rightFilterData.transactionView.forEach(element => {
             //   if(element.selected == true){
@@ -526,21 +583,22 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
             //   };
             //   this.displayColArray.push(obj);
             // });
-            this.type = this.rightFilterData.reportType[0];
-            this.reponseData = this.doFiltering(this.rightFilterData.mfData)
+            // this.type = this.rightFilterData.reportType[0];
+            this.reponseData = this.doFiltering(this.rightFilterData.mfData);
             this.mfData = this.reponseData;
-            this.displayColArray=[];
+            this.displayColArray = [];
             this.rightFilterData.transactionView.forEach(element => {
               const obj = {
                 displayName: element.displayName,
-                selected:true
+                selected: true
               };
               this.displayColArray.push(obj);
             });
-            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
-            this.asyncFilter(this.reponseData.mutualFundList);
+            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
+            // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
+            this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
             // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,

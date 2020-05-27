@@ -26,6 +26,8 @@ export class DuplicateDataComponent implements OnInit {
 
   advisorId = AuthService.getAdvisorId();
 
+  parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+
   displayedColumns: string[] = ['arnRia', 'name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
   dataSource;
   isLoading: boolean = false;
@@ -83,6 +85,8 @@ export class DuplicateDataComponent implements OnInit {
     this.isLoading = true;
     const data = {
       advisorIds: [...this.adminAdvisorIds],
+      parentId: this.parentId,
+      isParent: (this.parentId === this.advisorId) ? true : false
     }
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {

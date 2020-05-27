@@ -222,7 +222,7 @@ export const appConfig = {
   MUTUAL_FUND_TRANSACTION_ADD: 'mutual-fund/mutualFund/transaction/add',
   MUTUAL_FUND_TRANSACTION_EDIT: 'mutual-fund/mutualFund/transaction/edit',
   MUTUAL_FUND_TRANSACTION_DELETE: 'mutual-fund/mutualFund/transaction/delete',
-
+  GET_TRANSACTION_TYPE:'mutual-fund/transaction/type/get',
   MUTUAL_FUND_ADD: 'mutual-fund/mutualFund/add',
   MUTUAL_FUND_EDIT: 'mutual-fund/mutualFund/edit',
   FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID: 'family/name/by/clientId/get',
@@ -461,6 +461,8 @@ export const appConfig = {
   GET_MANDATE_DETAILS: 'mandate/view',
   GET_UNMAPPED_CLIENTS: 'user/client/unmapped/view',
   GET_MAPPED_CLIENTS: 'user/client/mapped/view',
+  GET_MAPPED_CLIENTS_FILTER: 'user/client/mapped/filter/client-wise/view',
+
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',
   BSE_UCC_FILE_UPLOAD: 'user/bse/client/file-upload',
@@ -729,9 +731,6 @@ export const appConfig = {
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
-  DELETE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/delete',
-  UPDATE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/update',
-  ADD_MF_RTA_QUESTION: 'setting/arn-ria/rta-sec/answer/add',
 
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 

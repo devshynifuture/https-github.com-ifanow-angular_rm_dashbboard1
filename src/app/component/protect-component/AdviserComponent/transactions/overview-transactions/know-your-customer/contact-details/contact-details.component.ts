@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {DatePipe} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -14,12 +14,15 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class ContactDetailsComponent implements OnInit {
   contactDetails: any;
 
-  constructor(public subInjectService: SubscriptionInject,private fb: FormBuilder,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private custumService: CustomerService, private datePipe: DatePipe,
+              public utils: UtilService, public eventService: EventService) {
+  }
 
   ngOnInit() {
   }
-  close(){
+
+  close() {
     const fragmentData = {
       direction: 'top',
       componentName: ContactDetailsComponent,
@@ -28,6 +31,7 @@ export class ContactDetailsComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+
   getdataForm(data) {
 
     this.contactDetails = this.fb.group({
@@ -47,9 +51,11 @@ export class ContactDetailsComponent implements OnInit {
 
     });
   }
+
   getFormControl(): any {
     return this.contactDetails.controls;
   }
+
   savePersonalDetails() {
     if (this.contactDetails.get('email').invalid) {
       this.contactDetails.get('email').markAsTouched();
@@ -59,7 +65,7 @@ export class ContactDetailsComponent implements OnInit {
       return;
     } else if (this.contactDetails.get('phoneNo').invalid) {
       this.contactDetails.get('phoneNo').markAsTouched();
-      return
+      return;
     } else if (this.contactDetails.get('addressType').invalid) {
       this.contactDetails.get('addressType').markAsTouched();
       return;
@@ -75,19 +81,19 @@ export class ContactDetailsComponent implements OnInit {
     } else if (this.contactDetails.get('addressLine2').invalid) {
       this.contactDetails.get('addressLine2').markAsTouched();
       return;
-    }else if (this.contactDetails.get('pinCode').invalid) {
+    } else if (this.contactDetails.get('pinCode').invalid) {
       this.contactDetails.get('pinCode').markAsTouched();
       return;
     } else if (this.contactDetails.get('city').invalid) {
       this.contactDetails.get('city').markAsTouched();
       return;
-    }  else if (this.contactDetails.get('district').invalid) {
+    } else if (this.contactDetails.get('district').invalid) {
       this.contactDetails.get('district').markAsTouched();
       return;
     } else if (this.contactDetails.get('state').invalid) {
       this.contactDetails.get('state').markAsTouched();
       return;
-    }else if (this.contactDetails.get('country').invalid) {
+    } else if (this.contactDetails.get('country').invalid) {
       this.contactDetails.get('country').markAsTouched();
       return;
     } else {
@@ -105,7 +111,7 @@ export class ContactDetailsComponent implements OnInit {
         district: this.contactDetails.controls.district.value,
         state: this.contactDetails.controls.state.value,
         country: this.contactDetails.controls.country.value,
-      }
+      };
     }
   }
 }

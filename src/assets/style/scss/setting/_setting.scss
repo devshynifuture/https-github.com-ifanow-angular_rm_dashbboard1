@@ -126,6 +126,44 @@
   }
 }
 
+.add-new-role {
+  .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 38px !important;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: #008FFF;
+    color: #fff;
+    border: 1px solid #008FFF;
+  }
+}
+
+.overflow-text-users {
+  width: 142px;
+
+  h5 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    // &:hover {
+    //   overflow: visible;
+    // }
+  }
+}
+
+.commencement-date,
+.renewal-date {
+  .mat-form-field-flex {
+    padding-top: 0px !important;
+  }
+
+  .mat-form-field-infix {
+    top: -4px !important;
+    padding-top: 0px !important;
+  }
+}
+
 #ui-add-personal-profile {
   .mat-tab-body-content {
     min-height: 450px !important;
