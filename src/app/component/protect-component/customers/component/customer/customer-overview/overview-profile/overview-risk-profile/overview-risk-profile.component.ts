@@ -27,7 +27,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   gaugeOptions:any;
   advisorId: any;
   score;
-  showRisk = false;
+  showResults = false;
   clickMessage = '';
   name = 'Angular';
   showLoader: boolean;
@@ -44,9 +44,11 @@ export class OverviewRiskProfileComponent implements OnInit {
   clientRiskAssessmentResults;
 
   globalRiskProfile:any;
-  feedsRiskProfile:any;
+  feedsRiskProfile:any = {};
   clientId;
+  clientInfo:any;
   count:number = 0;
+  showRetakeTestsButton: boolean = false;
   
   constructor(
     private fb: FormBuilder, 
@@ -58,13 +60,13 @@ export class OverviewRiskProfileComponent implements OnInit {
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.clientInfo = AuthService.getClientData();
   }
 
   ngOnInit() {
-    this.getRiskProfileList(true);
-    this.getdataForm('');
     this.loadGlobalRiskProfile();
     this.loadRiskProfile();
+    this.getdataForm('');
     this.sendRiskList = [];
     // this.progressBar = [];
     this.statusArray = [];
@@ -301,6 +303,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   getRiskProfilRes(data, flag) {
     this.showButton = true
     this.isLoading = false
+    this.statusArray = [];
     console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
@@ -349,29 +352,33 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   submitRiskRes(data) {
     this.isLoading = false
-    this.showRisk = true;
+    this.showResults = true;
     setTimeout(() => {
       this.guageFun(data);
       this.percentage(data)
     }, 300);
     if (data) {
-      console.log(data);
-      this.score = data.score;
       if (this.score <= 180) {
         this.scoreStatus = 'conservative'
-      } else if (this.score <= 290) {
+      } else if (data.score <= 290) {
         this.scoreStatus = 'Moderately conservative'
-      } else if (this.score <= 400) {
+      } else if (data.score <= 400) {
         this.scoreStatus = 'Moderate'
-      } else if (this.score <= 510) {
+      } else if (data.score <= 510) {
         this.scoreStatus = 'Moderately aggressive'
-      } else if (this.score <= 600) {
+      } else if (data.score <= 600) {
         this.scoreStatus = 'Aggressive'
       } else {
         this.scoreStatus = ''
       }
       this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
       this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
+
+      this.feedsRiskProfile = {
+        "riskAssessmentScore": data.score,
+        "riskProfileId": data.riskProfileId || 4,
+        "riskProfileStatus": data.riskProfileName,
+      }
     }
   }
 
@@ -395,16 +402,15 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   getResultData(data) {
-    console.log(data)
-
     if (data != undefined) {
-      this.showRisk = false
+      this.showResults = false
       if (data.refreshRequired == false) {
         this.reset();
       } else if (data.refreshRequired) {
         this.riskAssessmentQuestionList = data.refreshRequired
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.showButton = false
+        this.showRetakeTestsButton = true;
       } else {
         this.reset();
       }
@@ -412,9 +418,10 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   reset() {
-    this.statusArray = []
+    this.showRetakeTestsButton = false;
+    // this.statusArray = []
     this.getRiskProfileList(true);
-    this.showRisk = false;
+    this.showResults = false;
   }
 
 
@@ -442,10 +449,9 @@ export class OverviewRiskProfileComponent implements OnInit {
     }
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
-      if (res == null) {
-        this.feedsRiskProfile = [];
-      } else {
-        this.feedsRiskProfile = res;
+      if (res) {
+        this.feedsRiskProfile = res[0];
+        this.showResults = true;
       }
       this.loaderFn.decreaseCounter();
     }, err => {
@@ -453,5 +459,22 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+
+
+  riskProfileMaxScore(id) {
+    if (this.globalRiskProfile.length > 0) {
+      return this.globalRiskProfile.find(data => data.id == id).scoreUpperLimit;
+    } else {
+      return 0;
+    }
+  }
+
+  riskProfileDesc(id) {
+    if (this.globalRiskProfile.length > 0) {
+      return this.globalRiskProfile.find(data => data.id == id).description;
+    } else {
+      return '';
+    }
   }
 }
