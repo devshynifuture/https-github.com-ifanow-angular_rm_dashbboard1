@@ -19,9 +19,24 @@ addEventListener('message', ({data}) => {
   totalValue.grandTotal = mfService.mutualFundRoundAndFormat(totalValue.grandTotal, 2);
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
+    if (element.currentAmount && element.amount) {
+      element.gain = element.currentAmount - element.amount;
+    } else {
+    }
+
+    if (element.totalCurrentValue && element.totalTransactionAmt) {
+      element.totalGain = element.totalCurrentValue - element.totalTransactionAmt;
+    } else {
+    }
+    element.gain = mfService.mutualFundRoundAndFormat(element.gain, 2);
+
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
     element.totalTransactionAmt = mfService.mutualFundRoundAndFormat(element.totalTransactionAmt, 2);
-    element.transactionNav = mfService.mutualFundRoundAndFormat(element.transactionNav, 4);
+    if (element.transactionNav && element.transactionNav > 0) {
+      element.transactionNav = mfService.mutualFundRoundAndFormat(element.transactionNav, 4);
+    } else {
+      element.transactionNav = '';
+    }
     element.totalNav = mfService.mutualFundRoundAndFormat(element.totalNav, 3);
     element.unit = mfService.mutualFundRoundAndFormat(element.unit, 3);
     element.totalUnit = mfService.mutualFundRoundAndFormat(element.totalUnit, 3);
@@ -31,7 +46,6 @@ addEventListener('message', ({data}) => {
     element.totalCurrentValue = mfService.mutualFundRoundAndFormat(element.totalCurrentValue, 2);
     element.dividendPayout = mfService.mutualFundRoundAndFormat(element.dividendPayout, 2);
     element.dividendReinvest = mfService.mutualFundRoundAndFormat(element.dividendReinvest, 2);
-    element.currentAmount = mfService.mutualFundRoundAndFormat(element.currentAmount, 2);
     element.absoluteReturn = mfService.mutualFundRoundAndFormat(element.absoluteReturn, 2);
     element.trnAbsoluteReturn = mfService.mutualFundRoundAndFormat(element.trnAbsoluteReturn, 2);
     element.cagr = mfService.mutualFundRoundAndFormat(element.cagr, 2);

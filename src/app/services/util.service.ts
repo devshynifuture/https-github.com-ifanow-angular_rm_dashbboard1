@@ -318,11 +318,13 @@ export class UtilService {
     formGroup.patchValue(event.target.value.toUpperCase());
   }
 
-  htmlToPdf(inputData, pdfName, fragData) {
+  htmlToPdf(inputData, pdfName, fragData,key=null,svg=null) {
     const obj = {
       htmlInput: inputData,
       name: pdfName,
-      landscape: true
+      landscape: true,
+      key : key,
+      svg:svg
     };
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
