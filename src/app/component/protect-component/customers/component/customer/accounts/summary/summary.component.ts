@@ -33,37 +33,37 @@ export class SummaryComponent implements OnInit {
   inflowFlag;
   outflowFlag;
   mutualFundValue: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   fixedIncome: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   realEstate: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   stocks: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   retirement: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   smallSavingScheme: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   cashAndFLow: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   Commodities: any =
     {
-      currentValue: null,
-      percentage: null
+      currentValue: 0,
+      percentage: 0
     }
   bscData: any;
   nscDAta: any;
@@ -91,10 +91,6 @@ export class SummaryComponent implements OnInit {
   }
 
   calculateTotalSummaryValues() {
-    this.mutualFundValue = {
-      currentValue: null,
-      percentage: null
-    }
     this.letsideBarLoader = true;
     console.log(new Date(this.asOnDate).getTime());
     const obj = {
@@ -139,7 +135,10 @@ export class SummaryComponent implements OnInit {
         }
       },
       err => {
+        this.letsideBarLoader = false;
         this.finalTotal = 0;
+        this.liabilityTotal = 0;
+        this.totalAssetsWithoutLiability = 0;
       }
     );
     this.getSummaryList(obj);
