@@ -284,11 +284,9 @@
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
   <div class="col-md-5 center_menu">
-    <div *ngIf="inputData.taxStatus != '21'">
-      <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="activeLink"> First Holder </a>
-      <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink"> Second Holder </a>
-      <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink"> Third Holder </a>
-    </div>
+    <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="activeLink"> First Holder </a>
+    <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink"> Second Holder </a>
+    <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink"> Third Holder </a>
   </div>
 
 

@@ -169,15 +169,16 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
                     return;
                 }
             }
-        }
 
-        const obj1 = {
-            ...this.inputData,
-            // fatcaDetail: obj,
-            commMode: 1,
-            confirmationFlag: 1,
-        };
-        this.openReviwSubmit(obj1);
+            const obj1 = {
+                ...this.inputData,
+                fatcaDetail: this.firstHolderContact.fatcaDetail,
+                ...this.firstHolderContact.fatcaDetail,
+                commMode: 1,
+                confirmationFlag: 1,
+            };
+            this.openReviwSubmit(obj1);
+        }
 
     }
 
