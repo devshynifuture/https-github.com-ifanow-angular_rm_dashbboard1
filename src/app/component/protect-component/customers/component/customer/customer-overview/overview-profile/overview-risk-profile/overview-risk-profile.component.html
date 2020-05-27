@@ -44,7 +44,7 @@
     align-items: center;
     justify-content: center;
     align-content: center;" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
-                                    <i class="text-success text-right">
+                                    <i class="material-icons text-success text-right">
                                         check_circle_outline
                                     </i>
                                 </div>
@@ -61,9 +61,10 @@
                         </mat-expansion-panel-header>
 
 
-                        <mat-radio-group aria-label="Select an option" id="custom-radio">
-
-                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index" [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled" (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;item.done = false;item.choice = choice.choice;checkState(item,i)">
+                        <mat-radio-group aria-label="Select an option" id="custom-radio" [disabled]="!!item.riskAssessmentChoice" (change)="checkState(item,i, $event.value)">
+                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index" 
+                            [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled" 
+                            >
                                 {{choice.choice}}<br>
                             </mat-radio-button>
 
@@ -75,9 +76,9 @@
                     {{item.choice}}{{item.riskAssessmentChoice}}
                 </div>
             </div>
-            <div *ngIf="showErrorMsg == true" class="errorClass"> Please complete all questions for test result
+            <div *ngIf="showErrorMsg" class="errorClass"> Please complete all questions for test result
             </div>
-            <button *ngIf="showButton == true" mat-stroked-button class="btn-primary mt-20 br-0 right" (click)="submitRiskAnalysis(item)">SUBMIT</button>
+            <button *ngIf="showButton" mat-stroked-button class="btn-primary mt-20 br-0 right" (click)="submitRiskAnalysis(item)">SUBMIT</button>
             <!-- <div *ngIf="isLoading == true">
                 <mat-spinner class="loader" [diameter]="30"></mat-spinner>
             </div> -->
@@ -92,7 +93,7 @@
             </div>
 
             <div class="p-20 b-primitive mt-12">
-                <mat-progress-bar mode="determinate" value="{{progressBar}}"></mat-progress-bar>
+                <mat-progress-bar mode="determinate" value="{{statusArray.length/15 * 100}}"></mat-progress-bar>
                 <h5 class="pt-8 m-0 pt-12 text-center">{{statusArray.length}} of 15 completed</h5>
             </div>
         </div>

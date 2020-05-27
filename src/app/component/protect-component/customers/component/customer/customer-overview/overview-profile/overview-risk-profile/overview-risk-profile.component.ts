@@ -32,7 +32,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   name = 'Angular';
   showLoader: boolean;
   isLoading = false
-  statusArray: any;
+  statusArray: any[] = [];
   showErrorMsg
   checkFamilyMem;
   showButton;
@@ -258,7 +258,11 @@ export class OverviewRiskProfileComponent implements OnInit {
 
     }));
   }
-  checkState(item, i) {
+  checkState(item, i, choice) {
+    item.selectedChoiceId = choice.id;
+    item.weight = choice.weight;
+    item.done = false;
+    item.choice = choice.choice;
     if (this.statusArray.length > 0 && item.question) {
       this.statusArray.forEach(element => {
         this.checkFamilyMem = item.question.includes(element.question);
