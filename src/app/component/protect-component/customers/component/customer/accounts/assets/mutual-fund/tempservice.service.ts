@@ -1,5 +1,7 @@
 export class TempserviceService {
 
+  // decimalPipe = new DecimalPipe('en-IN');
+
   subCatArrayForSummary = (mutualFundList, type, allData) => {
     let reportType;
     let array = [];
@@ -44,7 +46,7 @@ export class TempserviceService {
       });
       return filteredArray;
     }
-  }
+  };
 
   sorting(data, filterId) {
     if (data) {
@@ -556,6 +558,28 @@ export class TempserviceService {
       });
     });
     return filter;
+  }
+
+  roundOff(data: number, noOfPlaces: number = 0): number {
+    const roundedValue = parseFloat(data.toFixed(noOfPlaces));
+    // console.log(' original / roundedValue ', data, ' / ', roundedValue);
+
+    return roundedValue;
+  }
+
+  mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
+    if (data) {
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
   }
 
 }
