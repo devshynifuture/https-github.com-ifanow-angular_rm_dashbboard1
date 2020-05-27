@@ -237,7 +237,7 @@ addNewNominee(data) {
 
       tenure: [(data.tenure) ? String(data.tenure) : '1', [Validators.required]],
       // ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
-      poBranch: [],
+      poBranch: [data.postOfficeBranch],
       nominee: [],
       tdNum: [data.tdNumber],
       bankAccNum: [data.userBankMappingId],

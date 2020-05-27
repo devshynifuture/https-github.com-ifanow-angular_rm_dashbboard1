@@ -364,6 +364,7 @@ addNewNominee(data) {
               "amountInvested": 0,
               "valueAsOn": null,
               "isDeleted":false,
+               "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
               "transactionOrHoldingSummaryList": [
                   {
                     "holdingOrTransaction": 1,
@@ -396,6 +397,7 @@ addNewNominee(data) {
                 "amountInvested": 0,
                 "valueAsOn": null,
                 "isDeleted":true,
+                 "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
                 "transactionOrHoldingSummaryList": [
                   {
                     "id": d.id,
