@@ -38,16 +38,26 @@
                                 {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
 
                             </mat-panel-title>
-                            <div class="circle1" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
-                                <i class="material-icons text-success text-right">
-                                    check_circle_outline
-                                </i>
-                            </div>
-                            <div class="circle1" *ngIf="!item.selectedChoiceId && !item.riskAssessmentChoice">
-                                <i class="material-icons text-primary">
-                                    query_builder
-                                </i>
-                            </div>
+                            <mat-panel-description>
+                                <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
+                                    <i class="text-success text-right">
+                                        check_circle_outline
+                                    </i>
+                                </div>
+                                <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;" *ngIf="!item.selectedChoiceId && !item.riskAssessmentChoice">
+                                    <i class="material-icons text-primary">
+                                        query_builder
+                                    </i>
+                                </div>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
 
 
@@ -114,10 +124,16 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-8 p-0 text-center" *ngIf="score">
-                    <h5 class="m-0 f-500 roboto text-black">Your risk {{scoreStatus}}
+                    <h5 class="m-0 f-500 roboto text-black">Your risk {{risk.riskProfileStatus}}
                     </h5>
-                    <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
-                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take {{scoreStatus}} risk for {{scoreStatus}} returns</p>
+                    <div>
+                        <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                        <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                        <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                        <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                        <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
+                    </div>
+                    <p class="m-0 text-custom roboto" style="text-align: center;">{{riskProfileDesc(risk.riskProfileId)}}</p>
                 </div>
                 <div class="col-md-4">
                 </div>
@@ -161,8 +177,7 @@
 
         </div>
     </div>
-</div>
-<div *ngIf="showRisk == true">
+  
     <div class="row">
         <div class="col-md-12 text-center">
 

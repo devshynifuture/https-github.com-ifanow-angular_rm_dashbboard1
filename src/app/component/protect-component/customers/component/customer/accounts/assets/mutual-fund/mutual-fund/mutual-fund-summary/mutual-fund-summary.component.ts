@@ -164,7 +164,7 @@ export class MutualFundSummaryComponent implements OnInit {
             transactionView: transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') :  (data[0].showZeroFolios == true) ? '1' : '2',
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
-            selectFilter: (currentClient.length > 0) ? this.clientId : 0
+            selectFilter: (getList.length > 0) ? this.clientId : 0
           }
           if (this.mfGetData) {
             this.getMutualFundResponse(this.mfGetData)
@@ -582,7 +582,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);
+    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData,'','');
   }
 
   deleteModal(value, element) {
