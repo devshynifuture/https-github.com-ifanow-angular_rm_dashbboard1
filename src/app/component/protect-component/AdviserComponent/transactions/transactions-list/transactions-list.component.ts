@@ -169,7 +169,19 @@ export class TransactionsListComponent implements OnInit {
       state: 'open35',
       componentName: TransactionDetailComponent,
     };
-    this.subInjectService.changeNewRightSliderState(fragmentData);
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.refresh(true);
+          } else if (sideBarData.data) {
+
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 
   openTransaction() {

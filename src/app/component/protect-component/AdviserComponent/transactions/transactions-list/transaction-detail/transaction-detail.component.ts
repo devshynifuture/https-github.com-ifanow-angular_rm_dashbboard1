@@ -21,6 +21,7 @@ export class TransactionDetailComponent implements OnInit {
   }
 
   set data(data) {
+    console.log('transaction detail : ', data);
     this.transactionData = data;
     switch (true) {
       case (this.transactionData.transactionType == 'ORDER' || this.transactionData.transactionType == 'PURCHASE'):
@@ -91,6 +92,6 @@ export class TransactionDetailComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close', data: this.transactionData});
   }
 }
