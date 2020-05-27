@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EnumServiceService} from '../../../../services/enum-service.service';
-import {detailStatusObj} from './transactions-list/transactions-history/detailStatus';
+import {detailStatusObj} from './transactions-list/transaction-detail/detailStatus';
 
 @Injectable({
   providedIn: 'root'
