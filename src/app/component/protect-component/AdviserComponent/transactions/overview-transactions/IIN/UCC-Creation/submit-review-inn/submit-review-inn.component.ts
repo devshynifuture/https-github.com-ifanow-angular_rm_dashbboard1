@@ -191,7 +191,7 @@ export class SubmitReviewInnComponent implements OnInit {
 
 
   submit(singleBrokerCred) {
-    this.doneData = true;
+    // this.doneData = true;
     this.toSendObjHolderList = [];
     this.toSendObjBankList = [];
     this.toSendObjNomineeList = [];
