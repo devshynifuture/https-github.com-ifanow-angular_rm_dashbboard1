@@ -21,7 +21,11 @@ addEventListener('message', ({data}) => {
     customDataHolder.push({...element});
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
     element.totalTransactionAmt = mfService.mutualFundRoundAndFormat(element.totalTransactionAmt, 2);
-    element.transactionNav = mfService.mutualFundRoundAndFormat(element.transactionNav, 4);
+    if (element.transactionNav && element.transactionNav > 0) {
+      element.transactionNav = mfService.mutualFundRoundAndFormat(element.transactionNav, 4);
+    } else {
+      element.transactionNav = '';
+    }
     element.totalNav = mfService.mutualFundRoundAndFormat(element.totalNav, 3);
     element.unit = mfService.mutualFundRoundAndFormat(element.unit, 3);
     element.totalUnit = mfService.mutualFundRoundAndFormat(element.totalUnit, 3);

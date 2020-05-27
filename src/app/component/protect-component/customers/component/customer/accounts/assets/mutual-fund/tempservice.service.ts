@@ -352,7 +352,7 @@ export class TempserviceService {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
         totalUnit += (ele.unit) ? ele.unit : 0;
         totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
-        balanceUnit += (ele.balanceUnits) ? ele.balanceUnits : 0;
+        balanceUnit = (ele.balanceUnits) ? ele.balanceUnits : 0;
         currentValue += (ele.currentValue) ? ele.currentValue : 0;
         dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
         dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;

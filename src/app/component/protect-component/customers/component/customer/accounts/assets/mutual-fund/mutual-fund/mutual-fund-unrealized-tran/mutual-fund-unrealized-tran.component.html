@@ -1,4 +1,4 @@
-<div class="wrapper-8" *ngIf="viewMode">
+<div *ngIf="viewMode" class="wrapper-8">
   <div class="row pb-12">
     <div class="col-md-6 pl-0">
       <h4 class="m-0 text-black roboto pt-8">
@@ -203,14 +203,27 @@
             </td>
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
           </ng-container>
-
+          <ng-container matColumnDef="noTotal" sticky>
+            <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
+              <div class="bar"><span>{{element.indexId}}</span></div>
+            </td>
+            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+          </ng-container>
           <ng-container matColumnDef="transactionType">
             <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
             </th>
             <td *matCellDef="let element" class="br zIndex" mat-cell>
               <div class="bar">
-                <span *ngIf="element.total=='Total'" class="f-700">{{element.total}}</span>
-                <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
+                <span>{{element.fwTransactionType}}</span>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="transactionTypeTotal">
+            <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
+            </th>
+            <td *matCellDef="let element" class="br zIndex" mat-cell>
+              <div class="bar">
+                <span class="f-700">{{element.total}}</span>
               </div>
             </td>
           </ng-container>
@@ -225,39 +238,58 @@
               </div>
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="transactionDateTotal">
+            <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
+              <div class="bar">
+                {{element.transactionDate | date:'dd/MM/yyyy'}}
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="transactionAmount">
             <th *matHeaderCellDef class="br text-left" mat-header-cell>
               Transaction amount
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-              <div class="bar"><span
-                *ngIf="element.amount">{{element.amount}}</span>
+              <div class="bar"><span>{{element.amount}}</span>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="transactionAmountTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
                 <span *ngIf="element.totalTransactionAmt"
                       class="f-700">{{element.totalTransactionAmt}}</span>
               </div>
             </td>
           </ng-container>
 
-
           <ng-container matColumnDef="transactionNav">
             <th *matHeaderCellDef class="br   text-right" mat-header-cell>
               Transaction NAV
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-              <div class="bar"><span
-                *ngIf="!element.totalNav">{{element.transactionNav}}</span>
-                <span *ngIf="element.totalNav"
-                      class="f-700">{{element.totalNav}}</span>
+              <div class="bar"><span>{{element.transactionNav}}</span>
               </div>
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="transactionNavTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <!--                <span class="f-700">{{element.totalNav}}</span>-->
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="units">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>Units</th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
               <div class="bar"><span *ngIf="element.unit || element.unit == 0">{{element.unit}}</span>
-                <span *ngIf="element.totalUnit || element.totalUnit == 0" class="f-700">{{element.totalUnit}}</span>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="unitsTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span class="f-700">{{element.totalUnit}}</span>
               </div>
             </td>
           </ng-container>
@@ -267,44 +299,51 @@
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
               <div class="bar">
-                <span *ngIf="element.balanceUnits || element.balanceUnits == 0">{{element.balanceUnits}}</span>
-                <span *ngIf="element.totalBalanceUnit || element.totalBalanceUnit == 0"
-                      class="f-700">{{element.totalBalanceUnit}}</span>
+                <span>{{element.balanceUnits}}</span>
               </div>
             </td>
             <td *matFooterCellDef class="br f-600 text-right zIndex" mat-footer-cell>
               {{grandTotal.totalBalanceUnit}}</td>
-
           </ng-container>
-
+          <ng-container matColumnDef="balanceUnitsTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span class="f-700">{{element.totalUnit}}</span>
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="days">
             <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="days">
               Days
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-
               <div class="bar">
                 {{element.days}}
               </div>
             </td>
             <td *matFooterCellDef class="br text-right zIndex" mat-footer-cell>
             </td>
-
+          </ng-container>
+          <ng-container matColumnDef="daysTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                {{element.days}}
+              </div>
+            </td>
           </ng-container>
           <ng-container matColumnDef="currentValue">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>
               Current value
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-              <div class="bar">
-                                <span
-                                  *ngIf="element.currentAmount || element.currentAmount == 0 ">{{element.currentAmount}}</span>
-                <span *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0"
-                      class="f-700">{{element.totalCurrentValue}}</span>
-              </div>
+              <div class="bar"><span>{{element.currentAmount}}</span></div>
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="currentValueTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar"><span class="f-700">{{element.totalCurrentValue}}</span></div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="dividendPayout">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>
               Dividend payout
@@ -315,7 +354,13 @@
               </div>
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="dividendPayoutTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span>{{element.dividendPayout}}</span>
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="dividendReinvest">
             <th *matHeaderCellDef class="br text-right zIndex" mat-header-cell>
               Dividend reinvestment
@@ -327,68 +372,78 @@
               </div>
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="dividendReinvestTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span>{{element.dividendReinvest}}</span>
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="totalAmount">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>
               Total amount
             </th>
             <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
+              <div class="bar"><span>{{element.currentAmount}}</span></div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="totalAmountTotal">
+            <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
               <div class="bar">
-                                <span
-                                  *ngIf="element.currentAmount || element.currentAmount == 0">{{element.currentAmount}}</span>
-                <span *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0"
-                      class="f-700">{{element.totalCurrentValue}}</span>
+                <span class="f-700">{{element.totalCurrentValue}}</span>
               </div>
             </td>
 
           </ng-container>
-
           <ng-container matColumnDef="gain">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>
               Gain
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
               <div class="bar">
-                                <span
-                                  *ngIf="element.currentAmount || element.currentAmount ==0 || element.amount || element.amount == 0">
-                                    {{element.currentAmount - element.amount}}</span>
-                <span
-                  *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0 || element.totalTransactionAmt || element.totalTransactionAmt ==0"
-                  class="f-700">
-                                    {{element.totalCurrentValue - element.totalTransactionAmt}}</span>
+                <span>{{element.currentAmount - element.amount}}</span>
               </div>
             </td>
-
-
           </ng-container>
-
+          <ng-container matColumnDef="gainTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span>{{element.totalCurrentValue - element.totalTransactionAmt}}</span>
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="absReturn">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>
               Absolute Return%
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-              <div class="bar"><span
-                *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{element.absoluteReturn}}</span>
-                <span
-                  *ngIf="element.trnAbsoluteReturn || element.trnAbsoluteReturn==0">{{element.trnAbsoluteReturn}}</span>
+              <div class="bar"><span>{{element.absoluteReturn}}</span></div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="absReturnTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span>{{element.trnAbsoluteReturn}}</span>
               </div>
             </td>
-
-
           </ng-container>
-
           <ng-container matColumnDef="xirr">
             <th *matHeaderCellDef class="br text-right" mat-header-cell>
               XIRR%
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
               <div class="bar">
-                <span *ngIf="element.cagr || element.cagr == 0">{{element.cagr}}</span>
-                <span *ngIf="element.totalCagr || element.totalCagr ==0">{{element.totalCagr}}</span>
+                <span>{{element.cagr}}</span>
               </div>
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="xirrTotal">
+            <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+              <div class="bar">
+                <span>{{element.totalCagr}}</span>
+              </div>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="groupHeader">
             <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                 class="text-center zIndex text-primary">
@@ -438,8 +493,14 @@
 
             <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
           </ng-container>
+          <ng-container matColumnDef="iconsTotal" sticky>
+            <td *matCellDef="let element" class="zIndex" mat-cell>
+            </td>
+          </ng-container>
           <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
           <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
+
           <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
           <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
           <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
