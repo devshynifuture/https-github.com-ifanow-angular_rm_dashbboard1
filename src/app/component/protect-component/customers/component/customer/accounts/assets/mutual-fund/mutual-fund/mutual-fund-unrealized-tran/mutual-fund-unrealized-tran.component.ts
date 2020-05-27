@@ -172,8 +172,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             transactionView: transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
-            selectFilter: (currentClient.length > 0) ? this.clientId : 0
-          };
+            selectFilter: (getList.length > 0) ? this.clientId : 0
+          }
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions') {
             this.isLoading = true;

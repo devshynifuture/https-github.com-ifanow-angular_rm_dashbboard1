@@ -361,7 +361,7 @@
                         </td>
 
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(totaldividendPayout == 0 ) ? (totaldividendPayout) : (totaldividendPayout | number:'1.2-2')}}
+                            {{(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout | number:'1.2-2')}}
                         </td>
 
                     </ng-container>
@@ -375,7 +375,7 @@
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(totaldividendReinvestment == 0 ) ? (totaldividendReinvestment) : (totaldividendReinvestment | number:'1.2-2')}}
+                            {{(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment | number:'1.2-2')}}
                         </td>
 
                     </ng-container>
@@ -388,7 +388,7 @@
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                            {{(totalReinvesment == 0 ) ? (totalReinvesment) : (totalReinvesment | number:'1.2-2')}}
+                            {{(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment | number:'1.2-2')}}
                         </td>
 
                     </ng-container>
