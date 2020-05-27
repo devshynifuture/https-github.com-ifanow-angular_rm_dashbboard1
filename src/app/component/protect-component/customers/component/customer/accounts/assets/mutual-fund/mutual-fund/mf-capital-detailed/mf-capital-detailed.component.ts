@@ -44,6 +44,9 @@ export class MfCapitalDetailedComponent implements OnInit {
   fromDate: Date;
   toDate: Date;
   categoryWiseTotal ={};
+  GTdividendPayout = 0;
+  GTReinvesment = 0;
+  GTdividendReinvestment = 0;
   constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
@@ -167,6 +170,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       let totalValue: any ={};
       this.categoryWiseTotal;
       let mfList = this.MfServiceService.filter(data, 'mutualFund');
+      if(this.rightFilterData){
+        mfList = this.MfServiceService.filterArray(mfList , 'familyMemberId', this.rightFilterData.family_member_list, 'id');
+      }
       mfList.forEach(element => {
         const startObj={
           schemeName:element.schemeName,
@@ -207,30 +213,6 @@ export class MfCapitalDetailedComponent implements OnInit {
       
               });
               }
-              // }else{
-              //   obj.purchaceAgainstRedemptionTransactions =[];
-              //   const array={
-              //     redeemTransactionDate : (obj.transactionDate) ? obj.transactionDate : 0,
-              //     transactionType : (obj.fwTransactionType) ? obj.fwTransactionType : 0,
-              //     redeemAmount : (obj.amount) ? obj.amount : 0,
-              //     redeemStt :  (obj.stt) ? obj.stt:0,
-              //     redeemUnit :(obj.unit) ? obj.unit : 0,
-              //     redeemRate : (obj.purchasePrice) ? obj.purchasePrice :0,
-              //     stGain :0,
-              //     ltGain :0,
-              //     stLoss :0,
-              //     ltLoss :0,
-              //     indexGain :0,
-              //     indexLoss :0,
-              //     transactionDate:'',
-              //     amount:0,
-              //     unit:0,
-              //     purchasePrice:0,
-              //     days:0
-              //   }
-              //   filteredArray.push(array)
-              //   totalValue = this.MfServiceService.addTwoObjectValues(this.calculateTotalValue(array), totalValue, {totalAmt: true});
-              // }
             }
     
           });
@@ -393,9 +375,16 @@ export class MfCapitalDetailedComponent implements OnInit {
   // }
   getDividendSummaryData(data) {
     if (data) {
+      this.GTReinvesment=0;
+      this.GTdividendPayout=0;
+      this.GTdividendReinvestment= 0;
       let filterObj = []
       this.totalReinvesment = 0;
+      let flag = false;
       let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
+      if(this.rightFilterData){
+        mutualFund = this.MfServiceService.filterArray(mutualFund , 'familyMemberId', this.rightFilterData.family_member_list, 'id');
+      }
       mutualFund.forEach(element => {
        if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
@@ -413,16 +402,28 @@ export class MfCapitalDetailedComponent implements OnInit {
                 this.totaldividendReinvestment += ((ele.dividendReinvestment) ? ele.dividendReinvestment : 0);
               
               }
+              flag = true;
+           
             }
+
           });
-          const obj={
-            schemeName :element.schemeName,
-            folioNumber:element.folioNumber,
-            dividendPayout:this.totaldividendPayout,
-            dividendReinvestment:this.totaldividendReinvestment,
-            totalReinvesment:this.totalReinvesment
+          if(flag){
+            const obj={
+              schemeName :element.schemeName,
+              folioNumber:element.folioNumber,
+              dividendPayout:this.totaldividendPayout,
+              dividendReinvestment:this.totaldividendReinvestment,
+              totalReinvesment:this.totalReinvesment
+            }
+            filterObj.push(obj);  
+            this.GTReinvesment+= (this.totalReinvesment) ? this.totalReinvesment : 0;
+            this.GTdividendPayout+=(this.totaldividendPayout) ? this.totaldividendPayout  :0;
+            this.GTdividendReinvestment+=(this.totaldividendReinvestment) ? this.totaldividendReinvestment : 0;
+            this.totalReinvesment=0;
+            this.totaldividendPayout=0;
+            this.totaldividendReinvestment=0;
           }
-          filterObj.push(obj);
+
         } 
       });
       return filterObj;

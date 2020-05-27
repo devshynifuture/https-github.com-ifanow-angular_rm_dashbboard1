@@ -183,7 +183,7 @@ export class MutualFundOverviewComponent implements OnInit {
           overviewFilter : overviewFilter,
           showFolio:(data[0].showZeroFolios == true) ? '1' : '2',
           reportType:data[0].reportType,
-          selectFilter : (allClient.length > 0)  ? 0 : this.clientId
+          selectFilter : (getList.length > 0)  ? this.clientId : 0
         }
         
             this.showHideTable = overviewFilter;
@@ -419,7 +419,7 @@ export class MutualFundOverviewComponent implements OnInit {
     if (this.dataSource.data.length > 0) {
       let sortedData = this.MfServiceService.sorting(data.family_member_list, 'name');
       sortedData = sortedData.filter((item: any) =>
-        item.currentValue != 0 && item.currentValue > 0
+        item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
       );
       this.dataSource = new MatTableDataSource(sortedData);
       this.isLoading = false;
@@ -457,7 +457,7 @@ export class MutualFundOverviewComponent implements OnInit {
               dataToShow.push(element);
               let sortedData = this.MfServiceService.sorting(dataToShow, 'schemeName')
               sortedData = sortedData.filter((item: any) =>
-                item.currentValue != 0 && item.currentValue > 0
+                item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnit != 0 && item.balanceUnit > 0)
               );
               this.dataSource2 = new MatTableDataSource(sortedData);
               this.isLoading = false;
@@ -474,7 +474,7 @@ export class MutualFundOverviewComponent implements OnInit {
         dataToShow.push(element);
         let sortedData = this.MfServiceService.sorting(dataToShow, 'schemeName');
         sortedData = sortedData.filter((item: any) =>
-          (item.currentValue != 0 && item.currentValue > 0)
+          (item.currentValue != 0 && item.currentValue > 0) || (item.balanceUnit != 0 && item.balanceUnit > 0)
         );
         this.dataSource2 = new MatTableDataSource(sortedData);
         this.changeInput.emit(false);
