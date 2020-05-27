@@ -198,16 +198,6 @@ export class MutualFundOverviewComponent implements OnInit {
             (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
             (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
             (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-       }else{
-         if(this.rightFilterData){
-          this.showHideTable = this.rightFilterData.overviewFilter;
-          (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
-          (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
-          (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
-          (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
-          (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
-          (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
-         }
        }
 
      }
@@ -327,11 +317,17 @@ export class MutualFundOverviewComponent implements OnInit {
         item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
+      if(this.dataSource4.data.length == 0){
+        this.showCategory = false;
+      }
       this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
       this.schemeWiseAllocation(data); // for shemeWiseAllocation
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
       this.isLoading = false;
       this.changeInput.emit(false);
+      if(this.dataSource.data.length == 0 && this.dataSource2.data.length==0  && this.dataSource3.data.length==0 && this.dataSource4.data.length==0 ){
+        this.showSummaryBar = false;
+      }
     } else {
       this.showSummaryBar = false;
       this.dataSource.data = []
@@ -398,8 +394,14 @@ export class MutualFundOverviewComponent implements OnInit {
         { data: 'i. Lifetime XIRR (All Transactions)', amts: (this.cashFlowXirr) ? this.cashFlowXirr : 0 },
 
       ];
+      if(this.datasource1.data.length == 0){
+        this.showCashFlow = false;
+      }
     } else {
       this.datasource1.data = [];
+      if(this.datasource1.data.length == 0){
+        this.showCashFlow = false;
+      }
     }
 
   }
@@ -413,6 +415,9 @@ export class MutualFundOverviewComponent implements OnInit {
         item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource3 = new MatTableDataSource(sortedData);
+      if(this.dataSource3.data.length == 0){
+        this.showSubCategory = false;
+      }
       this.isLoading = false;
       this.changeInput.emit(false);
 
@@ -427,6 +432,9 @@ export class MutualFundOverviewComponent implements OnInit {
         item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
       );
       this.dataSource = new MatTableDataSource(sortedData);
+      if(this.dataSource.data.length == 0){
+        this.showFamilyMember = false;
+      }
       this.isLoading = false;
       this.changeInput.emit(false);
 
@@ -465,6 +473,9 @@ export class MutualFundOverviewComponent implements OnInit {
                 item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnit != 0 && item.balanceUnit > 0)
               );
               this.dataSource2 = new MatTableDataSource(sortedData);
+              // if(this.dataSource2.data.length == 0){
+              //   this.showSchemeWise=false
+              // }
               this.isLoading = false;
               this.changeInput.emit(false);
             });
@@ -482,6 +493,9 @@ export class MutualFundOverviewComponent implements OnInit {
           (item.currentValue != 0 && item.currentValue > 0) || (item.balanceUnit != 0 && item.balanceUnit > 0)
         );
         this.dataSource2 = new MatTableDataSource(sortedData);
+        // if(this.dataSource2.data.length == 0){
+        //   this.showSchemeWise=false
+        // }
         this.changeInput.emit(false);
       }
     });
@@ -721,7 +735,7 @@ export class MutualFundOverviewComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.getFilterData(1);
+            // this.getFilterData(1);
             this.totalValue = {};
             this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
             this.dataSource4 = new MatTableDataSource([{}, {}, {}]);
@@ -732,6 +746,15 @@ export class MutualFundOverviewComponent implements OnInit {
             this.rightFilterData = sideBarData.data;
             this.getMutualFundResponse(this.rightFilterData.mfData);
             this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund,this.rightFilterData,this.displayedColumns);
+            if(this.rightFilterData){
+              this.showHideTable = this.rightFilterData.overviewFilter;
+              (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
+              (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ? this.showSchemeWise = true : (this.showSchemeWise = false, this.dataSource2.data = []);
+              (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false, this.datasource1.data = []);
+              (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false, this.dataSource.data = []);
+              (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false, this.dataSource4.data = []);
+              (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false, this.dataSource3.data = []);
+             }
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);
             this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
             this.isLoading = false;
