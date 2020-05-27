@@ -316,7 +316,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     // }
   }
 
-  submitRiskAnalysis(data) {
+  submitRiskAnalysis() {
     this.clientRiskAssessmentResults = [];
     const obj = {
       riskAssessmentId: 1,
