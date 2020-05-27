@@ -153,6 +153,18 @@ export class UtilService {
     return parseFloat(this.decimalPipe.transform(data, '9.0-' + noOfPlaces, null).replace(/,/g, ''));
   }
 
+  static mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
+    if (data) {
+      if (isNaN(data)) {
+        return data;
+      } else {
+        return this.roundOff(data, noOfPlaces).toLocaleString('en-IN');
+      }
+    } else {
+      return '0';
+    }
+  }
+
   static obfuscateEmail(email: string) {
     let tempMail: string;
     const indexOfAt = email.indexOf('@');
@@ -310,9 +322,11 @@ export class UtilService {
     const obj = {
       htmlInput: inputData,
       name: pdfName,
-      landscape : true
+      landscape: true
     };
-    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
+    return this.http.post(
+      'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
+      {responseType: 'blob'}).subscribe(
       data => {
         const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
