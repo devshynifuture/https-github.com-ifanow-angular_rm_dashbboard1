@@ -72,7 +72,7 @@ export class MyIfasComponent implements OnInit {
               team: element.teamMemberCount,
               arn: element.arnRiaDetailCount,
               logout: element.logout ? element.logout : " - ",
-              adminAdvisorId: element.admin_advisor_id,
+              adminAdvisorId: element.adminAdvisorId,
               menu: "",
             });
           });

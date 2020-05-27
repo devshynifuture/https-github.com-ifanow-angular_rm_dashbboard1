@@ -131,7 +131,7 @@
                                         <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
                                             <span
                                                 *ngIf="singleMembers.shortName==undefined">{{singleMembers.name}}</span><span
-                                                title="{{singleMembers.name}}"
+                                                matTooltip="{{singleMembers.name}}"
                                                 *ngIf="singleMembers.shortName">{{singleMembers.shortName}} ...</span>
                                         </h4>
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
@@ -143,7 +143,7 @@
                                             <span *ngIf="singleMembers.relationshipId==7">Others</span>
                                         </p>
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
-                                            {{singleMembers.age}}</p>
+                                            {{singleMembers.age}} Yrs</p>
                                     </div>
 
                                     <!-- <i class="material-icons familyDelete">
