@@ -84,7 +84,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.fieldFlag == 'familyMember') {
       (data.relationshipId == 2 || data.relationshipId == 4 || data.relationshipId == 5) ?
         data.genderId = 2 : (data.relationshipId == 3 || data.relationshipId == 6) ?
-          data.genderId = 1 : data.genderId = 3;
+          data.genderId = 1 : (data.genderId == 0) ? data.genderId = 1 : '';
+      (data.relationshipId == 7) ? this.maxDateForAdultDob = new Date() : '';
       this.basicDetailsData = data;
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 6
         || this.basicDetailsData.relationshipId == 5 || this.basicDetailsData.relationshipId == 7) {

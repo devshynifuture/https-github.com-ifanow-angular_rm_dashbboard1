@@ -3,8 +3,7 @@
         <!--        <h3 class="m-0">Leads</h3>-->
     </div>
 
-    <div *ngIf="leadDataSource.data.length>0 && isLoading==false"
-        class="col-md-8 d-flex align-items-center justify-content-end ">
+    <div *ngIf="leadDataSource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end ">
         <!-- <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p"> -->
 
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
@@ -33,9 +32,7 @@
 
 <div class="row">
     <div class="col-md-12 people-leads">
-        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort"
-            [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
-            class="mt-8" id="table-low">
+        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort" [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-sort-header="displayName" mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>
@@ -67,12 +64,12 @@
                     <div class="bar">
                         <span *ngIf="element.leadSource && element.leadSource!=0">
                             <span *ngIf="element.leadSource==1">Search engine</span>
-                            <span *ngIf="element.leadSource==2">Website</span>
-                            <span *ngIf="element.leadSource==3">Refrerals from existing clients</span>
-                            <span *ngIf="element.leadSource==4">Refrerals from existing friends</span>
-                            <span *ngIf="element.leadSource==5">Refrerals from existing relatives</span>
-                            <span *ngIf="element.leadSource==6">LinkedIn</span>
-                            <span *ngIf="element.leadSource==7">Others</span>
+                        <span *ngIf="element.leadSource==2">Website</span>
+                        <span *ngIf="element.leadSource==3">Refrerals from existing clients</span>
+                        <span *ngIf="element.leadSource==4">Refrerals from existing friends</span>
+                        <span *ngIf="element.leadSource==5">Refrerals from existing relatives</span>
+                        <span *ngIf="element.leadSource==6">LinkedIn</span>
+                        <span *ngIf="element.leadSource==7">Others</span>
                         </span>
                         <span *ngIf="!isLoading">
                             <span *ngIf="element.leadSource==undefined || element.leadSource==0">
@@ -128,11 +125,27 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="leadDataSource.data.length==0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">No Leads found</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
-                ADD NEW</button>
+        <div *ngIf="leadDataSource.data.length==0" class="row pt-32">
+
+            <div class="col-md-7 d-flex align-items-center  flex-column ">
+                <img src="assets/images/svg/leads-empty-states.svg">
+                <h4 class="mt-24 mb-12">No leads added yet</h4>
+                <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
+                    ADD NEW</button>
+            </div>
+
+            <div class="col-md-5">
+                <div class="dashedClass">
+                    <p>You can manually add your leads from here. </p>
+                    <p> Tip: You can also create a dedicated sign-up page for leads who come to your website. So, let’s say you are doing a workshop (IAP) or a webinar etc., then you can simply give your audience the link to this page and they can self sign-up.
+                    </p>
+                    <p>You can get access to your dedicated sign-up page from here.</p>
+                    <p class="mb-0"> Still have questions? Watch this video:</p>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 </div>

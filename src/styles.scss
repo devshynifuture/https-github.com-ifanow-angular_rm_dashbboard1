@@ -1014,9 +1014,7 @@
 
                 #ui-insurance {
                   .vertical-menu {
-
-                    height: calc(100vh - 119px);
-
+                    height: calc(100vh - 145px);
                   }
                 }
 
@@ -1628,13 +1626,13 @@
                   }
                 }
 
-                #table-low tbody td.amt {
-                  padding-right: 20px !important;
-                }
+                // #table-low tbody td.amt {
+                //   padding-right: 20px !important;
+                // }
 
-                #table-low tfoot td.amt {
-                  padding-right: 20px !important;
-                }
+                // #table-low tfoot td.amt {
+                //   padding-right: 20px !important;
+                // }
 
                 .textRight .mat-sort-header-container {
                   display: block;
