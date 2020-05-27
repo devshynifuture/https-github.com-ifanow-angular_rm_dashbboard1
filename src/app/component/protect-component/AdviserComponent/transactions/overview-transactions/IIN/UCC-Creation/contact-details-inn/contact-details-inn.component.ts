@@ -53,7 +53,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.inputData = data;
     // this.doneData.nominee = true;
     // this.doneData.bank = true;
-    // this.doneData.contact = true;
+    this.doneData.contact = false;
     this.doneData.personal = true;
     // this.doneData.fatca = false;
     console.log('Data in contact detail : ', data);

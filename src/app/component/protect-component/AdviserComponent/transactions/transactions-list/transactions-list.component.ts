@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TransactionsHistoryComponent} from './transactions-history/transactions-history.component';
+import {TransactionDetailComponent} from './transaction-detail/transaction-detail.component';
 import {UtilService} from 'src/app/services/util.service';
 import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 import {OnlineTransactionService} from '../online-transaction.service';
@@ -167,7 +167,7 @@ export class TransactionsListComponent implements OnInit {
       flag: 'addNewTransaction',
       data,
       state: 'open35',
-      componentName: TransactionsHistoryComponent,
+      componentName: TransactionDetailComponent,
     };
     this.subInjectService.changeNewRightSliderState(fragmentData);
   }

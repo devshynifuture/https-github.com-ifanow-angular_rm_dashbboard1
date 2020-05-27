@@ -482,7 +482,7 @@ export const appConfig = {
   ADD_HIDDEN_AMC: 'mutual-fund/hidden-amc/add',
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
-  GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
+  GET_TRANSACTION_DETAILS: 'report/transaction/status/get',
   GET_OVERVIEW_MANDATE: 'mandate/summary',
   GET_IIN_UCC_OVERVIEW: 'report/client-code/count/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
