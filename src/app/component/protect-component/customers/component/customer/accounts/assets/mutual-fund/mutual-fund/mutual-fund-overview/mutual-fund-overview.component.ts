@@ -494,7 +494,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log(this.svg)
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData,this.svg)
+    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData,'showPieChart',this.svg)
     console.log('return value ====',this.returnValue)
   }
   getReportWiseCalculation(data) {
