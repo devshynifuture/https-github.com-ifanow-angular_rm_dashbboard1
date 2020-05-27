@@ -14,6 +14,10 @@
     }
 }
 
+.wb-bw{
+    word-break: break-word !important;
+}
+
 ::ng-deep .classToggleBtn .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     line-height: 36px;
 }
