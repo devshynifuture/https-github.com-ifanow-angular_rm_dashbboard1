@@ -24,7 +24,7 @@
                             (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable || f.genderId == 1 " [value]="f.userName">
+                            <mat-option *ngFor="let f of nomineesListFM" [hidden]="f.disable || f.genderId == 1 " [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -67,8 +67,8 @@
                     <mat-select matInput formControlName="guardian" 
                             class="form-control br-0" >
                             <mat-option value='' disabled>Select Guardian</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable || f.familyMemberAge < 18" [value]="f.userName">
-                                <span>{{f.userName}}</span>
+                            <mat-option *ngFor="let f of nomineesListFM" [hidden]="f.familyMemberAge < 18 || (f.relationshipId != 6 && f.relationshipId != 7)" [value]="f.userName">
+                                <span>{{f.userName}} {{f.relationshipId == 6?'(Father)': f.relationshipId == 7?'(Mother)': ''}}</span>
                             </mat-option>
                         </mat-select>
                     <!-- <input autocomplete="off" matInput #guradian class="form-control br-0" formControlName="guardian"
@@ -143,7 +143,7 @@
                         Setected date of Commencement must not be before birth of owner
                     </mat-error>
                     <mat-error class="f-12" *ngIf="ssySchemeForm.get('commDate').errors?.incorrect">
-                        Setected owner is not allowed for SSY as on date of Commencement her age is above 21
+                        Setected owner is not allowed for SSY as on date of Commencement her age was above 21
                     </mat-error>
                 </mat-form-field>
             </div>

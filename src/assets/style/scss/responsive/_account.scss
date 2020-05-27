@@ -24,6 +24,10 @@
   .mat-form-field-appearance-standard .mat-form-field-flex {
     padding-top: 0px !important;
   }
+
+  .mat-expansion-panel-header-description {
+    flex-grow: 0;
+  }
 }
 
 .mf-capital-details {
@@ -51,6 +55,57 @@
 
 #ui-profile-plan {
   pointer-events: initial !important;
+}
+
+.sticy-now {
+  position: sticky;
+  top: 140px;
+  z-index: 1020;
+}
+
+.riskProfileBox {
+  .mat-expansion-panel-header-title {
+    margin-right: 52px;
+  }
+
+  .mat-expansion-panel-header {
+    background: #F5F7F7;
+  }
+
+  .mat-expansion-panel-header.mat-expanded:focus,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: #F5F7F7;
+  }
+
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+  }
+
+  .mat-expansion-panel-header-description {
+    flex-grow: 0 !important;
+  }
+
+  .mat-expansion-panel-body {
+    margin-top: 12px !important;
+  }
+}
+
+.highcharts-credits {
+  display: none !important;
+}
+
+.sticky-risk-pofile {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 140px;
+
+  .mat-progress-bar {
+    height: 30px;
+  }
+
+  .mat-progress-bar-buffer {
+    background: #D9DEE1;
+  }
 }
 
 @media(max-width:1292px) {

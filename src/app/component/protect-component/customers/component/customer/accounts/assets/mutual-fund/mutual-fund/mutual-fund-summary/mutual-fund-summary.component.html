@@ -87,11 +87,11 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span class="text-right"
-                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested | number :'1.0-0') : 0}}</span>
-                            <span  class="f-700"
-                                *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? (element.totalAmountInvested | number:'1.0-0') : 0}}</span>
-                        </div>
+<!--                        <div class="bar"> <span class="text-right"-->
+<!--                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested | number :'1.0-0') : 0}}</span>-->
+<!--                            <span  class="f-700"-->
+<!--                                *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? (element.totalAmountInvested | number:'1.0-0') : 0}}</span>-->
+<!--                        </div>-->
                     </td>
 
                     <td *matFooterCellDef
@@ -104,7 +104,7 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Current value</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span 
+                        <div class="bar"><span
                                 *ngIf="element.currentValue || element.currentValue == 0">{{(element.currentValue)?(element.currentValue | number :'1.0-0'):0}}</span>
                             <span  class="f-700"
                                 *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{(element.totalCurrentValue) ? (element.totalCurrentValue | number :'1.0-0') : 0}}</span>
@@ -123,7 +123,7 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Unrealized profit</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span 
+                        <div class="bar"><span
                                 *ngIf="element.unrealizedGain || element.unrealizedGain == 0">{{(element.unrealizedGain)?(element.unrealizedGain | number :'1.0-0'):0}}</span>
                             <span   class="f-700"
                                 *ngIf="element.totalUnrealizedGain || element.totalUnrealizedGain == 0">{{(element.totalUnrealizedGain) ? (element.totalUnrealizedGain | number :'1.0-0') : 0}}</span>
@@ -171,14 +171,14 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Dividend payout</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span 
+                        <div class="bar"><span
                                 *ngIf="element.dividendPayout || element.dividendPayout == 0">{{(element.dividendPayout) ? (element.dividendPayout | number) : 0}}</span>
                             <span  class="f-700"
                                 *ngIf="element.totalDividendPayout || element.totalDividendPayout == 0">{{(element.totalDividendPayout) ? (element.totalDividendPayout | number) : 0}}</span>
                         </div>
                     </td>
 
-                    <td *matFooterCellDef 
+                    <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
                         <span>{{(mfData) ? (mfData.total_dividend_payout | number :'1.0-0') : 0}}</span>
                     </td>
@@ -188,14 +188,14 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Withdrawal Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span 
+                        <div class="bar"><span
                                 *ngIf="element.switchOut || element.switchOut == 0">{{(element.switchOut) ? (element.switchOut | number :'1.0-0') : 0}}</span>
                             <span  class="f-700"
                                 *ngIf="element.totalSwitchOut || element.totalSwitchOut == 0">{{(element.totalSwitchOut) ? (element.totalSwitchOut | number :'1.0-0') : 0}}</span>
                         </div>
                     </td>
 
-                    <td *matFooterCellDef 
+                    <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
                         <span>{{(grandTotal) ? (grandTotal.withdrawals) : 0}}</span>
                     </td>
@@ -238,7 +238,7 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef> SIP
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span 
+                        <div class="bar"><span
                                 *ngIf="element.sipAmount  || element.sipAmount == 0">{{(element.sipAmount) ? (element.sipAmount | number) : 0}}</span>
                             <span  class="f-700"
                                 *ngIf="element.totalSipAmount || element.totalSipAmount == 0">{{(element.totalSipAmount) ? (element.totalSipAmount | number) : 0}}</span>

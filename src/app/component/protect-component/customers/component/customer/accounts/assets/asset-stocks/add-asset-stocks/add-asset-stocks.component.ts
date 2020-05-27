@@ -254,6 +254,7 @@ addNewNominee(data) {
           "ownerList": this.assetForm.value.getCoOwnerName,
           "stockList": [
             {
+              "ownerList": this.assetForm.value.getCoOwnerName,
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
@@ -277,6 +278,7 @@ addNewNominee(data) {
           "portfolioName": this.assetForm.get("portfolioName").value,
           "stockList": [
             {
+              "ownerList": this.assetForm.value.getCoOwnerName,
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,

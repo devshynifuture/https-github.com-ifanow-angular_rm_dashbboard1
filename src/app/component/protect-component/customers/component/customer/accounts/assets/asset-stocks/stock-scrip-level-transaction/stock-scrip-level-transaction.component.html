@@ -72,7 +72,7 @@
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <div class="form-group mb-0">
                 <app-portfolio-field [ownerId]="portfolioFieldData" [checkValid]='checkValid'
-                    [owner]="scipLevelTransactionForm" (outputEvent)="getPortfolioData($event)">
+                    [owner]="scipLevelTransactionForm.controls" (outputEvent)="getPortfolioData($event)">
                 </app-portfolio-field>
             </div>
         </div>

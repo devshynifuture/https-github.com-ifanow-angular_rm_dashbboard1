@@ -11,6 +11,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import * as moment from 'moment';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-ppf',
   templateUrl: './add-ppf.component.html',
@@ -76,7 +77,7 @@ export class AddPpfComponent implements OnInit {
     }
   adviceShowHeaderAndFooter: boolean = true;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(public utils: UtilService,  private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -270,11 +271,11 @@ addNewNominee(data) {
     let y:any;
     if(new Date(this.ppfSchemeForm.value.commencementDate).getMonth()> 3){
       y =  new Date(this.ppfSchemeForm.value.commencementDate).getFullYear() + 1;
-      startDate = new Date(y , 3, 1);
+      startDate = new Date(y , 3, 2);
     }
     else{
       y =  new Date(this.ppfSchemeForm.value.commencementDate).getFullYear();
-      startDate = new Date(y , 3, 1);
+      startDate = new Date(y , 3, 2);
     }
     // startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
     maturityDate =startDate.setFullYear(startDate.getFullYear() + 15);
@@ -330,10 +331,11 @@ addNewNominee(data) {
       // extenMaturity:['', [Validators.required]],
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [ Validators.min(500)]],//Validators.max(150000)
-      balanceAsOn: [new Date(data.balanceAsOn)],
+      balanceAsOn: [data.balanceAsOn?new Date(data.balanceAsOn):''],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
       extenMaturity: [''],
+      ppfNo:[data.ppfNumber],
       frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
       description: [data.description],
       bankName: [data.userBankMappingId],
@@ -451,7 +453,7 @@ removedList:any=[];
         if (element.valid) {
           let obj = {
             "id":element.value.id,
-            "transactionDate":element.controls.date.value._d?element.controls.date.value._d:element.controls.date.value,
+            "transactionDate":element.controls.date.value._d?this.datePipe.transform(element.controls.date.value._d, 'dd/MM/yyyy'):this.datePipe.transform(element.controls.date.value, 'dd/MM/yyyy'),
             "amount": element.controls.amount.value,
             "transactionType": element.controls.type.value,
             "isActive":element.value.isActive == 0?element.value.isActive:1
@@ -502,8 +504,8 @@ removedList:any=[];
         // "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
         "accountBalance":parseInt(this.ppfSchemeForm.get('accountBalance').value),
-        "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,
-        "commencementDate": this.ppfSchemeForm.get('commencementDate').value,
+        "balanceAsOn":  this.ppfSchemeForm.get('balanceAsOn').value?this.datePipe.transform(this.ppfSchemeForm.get('balanceAsOn').value, 'yyyy-MM-dd'):null,
+        "commencementDate": this.datePipe.transform(this.ppfSchemeForm.get('commencementDate').value, 'yyyy-MM-dd'),
         "description": this.ppfSchemeForm.get('description').value,
         "bankName": this.ppfSchemeForm.get('bankName').value,
         "userBankMappingId": this.ppfSchemeForm.get('bankName').value,
@@ -512,6 +514,7 @@ removedList:any=[];
         "futureApproxcontribution": parseInt(this.ppfSchemeForm.get('futureContribution').value),
         'nomineeList': this.ppfSchemeForm.value.getNomineeName,
         "transactionList": finalTransctList,
+        "ppfNumber": this.ppfSchemeForm.get('ppfNo').value,
         "id":this.ppfSchemeForm.value.id,
         "agentName":"abc",
         "parentId":0,

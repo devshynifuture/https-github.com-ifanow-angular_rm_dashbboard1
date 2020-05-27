@@ -95,6 +95,7 @@ export class OwnerNomineeDirective {
       }, 100);
     });
     this.sendData = data;
+    console.log(this.sendData,'familyList');
     this.disabledMember(null);
     this.valueChange1.emit(this.sendData);
   }
