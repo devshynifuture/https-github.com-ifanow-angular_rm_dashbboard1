@@ -63,6 +63,7 @@ export class MutualFundSummaryComponent implements OnInit {
   savedFilterData: any;
   returnValue: any;
   selectedDataLoad: any;
+  showDownload: boolean = false;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -344,12 +345,16 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    this.fragmentData.isSpinner = true;
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    const data = this.excel.generateExcel(rows, tableTitle);
-    if (data) {
-      this.fragmentData.isSpinner = false;
-    }
+    this.showDownload = true
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      });
+      saveAs(blob, tableTitle + ".xls");
+    }, 200);
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
   }
 
   subCatArrayForSummary(mutualFundList, type, mfService: MfServiceService) {
@@ -574,6 +579,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
+    this.showDownload = true
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);

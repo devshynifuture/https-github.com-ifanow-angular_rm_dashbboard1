@@ -77,7 +77,11 @@
                 <div class="col-md-5 pr-4 pl-0">
                     <div class="row b-a">
                         <div class="col-md-12 bg-grey lter p-0">
-                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
+                            <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary <img
+                                    src="assets/images/svg/info.svg" class="c-p"
+                                    matTooltip="The calculations in this section relate to held portfolio only (i.e. only those transactions of a folio where unit balance is > 0)"
+                                    [matTooltipPosition]="'right'">
+                            </h5>
                         </div>
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-24 pl-8">Current value</p>
@@ -526,7 +530,10 @@
 
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow">
                 <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
-                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status</h5>
+                    <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status <img
+                            src="assets/images/svg/info.svg" class="c-p"
+                            matTooltip="This section calculates the cash flow status of your entire portfolio - i.e. It includes cash flows from zero balance folios too"
+                            [matTooltipPosition]="'right'"></h5>
                 </div>
                 <div class="example-container" id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
