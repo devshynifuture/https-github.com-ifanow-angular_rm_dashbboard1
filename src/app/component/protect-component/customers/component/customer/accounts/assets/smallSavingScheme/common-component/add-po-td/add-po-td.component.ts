@@ -11,6 +11,7 @@ import { AssetValidationService } from './../../../asset-validation.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-po-td',
   templateUrl: './add-po-td.component.html',
@@ -58,7 +59,7 @@ export class AddPoTdComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(public utils: UtilService, private fb: FormBuilder, private dateFormatPipe: DatePipe, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -341,7 +342,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
           "ownerList": this.POTDForm.value.getCoOwnerName,
           // "ownerName": (this.ownerName == null) ? this.POTDForm.controls.ownerName.value : this.ownerName.userName,
           "amountInvested": this.POTDForm.get('amtInvested').value,
-          "commencementDate": this.POTDForm.get('commDate').value,
+          "commencementDate": this.dateFormatPipe.transform(this.POTDForm.get('commDate').value, 'dd/MM/yyyy'),
           "tenure": this.POTDForm.get('tenure').value,
           "postOfficeBranch": this.POTDForm.get('poBranch').value,
           // "ownerTypeId": this.POTDForm.get('ownershipType').value,

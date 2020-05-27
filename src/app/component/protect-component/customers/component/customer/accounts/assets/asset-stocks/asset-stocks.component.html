@@ -206,7 +206,7 @@
         <ng-container matColumnDef="scrip">
           <th *matHeaderCellDef class="br" mat-header-cell> Scrip</th>
           <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar">{{element.scripName}} </div>
+            <div class="bar" >{{element.scripName}} </div>
           </td>
           <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell
             style="background-color: #fff !important;"> Total
@@ -215,7 +215,7 @@
         <ng-container matColumnDef="owner">
           <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
           <td mat-cell *matCellDef="let element" class="br">
-            <div class="bar">{{singlePortfolio.ownerList[0].name}}</div>
+            <div class="bar" >{{singlePortfolio.ownerList[0].name}}</div>
         </td>
           <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -223,7 +223,7 @@
         <ng-container matColumnDef="bal">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Balance shares</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.balanceShares}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.balanceShares}}</span></div>
           </td>
           <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -231,7 +231,7 @@
         <ng-container matColumnDef="price">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Average price</th>
           <td *matCellDef="let element" class="br  text-right" mat-cell>
-            <div class="bar"> {{element.averagePrice}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.averagePrice}}</span></div>
           </td>
           <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -239,7 +239,7 @@
         <ng-container matColumnDef="mprice">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Market price</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.scripCurrentValue}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.scripCurrentValue}}</span></div>
           </td>
           <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
 
@@ -247,34 +247,37 @@
         <ng-container matColumnDef="amt">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Amount invested</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.amountInvested}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.amountInvested}}</span></div>
           </td>
           <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            {{ singlePortfolio.amountInvested}}</td>
+            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.amountInvested}}</span></td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Current value</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.currentMarketValue}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.currentMarketValue}}</span></div>
           </td>
           <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            {{ singlePortfolio.currentMarketValue}}</td>
+            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.currentMarketValue}}</span>
+          </td>
         </ng-container>
         <ng-container matColumnDef="gain">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Unrealized gain/loss</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.unrealizedGainLoss}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
           </td>
           <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            {{ singlePortfolio.unrealizedGainLoss}}</td>
+            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.unrealizedGainLoss}}</span>
+          </td>
         </ng-container>
         <ng-container matColumnDef="ret">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Absolute returns %</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar"> {{element.absoluteReturn}}</div>
+            <div class="bar">₹<span appFormatNumber>{{element.absoluteReturn}}</span></div>
           </td>
           <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            {{ singlePortfolio.absoluteReturn}}</td>
+            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.absoluteReturn}}</span>
+          </td>
         </ng-container>
         <ng-container matColumnDef="xirr">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> XIRR %</th>

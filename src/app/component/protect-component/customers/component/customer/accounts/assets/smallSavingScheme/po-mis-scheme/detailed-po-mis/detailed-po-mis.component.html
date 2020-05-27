@@ -81,7 +81,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0" >
-                        Payout till now
+                        Payout received till now
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.totalPayoutTillToday != 0">
                         ₹<span appFormatNumber>{{data.totalPayoutTillToday}}</span>
@@ -93,6 +93,15 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
                         ₹<span appFormatNumber>{{data.maturityValue}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        PO MIS number
+                    </div>
+
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (data.poMisNumber)?data.poMisNumber:'-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -142,12 +151,12 @@
                         -
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngFor="let obj of data.nomineeList; let i = index">
+                <div class="row bb p-8 b-l br" [hidden]="!data.nomineeList" *ngFor="let obj of data.nomineeList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0" >
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}}
+                        {{obj.name}} <span *ngIf="data.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>

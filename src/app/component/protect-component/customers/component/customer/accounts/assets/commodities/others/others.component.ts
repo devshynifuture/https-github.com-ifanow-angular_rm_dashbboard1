@@ -264,7 +264,7 @@ export class OthersComponent implements OnInit {
       })]),
       typeOfCommodity: [(data.commodityTypeId == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
       marketValue: [(data.marketValue == undefined) ? '' : (data.marketValue), [Validators.required]],
-      marketValueAsOnDate: [(data.marketValueAsOnDate == undefined) ? '' : (data.marketValueAsOnDate), [Validators.required]],
+      marketValueAsOnDate: [(data.marketValueAsOnDate == undefined) ? '' : new Date(data.marketValueAsOnDate), [Validators.required]],
       purchaseValue: [(data.purchaseValue == undefined) ? '' : (data.purchaseValue),],
       dateOfPurchase: [(data.dateOfPurchase == undefined) ? '' : new Date(data.dateOfPurchase)],
       growthRate: [(data.growthRate == undefined) ? '' : data.growthRate,],
