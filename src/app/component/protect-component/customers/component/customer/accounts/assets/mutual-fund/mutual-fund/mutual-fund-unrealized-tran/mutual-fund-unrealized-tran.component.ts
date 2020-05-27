@@ -61,6 +61,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   transactionTypeList: any;
   returnValue: any;
   selectedLoadData: any;
+  showDownload: boolean;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private excel: ExcelGenService, private custumService: CustomerService, private eventService: EventService) {
@@ -377,10 +378,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    var blob = new Blob([document.getElementById('template').innerHTML], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-  });
-  saveAs(blob, tableTitle+".xls");
+    this.showDownload = true
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      });
+      saveAs(blob, tableTitle + ".xls");
+    }, 200);
     // if (data) {
     //   this.fragmentData.isSpinner = false;
     // }
@@ -651,6 +655,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   // }
 
   generatePdf() {
+    this.showDownload = true
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('template');
     this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
