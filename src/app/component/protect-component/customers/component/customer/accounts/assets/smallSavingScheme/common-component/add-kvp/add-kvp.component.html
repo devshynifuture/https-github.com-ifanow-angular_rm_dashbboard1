@@ -129,6 +129,22 @@
         <div *ngIf="isOptionalField==false">
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Certificate number</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field> 
+                            <input autocomplete="off" matInput formControlName="certificateNo" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY"
+                                type="text" class="form-control br-0">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <!-- <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">PO branch</h5>
                 </div>
                 <div class="col-md-5">

@@ -10,6 +10,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-kvp',
   templateUrl: './add-kvp.component.html',
@@ -55,7 +56,7 @@ export class AddKvpComponent implements OnInit {
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,public dialog: MatDialog, private enumService: EnumServiceService) { }
+    constructor(public utils: UtilService, private datePipe: DatePipe,  private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -251,6 +252,7 @@ addNewNominee(data) {
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownerType: [data.ownershipTypeId ? String(data.ownershipTypeId) : '1', [Validators.required]],
       poBranch: [data.postOfficeBranch],
+      certificateNo: [data.certificateNo],
       nominees: this.nominees,
       bankAccNum: [data.userBankMappingId],
       description: [data.description],
@@ -323,11 +325,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
         // "familyMemberId": this.familyMemberId,
         // "ownerName": (this.ownerName == undefined) ? this.KVPFormScheme.controls.ownerName.value : this.ownerName.userName,
         "amountInvested": this.KVPFormScheme.get('amtInvested').value,
-        "commencementDate": this.KVPFormScheme.get('commDate').value,
+        "commencementDate":this.datePipe.transform(this.KVPFormScheme.get('commDate').value, 'yyyy-MM-dd'), 
         "postOfficeBranch": this.KVPFormScheme.get('poBranch').value,
         "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
         "nominees": this.nominees,
         "userBankMappingId": this.KVPFormScheme.get('bankAccNum').value,
+        "certificateNo": this.KVPFormScheme.get('certificateNo').value,
         "bankAccountNumber": this.KVPFormScheme.get('bankAccNum').value,
         "description": this.KVPFormScheme.get('description').value,
         "nomineeList": this.KVPFormScheme.value.getNomineeName,
