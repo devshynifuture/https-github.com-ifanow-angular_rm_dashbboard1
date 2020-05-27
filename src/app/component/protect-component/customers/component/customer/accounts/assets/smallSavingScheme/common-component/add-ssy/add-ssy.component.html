@@ -67,8 +67,8 @@
                     <mat-select matInput formControlName="guardian" 
                             class="form-control br-0" >
                             <mat-option value='' disabled>Select Guardian</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable || f.familyMemberAge < 18" [value]="f.userName">
-                                <span>{{f.userName}}</span>
+                            <mat-option *ngFor="let f of nomineesListFM" [hidden]="f.familyMemberAge < 18 || (f.relationshipId != 6 && f.relationshipId != 7)" [value]="f.userName">
+                                <span>{{f.userName}} {{f.relationshipId == 6?'(Father)': f.relationshipId == 7?'(Mother)': ''}}</span>
                             </mat-option>
                         </mat-select>
                     <!-- <input autocomplete="off" matInput #guradian class="form-control br-0" formControlName="guardian"
