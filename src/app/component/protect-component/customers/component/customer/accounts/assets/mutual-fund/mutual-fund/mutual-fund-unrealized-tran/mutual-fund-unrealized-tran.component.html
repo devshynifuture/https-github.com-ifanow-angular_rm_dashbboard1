@@ -191,7 +191,9 @@
 
   <div class="row secoundTable">
     <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-      <div *ngIf="customDataSource.data.length>0" class="wrapper">
+      <cdk-virtual-scroll-viewport *ngIf="customDataSource.data.length>0" class="wrapper" tvsItemSize>
+
+        <!--      <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
         <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="customDataSource" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table
                matSort>
@@ -400,14 +402,14 @@
             </th>
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
               <div class="bar">
-                <span>{{element.currentAmount - element.amount}}</span>
+                <span>{{element.gain}}</span>
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="gainTotal">
             <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
               <div class="bar">
-                <span>{{element.totalCurrentValue - element.totalTransactionAmt}}</span>
+                <span>{{element.totalGain}}</span>
               </div>
             </td>
           </ng-container>
@@ -507,9 +509,10 @@
           <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
 
         </table>
-      </div>
+        <!--      </div>-->
+      </cdk-virtual-scroll-viewport>
 
-      <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
+      <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12"> No data found</h4>
       </div>
@@ -729,8 +732,8 @@
     <tbody *ngFor="let item of customDataSource.data ;index as i">
     <tr>
       <td class="f-700"
-      colspan="5"
-      style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;"></td>
+          colspan="5"
+          style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;"></td>
       <td *ngIf="item.groupName"
           colspan="13"
           style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
@@ -770,15 +773,14 @@
         {{item.transactionDate | date:'dd/MM/yyyy'}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
-        <span *ngIf="item.amount">{{item.amount}}</span></td>
+        <span>{{item.amount}}</span></td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
-                    <span
-                      *ngIf="item.transactionNav">{{item.transactionNav}}</span>
+        <span>{{item.transactionNav}}</span>
       </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-        <span *ngIf="item.unit">{{item.unit}}</span></td>
+        <span>{{item.unit}}</span></td>
       <td
         appFormatNumber
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;"> {{item.currentAmount}} </td>
@@ -793,7 +795,7 @@
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;"> {{item.currentAmount}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-        {{item.currentAmount - item.amount}} </td>
+        {{item.gain}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
         {{item.absReturn}} </td>

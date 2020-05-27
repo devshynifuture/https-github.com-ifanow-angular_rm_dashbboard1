@@ -582,7 +582,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData);
+    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData,'','');
   }
 
   deleteModal(value, element) {

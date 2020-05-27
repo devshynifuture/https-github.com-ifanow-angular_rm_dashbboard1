@@ -7,6 +7,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
+import HC_exporting from 'highcharts/modules/exporting';
+HC_exporting(Highcharts);
 import { CustomerService } from '../../../../../customer.service';
 import { MatTableDataSource } from '@angular/material';
 import { map } from 'rxjs/operators';
@@ -16,6 +18,7 @@ import { WebworkerService } from 'src/app/services/web-worker.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -81,6 +84,8 @@ export class MutualFundOverviewComponent implements OnInit {
   transactionTypeList: any;
   changeViewModeSet: any;
   changeViewModeValue: boolean = false;
+  svg: string;
+  chart: Highcharts.Chart;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService : MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -485,9 +490,11 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdf() {
+    this.svg = this.chart.getSVG()
+    console.log(this.svg)
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData)
+    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData,this.svg)
     console.log('return value ====',this.returnValue)
   }
   getReportWiseCalculation(data) {
@@ -519,7 +526,7 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   pieChart(id) {
-    Highcharts.chart('piechartMutualFund', {
+  this.chart =  Highcharts.chart('piechartMutualFund', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
