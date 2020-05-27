@@ -74,7 +74,7 @@ export class ReconFranklinComponent implements OnInit {
         rmId: this.rmId,
         rtId: this.rtId,
         parentId: this.adminId == 0 ? this.advisorId : this.parentId,
-        isParent: (this.parentId === 0 && this.parentId === this.advisorId) ? true : false
+        isParent: (this.parentId === this.advisorId) ? true : false
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {

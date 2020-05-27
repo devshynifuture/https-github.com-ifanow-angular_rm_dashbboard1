@@ -177,7 +177,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       brokerId: this.brokerId,
       rt: this.data.rtId,
       parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
-      isParent: (this.parentId == 0 && this.parentId === this.advisorId) ? true : false
+      isParent: (this.parentId === this.advisorId) ? true : false
     }
     // 
     this.supportService.getAumReconListGetValues(data)
@@ -358,7 +358,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       rtId: this.data.rtId,
       mutualFundIds: this.mutualFundIds,
       parentId: this.parentId,
-      isParent: (this.parentId == 0 && this.parentId === this.advisorId) ? true : false
+      isParent: (this.parentId === this.advisorId) ? true : false
     }
     console.log("this is requestjson for delete and reorder:::: ", data)
     this.reconService.deleteAndReorder(data)
@@ -574,7 +574,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       id: this.data.id,
       advisorIds: [this.advisorId],
       parentId: this.parentId,
-      isParent: (this.parentId === 0 && this.parentId === this.advisorId) ? true : false,
+      isParent: (this.parentId === this.advisorId) ? true : false,
       brokerId: this.brokerId,
       rtId: this.rtId,
       mutualFundIds: this.mutualFundIds
