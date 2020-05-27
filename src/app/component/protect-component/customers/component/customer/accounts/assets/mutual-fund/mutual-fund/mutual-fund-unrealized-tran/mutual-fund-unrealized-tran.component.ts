@@ -1,5 +1,5 @@
 import {AuthService} from './../../../../../../../../../../auth-service/authService';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MatDialog, MatTableDataSource} from '@angular/material';
@@ -12,12 +12,13 @@ import {map} from 'rxjs/operators';
 import {DatePipe} from '@angular/common';
 import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
   templateUrl: './mutual-fund-unrealized-tran.component.html',
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class MutualFundUnrealizedTranComponent implements OnInit {
@@ -39,7 +40,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   type: any = {name: ''};
   isSpinner = false;
   customDataHolder = [];
-  customDataSource = new MatTableDataSource([{}, {}, {}]);
+  customDataSource = new TableVirtualScrollDataSource([]);
   @ViewChild('tableEl', {static: false}) tableEl;
   rightFilterData: any = {reportType: ''};
   adviorData: any;
@@ -69,7 +70,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
               private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private excel: ExcelGenService,
               private custumService: CustomerService, private eventService: EventService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              /*private changeDetectorRef: ChangeDetectorRef*/) {
   }
 
   mutualFund;
@@ -229,9 +230,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     } else {
       this.isLoading = false;
       this.changeInput.emit(false);
-      this.customDataSource.data = [];
+      // this.customDataSource.data = [];
+      this.customDataSource = new TableVirtualScrollDataSource([]);
       this.customDataHolder = [];
-      this.changeDetectorRef.detectChanges();
+      // this.changeDetectorRef.detectChanges();
     }
   }
 
@@ -338,11 +340,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }, (error) => {
         this.isLoading = false;
         this.dataSource.data = [];
-        this.customDataSource.data = [];
+        // this.customDataSource.data = [];
+        this.customDataSource = new TableVirtualScrollDataSource([]);
         this.customDataHolder = [];
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
-        this.changeDetectorRef.detectChanges();
+        // this.changeDetectorRef.detectChanges();
       }
     );
   }
@@ -371,12 +374,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       worker.onmessage = ({data}) => {
         this.grandTotal = data.totalValue;
         this.dataSource.data = (data.dataSourceData);
-        this.customDataSource.data = (data.customDataSourceData);
+        // this.customDataSource.data = (data.customDataSourceData);
+        this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
         this.customDataHolder = data.customDataHolder;
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
-        this.changeDetectorRef.detectChanges();
+        // this.changeDetectorRef.detectChanges();
       };
       worker.postMessage(input);
     } else {
@@ -386,12 +390,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    this.showDownload = true
+    this.showDownload = true;
     setTimeout(() => {
       var blob = new Blob([document.getElementById('template').innerHTML], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + ".xls");
+      saveAs(blob, tableTitle + '.xls');
     }, 200);
     // if (data) {
     //   this.fragmentData.isSpinner = false;
@@ -583,7 +587,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.dataSource.data = ([{}, {}, {}]);
-            this.customDataSource.data = ([{}, {}, {}]);
+            // this.customDataSource.data = ([{}, {}, {}]);
+            this.customDataSource = new TableVirtualScrollDataSource([]);
+
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
@@ -624,7 +630,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             // this.rightFilterData.reportType, this.mfService);
             // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
-            this.changeDetectorRef.detectChanges();
+            // this.changeDetectorRef.detectChanges();
           }
           rightSideDataSub.unsubscribe();
         }
@@ -663,7 +669,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   // }
 
   generatePdf() {
-    this.showDownload = true
+    this.showDownload = true;
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('template');
     this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
