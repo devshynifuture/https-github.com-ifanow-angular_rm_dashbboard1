@@ -86,7 +86,7 @@ export class DuplicateDataComponent implements OnInit {
     const data = {
       advisorIds: [...this.adminAdvisorIds],
       parentId: this.parentId,
-      isParent: (this.parentId == 0 && this.parentId === this.advisorId) ? true : false
+      isParent: (this.parentId === this.advisorId) ? true : false
     }
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {

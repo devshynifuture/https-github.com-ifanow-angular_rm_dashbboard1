@@ -99,7 +99,7 @@
                 <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email">
+                            <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email" [disabled]="!!this.basicDetailsData.userId">
                             </app-email-domain-auto-suggest>
                             <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
                             <mat-error *ngIf="basicDetails.get('email').errors?.required">This field is required
