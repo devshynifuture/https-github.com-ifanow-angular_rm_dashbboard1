@@ -70,7 +70,7 @@
 
     <div class="row">
         <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
-            <table #tableEl mat-table [dataSource]="customDataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="customDataSource.data.length>0">
+            <table mat-table [dataSource]="customDataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="customDataSource.data.length>0">
 
                 <ng-container matColumnDef="schemeName" sticky>
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -361,11 +361,15 @@
 
 
 
-<div class="hide" #summaryTemplate id="template">
+<div  class="hide" #summaryTemplate id="template">
 
     <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
 
         <tr>
+            <td style="text-align: left;">
+                <p style="margin: 0px; font-weight: 800;font-size: 20px;">
+                    Mutual fund summary</p>
+            </td>
             <td style="text-align: left;">
                 <img width="100px" *ngIf="advisorData" [src]="advisorData.profilePic">
             </td>

@@ -75,8 +75,8 @@ export class ClientAddressComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       // addressType: [(data.addressType) ? String(data.addressType) : '1'],
-      addProofType: [(data.proofType) ? String(data.proofType) : '', [Validators.required]],
-      proofIdNum: [data.proofIdNumber, [Validators.required]],
+      addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : '', [Validators.required]],
+      proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2],
       pinCode: [data.pinCode, [Validators.required]],
@@ -84,7 +84,9 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-    this.changeAddrProofNumber({ value: String(data.proofType) }, data);
+    if (this.userMappingIdFlag) {
+      this.changeAddrProofNumber({ value: String(data.proofType) }, data);
+    }
   }
   changeAddrProofNumber(data, addressData = null) {
     let regexPattern;
