@@ -15,9 +15,11 @@ export class MfCapitalDetailedComponent implements OnInit {
   displayedColumns: string[] = ['dateRedeem', 'trnRedeem', 'amtRedeem', 'sttRedeem', 'unitsRedeem', 'rateRedeem', 'datePurchase', 'amtPurchase', 'unitsPurchase', 'ratePurchase', 'stGainPurchase', 'stLossPurchase', 'ltGainPurchase', 'ltLossPurchase', 'indGainPurchase', 'indLossPurchase', 'daysPurchase'];
   displayedColumns1: string[] = ['schemeName1', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
+  displayedColumns4: string[] = ['dateRedeem', 'trnRedeem', 'amtRedeem', 'sttRedeem', 'unitsRedeem', 'rateRedeem', 'datePurchase', 'amtPurchase', 'unitsPurchase', 'ratePurchase', 'stGainPurchase', 'stLossPurchase', 'ltGainPurchase', 'ltLossPurchase', 'indGainPurchase', 'indLossPurchase', 'daysPurchase'];
   dataSource = new MatTableDataSource([{}, {}, {}]);
   dataSource1 = new MatTableDataSource([{}, {}, {}]);
   dataSource2 = new MatTableDataSource([{}, {}, {}]);
+  dataSource4;
   isLoading =false;
   total_stGain = 0;
   total_ltGain = 0;
@@ -261,12 +263,16 @@ export class MfCapitalDetailedComponent implements OnInit {
       if(category != 'EQUITY'){
         this.categoryWiseTotal={};
       }
+      // this.dataSource4=['Grand total','tranType', this.redeemAmount,this.total_stt,'-','-','-',this.purchaseAmount,'-','-',this.total_stGain,this.total_stLoss,this.total_ltGain,this.total_ltLoss,this.total_indexGain,this.total_indexLoss,'-'                                                                                                ];
 
       return filteredArray;
+      
+      // this.getArrayForFinalValue()
     }
-
   }
-
+  // getArrayForFinalValue(){
+  //   this.dataSource4=['Grand total', '-', this.redeemAmount, this.total_stt, '-', '-', '-', 'amtPurchase', this.purchaseAmount, '-', '-', this.total_stGain, this.total_stLoss, this.total_ltGain, this.total_ltLoss, this.total_indexGain, this.total_indexLoss];
+  // }
   getFilteredValues(data, category) {
     let days;
     let gainLossBasedOnGrandfathering;
@@ -344,11 +350,14 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.purchaseAmount += (data) ? data.purchaseAmount : 0;
     this.redeemAmount += (data) ? data.totalAmount : 0;
     this.total_stt +=(data) ? data.totalStt : 0;
+
+    this.dataSource4=[{'name' : 'Grand total'}, {'tranType' : '-'}, {'redeemAmount' : this.redeemAmount}, {'total_stt' : this.total_stt}, {'unit':'-'}, {'saleRate':'-'}, {'date':'-'}, {'amtPurchase':this.purchaseAmount}, {'purUnit':'-'}, {'purRate':'-'}, {'total_stGain':this.total_stGain}, {'total_stLoss':this.total_stLoss}, {'total_ltGain' :this.total_ltGain}, {'total_ltLoss' : this.total_ltLoss}, {'total_indexGain':this.total_indexGain}, {'total_indexLosst':this.total_indexLoss},{'days':'-'}];
+
   }
   // getDividendSummaryData(data) {
   //   if(data){
   //     let filterObj = []
-  //     this.totalReinvesment = 0;
+  //     this.totalReinvesment = 0;                                                                                                                                                                                                                                 
   //     let mutualFund = this.MfServiceService.filter(data, 'mutualFund');
   //     mutualFund.forEach(element => {
   //       if(element.redemptionTransactions){
@@ -363,7 +372,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   //               this.totaldividendReinvestment += ((element.dividendReinvestment) ? element.dividendReinvestment : 0);
   //               filterObj.push(element);
   //             }
-  //           }
+  //           }                                                                                                                                                              
   //         });
   //       } else{
   //         filterObj = [];
