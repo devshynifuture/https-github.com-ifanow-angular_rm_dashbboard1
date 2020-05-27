@@ -109,7 +109,7 @@
                                     STATUS - LIVE
                                 </button>
                                 <button mat-menu-item (click)="(insuranceTypeId == 1) ? filterInsurance('statusId', 'MATURED') : filterInsurance('statusId', 'EXPIRED')">
-                                  {{(insuranceTypeId == 1 ) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}  
+                                    {{(insuranceTypeId == 1 ) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}
                                 </button>
                             </mat-menu>
                             <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)" *ngIf="showAdd"> ADD NEW</button>

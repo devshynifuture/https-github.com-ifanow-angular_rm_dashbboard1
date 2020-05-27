@@ -36,7 +36,6 @@ export class OverviewRiskProfileComponent implements OnInit {
   showErrorMsg
   checkFamilyMem;
   showButton;
-  progressBar;
   scoreStatus;
   equityAllocationLowerLimit;
   equityAllocationUpperLimit;
@@ -237,6 +236,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     };
     this.container()
   }
+
   container() {
     var chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(this.gaugeOptions, {
       yAxis: {
@@ -258,6 +258,7 @@ export class OverviewRiskProfileComponent implements OnInit {
 
     }));
   }
+
   checkState(item, i, choice) {
     item.selectedChoiceId = choice.id;
     item.weight = choice.weight;
@@ -399,27 +400,21 @@ export class OverviewRiskProfileComponent implements OnInit {
     if (data != undefined) {
       this.showRisk = false
       if (data.refreshRequired == false) {
-        this.reset(true);
+        this.reset();
       } else if (data.refreshRequired) {
         this.riskAssessmentQuestionList = data.refreshRequired
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-        this.progressBar = this.statusArray.length * 7
         this.showButton = false
       } else {
-        this.reset(true);
+        this.reset();
       }
     }
-    // this.riskAssessmentQuestionList.forEach(element => {
-    //   element.done = true
-    // });
   }
 
-  reset(flag) {
+  reset() {
     this.statusArray = []
-    this.progressBar = this.statusArray.length * 0
-    if (flag == true) {
-      this.getRiskProfileList(true);
-    }
+    this.getRiskProfileList(true);
+    this.showRisk = false;
   }
 
 

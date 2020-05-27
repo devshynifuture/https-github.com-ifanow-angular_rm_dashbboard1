@@ -18,12 +18,13 @@
     </span>
 
     <!-- <span class="textZindex"> Submit</span> -->
-
-    <mat-progress-bar #progressBar *ngIf="options.active && !options.disabled" [color]="options.barColor"
-      [mode]="options.mode" [value]="options.value" class="bar">
-      <!--    class="bar"-->
-      <!--    [ngStyle]="{'.mat-progress-bar-buffer.background-color':options.buttonColor}"-->
-      <!--    [bufferValue]="0"-->
-    </mat-progress-bar>
+    <div class="progress-bar-common">
+      <mat-progress-bar #progressBar *ngIf="options.active && !options.disabled" [color]="options.barColor"
+        [mode]="options.mode" [value]="options.value" class="bar">
+        <!--    class="bar"-->
+        <!--    [ngStyle]="{'.mat-progress-bar-buffer.background-color':options.buttonColor}"-->
+        <!--    [bufferValue]="0"-->
+      </mat-progress-bar>
+    </div>
   </button>
 </div>

@@ -318,7 +318,7 @@ export class UtilService {
     formGroup.patchValue(event.target.value.toUpperCase());
   }
 
-  htmlToPdf(inputData, pdfName, fragData,key,svg) {
+  htmlToPdf(inputData, pdfName, fragData,key=null,svg=null) {
     const obj = {
       htmlInput: inputData,
       name: pdfName,
