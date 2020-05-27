@@ -24,6 +24,10 @@
   .mat-form-field-appearance-standard .mat-form-field-flex {
     padding-top: 0px !important;
   }
+
+  .mat-expansion-panel-header-description {
+    flex-grow: 0;
+  }
 }
 
 .mf-capital-details {
@@ -76,10 +80,33 @@
   .mat-expansion-panel:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
   }
+
+  .mat-expansion-panel-header-description {
+    flex-grow: 0 !important;
+  }
+
+  .mat-expansion-panel-body {
+    margin-top: 12px !important;
+  }
 }
 
+.highcharts-credits {
+  display: none !important;
+}
 
+.sticky-risk-pofile {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 140px;
 
+  .mat-progress-bar {
+    height: 30px;
+  }
+
+  .mat-progress-bar-buffer {
+    background: #D9DEE1;
+  }
+}
 
 @media(max-width:1292px) {
   .btn140 {
