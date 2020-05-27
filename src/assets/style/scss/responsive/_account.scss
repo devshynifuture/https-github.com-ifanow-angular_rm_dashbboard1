@@ -53,6 +53,15 @@
   pointer-events: initial !important;
 }
 
+.riskProfileBox {
+  .mat-expansion-panel-header-title {
+    margin-right: 52px;
+  }
+}
+
+
+
+
 @media(max-width:1292px) {
   .btn140 {
     width: 135px !important;
