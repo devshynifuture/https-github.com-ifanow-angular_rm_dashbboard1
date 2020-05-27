@@ -48,7 +48,9 @@ export class PortfolioFieldComponent implements OnInit {
     this.getPortfolioList()
     this.portfolioForm.get('portfolioName').setValue('');
     if(this.portfolioName != undefined){
-      this.portfolioForm.get('portfolioName').setValue(this.portfolioName);
+     
+        this.portfolioForm.get('portfolioName').setValue(this.portfolioName.value);
+      
     }
   };
 
@@ -66,15 +68,16 @@ export class PortfolioFieldComponent implements OnInit {
 
   getPortfolioListRes(data) {
     console.log(data, "porfolio list")
-    let checkOwnerId = false;
-    this.familyWisePortfolio = [];
-    data.forEach(element => {
-      if (element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId) {
-        checkOwnerId = true;
-        this.familyWisePortfolio.push(element)
-      }
-    });
-    (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
+    let checkOwnerId = true;
+    this.familyWisePortfolio = data;
+    // this.portfolioForm.get('portfolioName').setValue(this.portfolioName.value);
+    // data.forEach(element => {
+    //   if (element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId) {
+    //     checkOwnerId = true;
+    //     this.familyWisePortfolio.push(element)
+    //   }
+    // });
+    // (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
     console.log(this.familyWisePortfolio)
   }
   openAddPortfolio() {

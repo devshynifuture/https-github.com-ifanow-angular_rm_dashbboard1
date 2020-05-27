@@ -68,6 +68,8 @@ export class DetailedViewMandateComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: this.isRefreshRequired});
   }
 
+  isFileUploading = false;
+
   getFileDetails(e, flag) {
     this.file = e.target.files[0];
     const file = e.target.files[0];
@@ -76,9 +78,10 @@ export class DetailedViewMandateComponent implements OnInit {
       documentType: flag,
       tpMandateDetailId: this.details.id
     };
+    this.isFileUploading = true;
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-
+        this.isFileUploading = false;
         if (status == 200) {
           const responseObject = JSON.parse(response);
           this.eventService.openSnackBar('File uploaded successfully');

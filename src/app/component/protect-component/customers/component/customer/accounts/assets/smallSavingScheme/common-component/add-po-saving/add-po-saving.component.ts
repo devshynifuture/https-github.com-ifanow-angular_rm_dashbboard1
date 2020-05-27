@@ -11,6 +11,7 @@ import { AssetValidationService } from './../../../asset-validation.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-po-saving',
   templateUrl: './add-po-saving.component.html',
@@ -58,7 +59,7 @@ export class AddPoSavingComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   callMethod: { methodName: string; ParamValue: any; };
 
-  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService,
+  constructor(public utils: UtilService, private dateFormatPipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService,
     private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
@@ -325,7 +326,7 @@ addNewNominee(data) {
         const obj = {
           id: this.editApi.id,
           familyMemberId: this.familyMemberId,
-          balanceAsOn: this.poSavingForm.get('balAsOn').value,
+          balanceAsOn: this.dateFormatPipe.transform(this.poSavingForm.get('balAsOn').value, 'dd/MM/yyyy'),
           accountBalance: this.poSavingForm.get('accBal').value,
           postOfficeBranch: this.poSavingForm.get('poBranch').value,
           // ownerTypeId: this.poSavingForm.get('ownershipType').value,
@@ -349,7 +350,7 @@ addNewNominee(data) {
           clientId: this.clientId,
           advisorId: this.advisorId,
           familyMemberId: this.familyMemberId,
-          balanceAsOn: this.poSavingForm.get('balAsOn').value,
+          balanceAsOn: this.dateFormatPipe.transform(this.poSavingForm.get('balAsOn').value, 'dd/MM/yyyy'),
           accountBalance: this.poSavingForm.get('accBal').value,
           postOfficeBranch: this.poSavingForm.get('poBranch').value,
           // ownerTypeId: this.poSavingForm.get('ownershipType').value,

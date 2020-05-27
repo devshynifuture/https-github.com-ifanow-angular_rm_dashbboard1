@@ -541,7 +541,7 @@ addNewNominee(data) {
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
         // nominees: this.schemeHoldingsNPS.controls.nominees.value,
         nomineeList: this.schemeHoldingsNPS.value.getNomineeName,
-        description: this.schemeHoldingsNPS.controls.description.value,
+        description: this.schemeHoldingsNPS.controls.description.value == null?'':this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value,
         userBankMappingId: this.schemeHoldingsNPS.controls.bankACNo.value,
 
@@ -550,12 +550,12 @@ addNewNominee(data) {
         // totalAmountInvested: 0
       }
       this.barButtonOptions.active = true;
-      // this.nominee.value.forEach(element => {
-      //   if (element.sharePercentage == null && element.name == null) {
-      //     this.nominee.removeAt(0);
-      //   }
-      //   obj.nominees = this.schemeHoldingsNPS.controls.nominees.value;
-      // });
+      obj.nomineeList.forEach((element, index) => {
+        if(element.name == ''){
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList= this.schemeHoldingsNPS.value.getNomineeName;
       let adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,

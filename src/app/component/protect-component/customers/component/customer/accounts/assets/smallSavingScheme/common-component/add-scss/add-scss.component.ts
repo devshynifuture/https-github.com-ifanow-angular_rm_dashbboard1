@@ -11,6 +11,7 @@ import { AssetValidationService } from './../../../asset-validation.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-scss',
   templateUrl: './add-scss.component.html',
@@ -57,7 +58,7 @@ export class AddScssComponent implements OnInit {
   @Input() popupHeaderText: string = 'Add Senior citizen savings scheme (SCSS)';
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(private subInjectService: SubscriptionInject, private dateFormatPipe: DatePipe, private fb: FormBuilder,
     private cusService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
@@ -321,7 +322,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.scssSchemeForm
         advisorId: this.advisorId,
         ownerList: this.scssSchemeForm.value.getCoOwnerName,
         amountInvested: this.scssSchemeForm.get('amtInvested').value,
-        commencementDate: this.scssSchemeForm.get('commDate').value,
+        commencementDate: this.dateFormatPipe.transform(this.scssSchemeForm.get('commDate').value, 'dd/MM/yyyy'),
         postOfficeBranch: this.scssSchemeForm.get('poBranch').value,
         bankAccountNumber: this.scssSchemeForm.get('bankAccNumber').value,
         userBankMappingId: this.scssSchemeForm.get('bankAccNumber').value,

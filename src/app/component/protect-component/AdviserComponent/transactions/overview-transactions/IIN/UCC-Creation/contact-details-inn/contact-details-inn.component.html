@@ -208,13 +208,16 @@
     <div *ngIf="inputData.taxStatus == '21'">
       <a (click)="SendToForm('first',false);" class="activeLink"> Indian Address </a>
       <a (click)="SendToForm('overseas',false);" class="activeLink"> Overseas Address </a>
+      <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink"> Second Holder </a>
+      <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink"> Third Holder </a>
+
       <!--    <a (click)="SendToForm('second',false);" *ngIf="inputData.holdingType != 'SI'" class="activeLink"> Second-->
       <!--      holder </a>-->
       <!--    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingType != 'SI'" class="activeLink"> Third-->
       <!--      holder </a>-->
     </div>
     <div *ngIf="inputData.taxStatus != '21'">
-      <a (click)="SendToForm('first',false);" class="activeLink"> First Holder </a>
+      <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="activeLink"> First Holder </a>
       <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink"> Second Holder </a>
       <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink"> Third Holder </a>
 
