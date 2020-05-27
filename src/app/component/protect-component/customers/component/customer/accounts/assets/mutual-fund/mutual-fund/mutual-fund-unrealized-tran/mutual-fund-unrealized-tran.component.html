@@ -14,14 +14,14 @@
 
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF
-          </button>
+                    </button>
                     <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
             </div>
             <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
-        <i class="material-icons">filter_list</i>FILTERS
-      </button>
+                <i class="material-icons">filter_list</i>FILTERS
+            </button>
         </div>
     </div>
 
@@ -174,8 +174,6 @@
                         <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
                         <tr *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading" mat-footer-row>
                         </tr>
-
-
                     </table>
                 </div>
             </div>
@@ -464,12 +462,12 @@
                                 <mat-menu #menu25="matMenu">
                                     <div [matTooltipDisabled]="element.rtMasterId === 14" [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
                                         <button (click)="openMutualEditFund('editTransaction',element)" [disabled]="element.rtMasterId !== 14" mat-menu-item>Edit
-                      Transaction
-                    </button>
+                                            Transaction
+                                        </button>
                                     </div>
                                     <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
-                    Transaction
-                  </button>
+                                        Transaction
+                                    </button>
 
                                 </mat-menu>
                             </div>
@@ -507,7 +505,7 @@
 
 <!-- -------------------- pdf ---------------------------- -->
 <!--*ngIf="showDownload"-->
-<div #unrealizedTranTemplate  class="hide" id="template">
+<div #unrealizedTranTemplate class="hide" id="template">
 
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
         <tr>
@@ -529,9 +527,9 @@
                                 {{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
                             <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
                             <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;"><strong>
-                  Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
+                                    Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
                             <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;"><strong> Email
-                  : </strong> {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
+                                    : </strong> {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
                         </td>
                     </tr>
                 </table>
@@ -568,7 +566,7 @@
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 XIRR%
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Allocation%
             </td>
         </tr>
@@ -618,7 +616,7 @@
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-            <td style="height: 50px;">
+            <td style="height: 30px;">
 
             </td>
         </tr>
@@ -696,7 +694,7 @@
                     {{i + 1}}</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
                     <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
-          </span>
+                    </span>
                 </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%">
                     {{item.transactionDate | date:'dd/MM/yyyy'}} </td>
