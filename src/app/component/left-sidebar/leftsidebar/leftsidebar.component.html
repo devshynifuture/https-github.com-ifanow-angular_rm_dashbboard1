@@ -185,8 +185,8 @@
                         matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList | async"
-                            [value]="singleClient.displayName">
+                        <mat-option (onSelectionChange)="selectClient(singleClient)"
+                            *ngFor="let singleClient of clientList | async" [value]="singleClient.displayName">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
@@ -378,7 +378,8 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="row c-p" [routerLink]="['/admin/setting/preference']" *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div class="row c-p" [routerLink]="['/admin/setting/preference']"
+                                *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
                                 </div>
@@ -389,7 +390,8 @@
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/activity']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div [routerLink]="['/admin/setting/activity']" class="row c-p"
+                                *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/activity.svg" class="v-super">
                                 </div>
@@ -412,7 +414,8 @@
                                 </div>
                             </div> -->
 
-                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p"
+                                *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/user-and-roles.svg" class="v-super">
                                 </div>
@@ -424,7 +427,8 @@
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p"
+                                *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/backoffice.svg" class="v-super">
                                 </div>
