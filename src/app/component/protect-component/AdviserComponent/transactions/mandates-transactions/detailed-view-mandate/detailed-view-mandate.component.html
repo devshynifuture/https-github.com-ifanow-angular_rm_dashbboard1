@@ -127,13 +127,15 @@
 
       <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0"
            appFileDragDrop class="custom-file mb-12">
-        <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl"
+        <input [disabled]="isFileUploading" (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3"
+               lang="pl-Pl"
                type="file">
         <label class="custom-file-label" for="customFileLang">Upload check</label>
       </div>
 
       <div *ngIf="details.formUploadFlag == 0 && details.status != 0" class="custom-file">
-        <input (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl"
+        <input [disabled]="isFileUploading" (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4"
+               lang="pl-Pl"
                type="file">
         <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
       </div>
