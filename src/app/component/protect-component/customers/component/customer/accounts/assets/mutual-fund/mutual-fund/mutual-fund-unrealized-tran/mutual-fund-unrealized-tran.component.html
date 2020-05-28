@@ -566,47 +566,48 @@
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Sub category name
+                <b>Sub category name</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Amount invested
+                <b>Amount invested</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Current value
+                <b>Current value</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Dividend payout
+                <b>Dividend payout</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Dividend reinvestment
+                <b>Dividend reinvestment</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Gain
+                <b>Gain</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Absolute Return%
+                <b>Absolute Return%</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                XIRR%
+                <b>XIRR%</b>
             </td>
             <td
                 style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Allocation%
+                <b>Allocation%</b>
             </td>
         </tr>
 
         <tr *ngFor="let item of dataSource.data"
             style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.categoryName}}</td>
+                style="text-align: center; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.categoryName}}
+            </td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{(item.totalTransactionAmt) ? (item.totalTransactionAmt | number :'1.0-0') : 0}}</td>
@@ -679,55 +680,55 @@
             <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
-                    Sr no.
+                    <b>Sr no.</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
-                    Transaction Type
+                    <b>Transaction Type</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%;">
-                    Transaction date
+                    <b>Transaction date</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
-                    Transaction amount
+                    <b>Transaction amount</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
-                    Transaction NAV
+                    <b>Transaction NAV</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Units
+                    <b>Units</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Current value
+                    <b>Current value</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Dividend payout
+                    <b>Dividend payout</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Dividend reinvestment
+                    <b>Dividend reinvestment</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Total amount
+                    <b>Total amount</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Gain
+                    <b>Gain</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    Absolute Return%
+                    <b>Absolute Return%</b>
                 </td>
                 <td
                     style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;width: 6%;">
-                    XIRR%
+                    <b>XIRR%</b>
                 </td>
             </tr>
         </thead>
