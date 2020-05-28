@@ -238,7 +238,8 @@
             <!--      <h6>{{errorMsg}}</h6>-->
             <!-- (click)="createMandate()" removed for prod build -->
             <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button>
-            <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit "></app-progress-button>
+            <!-- prod fix -->
+            <app-progress-button [options]="barButtonOptions" class="br-0 text-inherit "></app-progress-button>
         </div>
     </div>
 </div>

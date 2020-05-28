@@ -525,7 +525,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: 'You have received this email because AdvisorName shared link with you.  ' +''+ this.element.link
+        messageBody: 'You have received this email because AdvisorName shared link with you.  ' + '' + this.element.link
       }
       this.custumService.sendSharebleLink(obj).subscribe(
         data => this.sendSharebleLinkRes(data),
@@ -603,10 +603,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.recovery(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Recovered', 'Dismiss');
+              this.eventService.openSnackBar('Recovered successfully', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(4, 'Recovered');
+              this.getAllFileList(4, 'Recovered ');
             },
             error => this.eventService.showErrorMessage(error)
           );
