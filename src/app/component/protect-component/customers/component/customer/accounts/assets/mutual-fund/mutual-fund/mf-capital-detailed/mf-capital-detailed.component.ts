@@ -143,7 +143,7 @@ export class MfCapitalDetailedComponent implements OnInit {
             const obj={
               data:this.rightFilterData.capitalGainData.responseData,
               summaryView:(this.rightFilterData.reportFormat[0].name == 'Detailed') ? false : true,
-              grandfatheringEffect : this.rightFilterData.grandfathering,
+              grandfatheringEffect :(this.rightFilterData.grandfathering == 1) ? true : false,
               fromDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].from : 2019,
               toDateYear : (this.rightFilterData.financialYear.length > 0) ? this.rightFilterData.financialYear[0].to : 2020,
               filterDataForCapital:this.rightFilterData
@@ -253,10 +253,11 @@ export class MfCapitalDetailedComponent implements OnInit {
       if(filteredArray.length > 0){
         if(filteredArray[filteredArray.length - 1].folioNumber || filteredArray[filteredArray.length - 1].schemeName || filteredArray[filteredArray.length - 1].folioNumber || filteredArray[filteredArray.length - 1].ownerName){
           filteredArray.pop();
-        }
+        } 
       }
       if(Object.keys(this.categoryWiseTotal).length != 0){
         (category == 'DEBT') ? this.debtObj =this.categoryWiseTotal : this.equityObj =this.categoryWiseTotal;
+        this.categoryWiseTotal={};
       }
       console.log('DEBT',this.debtObj);
       console.log('EQUITY',this.equityObj);

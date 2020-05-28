@@ -22,6 +22,7 @@ export class UpperCustomerComponent implements OnInit {
 
   close(flag) {
     const fragmentData = {
+      direction: 'top',
       state: 'close',
       refreshRequired: flag
     };

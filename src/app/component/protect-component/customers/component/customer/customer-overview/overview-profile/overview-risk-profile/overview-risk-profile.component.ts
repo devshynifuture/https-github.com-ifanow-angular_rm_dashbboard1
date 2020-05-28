@@ -29,26 +29,26 @@ export class OverviewRiskProfileComponent implements OnInit {
   score;
   showResults = false;
   clickMessage = '';
-  name = 'Angular';
   showLoader: boolean;
   isLoading = false
   statusArray: any[] = [];
-  showErrorMsg
-  checkFamilyMem;
+  showErrorMsg = false;
   showButton;
   scoreStatus;
-  equityAllocationLowerLimit;
-  equityAllocationUpperLimit;
   hasError: boolean = false;
 
   clientRiskAssessmentResults;
 
-  globalRiskProfile:any;
+  globalRiskProfile:any[] = [];
   feedsRiskProfile:any = {};
   clientId;
   clientInfo:any;
   count:number = 0;
   showRetakeTestsButton: boolean = false;
+
+  isEmpty:boolean = true;
+  showQuestionnaire:boolean = false;
+
   
   constructor(
     private fb: FormBuilder,
@@ -65,7 +65,6 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   ngOnInit() {
     this.loadGlobalRiskProfile();
-    this.loadRiskProfile();
     this.getdataForm('');
     this.sendRiskList = [];
     // this.progressBar = [];
@@ -161,124 +160,19 @@ export class OverviewRiskProfileComponent implements OnInit {
     });
   }
 
-  guageFun(chartId) {
-    this.gaugeOptions = {
-      chart: {
-        type: 'gauge'
-      },
-      title: null,
-      pane: {
-        center: ['40%', '80%'],
-        size: '150%',
-        startAngle: -90,
-        endAngle: 90,
-        background: {
-          backgroundColor: '#EEE',
-          innerRadius: '70%',
-          outerRadius: '100%',
-          shape: 'solid'
-        }
-      },
-      tooltip: {
-        enabled: false
-      },
-      yAxis: {
-        plotBands: [{
-          from: 1,
-          to: 120,
-          color: '#02B875',
-          thickness: '30%'
-        }, {
-          from: 121,
-          to: 240,
-          color: '#5DC644',
-          thickness: '30%'
-        }, {
-          from: 241,
-          to: 360,
-          color: '#FFC100',
-          thickness: '30%'
-        },
-        {
-          from: 361,
-          to: 480,
-          color: '#FDAF40',
-          thickness: '30%'
-        }, {
-          from: 481,
-          to: 600,
-          color: '#FF7272',
-          thickness: '30%'
-        }],
-        lineWidth: 0,
-        minorTickInterval: 1,
-        tickPositions: [1, 600],
-        tickAmount: 1,
-        min: 0,
-        max: 600,
-        title: {
-          y: -70
-        },
-        labels: {
-          y: 16
-        }
-      },
-      plotOptions: {
-        solidgauge: {
-          dataLabels: {
-            y: 5,
-            borderWidth: 0,
-          },
-          marker: {
-            enabled: true,
-            symbol: 'triangle',
-          }
-        },
-      }
-    };
-    this.container()
-  }
-
-  container() {
-    var chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(this.gaugeOptions, {
-      yAxis: {
-        title: {
-          text: ''
-        },
-      },
-      credits: {
-        enabled: true
-      },
-      series: [{
-        name: 'Score',
-        data: [this.score],
-        dataLabels: 1,
-        tooltip: {
-          valueSuffix: this.score + '/600'
-        },
-      }]
-
-    }));
-  }
-
   checkState(item, i, choice) {
     item.selectedChoiceId = choice.id;
     item.weight = choice.weight;
-    item.done = false;
+    item.done = true;
     item.choice = choice.choice;
     if (this.statusArray.length > 0 && item.question) {
-      this.statusArray.forEach(element => {
-        this.checkFamilyMem = item.question.includes(element.question);
-        console.log(this.checkFamilyMem)
-      });
-      if (this.checkFamilyMem == false && this.statusArray.length < 15) {
+      let checkIfQuestionExist = this.statusArray.find(question => question.question == item.question);
+      if (!checkIfQuestionExist) {
         this.statusArray.push(item)
       }
     } else if (this.statusArray.length == 0) {
       this.statusArray.push(item)
     }
-    const index = item.id
-    this.riskAssessmentQuestionList[index].done = true
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -309,11 +203,6 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.riskAssessmentQuestionList.forEach(element => {
       element.done = false
     });
-    this.riskAssessmentQuestionList[0].done = true
-    console.log(this.riskAssessmentQuestionList);
-    // if (flag == false) {
-    //   this.reset(false)
-    // }
   }
 
   submitRiskAnalysis() {
@@ -324,6 +213,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       advisorId: this.advisorId,
       clientRiskAssessmentResults: []
     };
+    this.showErrorMsg = false;
     this.riskAssessmentQuestionList.forEach(element => {
       if (element.selectedChoiceId == undefined) {
         this.showErrorMsg = true
@@ -333,15 +223,14 @@ export class OverviewRiskProfileComponent implements OnInit {
           riskAssessmentChoiceId: element.selectedChoiceId,
           weight: element.weight
         });
-        this.showErrorMsg = false
       }
     });
-    if (this.showErrorMsg == false) {
+    if (!this.showErrorMsg) {
       obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
-      console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
       this.planService.submitRisk(obj).subscribe(
         data => this.submitRiskRes(data), error => {
-          this.showErrorMsg = true
+          this.showErrorMsg = true;
+          this.eventService.openSnackBar(error, "Dismiss")
           //this.submitRiskRes(data);
         }
       );
@@ -351,32 +240,30 @@ export class OverviewRiskProfileComponent implements OnInit {
   submitRiskRes(data) {
     this.isLoading = false
     this.showResults = true;
-    setTimeout(() => {
-      this.guageFun(data);
-      this.percentage(data)
-    }, 300);
+    this.isEmpty = false;
+    this.showQuestionnaire = false;
     if (data) {
-      if (this.score <= 180) {
-        this.scoreStatus = 'conservative'
-      } else if (data.score <= 290) {
-        this.scoreStatus = 'Moderately conservative'
-      } else if (data.score <= 400) {
-        this.scoreStatus = 'Moderate'
-      } else if (data.score <= 510) {
-        this.scoreStatus = 'Moderately aggressive'
-      } else if (data.score <= 600) {
-        this.scoreStatus = 'Aggressive'
+      const globalProfile = this.globalRiskProfile.find(risk => risk.id == data.id);
+      if(globalProfile) {
+        this.feedsRiskProfile = {
+          "riskAssessmentScore": data.score,
+          "riskProfileId": data.id,
+          "riskProfileStatus": data.riskProfileName,
+          equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
+          equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
+        }
       } else {
-        this.scoreStatus = ''
+        this.feedsRiskProfile = {
+          "riskAssessmentScore": data.score,
+          "riskProfileId": data.id,
+          "riskProfileStatus": data.riskProfileName,
+          equityAllocationUpperLimit: data.equityAllocationUpperLimit,
+          equityAllocationLowerLimit: data.equityAllocationLowerLimit,
+        }
       }
-      this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
-      this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
-
-      this.feedsRiskProfile = {
-        "riskAssessmentScore": data.score,
-        "riskProfileId": data.id,
-        "riskProfileStatus": data.riskProfileName,
-      }
+      setTimeout(() => {
+        this.percentage(this.feedsRiskProfile)
+      }, 300);
     }
   }
 
@@ -403,27 +290,26 @@ export class OverviewRiskProfileComponent implements OnInit {
     if (data != undefined) {
       this.showResults = false
       if (data.refreshRequired == false) {
-        this.reset();
+        this.takeTests();
       } else if (data.refreshRequired) {
         this.riskAssessmentQuestionList = data.refreshRequired
+        this.showErrorMsg = false;
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.showButton = false
         this.showRetakeTestsButton = true;
       } else {
-        this.reset();
+        this.takeTests();
       }
     }
   }
 
-  reset() {
+  takeTests() {
+    this.showQuestionnaire = true;
+    this.isEmpty = false;
     this.showRetakeTestsButton = false;
-    // this.statusArray = []
     this.getRiskProfileList(true);
     this.showResults = false;
   }
-
-
-
 
   loadGlobalRiskProfile() {
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {
@@ -432,9 +318,11 @@ export class OverviewRiskProfileComponent implements OnInit {
       } else {
         this.globalRiskProfile = res;
       }
+      this.loadRiskProfile();
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.loadRiskProfile();
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -450,6 +338,25 @@ export class OverviewRiskProfileComponent implements OnInit {
       if (res) {
         this.feedsRiskProfile = res[0];
         this.showResults = true;
+        this.isEmpty = false;
+
+        const globalProfile = this.globalRiskProfile.find(risk => risk.id == this.feedsRiskProfile.riskProfileId);
+        if(globalProfile) {
+          this.feedsRiskProfile = {
+            equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
+            equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
+            ...this.feedsRiskProfile
+          }
+        } else {
+          this.feedsRiskProfile = {
+            equityAllocationUpperLimit: 0,
+            equityAllocationLowerLimit: 0,
+            ...this.feedsRiskProfile
+          }
+        }
+        setTimeout(() => {
+          this.percentage(this.feedsRiskProfile)
+        }, 300);
       }
       this.loaderFn.decreaseCounter();
     }, err => {
@@ -457,6 +364,17 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+
+  cancelTest(){
+    this.showQuestionnaire = false;
+    if(this.feedsRiskProfile.riskProfileId) {
+      this.isEmpty = false;
+      this.showResults = true;
+    } else {
+      this.isEmpty = true;
+      this.showResults = false;
+    }
   }
 
 

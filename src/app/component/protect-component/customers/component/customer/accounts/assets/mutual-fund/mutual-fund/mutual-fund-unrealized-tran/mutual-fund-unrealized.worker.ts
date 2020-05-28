@@ -12,24 +12,30 @@ addEventListener('message', ({data}) => {
   // console.log(`addEventListener got message: ${data}`);
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
-  const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund);
+  const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund,data.showFolio);
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
-  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.nav, data.mutualFund, data.transactionType, data.viewMode);
+  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.nav, data.mutualFund, data.transactionType, data.viewMode,data.showFolio);
   const customDataHolder = [];
   totalValue.grandTotal = mfService.mutualFundRoundAndFormat(totalValue.grandTotal, 2);
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
-    if (element.currentAmount && element.amount) {
+    if (element.currentAmount && element.amount && !element.gain) {
       element.gain = element.currentAmount - element.amount;
+      element.gain = mfService.mutualFundRoundAndFormat(element.gain, 2);
+
     } else {
     }
 
-    if (element.totalCurrentValue && element.totalTransactionAmt) {
+    if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {
       element.totalGain = element.totalCurrentValue - element.totalTransactionAmt;
+      element.totalGain = mfService.mutualFundRoundAndFormat(element.totalGain, 2);
     } else {
-    }
-    element.gain = mfService.mutualFundRoundAndFormat(element.gain, 2);
 
+    }
+    if(element.totalCurrentValue && element.totalTransactionAmt && !element.netGain ){
+      element.netGain  =  element.totalCurrentValue - element.totalTransactionAmt;
+    }
+    element.netGain = mfService.mutualFundRoundAndFormat(element.netGain, 2);
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
     element.totalTransactionAmt = mfService.mutualFundRoundAndFormat(element.totalTransactionAmt, 2);
     if (element.transactionNav && element.transactionNav > 0) {

@@ -1,163 +1,230 @@
 <div class="dialogclose">
-  <div class="row popup-header-fix-100">
-    <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-    </div>
-    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo"
+                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
-      <p class="f-16 mb-0">
-        Investment onboarding - IIN/UCC
-      </p>
+            <p class="f-16 mb-0">
+                Investment onboarding - IIN/UCC
+            </p>
+        </div>
+        <!-- (click)="dialogClose()" for prod build  -->
+        <div class="col-md-2 text-right">
+            <i (click)="close()" class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
     </div>
-    <!-- (click)="dialogClose()" for prod build  -->
-    <div class="col-md-2 text-right">
-      <i (click)="close()" class="material-icons pt-16 c-p pr-16">
-        clear
-      </i>
-    </div>
-  </div>
 </div>
 
 
 <div class="pt-60 mb-100" [formGroup]="reviewSubmit">
-  <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
-  <div class="col-md-10 offset-2 p-0 bl-1 ">
-    <div class="p-20">
-      <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
-      <p class="f-14 mb-4">Thanks for adding the details. Let’s go ahead and complete the process.</p>
-      <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select
-        multiple.
-      </p>
-      <p *ngIf="dataSourceNse.length>0">NSE NMF II</p>
-      <div *ngFor="let singleBrokerCred of dataSourceNse; index as i" class="row">
-        <div class="col-md-3 mb-12 pl-0">
-          <h5>1) Select a broker code</h5>
-          <p class="f-12 text-primitive">You can multiple select broker code</p>
-          <div class="row">
-            <div class="col-md-10 pl-0">
-              <div class="readOnlyClass mb-4">
-                {{singleBrokerCred.brokerCode}}
-              </div>
-              <div (click)="addNewRow()" *ngIf="brokerCredentials&&selectedCount<brokerCredentials.length"
-                   class="f-14 c-p text-primitive">+ Add more
-              </div>
-            </div>
-            <div class="col-md-1 p-0 mt-8">
-              <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+    <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
+    <div class="col-md-10 offset-2 p-0 bl-1 ">
+        <div class="p-20">
+            <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
+            <p class="f-14 mb-4">Thanks for adding the details. Let’s go ahead and complete the process.</p>
+            <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can
+                select multiple.
+            </p>
+
+
+            <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
+                <div *ngIf="isLoading" class="col-md-3 p-0 mt-12 overflow-hidden">
+                    <div class="row">
+                        <div class="col-md-12 pl-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngIf="isLoading" class="col-md-3 p-0 mt-12 overflow-hidden">
+                    <div class="row">
+                        <div class="col-md-12 pl-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngIf="isLoading" class="col-md-3 p-0 mt-12 overflow-hidden">
+                    <div class="row">
+                        <div class="col-md-12 pl-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pr-0 relClass">
+                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                <span *ngIf="!isLoading">Test</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-          </div>
+
+            <p *ngIf="dataSourceNse.length>0">NSE NMF II</p>
+            <div *ngFor="let singleBrokerCred of dataSourceNse; index as i" class="row">
+                <div class="col-md-3 mb-12 pl-0">
+                    <h5>1) Select a broker code</h5>
+                    <p class="f-12 text-primitive">You can multiple select broker code</p>
+                    <div class="row">
+                        <div class="col-md-10 pl-0">
+                            <div class="readOnlyClass mb-4">
+                                {{singleBrokerCred.brokerCode}}
+                            </div>
+                            <div (click)="addNewRow()" *ngIf="brokerCredentials&&selectedCount<brokerCredentials.length"
+                                class="f-14 c-p text-primitive">+ Add more
+                            </div>
+                        </div>
+                        <div class="col-md-1 p-0 mt-8">
+                            <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-12 pl-0  ">
+                    <h5>2) Confirm & submit</h5>
+                    <p class="f-12 text-primitive">This will send request for IIN creation</p>
+                    <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0"
+                        class="btnConfirm bg-primary text-white" mat-button>Create
+                        account
+                    </button>
+                    <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
+                    </p>
+
+                </div>
 
 
-        </div>
+                <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-5 mb-12 pl-0  ">
 
-        <div class="col-md-3 mb-12 pl-0  ">
-          <h5>2) Confirm & submit</h5>
-          <p class="f-12 text-primitive">This will send request for IIN creation</p>
-          <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0"
-                  class="btnConfirm bg-primary text-white" mat-button>Create
-            account
-          </button>
-          <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
-          </p>
+                    <h5>3) Upload forms</h5>
+                    <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
-        </div>
-
-
-        <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-5 mb-12 pl-0  ">
-
-          <h5>3) Upload forms</h5>
-          <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
-
-          <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
-                  class="btnConfirm bg-primary mr-10 text-white" mat-button>
-            Upload AOF
-            <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
-                   id="file-4" type="file">
-          </button>
-          <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
-                  class="btnConfirm bg-primary text-white" mat-button>
-            Upload Cheque
-            <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput"
-                   id="file-4" type="file">
-          </button>
-        </div>
-      </div>
-
-      <div *ngIf="dataSourceBse.length>0" class="mt-20 classBorder">
-        <p class="">BSE Star MF</p>
-      </div>
-      <div *ngFor="let singleBrokerCred of dataSourceBse; index as i" class="row">
-        <div class="col-md-3 mb-12 pl-0">
-          <h5>1) Select a broker code</h5>
-          <p class="f-12 text-primitive">You can multiple select broker code</p>
-          <div class="row">
-            <div class="col-md-10 pl-0">
-              <div class="readOnlyClass mb-4">
-                {{singleBrokerCred.brokerCode}}
-              </div>
+                    <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
+                        class="btnConfirm bg-primary mr-10 text-white" mat-button>
+                        Upload AOF
+                        <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
+                            id="file-4" type="file">
+                    </button>
+                    <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
+                        class="btnConfirm bg-primary text-white" mat-button>
+                        Upload Cheque
+                        <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput"
+                            id="file-4" type="file">
+                    </button>
+                </div>
             </div>
 
-          </div>
-        </div>
+            <div *ngIf="dataSourceBse.length>0" class="mt-20 classBorder">
+                <p class="">BSE Star MF</p>
+            </div>
+            <div *ngFor="let singleBrokerCred of dataSourceBse; index as i" class="row">
+                <div class="col-md-3 mb-12 pl-0">
+                    <h5>1) Select a broker code</h5>
+                    <p class="f-12 text-primitive">You can multiple select broker code</p>
+                    <div class="row">
+                        <div class="col-md-10 pl-0">
+                            <div class="readOnlyClass mb-4">
+                                {{singleBrokerCred.brokerCode}}
+                            </div>
+                        </div>
 
-        <div class="col-md-3 mb-12 pl-0">
-          <h5>2) Provide account number</h5>
-          <p class="f-12 text-primitive">This will be displayed as UCC number</p>
-          <div class="form-group inputPaddingNone">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9" appInputValueValidation
-                     class="form-control" formControlName="accountNumber" matInput placeholder="Enter account number">
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                    </div>
+                </div>
 
-        <div class="col-md-3 mb-12 pl-0  ">
-          <h5>3) Confirm & submit</h5>
-          <p class="f-12 text-primitive">This will send request for UCC creation</p>
-          <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0"
-                  class="btnConfirm bg-primary text-white" mat-button>Create
-            account
-          </button>
-          <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
-          </p>
-        </div>
+                <div class="col-md-3 mb-12 pl-0">
+                    <h5>2) Provide account number</h5>
+                    <p class="f-12 text-primitive">This will be displayed as UCC number</p>
+                    <div class="form-group inputPaddingNone">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9"
+                                appInputValueValidation class="form-control" formControlName="accountNumber" matInput
+                                placeholder="Enter account number">
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
-          <h5>4) Upload forms</h5>
-          <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+                <div class="col-md-3 mb-12 pl-0  ">
+                    <h5>3) Confirm & submit</h5>
+                    <p class="f-12 text-primitive">This will send request for UCC creation</p>
+                    <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0"
+                        class="btnConfirm bg-primary text-white" mat-button>Create
+                        account
+                    </button>
+                    <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
+                    </p>
+                </div>
 
-          <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
-                  class="btnConfirm bg-primary text-white" mat-button>
-            Upload AOF
-            <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
-                   id="file-4" type="file">
-          </button>
+                <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
+                    <h5>4) Upload forms</h5>
+                    <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+
+                    <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
+                        class="btnConfirm bg-primary text-white" mat-button>
+                        Upload AOF
+                        <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
+                            id="file-4" type="file">
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-  <div class="col-md-8 p-0 d-flex align-items-center ">
-    <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
-  </div>
+    <div class="col-md-8 p-0 d-flex align-items-center ">
+        <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
+    </div>
 
 
-  <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-    <button (click)="openFatcaDetails()" [disabled]="isSuccessful" class="br-0 perviousBtn text-inherit f-14" mat-button
-            mat-raised-button>
-      PREVIOUS
-    </button>
+        <button (click)="openFatcaDetails()" [disabled]="isSuccessful" class="br-0 perviousBtn text-inherit f-14"
+            mat-button mat-raised-button>
+            PREVIOUS
+        </button>
 
-    <button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>CLOSE</button>
+        <button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>CLOSE</button>
 
 
-  </div>
+    </div>
 
 </div>

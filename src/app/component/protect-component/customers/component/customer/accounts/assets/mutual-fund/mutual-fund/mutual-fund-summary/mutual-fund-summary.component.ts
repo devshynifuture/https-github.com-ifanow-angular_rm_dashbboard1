@@ -324,8 +324,9 @@ export class MutualFundSummaryComponent implements OnInit {
       const input = {
         mutualFundList: mutualFund,
         // mutualFund: this.mfData,
-        mutualFund: this.mutualFund,
+        mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
+        showFolio:(this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
       };
       // Create a new
@@ -432,7 +433,7 @@ export class MutualFundSummaryComponent implements OnInit {
       scheme: this.setDefaultFilterData.scheme,
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       reportAsOn: this.setDefaultFilterData.reportAsOn,
-      showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
+      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
@@ -671,28 +672,28 @@ export class MutualFundSummaryComponent implements OnInit {
 
   openUpperFragment(flag, element) {
     console.log("this is what element is:::", element);
-    this.mfService.getMutualFundData()
-      .subscribe(res => {
-        const fragmentData = {
-          flag: 'app-upper-customer',
-          id: 1,
-          data: { family_member_list: res['family_member_list'], flag: 'addTransaction', ...element },
-          direction: 'top',
-          componentName: UpperCustomerComponent,
-          state: 'open'
-        };
-        const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-          upperSliderData => {
-            if (UtilService.isDialogClose(upperSliderData)) {
-              if (UtilService.isRefreshRequired(upperSliderData)) {
-                // code to refresh ...
-                this.getMutualFund();
+    if (flag == 'addTransaction') {
+          const fragmentData = {
+            flag: 'app-upper-customer',
+            id: 1,
+            data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+            direction: 'top',
+            componentName: UpperCustomerComponent,
+            state: 'open'
+          };
+          const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+            upperSliderData => {
+              if (UtilService.isDialogClose(upperSliderData)) {
+                if (UtilService.isRefreshRequired(upperSliderData)) {
+                  // code to refresh ...
+                  this.getMutualFund();
+                }
+                // this.getClientSubscriptionList();
+                subscription.unsubscribe();
               }
-              // this.getClientSubscriptionList();
-              subscription.unsubscribe();
             }
-          }
-        );
-      });
+          );
+    }
+
   }
 }
