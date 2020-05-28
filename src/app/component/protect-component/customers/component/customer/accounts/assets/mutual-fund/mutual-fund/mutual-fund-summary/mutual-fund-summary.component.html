@@ -239,9 +239,9 @@
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span
-                                *ngIf="element.sipAmount  || element.sipAmount == 0">{{(element.sipAmount) ? (element.sipAmount | number) : 0}}</span>
+                                *ngIf="element.sipAmount  || element.sipAmount == 0">{{(element.sipAmount) ? (element.sipAmount | number :'1.0-0') : 0}}</span>
                             <span  class="f-700"
-                                *ngIf="element.totalSipAmount || element.totalSipAmount == 0">{{(element.totalSipAmount) ? (element.totalSipAmount | number) : 0}}</span>
+                                *ngIf="element.totalSipAmount || element.totalSipAmount == 0">{{(element.totalSipAmount) ? (element.totalSipAmount |  number :'1.0-0') : 0}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -250,7 +250,7 @@
                     </td> -->
                     <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span>{{(grandTotal) ? (grandTotal.sip) : 0}}</span>
+                        <span>{{(grandTotal) ? (grandTotal.sip |  number :'1.0-0') : 0}}</span>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
