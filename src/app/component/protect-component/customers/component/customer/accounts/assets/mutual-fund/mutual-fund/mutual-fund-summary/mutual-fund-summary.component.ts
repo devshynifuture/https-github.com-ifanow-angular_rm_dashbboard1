@@ -645,11 +645,9 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
     });
-    this.mfService.getMutualFundData()
-      .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: { family_member_list: res['family_member_list'], flag, ...element, ...this.selectedDataLoad },
+          data: { family_member_list:['family_member_list'], flag, ...element, ...this.selectedDataLoad },
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent
@@ -666,8 +664,6 @@ export class MutualFundSummaryComponent implements OnInit {
             }
           }
         );
-      })
-
   }
 
   openUpperFragment(flag, element) {
