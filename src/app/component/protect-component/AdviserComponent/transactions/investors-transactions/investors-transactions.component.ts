@@ -14,6 +14,7 @@ import { apiConfig } from '../../../../../config/main-config';
 import { appConfig } from '../../../../../config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Router } from '@angular/router';
+import { OpenPdfViewComponent } from '../open-pdf-view/open-pdf-view.component';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -71,7 +72,13 @@ export class InvestorsTransactionsComponent implements OnInit {
       this.noData = 'No investors found';
     }
   }
+  openPdfPopup() {
+    const dialogRef = this.dialog.open(OpenPdfViewComponent);
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   refresh(flag) {
     this.dontHide = true;
     if (this.isPendingData) {
