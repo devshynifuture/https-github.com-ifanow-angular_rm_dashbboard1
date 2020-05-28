@@ -251,27 +251,31 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.isEmpty = false;
     this.showQuestionnaire = false;
     if (data) {
-      const globalProfile = this.globalRiskProfile.find(risk => risk.id == data.id);
-      if(globalProfile) {
-        this.feedsRiskProfile = {
-          "riskAssessmentScore": data.score,
-          "riskProfileId": data.id,
-          "riskProfileStatus": data.riskProfileName,
-          equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
-          equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
-        }
-      } else {
-        this.feedsRiskProfile = {
-          "riskAssessmentScore": data.score,
-          "riskProfileId": data.id,
-          "riskProfileStatus": data.riskProfileName,
-          equityAllocationUpperLimit: data.equityAllocationUpperLimit,
-          equityAllocationLowerLimit: data.equityAllocationLowerLimit,
-        }
-      }
+      this.mergeRiskProfile(data);
       setTimeout(() => {
         this.percentage(this.feedsRiskProfile)
       }, 300);
+    }
+  }
+
+  mergeRiskProfile(data) {
+    const globalProfile = this.globalRiskProfile.find(risk => risk.id == data.id);
+    if(globalProfile) {
+      this.feedsRiskProfile = {
+        "riskAssessmentScore": data.score,
+        "riskProfileId": data.id,
+        "riskProfileStatus": data.riskProfileName,
+        equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
+        equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
+      }
+    } else {
+      this.feedsRiskProfile = {
+        "riskAssessmentScore": data.score,
+        "riskProfileId": data.id,
+        "riskProfileStatus": data.riskProfileName,
+        equityAllocationUpperLimit: data.equityAllocationUpperLimit,
+        equityAllocationLowerLimit: data.equityAllocationLowerLimit,
+      }
     }
   }
 
@@ -300,7 +304,8 @@ export class OverviewRiskProfileComponent implements OnInit {
       } else if (data.refreshRequired) {
         this.showQuestionnaire = true;
         this.showResults = true;
-        this.riskAssessmentQuestionList = data.refreshRequired
+        this.riskAssessmentQuestionList = data.data.assessmentResult;
+        this.mergeRiskProfile(data.data.assessmentScore);
         this.showErrorMsg = false;
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.showButton = false
