@@ -22,14 +22,14 @@ export class SubBrokerTeamMemberComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
 
-  constructor(private onlineTransact: OnlineTransactionService, 
+  constructor(private onlineTransact: OnlineTransactionService,
     private utilService: UtilService,
-    private event : EventService,
-     private subInjectService: SubscriptionInject,
-     public dialog:MatDialog) {
-      this.advisorId = AuthService.getAdvisorId();
+    private event: EventService,
+    private subInjectService: SubscriptionInject,
+    public dialog: MatDialog) {
+    this.advisorId = AuthService.getAdvisorId();
 
-     }
+  }
   isLoading = false;
 
 
@@ -54,19 +54,19 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   getBSESubBrokerCredentialsRes(data) {
-    if(data){
+    if (data) {
       this.isLoading = false;
       data = data.filter(element => element.teamMemberSessionId != this.advisorId)
       this.dataSource.data = data
       this.dataSource.sort = this.sort;
-    }else{
+    } else {
       this.isLoading = false;
-       this.noData = "No scheme found";
+      this.noData = "No scheme found";
       this.dataSource.data = [];
     }
-  
+
   }
-  addSubBroker(data){
+  addSubBroker(data) {
     const fragmentData = {
       flag: 'addNsc',
       data,
@@ -77,8 +77,8 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getBSESubBrokerCredentials()
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getBSESubBrokerCredentials()
           }
           rightSideDataSub.unsubscribe();
         }
@@ -123,7 +123,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     });
   }
 
-  
+
   openAddSubBrokerCredential(data, flag) {
     const fragmentData = {
       flag: 'addNsc',

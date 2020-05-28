@@ -326,7 +326,7 @@ export class MutualFundSummaryComponent implements OnInit {
         // mutualFund: this.mfData,
         mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
-        showFolio:(this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
+        showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
       };
       // Create a new
@@ -639,56 +639,59 @@ export class MutualFundSummaryComponent implements OnInit {
 
   openMutualEditFund(flag, element) {
     this.mutualFundList.forEach(ele => {
-      ele.mutualFundTransactions.forEach(trsn => {
-        if (trsn.id == element.id) {
-          this.selectedDataLoad = ele
+      ele.mutualFundTransactions.forEach(tran => {
+        if (tran.id == element.id) {
+          this.selectedDataLoad = ele;
         }
       });
     });
-        const fragmentData = {
-          flag: 'editTransaction',
-          data: { family_member_list:['family_member_list'], flag, ...element, ...this.selectedDataLoad },
-          id: 1,
-          state: 'open',
-          componentName: MFSchemeLevelHoldingsComponent
-        };
-        const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-          sideBarData => {
-            console.log('this is sidebardata in subs subs : ', sideBarData);
-            if (UtilService.isDialogClose(sideBarData)) {
-              if (UtilService.isRefreshRequired(sideBarData)) {
-                this.getMutualFund();
-              }
-              console.log('this is sidebardata in subs subs 2: ', sideBarData);
-              rightSideDataSub.unsubscribe();
-            }
+    if(!this.selectedDataLoad){
+      this.selectedDataLoad= element
+    }
+    const fragmentData = {
+      flag: 'editTransaction',
+      data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },
+      id: 1,
+      state: 'open',
+      componentName: MFSchemeLevelHoldingsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getMutualFund();
           }
-        );
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   openUpperFragment(flag, element) {
     console.log("this is what element is:::", element);
     if (flag == 'addTransaction') {
-          const fragmentData = {
-            flag: 'app-upper-customer',
-            id: 1,
-            data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
-            direction: 'top',
-            componentName: UpperCustomerComponent,
-            state: 'open'
-          };
-          const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-            upperSliderData => {
-              if (UtilService.isDialogClose(upperSliderData)) {
-                if (UtilService.isRefreshRequired(upperSliderData)) {
-                  // code to refresh ...
-                  this.getMutualFund();
-                }
-                // this.getClientSubscriptionList();
-                subscription.unsubscribe();
-              }
+      const fragmentData = {
+        flag: 'app-upper-customer',
+        id: 1,
+        data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+        direction: 'top',
+        componentName: UpperCustomerComponent,
+        state: 'open'
+      };
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            if (UtilService.isRefreshRequired(upperSliderData)) {
+              // code to refresh ...
+              this.getMutualFund();
             }
-          );
+            // this.getClientSubscriptionList();
+            subscription.unsubscribe();
+          }
+        }
+      );
     }
 
   }
