@@ -32,7 +32,10 @@ addEventListener('message', ({data}) => {
     } else {
 
     }
-
+    if(element.totalCurrentValue && element.totalTransactionAmt && !element.netGain ){
+      element.netGain  =  element.totalCurrentValue - element.totalTransactionAmt;
+    }
+    element.netGain = mfService.mutualFundRoundAndFormat(element.netGain, 2);
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
     element.totalTransactionAmt = mfService.mutualFundRoundAndFormat(element.totalTransactionAmt, 2);
     if (element.transactionNav && element.transactionNav > 0) {

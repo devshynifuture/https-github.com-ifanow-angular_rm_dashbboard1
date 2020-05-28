@@ -62,6 +62,7 @@ export class MfServiceService {
     data.schemeWise = this.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.filter(data.schemeWise, 'mutualFund');
     data.folioWise = this.filter(data.schemeWise, 'mutualFund');
+    data.transactions= this.filter(data.mutualFundList, 'mutualFundTransactions');
     return data;
   }
   filter(data, key) {// filtering data as per category
