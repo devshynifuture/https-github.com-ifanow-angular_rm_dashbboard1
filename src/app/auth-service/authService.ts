@@ -90,7 +90,7 @@ export class AuthService {
   }
 
   get orgData() {
-    return JSON.parse(localStorage.getItem('orgData'));
+    return JSON.parse(localStorage.getItem('orgData')) || {};
   }
 
   get profilePic() {

@@ -23,6 +23,7 @@ export class OpenPdfViewComponent implements OnInit {
   getFileDetails(e) {
     console.log('file', e);
     const file = e.target.files[0];
+    this.showStatus = undefined;
     const requestMap = {
       advisorId: AuthService.getAdvisorId()
     };

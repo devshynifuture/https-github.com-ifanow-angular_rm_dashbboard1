@@ -360,6 +360,10 @@ export class OverviewRiskProfileComponent implements OnInit {
         setTimeout(() => {
           this.percentage(this.feedsRiskProfile)
         }, 300);
+      } else {
+
+        this.showResults = false;
+        this.isEmpty = true;
       }
       this.loaderFn.decreaseCounter();
     }, err => {

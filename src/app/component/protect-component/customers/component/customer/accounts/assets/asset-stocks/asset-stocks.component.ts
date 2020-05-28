@@ -44,7 +44,7 @@ export class AssetStocksComponent implements OnInit {
   }
 
   pieChart(id) {
-    pieChart();
+    pieChart(id);
   }
 
   getStocksData() {
@@ -56,7 +56,7 @@ export class AssetStocksComponent implements OnInit {
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
         this.getStocksDataRes(data);
-        this.pieChart('piechartStock');
+        this.pieChart(data.categories);
         this.isLoading = false;
       },
       err => {
@@ -66,11 +66,14 @@ export class AssetStocksComponent implements OnInit {
     );
   }
 
+  categories:any;
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
     if (data.portfolios.length != 0) {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
+      this.categories = data.categories;
+      
     } else {
       this.noData = 'No Stocks Found';
     }
