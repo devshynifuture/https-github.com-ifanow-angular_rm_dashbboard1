@@ -433,7 +433,7 @@ export class MutualFundSummaryComponent implements OnInit {
       scheme: this.setDefaultFilterData.scheme,
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       reportAsOn: this.setDefaultFilterData.reportAsOn,
-      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : this.saveFilterData.showFolio,
+      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
