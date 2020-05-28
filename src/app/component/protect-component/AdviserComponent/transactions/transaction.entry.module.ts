@@ -45,7 +45,6 @@ import { DetailedViewMandateComponent } from './mandates-transactions/detailed-v
 import { PeopleEntryModule } from '../../PeopleComponent/people/people-entry-module';
 import { NoCredFoundComponent } from './noCredFound/no-cred-found/no-cred-found.component';
 import { InvestorDetailComponent } from './investors-transactions/investor-detail/investor-detail.component';
-import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
 
 export const componentList = [
   OnlineTransactionComponent,
@@ -88,7 +87,6 @@ export const componentList = [
   AddMandateComponent,
   DetailedViewMandateComponent,
   InvestorDetailComponent,
-  OpenPdfViewComponent
 
   // VideoKycComponent
 

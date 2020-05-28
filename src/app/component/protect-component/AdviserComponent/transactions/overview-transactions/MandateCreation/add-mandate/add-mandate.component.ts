@@ -52,6 +52,8 @@ export class AddMandateComponent implements OnInit {
   clientCodeDataShow = false;
   errorMsg: any;
   currentDate = new Date();
+  imageUploaded: any = undefined;
+  imageLoader: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTrasaction: ProcessTransactionService,
@@ -307,6 +309,7 @@ export class AddMandateComponent implements OnInit {
       this.generalDetails.markAllAsTouched();
       return;
     }
+    this.barButtonOptions.active = true;
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.toDate = new Date(this.generalDetails.controls.toDate.value);
     Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
@@ -318,6 +321,7 @@ export class AddMandateComponent implements OnInit {
     Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
+        this.barButtonOptions.active = false;
         this.eventService.openSnackBar(error, 'Dismiss');
         this.errorMsg = error;
       }
@@ -327,6 +331,7 @@ export class AddMandateComponent implements OnInit {
   addMandateRes(data) {
 
     if (data) {
+      this.barButtonOptions.active = false;
       this.madateResponse = data;
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');
       // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
@@ -336,6 +341,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   getFileDetails(e, flag) {
+    this.imageLoader = true;
     this.file = e.target.files[0];
     const file = e.target.files[0];
     const requestMap = {
@@ -348,10 +354,13 @@ export class AddMandateComponent implements OnInit {
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
 
         if (status == 200) {
+          this.imageLoader = false;
+          this.closeRightSlider(true);
           const responseObject = JSON.parse(response);
-          this.eventService.openSnackBar('File uploaded successfully');
+          this.eventService.openSnackBar('File uploaded successfully', "Dismiss");
         } else {
           const responseObject = JSON.parse(response);
+          this.imageLoader = false;
           this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
         }
       });

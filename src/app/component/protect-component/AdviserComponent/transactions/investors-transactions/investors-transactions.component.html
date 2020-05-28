@@ -18,8 +18,8 @@
                 <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="Type to filter data">
             </mat-form-field>
 
-            <input #uploadFileInput (change)="getFileDetails($event)" [hidden]="true" class="uploadInput" id="file-4" type="file">
-            <img (click)="uploadFileInput.click()" *ngIf="isAdvisorSection" class="b-a p-5 c-p " src="/assets/images/svg/download-black.svg">
+            <!-- <input  [hidden]="true" class="uploadInput" id="file-4" type="file"> -->
+            <img (click)="openPdfPopup()" *ngIf="isAdvisorSection" class="b-a p-5 c-p " src="/assets/images/svg/download-black.svg">
 
 
             <!-- <img (click)="openDialog()" class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg"> -->

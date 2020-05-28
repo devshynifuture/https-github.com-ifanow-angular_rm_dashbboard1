@@ -1,7 +1,7 @@
 <div class="popup-header-fix-40">
     <div class="row bb-1">
         <div class="col-lg-8 p-0">
-            <h4 class="mb-0 wrapper-20"> ARN-83865 CAMS </h4>
+            <h4 class="mb-0 wrapper-20 pr-0"> ARN-83865 CAMS </h4>
         </div>
         <div class="col-lg-4 text-right">
             <div class="wrapper-12">
@@ -34,23 +34,23 @@
             <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
 
                 <ng-container matColumnDef="unitOne">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Units (IFANOW) </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Units (IFANOW) </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.unitOne}} </div>
                     </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="unitsRta">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> units (RTA) </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> units (RTA) </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.unitsRta}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="difference">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Difference </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Difference </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.difference}} </div>
                     </td>
                 </ng-container>
@@ -73,16 +73,15 @@
     <div class="col-lg-6" *ngIf="tableEntriesType==2">
         <!-- <mat-checkbox>Show All Transactions</mat-checkbox> -->
     </div>
-    <div class="col-lg-4 text-right">
+    <div class="col-lg-6 full-end">
         <div matTooltip="You cannot Unfreeze Folio" [matTooltipDisabled]="!disableUnfreezeBtn">
-            <button [ngClass]="disableUnfreezeBtn ? 'disableClass':''" [disabled]="disableUnfreezeBtn" class="ba-black"
-                mat-button (click)="unfreezeFolioData()">
+            <button [ngClass]="disableUnfreezeBtn ? 'disableClass':''" [disabled]="disableUnfreezeBtn"
+                class="ba-black mr-16" mat-button (click)="unfreezeFolioData()">
                 Unfreeze
             </button>
         </div>
 
-    </div>
-    <div class="col-lg-2 text-right">
+
         <div matTooltip="You cannot freeze Folio, as difference is not zero" [matTooltipDisabled]="!disableFreezeBtn">
             <button class="ba-black" mat-button [disabled]="disableFreezeBtn"
                 [ngClass]="disableFreezeBtn ? 'disableClass':''" (click)="freezeFolioData()">
@@ -97,7 +96,7 @@
         <div *ngIf="tableEntriesType == 1">
             <table mat-table [dataSource]="dataSource1" id="table-low" class=" mt-8">
                 <ng-container matColumnDef="checkbox">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef>
+                    <th class="br" mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (change)="$event ? masterToggle() : null"
                             [checked]="selection.hasValue() && isAllSelected()"
                             [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
@@ -137,7 +136,7 @@
                             </button>
                         </mat-menu>
                     </th>
-                    <td mat-cell class="b-a" *matCellDef="let row">
+                    <td mat-cell class="br" *matCellDef="let row">
                         <mat-checkbox (click)="$event.stopPropagation(); "
                             (change)="$event ? singleSelectionSelect(row): null" [checked]="selection.isSelected(row)"
                             [aria-label]="checkboxLabel(row)">
@@ -148,43 +147,43 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="transactionType">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Transaction type </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Transaction type </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.transactionType}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="date">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Date </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Date </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.date | date: 'short'}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="amount">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Amount </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.amount}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="units">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Units </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Units </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.units}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="balanceUnits">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Balance units </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Balance units </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.balanceUnits}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Action </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <!-- [matTooltipPosition]="below" -->
                             <div matTooltip="Kindly unfreeze folio, to delete transaction"
@@ -212,43 +211,43 @@
             <table mat-table [dataSource]="dataSource2" id="table-low" class="mt-8">
                 <!-- transaction Type Column -->
                 <ng-container matColumnDef="transactionType">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Transaction type </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Transaction type </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.transactionType}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="date">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Date </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Date </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.date | date: 'short'}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="amount">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Amount </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.amount}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="nav">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> NAV </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> NAV </th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.nav}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="units">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Units </th>
-                    <td class="b-a" mat-cell *matCellDef="let element">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Units </th>
+                    <td class="br" mat-cell *matCellDef=" let element">
                         <div class="bar"> {{element.units}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
-                    <td class="b-a" mat-cell *matCellDef="let element; index as i">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Action </th>
+                    <td class="br" mat-cell *matCellDef="let element; index as i">
                         <div class="bar">
                             <button mat-stroked-button [ngClass]="element.keep ? 'disableClass': ''"
                                 [disabled]="element.keep" (click)="shouldKeepOrRemove(1, element)"
