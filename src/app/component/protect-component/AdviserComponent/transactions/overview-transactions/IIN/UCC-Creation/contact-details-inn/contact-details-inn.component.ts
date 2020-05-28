@@ -132,7 +132,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.addressList.address = {};
     if (data.clientId || data.familyMemberId) {
       const obj = {
-        userId: data.clientId && data.clientId > 0 ? data.clientId : data.familyMemberId,
+        userId: data.userType == 2 ? data.clientId : data.familyMemberId,
         userType: data.userType
       };
       this.custumService.getAddressList(obj).subscribe(
