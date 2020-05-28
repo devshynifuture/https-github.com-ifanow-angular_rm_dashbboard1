@@ -130,17 +130,17 @@
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 relClass height24">
                                         <div class="bar height24">
-                                            <span *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0"
-                                                class="text-success">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{(!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0) ? '%' : ''}}</span>
+                                            <span *ngIf="(mfData) ? (mfData.total_xirr >= 0) : 0 && !isLoading"
+                                                class="text-success">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{!isLoading ? '%' : ''}}</span>
                                             <i class="material-icons f-14 f-700 text-success"
                                                 *ngIf="!isLoading || (mfData) ? (mfData.total_xirr >= 0) : 0">
-                                                arrow_upward
+                                               <span *ngIf="!isLoading">arrow_upward</span> 
                                             </i>
-                                            <span *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0"
-                                                class="text-danger">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity' || mfData.total_xirr == '_infinity' || mfData.total_xirr == 'NaN') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{(!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0) ? '%' : ''}}</span>
+                                            <span *ngIf="(mfData) ? (mfData.total_xirr < 0) : 0 && !isLoading"
+                                                class="text-danger">{{(isLoading) ? '' :((mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : (mfData.total_xirr == 0 || mfData.total_xirr == 'Infinity') ? (mfData.total_absolute_return | number:'1.2-2') : 0)}}{{!isLoading ? '%' : ''}}</span>
                                             <i class="material-icons f-14 f-700 text-danger"
                                                 *ngIf="!isLoading || (mfData) ? (mfData.total_xirr < 0) : 0">
-                                                arrow_downward
+                                                <span *ngIf="!isLoading">arrow_downward</span>
                                             </i>
                                         </div>
                                     </h5>
@@ -165,19 +165,22 @@
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}
-                                            <span appFormatNumber *ngIf="this.equityCurrentValue">
+                                            <span appFormatNumber *ngIf="this.equityCurrentValue && !isLoading">
                                                 {{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">
                                                 0</span>
+                                                <span *ngIf="isLoading">{{''}}</span>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 relClass pl-8">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.equityPercentage">{{(this.equityPercentage)?(this.equityPercentage | number:'1.2-2'):'0'}}%</span><span
+                                                *ngIf="this.equityPercentage && !isLoading">{{(this.equityPercentage)?(this.equityPercentage | number:'1.2-2'):'0'}}%</span><span
                                                 appFormatNumber
                                                 *ngIf="!this.equityPercentage && !isLoading">0.00%</span>
+                                                <span *ngIf="isLoading">{{''}}</span>
+
                                         </p>
                                     </div>
                                 </div>
@@ -192,17 +195,21 @@
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
-                                                appFormatNumber *ngIf="this.debtCurrentValue">
+                                                appFormatNumber *ngIf="this.debtCurrentValue && !isLoading">
                                                 {{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading"> 0</span>
+                                                <span *ngIf="isLoading">{{''}}</span>
+
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 relClass pl-8">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.debtPercentage">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</span><span
+                                                *ngIf="this.debtPercentage && !isLoading">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</span><span
                                                 appFormatNumber *ngIf="!this.debtPercentage && !isLoading ">0.00%</span>
+                                                <span *ngIf="isLoading">{{''}}</span>
+
                                         </p>
                                     </div>
                                 </div>
@@ -217,19 +224,23 @@
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
-                                                appFormatNumber *ngIf="this.hybridCurrentValue">
+                                                appFormatNumber *ngIf="this.hybridCurrentValue && !isLoading">
                                                 {{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">
                                                 0</span>
+                                                <span *ngIf="isLoading">{{''}}</span>
+
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 relClass pl-8">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.hybridPercenatge">{{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
+                                                *ngIf="this.hybridPercenatge && !isLoading">{{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
                                                 appFormatNumber
                                                 *ngIf="!this.hybridPercenatge && !isLoading ">0.00%</span>
+                                                <span *ngIf="isLoading">{{''}}</span>
+
                                         </p>
                                     </div>
                                 </div>
@@ -244,17 +255,18 @@
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}
-                                            <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">
+                                            <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue && !isLoading">
                                                 {{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span
                                                 appFormatNumber
                                                 *ngIf="!this.solution_OrientedCurrentValue && !isLoading">0</span>
+                                                
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 relClass pl-8">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.solution_OrientedPercenatge">{{(this.solution_OrientedPercenatge) ? (solution_OrientedPercenatge | number:'1.2-2') : '0'}}%</span><span
+                                                *ngIf="this.solution_OrientedPercenatge && !isLoading">{{(this.solution_OrientedPercenatge) ? (solution_OrientedPercenatge | number:'1.2-2') : '0'}}%</span><span
                                                 appFormatNumber
                                                 *ngIf="!this.solution_OrientedPercenatge && !isLoading ">0.00%</span>
                                         </p>
@@ -272,7 +284,7 @@
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
-                                                appFormatNumber *ngIf="this.otherCurrentValue">
+                                                appFormatNumber *ngIf="this.otherCurrentValue && !isLoading">
                                                 {{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span
                                                 appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading"> 0</span>
                                         </p>
@@ -281,7 +293,7 @@
                                 <div class="col-md-2 relClass pl-8">
                                     <div class="bar height24 ">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
-                                                *ngIf="this.otherPercentage">{{(this.otherPercentage) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
+                                                *ngIf="this.otherPercentage && !isLoading">{{(this.otherPercentage) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
                                                 appFormatNumber
                                                 *ngIf="!this.otherPercentage && !isLoading ">0.00%</span>
                                         </p>

@@ -29,13 +29,13 @@
 
     <div class="mb-40">
         <div class="row">
-            <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 ">
-                <div *ngIf="dataSource.data.length>0" class="tran-height">
+            <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
+                <div *ngIf="dataSource.data.length>0">
                     <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                         class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
-                        <ng-container matColumnDef="categoryName" sticky>
+                        <ng-container matColumnDef="categoryName">
                             <th *matHeaderCellDef class="br" mat-header-cell>
-                                {{columnHeader}}
+                                {{(columnHeader) ? columnHeader : 'Sub Category Name'}}
                             </th>
                             <td *matCellDef="let element" class="br" mat-cell>
                                 <div class="bar">{{element.categoryName}}</div>
@@ -113,7 +113,7 @@
                             </th>
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar">
-                                    <span>{{isLoading ? '' : ((element.totalGain) ? (element.totalGain | number:'1.2-2') : 0)}}</span>
+                                    <span>{{isLoading ? '' : ((element.totalGain) ? (element.totalGain + grandTotal.dividendPayout | number:'1.2-2') : 0)}}</span>
                                 </div>
                             </td>
                             <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
