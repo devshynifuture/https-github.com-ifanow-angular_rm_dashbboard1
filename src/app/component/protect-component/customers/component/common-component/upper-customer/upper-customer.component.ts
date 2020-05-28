@@ -28,5 +28,6 @@ export class UpperCustomerComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+
   }
 }

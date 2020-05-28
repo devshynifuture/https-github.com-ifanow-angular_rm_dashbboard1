@@ -136,6 +136,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.handlingDataVariable();
           this.eventService.openSnackBar('No Team Member Found', "Dismiss");
         }
+      }, err => {
+        console.log(err);
       })
   }
 
@@ -209,7 +211,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               transaction: '',
               mutualFundId: element.mutualFundId,
               canDeleteTransaction: new Date(res.transactionDate).getTime() > new Date(element.freezeDate).getTime(),
-              freezeDate: element.freezeDate ? element.freezeDate : null
+              freezeDate: element.freezeDate ? element.freezeDate : null,
+              investorName: element.investorName
             });
           });
           this.dataSource1.data = arrayValue;
@@ -241,7 +244,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
           // aum date for all object is the same 
           objArr = [{
-            doneOne: new Date().getMilliseconds(),
+            doneOne: res.doneOn,
             aum_balance: res.aumList[0].aumDate,
             transaction: res.transactionDate,
             export_folios: '',
@@ -356,6 +359,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   deleteAndReorder() {
+    let isRmLogin = AuthService.getUserInfo().isRmLogin;
+    let isParent = isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     const data = {
       id: this.aumReconId,
       brokerId: this.brokerId,
@@ -363,7 +368,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       rtId: this.data.rtId,
       mutualFundIds: this.mutualFundIds,
       parentId: this.parentId,
-      isParent: (this.parentId === this.advisorId) ? true : false
+      isParent
     }
     console.log("this is requestjson for delete and reorder:::: ", data)
     this.reconService.deleteAndReorder(data)
@@ -505,7 +510,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   }
 
-  openReconciliationDetails(value, data, tableType, index, freezeDate) {
+  openReconciliationDetails(flag, data, tableType, index, freezeDate) {
     let tableData = [];
     if (tableType === 'all-folios') {
       if (this.data.flag === 'report') {
@@ -522,7 +527,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       }
     }
     const fragmentData = {
-      flag: value,
+      flag,
       data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate },
       id: 1,
       state: 'open',
@@ -619,7 +624,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime()
+              canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime(),
+              investorName: element.investorName
             });
           });
           this.dataSource1.data = arrayValue;

@@ -30,7 +30,7 @@
     <div class="mb-40">
         <div class="row">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 ">
-                <div *ngIf="dataSource.data.length>0" class="tran-height">
+                <div *ngIf="dataSource && dataSource.data.length>0" class="wrapper">
                     <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                         class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
                         <ng-container matColumnDef="categoryName" sticky>

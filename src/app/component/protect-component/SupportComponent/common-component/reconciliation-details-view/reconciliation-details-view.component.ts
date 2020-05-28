@@ -161,6 +161,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           console.log(res);
 
           this.disableUnfreezeBtn = true;
+          this.disableFreezeBtn = false;
           this.canDeleteTransaction = true;
         }, err => {
           console.error(err);
