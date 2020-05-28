@@ -125,7 +125,7 @@
     <div *ngIf="details&&data.isAdvisorSection" class="row">
         <div class="col-md-12 mt-8 p-0">
 
-            <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" appFileDragDrop class="custom-file mb-12">
+            <!-- <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" appFileDragDrop class="custom-file mb-12">
                 <input [disabled]="isFileUploading" (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl" type="file">
                 <label class="custom-file-label" for="customFileLang">Upload check</label>
             </div>
@@ -133,15 +133,23 @@
             <div *ngIf="details.formUploadFlag == 0 && details.status != 0" class="custom-file">
                 <input [disabled]="isFileUploading" (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl" type="file">
                 <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
-            </div>
+            </div> -->
 
 
 
-            <!-- <button (click)="uploadFileInput.click()" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
-        Upload Cheque
-        <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput" id="file-4"
-          type="file">
-      </button> -->
+            <button (click)="uploadFileInput1.click()" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0"
+                [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+                Upload Cheque
+                <input #uploadFileInput1 (change)="getFileDetails($event,4)" class="uploadInput" id="file-4"
+                    type="file">
+            </button>
+
+            <button *ngIf="details.formUploadFlag == 0 && details.status != 0" (click)="uploadFileInput2.click()"
+                [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+                Upload mandate form
+                <input #uploadFileInput2 (change)="getFileDetails($event,2)" class="uploadInput" id="file-4"
+                    type="file">
+            </button>
 
 
         </div>
@@ -153,13 +161,13 @@
             <div class="d-flex">
                 <div *ngIf="singleStep.checked == true" class="circle1">
                     <i class="material-icons text-success">
-            check_circle_outline
-          </i>
+                        check_circle_outline
+                    </i>
                 </div>
                 <div *ngIf="singleStep.checked == false" class="circle1">
                     <i class="material-icons text-primary">
-            query_builder
-          </i>
+                        query_builder
+                    </i>
                 </div>
                 <div class="circleDetails">
                     <p class="m-0 f-16 l-18">{{singleStep.name}}</p>

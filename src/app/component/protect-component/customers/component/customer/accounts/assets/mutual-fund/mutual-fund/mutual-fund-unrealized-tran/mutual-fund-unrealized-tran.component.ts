@@ -575,7 +575,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
-      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : this.saveFilterData.showFolio,
+      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,

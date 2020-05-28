@@ -627,8 +627,8 @@
         </tr>
     </table>
 
-    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-after: always;  ">
-        <thead>
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;  ">
+        <thead style=" display: table-header-group " style="width: 40%; text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
             <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                 <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
                     Sr no.
@@ -673,28 +673,26 @@
         </thead>
 
         <tbody *ngFor="let item of customDataSource.data ;index as i">
-            <tr>
-                <td class="f-700" colspan="5" style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-                </td>
-                <td *ngIf="item.groupName" colspan="13" style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+            <tr style="page-break-inside: avoid" >
+                <td *ngIf="item.groupName" colspan="12" style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}
                 </td>
             </tr>
 
-            <tr *ngIf="item.schemeName || item.nav">
+            <tr *ngIf="item.schemeName || item.nav"style="page-break-inside: avoid" >
                 <td class="f-700" colspan="8" style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                     {{item.schemeName}}</td>
                 <td class="f-700" colspan="5" style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
                     Current NAV:{{item.nav}}</td>
             </tr>
 
-            <tr>
+            <tr style="page-break-inside: avoid" >
                 <td *ngIf="item.name || item.pan || item.folio" colspan="13" style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
                 </td>
             </tr>
 
-            <tr *ngIf="item.fwTransactionType || item.category" style=" border-bottom:1px solid #DADCE0; ">
+            <tr *ngIf="item.fwTransactionType || item.category" style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;">
                     {{i + 1}}</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
@@ -725,7 +723,7 @@
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.xirr}} </td>
             </tr>
-            <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;">
+            <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid" >
                 <td class="f-700" style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;">
                 </td>
                 <td class="f-700" style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 17%">

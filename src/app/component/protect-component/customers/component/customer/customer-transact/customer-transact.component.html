@@ -7,13 +7,13 @@
 
     <div class="col-md-2 d-flex align-items-center">
         <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-      <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
-    </button>
+            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+        </button>
     </div>
 
     <div class="col-md-8 p-0">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
-            <a [routerLink]="['/customer/detail/transact/list']" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
+            <a class="minWidth130" [routerLink]="['/customer/detail/transact/list']" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
             <a [routerLink]="['/customer/detail/transact/investors']" mat-tab-link routerLinkActive="active">INVESTORS</a>
             <a [routerLink]="['/customer/detail/transact/mandate']" mat-tab-link routerLinkActive="active">MANDATES</a>
         </nav>
