@@ -37,7 +37,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
-  type: any = {name: ''};
   isSpinner = false;
   customDataHolder = [];
   customDataSource = new TableVirtualScrollDataSource([]);
@@ -65,6 +64,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   returnValue: any;
   selectedLoadData: any;
   showDownload: boolean = false;
+  columnHeader: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
               private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -190,6 +190,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.getMutualFund();
           }
         }
+        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType)
+        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' :'Sub Category wise';
       },
       (error) => {
         this.mfData = this.mfGetData;
@@ -207,9 +209,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         } else {
           this.getMutualFund();
         }
+        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType)
+        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' :'Sub Category wise';
       }
     );
-
+   
   }
 
   initValueOnInit() {

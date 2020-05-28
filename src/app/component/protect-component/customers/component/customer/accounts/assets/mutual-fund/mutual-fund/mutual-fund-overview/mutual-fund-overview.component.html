@@ -342,7 +342,7 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="abs">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret </th>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret% </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
                                     <span *ngIf="!isLoading">
@@ -360,7 +360,7 @@
                             </td> -->
                         </ng-container>
                         <ng-container matColumnDef="xirr">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR</th>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right">  XIRR%</th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar">
                                     <span *ngIf="!isLoading">
@@ -376,7 +376,7 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
-                            <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc</th>
+                            <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc%</th>
                             <td mat-cell *matCellDef="let element" class="text-right">
                                 <div class="bar"><span
                                         *ngIf="!isLoading">{{(element.allocatedPercentage | number:'1.2-2')}}</span>
@@ -454,7 +454,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret </th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret% </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
@@ -476,7 +476,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="xirr">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR</th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right">  XIRR%</th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
@@ -498,7 +498,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="alloc">
-                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc</th>
+                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc%</th>
                                 <td mat-cell *matCellDef="let element" class="text-right">
                                     <div class="bar"><span
                                             *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2' }}</span>
@@ -618,7 +618,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret </th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret% </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
@@ -637,7 +637,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="xirr">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR </th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right">  XIRR% </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
@@ -659,7 +659,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="alloc">
-                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc</th>
+                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc%</th>
                                 <td mat-cell *matCellDef="let element" class="text-right">
                                     <div class="bar"><span *ngIf="!isLoading">
                                             {{element.allocatedPercentage | number:'1.2-2'}}</span>
@@ -738,7 +738,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret</th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret%</th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
@@ -759,7 +759,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="xirr">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR</th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right">  XIRR%</th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
@@ -780,7 +780,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="alloc">
-                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc </th>
+                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc% </th>
                                 <td mat-cell *matCellDef="let element" class="text-right">
                                     <div class="bar"> <span
                                             *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2'}}</span>
@@ -1047,13 +1047,13 @@
                             Current value</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                            Abs Ret</th>
+                            Abs Ret%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                            XIRR</th>
+                             XIRR%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                            Alloc</th>
+                            Alloc%</th>
                     </tr>
 
                     <tr *ngFor="let item of dataSource2.data">
@@ -1220,13 +1220,13 @@
                             Current value</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            Abs Ret</th>
+                            Abs Ret%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            XIRR</th>
+                             XIRR%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            Alloc</th>
+                            Alloc%</th>
                     </tr>
 
                     <tr *ngFor="let item of dataSource3.data">
@@ -1306,13 +1306,13 @@
                             Current value</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            Abs Ret %</th>
+                            Abs Ret%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            XIRR %</th>
+                            XIRR%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            Alloc %</th>
+                            Alloc%</th>
                     </tr>
 
                     <tr *ngFor="let item of dataSource.data">
@@ -1389,13 +1389,13 @@
                             Current value</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            Abs Ret</th>
+                            Abs Ret%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            XIRR</th>
+                             XIRR%</th>
                         <th
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
-                            Alloc</th>
+                            Alloc%</th>
                     </tr>
 
                     <tr *ngFor="let item of dataSource4.data">

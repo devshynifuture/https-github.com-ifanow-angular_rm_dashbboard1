@@ -32,7 +32,7 @@
                     <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
                         <ng-container matColumnDef="categoryName" sticky>
                             <th *matHeaderCellDef class="br" mat-header-cell>
-                                {{(type.name == 'Sub Category wise' || type.name == '') ? 'Sub category name' : (type.name == 'Category wise') ? 'Category name' : (type.name == 'Investor wise') ? 'Family member name' : (type.name == 'Scheme wise') ? 'Scheme name' : 'Sub Category wise'}}
+                                {{columnHeader}}
                             </th>
                             <td *matCellDef="let element" class="br" mat-cell>
                                 <div class="bar">{{element.categoryName}}</div>
