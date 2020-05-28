@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="row pt-90">
+<div class="row pt-90 pb-48">
     <div class="col-md-8">
         <mat-tab-group id="ui-backoffice-tabs">
             <mat-tab>
@@ -214,9 +214,11 @@
                                 <ng-container matColumnDef="transactions">
                                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
                                     <td mat-cell *matCellDef="let element; index as i">
-                                        <div class="bar"> {{ element.transactions }} <button *ngIf="!isLoading"
+                                        <div class="bar text-center"> {{ element.transactions }} <button mat-button
+                                                *ngIf="!isLoading"
                                                 (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios', i, element.freezeDate)"
-                                                class="bg-primary text-white" mat-flat-button>View</button> </div>
+                                                class="bg-primary text-white view-folios" mat-flat-button>View</button>
+                                        </div>
                                     </td>
                                 </ng-container>
 
