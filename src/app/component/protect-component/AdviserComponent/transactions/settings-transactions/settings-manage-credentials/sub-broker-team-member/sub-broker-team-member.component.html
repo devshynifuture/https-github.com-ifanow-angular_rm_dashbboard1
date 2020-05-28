@@ -1,14 +1,15 @@
 <div class="p-20 arn-ria">
     <div class="row">
         <div class="col-md-8 p-0">
-<!--            <h4 class="m-0 pt-12">Sub broker/Team member</h4>-->
+            <!--            <h4 class="m-0 pt-12">Sub broker/Team member</h4>-->
         </div>
         <div class="col-md-4 text-right pr-0" *ngIf="dataSource.filteredData.length > 0">
             <button mat-stroked-button class="btn-primary text-right pl-8" (click)="addSubBroker(null)">
                 ADD NEW</button>
         </div>
     </div>
-    <table mat-table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading">
+    <table mat-table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
+        *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="position">
             <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -29,7 +30,7 @@
         <ng-container matColumnDef="weight">
             <th mat-sort-header="brokerCode" mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.brokerCode}}
+                <div class="bar"> {{isLoading ? '' :element.brokerCode}}
                 </div>
             </td>
         </ng-container>
@@ -38,19 +39,19 @@
             <th mat-sort-header="teamMember" mat-header-cell *matHeaderCellDef class="br"> Sub broker/Team member name
             </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar">{{element.name}} </div>
+                <div class="bar">{{isLoading ? '' :element.name}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="code">
             <th mat-sort-header="suBrokerCode" mat-header-cell *matHeaderCellDef class="br"> Sub broker code </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.subBrokerCode}}</div>
+                <div class="bar"> {{isLoading ? '' :element.subBrokerCode}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="euin">
             <th mat-sort-header="euin" mat-header-cell *matHeaderCellDef class="br"> EUIN </th>
             <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.euin}}</div>
+                <div class="bar"> {{isLoading ? '' :element.euin}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="icons">
@@ -65,7 +66,7 @@
                         <!-- ,'edit' prod build -->
                         <button mat-menu-item (click)="addSubBroker(element)">Edit</button>
                         <button mat-menu-item *ngIf="element.teamMemberSessionId != advisorId"
-                         (click)="deleteSubCred(element)">Delete</button>
+                            (click)="deleteSubCred(element)">Delete</button>
                     </mat-menu>
                 </div>
 
@@ -74,7 +75,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
+    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
+        class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">No sub-broker credentials found</h4>
         <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons text-white pr-8"
