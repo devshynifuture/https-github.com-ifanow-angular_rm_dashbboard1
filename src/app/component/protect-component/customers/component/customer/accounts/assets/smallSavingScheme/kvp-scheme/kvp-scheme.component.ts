@@ -46,7 +46,7 @@ export class KvpSchemeComponent implements OnInit {
       this.clientData = AuthService.getClientData()
     }
 
-  displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
+  displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'certificateNo', 'desc', 'status', 'icons'];
 
   ngOnInit() {
 

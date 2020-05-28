@@ -12,8 +12,8 @@
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
             <i (click)="close()" class="material-icons pt-16 c-p pr-16">
-                clear
-            </i>
+        clear
+      </i>
         </div>
     </div>
 </div>
@@ -253,20 +253,29 @@
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-    <div class="col-md-4 p-0 d-flex align-items-center ">
-<!--        <a class="text-white f-300" href="#"> Skip this step </a>-->
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
+    </div>
+
+    <div class="col-md-5 center_menu">
+        <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="c-p activeLink"> First Holder </a>
+        <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink c-p"> Second Holder </a>
+        <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink c-p"> Third Holder </a>
     </div>
 
 
-    <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
         <button (click)="openNomineeDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
-            PREVIOUS
-        </button>
+      PREVIOUS
+    </button>
 
-        <button (click)="SendToForm()" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT</button>
+        <button (click)="SendToForm(formId,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>
+      NEXT
+    </button>
 
 
     </div>
+
 
 </div>

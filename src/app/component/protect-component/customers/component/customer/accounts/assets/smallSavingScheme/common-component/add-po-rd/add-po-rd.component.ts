@@ -10,6 +10,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-po-rd',
   templateUrl: './add-po-rd.component.html',
@@ -56,7 +57,7 @@ export class AddPoRdComponent implements OnInit {
   bankList:any = [];
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
+  constructor(public utils: UtilService, private fb: FormBuilder,private dateFormatPipe: DatePipe, private cusService: CustomerService, private eventService: EventService,
     private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
@@ -355,7 +356,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
         // familyMemberId: this.familyMemberId,
         // ownerName: (this.ownerName == undefined) ? this.PORDForm.controls.ownerName.value : this.ownerName.userName,
         monthlyContribution: this.PORDForm.get('monthlyContribution').value,
-        commencementDate: this.PORDForm.get('commDate').value,
+        commencementDate: this.dateFormatPipe.transform(this.PORDForm.get('commDate').value, 'dd/MM/yyyy'),
         rdNumber: this.PORDForm.get('rdNum').value,
         postOfficeBranch: this.PORDForm.get('poBranch').value,
         nominees: this.nominees,

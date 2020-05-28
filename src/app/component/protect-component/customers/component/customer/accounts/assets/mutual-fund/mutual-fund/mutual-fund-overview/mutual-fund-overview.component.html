@@ -535,11 +535,12 @@
                             matTooltip="This section calculates the cash flow status of your entire portfolio - i.e. It includes cash flows from zero balance folios too"
                             [matTooltipPosition]="'right'"></h5>
                 </div>
-                <div class="example-container" id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0">
+                <div id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0"
+                    class="mb-20 cashflows-headers-hide">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="data">
-                            <th mat-header-cell *matHeaderCellDef class="t-55"> Scheme name </th>
+                            <th mat-header-cell *matHeaderCellDef class="t-55"> </th>
                             <td mat-cell *matCellDef="let element" class="t-55">
                                 <div class="bar"><span *ngIf="!isLoading">{{element.data}}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
@@ -547,7 +548,7 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="amts">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right"> </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar"><span appFormatNumber
                                         *ngIf="element.data != 'i. Lifetime XIRR (All Transactions)' && !isLoading"
@@ -563,10 +564,12 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                     </table>
                 </div>
-                <div class="pr-0 mt-20 mb-20 familymember-wise" (click)="openSummary('investor wise')"
+
+                <div class="pr-0 mb-20 familymember-wise" (click)="openSummary('investor wise')"
                     *ngIf="showFamilyMember || dataSource.data.length > 0">
                     <div class="bg-grey lter">
-                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
+                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation
+                        </h5>
                     </div>
                     <div class="family-member-wise-allocation" id="table-low">
                         <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
@@ -574,9 +577,11 @@
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef class="br"> Family Member Name </th>
                                 <td mat-cell *matCellDef="let element" class="br">
-                                    <div class="bar">{{isLoading ? '' : ((element.name) ? element.name : '-')}} </div>
+                                    <div class="bar">{{isLoading ? '' : ((element.name) ? element.name : '-')}}
+                                    </div>
                                 </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">
+                                    Total
                                 </td>
                             </ng-container>
 
@@ -648,7 +653,8 @@
                                 {{mfData.total_xirr | number:'1.2-2'}}
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+                                    <div class="bar">
+                                        {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
@@ -680,6 +686,7 @@
                     </div> -->
                     </div>
                 </div>
+
                 <div class="p-0 mt-20 mb-20 familymember-wise" (click)="openSummary('category wise')"
                     *ngIf="showCategory || dataSource4.data.length >0">
                     <div class="bg-grey lter">
@@ -946,7 +953,7 @@
 
         <tr>
             <td valign="top" style="width: 196px;  border: 1px solid #dee5e7; ">
-            <div>showPieChart</div>
+                <div>showPieChart</div>
             </td>
 
             <td style="padding: 10px 0px; border: 1px solid #dee5e7;" valign="top">

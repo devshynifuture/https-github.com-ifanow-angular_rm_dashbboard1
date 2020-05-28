@@ -1,40 +1,39 @@
 <div class="row" id="ui-customer-secondhead">
-  <!-- <div class="col-md-2 d-flex align-items-center">
+    <!-- <div class="col-md-2 d-flex align-items-center">
       <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
     <i class="material-icons"> keyboard_backspace</i> ADVISOR HOME
   </button>
   </div> -->
 
-  <div class="col-md-2 d-flex align-items-center">
-    <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2"
-            mat-stroked-button>
+    <div class="col-md-2 d-flex align-items-center">
+        <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
       <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
     </button>
-  </div>
+    </div>
 
-  <div class="col-md-8 p-0">
-    <nav mat-align-tabs="center" mat-tab-nav-bar>
-      <a [routerLink]="['/customer/detail/transact/list']" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
-      <a [routerLink]="['/customer/detail/transact/investors']" mat-tab-link routerLinkActive="active">INVESTORS</a>
-      <a [routerLink]="['/customer/detail/transact/mandate']" mat-tab-link routerLinkActive="active">MANDATES</a>
-    </nav>
-  </div>
-  <div class="col-md-2 d-flex align-items-center borderLeft">
-    <p class="m-0 f-14 text-white d-flex align-items-center">{{(clientData) ? clientData.name : ''}}
-    </p>
-  </div>
+    <div class="col-md-8 p-0">
+        <nav mat-align-tabs="center" mat-tab-nav-bar>
+            <a [routerLink]="['/customer/detail/transact/list']" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
+            <a [routerLink]="['/customer/detail/transact/investors']" mat-tab-link routerLinkActive="active">INVESTORS</a>
+            <a [routerLink]="['/customer/detail/transact/mandate']" mat-tab-link routerLinkActive="active">MANDATES</a>
+        </nav>
+    </div>
+    <div class="col-md-2 d-flex align-items-center borderLeft">
+        <p class="m-0 f-14 text-white d-flex align-items-center">{{(clientData) ? clientData.name : ''}}
+        </p>
+    </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12 p-0">
-    <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
+    <div class="col-md-12 p-0">
+        <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
 
-      <router-outlet #outlet="outlet">
-      </router-outlet>
+            <router-outlet #outlet="outlet">
+            </router-outlet>
 
-      <ng-template>
-        <router-outlet></router-outlet>
-      </ng-template>
+            <ng-template>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </div>
     </div>
-  </div>
 </div>

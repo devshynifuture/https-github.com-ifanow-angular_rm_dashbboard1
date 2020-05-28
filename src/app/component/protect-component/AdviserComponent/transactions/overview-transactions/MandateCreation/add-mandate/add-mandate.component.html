@@ -77,7 +77,7 @@
             </div>
             <div class="col-md-3 form-group m-0">
                 <mat-form-field class="ba-date">
-                    <input (click)="picker.open()" [matDatepicker]="picker" [min]="currentDate" autocomplete="off" class="form-control b-0" formControlName="fromDate" matInput readonly value="dd/MM/yy">
+                    <input (click)="picker.open()" [matDatepicker]="picker" [min]="currentDate" class="form-control b-0" formControlName="fromDate" matInput readonly>
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4">
@@ -92,7 +92,7 @@
             </div>
             <div class="col-md-3 form-group  ">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select (ngModelChange)="continuesTill($event)" class="form-control" formControlName="selectDateOption">
+                    <mat-select (selectionChange)="continuesTill($event)" class="form-control" formControlName="selectDateOption">
                         <mat-option disabled value=''>Select date option</mat-option>
                         <mat-option [value]="1">
                             Custom date
@@ -156,18 +156,17 @@
                 </div>
             </div>
             <!--<div class="col-md-6 bl-1  fixed-top-right ">
-        <h3 class="f-16 mt-4 mb-10">Upload cheque</h3>
-        <div class="dragDropCLass">
-          <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl"
-                 type="file"> Drag & drop file here <br> or <br> Browse
-        </div>
-      </div>-->
+  <h3 class="f-16 mt-4 mb-10">Upload cheque</h3>
+  <div class="dragDropCLass">
+    <input (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl"
+           type="file"> Drag & drop file here <br> or <br> Browse
+  </div>
+</div>-->
         </div>
     </div>
     <div *ngIf="showMandateTable == true && showUploadSection ==false" class="row">
         <div class="col-md-12">
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-16 skeletonAnimation" id="tbs" mat-table matSort>
-
                 <ng-container matColumnDef="position">
                     <th *matHeaderCellDef class="br" mat-header-cell> Investor name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
@@ -176,7 +175,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <ng-container matColumnDef="bankName">
                     <th *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
@@ -240,6 +238,7 @@
             <!--      <h6>{{errorMsg}}</h6>-->
             <!-- (click)="createMandate()" removed for prod build -->
             <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button>
+            <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit "></app-progress-button>
         </div>
     </div>
 </div>

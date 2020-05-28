@@ -128,6 +128,8 @@ export class AddEPFComponent implements OnInit {
 lisNominee(value) {
   this.ownerData.Fmember = value;
   this.nomineesListFM = Object.assign([], value);
+  this.selectOwner = this.nomineesListFM.filter((m)=> m.familyMemberId == this.epf.value.getCoOwnerName[0].familyMemberId)
+
 }
 
 selectOwner:any;

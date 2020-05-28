@@ -4,6 +4,7 @@
   .row {
     margin-right: -15px !important;
     margin-left: -15px !important;
+
   }
 
   .col-width-18 {
@@ -201,9 +202,9 @@
   font-size: 16px;
 }
 
-::ng-deep .mat-expansion-panel-header.mat-expanded:hover {
-  background: #F5F7F7;
-}
+// ::ng-deep .mat-expansion-panel-header.mat-expanded:hover {
+//   background: #F5F7F7;
+// }
 
 ::ng-deep .mat-expansion-panel-header {
   font-size: 14px;
@@ -273,6 +274,7 @@
     display: block !important;
     width: 100%;
     text-align: left;
+    height: calc(100vh - 116px);
   }
 
   li {

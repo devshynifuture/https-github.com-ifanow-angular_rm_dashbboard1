@@ -53,7 +53,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.inputData = data;
     // this.doneData.nominee = true;
     // this.doneData.bank = true;
-    // this.doneData.contact = true;
+    this.doneData.contact = false;
     this.doneData.personal = true;
     // this.doneData.fatca = false;
     console.log('Data in contact detail : ', data);
@@ -132,7 +132,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.addressList.address = {};
     if (data.clientId || data.familyMemberId) {
       const obj = {
-        userId: data.clientId && data.clientId > 0 ? data.clientId : data.familyMemberId,
+        userId: data.userType == 2 ? data.clientId : data.familyMemberId,
         userType: data.userType
       };
       this.custumService.getAddressList(obj).subscribe(

@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService} from 'src/app/services/util.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FileUploadService} from 'src/app/services/file-upload.service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {map, startWith} from 'rxjs/operators';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { map, startWith } from 'rxjs/operators';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 const moment = require('moment');
 
@@ -36,7 +37,7 @@ export class AddMandateComponent implements OnInit {
   detailsIIN: any;
   showMandateTable = false;
   selectedMandate: any;
-  customValue: any;
+  customValue: any = 2;
   toDate: any;
   formDate: Date;
   isLoading;
@@ -116,6 +117,23 @@ export class AddMandateComponent implements OnInit {
     );
   }
 
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
   getBankDetailsNSERes(data) {
     this.isLoadingBank = false;
     this.bankDetails = data;
@@ -141,7 +159,7 @@ export class AddMandateComponent implements OnInit {
       fromDate: [fromDate, [Validators.required]],
       toDate: [endDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(100)]],
-      selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
+      selectDateOption: [this.customValue, [Validators.required]],
     });
   }
 

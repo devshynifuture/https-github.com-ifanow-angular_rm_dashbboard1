@@ -36,6 +36,10 @@ export class AddScripComponent implements OnInit {
 
       let obj =
       {
+        "code":null,
+        "bseCode":null,
+        "stockCategoryId":null,
+        "scripType":this.scripForm.get('scripType').value,
         "name": this.scripForm.get('scripName').value,
         "currentValue": this.scripForm.get('priceDetailsMarketPrice').value
       }

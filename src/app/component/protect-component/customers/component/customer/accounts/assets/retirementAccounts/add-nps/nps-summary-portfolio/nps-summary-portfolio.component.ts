@@ -359,7 +359,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
           id: [element.id, [Validators.required]]
         }))
       })
-      this.futureContry.removeAt(0);
+
+      if(data.futureContributionList.length > 0){
+        this.futureContry.removeAt(0);
+      }
 
     }
     // if (data.nominees != undefined) {

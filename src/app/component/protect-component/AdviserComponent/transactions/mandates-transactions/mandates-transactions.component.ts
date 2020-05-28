@@ -120,6 +120,9 @@ export class MandatesTransactionsComponent implements OnInit {
   }
 
   openMandateDetails(data) {
+    if (this.isLoading) {
+      return;
+    }
     data.isAdvisorSection = this.isAdvisorSection;
     const fragmentData = {
       flag: 'detailPoTd',

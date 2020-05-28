@@ -1,69 +1,61 @@
-<!-- <div *ngIf="showLoader==true">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->
+<!-- loading state -->
+<div *ngIf="loaderFn.loading">
+    LOADING DATA
+</div>
 
+<!-- empty state -->
+<div class="d-flex justify-content-center mt-150" *ngIf="!feedsRiskProfile.riskProfileId && !loaderFn.loading">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3 class="f-22 m-0">Hi {{clientInfo.displayName}}, welcome!</h3>
+            <h5 class="m-0 pt-28 pb-28">Did you know your risk profile score? Find it out here.</h5>
+            <button mat-stroked-button class="btn-primary br-0" (click)="reset()">Take the test</button>
+        </div>
+    </div>
+</div>
+<!-- end empty state -->
 
-
-<div class="wrapper-28" *ngIf="showRisk == false">
+<!-- questionnaire -->
+<div class="wrapper-28" *ngIf="!showResults">
     <div class="row">
         <div class="col-md-9 pl-0">
             <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can take.
             </h3>
 
-            <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation">
-                <div class="col-md-12 mb-8 realClass">
-                    <div class="bar height23">
-
-                    </div>
-                </div>
-                <div class="col-md-12 mb-8 realClass">
-                    <div class="bar height23">
-
-                    </div>
-                </div>
-                <div class="col-md-12 mb-8 realClass">
-                    <div class="bar height23">
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- page loader -->
-
             <div class="pt-20" *ngFor="let item of riskAssessmentQuestionList;  let i = index">
                 <mat-accordion class="riskProfileBox">
-                    <mat-expansion-panel [expanded]="item.done">
+                    <mat-expansion-panel [expanded]="item.done" #example>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
 
                             </mat-panel-title>
+                            <!-- <div class="circle1" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
+                                <i class="material-icons text-success text-right">
+                                    check_circle_outline
+                                </i>
+                            </div>
+                            <div class="circle1" *ngIf="!item.selectedChoiceId && !item.riskAssessmentChoice">
+                                <i class="material-icons text-primary">
+                                    query_builder
+                                </i>
+                            </div> -->
                             <mat-panel-description>
-                                <div style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;" *ngIf="item.selectedChoiceId || item.riskAssessmentChoice">
-                                    <i class="text-success text-right">
-                                        check_circle_outline
-                                    </i>
-                                </div>
-                                <div style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;" *ngIf="!item.selectedChoiceId && !item.riskAssessmentChoice">
-                                    <i class="material-icons text-primary">
-                                        query_builder
-                                    </i>
-                                </div>
+                                <mat-icon *ngIf="!(item.selectedChoiceId || item.riskAssessmentChoice)"
+                                    class="text-primary"> query_builder </mat-icon>
+                                <mat-icon *ngIf="(item.selectedChoiceId || item.riskAssessmentChoice)"
+                                    class="text-success">check_circle_outline
+                                </mat-icon>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
 
-                        <mat-radio-group aria-label="Select an option" id="custom-radio">
+                        <mat-radio-group aria-label="Select an option" id="custom-radio"
+                            [disabled]="!!item.riskAssessmentChoice" (change)="checkState(item,i, $event.value)">
 
-                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index" [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled" (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;item.done = false;item.choice = choice.choice;checkState(item,i)">
+                            <mat-radio-button class="w-100"
+                                *ngFor="let choice of item.riskAssessmentChoices; let i = index"
+                                [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled">
                                 {{choice.choice}}<br>
                             </mat-radio-button>
 
@@ -71,120 +63,97 @@
 
                     </mat-expansion-panel>
                 </mat-accordion>
-                <div class="mt-10 pl-20 pr-20">
+                <!-- <div class="mt-10 pl-20 pr-20">
                     {{item.choice}}{{item.riskAssessmentChoice}}
-                </div>
+                </div> -->
             </div>
-            <div *ngIf="showErrorMsg == true" class="errorClass"> Please complete all questions for test result
+            <div *ngIf="showErrorMsg" class="errorClass"> Please complete all questions for test result
             </div>
-            <button *ngIf="showButton == true" mat-stroked-button class="btn-primary mt-20 br-0 right" (click)="submitRiskAnalysis(item)">SUBMIT</button>
-            <!-- <div *ngIf="isLoading == true">
-                <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-            </div> -->
+            <button *ngIf="showButton" mat-stroked-button class="btn-primary mt-20 br-0 right"
+                (click)="submitRiskAnalysis()">SUBMIT</button>
         </div>
         <div class="col-md-3 pr-0">
-            <div class="row">
-                <div class="col-md-12 p-0 d-flex justify-content-between">
-                    <button mat-flat-button class="b-a-custom text-primary" (click)="reset(true);showRisk = false">Risk
-                        assessment</button>
-                    <button mat-flat-button class="b-a-custom ml-12 text-primary" (click)="open('riskProfile', null)">History</button>
+            <div class="sticky-risk-pofile">
+                <div class="row">
+                    <div class="col-md-12 p-0 d-flex justify-content-between">
+                        <button mat-flat-button class="b-a-custom text-primary pl-8 pr-8" (click)="reset()"
+                            *ngIf="showRetakeTestsButton">Retake
+                            assessment</button>
+                        <button mat-flat-button class="b-a-custom ml-12 text-primary"
+                            (click)="open('riskProfile', null)" *ngIf="showRetakeTestsButton">History</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="p-20 b-primitive mt-12">
-                <mat-progress-bar mode="determinate" value="{{progressBar}}"></mat-progress-bar>
-                <h5 class="pt-8 m-0 pt-12 text-center">{{statusArray.length}} of 15 completed</h5>
+                <div class="p-20 b-primitive mt-12">
+                    <mat-progress-bar mode="determinate" [value]="(statusArray.length/15) * 100"></mat-progress-bar>
+                    <h5 class="pt-8 m-0 pt-12 text-center">{{statusArray.length}} of 15 completed</h5>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="pt-32 pb-44" *ngIf="showRisk == true">
-    <div class="row">
-        <div class="col-md-12 mb-16 d-flex justify-content-end">
-            <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="reset(true);showRisk = false">Risk
-                assessment</button>
-            <button mat-flat-button class="b-a-custom text-primary c-p" (click)="open('riskProfile', null)">History</button>
+<!-- questionnaire end -->
+
+<!-- results -->
+<div *ngIf="feedsRiskProfile.riskProfileId && !loaderFn.loading">
+    <div class="pt-32 pb-44" *ngIf="showResults">
+        <div class="row">
+            <div class="col-md-12 mb-16 d-flex justify-content-end">
+                <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="reset()">Retake
+                    assessment</button>
+                <button mat-flat-button class="b-a-custom text-primary c-p"
+                    (click)="open('riskProfile', null)">History</button>
+            </div>
+
         </div>
 
-    </div>
-
-    <div class="row">
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-md-8"></div>
-                <div class="col-md-4 p-0">
-                    <h5 class="m-0 f-500 roboto text-black">Your risk score</h5>
-                    <div class="ba-3x text-center riskScoreBox mt-12">
-                        <h1 class="f-48 mb-8">{{score}}</h1>
-                        <p class="m-0 text-custom f-12 ">Max: 600</p>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 p-0">
+                        <h5 class="m-0 f-500 roboto text-black">Your risk score</h5>
+                        <div class="ba-3x text-center riskScoreBox mt-12">
+                            <h1 class="f-48 mb-8">{{feedsRiskProfile.riskAssessmentScore}}</h1>
+                            <p class="m-0 text-custom f-12 ">Max:
+                                {{riskProfileMaxScore(feedsRiskProfile.riskProfileId)}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-8 p-0 text-center">
+                        <h5 class="m-0 f-500 roboto text-black">Your risk profile:
+                            {{feedsRiskProfile.riskProfileStatus}}
+                        </h5>
+                        <div>
+                            <img src="/assets/images/svg/aggressive.svg" *ngIf="feedsRiskProfile.riskProfileId == 1">
+                            <img src="/assets/images/svg/moderately-aggressive.svg"
+                                *ngIf="feedsRiskProfile.riskProfileId == 2">
+                            <img src="/assets/images/svg/moderate.svg" *ngIf="feedsRiskProfile.riskProfileId == 3">
+                            <img src="/assets/images/svg/moderately-conservative.svg"
+                                *ngIf="feedsRiskProfile.riskProfileId == 4">
+                            <img src="/assets/images/svg/conservative.svg" *ngIf="feedsRiskProfile.riskProfileId == 5">
+                        </div>
+                        <p class="m-0 text-custom roboto" style="text-align: center;">
+                            {{riskProfileDesc(feedsRiskProfile.riskProfileId)}}</p>
+                    </div>
+                    <div class="col-md-4">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-8 p-0 text-center" *ngIf="score">
-                    <h5 class="m-0 f-500 roboto text-black">Your risk {{risk.riskProfileStatus}}
-                    </h5>
-                    <div>
-                        <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
-                        <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
-                        <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
-                        <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
-                        <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
-                    </div>
-                    <p class="m-0 text-custom roboto" style="text-align: center;">{{riskProfileDesc(risk.riskProfileId)}}</p>
-                </div>
-                <div class="col-md-4">
-                </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <h5 class="mb-4 f-500 roboto width545 text-black">Equity asset allocation </h5>
+
+                <div id="container1"></div>
+                <!-- <img src="/assets/images/svg/assest-allocation.svg" class="w-100"> -->
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-8">
-            <p class="m-0 roboto pb-12 pt-4">Over the next 12 months</p>
-            <div class="row">
-                <div class="col-md-5 bg-danger pt-12 pl-16 pb-8">
-                    <div class="row">
-                        <div class="col-md-10 p-0">
-                            <h5 class="m-0 text-white">You’re ok if your portfolio goes down this much...</h5>
-                            <h1 class="m-0 f-32 text-white pt-8">-10%</h1>
-                        </div>
-                        <div class="col-md-2 pl-0">
-                            <img src="/assets/images/svg/down-arrow.svg">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-5 bg-success pt-12 pl-16 pb-8">
-                    <div class="row">
-                        <div class="col-md-10 p-0">
-                            <h5 class="m-0 text-white">...for a chance of getting this much</h5>
-                            <h1 class="m-0 f-32 text-white pt-8">10%</h1>
-                        </div>
-                        <div class="col-md-2 pl-0">
-                            <img src="/assets/images/svg/up-arrow.svg">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-10 pr-0">
-                    <p class="m-0 text-custom roboto text-right pt-4">with a 95% probability</p>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-
-        </div>
-    </div>
-  
-    <div class="row">
-        <div class="col-md-12 text-center">
-
-            <h5 class="mb-4 f-500 roboto width545 text-black">Equity asset allocation </h5>
-
-            <div id="container1"></div>
-            <!-- <img src="/assets/images/svg/assest-allocation.svg" class="w-100"> -->
         </div>
     </div>
 </div>
+<!-- results end -->

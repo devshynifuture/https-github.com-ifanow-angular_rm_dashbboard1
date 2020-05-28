@@ -33,37 +33,37 @@ export class SummaryComponent implements OnInit {
   inflowFlag;
   outflowFlag;
   mutualFundValue: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   fixedIncome: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   realEstate: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   stocks: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   retirement: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   smallSavingScheme: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   cashAndFLow: any = {
-    currentValue: null,
-    percentage: null
+    currentValue: 0,
+    percentage: 0
   };
   Commodities: any =
     {
-      currentValue: null,
-      percentage: null
+      currentValue: 0,
+      percentage: 0
     }
   bscData: any;
   nscDAta: any;
@@ -91,10 +91,6 @@ export class SummaryComponent implements OnInit {
   }
 
   calculateTotalSummaryValues() {
-    this.mutualFundValue = {
-      currentValue: null,
-      percentage: null
-    }
     this.letsideBarLoader = true;
     console.log(new Date(this.asOnDate).getTime());
     const obj = {
@@ -110,14 +106,21 @@ export class SummaryComponent implements OnInit {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
-          this.mutualFundValue = data[3];
-          this.fixedIncome = data[0];
-          this.realEstate = data[1];
-          this.stocks = data[2];
-          this.retirement = data[4];
-          this.smallSavingScheme = data[5];
-          this.cashAndFLow = data[6];
-          this.Commodities = data[7];
+          // this.mutualFundValue = data[3];
+          this.fixedIncome = data.filter(element => element.assetType == 7);
+          this.fixedIncome = this.fixedIncome[0];
+          this.realEstate = data.filter(element => element.assetType == 8);
+          this.realEstate = this.realEstate[0];
+          this.stocks = data.filter(element => element.assetType == 6);
+          this.stocks = this.stocks[0];
+          this.retirement = data.filter(element => element.assetType == 9);
+          this.retirement = this.retirement[0];
+          this.smallSavingScheme = data.filter(element => element.assetType == 10);
+          this.smallSavingScheme = this.smallSavingScheme[0];
+          this.cashAndFLow = data.filter(element => element.assetType == 31);
+          this.cashAndFLow = this.cashAndFLow[0];
+          this.Commodities = data.filter(element => element.assetType == 12);
+          this.Commodities = this.Commodities[0]
           const tempSummaryTotalValue: any = {};
           this.summaryTotalValue.forEach(element => {
             tempSummaryTotalValue[element.assetType] = element;
@@ -132,14 +135,17 @@ export class SummaryComponent implements OnInit {
             this.totalAssetsWithoutLiability = 0;
             this.liabilityTotal = 0;
           });
-          this.totalOfLiabilitiesAndTotalAssset(data);
+          this.totalOfLiabilitiesAndTotalAssset(this.summaryTotalValue);
           this.letsideBarLoader = false;
           this.summaryMap = tempSummaryTotalValue;
-          this.pieChart('piechartMutualFund', data);
+          this.pieChart('piechartMutualFund', this.summaryTotalValue);
         }
       },
       err => {
+        this.letsideBarLoader = false;
         this.finalTotal = 0;
+        this.liabilityTotal = 0;
+        this.totalAssetsWithoutLiability = 0;
       }
     );
     this.getSummaryList(obj);
@@ -192,7 +198,9 @@ export class SummaryComponent implements OnInit {
         this.sortDataUsingFlowType(data, true);
         console.log(this.cashFlowViewDataSource);
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.cashFlowViewDataSource = []
+      }
     );
   }
 
