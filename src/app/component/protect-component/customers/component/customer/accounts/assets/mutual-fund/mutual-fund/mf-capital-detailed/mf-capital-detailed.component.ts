@@ -257,6 +257,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       }
       if(Object.keys(this.categoryWiseTotal).length != 0){
         (category == 'DEBT') ? this.debtObj =this.categoryWiseTotal : this.equityObj =this.categoryWiseTotal;
+        this.categoryWiseTotal={};
       }
       console.log('DEBT',this.debtObj);
       console.log('EQUITY',this.equityObj);

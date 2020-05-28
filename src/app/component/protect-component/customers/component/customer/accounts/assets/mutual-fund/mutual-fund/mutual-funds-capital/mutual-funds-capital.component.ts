@@ -356,6 +356,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       });
       if(Object.keys(this.finalValue).length != 0){
         (category == 'DEBT') ? this.debtObj = this.finalValue : this.equityObj = this.finalValue;
+        this.finalValue={};
       }
       if(category!='EQUITY'){
         this.finalValue = {};

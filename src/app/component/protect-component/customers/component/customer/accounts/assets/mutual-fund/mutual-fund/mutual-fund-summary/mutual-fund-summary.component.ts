@@ -324,8 +324,9 @@ export class MutualFundSummaryComponent implements OnInit {
       const input = {
         mutualFundList: mutualFund,
         // mutualFund: this.mfData,
-        mutualFund: this.mutualFund,
+        mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
+        showFolio:(this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
       };
       // Create a new
@@ -432,7 +433,7 @@ export class MutualFundSummaryComponent implements OnInit {
       scheme: this.setDefaultFilterData.scheme,
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       reportAsOn: this.setDefaultFilterData.reportAsOn,
-      showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
+      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
