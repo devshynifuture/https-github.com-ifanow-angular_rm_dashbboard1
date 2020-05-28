@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
+
 @Component({
   selector: 'app-upper-slider-backoffice',
   templateUrl: './upper-slider-backoffice.component.html',
@@ -57,7 +58,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private dialog: MatDialog,
     private supportService: SupportService,
     private datePipe: DatePipe,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
+    private util: UtilService
   ) { }
 
   ngOnInit() {
@@ -216,7 +218,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
             });
           });
           this.dataSource1.data = arrayValue;
-
+          let doneOnDate = new Date(res.doneOn);
+          let doneOnFormatted = doneOnDate.getFullYear() + '-' +
+            this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
+            this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
           // console.log("datas available till now:::::", this.data, res);
           const data = {
             advisorId: this.advisorId,
@@ -227,6 +232,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             unmatchedCountBeforeRecon: res.unmappedCount,
             transactionDate: res.transactionDate,
             rtId: this.data.rtId,
+            doneOn: doneOnFormatted,
             // when rm login is creted this will get value from localStorage
             rmId: this.rmId
           }
