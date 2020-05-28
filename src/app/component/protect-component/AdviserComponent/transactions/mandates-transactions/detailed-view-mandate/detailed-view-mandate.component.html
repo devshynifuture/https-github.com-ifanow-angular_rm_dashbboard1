@@ -109,7 +109,7 @@
     </div>
 </div>
 
-<div class="p-28 pb-100">
+<div class="p-20 pr-0 pb-100">
 
     <div class="row">
         <div class="col-md-9 p-0">
@@ -138,7 +138,7 @@
 
             <div class="row">
                 <div class="col-md-6 pl-0">
-                    <button (click)="uploadFileInput1.click()" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+                    <button (click)="uploadFileInput1.click()" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" [disabled]="isFileUploading" class="btnConfirm2 bg-primary text-white" mat-button>
                         Upload Cheque
                         <input #uploadFileInput1 (change)="getFileDetails($event,4)" class="uploadInput" id="file-4"
                             type="file">
