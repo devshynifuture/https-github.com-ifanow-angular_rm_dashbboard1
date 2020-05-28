@@ -82,26 +82,31 @@
           <div class="col-md-12 p-0">
             <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
             <h2 *ngIf="assetStockData" appFormatNumber class="m-0 f-300 text-black pt-4 pl-8 pb-24">
-              {{assetStockData.grandTotalCurrentValue | currency:'INR'}}</h2>
+              ₹<span [value]="assetStockData.grandTotalCurrentValue" appFormatNumber>{{assetStockData.grandTotalCurrentValue}}</span>
+            </h2>
           </div>
           <div class="col-md-12 p-0">
             <div class="row bg-light lter pt-12 pb-12 bt-1">
               <div class="col-md-4 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Amount invested</p>
                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
-                  {{assetStockData.grandTotalAmountInvested | currency:'INR'}}</h5>
+                  ₹<span [value]="assetStockData.grandTotalAmountInvested" appFormatNumber>{{assetStockData.grandTotalAmountInvested}}</span>
+                </h5>
               </div>
               <div class="col-md-5 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
-                  {{assetStockData.grandTotalUnrealizedGainLoss | currency:'INR'}}</h5>
+                  ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss}}</span>
+                </h5>
               </div>
               <div class="col-md-3 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Returns</p>
-                <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
+                <h5 *ngIf="assetStockData" class="m-0 text-danger">
+                  ₹<span [value]="assetStockData.grandTotalAbsReturns" appFormatNumber>{{assetStockData.grandTotalAbsReturns}}</span>
                   <i class="material-icons text-danger v-sub f-18 f-700">
                     arrow_upward
-                  </i></h5>
+                  </i>
+                </h5>
               </div>
             </div>
           </div>
@@ -121,10 +126,15 @@
                 <p class="f-500 text-black mb-0">Banking</p>
               </div>
               <div class="col-md-3 pl-0">
-                <p class="text-black mb-0">5,24,819</p>
+                <!-- <p class="text-black mb-0">5,24,819</p> -->
+                {{categories.Banking?'₹':''}}<span *ngIf="categories.Banking" [value]="categories.Banking.currentValue" appFormatNumber>{{categories.Banking.currentValue}}</span>
+                <span *ngIf="!categories.Banking" >₹0</span>
+                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
               </div>
               <div class="col-md-2 pl-0">
-                <p class="text-black mb-0">23.43%</p>
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" *ngIf="!categories.Banking">{{0 | number: '1.2-2'}}%</p>
+                <p class="text-black mb-0" *ngIf="categories.Banking">{{categories.Banking.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row b-b pt-10 pb-10">
@@ -135,10 +145,15 @@
                 <p class="f-500 text-black mb-0">Information technology</p>
               </div>
               <div class="col-md-3 pl-0">
-                <p class="text-black mb-0">5,24,819</p>
+                <!-- <p class="text-black mb-0">5,24,819</p> -->
+                {{categories.Banking?'₹':''}}<span *ngIf="categories.Banking" [value]="categories.Banking.currentValue" appFormatNumber>{{categories.Banking.currentValue}}</span>
+                <span *ngIf="!categories.Banking" >₹0</span>
+                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
               </div>
               <div class="col-md-2 pl-0">
-                <p class="text-black mb-0">23.43%</p>
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" *ngIf="!categories.Banking">{{0 | number: '1.2-2'}}%</p>
+                <p class="text-black mb-0" *ngIf="categories.Banking">{{categories.Banking.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row b-b pt-10 pb-10">
@@ -149,10 +164,15 @@
                 <p class="f-500 text-black mb-0">FMCG</p>
               </div>
               <div class="col-md-3 pl-0">
-                <p class="text-black mb-0">5,24,819</p>
+                <!-- <p class="text-black mb-0">5,24,819</p> -->
+                {{categories.Banking?'₹':''}}<span *ngIf="categories.Banking" [value]="categories.Banking.currentValue" appFormatNumber>{{categories.Banking.currentValue}}</span>
+                <span *ngIf="!categories.Banking" >₹0</span>
+                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
               </div>
               <div class="col-md-2 pl-0">
-                <p class="text-black mb-0">23.43%</p>
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" *ngIf="!categories.Banking">{{0 | number: '1.2-2'}}%</p>
+                <p class="text-black mb-0" *ngIf="categories.Banking">{{categories.Banking.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row b-b pt-10 pb-10">
@@ -163,10 +183,15 @@
                 <p class="f-500 text-black mb-0">Auto ancillaries</p>
               </div>
               <div class="col-md-3 pl-0">
-                <p class="text-black mb-0">5,24,819</p>
+                <!-- <p class="text-black mb-0">5,24,819</p> -->
+                {{categories.Auto_Ancillaries?'₹':''}}<span *ngIf="categories.Auto_Ancillaries" [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
+                <span *ngIf="!categories.Auto_Ancillaries" >₹0</span>
+                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
               </div>
               <div class="col-md-2 pl-0">
-                <p class="text-black mb-0">23.43%</p>
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" *ngIf="!categories.Auto_Ancillaries">{{0 | number: '1.2-2'}}%</p>
+                <p class="text-black mb-0" *ngIf="categories.Auto_Ancillaries">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row pt-10 pb-10">
@@ -177,10 +202,14 @@
                 <p class="f-500 text-black mb-0">Others</p>
               </div>
               <div class="col-md-3 pl-0">
-                <p class="text-black mb-0">5,24,819</p>
+                <!-- <p class="text-black mb-0">5,24,819</p> -->
+                <span *ngIf="!categories.OTHERS" >₹0</span>
+
+                {{categories.OTHERS?'₹':''}}<span *ngIf="categories.OTHERS" [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
               </div>
               <div class="col-md-2 pl-0">
-                <p class="text-black mb-0">23.43%</p>
+                <p class="text-black mb-0" *ngIf="!categories.OTHERS.perrcentage">{{0 | number: '1.2-2'}}%</p>
+                <p class="text-black mb-0" *ngIf="categories.OTHERS.perrcentage">{{categories.OTHERS.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
           </div>
@@ -250,16 +279,16 @@
           <td *matCellDef="let element" class="br text-right" mat-cell>
             <div class="bar">₹<span appFormatNumber>{{element.amountInvested}}</span></div>
           </td>
-          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.amountInvested}}</span></td>
+          <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+            ₹<span [value]="singlePortfolio.totalAmountInvested" appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Current value</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
             <div class="bar">₹<span appFormatNumber>{{element.currentMarketValue}}</span></div>
           </td>
-          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.currentMarketValue}}</span>
+          <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+            ₹<span [value]="singlePortfolio.totalCurrentValue" appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
           </td>
         </ng-container>
         <ng-container matColumnDef="gain">
@@ -267,17 +296,17 @@
           <td *matCellDef="let element" class="br text-right" mat-cell>
             <div class="bar">₹<span appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
           </td>
-          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.unrealizedGainLoss}}</span>
+          <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+            ₹<span [value]="singlePortfolio.totalUnrealizedGainLoss" appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
           </td>
         </ng-container>
         <ng-container matColumnDef="ret">
-          <th *matHeaderCellDef class="br text-right" mat-header-cell> Absolute returns %</th>
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Absolute returns</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
             <div class="bar">₹<span appFormatNumber>{{element.absoluteReturn}}</span></div>
           </td>
-          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-            ₹<span [value]="singlePortfolio.amountInvested" appFormatNumber>{{ singlePortfolio.absoluteReturn}}</span>
+          <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+            ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
           </td>
         </ng-container>
         <ng-container matColumnDef="xirr">
