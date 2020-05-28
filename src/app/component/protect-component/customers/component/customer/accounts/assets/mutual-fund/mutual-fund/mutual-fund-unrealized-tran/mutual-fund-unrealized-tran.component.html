@@ -679,55 +679,63 @@
             style="width: 40%; text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
             <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Sr no.</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Transaction Type</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Transaction date</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Transaction amount</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Transaction NAV</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Units</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Current value</b>
                 </td>
-                <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                <td *ngIf="viewMode == 'unrealized transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Dividend payout</b>
                 </td>
-                <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                <td *ngIf="viewMode == 'unrealized transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Dividend reinvestment</b>
                 </td>
                 <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Total amount</b>
                 </td>
-                <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                <td *ngIf="viewMode == 'All transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    <b>Balance units</b>
+                </td>
+                <td *ngIf="viewMode == 'All transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    <b>Days</b>
+                </td>
+                <td *ngIf="viewMode == 'unrealized transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Gain</b>
                 </td>
-                <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                <td *ngIf="viewMode == 'unrealized transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     <b>Absolute Return%</b>
                 </td>
-                <td
-                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;width: 6%;">
+                <td *ngIf="viewMode == 'unrealized transactions'"
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;">
                     <b>XIRR%</b>
                 </td>
             </tr>
@@ -735,10 +743,14 @@
 
         <tbody *ngFor="let item of customDataSource.data ;index as i">
             <tr style="page-break-inside: avoid">
-                <td *ngIf="item.groupName" colspan="12"
+                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
                     style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}
                 </td>
+                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}
+            </td>
             </tr>
 
             <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
@@ -783,22 +795,28 @@
                 <td appFormatNumber
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.currentAmount}} </td>
-                <td appFormatNumber
+                <td *ngIf="viewMode == 'unrealized transactions'" appFormatNumber
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.dividendPayout}} </td>
-                <td appFormatNumber
+                <td *ngIf="viewMode == 'unrealized transactions'" appFormatNumber
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.dividendReinvest}} </td>
                 <td appFormatNumber
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.currentAmount}} </td>
-                <td
+                <td *ngIf="viewMode == 'All transactions'"
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    {{item.balanceUnits}} </td>
+                <td *ngIf="viewMode == 'All transactions'"
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    {{item.days}} </td>
+                <td *ngIf="viewMode == 'unrealized transactions'"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.gain}} </td>
-                <td
+                <td *ngIf="viewMode == 'unrealized transactions'"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.absReturn}} </td>
-                <td
+                <td *ngIf="viewMode == 'unrealized transactions'"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.xirr}} </td>
             </tr>
@@ -828,10 +846,10 @@
                 <td class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.totalCurrentValue}} </td>
-                <td class="f-700"
+                <td *ngIf="viewMode == 'unrealized transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.dividendPayout}} </td>
-                <td class="f-700"
+                <td *ngIf="viewMode == 'unrealized transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.dividendReinvest}} </td>
                 <td class="f-700"
@@ -840,10 +858,10 @@
                 <td class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.totalCurrentValue - item.totalTransactionAmt}} </td>
-                <td class="f-700"
+                <td *ngIf="viewMode == 'unrealized transactions'"  class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.absReturn}} </td>
-                <td class="f-700"
+                <td *ngIf="viewMode == 'unrealized transactions'"  class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
                     {{item.xirr}} </td>
             </tr>

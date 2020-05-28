@@ -2,7 +2,7 @@
   <div class="wrapper-8">
     <div class="row">
       <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-        <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0" [ngClass]="{ 'disabled' : isShow}">
+        <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0" [ngClass]="isShow ? 'disabled': ''">
           {{viewMode}}
           <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
         </button>
@@ -37,14 +37,16 @@
   </div> -->
   <div [ngSwitch]="viewMode">
     <div *ngSwitchCase="'Overview Report'">
-      <app-mutual-fund-overview (changeInput)="changeInput($event)" (changeAsPerCategory)="OutputData($event)"></app-mutual-fund-overview>
+      <app-mutual-fund-overview (changeInput)="changeInput($event)" (changeAsPerCategory)="OutputData($event)">
+      </app-mutual-fund-overview>
     </div>
     <div *ngSwitchCase="'Summary'">
-      <app-mutual-fund-summary (changeInput)="changeInput($event)" [data]="typeWiseData" (refreshMFData)="refreshMFData($event)">
+      <app-mutual-fund-summary (changeInput)="changeInput($event)" [data]="typeWiseData"
+        (refreshMFData)="refreshMFData($event)">
       </app-mutual-fund-summary>
     </div>
     <div *ngSwitchCase="'All Transactions'">
-      <app-mutual-fund-unrealized-tran [data]="typeWiseData"  (changeInput)="changeInput($event)">
+      <app-mutual-fund-unrealized-tran [data]="typeWiseData" (changeInput)="changeInput($event)">
       </app-mutual-fund-unrealized-tran>
     </div>
     <div *ngSwitchCase="'Unrealized Transactions'">
