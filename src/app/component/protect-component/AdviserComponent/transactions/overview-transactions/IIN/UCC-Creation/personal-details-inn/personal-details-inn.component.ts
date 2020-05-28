@@ -1,15 +1,15 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatInput} from '@angular/material';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatInput } from '@angular/material';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -21,11 +21,11 @@ export class PersonalDetailsInnComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private processTransaction: ProcessTransactionService,
-              private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-              private peopleService: PeopleService, private custumService: CustomerService,
-              public utils: UtilService,
-              public eventService: EventService) {
+    private processTransaction: ProcessTransactionService,
+    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
+    private peopleService: PeopleService, private custumService: CustomerService,
+    public utils: UtilService,
+    public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -34,7 +34,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.inputData = data;
     console.log('Data in personal detail : ', data);
     this.clientData = data.clientData;
-    this.obj1 = {...data};
+    this.obj1 = { ...data };
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
       this.firstHolder = data.holderList[0];
@@ -104,6 +104,11 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
 
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   getClientOrFamilyDetails(data) {
     if (data.userType == 2) {
       this.sendObj = {
