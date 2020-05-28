@@ -366,6 +366,17 @@ export class OverviewRiskProfileComponent implements OnInit {
     })
   }
 
+  cancelTest(){
+    this.showQuestionnaire = false;
+    if(this.feedsRiskProfile.riskProfileId) {
+      this.isEmpty = false;
+      this.showResults = true;
+    } else {
+      this.isEmpty = true;
+      this.showResults = false;
+    }
+  }
+
 
   riskProfileMaxScore(id) {
     if (this.globalRiskProfile.length > 0) {
