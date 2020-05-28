@@ -26,7 +26,7 @@ export class MutualFundComponent implements OnInit {
   isLoading = true;
 
   dataHolder: any = {};
-  isShow;
+  isShow = 'true';
   capitalGainData: any;
   inputData: any;
   showSelector: boolean = false;
@@ -40,9 +40,9 @@ export class MutualFundComponent implements OnInit {
   get data() {
     this.changeViewMode(this.inputData)
     return this.inputData;
-    
+
   }
-  
+
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
     private mfService: MfServiceService, private settingService: SettingsService) {
@@ -51,14 +51,15 @@ export class MutualFundComponent implements OnInit {
   ngOnInit() {
     this.mfService.getMutualFundShowDropdown()
       .subscribe(res => {
+        console.log(typeof res);
         this.isShow = res;
       })
 
     this.viewMode = 'Overview Report';
-    if(this.inputData){
+    if (this.inputData) {
       this.changeViewMode(this.inputData)
       this.viewMode = this.inputData
-    }else{
+    } else {
       this.mfService.changeViewMode(this.viewMode);
     }
     this.advisorId = AuthService.getAdvisorId();
@@ -126,8 +127,8 @@ export class MutualFundComponent implements OnInit {
   changeInput(value) {
     this.isShow = value;
   }
-  OutputData(data){
-    this.viewMode =data.viewMode;
+  OutputData(data) {
+    this.viewMode = data.viewMode;
     this.typeWiseData = data.flag
   }
 

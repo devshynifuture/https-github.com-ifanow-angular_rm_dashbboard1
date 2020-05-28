@@ -1,303 +1,311 @@
-<div class="popup-header-fix-40">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
-        </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose(false)"> clear</i>
+<div class="pos-rel" [ngClass]="isMainLoading ? 'cur-wait opacity-4': ''">
+    <div class="popup-header-fix-40">
+        <div class="row bb-1">
+            <div class="col-md-8 p-0">
+                <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="wrapper-12">
+                    <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose(false)"> clear</i>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="pb-100 order-historical" [formGroup]="orderHistoryFileForm">
-    <div class="row pt-28">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-20 mb-0">Search Advisor</h5>
-        </div>
-        <div class="col-md-7">
-            <div class="form-group">
-                <mat-form-field floatLabel="never" appearance="standard" [formGroup]="searchAdvisorForm">
-                    <input class="form-control" matInput placeholder="Search" aria-label="State"
-                        [matAutocomplete]="auto1" #advisorRef formControlName="searchAdvisor"
-                        [value]="advisorNameInput">
-                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
-                        <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
-                        </mat-option>
-                        <ng-container *ngIf="!isLoadingForDropDown">
-                            <mat-option (onSelectionChange)="setAdvisorId(advisor)"
-                                *ngFor="let advisor of arrayOfAdvisorName" [value]="advisor.name"
-                                [matTooltip]="advisor.name" matTooltipPosition="after">
-                                <span>
-                                    <b>
-                                        {{advisor.name}}
-                                    </b>
-                                </span>
+    <div class="pb-100 order-historical" [formGroup]="orderHistoryFileForm">
+        <div class="row pt-28">
+            <div class="col-md-5 pr-0">
+                <h5 class="text-right pt-20 mb-0">Search Advisor</h5>
+            </div>
+            <div class="col-md-7">
+                <div class="form-group">
+                    <mat-form-field floatLabel="never" appearance="standard" [formGroup]="searchAdvisorForm">
+                        <input class="form-control" matInput placeholder="Search" aria-label="State"
+                            [matAutocomplete]="auto1" #advisorRef formControlName="searchAdvisor"
+                            [value]="advisorNameInput">
+                        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
                             </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                    <mat-error
-                        *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-                <br>
-                <ng-container *ngIf="arrayAdvisorNameError">
-                    <span class="f-12">
-                        {{errorMsg}}
-                    </span>
-                </ng-container>
+                            <ng-container *ngIf="!isLoadingForDropDown">
+                                <mat-option (onSelectionChange)="setAdvisorId(advisor)"
+                                    *ngFor="let advisor of arrayOfAdvisorName" [value]="advisor.name"
+                                    [matTooltip]="advisor.name" matTooltipPosition="after">
+                                    <span>
+                                        <b>
+                                            {{advisor.name}}
+                                        </b>
+                                    </span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                        <mat-error
+                            *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <ng-container *ngIf="arrayAdvisorNameError">
+                        <span class="f-12">
+                            {{errorMsg}}
+                        </span>
+                    </ng-container>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row pt-28">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">Select RTA</h5>
-        </div>
-        <div class="col-md-7">
-            <mat-radio-group formControlName="selectRta" (change)="resetDateAsOnDateAndFormCheckbox()">
-                <mat-radio-button #radioBtnRef [value]="item.id" *ngFor="let item of rtList; index as i"
-                    [ngStyle]="{ 'padding-right': getPaddingTop(i) }"
-                    [ngClass]="orderHistoryFileForm.get('selectRta') === item.id ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
-                    {{ item.name }}
-                </mat-radio-button>
-                <!--<mat-radio-button value="2"
-                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
-                    Karvy </mat-radio-button>
-                <mat-radio-button value="3"
-                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
-                    Franklin </mat-radio-button> -->
-            </mat-radio-group>
-            <mat-error
-                *ngIf="orderHistoryFileForm.get('selectRta').touched && orderHistoryFileForm.get('selectRta').invalid">
-                This field is required
-            </mat-error>
-        </div>
-    </div>
-
-    <div class="row pt-28" *ngIf="arnRiaDetailsList.length!==0">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">Select ARN/RIA</h5>
-        </div>
-        <div class="col-md-6">
-            <div *ngFor="let item of arnRiaDetailsList; index as i" formArrayName="selectArnRia">
-                <div [formGroupName]="i">
-                    <mat-checkbox [checked]="item" class="d-block f-14" formControlName="selection"
-                        (click)="setArnRiaId(i)">
+        <div class="row pt-28">
+            <div class="col-md-5 pr-0">
+                <h5 class="text-right pt-12 mb-0">Select RTA</h5>
+            </div>
+            <div class="col-md-7">
+                <mat-radio-group formControlName="selectRta" (change)="resetDateAsOnDateAndFormCheckbox()">
+                    <mat-radio-button #radioBtnRef [value]="item.id" *ngFor="let item of rtList; index as i"
+                        [ngStyle]="{ 'padding-right': getPaddingTop(i) }"
+                        [ngClass]="orderHistoryFileForm.get('selectRta') === item.id ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                         {{ item.name }}
-                    </mat-checkbox>
-                </div>
+                    </mat-radio-button>
+                    <!--<mat-radio-button value="2"
+                        [ngClass]="orderHistoryFileForm.get('selectRta').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                        Karvy </mat-radio-button>
+                    <mat-radio-button value="3"
+                        [ngClass]="orderHistoryFileForm.get('selectRta').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                        Franklin </mat-radio-button> -->
+                </mat-radio-group>
+                <mat-error
+                    *ngIf="orderHistoryFileForm.get('selectRta').touched && orderHistoryFileForm.get('selectRta').invalid">
+                    This field is required
+                </mat-error>
             </div>
         </div>
 
-        <mat-error class=" f-11 f-500" *ngIf="orderHistoryFileForm.get('selectArnRia').invalid">
-            Atleast one must be selected
-        </mat-error>
-    </div>
-
-    <div class="row pt-28">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
-        </div>
-        <div class="col-md-6 pr-0" formGroupName="selectFilesToOrder">
-            <div class="row">
-                <div class="col-md-6 p-0">
-                    <h3 class="f-14 m-0 f-600">Transactions</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
-                        <!-- cams option -->
-                        <div formGroupName="cams">
-                            <mat-checkbox class="d-block" formControlName="wbr2">WBR2
-                            </mat-checkbox>
-                            <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
-                        <!-- karvy option -->
-                        <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd201">201</mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
-                        <!-- franklin option -->
-                        <div formGroupName="franklin">
-                            <mat-checkbox class="d-block wb ws-normal" formControlName="transactions">My
-                                transactions </mat-checkbox>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 p-0">
-                    <h3 class="f-14 m-0 f-600">SIP/STP</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
-                        <!-- cams options -->
-                        <div formGroupName="cams">
-                            <mat-checkbox class="d-block" formControlName="wbr49Active">WBR49 Active</mat-checkbox>
-                            <mat-checkbox class="d-block" formControlName="wbr49Ceased">WBR49 Ceased</mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
-                        <!-- karvy options -->
-                        <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd243">243 Active
-                            </mat-checkbox>
-                            <mat-checkbox class="d-block" formControlName="mfsd231">231 Ceased
-                            </mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
-                        <!-- franklin options -->
-                        <div formGroupName="franklin">
-                            <mat-checkbox class="d-block" formControlName="active_sip">Active SIP</mat-checkbox>
-                            <mat-checkbox class="d-block" formControlName="ceased_sip">Ceased SIP </mat-checkbox>
-                        </div>
+        <div class="row pt-28" *ngIf="arnRiaDetailsList.length!==0">
+            <div class="col-md-5 pr-0">
+                <h5 class="text-right pt-12 mb-0">Select ARN/RIA</h5>
+            </div>
+            <div class="col-md-6">
+                <div *ngFor="let item of arnRiaDetailsList; index as i" formArrayName="selectArnRia">
+                    <div [formGroupName]="i">
+                        <mat-checkbox [checked]="item" class="d-block f-14" formControlName="selection"
+                            (click)="setArnRiaId(i)">
+                            {{ item.name }}
+                        </mat-checkbox>
                     </div>
                 </div>
             </div>
 
-            <div class="row pt-14">
-                <div class="col-md-6 p-0">
-                    <h3 class="f-14 m-0 f-600">Folio master</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
-                        <!-- cams options -->
-                        <div formGroupName="cams">
-                            <mat-checkbox class="d-block" formControlName="wbr9">WBR9</mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
-                        <!-- karvy options -->
-                        <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd211">211</mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
-                        <!-- franklin options -->
-                        <div formGroupName="franklin">
-                            <mat-checkbox class="d-block wb ws-normal" formControlName="investor_folio">Investor
-                                Folio
-                            </mat-checkbox>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 p-0">
-                    <h3 class="f-14 m-0 f-600">AUM</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
-                        <!-- cams options -->
-                        <div formGroupName="cams">
-                            <mat-checkbox class="d-block" formControlName="wbr22">WBR22
-                            </mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
-                        <!-- karvy options -->
-                        <div formGroupName="karvy">
-                            <mat-checkbox class="d-block" formControlName="mfsd203">203</mat-checkbox>
-                        </div>
-                    </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
-                        <!-- franklin options -->
-                        <div formGroupName="franklin">
-                            <mat-checkbox class="d-block wb ws-normal" formControlName="aum">
-                                Clients wise AUM
-                            </mat-checkbox>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <mat-error class="f-11 roboto f-500 pt-12" *ngIf="orderHistoryFileForm.get('selectFilesToOrder').invalid">
+            <mat-error class=" f-11 f-500" *ngIf="orderHistoryFileForm.get('selectArnRia').invalid">
                 Atleast one must be selected
             </mat-error>
         </div>
-    </div>
 
-    <div class="pt-32 pl-20 pr-20">
-        <div class="row b-t pt-14 ">
+        <div class="row pt-28">
             <div class="col-md-5 pr-0">
-                <h5 class="text-right pt-48 mb-0">Date range</h5>
+                <h5 class="text-right pt-12 mb-0"> Select files to order </h5>
             </div>
-            <div class="col-md-6">
-                <div class="row" *ngIf="!asOnDate">
-                    <div class="col-md-6 pl-0">
-                        <h5 class="mb-4 pt-16">From date</h5>
-                        <div class="form-group">
-                            <mat-form-field class="ba-date">
-                                <input class="form-control b-0" [min]="camsAsOnDatePastMaxDate" [max]="dateYesterday"
-                                    formControlName="fromDate" (click)="picker1.open()" matInput
-                                    [matDatepicker]="picker1">
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                                <mat-error
-                                    *ngIf="orderHistoryFileForm.get('fromDate').touched && orderHistoryFileForm.get('fromDate').invalid">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
+            <div class="col-md-6 pr-0" formGroupName="selectFilesToOrder">
+                <div class="row">
+                    <div class="col-md-6 p-0">
+                        <h3 class="f-14 m-0 f-600">Transactions</h3>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
+                            <!-- cams option -->
+                            <div formGroupName="cams">
+                                <mat-checkbox class="d-block" formControlName="wbr2">WBR2
+                                </mat-checkbox>
+                                <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
+                            <!-- karvy option -->
+                            <div formGroupName="karvy">
+                                <mat-checkbox class="d-block" formControlName="mfsd201">201</mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
+                            <!-- franklin option -->
+                            <div formGroupName="franklin">
+                                <mat-checkbox class="d-block wb ws-normal" formControlName="transactions">My
+                                    transactions </mat-checkbox>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6 pl-0">
-                        <h5 class="mb-4 pt-16">To date</h5>
-                        <div class="form-group">
-                            <mat-form-field class="ba-date">
-                                <input class="form-control b-0" [max]="dateToday" [min]="camsAsOnDatePastMaxDate"
-                                    formControlName="toDate" (focus)="picker.open()" matInput [matDatepicker]="picker">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                                <mat-error
-                                    *ngIf="orderHistoryFileForm.get('toDate').touched && orderHistoryFileForm.get('toDate').invalid">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
+                    <div class="col-md-6 p-0">
+                        <h3 class="f-14 m-0 f-600">SIP/STP</h3>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
+                            <!-- cams options -->
+                            <div formGroupName="cams">
+                                <mat-checkbox class="d-block" formControlName="wbr49Active">WBR49 Active</mat-checkbox>
+                                <mat-checkbox class="d-block" formControlName="wbr49Ceased">WBR49 Ceased</mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
+                            <!-- karvy options -->
+                            <div formGroupName="karvy">
+                                <mat-checkbox class="d-block" formControlName="mfsd243">243 Active
+                                </mat-checkbox>
+                                <mat-checkbox class="d-block" formControlName="mfsd231">231 Ceased
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
+                            <!-- franklin options -->
+                            <div formGroupName="franklin">
+                                <mat-checkbox class="d-block" formControlName="active_sip">Active SIP</mat-checkbox>
+                                <mat-checkbox class="d-block" formControlName="ceased_sip">Ceased SIP </mat-checkbox>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="asOnDate">
-                    <div class="col-md-12 pl-0">
-                        <h5 class="mb-4 pt-16">As On Date</h5>
-                        <mat-form-field>
-                            <input class="form-control" formControlName="asOnDate" [min]="camsAsOnDatePastMaxDate"
-                                [max]="dateToday" (click)="picker2.open()" matInput [matDatepicker]="picker2">
-                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                            <mat-datepicker #picker2></mat-datepicker>
-                            <mat-error
-                                *ngIf="orderHistoryFileForm.get('asOnDate').touched && orderHistoryFileForm.get('asOnDate').invalid">
-                                This field is required
-                            </mat-error>
-                        </mat-form-field>
+
+                <div class="row pt-14">
+                    <div class="col-md-6 p-0">
+                        <h3 class="f-14 m-0 f-600">Folio master</h3>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
+                            <!-- cams options -->
+                            <div formGroupName="cams">
+                                <mat-checkbox class="d-block" formControlName="wbr9">WBR9</mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
+                            <!-- karvy options -->
+                            <div formGroupName="karvy">
+                                <mat-checkbox class="d-block" formControlName="mfsd211">211</mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
+                            <!-- franklin options -->
+                            <div formGroupName="franklin">
+                                <mat-checkbox class="d-block wb ws-normal" formControlName="investor_folio">Investor
+                                    Folio
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-0">
+                        <h3 class="f-14 m-0 f-600">AUM</h3>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
+                            <!-- cams options -->
+                            <div formGroupName="cams">
+                                <mat-checkbox class="d-block" formControlName="wbr22">WBR22
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
+                            <!-- karvy options -->
+                            <div formGroupName="karvy">
+                                <mat-checkbox class="d-block" formControlName="mfsd203">203</mat-checkbox>
+                            </div>
+                        </div>
+                        <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
+                            <!-- franklin options -->
+                            <div formGroupName="franklin">
+                                <mat-checkbox class="d-block wb ws-normal" formControlName="aum">
+                                    Clients wise AUM
+                                </mat-checkbox>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-24">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">Ordering frequency</h5>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field>
-                <mat-select class="form-control" formControlName="orderingFreq">
-                    <mat-option value="">
-                        Select Option
-                    </mat-option>
-                    <mat-option [value]="freq.id" *ngFor="let freq of orderingFreq">
-                        {{ freq.name }}
-                    </mat-option>
-                </mat-select>
-                <mat-error
-                    *ngIf="orderHistoryFileForm.get('orderingFreq').touched && orderHistoryFileForm.get('orderingFreq').invalid">
-                    This field is required
+                <mat-error class="f-11 roboto f-500 pt-12"
+                    *ngIf="orderHistoryFileForm.get('selectFilesToOrder').invalid">
+                    Atleast one must be selected
                 </mat-error>
-            </mat-form-field>
+            </div>
         </div>
-    </div>
 
-</div>
-<div class="bottom-fixed wrapper-12 pt-16 w-50">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
+        <div class="pt-32 pl-20 pr-20">
+            <div class="row b-t pt-14 ">
+                <div class="col-md-5 pr-0">
+                    <h5 class="text-right pt-48 mb-0">Date range</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="row" *ngIf="!asOnDate">
+                        <div class="col-md-6 pl-0">
+                            <h5 class="mb-4 pt-16">From date</h5>
+                            <div class="form-group">
+                                <mat-form-field class="ba-date">
+                                    <input class="form-control b-0" [min]="camsAsOnDatePastMaxDate"
+                                        [max]="dateYesterday" formControlName="fromDate" (click)="picker1.open()"
+                                        matInput [matDatepicker]="picker1">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="orderHistoryFileForm.get('fromDate').touched && orderHistoryFileForm.get('fromDate').invalid">
+                                        This field is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pl-0">
+                            <h5 class="mb-4 pt-16">To date</h5>
+                            <div class="form-group">
+                                <mat-form-field class="ba-date">
+                                    <input class="form-control b-0" [max]="dateToday" [min]="camsAsOnDatePastMaxDate"
+                                        formControlName="toDate" (focus)="picker.open()" matInput
+                                        [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="orderHistoryFileForm.get('toDate').touched && orderHistoryFileForm.get('toDate').invalid">
+                                        This field is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="asOnDate">
+                        <div class="col-md-12 pl-0">
+                            <h5 class="mb-4 pt-16">As On Date</h5>
+                            <mat-form-field>
+                                <input class="form-control" formControlName="asOnDate" [min]="camsAsOnDatePastMaxDate"
+                                    [max]="dateToday" (click)="picker2.open()" matInput [matDatepicker]="picker2">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                                <mat-error
+                                    *ngIf="orderHistoryFileForm.get('asOnDate').touched && orderHistoryFileForm.get('asOnDate').invalid">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="orderHistoricalFileSave()">Save</button>
+
+        <div class="row pt-24">
+            <div class="col-md-5 pr-0">
+                <h5 class="text-right pt-12 mb-0">Ordering frequency</h5>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="orderingFreq">
+                        <mat-option value="">
+                            Select Option
+                        </mat-option>
+                        <mat-option [value]="freq.id" *ngFor="let freq of orderingFreq">
+                            {{ freq.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="orderHistoryFileForm.get('orderingFreq').touched && orderHistoryFileForm.get('orderingFreq').invalid">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+    <div class="bottom-fixed wrapper-12 pt-16 w-50">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button mat-button class="btn-bottom br-0 text-inherit" [ngClass]="isMainLoading ? 'cur-wait': ''"
+                    (click)="orderHistoricalFileSave()">Save</button>
+            </div>
         </div>
     </div>
+</div>
+<div class="row" *ngIf="isMainLoading">
+    <mat-spinner class="loader middle-of-slider" [diameter]="30"></mat-spinner>
 </div>

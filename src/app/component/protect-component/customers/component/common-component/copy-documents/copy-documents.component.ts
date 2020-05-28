@@ -112,9 +112,9 @@ export class CopyDocumentsComponent implements OnInit {
     }
     console.log('sorted', this.commonFileFolders);
   }
-Close(){
-  this.dialogRef.close()
-}
+  Close() {
+    this.dialogRef.close()
+  }
   getFolders(data, index) {
     this.showMsg = false;
     this.commonFileFolders.data = [{}, {}, {}];
@@ -156,24 +156,45 @@ Close(){
   }
   copyFile(value) {
     var idTOsend = this.sendToCopy
-    if(value == 'Move'){
-      const obj = {
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        folderParentId: this.parentId,
-        id: idTOsend.id
-      };
-    this.sendObj = obj  
-    }else{
-      const obj = {
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        parentFolderId: this.parentId,
-        id: idTOsend.id
-      };
-      this.sendObj = obj  
+    if (value == 'Move') {
+      if (idTOsend.fileName) {
+        const obj = {
+          clientId: this.clientId,
+          advisorId: this.advisorId,
+          parentFolderId: this.parentId,
+          id: idTOsend.id
+        };
+        this.sendObj = obj
+      } else {
+        const obj = {
+          clientId: this.clientId,
+          advisorId: this.advisorId,
+          folderParentId: this.parentId,
+          id: idTOsend.id
+        };
+        this.sendObj = obj
+      }
+    } else {
+      if (idTOsend.fileName) {
+        const obj = {
+          clientId: this.clientId,
+          advisorId: this.advisorId,
+          parentFolderId: this.parentId,
+          id: idTOsend.id
+        };
+        this.sendObj = obj
+      } else {
+        const obj = {
+          clientId: this.clientId,
+          advisorId: this.advisorId,
+          folderParentId: this.parentId,
+          id: idTOsend.id
+        };
+        this.sendObj = obj
+      }
+
     }
-   
+
     Object.assign(this.sendObj, { value: value });
     this.dialogRef.close(this.sendObj)
 
