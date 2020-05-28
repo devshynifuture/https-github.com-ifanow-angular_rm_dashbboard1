@@ -585,7 +585,8 @@ export class TempserviceService {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
+        const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN', {currency: 'INR'});
+
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
       }
