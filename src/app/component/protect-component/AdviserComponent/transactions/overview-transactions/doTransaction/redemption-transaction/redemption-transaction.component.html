@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="row pt-20 pb-20">
+        <div class="row pt-20 pb-10">
             <div class="col-md-8 pl-0 pr-20">
 
                 <!-- value == 1 -->
@@ -172,7 +172,7 @@
 
         </div>
 
-        <div *ngIf="multiTransact == true && childTransactions.length>0" class="row pt-60">
+        <div *ngIf="multiTransact == true && childTransactions.length>0" class="row pb-60 pt-10">
             <div class="col-md-12 p-0 all-transactions">
                 <table [dataSource]="dataSource" id="table-low" mat-table>
                     <ng-container matColumnDef="no">

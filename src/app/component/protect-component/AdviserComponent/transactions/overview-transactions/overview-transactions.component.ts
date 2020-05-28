@@ -12,7 +12,7 @@ import {HttpService} from 'src/app/http-service/http-service';
 import {TransactionMobileViewComponent} from '../transaction-mobile-view/transaction-mobile-view.component';
 import {MatDialog} from '@angular/material';
 import {OnlineTransactionService} from '../online-transaction.service';
-import {TransactionsHistoryComponent} from '../transactions-list/transactions-history/transactions-history.component';
+import {TransactionDetailComponent} from '../transactions-list/transaction-detail/transaction-detail.component';
 import {TransactionEnumService} from '../transaction-enum.service';
 
 @Component({
@@ -83,7 +83,7 @@ export class OverviewTransactionsComponent implements OnInit {
       flag: 'addNewTransaction',
       data,
       state: 'open35',
-      componentName: TransactionsHistoryComponent,
+      componentName: TransactionDetailComponent,
     };
     this.subInjectService.changeNewRightSliderState(fragmentData);
   }
