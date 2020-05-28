@@ -67,7 +67,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   openPdfPopup() {
     const dialogRef = this.dialog.open(OpenPdfViewComponent, {
       width: '500px',
-      height: '500px',
+      height: '300px',
     });
   }
   refresh(flag) {
