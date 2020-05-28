@@ -1277,6 +1277,7 @@
                 }
 
                 .cashflow #table-low {
+
                   .mat-row:last-child {
                     font-weight: normal !important;
                     text-align: left !important;
@@ -1293,7 +1294,15 @@
 
                   tr.mat-header-row {
                     height: 40px !important;
-                    display: none;
+
+                  }
+
+
+                }
+
+                .cashflows-headers-hide#table-low {
+                  tr.mat-header-row {
+                    display: none !important;
                   }
                 }
 

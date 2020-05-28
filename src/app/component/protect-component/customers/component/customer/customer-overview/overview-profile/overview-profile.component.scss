@@ -4,6 +4,7 @@
   .row {
     margin-right: -15px !important;
     margin-left: -15px !important;
+
   }
 
   .col-width-18 {
@@ -273,6 +274,7 @@
     display: block !important;
     width: 100%;
     text-align: left;
+    height: calc(100vh - 116px);
   }
 
   li {
