@@ -153,6 +153,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
         data => {
           this.barButtonOptions.active = false;
           this.subBroker = data || [];
+          this.eventService.openSnackBar(this.inputData ? 'Credential edited successfully!' : 'Credential added successfully!', "Dismiss")
           this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
         },
         err => {
