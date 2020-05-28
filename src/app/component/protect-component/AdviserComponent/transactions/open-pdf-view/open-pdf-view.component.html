@@ -7,12 +7,14 @@
 
     <div class="row">
         <div class="col-md-12 p-0">
-            <button class="btnConfirm bg-primary text-white" mat-button>
+            <button (click)="fileUpload.click()" class="btnConfirm bg-primary text-white" mat-button>
                 Upload
-                <input [hidden]="true" class="uploadInput" id="file-4" type="file">
+                <input [hidden]="true" #fileUpload (change)="getFileDetails($event)" class="uploadInput" id="file-4"
+                    type="file">
             </button>
-            <mat-spinner class="spinnerClass1 "></mat-spinner>
-            <span class="text-primary ml-12 f-12">Uploaded successfully!</span>
+            <mat-spinner *ngIf="isFileUploading" class="spinnerClass1 "></mat-spinner>
+            <span *ngIf="showStatus" class="text-primary ml-12 f-12">Uploaded successfully!</span>
+            <span *ngIf="showStatus==false" class="text-danger ml-12 f-12">Uploading failed!</span>
         </div>
 
 
