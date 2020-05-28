@@ -554,6 +554,7 @@ export class MutualFundOverviewComponent implements OnInit {
         verticalAlign: 'middle',
         y: 60
       },
+      exporting: { enabled: false },
       tooltip: {
         pointFormat: ' <b>{point.percentage:.1f}%</b>'
       },
