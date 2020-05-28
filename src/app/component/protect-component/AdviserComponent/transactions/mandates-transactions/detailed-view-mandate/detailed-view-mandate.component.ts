@@ -75,9 +75,13 @@ export class DetailedViewMandateComponent implements OnInit {
   isFileUploading = false;
 
   getFileDetails(e, flag) {
-    (flag == 4) ? this.chequeFlag = true : this.mandateFlag = true;
     this.file = e.target.files[0];
     const file = e.target.files[0];
+    if (flag == 4 && file.type != "application/pdf") {
+      this.eventService.openSnackBar("Please select PDF/TIF format image", "Dismiss");
+      return;
+    }
+    (flag == 4) ? this.chequeFlag = true : this.mandateFlag = true;
     const requestMap = {
       // tpUserRequestId: 1,
       documentType: flag,
