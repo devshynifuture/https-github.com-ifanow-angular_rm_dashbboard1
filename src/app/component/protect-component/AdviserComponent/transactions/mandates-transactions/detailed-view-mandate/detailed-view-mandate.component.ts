@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {FileUploadService} from 'src/app/services/file-upload.service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {EventService} from '../../../../../../Data-service/event.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { EventService } from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -31,6 +31,10 @@ export class DetailedViewMandateComponent implements OnInit {
   ];
   statusDetails: any;
   file: any;
+  chequeFlag: boolean;
+  mandateFlag: boolean;
+  showChequeStatus: boolean;
+  showMandateStatus: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
   }
@@ -65,7 +69,7 @@ export class DetailedViewMandateComponent implements OnInit {
 
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: this.isRefreshRequired});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: this.isRefreshRequired });
   }
 
   isFileUploading = false;
@@ -73,6 +77,11 @@ export class DetailedViewMandateComponent implements OnInit {
   getFileDetails(e, flag) {
     this.file = e.target.files[0];
     const file = e.target.files[0];
+    if (flag == 4 && file.type != "application/pdf") {
+      this.eventService.openSnackBar("Please select PDF/TIF format image", "Dismiss");
+      return;
+    }
+    (flag == 4) ? this.chequeFlag = true : this.mandateFlag = true;
     const requestMap = {
       // tpUserRequestId: 1,
       documentType: flag,
@@ -82,7 +91,9 @@ export class DetailedViewMandateComponent implements OnInit {
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         this.isFileUploading = false;
+        (flag == 4) ? this.chequeFlag = false : this.mandateFlag = false;
         if (status == 200) {
+          (flag == 4) ? this.showChequeStatus = true : this.showMandateStatus = true;
           const responseObject = JSON.parse(response);
           this.eventService.openSnackBar('File uploaded successfully');
           if (flag == 2) {
@@ -95,8 +106,9 @@ export class DetailedViewMandateComponent implements OnInit {
           this.isRefreshRequired = true;
           this.subInjectService.setRefreshRequired();
         } else {
+          (flag == 4) ? this.showChequeStatus = false : this.showMandateStatus = false;
           const responseObject = JSON.parse(response);
-          this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
+          // this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
         }
 
       });
