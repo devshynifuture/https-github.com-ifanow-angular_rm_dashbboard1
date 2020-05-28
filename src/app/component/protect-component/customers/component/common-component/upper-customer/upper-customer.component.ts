@@ -22,12 +22,11 @@ export class UpperCustomerComponent implements OnInit {
 
   close(flag) {
     const fragmentData = {
-      direction: 'top',
-      componentName: UpperCustomerComponent,
       state: 'close',
       refreshRequired: flag
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+
   }
 }
