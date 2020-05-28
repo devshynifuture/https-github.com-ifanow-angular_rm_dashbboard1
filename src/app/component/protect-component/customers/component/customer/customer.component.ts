@@ -31,6 +31,8 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   loading: boolean;
   user: any;
 
+  organizationLogo = 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png';
+
   constructor(
     private router: Router,
     protected eventService: EventService,
