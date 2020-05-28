@@ -1,11 +1,12 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-sub-broker-credentials',
@@ -28,11 +29,25 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
   inputData: any;
   isLoadingBroker: boolean = false;
   euinValue: string;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   constructor(private eventService: EventService,
-              private settingService: SettingsService,
-              private fb: FormBuilder, private utilService: UtilService,
-              private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) {
+    private settingService: SettingsService,
+    private fb: FormBuilder, private utilService: UtilService,
+    private onlineTransact: OnlineTransactionService, private subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -53,7 +68,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getBSECredentials() {
@@ -125,6 +140,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
     if (this.addSubCredential.invalid) {
       this.addSubCredential.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         id: (this.inputData) ? this.inputData.id : null,
         advisorId: this.advisorId,
@@ -135,10 +151,12 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       };
       this.onlineTransact.addSubBroker(obj).subscribe(
         data => {
+          this.barButtonOptions.active = false;
           this.subBroker = data || [];
-          this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+          this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
         },
         err => {
+          this.barButtonOptions.active = false;
           this.eventService.openSnackBar(err, 'Dismiss');
         }
       );

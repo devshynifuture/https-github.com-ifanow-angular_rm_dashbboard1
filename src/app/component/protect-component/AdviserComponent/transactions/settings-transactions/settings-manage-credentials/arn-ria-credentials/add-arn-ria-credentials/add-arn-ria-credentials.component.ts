@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-arn-ria-credentials',
@@ -24,10 +25,24 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   euinValue: string;
   brokerCode: string;
   defaultLoginDisabled: boolean = false;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   constructor(private eventService: EventService, private fb: FormBuilder,
-              private utilService: UtilService, private onlineTransact: OnlineTransactionService,
-              private subInjectService: SubscriptionInject) {
+    private utilService: UtilService, private onlineTransact: OnlineTransactionService,
+    private subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -49,7 +64,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
     this.getdataForm(this.inputData);
   }
 
-  euinChangeFun = function(value) {
+  euinChangeFun = function (value) {
     const test = value.slice(1, value.length + 1);
     let exp = /^E/i;
     if (exp.test(value) == false) {
@@ -161,6 +176,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       if (this.platForm == '1') {
         this.addCredential.controls.memberId.setValue('');
       }
+      this.barButtonOptions.active = true;
       const obj = {
         accountType: this.addCredential.controls.accType.value,
         advisorId: this.advisorId,
@@ -178,6 +194,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       };
       this.onlineTransact.addBSECredentilas(obj).subscribe(
         data => this.addBSECredentilasRes(data), error => {
+          this.barButtonOptions.active = false;
           this.eventService.showErrorMessage(error);
         }
       );
@@ -186,11 +203,12 @@ export class AddArnRiaCredentialsComponent implements OnInit {
   }
 
   addBSECredentilasRes(data) {
-    this.eventService.openSnackBar('Credential added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+    this.barButtonOptions.active = false;
+    this.eventService.openSnackBar((this.inputData == 'addCredentials') ? 'Credential added successfully!' : 'Credential edited successfully!', 'Dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
