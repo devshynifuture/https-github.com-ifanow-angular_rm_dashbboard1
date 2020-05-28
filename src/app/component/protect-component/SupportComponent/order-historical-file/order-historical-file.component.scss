@@ -37,3 +37,21 @@
     }
   }
 }
+.pos-rel{
+  position: relative !important;
+}
+
+.middle-of-slider{
+  position: absolute !important;
+  top:50% !important;
+  left:50% !important;
+}
+
+.cur-wait{
+  cursor: wait !important;
+  z-index: -1 !important;
+}
+
+.opacity-4{
+  opacity: 0.4 !important;
+}
