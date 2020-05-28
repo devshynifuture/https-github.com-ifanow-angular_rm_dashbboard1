@@ -15,18 +15,21 @@
 
         <div *ngIf="credentialData" class="col-md-8 text-right pt-4">
             <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
-                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput placeholder="Type to filter data">
+                <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
+                    placeholder="Type to filter data">
             </mat-form-field>
 
-            <input #uploadFileInput (change)="getFileDetails($event)" [hidden]="true" class="uploadInput" id="file-4" type="file">
-            <img (click)="uploadFileInput.click()" *ngIf="isAdvisorSection" class="b-a p-5 c-p " src="/assets/images/svg/download-black.svg">
+            <!-- <input  [hidden]="true" class="uploadInput" id="file-4" type="file"> -->
+            <img (click)="openPdfPopup()" *ngIf="isAdvisorSection" class="b-a p-5 c-p "
+                src="/assets/images/svg/download-black.svg">
 
 
             <!-- <img (click)="openDialog()" class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg"> -->
 
 
             <img (click)="refresh(true)" class="b-a p-8 c-p" src="/assets/images/svg/reload.svg">
-            <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+            <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle"
+                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #IINUCCMenu>
                 <button (click)="getIINUCC()" mat-menu-item>
@@ -36,7 +39,8 @@
                     INVESTMENT READY
                 </button>
             </mat-menu>
-            <button (click)="openNewCustomerIIN()" *ngIf="dataSource.filteredData.length > 0&&isAdvisorSection" class="btn-primary addon v-middle" mat-stroked-button> ADD
+            <button (click)="openNewCustomerIIN()" *ngIf="dataSource.filteredData.length > 0&&isAdvisorSection"
+                class="btn-primary addon v-middle" mat-stroked-button> ADD
                 NEW
             </button>
 
@@ -45,7 +49,8 @@
 
     <div class="row">
         <div class="col-md-12 ">
-            <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
+            <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+                appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="aggregatorType">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
                     <td *matCellDef="let element" class="br" mat-cell>
@@ -91,7 +96,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="clientCode">
-                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="accountNo"> Account number
+                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="accountNo"> Account
+                        number
                     </th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> {{isLoading ? '' : (element.clientCode) ? element.clientCode : '-'}} </div>
@@ -121,15 +127,19 @@
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
-            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
+                class="d-flex flex-column align-items-center pt-44">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">{{noData}}</h4>
-                <button *ngIf="noData=='No investors found'&&isAdvisorSection" class="btn-primary addon v-middle  " mat-stroked-button>
+                <button *ngIf="noData=='No investors found'&&isAdvisorSection" class="btn-primary addon v-middle  "
+                    mat-stroked-button>
                     <!-- (click)="openTransaction()"for prod build -->
 
                     ADD NEW
                 </button>
-                <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
+                <button *ngIf="noData=='No credentials found'"
+                    [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
+                    class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
