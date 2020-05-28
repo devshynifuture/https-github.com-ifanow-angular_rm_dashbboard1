@@ -1,19 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {TransactionEnumService} from '../transaction-enum.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {EnumServiceService} from '../../../../../services/enum-service.service';
-import {IinUccCreationComponent} from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {InvestorDetailComponent} from './investor-detail/investor-detail.component';
-import {FileUploadService} from '../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../config/main-config';
-import {appConfig} from '../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {Router} from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { EnumServiceService } from '../../../../../services/enum-service.service';
+import { IinUccCreationComponent } from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { InvestorDetailComponent } from './investor-detail/investor-detail.component';
+import { FileUploadService } from '../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../config/main-config';
+import { appConfig } from '../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -31,7 +31,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   advisorId: any;
   clientId;
   filterData: any;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
   innUccPendindList: any;
   credentialData: any;
@@ -44,10 +44,11 @@ export class InvestorsTransactionsComponent implements OnInit {
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
-              private eventService: EventService,
-              private enumServiceService: EnumServiceService,
-              private subInjectService: SubscriptionInject,
-              private router: Router) {
+    private eventService: EventService,
+    public dialog: MatDialog,
+    private enumServiceService: EnumServiceService,
+    private subInjectService: SubscriptionInject,
+    private router: Router) {
   }
 
   ngOnInit() {

@@ -19,16 +19,19 @@ addEventListener('message', ({data}) => {
   totalValue.grandTotal = mfService.mutualFundRoundAndFormat(totalValue.grandTotal, 2);
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
-    if (element.currentAmount && element.amount) {
+    if (element.currentAmount && element.amount && !element.gain) {
       element.gain = element.currentAmount - element.amount;
+      element.gain = mfService.mutualFundRoundAndFormat(element.gain, 2);
+
     } else {
     }
 
-    if (element.totalCurrentValue && element.totalTransactionAmt) {
+    if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {
       element.totalGain = element.totalCurrentValue - element.totalTransactionAmt;
+      element.totalGain = mfService.mutualFundRoundAndFormat(element.totalGain, 2);
     } else {
+
     }
-    element.gain = mfService.mutualFundRoundAndFormat(element.gain, 2);
 
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
     element.totalTransactionAmt = mfService.mutualFundRoundAndFormat(element.totalTransactionAmt, 2);

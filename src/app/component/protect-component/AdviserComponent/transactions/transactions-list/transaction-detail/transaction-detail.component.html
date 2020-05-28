@@ -126,7 +126,7 @@
         </div>
         <div class="circleDetails">
           <p class="m-0 f-14 l-18">{{singleStep.name}}</p>
-          <p *ngIf="singleStep.helper" class="m-0 f-14 l-18">{{singleStep.helper}}</p>
+          <p *ngIf="singleStep.helper&&transactionData.status ==2" class="m-0 f-8 l-18">{{singleStep.helper}}</p>
 
         </div>
       </div>

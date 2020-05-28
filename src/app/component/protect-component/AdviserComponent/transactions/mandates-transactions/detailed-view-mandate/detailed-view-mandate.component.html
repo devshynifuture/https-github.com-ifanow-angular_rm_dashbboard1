@@ -1,165 +1,170 @@
 <div class="popup-header-fix-35">
-  <div class="row bb-1">
-    <div class="col-md-10 p-0">
-      <h4 class="mb-0 wrapper-20">Mandate - Detailed view</h4>
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">Mandate - Detailed view</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
     </div>
-    <div class="col-md-2 text-left">
-      <div class="wrapper-12">
-        <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="pl-20 pr-20 pb-48 mt-44">
-  <div class="row pt-40">
-    <div class="col-md-12 p-0">
-      <div class="insurance-ui bt">
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Platform
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.aggregatorType == 1) ? 'NSE' : 'BSE' || '-' }}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            ARN/RIA
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.brokerCode) ? details.brokerCode : '-' }}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Investor name
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.investorName) ? details.investorName : '-' }}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            IIN/UCC
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.clientCode) ? details.clientCode : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Bank name
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.bankName) ? details.bankName : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Bank branch
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.bankBranch) ? details.bankBranch : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Account number
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.accountNo) ? details.accountNo : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Account type
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.accountType) ? details.accountType : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Ifsc code
-          </div>
+    <div class="row pt-40">
+        <div class="col-md-12 p-0">
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Platform
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.aggregatorType == 1) ? 'NSE' : 'BSE' || '-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        ARN/RIA
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.brokerCode) ? details.brokerCode : '-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Investor name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.investorName) ? details.investorName : '-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        IIN/UCC
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.clientCode) ? details.clientCode : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Bank name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.bankName) ? details.bankName : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Bank branch
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.bankBranch) ? details.bankBranch : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.accountNo) ? details.accountNo : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account type
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.accountType) ? details.accountType : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Ifsc code
+                    </div>
 
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.ifscCode) ? details.ifscCode : '-' }}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            UMRN no.
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{(details.umrnNo) ? details.umrnNo : '-'}}
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Status
-          </div>
-          <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.statusString) ? details.statusString : '-'}}
-          </div>
-        </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.ifscCode) ? details.ifscCode : '-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        UMRN no.
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(details.umrnNo) ? details.umrnNo : '-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Status
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (details.statusString) ? details.statusString : '-'}}
+                    </div>
+                </div>
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="p-28 pb-100">
 
-  <div class="row">
-    <div class="col-md-9 p-0">
-      <h5 class="m-0 f-500 text-black">Status</h5>
+    <div class="row">
+        <div class="col-md-9 p-0">
+            <h5 class="m-0 f-500 text-black">Status</h5>
+        </div>
+        <div class="col-md-1 p-0 ">
+            <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
+        </div>
+        <div class="col-md-2 p-0 text-right right">
+            <!--      <button (click)="refresh(details)" class="primary-sm" mat-stroked-button>REFRESH</button>-->
+        </div>
+
     </div>
-    <div class="col-md-1 p-0 ">
-      <mat-spinner *ngIf="isLoading==true" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
+    <div *ngIf="details&&data.isAdvisorSection" class="row">
+        <div class="col-md-12 mt-8 p-0">
+
+            <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" appFileDragDrop class="custom-file mb-12">
+                <input [disabled]="isFileUploading" (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3" lang="pl-Pl" type="file">
+                <label class="custom-file-label" for="customFileLang">Upload check</label>
+            </div>
+
+            <div *ngIf="details.formUploadFlag == 0 && details.status != 0" class="custom-file">
+                <input [disabled]="isFileUploading" (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4" lang="pl-Pl" type="file">
+                <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
+            </div>
+
+
+
+            <!-- <button (click)="uploadFileInput.click()" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+        Upload Cheque
+        <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput" id="file-4"
+          type="file">
+      </button> -->
+
+
+        </div>
     </div>
-    <div class="col-md-2 p-0 text-right right">
-      <!--      <button (click)="refresh(details)" class="primary-sm" mat-stroked-button>REFRESH</button>-->
-    </div>
-
-  </div>
-  <div *ngIf="details&&data.isAdvisorSection" class="row">
-    <div class="col-md-12 mt-8 p-0">
-
-      <div (fileDropped)="getFileDetails($event,4)" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0"
-           appFileDragDrop class="custom-file mb-12">
-        <input [disabled]="isFileUploading" (change)="getFileDetails($event,4)" class="custom-file-input" id="file-3"
-               lang="pl-Pl"
-               type="file">
-        <label class="custom-file-label" for="customFileLang">Upload check</label>
-      </div>
-
-      <div *ngIf="details.formUploadFlag == 0 && details.status != 0" class="custom-file">
-        <input [disabled]="isFileUploading" (change)="getFileDetails($event,2)" class="custom-file-input" id="file-4"
-               lang="pl-Pl"
-               type="file">
-        <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
-      </div>
-    </div>
-  </div>
 
 
-  <div class="mt-20">
-    <div *ngFor="let singleStep of statusDetails" class="circleGreen ">
-      <div class="d-flex">
-        <div *ngIf="singleStep.checked == true" class="circle1">
-          <i class="material-icons text-success">
+    <div class="mt-20">
+        <div *ngFor="let singleStep of statusDetails" class="circleGreen ">
+            <div class="d-flex">
+                <div *ngIf="singleStep.checked == true" class="circle1">
+                    <i class="material-icons text-success">
             check_circle_outline
           </i>
-        </div>
-        <div *ngIf="singleStep.checked == false" class="circle1">
-          <i class="material-icons text-primary">
+                </div>
+                <div *ngIf="singleStep.checked == false" class="circle1">
+                    <i class="material-icons text-primary">
             query_builder
           </i>
+                </div>
+                <div class="circleDetails">
+                    <p class="m-0 f-16 l-18">{{singleStep.name}}</p>
+                </div>
+            </div>
         </div>
-        <div class="circleDetails">
-          <p class="m-0 f-16 l-18">{{singleStep.name}}</p>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
