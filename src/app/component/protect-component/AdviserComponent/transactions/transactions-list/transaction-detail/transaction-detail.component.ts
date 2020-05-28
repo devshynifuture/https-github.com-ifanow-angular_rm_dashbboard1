@@ -5,11 +5,11 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {detailStatusObj} from './detailStatus';
 
 @Component({
-  selector: 'app-transactions-history',
-  templateUrl: './transactions-history.component.html',
-  styleUrls: ['./transactions-history.component.scss']
+  selector: 'app-transaction-detail',
+  templateUrl: './transaction-detail.component.html',
+  styleUrls: ['./transaction-detail.component.scss']
 })
-export class TransactionsHistoryComponent implements OnInit {
+export class TransactionDetailComponent implements OnInit {
   transactionData: any;
   // transactionData: any;
   transactionStatusList;
@@ -21,6 +21,7 @@ export class TransactionsHistoryComponent implements OnInit {
   }
 
   set data(data) {
+    console.log('transaction detail : ', data);
     this.transactionData = data;
     switch (true) {
       case (this.transactionData.transactionType == 'ORDER' || this.transactionData.transactionType == 'PURCHASE'):
@@ -67,9 +68,7 @@ export class TransactionsHistoryComponent implements OnInit {
     this.onlineTransact.getTransactionDetail(obj).subscribe(
       responseData => {
         this.isLoading = false;
-
         this.transactionData = responseData;
-
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
@@ -89,10 +88,10 @@ export class TransactionsHistoryComponent implements OnInit {
   }
 
   refresh(data) {
-    // this.getTransactionDetail(data);
+    this.getTransactionDetail(data);
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close', data: this.transactionData});
   }
 }

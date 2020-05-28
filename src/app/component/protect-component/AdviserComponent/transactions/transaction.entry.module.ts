@@ -15,7 +15,7 @@ import { RedemptionTransactionComponent } from './overview-transactions/doTransa
 import { SwpTransactionComponent } from './overview-transactions/doTransaction/swp-transaction/swp-transaction.component';
 import { StpTransactionComponent } from './overview-transactions/doTransaction/stp-transaction/stp-transaction.component';
 import { SipTransactionComponent } from './overview-transactions/doTransaction/sip-transaction/sip-transaction.component';
-import { TransactionsHistoryComponent } from './transactions-list/transactions-history/transactions-history.component';
+import { TransactionDetailComponent } from './transactions-list/transaction-detail/transaction-detail.component';
 import { KnowYourCustomerComponent } from './overview-transactions/know-your-customer/know-your-customer.component';
 import { BackDetailsComponent } from './overview-transactions/know-your-customer/back-details/back-details.component';
 import { PermanentAddressComponent } from './overview-transactions/know-your-customer/permanent-address/permanent-address.component';
@@ -60,7 +60,7 @@ export const componentList = [
   SwpTransactionComponent,
   StpTransactionComponent,
   SipTransactionComponent,
-  TransactionsHistoryComponent,
+  TransactionDetailComponent,
   KnowYourCustomerComponent,
   PermanentAddressComponent,
   BackDetailsComponent,
