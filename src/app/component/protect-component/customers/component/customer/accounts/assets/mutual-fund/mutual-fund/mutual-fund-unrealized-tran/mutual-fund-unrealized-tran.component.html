@@ -460,13 +460,13 @@
                             <div *ngIf="!isLoading">
                                 <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu25="matMenu">
-                                    <div [matTooltipDisabled]="element.rtMasterId === 14" [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
-                                        <button (click)="openMutualEditFund('editTransaction',element)" [disabled]="element.rtMasterId !== 14" mat-menu-item>Edit
+                                    <div [matTooltipDisabled]="element.rtTypeId === 14" [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
+                                        <button (click)="openMutualEditFund('editTransaction',element)" [disabled]="element.rtTypeId !== 14" mat-menu-item>Edit
                                             Transaction
                                         </button>
                                     </div>
-                                    <div [matTooltipDisabled]="element.rtMasterId === 14" [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
-                                        <button  (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtMasterId !== 14" mat-menu-item>Delete
+                                    <div [matTooltipDisabled]="element.rtTypeId === 14" [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
+                                        <button  (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtTypeId !== 14" mat-menu-item>Delete
                                             Transaction
                                         </button>
                                     </div>

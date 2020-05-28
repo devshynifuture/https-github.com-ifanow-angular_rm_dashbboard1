@@ -15,16 +15,13 @@ import { appConfig } from '../../../../../config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Router } from '@angular/router';
 import { OpenPdfViewComponent } from '../open-pdf-view/open-pdf-view.component';
-
 @Component({
   selector: 'app-investors-transactions',
   templateUrl: './investors-transactions.component.html',
   styleUrls: ['./investors-transactions.component.scss']
 })
 export class InvestorsTransactionsComponent implements OnInit {
-
   isFileUploading = false;
-
   displayedColumns: string[] = ['aggregatorType', 'brokerCode', 'name', 'panNo', 'taxStatus', 'holdingType',
     'clientCode', 'status'];
   data: Array<any> = [{}, {}, {}];
@@ -38,11 +35,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   credentialData: any;
   dontHide: boolean;
   isPendingData = false;
-
   isLoading = false;
-
   isAdvisorSection = true;
-
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService,
@@ -51,7 +45,6 @@ export class InvestorsTransactionsComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private router: Router) {
   }
-
   ngOnInit() {
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
@@ -63,7 +56,6 @@ export class InvestorsTransactionsComponent implements OnInit {
     // this.getMappedData();
     this.getFilterOptionData();
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -74,11 +66,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   }
   openPdfPopup() {
     const dialogRef = this.dialog.open(OpenPdfViewComponent, {
-      width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      width: '500px',
+      height: '500px',
     });
   }
   refresh(flag) {
@@ -89,7 +78,6 @@ export class InvestorsTransactionsComponent implements OnInit {
       this.getMappedData();
     }
   }
-
   getFilterOptionData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
@@ -106,9 +94,7 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
-
   getFilterOptionDataRes(data) {
-
     if (data) {
       this.credentialData = data;
       this.getMappedData();
@@ -119,7 +105,6 @@ export class InvestorsTransactionsComponent implements OnInit {
     }
     // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
-
   // sortDataFilterWise() {
   //   (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   // }
@@ -127,14 +112,12 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.isPendingData = false;
-
     const obj = {
       advisorId: this.advisorId,
       clientId: this.isAdvisorSection ? 0 : this.clientId
       // tpUserCredentialId: this.selectedBrokerCode.id,
       // aggregatorType: this.selectedPlatform.aggregatorType
     };
-
     if (this.isAdvisorSection) {
       this.onlineTransact.getMapppedClients(obj).subscribe(
         data => {
@@ -163,7 +146,6 @@ export class InvestorsTransactionsComponent implements OnInit {
       );
     }
   }
-
   handleMappedClientRes(data) {
     if (data) {
       data.forEach(singleData => {
@@ -182,7 +164,6 @@ export class InvestorsTransactionsComponent implements OnInit {
     }
     this.isLoading = false;
   }
-
   getIINUCC() {
     this.dontHide = true;
     this.isLoading = true;
@@ -192,7 +173,6 @@ export class InvestorsTransactionsComponent implements OnInit {
       clientId: this.isAdvisorSection ? 0 : this.clientId
     };
     this.isPendingData = true;
-
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
         data.forEach(singleData => {
@@ -215,7 +195,6 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
-
   openNewCustomerIIN() {
     const fragmentData = {
       flag: 'addNewCustomer',
@@ -234,9 +213,7 @@ export class InvestorsTransactionsComponent implements OnInit {
         }
       }
     );
-
   }
-
   getFileDetails(e) {
     console.log('file', e);
     const file = e.target.files[0];
@@ -261,7 +238,6 @@ export class InvestorsTransactionsComponent implements OnInit {
         }
       });
   }
-
   openInvestorDetail(data) {
     if (this.isLoading || !this.isPendingData || !this.isAdvisorSection) {
       return;
@@ -283,5 +259,4 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
-
 }

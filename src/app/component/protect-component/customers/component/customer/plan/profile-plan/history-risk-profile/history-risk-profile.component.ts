@@ -45,9 +45,8 @@ export class HistoryRiskProfileComponent implements OnInit {
   }
   getResultRiskRes(data) {
     this.isLoading = false
-    console.log(data);
     this.storeResult = data;
-    this.Close(data);
+    this.Close(true, data);
   }
   getRiskHistoryRes(data) {
     this.isLoading = false
@@ -73,8 +72,8 @@ export class HistoryRiskProfileComponent implements OnInit {
       }
     );
   }
-  Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  Close(flag, data={}) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag, data: data });
   }
 
 }
