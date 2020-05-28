@@ -456,9 +456,9 @@ export class RightFilterComponent implements OnInit {
   changeFilterFamily() {
     (this.familyMemObj.length == 0) ? this.showError = null : (this.familyMemObj.length == 1 && !this.familyMemObj[0].selected) ? this.showError = 'family member' : this.showError = null;
     let filterData = this._data.mfData.mutualFundList;
-    filterData = filterData.filter((item: any) =>
-      (item.currentValue != 0 && item.currentValue > 0)
-    );
+    // filterData = filterData.filter((item: any) =>
+    //   (item.currentValue != 0 && item.currentValue > 0)
+    // );
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
@@ -587,9 +587,9 @@ export class RightFilterComponent implements OnInit {
   changeFilterCategory(data) {
     (this.categoryObj.length == 0) ? this.showError = null : (this.categoryObj.length == 1 && !this.categoryObj[0].selected) ? this.showError = 'category' : this.showError = null;
     let filterData = this._data.mfData.mutualFundList;
-    filterData = filterData.filter((item: any) =>
-      (item.currentValue != 0 && item.currentValue > 0)
-    );
+    // filterData = filterData.filter((item: any) =>
+    //   (item.currentValue != 0 && item.currentValue > 0)
+    // );
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
@@ -636,9 +636,9 @@ export class RightFilterComponent implements OnInit {
     const filterData = [];
     // let filterData2 = this._data.mfData.mutualFundList;
     let filterData2 = this._data.mfData.mutualFundList;
-    filterData2 = filterData2.filter((item: any) =>
-      (item.currentValue != 0 && item.currentValue > 0)
-    );
+    // filterData2 = filterData2.filter((item: any) =>
+    //   (item.currentValue != 0 && item.currentValue > 0)
+    // );
     const filterData1 = [];
     const filterData3 = [];
     this.folio.filter(function (element) {
@@ -687,9 +687,9 @@ export class RightFilterComponent implements OnInit {
     const filterData = [];
     // let filterData2 = this._data.mfData.mutualFundList;
     let filterData2 = this._data.mfData.mutualFundList;
-    filterData2 = filterData2.filter((item: any) =>
-      (item.currentValue != 0 && item.currentValue > 0)
-    );
+    // filterData2 = filterData2.filter((item: any) =>
+    //   (item.currentValue != 0 && item.currentValue > 0)
+    // );
     const filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];
@@ -752,9 +752,9 @@ export class RightFilterComponent implements OnInit {
     (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
     const filterData = [];
     let filterData2 = this._data.mfData.mutualFundList;
-    filterData2 = filterData2.filter((item: any) =>
-      (item.currentValue != 0 && item.currentValue > 0)
-    );
+    // filterData2 = filterData2.filter((item: any) =>
+    //   (item.currentValue != 0 && item.currentValue > 0)
+    // );
     const filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];

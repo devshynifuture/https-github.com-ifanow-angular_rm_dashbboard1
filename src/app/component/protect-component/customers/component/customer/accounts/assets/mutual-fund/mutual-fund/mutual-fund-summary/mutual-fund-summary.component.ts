@@ -94,23 +94,23 @@ export class MutualFundSummaryComponent implements OnInit {
       .subscribe(res => {
         this.viewMode = res;
       })
-      this.getFilterData(2);
+    this.getFilterData(2);
   }
   getFilterData(value) {
     this.isLoading = true;
-      this.changeInput.emit(true);
+    this.changeInput.emit(true);
     this.mfService.getMfData()
-    .subscribe(res => {
-      this.mutualFund = res;
-    })
-  this.mfService.getFilterValues()
-    .subscribe(res => {
-      this.setDefaultFilterData = res;
-    })
-  this.mfService.getDataForMfGet()
-    .subscribe(res => {
-      this.mfGetData = res;
-    })
+      .subscribe(res => {
+        this.mutualFund = res;
+      })
+    this.mfService.getFilterValues()
+      .subscribe(res => {
+        this.setDefaultFilterData = res;
+      })
+    this.mfService.getDataForMfGet()
+      .subscribe(res => {
+        this.mfGetData = res;
+      })
     const obj = {
       advisor_id: this.advisorId,
       clientId: this.clientId,
@@ -162,7 +162,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
           this.saveFilterData = {
             transactionView: transactionView,
-            showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') :  (data[0].showZeroFolios == true) ? '1' : '2',
+            showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           }
@@ -175,7 +175,7 @@ export class MutualFundSummaryComponent implements OnInit {
           }
         }
       },
-      (error)=>{
+      (error) => {
         if (this.mfGetData) {
           this.getMutualFundResponse(this.mfGetData)
         } else if (this.mutualFund) {
@@ -316,7 +316,7 @@ export class MutualFundSummaryComponent implements OnInit {
       if (!this.inputData) {
         this.rightFilterData.reportType = [];
         this.rightFilterData.reportType[0] = {
-          name:(this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+          name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
           selected: true
         }
       }
@@ -324,8 +324,9 @@ export class MutualFundSummaryComponent implements OnInit {
       const input = {
         mutualFundList: mutualFund,
         // mutualFund: this.mfData,
-        mutualFund: this.mutualFund,
+        mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
+        showFolio:(this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
       };
       // Create a new
@@ -430,9 +431,9 @@ export class MutualFundSummaryComponent implements OnInit {
       transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
       overviewFilter: (this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       scheme: this.setDefaultFilterData.scheme,
-      reportType:(this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+      reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       reportAsOn: this.setDefaultFilterData.reportAsOn,
-      showFolio: (this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio,
+      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : this.saveFilterData.showFolio,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
@@ -583,7 +584,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData,'','');
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', this.fragmentData, '', '');
     });
 
   }
@@ -639,7 +640,7 @@ export class MutualFundSummaryComponent implements OnInit {
   openMutualEditFund(flag, element) {
     this.mutualFundList.forEach(ele => {
       ele.mutualFundTransactions.forEach(trsn => {
-        if(trsn.id == element.id){
+        if (trsn.id == element.id) {
           this.selectedDataLoad = ele
         }
       });
@@ -648,7 +649,7 @@ export class MutualFundSummaryComponent implements OnInit {
       .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: { family_member_list: res['family_member_list'], flag, ...element,...this.selectedDataLoad },
+          data: { family_member_list: res['family_member_list'], flag, ...element, ...this.selectedDataLoad },
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent
@@ -671,28 +672,28 @@ export class MutualFundSummaryComponent implements OnInit {
 
   openUpperFragment(flag, element) {
     console.log("this is what element is:::", element);
-    this.mfService.getMutualFundData()
-      .subscribe(res => {
-        const fragmentData = {
-          flag: 'app-upper-customer',
-          id: 1,
-          data: { family_member_list: res['family_member_list'], flag: 'addTransaction', ...element },
-          direction: 'top',
-          componentName: UpperCustomerComponent,
-          state: 'open'
-        };
-        const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-          upperSliderData => {
-            if (UtilService.isDialogClose(upperSliderData)) {
-              if (UtilService.isRefreshRequired(upperSliderData)) {
-                // code to refresh ...
-                this.getMutualFund();
+    if (flag == 'addTransaction') {
+          const fragmentData = {
+            flag: 'app-upper-customer',
+            id: 1,
+            data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+            direction: 'top',
+            componentName: UpperCustomerComponent,
+            state: 'open'
+          };
+          const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+            upperSliderData => {
+              if (UtilService.isDialogClose(upperSliderData)) {
+                if (UtilService.isRefreshRequired(upperSliderData)) {
+                  // code to refresh ...
+                  this.getMutualFund();
+                }
+                // this.getClientSubscriptionList();
+                subscription.unsubscribe();
               }
-              // this.getClientSubscriptionList();
-              subscription.unsubscribe();
             }
-          }
-        );
-      });
+          );
+    }
+
   }
 }

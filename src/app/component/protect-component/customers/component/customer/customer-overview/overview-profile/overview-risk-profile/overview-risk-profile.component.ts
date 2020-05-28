@@ -29,16 +29,12 @@ export class OverviewRiskProfileComponent implements OnInit {
   score;
   showResults = false;
   clickMessage = '';
-  name = 'Angular';
   showLoader: boolean;
   isLoading = false
   statusArray: any[] = [];
   showErrorMsg
-  checkFamilyMem;
   showButton;
   scoreStatus;
-  equityAllocationLowerLimit;
-  equityAllocationUpperLimit;
   hasError: boolean = false;
 
   clientRiskAssessmentResults;
@@ -161,117 +157,14 @@ export class OverviewRiskProfileComponent implements OnInit {
     });
   }
 
-  guageFun(chartId) {
-    this.gaugeOptions = {
-      chart: {
-        type: 'gauge'
-      },
-      title: null,
-      pane: {
-        center: ['40%', '80%'],
-        size: '150%',
-        startAngle: -90,
-        endAngle: 90,
-        background: {
-          backgroundColor: '#EEE',
-          innerRadius: '70%',
-          outerRadius: '100%',
-          shape: 'solid'
-        }
-      },
-      tooltip: {
-        enabled: false
-      },
-      yAxis: {
-        plotBands: [{
-          from: 1,
-          to: 120,
-          color: '#02B875',
-          thickness: '30%'
-        }, {
-          from: 121,
-          to: 240,
-          color: '#5DC644',
-          thickness: '30%'
-        }, {
-          from: 241,
-          to: 360,
-          color: '#FFC100',
-          thickness: '30%'
-        },
-        {
-          from: 361,
-          to: 480,
-          color: '#FDAF40',
-          thickness: '30%'
-        }, {
-          from: 481,
-          to: 600,
-          color: '#FF7272',
-          thickness: '30%'
-        }],
-        lineWidth: 0,
-        minorTickInterval: 1,
-        tickPositions: [1, 600],
-        tickAmount: 1,
-        min: 0,
-        max: 600,
-        title: {
-          y: -70
-        },
-        labels: {
-          y: 16
-        }
-      },
-      plotOptions: {
-        solidgauge: {
-          dataLabels: {
-            y: 5,
-            borderWidth: 0,
-          },
-          marker: {
-            enabled: true,
-            symbol: 'triangle',
-          }
-        },
-      }
-    };
-    this.container()
-  }
-
-  container() {
-    var chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(this.gaugeOptions, {
-      yAxis: {
-        title: {
-          text: ''
-        },
-      },
-      credits: {
-        enabled: true
-      },
-      series: [{
-        name: 'Score',
-        data: [this.score],
-        dataLabels: 1,
-        tooltip: {
-          valueSuffix: this.score + '/600'
-        },
-      }]
-
-    }));
-  }
-
   checkState(item, i, choice) {
     item.selectedChoiceId = choice.id;
     item.weight = choice.weight;
     item.done = false;
     item.choice = choice.choice;
     if (this.statusArray.length > 0 && item.question) {
-      this.statusArray.forEach(element => {
-        this.checkFamilyMem = item.question.includes(element.question);
-        console.log(this.checkFamilyMem)
-      });
-      if (this.checkFamilyMem == false && this.statusArray.length < 15) {
+      let checkIfQuestionExist = this.statusArray.find(question => question.question == item.question);
+      if (!checkIfQuestionExist) {
         this.statusArray.push(item)
       }
     } else if (this.statusArray.length == 0) {
@@ -352,26 +245,9 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.isLoading = false
     this.showResults = true;
     setTimeout(() => {
-      this.guageFun(data);
       this.percentage(data)
     }, 300);
     if (data) {
-      if (this.score <= 180) {
-        this.scoreStatus = 'conservative'
-      } else if (data.score <= 290) {
-        this.scoreStatus = 'Moderately conservative'
-      } else if (data.score <= 400) {
-        this.scoreStatus = 'Moderate'
-      } else if (data.score <= 510) {
-        this.scoreStatus = 'Moderately aggressive'
-      } else if (data.score <= 600) {
-        this.scoreStatus = 'Aggressive'
-      } else {
-        this.scoreStatus = ''
-      }
-      this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
-      this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
-
       this.feedsRiskProfile = {
         "riskAssessmentScore": data.score,
         "riskProfileId": data.id,
@@ -417,13 +293,9 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   reset() {
     this.showRetakeTestsButton = false;
-    // this.statusArray = []
     this.getRiskProfileList(true);
     this.showResults = false;
   }
-
-
-
 
   loadGlobalRiskProfile() {
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {

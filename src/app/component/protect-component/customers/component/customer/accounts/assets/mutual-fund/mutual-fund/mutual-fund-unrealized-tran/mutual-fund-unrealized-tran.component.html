@@ -258,7 +258,7 @@
                             Transaction NAV
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.transactionNav}}</span>
+                            <div class="bar"><span>{{element.purchasePrice}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -397,7 +397,7 @@
                     <ng-container matColumnDef="gainTotal">
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span>{{element.totalGain}}</span>
+                                <span>{{element.netGain}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -443,7 +443,7 @@
                     <ng-container matColumnDef="groupHeader2">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="zIndex">
                             <div class="bar d-flex w-100">
-                                <p class="w-50 m-0">{{group.schemeName}}</p>
+                                <p class="w-50 m-0">{{group.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}</p>
                                 <p class="text-right w-50 m-0">Avg Cost NAV: {{group.avgNav}} | Current NAV: {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
                             </div>
                         </td>
@@ -465,9 +465,14 @@
                                             Transaction
                                         </button>
                                     </div>
-                                    <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
+                                    <div [matTooltipDisabled]="element.rtMasterId === 14" [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'" matTooltipPosition="below">
+                                        <button  (click)="deleteModal('TRANSACTION', element)" [disabled]="element.rtMasterId !== 14" mat-menu-item>Delete
+                                            Transaction
+                                        </button>
+                                    </div>
+                                    <!-- <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
                                         Transaction
-                                    </button>
+                                    </button> -->
 
                                 </mat-menu>
                             </div>

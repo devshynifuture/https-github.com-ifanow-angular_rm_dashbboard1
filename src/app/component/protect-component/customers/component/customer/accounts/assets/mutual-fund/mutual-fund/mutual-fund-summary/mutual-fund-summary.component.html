@@ -87,11 +87,11 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-<!--                        <div class="bar"> <span class="text-right"-->
-<!--                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested | number :'1.0-0') : 0}}</span>-->
-<!--                            <span  class="f-700"-->
-<!--                                *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? (element.totalAmountInvested | number:'1.0-0') : 0}}</span>-->
-<!--                        </div>-->
+                       <div class="bar"> <span class="text-right"
+                               *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested | number :'1.0-0') : 0}}</span>
+                           <span  class="f-700"
+                               *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? (element.totalAmountInvested | number:'1.0-0') : 0}}</span>
+                       </div>
                     </td>
 
                     <td *matFooterCellDef
@@ -275,14 +275,14 @@
 
                                 <button mat-menu-item class="bt-1" (click)="openUpperFragment('addTransaction', element)">View
                                     transactions</button>
-                                <div [matTooltip]="'To Add Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                <!-- <div [matTooltip]="'To Add Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
                                     <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openUpperFragment('addTransaction', element)">Add
                                         transaction</button>
-                                </div>
-                                <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                </div> -->
+                                <!-- <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
                                     <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editTransaction',element)">Edit
                                         Transaction</button>
-                                </div>
+                                </div> -->
                                 <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
                                     <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editMutualFund',element)">Edit
