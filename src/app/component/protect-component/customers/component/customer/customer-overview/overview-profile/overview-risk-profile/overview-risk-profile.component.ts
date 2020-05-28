@@ -196,14 +196,22 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showButton = true
     this.isLoading = false
     this.statusArray = [];
-    console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
     this.riskAssessmentQuestionList.forEach(element => {
       element.done = false
     });
+    this.showQuestionnaire = true;
+    this.isEmpty = false;
+    this.showRetakeTestsButton = false;
+    this.showResults = false;
   }
+
+  takeTests() {
+    this.getRiskProfileList(true);
+  }
+
 
   submitRiskAnalysis() {
     this.clientRiskAssessmentResults = [];
@@ -288,30 +296,20 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   getResultData(data) {
     if (data != undefined) {
-      this.showResults = false
       if (data.refreshRequired == false) {
-        this.takeTests();
       } else if (data.refreshRequired) {
+        this.showQuestionnaire = true;
+        this.showResults = true;
         this.riskAssessmentQuestionList = data.refreshRequired
         this.showErrorMsg = false;
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.showButton = false
         this.showRetakeTestsButton = true;
-      } else {
-        this.takeTests();
       }
     }
   }
-
-  takeTests() {
-    this.showQuestionnaire = true;
-    this.isEmpty = false;
-    this.showRetakeTestsButton = false;
-    this.getRiskProfileList(true);
-    this.showResults = false;
-  }
-
   loadGlobalRiskProfile() {
+    this.loaderFn.increaseCounter();
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {
       if (res == null) {
         this.globalRiskProfile = [];
@@ -368,13 +366,7 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   cancelTest(){
     this.showQuestionnaire = false;
-    if(this.feedsRiskProfile.riskProfileId) {
-      this.isEmpty = false;
-      this.showResults = true;
-    } else {
-      this.isEmpty = true;
-      this.showResults = false;
-    }
+    this.loadRiskProfile();
   }
 
 
