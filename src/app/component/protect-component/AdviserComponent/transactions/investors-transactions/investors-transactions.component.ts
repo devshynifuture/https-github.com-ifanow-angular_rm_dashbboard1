@@ -73,7 +73,9 @@ export class InvestorsTransactionsComponent implements OnInit {
     }
   }
   openPdfPopup() {
-    const dialogRef = this.dialog.open(OpenPdfViewComponent);
+    const dialogRef = this.dialog.open(OpenPdfViewComponent, {
+      width: '300px',
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
