@@ -1,4 +1,8 @@
 .active {
-  background-color: #E2E2E2 !important;
-  color: #008FFF !important;
+    background-color: #E2E2E2 !important;
+    color: #008FFF !important;
+}
+
+#ui-customer-secondhead .mat-tab-link.minWidth130 {
+    min-width: 130px !important;
 }
