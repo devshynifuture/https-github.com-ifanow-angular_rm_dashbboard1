@@ -197,7 +197,7 @@
 
                     <td *matFooterCellDef
                         class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span>{{(grandTotal) ? (grandTotal.withdrawals) : 0}}</span>
+                        <span>{{(grandTotal) ? (grandTotal.withdrawals | number :'1.0-0') : 0}}</span>
                     </td>
                 </ng-container>
 
