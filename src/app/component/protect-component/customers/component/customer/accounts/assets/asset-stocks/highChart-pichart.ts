@@ -1,6 +1,6 @@
 import * as Highcharts from 'highcharts';
 
-export const pieChart = () => {
+export const pieChart = (data) => {
     Highcharts.chart('piechartStock', {
         chart: {
             plotBackgroundColor: null,
@@ -39,35 +39,35 @@ export const pieChart = () => {
             data: [
                 {
                     name: 'Banking',
-                    y: 23,
+                    y: 0,
                     color: '#008FFF',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'Information technology',
-                    y: 13,
+                    y: 0,
                     color: '#5DC644',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'FMCG',
-                    y: 25.42,
+                    y: 0,
                     color: '#FFC100',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'Other',
-                    y: 12.61,
+                    y: data.OTHERS.perrcentage,
                     color: '#A0AEB4',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'Auto ancillaries',
-                    y: 23.42,
+                    y: data.Auto_Ancillaries.perrcentage,
                     color: '#FF7272',
                     dataLabels: {
                         enabled: false
