@@ -167,14 +167,11 @@
                 <mat-option value="0">
                   Not Categorized
                 </mat-option>
-
               </mat-select>
               <mat-error class="f-12">This field is required</mat-error>
             </mat-form-field>
           </div>
         </div>
-
-
         <div class="row pt-32">
           <div class="col-md-4 pr-0 text-right ">
             <h3 class="f-16  m-0"> Are you politically exposed person </h3>
@@ -186,13 +183,11 @@
                 class="f-14 radioBtnWidth" value="1">
                 Yes
               </mat-radio-button>
-
               <mat-radio-button
                 [ngClass]="fatcaDetails.get('politically').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
                 class="f-14 radioBtnWidth" value="2">
                 No
               </mat-radio-button>
-
               <mat-radio-button
                 [ngClass]="fatcaDetails.get('politically').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'"
                 class="f-14 pr-10" value="3">
@@ -200,15 +195,9 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
-
         </div>
-
-
       </div>
-
     </div>
-
-
     <div class="col-md-3 bl-1 mt-28 fixed-top-right ">
       <div class="row ">
         <div class="col-md-12">
@@ -219,18 +208,15 @@
             use of offshore accounts. FATCA obligates foreign financial institutions, including Indian financial
             institutions to provide the US Internal Revenue
             Service (IRS) to report these offshore accounts held by specified US Persons. </p>
-
           <p class="text-primitive mb-12"> Since domestic laws of sovereign countries, including India, may not permit
             sharing of confidential client information by such institutions directly with US IRS, the US has entered
             into Inter-Governmental Agreement (IGA) with various
             countries. </p>
-
           <p class="text-primitive mb-12"> The IGA between India and USA was signed on 9th July, 2015, which provides
             that the Indian FIs will provide the necessary information to Indian tax authorities.
           </p>
         </div>
       </div>
-
       <div class="row ">
         <div class="col-md-12">
           <p class="f-16 mb-8 f-600"> I am an Indian resident and have nothing to do with US. Why am I being asked to
@@ -244,7 +230,6 @@
           </p>
         </div>
       </div>
-
       <div class="row ">
         <div class="col-md-12">
           <p class="f-16 mb-8 f-600">Who can I appoint as a nominee?</p>
@@ -254,7 +239,6 @@
           </p>
         </div>
       </div>
-
       <div class="row ">
         <div class="col-md-12">
           <p class="f-16 mb-8 f-600">Things to note</p>
@@ -264,7 +248,6 @@
           </p>
         </div>
       </div>
-
       <div class="row ">
         <div class="col-md-12">
           <p class="f-16 mb-8 f-600">Disclaimer</p>
@@ -276,32 +259,23 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
-
-
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
-
-  <div class="col-md-5 center_menu">
-    <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="activeLink"> First Holder </a>
-    <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink"> Second Holder </a>
-    <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink"> Third Holder </a>
+  <div class="col-md-3 p-0 d-flex align-items-center ">
+    <!-- <a  class="text-white f-300"   (click)="savePersonalDetails('skip')"> Skip this step </a> -->
   </div>
-
-
-  <div class="col-md-8 p-0 d-flex align-items-center justify-content-end">
-
+  <div class="col-md-5 center_menu">
+    <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="c-p activeLink"> First Holder </a>
+    <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink c-p"> Second Holder </a>
+    <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink c-p"> Third Holder </a>
+  </div>
+  <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
     <button (click)="openNomineeDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
       PREVIOUS
     </button>
-
     <button (click)="SendToForm(formId,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>
       NEXT
     </button>
-
-
   </div>
-
-
 </div>

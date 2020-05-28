@@ -1,7 +1,8 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      <img class="imgAdLogo"
+           src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -25,9 +26,76 @@
     <div class="p-20">
       <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
       <p class="f-14 mb-4">Thanks for adding the details. Let’s go ahead and complete the process.</p>
-      <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select
-        multiple.
+      <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can
+        select multiple.
       </p>
+
+
+      <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
+        <div *ngIf="isLoading" class="col-md-3 p-0 mt-12 overflow-hidden">
+          <div class="row">
+            <div class="col-md-12 pl-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="isLoading" class="col-md-3 p-0 mt-12 overflow-hidden">
+          <div class="row">
+            <div class="col-md-12 pl-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="isLoading" class="col-md-3 p-0 mt-12 overflow-hidden">
+          <div class="row">
+            <div class="col-md-12 pl-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+            <div class="col-md-12 pr-0 relClass">
+              <div [ngClass]="{'height23': isLoading}" class="bar">
+                <span *ngIf="!isLoading">Test</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       <p *ngIf="dataSourceNse.length>0">NSE NMF II</p>
       <div *ngFor="let singleBrokerCred of dataSourceNse; index as i" class="row">
         <div class="col-md-3 mb-12 pl-0">
@@ -47,8 +115,6 @@
 
             </div>
           </div>
-
-
         </div>
 
         <div class="col-md-3 mb-12 pl-0  ">
@@ -106,8 +172,9 @@
           <p class="f-12 text-primitive">This will be displayed as UCC number</p>
           <div class="form-group inputPaddingNone">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9" appInputValueValidation
-                     class="form-control" formControlName="accountNumber" matInput placeholder="Enter account number">
+              <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9"
+                     appInputValueValidation class="form-control" formControlName="accountNumber" matInput
+                     placeholder="Enter account number">
               <mat-error>This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -150,12 +217,14 @@
 
   <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-    <button (click)="openFatcaDetails()" [disabled]="isSuccessful" class="br-0 perviousBtn text-inherit f-14" mat-button
-            mat-raised-button>
+    <button (click)="openFatcaDetails()" [disabled]="isSuccessful" class="br-0 perviousBtn text-inherit f-14"
+            mat-button mat-raised-button>
       PREVIOUS
     </button>
 
-    <button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>CLOSE</button>
+    <button (click)="close()" [disabled]="!isSuccessful" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
+            mat-button>CLOSE
+    </button>
 
 
   </div>

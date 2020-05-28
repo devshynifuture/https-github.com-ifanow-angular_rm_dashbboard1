@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService} from 'src/app/services/util.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FileUploadService} from 'src/app/services/file-upload.service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {map, startWith} from 'rxjs/operators';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { map, startWith } from 'rxjs/operators';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 const moment = require('moment');
 
@@ -36,7 +37,7 @@ export class AddMandateComponent implements OnInit {
   detailsIIN: any;
   showMandateTable = false;
   selectedMandate: any;
-  customValue: any;
+  customValue: any = 2;
   toDate: any;
   formDate: Date;
   isLoading;
@@ -51,6 +52,8 @@ export class AddMandateComponent implements OnInit {
   clientCodeDataShow = false;
   errorMsg: any;
   currentDate = new Date();
+  imageUploaded: any = undefined;
+  imageLoader: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTrasaction: ProcessTransactionService,
@@ -116,6 +119,23 @@ export class AddMandateComponent implements OnInit {
     );
   }
 
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
   getBankDetailsNSERes(data) {
     this.isLoadingBank = false;
     this.bankDetails = data;
@@ -141,7 +161,7 @@ export class AddMandateComponent implements OnInit {
       fromDate: [fromDate, [Validators.required]],
       toDate: [endDate, [Validators.required]],
       mandateAmount: [data ? '' : data.mandateAmount, [Validators.required, Validators.min(100)]],
-      selectDateOption: [(data.mandateAmount) ? data.mandateAmount : '', [Validators.required]],
+      selectDateOption: [this.customValue, [Validators.required]],
     });
   }
 
@@ -289,6 +309,7 @@ export class AddMandateComponent implements OnInit {
       this.generalDetails.markAllAsTouched();
       return;
     }
+    this.barButtonOptions.active = true;
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.toDate = new Date(this.generalDetails.controls.toDate.value);
     Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
@@ -300,6 +321,7 @@ export class AddMandateComponent implements OnInit {
     Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
+        this.barButtonOptions.active = false;
         this.eventService.openSnackBar(error, 'Dismiss');
         this.errorMsg = error;
       }
@@ -309,6 +331,7 @@ export class AddMandateComponent implements OnInit {
   addMandateRes(data) {
 
     if (data) {
+      this.barButtonOptions.active = false;
       this.madateResponse = data;
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');
       // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
@@ -318,6 +341,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   getFileDetails(e, flag) {
+    this.imageLoader = true;
     this.file = e.target.files[0];
     const file = e.target.files[0];
     const requestMap = {
@@ -330,10 +354,13 @@ export class AddMandateComponent implements OnInit {
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
 
         if (status == 200) {
+          this.imageLoader = false;
+          this.closeRightSlider(true);
           const responseObject = JSON.parse(response);
-          this.eventService.openSnackBar('File uploaded successfully');
+          this.eventService.openSnackBar('File uploaded successfully', "Dismiss");
         } else {
           const responseObject = JSON.parse(response);
+          this.imageLoader = false;
           this.eventService.openSnackBar(responseObject.message, 'Dismiss', null, 60000);
         }
       });

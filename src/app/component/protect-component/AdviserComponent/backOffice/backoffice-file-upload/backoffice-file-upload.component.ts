@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ReconciliationService} from '../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {HttpHeaders} from '@angular/common/http';
-import {HttpService} from 'src/app/http-service/http-service';
+import { Component, OnInit } from '@angular/core';
+import { ReconciliationService } from '../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpService } from 'src/app/http-service/http-service';
 import { BackofficeFileUploadService } from './backoffice-file-upload.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { SettingsService } from '../../setting/settings.service';
 
 @Component({
   selector: 'app-backoffice-file-upload',
@@ -17,32 +18,47 @@ export class BackofficeFileUploadComponent implements OnInit {
   selectedFileType: any = "";
   fileType: any;
   advisorId: any;
-  filterList:any;
-  filter:any = {
-    rt:0,
-    status:0
+  filterList: any;
+  arnRiaList = [];
+  arnRiaId;
+  filter: any = {
+    rt: 0,
+    status: 0
   }
-  constructor(private reconService: ReconciliationService,private eventService: EventService, private http: HttpService, private BackOffice: BackofficeFileUploadService) { }
+  constructor(
+    private reconService: ReconciliationService,
+    private eventService: EventService,
+    private http: HttpService,
+    private BackOffice: BackofficeFileUploadService,
+    private settingService: SettingsService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.reconService.getBackOfficeFileUploadFileType({}).subscribe((data) => {
       this.fileType = data;
     })
-    this.reconService.getBackOfficeFilter({}).subscribe((data)=>{
+    this.reconService.getBackOfficeFilter({}).subscribe((data) => {
       this.filterList = data;
-      
-    })
+      console.log("this is filter list :::", data);
+    });
+    this.settingService.getArnlist({ advisorId: this.advisorId })
+      .subscribe(res => {
+        if (res) {
+          this.arnRiaList = res;
+        } else {
+          this.eventService.openSnackBar('No arn ria code found!!', "DISMISS");
+        }
+      });
     this.setFilter();
   }
-  fileName:any;
-  fileSize:any;
-  targetFile:any;
-  uploadButton:boolean=false;
+  fileName: any;
+  fileSize: any;
+  targetFile: any;
+  uploadButton: boolean = false;
   getFile(e) {
     this.fileName = e.currentTarget.files[0].name;
     this.fileSize = this.formatBytes(e.currentTarget.files[0].size, 2);
-    this.targetFile =e;
+    this.targetFile = e;
     this.uploadButton = true;
     // let obj = {
     //   fileType: this.selectedFileType,
@@ -64,12 +80,21 @@ export class BackofficeFileUploadComponent implements OnInit {
     //   this.uploadFile(this.parentId, this.filenm);
     // });
   }
-  uploadTargetFile(){
+
+  setArnRiaId(value) {
+    console.log(value);
+    if (value) {
+      this.arnRiaId = value.id;
+    }
+  }
+
+  uploadTargetFile() {
     this.uploadButton = false;
 
     let obj = {
       fileType: this.selectedFileType,
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      arnRiaDetailId: this.arnRiaId,
     }
     this.reconService.getBackOfficeFileToUpload(obj).subscribe((data) => {
       // this.fileType = data;
@@ -89,7 +114,12 @@ export class BackofficeFileUploadComponent implements OnInit {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
+  }
+
+  setDefaultRtAndStatus() {
+    this.filterStatus = "0";
+    this.filterRTA = "0";
+  }
 
   uploadFileRes(data, file) {
     const httpOptions = {
@@ -115,12 +145,12 @@ export class BackofficeFileUploadComponent implements OnInit {
     })
   }
 
-  setFilter(){
+  setFilter() {
     this.filter.status = this.filterStatus;
     this.filter.rt = this.filterRTA;
     this.BackOffice.addFilterData(this.filter);
   }
-  refresh(flag){
-    
+  refresh(flag) {
+
   }
 }

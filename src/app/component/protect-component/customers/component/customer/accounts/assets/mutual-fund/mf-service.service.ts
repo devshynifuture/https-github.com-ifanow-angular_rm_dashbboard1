@@ -62,6 +62,7 @@ export class MfServiceService {
     data.schemeWise = this.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.filter(data.schemeWise, 'mutualFund');
     data.folioWise = this.filter(data.schemeWise, 'mutualFund');
+    data.transactions= this.filter(data.mutualFundList, 'mutualFundTransactions');
     return data;
   }
   filter(data, key) {// filtering data as per category
@@ -495,14 +496,14 @@ export class MfServiceService {
     // if(rightSideData){
     //   filterData = rightSideData.mfData;
     // }
-    orgData = orgData.filter((item: any) =>
-    (item.currentValue!=0 && item.currentValue > 0)
-    );
+    // orgData = orgData.filter((item: any) =>
+    // (item.currentValue!=0 && item.currentValue > 0)
+    // );
  
     if(filterData ? (filterData.length != orgData.length) : filterData){
-      filterData = filterData.filter((item: any) =>
-      (item.currentValue!=0 && item.currentValue > 0)
-      );
+      // filterData = filterData.filter((item: any) =>
+      // (item.currentValue!=0 && item.currentValue > 0)
+      // );
       orgData.forEach(item => item.selected = '');
       filterData.forEach(element => {
         orgData.forEach(item => {

@@ -3,6 +3,7 @@
         <div class="row pt-0">
             <div class="col-md-4 pl-0 c-p">
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund overview</h4>
+                <p class="m-0 text-custom f-13">A quick summary of all your mutual fund holdings</p>
             </div>
             <div class="col-md-8 p-0 justify-content-end d-flex align-items-center vaibhav " *ngIf="!isLoading">
                 <div class="pdfClass">
@@ -78,7 +79,7 @@
                     <div class="row b-a">
                         <div class="col-md-12 bg-grey lter p-0">
                             <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary <img
-                                    src="assets/images/svg/info.svg" class="c-p"
+                                    src="assets/images/svg/info.svg" class="c-p hw-17"
                                     matTooltip="The calculations in this section relate to held portfolio only (i.e. only those transactions of a folio where unit balance is > 0)"
                                     [matTooltipPosition]="'right'">
                             </h5>
@@ -111,7 +112,7 @@
                                         </div>
                                     </h5>
                                 </div>
-                                <div class="col-md-4 pr-0 pl-12">
+                                <div class="col-md-5 pr-0 pl-12">
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24" *ngIf="isLoading"></div>
@@ -125,7 +126,7 @@
                                         <span *ngIf="isLoading">{{''}}</span>
                                     </h5>
                                 </div>
-                                <div class="col-md-4 pr-0 pl-12">
+                                <div class="col-md-3 p-0">
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 relClass height24">
                                         <div class="bar height24">
@@ -399,7 +400,7 @@
                     <!-- <h4 class="text-center pt-12"> No data found</h4>
                     </div> -->
                 </div>
-                <div class="mt-20 pr-4 mb-20 pl-0" (click)="openSummary('subCategory wise')"
+                <div class="mt-20 mb-20 pl-0" (click)="openSummary('subCategory wise')"
                     *ngIf="showSubCategory || dataSource3.data.length > 0">
                     <div class="bg-grey lter">
                         <h5 class="m-0 wrapper-8 b-a f-500 roboto pb-10 pt-10 bb-0">Sub category wise allocation
@@ -531,15 +532,16 @@
             <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow">
                 <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
                     <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Cashflow status <img
-                            src="assets/images/svg/info.svg" class="c-p"
+                            src="assets/images/svg/info.svg" class="c-p hw-17"
                             matTooltip="This section calculates the cash flow status of your entire portfolio - i.e. It includes cash flows from zero balance folios too"
                             [matTooltipPosition]="'right'"></h5>
                 </div>
-                <div class="example-container" id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0">
+                <div id="table-low" *ngIf="showCashFlow || datasource1.data.length > 0"
+                    class="mb-20 cashflows-headers-hide">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="data">
-                            <th mat-header-cell *matHeaderCellDef class="t-55"> Scheme name </th>
+                            <th mat-header-cell *matHeaderCellDef class="t-55"> </th>
                             <td mat-cell *matCellDef="let element" class="t-55">
                                 <div class="bar"><span *ngIf="!isLoading">{{element.data}}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
@@ -547,7 +549,7 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="amts">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right"> </th>
                             <td mat-cell *matCellDef="let element" class="br text-right">
                                 <div class="bar"><span appFormatNumber
                                         *ngIf="element.data != 'i. Lifetime XIRR (All Transactions)' && !isLoading"
@@ -563,10 +565,12 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                     </table>
                 </div>
-                <div class="pr-0 mt-20 mb-20 familymember-wise" (click)="openSummary('investor wise')"
+
+                <div class="pr-0 mb-20 familymember-wise" (click)="openSummary('investor wise')"
                     *ngIf="showFamilyMember || dataSource.data.length > 0">
                     <div class="bg-grey lter">
-                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
+                        <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0">Family member wise allocation
+                        </h5>
                     </div>
                     <div class="family-member-wise-allocation" id="table-low">
                         <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
@@ -574,9 +578,11 @@
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef class="br"> Family Member Name </th>
                                 <td mat-cell *matCellDef="let element" class="br">
-                                    <div class="bar">{{isLoading ? '' : ((element.name) ? element.name : '-')}} </div>
+                                    <div class="bar">{{isLoading ? '' : ((element.name) ? element.name : '-')}}
+                                    </div>
                                 </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">
+                                    Total
                                 </td>
                             </ng-container>
 
@@ -648,7 +654,8 @@
                                 {{mfData.total_xirr | number:'1.2-2'}}
                             </td> -->
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+                                    <div class="bar">
+                                        {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
@@ -680,6 +687,7 @@
                     </div> -->
                     </div>
                 </div>
+
                 <div class="p-0 mt-20 mb-20 familymember-wise" (click)="openSummary('category wise')"
                     *ngIf="showCategory || dataSource4.data.length >0">
                     <div class="bg-grey lter">
@@ -946,7 +954,7 @@
 
         <tr>
             <td valign="top" style="width: 196px;  border: 1px solid #dee5e7; ">
-            <div>showPieChart</div>
+                <div>showPieChart</div>
             </td>
 
             <td style="padding: 10px 0px; border: 1px solid #dee5e7;" valign="top">
@@ -1108,7 +1116,7 @@
                     style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
                     Cashflow status
                 </h3>
-                <table cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #DADCE0;" width="100%">
+                <table cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #DADCE0;page-break-before: always;" width="100%">
                     <tr>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
                             a. Investment</td>

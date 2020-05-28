@@ -162,7 +162,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue(this.data.amount);
+      this.schemeLevelHoldingForm.get('sip').setValue(this.data.sipAmount);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -212,7 +212,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
 
   getSchemeLevelHoldings(data) {
-    if (data && data.hasOwnProperty('mutualFundTransactions') && data.mutualFundTransactions.length !== 0 && this.data.flag === 'editTransaction') {
+    if (data  && data.mutualFundTransactions.length != 0 && this.data.flag === 'editMutualFund') {
       data.mutualFundTransactions.forEach(element => {
         this.transactionArray.push(this.fb.group({
           transactionType: [element.transactionTypeMasterId, [Validators.required]],

@@ -4,6 +4,7 @@
   .row {
     margin-right: -15px !important;
     margin-left: -15px !important;
+
   }
 
   .col-width-18 {
@@ -18,7 +19,7 @@
     max-width: 79.666667%;
     padding-left: 15px;
     padding-right: 15px;
-    margin-left: 15px;
+    // margin-left: 15px;
   }
 
   .uiListProfile {
@@ -273,6 +274,7 @@
     display: block !important;
     width: 100%;
     text-align: left;
+    height: calc(100vh - 116px);
   }
 
   li {

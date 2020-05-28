@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="row pt-90">
+<div class="row pt-90 pb-48">
     <div class="col-md-8">
         <mat-tab-group id="ui-backoffice-tabs">
             <mat-tab>
@@ -46,7 +46,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                    <div class="col-md-12 p-0 overflow-hidden"
+                        [ngClass]="{'back-office-table': dataSource.data !== null}">
                         <!-- summary table -->
                         <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading
                             [appSkeletonLoading]="isLoading">
@@ -164,7 +165,8 @@
                         </p>
                     </div>
 
-                    <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                    <div class="col-md-12 p-0 overflow-hidden"
+                        [ngClass]="{'back-office-table': dataSource1.data !== null}">
                         <!-- manual recon all folio -->
                         <div *ngIf="subTabState == 1">
 
@@ -212,9 +214,11 @@
                                 <ng-container matColumnDef="transactions">
                                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
                                     <td mat-cell *matCellDef="let element; index as i">
-                                        <div class="bar"> {{ element.transactions }} <button *ngIf="!isLoading"
+                                        <div class="bar text-center"> {{ element.transactions }} <button mat-button
+                                                *ngIf="!isLoading"
                                                 (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios', i, element.freezeDate)"
-                                                class="bg-primary text-white" mat-flat-button>View</button> </div>
+                                                class="bg-primary text-white view-folios" mat-flat-button>View</button>
+                                        </div>
                                     </td>
                                 </ng-container>
 
@@ -346,7 +350,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 overflow-hidden back-office-table">
+                    <div class="col-md-12 overflow-hidden" [ngClass]="{'back-office-table': dataSource3.data !== null}">
                         <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8">
 
                             <!-- Symbol Column -->

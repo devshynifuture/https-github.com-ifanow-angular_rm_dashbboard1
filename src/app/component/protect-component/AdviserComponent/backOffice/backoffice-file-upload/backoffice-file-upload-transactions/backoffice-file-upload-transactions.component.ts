@@ -29,7 +29,7 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   advisorId: any;
   isLoading = false;
   listData: any = [];
-  dataSource;
+  dataSource = new MatTableDataSource([{}, {}, {}]);
   filterObj: any;
   @ViewChild(MatSort, { static: true }) sortList: MatSort;
   constructor(private reconService: ReconciliationService, public router: ActivatedRoute, private BackOffice: BackofficeFileUploadService) { }
@@ -40,7 +40,6 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   private unSubcrip: Subscription;
 
   ngOnInit() {
-    this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
 
@@ -52,22 +51,24 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   }
 
   getBackOfficeTransactions(filter) {
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId,
       rt: filter.rt,
       status: filter.status
     }
+
     this.reconService.getBackOfficeTransactions(obj).subscribe((data) => {
-      if(data){
+      this.isLoading = false;
+      if (data) {
         this.listData = data;
-        this.dataSource = new MatTableDataSource(this.listData);
+        console.log("this::", data);
+        this.dataSource.data = this.listData;
         this.dataSource.sort = this.sortList;
-        this.isLoading = false;
-      }else{
-        this.dataSource =[]
-        this.isLoading = false;
+      } else {
+        this.dataSource.data = null;
       }
- 
     });
   }
 
