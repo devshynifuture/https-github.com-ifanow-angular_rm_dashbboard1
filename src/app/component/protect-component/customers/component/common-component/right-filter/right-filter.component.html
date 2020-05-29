@@ -18,7 +18,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                    <mat-checkbox (change)="selectAll($event)" [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                    <mat-checkbox *ngIf="_data.name!='CAPITAL GAIN REPORT'"(change)="selectAll($event)" [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
                         </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of familyMember">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}
