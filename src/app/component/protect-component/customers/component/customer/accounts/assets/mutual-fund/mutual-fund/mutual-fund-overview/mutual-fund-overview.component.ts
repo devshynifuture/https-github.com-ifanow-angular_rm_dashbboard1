@@ -686,8 +686,8 @@ export class MutualFundOverviewComponent implements OnInit {
   //   );
   // }
   openSummary(flag) {
-    if (flag == 'scheme wise') {
-      this.changeViewModeSet = 'All Transactions'
+    if (flag == 'category wise') {
+      this.changeViewModeSet = 'Summary'
       this.changeViewModeValue = true
     } else {
       this.changeViewModeSet = 'Summary'

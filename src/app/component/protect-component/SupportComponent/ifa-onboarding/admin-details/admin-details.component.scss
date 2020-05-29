@@ -63,9 +63,14 @@
 
 ::ng-deep .ifaOnboardingClass .mat-tab-body.mat-tab-body-active {
   overflow-y: hidden;
-  padding-bottom: 150px;
+  padding-bottom: 90px;
 }
 
 .underline {
   text-decoration: underline;
+}
+
+.onboarding-icons {
+  z-index: 999;
+  position: relative;
 }

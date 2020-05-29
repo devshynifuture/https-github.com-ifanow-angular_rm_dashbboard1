@@ -11,6 +11,7 @@
   </div>
 </div>
 
+
 <div class="row pt-90">
   <div class="col-md-12">
     <mat-tab-group class="ifaOnboardingClass" id="ui-backoffice-tabs" (selectedIndexChange)="changeTab($event)">
@@ -60,7 +61,7 @@
                 <!-- <img src="assets/images/svg/conversation.svg" class="c-p"> -->
                 {{ stage.stageCommentCount }}
                 <img src="/assets/images/svg/onboarding-msg.svg"
-                  *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null">
+                  *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null" class="onboarding-icons">
 
               </span>
               <span class="material-icons c-p text-custom">
@@ -93,8 +94,7 @@
                   </div>
                   <div *ngIf="activityStage.isEditStage == false">
                     <mat-form-field>
-                      <input matInput type="text" maxlength="10" [(ngModel)]="activityStage.commentMsg"
-                        class="form-control br-0">
+                      <input matInput type="text" (ngModel)]="activityStage.commentMsg" class="form-control br-0">
                     </mat-form-field>
                   </div>
                 </div>
@@ -120,7 +120,7 @@
                   <div class="relClass">
                     <div class="bar" [ngClass]="{'height23': isLoading}">
                       <mat-form-field>
-                        <input matInput type="text" [(ngModel)]="CommentStage" maxlength="60" class="form-control br-0">
+                        <input matInput type="text" [(ngModel)]="CommentStage" class="form-control br-0">
                       </mat-form-field>
                     </div>
                   </div>
@@ -148,8 +148,7 @@
               <p *ngIf="activity.isEdit == true">{{activity.commentMsg}}</p>
               <div *ngIf="activity.isEdit == false">
                 <mat-form-field>
-                  <input matInput type="text" maxlength="10" [(ngModel)]="activity.commentMsg"
-                    class="form-control br-0">
+                  <input matInput type="text" [(ngModel)]="activity.commentMsg" class="form-control br-0">
                 </mat-form-field>
               </div>
             </div>
@@ -172,7 +171,7 @@
             </div>
             <div class="col-md-9 p-0">
               <mat-form-field>
-                <input matInput type="text" [(ngModel)]="Comment" maxlength="60" class="form-control br-0">
+                <input matInput type="text" [(ngModel)]="Comment" class="form-control br-0">
               </mat-form-field>
             </div>
             <div class="col-md-2 p-0 text-right">

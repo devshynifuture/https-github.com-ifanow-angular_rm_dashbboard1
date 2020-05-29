@@ -778,3 +778,15 @@ button.primary-sm {
     text-transform: uppercase;
   }
 }
+
+.file-orderings {
+  .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+  }
+}
+
+#ui-ifanow-deatils {
+  .mat-tab-body.mat-tab-body-active {
+    overflow-y: hidden !important;
+  }
+}

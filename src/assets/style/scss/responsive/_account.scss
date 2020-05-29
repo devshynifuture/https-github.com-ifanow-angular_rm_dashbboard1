@@ -203,6 +203,29 @@
 
 }
 
+.summary-transactions {
+  #table-low {
+    tr.mat-header-row {
+      height: 44px;
+    }
+
+    tr.mat-row {
+      height: 36px;
+    }
+
+    tbody td {
+      padding: 0px 8px !important;
+    }
+  }
+
+  .menus-list {
+    .mat-icon-button {
+      line-height: 30px !important;
+      height: 30px !important;
+    }
+  }
+}
+
 @media(max-width:1142px) {
   // .mat-radio-button#mat-radio-3 {
   //   min-width: 135px;

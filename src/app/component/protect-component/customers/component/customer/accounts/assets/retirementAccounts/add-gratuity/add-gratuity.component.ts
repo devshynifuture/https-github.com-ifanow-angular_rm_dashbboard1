@@ -317,7 +317,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
         // ownerName: (this.ownerName == undefined) ? this.gratuity.controls.ownerName.value : this.ownerName,
         // yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
         amountReceived: this.gratuity.controls.amountRecived.value,
-        yearOfJoining:this.gratuity.controls.yearOfJoining.value,
+        yearOfJoining:this.datePipe.transform(this.gratuity.controls.yearOfJoining.value, 'yyyy-MM-dd'),
         employmentType:this.gratuity.controls.employmentType.value,
         organizationName: this.gratuity.controls.nameOfOrg.value,
         yearOfReceipt: this.gratuity.controls.yearOfReceipt.value,
