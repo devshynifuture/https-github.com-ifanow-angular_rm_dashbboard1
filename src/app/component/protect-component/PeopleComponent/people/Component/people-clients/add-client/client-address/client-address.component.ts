@@ -76,8 +76,8 @@ export class ClientAddressComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       // addressType: [(data.addressType) ? String(data.addressType) : '1'],
-      addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : '', [Validators.required]],
-      proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber, [Validators.required]],
+      addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : ''],
+      proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2],
       pinCode: [data.pinCode, [Validators.required]],
@@ -86,7 +86,27 @@ export class ClientAddressComponent implements OnInit {
       country: [data.country, [Validators.required]]
     });
     (data) ? this.proofTypeData = data : ''
-    this.changeAddrProofNumber({ value: String(data.proofType) });
+    let regexPattern;
+    if (data.proofType == '1') {
+      regexPattern = this.validatorType.PASSPORT;
+      this.maxLength = 8;
+    }
+    else if (data.proofType == '2') {
+      regexPattern = this.validatorType.ADHAAR;
+      this.maxLength = 12;
+    }
+    else if (data.proofType == '3') {
+      this.maxLength = 15;
+      // regexPattern = this.validatorType.DRIVING_LICENCE
+    }
+    else if (data.proofType == '4') {
+      regexPattern = this.validatorType.VOTER_ID;
+      this.maxLength = 10;
+    }
+    else {
+      this.maxLength = undefined
+    }
+    // this.changeAddrProofNumber({ value: String(data.proofType) });
   }
   changeAddrProofNumber(data) {
     let regexPattern;

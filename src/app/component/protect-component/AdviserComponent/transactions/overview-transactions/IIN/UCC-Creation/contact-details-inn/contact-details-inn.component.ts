@@ -1,16 +1,16 @@
-import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatInput} from '@angular/material';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatInput } from '@angular/material';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -26,9 +26,9 @@ export class ContactDetailsInnComponent implements OnInit {
   filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService, public processTransaction: ProcessTransactionService,
-              private peopleService: PeopleService) {
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    public eventService: EventService, public processTransaction: ProcessTransactionService,
+    private peopleService: PeopleService) {
   }
 
   addressTypeLabel = 'Permanent Address Details';
@@ -100,7 +100,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.getAddressList(this.clientData);
       }*/
     }
-    this.sendObj = {...this.inputData};
+    this.sendObj = { ...this.inputData };
   }
 
   close() {
@@ -168,7 +168,7 @@ export class ContactDetailsInnComponent implements OnInit {
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       foreignMobileNo: [!data ? '' : data.foreignMobileNo,
-        this.inputData.taxStatus == '21' ? [Validators.required] : []],
+      this.inputData.taxStatus == '21' ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],
       address2: [(address.address2), [Validators.required]],
       pinCode: [address.pinCode, [Validators.required]],
@@ -176,6 +176,10 @@ export class ContactDetailsInnComponent implements OnInit {
       state: [address.state, [Validators.required]],
       country: [address.country, [Validators.required]],
       address: [address],
+      userAddressMappingId: [address.userAddressMappingId],
+      proofType: [address.proofType],
+      addressId: [address.addressId],
+      proofIdNumber: [address.proofIdNumber]
     });
 
     this.contactDetails.controls.country.valueChanges.subscribe(newValue => {
@@ -341,6 +345,10 @@ export class ContactDetailsInnComponent implements OnInit {
         city: formValue.city,
         state: formValue.state,
         country: formValue.country,
+        userAddressMappingId: formValue.userAddressMappingId,
+        proofType: formValue.proofType,
+        addressId: formValue.addressId,
+        proofIdNumber: formValue.proofIdNumber
       };
       this.firstHolderContact = holder;
     } else if (formId == 'second') {

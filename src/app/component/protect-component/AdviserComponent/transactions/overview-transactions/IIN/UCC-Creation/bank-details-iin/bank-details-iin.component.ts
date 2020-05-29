@@ -1,18 +1,18 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {NomineeDetailsIinComponent} from '../nominee-details-iin/nominee-details-iin.component';
-import {PostalService} from 'src/app/services/postal.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {ContactDetailsInnComponent} from '../contact-details-inn/contact-details-inn.component';
-import {MatInput} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
+import { PostalService } from 'src/app/services/postal.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
+import { MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -24,11 +24,11 @@ export class BankDetailsIINComponent implements OnInit {
   activeDetailsClass = 'first';
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-              private processTransaction: ProcessTransactionService,
-              private cusService: CustomerService,
-              private subService: SubscriptionService,
-              private enumService: EnumServiceService,
-              private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    private processTransaction: ProcessTransactionService,
+    private cusService: CustomerService,
+    private subService: SubscriptionService,
+    private enumService: EnumServiceService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -165,8 +165,8 @@ export class BankDetailsIINComponent implements OnInit {
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-          this.bankData(data);
-        },
+        this.bankData(data);
+      },
         err => {
           this.isIfsc = false;
         });
@@ -231,6 +231,9 @@ export class BankDetailsIINComponent implements OnInit {
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
+      userBankMappingId: [data.userBankMappingId],
+      bankId: [data.bankId],
+      addressId: [!data.address ? null : data.address.addressId]
     });
   }
 
@@ -432,6 +435,9 @@ export class BankDetailsIINComponent implements OnInit {
       micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
       paymentMode: this.bankDetailsForm.controls.paymentMode.value,
+      userBankMappingId: holder.userBankMappingId,
+      bankId: holder.bankId,
+      addressId: holder.addressId
     };
     value.address = {
       address1: holder.address1,
@@ -440,6 +446,7 @@ export class BankDetailsIINComponent implements OnInit {
       state: holder.state,
       city: holder.city,
       country: holder.country,
+      addressId: holder.addressId
       // branchProof: holder.branchProof,
       // bankMandate: holder.bankMandate,
       // mandateDate: holder.mandateDate,
