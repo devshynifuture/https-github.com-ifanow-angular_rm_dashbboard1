@@ -24,10 +24,10 @@
 			<div class="col-md-3 pr-0">
 				<div class="form-group mb-8">
 					<mat-form-field appearance="standard" floatLabel="never">
-						<input matInput class="form-control m-0" placeholder="Search by advisor" formControlName="filterByName"
-							[matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-							[matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="maniputateEventObjForName($event)"
-							#inputAdvisorNameRef>
+						<input matInput class="form-control m-0" placeholder="Search by advisor"
+							formControlName="filterByName" [matChipInputFor]="chipList"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+							(matChipInputTokenEnd)="maniputateEventObjForName($event)" #inputAdvisorNameRef>
 					</mat-form-field>
 				</div>
 			</div>
@@ -63,7 +63,8 @@
 
 			<div class="col-lg-3 pr-0">
 				<mat-form-field appearance="standard" floatLabel="never">
-					<mat-select class="form-control br-0" formControlName="filterByRta" (selectionChange)="add($event, 'rta')">
+					<mat-select class="form-control br-0" formControlName="filterByRta"
+						(selectionChange)="add($event, 'rta')">
 						<mat-option>
 							None
 						</mat-option>
@@ -78,10 +79,10 @@
 </div>
 
 <div class="row pt-12 pl-16 pr-16">
-	<div class="col-md-12 p-0 ">
+	<div class="col-md-12 p-0 pb-44">
 		<div [ngClass]="isLoading ? '': 'back-office-table'">
-			<table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading" [appSkeletonLoading]="isLoading"
-				appSkeletonLoading>
+			<table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading"
+				[appSkeletonLoading]="isLoading" appSkeletonLoading>
 				<ng-container matColumnDef="advisorName">
 					<th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
 					<td class="br" mat-cell *matCellDef="let element">

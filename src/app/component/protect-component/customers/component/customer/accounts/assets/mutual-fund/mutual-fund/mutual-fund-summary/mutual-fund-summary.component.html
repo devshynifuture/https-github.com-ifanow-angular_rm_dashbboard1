@@ -192,7 +192,7 @@
 
                 <ng-container matColumnDef="switchOut">
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                        Withdrawal/Switch outs </th>
+                        Withdrawal/<br>Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span
                                 *ngIf="element.switchOut || element.switchOut == 0">{{(element.switchOut) ? (element.switchOut | number :'1.0-0') : 0}}</span>
@@ -578,7 +578,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <!-- <tr>
                         <td valign="top"
                             style="width: 28%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             Grand Total</td>
@@ -612,7 +612,7 @@
                         <td valign="top"
                             style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{grandTotal.sip | number :'1.0-0'}}</td>
-                    </tr>
+                    </tr> -->
 
                 </table>
             </td>

@@ -30,8 +30,8 @@
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
+                <div class="form-group mb-0 file-orderings">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control br-0" formControlName="filterByRmName" placeholder="Ordered By"
                             (selectionChange)="add($event,'rm')">
                             <mat-option value="">None</mat-option>

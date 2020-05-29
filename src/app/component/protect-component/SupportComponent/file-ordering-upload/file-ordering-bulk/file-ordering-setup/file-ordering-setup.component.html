@@ -13,11 +13,11 @@
 
 <div class="pb-100 order-historical" [formGroup]="historicalFileBulkOrderingForm">
     <div class="row pt-28">
-        <div class="col-md-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">Select RTA</h5>
+        <div class="col-md-5 pr-0 full-end">
+            <h5 class="text-right mb-0">Select RTA</h5>
         </div>
         <div class="col-md-5">
-            <mat-select formControlName="rtId" (selectionChange)="setDateValidation()">
+            <mat-select class="form-control" formControlName="rtId" (selectionChange)="setDateValidation()">
                 <mat-option>
                     None
                 </mat-option>
@@ -32,12 +32,12 @@
         </div>
     </div>
 
-    <div class="row pt-24">
-        <div class="col-lg-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">File Type</h5>
+    <div class="row pt-40">
+        <div class="col-lg-5 pr-0 full-end">
+            <h5 class="text-right mb-0">File Type</h5>
         </div>
         <div class="col-lg-5">
-            <mat-select formControlName="fileTypeId">
+            <mat-select class="form-control" formControlName="fileTypeId">
                 <mat-option>
                     None
                 </mat-option>
@@ -52,18 +52,18 @@
         </div>
     </div>
 
-    <div class="row pt-24">
+    <div class="row pt-40">
         <div class="col-lg-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">From Date</h5>
-            <p class="text-primitive text-right">
+            <h5 class="text-right mb-0 pt-8">From Date</h5>
+            <p class="text-primitive text-right roboto f-400">
                 The date from which you want bulk ordering to be done
             </p>
         </div>
         <div class="col-lg-5">
-            <mat-form-field class="date-input">
+            <mat-form-field class="ba-date">
                 <input (click)="picker.open()" [min]="lastPastDate" formControlName="fromDate" readonly matInput
-                    class="form-control" [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="picker">
+                    class="form-control b-0" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker">
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error
@@ -74,18 +74,18 @@
         </div>
     </div>
 
-    <div class="row pt-24">
+    <div class="row pt-8">
         <div class="col-lg-5 pr-0">
-            <h5 class="text-right pt-12 mb-0">To Date</h5>
-            <p class="text-primitive text-right">
+            <h5 class="text-right mb-0 pt-8">To Date</h5>
+            <p class="text-primitive text-right roboto f-400 m-0">
                 The date to which you want bulk ordering to be done
             </p>
         </div>
         <div class="col-lg-5">
-            <mat-form-field class="date-input">
+            <mat-form-field class="ba-date">
                 <input (click)="picker1.open()" [min]="lastPastDate" [max]="presentDate" formControlName="toDate"
-                    readonly matInput class="form-control" [matDatepicker]="picker1">
-                <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="picker1">
+                    readonly matInput class="form-control b-0" [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1">
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
                 <mat-error
