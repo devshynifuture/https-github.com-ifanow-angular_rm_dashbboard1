@@ -110,7 +110,8 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span appFormatNumber
                                 *ngIf="element.currentValue || element.currentValue == 0">{{(element.currentValue)?(element.currentValue):0}}</span>
-                            <span class="f-700"  appFormatNumber *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{(element.totalCurrentValue) ? (element.totalCurrentValue) : 0}}</span>
+                            <span class="f-700" appFormatNumber
+                                *ngIf="element.totalCurrentValue || element.totalCurrentValue == 0">{{(element.totalCurrentValue) ? (element.totalCurrentValue) : 0}}</span>
                         </div>
                     </td>
 
@@ -144,7 +145,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.absoluteReturn || element.absoluteReturn == 0" >{{(isLoading) ? '' : ((element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0)}}</span>
+                                *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{(isLoading) ? '' : ((element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0)}}</span>
                             <span class="f-700"
                                 *ngIf="element.totalAbsoluteReturn || element.totalAbsoluteReturn ==0">{{(element.totalAbsoluteReturn == 0 || element.totalAbsoluteReturn  == 'Infinity' || element.totalAbsoluteReturn  == '-Infinity' || element.totalAbsoluteReturn  == 'NaN') ? 0 : (element.totalAbsoluteReturn) ? (element.totalAbsoluteReturn | number:'1.2-2') : 0}}</span>
                         </div>
@@ -191,9 +192,10 @@
 
                 <ng-container matColumnDef="switchOut">
                     <th class="br text-right" mat-header-cell *matHeaderCellDef>
-                        Withdrawal/Switch outs </th>
+                        Withdrawal/<br>Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div  class="bar"><span *ngIf="element.switchOut || element.switchOut == 0" appFormatNumber>{{(element.switchOut) ? (element.switchOut) : 0}}</span>
+                        <div class="bar"><span *ngIf="element.switchOut || element.switchOut == 0"
+                                appFormatNumber>{{(element.switchOut) ? (element.switchOut) : 0}}</span>
                             <span appFormatNumber class="f-700"
                                 *ngIf="element.totalSwitchOut || element.totalSwitchOut == 0">{{(element.totalSwitchOut) ? (element.totalSwitchOut) : 0}}</span>
                         </div>
@@ -240,10 +242,10 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef> SIP
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span
-                                *ngIf="element.sipAmount  || element.sipAmount == 0" appFormatNumber>{{element.sipAmount }}</span>
-                            <span class="f-700"
-                                *ngIf="element.totalSipAmount || element.totalSipAmount == 0" appFormatNumber>{{element.totalSipAmount}}</span>
+                        <div class="bar"><span *ngIf="element.sipAmount  || element.sipAmount == 0"
+                                appFormatNumber>{{element.sipAmount }}</span>
+                            <span class="f-700" *ngIf="element.totalSipAmount || element.totalSipAmount == 0"
+                                appFormatNumber>{{element.totalSipAmount}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -403,7 +405,7 @@
                     <tr style="background: #F5F7F7;">
 
                         <td
-                            style="width:28%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Scheme name</b>
                         </td>
 
@@ -420,7 +422,7 @@
                             <b>Unrealized profit</b>
                         </td>
                         <td
-                            style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                            style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Abs Ret %</b>
                         </td>
                         <td
@@ -470,27 +472,30 @@
                                 <tr *ngIf="item.id">
 
                                     <td valign="top"
-                                        style="width:28%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{item.schemeName+'|'+item.folioNumber+'|'+item.ownerName}}
                                     </td>
 
                                     <td valign="top"
-                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.amountInvested}}
                                     </td>
 
                                     <td valign="top"
-                                        style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.currentValue }}
                                     </td>
 
                                     <td valign="top"
-                                        style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.unrealizedGain }}
                                     </td>
 
                                     <td valign="top"
-                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
                                     </td>
 
@@ -500,11 +505,13 @@
                                     </td>
 
                                     <td valign="top"
-                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.dividendPayout}}
                                     </td>
                                     <td valign="top"
-                                        style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.switchOut }}
                                     </td>
 
@@ -519,7 +526,8 @@
                                     </td>
 
                                     <td valign="top"
-                                        style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.sipAmount }}
                                     </td>
 
@@ -528,23 +536,26 @@
 
                                 <tr *ngIf="item.schemeName=='Total'">
                                     <td valign="top"
-                                        style="width:28%;font-size: 13px; padding: 8px;font-weight: 500; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        style="width:26%;font-size: 13px; padding: 8px;font-weight: 500; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{item.schemeName}}
                                     </td>
                                     <td valign="top"
-                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.totalAmountInvested }}
                                     </td>
                                     <td valign="top"
-                                        style="width:6%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:6%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.totalCurrentValue}}
                                     </td>
                                     <td valign="top"
-                                        style="width:8%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:8%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.totalUnrealizedGain }}
                                     </td>
                                     <td valign="top"
-                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        style="width:5%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{item.totalAbsoluteReturn | number:'1.2-2'}}
                                     </td>
                                     <td valign="top"
@@ -552,11 +563,13 @@
                                         {{item.totalXirr | number:'1.2-2'}}
                                     </td>
                                     <td valign="top"
-                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.totalDividendPayout}}
                                     </td>
                                     <td valign="top"
-                                        style="width:9%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:9%;font-size: 13px; padding: 8px;font-weight: 500;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.totalSwitchOut}}
                                     </td>
                                     <td valign="top"
@@ -568,7 +581,8 @@
                                         {{item.totalNavDate}}
                                     </td>
                                     <td valign="top"
-                                        style="width:5%;font-size: 13px; padding: 8px;font-weight: 500; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                                        style="width:5%;font-size: 13px; padding: 8px;font-weight: 500; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                                        appFormatNumber>
                                         {{item.totalSipAmount}}
                                     </td>
                                 </tr>
@@ -578,37 +592,45 @@
 
                     <tr>
                         <td valign="top"
-                            style="width: 28%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="width:26%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             Grand Total</td>
-                        <td valign="top" 
-                            style=" width: 10%; font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                        <td valign="top"
+                            style="width:7%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
                             {{(mfData) ? (mfData.total_amount_invested ) : 0}}</td>
                         <td valign="top"
-                            style="width: 10%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style=" width:6%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
                             {{(mfData) ? (mfData.total_current_value ) : 0}}</td>
                         <td valign="top"
-                            style=" width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="width:8%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
                             {{(mfData) ? (mfData.total_unrealized_gain) : 0}}</td>
-                        <td valign="top" style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;">
-                            {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} </td>
+                        <td valign="top" style="width:5%;;font-size: 13px; padding: 8px; font-weight: 600;">
+                            {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}}
+                        </td>
                         <td valign="top"
-                            style="width: 5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} </td>
+                            style="width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}}
+                        </td>
                         <td valign="top"
-                            style="width: 7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
                             {{(mfData) ?( mfData.dividendPayout) : 0}}</td>
                         <td valign="top"
-                            style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
                             {{grandTotal.withdrawals }}</td>
                         <td valign="top"
-                            style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
                         </td>
                         <td valign="top"
-                            style="width: 9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{grandTotal.totalNav}}</td>
                         <td valign="top"
-                            style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
                             {{grandTotal.sip}}</td>
                     </tr>
 

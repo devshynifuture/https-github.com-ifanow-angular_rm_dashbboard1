@@ -95,7 +95,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     if (this.data.mainData.arnOrRia == 1) {
       this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
       this.maxArnLength = 6
-      this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)])
+      this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
     }
     this.arnRiaFG.updateValueAndValidity();
   }
