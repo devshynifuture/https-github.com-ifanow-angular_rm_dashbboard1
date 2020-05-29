@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
+
 @Component({
   selector: 'app-upper-slider-backoffice',
   templateUrl: './upper-slider-backoffice.component.html',
@@ -49,7 +50,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   canExportExcelSheet = 'false';
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   upperHeaderName;
-  isRmLogin: any;
+  isRmLogin = AuthService.getUserInfo().isRmLogin;
+  deleteReorderOrDeleteDisabled = 'none';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -57,7 +59,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private dialog: MatDialog,
     private supportService: SupportService,
     private datePipe: DatePipe,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
+    private util: UtilService
   ) { }
 
   ngOnInit() {
@@ -175,7 +178,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getBackofficeAumReconListSummary(doStartRecon) {
-    this.isRmLogin = AuthService.getUserInfo().isRmLogin;
+
     let isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
     const data = {
       advisorIds: [...this.adminAdvisorIds],
@@ -216,7 +219,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
             });
           });
           this.dataSource1.data = arrayValue;
-
+          let doneOnDate = new Date(res.doneOn);
+          let doneOnFormatted = doneOnDate.getFullYear() + '-' +
+            this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
+            this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
           // console.log("datas available till now:::::", this.data, res);
           const data = {
             advisorId: this.advisorId,
@@ -227,6 +233,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             unmatchedCountBeforeRecon: res.unmappedCount,
             transactionDate: res.transactionDate,
             rtId: this.data.rtId,
+            doneOn: doneOnFormatted,
             // when rm login is creted this will get value from localStorage
             rmId: this.rmId
           }
@@ -359,8 +366,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   deleteAndReorder() {
-    let isRmLogin = AuthService.getUserInfo().isRmLogin;
-    let isParent = isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+    let isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     const data = {
       id: this.aumReconId,
       brokerId: this.brokerId,
@@ -374,6 +380,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.reconService.deleteAndReorder(data)
       .subscribe(res => {
         console.log(res);
+        this.getBackofficeAumFileOrderListDeleteReorder();
       }, err => {
         console.error(err);
       })
@@ -381,6 +388,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   getBackofficeAumFileOrderListDeleteReorder() {
     this.isLoading = true;
+    this.dataSource3.data = ELEMENT_DATA3;
     this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
       .subscribe(res => {
         this.isLoading = false;
@@ -420,6 +428,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.dataSource3.data = res;
         } else {
           this.dataSource3.data = null;
+          this.eventService.openSnackBar("No Data Found!", "DISMISS");
         }
       });
   }
@@ -580,11 +589,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   deleteUnfreezeTransaction() {
+    let isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     let data = {
       id: this.data.id,
       advisorIds: [this.advisorId],
       parentId: this.parentId,
-      isParent: (this.parentId === this.advisorId) ? true : false,
+      isParent,
       brokerId: this.brokerId,
       rtId: this.rtId,
       mutualFundIds: this.mutualFundIds
