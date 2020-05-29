@@ -578,37 +578,37 @@
 
                     <tr>
                         <td valign="top"
-                            style="width: 28%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             Grand Total</td>
                         <td valign="top" 
-                            style=" width: 10%; font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="  font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
                             {{(mfData) ? (mfData.total_amount_invested ) : 0}}</td>
                         <td valign="top"
-                            style="width: 10%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style=" font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
                             {{(mfData) ? (mfData.total_current_value ) : 0}}</td>
                         <td valign="top"
-                            style=" width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style=" font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
                             {{(mfData) ? (mfData.total_unrealized_gain) : 0}}</td>
                         <td valign="top" style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;">
                             {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} </td>
                         <td valign="top"
-                            style="width: 5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} </td>
                         <td valign="top"
-                            style="width: 7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
                             {{(mfData) ?( mfData.dividendPayout) : 0}}</td>
                         <td valign="top"
-                            style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
                             {{grandTotal.withdrawals }}</td>
                         <td valign="top"
-                            style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
                         </td>
                         <td valign="top"
-                            style="width: 9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             {{grandTotal.totalNav}}</td>
                         <td valign="top"
-                            style="width: 10%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                            style="font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
                             {{grandTotal.sip}}</td>
                     </tr>
 
