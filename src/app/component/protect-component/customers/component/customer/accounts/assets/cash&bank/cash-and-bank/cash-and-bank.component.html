@@ -115,14 +115,31 @@
                     <th mat-sort-header="account" *matHeaderCellDef class="br textLeft" mat-header-cell> Account number
                     </th>
                     <td *matCellDef="let element" class="br text-right amt" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : element.accountNo || '-'}} </div>
+                        <div class="bar">
+                            <div *ngIf="element.accountNo" [ngSwitch]="element.accountNo">
+                                <div *ngFor="let bank of bankList">
+                                    <div *ngSwitchCase="bank.id">{{bank.accountNumber}}</div>
+                                </div>
+                            </div>
+                            <div *ngIf="!element.accountNo" >
+                                {{'-'}}
+                            </div>
+                        </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="bank">
                     <th mat-sort-header="bankName" *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : element.bankName || '-'}} </div>
+                        <div *ngIf="element.accountNo" [ngSwitch]="element.accountNo">
+                            <div *ngFor="let bank of bankList">
+                                <div *ngSwitchCase="bank.id">{{bank.bankName}}</div>
+                            </div>
+                        </div>
+                        <div *ngIf="!element.accountNo" >
+                            {{'-'}}
+                        </div>
+                        <!-- <div class="bar"> {{isLoading ? '' : element.bankName || '-'}} </div> -->
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
@@ -154,7 +171,7 @@
                                         id="file-4" multiple type="file">
                                 </button>
                                 <button mat-menu-item>Activity</button>
-                                <button (click)="deleteModal('BANK ACCOUNT',element)" mat-menu-item>Delete</button>
+                                <button (click)="deleteModal('BANK',element)" mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>

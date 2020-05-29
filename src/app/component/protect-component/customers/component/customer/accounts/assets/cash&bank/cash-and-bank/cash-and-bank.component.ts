@@ -15,6 +15,7 @@ import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -51,13 +52,14 @@ export class CashAndBankComponent implements OnInit {
   myFiles: any;
 
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
-    private fileUpload : FileUploadServiceService,
+    private fileUpload : FileUploadServiceService, private enumService: EnumServiceService,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog) {
       this.clientData =AuthService.getClientData()
   }
 
   @ViewChildren(FormatNumberDirective) formatNumber;
+  bankList:any = [];
 
   ngOnInit() {
     this.showRequring = '1';
@@ -65,6 +67,9 @@ export class CashAndBankComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getBankAccountList();
     this.bankAccountList = new MatTableDataSource(this.data);
+    this.bankList = this.enumService.getBank();
+    console.log(this.bankList,"this.bankList");
+    
   }
   Excel(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;

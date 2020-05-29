@@ -60,7 +60,7 @@
 
         </div>
     </div>
-    <div class="row pt-48">
+    <!-- <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Bank name</h5>
         </div>
@@ -70,7 +70,7 @@
                     <input autocomplete="off" matInput #bankName maxlength="60" appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0"
                         formControlName="bankName">
-                    <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+                    <mat-hint align="start" class="f-12">Optional</mat-hint> 
                     <mat-hint align="end" class="f-12">{{bankName.value.length}}/60</mat-hint>
                     <mat-error class="f-12">
                         This field is required
@@ -78,7 +78,7 @@
                 </mat-form-field>
             </div>
         </div>
-    </div>
+    </div> -->
     
     <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
@@ -112,7 +112,7 @@
                         <mat-option value="1">Current</mat-option>
                         <mat-option value="2">Savings</mat-option>
                     </mat-select>
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAccountType && getFormControl().accountType.invalid || getFormControl().accountType.touched && getFormControl().accountType.invalid)}">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
