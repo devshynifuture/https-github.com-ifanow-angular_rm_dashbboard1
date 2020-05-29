@@ -1,5 +1,5 @@
 import { AuthService } from './../../../../../../auth-service/authService';
-import { Component, OnInit, Input, NgModule } from '@angular/core';
+import { Component, OnInit, Input, NgModule, ViewChildren } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MFSchemeLevelHoldingsComponent } from '../../customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -9,6 +9,7 @@ import { EventService } from '../../../../../../Data-service/event.service';
 import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { SkeletonLoadingDirective } from 'src/app/common/directives/skeleton-loading.directive';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
 
 @Component({
   selector: 'app-transactions',
@@ -41,6 +42,7 @@ export class TransactionsComponent implements OnInit {
   folioNumber;
 
   mutualFundTransactions = [];
+  @ViewChildren(FormatNumberDirective) formatNumber;
 
   ngOnInit() {
     console.log("this is data what we got::", this.data);
@@ -121,6 +123,7 @@ export class TransactionsComponent implements OnInit {
     );
   }
   getTransactionDataBasedOnMf(res) {
+    this.isLoading = false;
     let filterData =this.mfService.doFiltering(res);
     this.mfList = filterData.mutualFundList;
     this.mfList = this.mfList.find((item: any) =>
@@ -173,6 +176,7 @@ export class TransactionsComponent implements OnInit {
         }
         this.isLoading = true;
         this.dataSource = new MatTableDataSource([{}, {}, {}]);
+        dialogRef.close();
         this.cusService.postDeleteTransactionMutualFund(requestJsonObj)
           .subscribe(res => {
             if (res) {
