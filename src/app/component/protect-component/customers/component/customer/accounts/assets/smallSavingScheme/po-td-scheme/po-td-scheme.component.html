@@ -176,7 +176,8 @@
                         <button mat-menu-item (click)="openAddPOTD(element)">Edit</button>
                         <button mat-menu-item (click)="openDetailPOTD(element)">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('Po TD',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('Po TD',$event,element)" class="uploadInput" id="file-4" multiple
+                                type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('PO TD',element)">Delete</button>
@@ -190,9 +191,9 @@
         <tr mat-footer-row *matFooterRowDef="displayedColumns22;sticky: true" [hidden]="isLoading"></tr>
     </table>
 
-    <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No PO TD found</h4>
+    <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
+        <img src="assets/images/svg/documents-empty-states.svg">
+        <h4 class="text-center mt-12 mb-20">No PO TD found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
     </div>
 </div>

@@ -90,6 +90,7 @@ export class ClientBankComponent implements OnInit {
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
+        (data == 0) ? data = undefined : '';
         if (data && data.length > 0) {
           this.bankList = data[0];
           this.createBankForm(this.bankList)
@@ -233,7 +234,7 @@ export class ClientBankComponent implements OnInit {
         });
       }
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;;
-      const obj = {
+      let obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
         bankName: this.bankForm.get('bankName').value,

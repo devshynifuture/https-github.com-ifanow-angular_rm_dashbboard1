@@ -11,6 +11,7 @@ import { UtilService } from '../../../../../../../../../../services/util.service
 import * as moment from 'moment';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { ReconciliationService } from '../../../../../../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -48,7 +49,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     private eventService: EventService,
     private util: UtilService,
     private mfService: MfServiceService,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
+    private datePipe: DatePipe
   ) { }
   familyMemberList = [];
   errorMsg = '';
@@ -61,7 +63,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   // @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
 
   ngOnInit() {
-    console.log('ttra data',this.data)
+    console.log('ttra data', this.data)
     this.getRtTypeIdList();
     this.setFormValue(this.data);
     if (this.data && this.data.hasOwnProperty('family_member_list')) {
@@ -187,7 +189,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       this.schemeLevelHoldingForm.get('sip').disable();
       this.schemeLevelHoldingForm.get('tag').disable();
       this.schemeNameControl.disable();
-    }else if(this.data && this.data.flag === 'editTransaction'){
+    } else if (this.data && this.data.flag === 'editTransaction' || this.data.flag === 'editMutualFund') {
       this.schemeNameControl.disable();
     }
 
@@ -196,7 +198,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   setTransactionType(id, fg) {
     fg.patchValue(id);
   }
-
+  getIndexOfSelectedElement(value, trn) {
+    trn.get('isEdited').setValue(true);
+  }
   getTransactionTypeData() {
     this.customerService.getTransactionTypeData({})
       .subscribe(res => {
@@ -212,14 +216,17 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
 
   getSchemeLevelHoldings(data) {
-    if (data  && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund' || this.data.flag === 'editTransaction')) {
+    if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund' || this.data.flag === 'editTransaction')) {
       data.mutualFundTransactions.forEach(element => {
         this.transactionArray.push(this.fb.group({
           transactionType: [element.transactionTypeMasterId, [Validators.required]],
           date: [new Date(element.transactionDate), [Validators.required]],
           transactionAmount: [element.amount, [Validators.required]],
           Units: [element.unit, [Validators.required]],
-          id: [element.id]
+          id: [element.id],
+          isEdited: element.isEdited,
+          previousUnit: element.previousUnit,
+          previousEffect: element.effect
         }))
       });
     } else {
@@ -228,7 +235,11 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         date: [, [Validators.required]],
         transactionAmount: [, [Validators.required]],
         Units: [, [Validators.required]],
-        id: []
+        id: [],
+        isEdited: false,
+        previousUnit: [],
+        previousEffect: []
+
       }))
     }
 
@@ -245,7 +256,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       date: [, [Validators.required]],
       transactionAmount: [, [Validators.required]],
       Units: [, [Validators.required]],
-      id: []
+      id: [],
+      isEdited: false,
+      previousUnit: [],
+      previousEffect: []
     }))
   }
   setDateChange(event) {
@@ -309,9 +323,12 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               transactionDate: this.getDateFormatted(element.date),
               unit: element.Units,
               amount: element.transactionAmount,
-              id:element.id,
+              id: element.id,
               transactionTypeId: element.transactionType,
-              effect: this.getTransactionEffect(element.transactionType)
+              effect: this.getTransactionEffect(element.transactionType),
+              isEdited: element.isEdited,
+              previousUnit: element.previousUnit,
+              previousEffect: element.previousEffect
             }
             mutualFundTransactions.push(obj1);
           } else if (this.data && this.data.flag === 'addTransaction') {
@@ -329,7 +346,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             }
             mutualFundTransactions.push(obj1);
           }
-          if (this.addEditMutualFund === 'add') {
+          if (this.data.flag == 'addMutualFund' || this.addEditMutualFund === 'add') {
             console.log(this.schemeObj);
             obj1 = {
               investorName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,
@@ -344,25 +361,30 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               effect: this.getTransactionEffect(element.transactionType)
             }
             mutualFundTransactions.push(obj1);
-          } else if (this.addEditMutualFund === 'edit') {
+          } else if (this.data.flag == 'editMutualFund' || this.addEditMutualFund === 'edit') {
             obj1 = {
               investorName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,
               folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
-              schemeCode: this.schemeObj['schemeCode'],
+              // schemeCode: this.schemeObj['schemeCode'],
+              schemeCode: this.data.schemeCode,
               mutualFundId: this.data.id,
               fwTransactionType: this.getTransactionName(element.transactionType),
               transactionDate: this.getDateFormatted(element.date),
               unit: element.Units,
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
-              effect: this.getTransactionEffect(element.transactionType)
+              effect: this.getTransactionEffect(element.transactionType),
+              isEdited: element.isEdited,
+              previousUnit: element.previousUnit,
+              previousEffect: element.previousEffect,
+              id: element.id
             }
             mutualFundTransactions.push(obj1);
           }
         }
       });
       let postObj;
-      if (this.addEditMutualFund === 'add') {
+      if (this.data.flag == 'addMutualFund' || this.addEditMutualFund === 'add') {
         postObj = {
           mutualFundSchemeMasterId: this.schemeObj['id'],
           ownerName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,
@@ -375,6 +397,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
           schemeCode: this.schemeObj['schemeCode'],
           balanceUnit: 0,
+          sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
           tag: this.schemeLevelHoldingForm.controls.tag.value,
           realOrFictitious: 0,
           parentId: this.parentId,
@@ -389,24 +412,27 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             }
           })
 
-      } else if (this.addEditMutualFund === 'edit') {
+      } else if (this.data.flag == 'editMutualFund' || this.addEditMutualFund === 'edit') {
         postObj = {
           id: this.data.id,
           mutualFundSchemeMasterId: this.schemeObj['id'],
           ownerName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: this.selectedFamilyData.id,
-          pan: this.selectedFamilyData.pan,
+          familyMemberId: (this.selectedFamilyData) ? this.selectedFamilyData.id : this.data.familyMemberId,
+          pan: (this.selectedFamilyData) ? this.selectedFamilyData.pan : this.data.pan,
           rtMasterId: this.getRtMasterTypeId("MANUAL"),
-          schemeName: this.schemeObj['schemeName'],
+          // schemeName: this.schemeObj['schemeName'],
           folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
-          schemeCode: this.schemeObj['schemeCode'],
-          balanceUnit: 0,
+          // schemeCode: this.schemeObj['schemeCode'],
+          balanceUnit: this.data.balanceUnit,
+          isSip: this.data.isSip,
+          sipAmount: this.schemeLevelHoldingForm.controls.sip.value,
           tag: this.schemeLevelHoldingForm.controls.tag.value,
-          realOrFictitious: 0,
+          // realOrFictitious: 0,
           parentId: this.parentId,
-          mutualFundTransactions
+          // mutualFundTransactions: mutualFundTransactions,
+          // mutualFundTransactions
         }
         console.log("for edit:::", postObj);
 
@@ -416,26 +442,39 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           mutualFundTransactions
         };
 
-        this.customerService.postEditTransactionMutualFund(transactionEditObj)
-          .subscribe(res => {
-            if (res) {
-              console.log("success:: transaction::", res);
+        if (mutualFundTransactions.length > 0) {
+          this.customerService.postEditTransactionMutualFund(transactionEditObj)
+            .subscribe(res => {
+              if (res) {
+                console.log("success:: transaction::", res);
 
-              this.customerService.postMutualFundEdit(postObj)
-                .subscribe(res => {
-                  if (res) {
-                    console.log("success:: edit mutual fund", res);
-                    this.Close(true);
-                  } else {
-                    this.eventService.openSnackBar(res, "Dismiss");
-                  }
-                })
-            } else {
-              this.eventService.openSnackBar(res, "Dismiss");
-            }
-          }, err => {
-            this.eventService.openSnackBar(err, "Dismiss");
-          })
+                this.customerService.postMutualFundEdit(postObj)
+                  .subscribe(res => {
+                    if (res) {
+                      console.log("success:: edit mutual fund", res);
+                      this.Close(true);
+                    } else {
+                      this.eventService.openSnackBar(res, "Dismiss");
+                    }
+                  })
+              } else {
+                this.eventService.openSnackBar(res, "Dismiss");
+              }
+            }, err => {
+              this.eventService.openSnackBar(err, "Dismiss");
+            })
+        } else {
+          this.customerService.postMutualFundEdit(postObj)
+            .subscribe(res => {
+              if (res) {
+                console.log("success:: edit mutual fund", res);
+                this.Close(true);
+              } else {
+                this.eventService.openSnackBar(res, "Dismiss");
+              }
+            })
+        }
+
       } else {
 
         console.log("this is object for adding transaction post::", mutualFundTransactions);
@@ -482,16 +521,27 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
+  // getDateFormatted(dateObj) {
+  //   if (this.dateChanged == false) {
+  //     return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
+  //   } else if (this.data && this.data.flag === 'addTransaction' || this.dateChanged === true) {
+  //     dateObj = new Date(dateObj.format("YYYY-MM-DDTHH:mm:ssZ"));
+  //     return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
+  //   }
+  //   if (this.addEditMutualFund === 'add') {
+  //     dateObj = new Date(dateObj.format("YYYY-MM-DDTHH:mm:ssZ"));
+  //     return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
+  //   }
+  // }
   getDateFormatted(dateObj) {
     if (this.dateChanged == false) {
-      return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
-    } else if (this.data && this.data.flag === 'addTransaction' || this.dateChanged === true) {
-      dateObj = new Date(dateObj.format("YYYY-MM-DDTHH:mm:ssZ"));
-      return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
+      return this.datePipe.transform(dateObj, 'yyyy-MM-dd');
+    }
+    else if (this.data && this.data.flag === 'addTransaction' || this.dateChanged === true) {
+      return this.datePipe.transform(dateObj, 'yyyy-MM-dd');
     }
     if (this.addEditMutualFund === 'add') {
-      dateObj = new Date(dateObj.format("YYYY-MM-DDTHH:mm:ssZ"));
-      return String(dateObj.getFullYear()) + "-" + this.util.addZeroBeforeNumber((dateObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(dateObj.getDate(), 2);
+      return this.datePipe.transform(dateObj, 'yyyy-MM-dd');
     }
   }
 }

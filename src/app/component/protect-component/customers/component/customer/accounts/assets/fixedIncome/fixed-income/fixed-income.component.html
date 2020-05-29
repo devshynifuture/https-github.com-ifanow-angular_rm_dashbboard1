@@ -223,7 +223,7 @@
             </table>
 
 
-            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-36 flex-column align-items-center">
 
                 <img src="assets/images/svg/documents-empty-states.svg">
 
@@ -409,9 +409,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns5;sticky: true" [hidden]="isLoading"></tr>
             </table>
 
-            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-36 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
-                <h4 class="text-center pt-12">No Recurring deposits found</h4>
+                <h4 class="text-center mt-12 mb-20">No Recurring deposits found</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)">
                     ADD NEW
                 </button>
@@ -621,9 +621,9 @@
                 </table>
             </div>
 
-            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-36 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
-                <h4 class="text-center pt-12">No Bonds found</h4>
+                <h4 class="text-center mt-12 mb-20">No Bonds found</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>
