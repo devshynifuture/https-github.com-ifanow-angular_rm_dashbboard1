@@ -52,14 +52,13 @@ export class InsuranceComponent implements OnInit {
   dataSourceGeneralInsurance = new MatTableDataSource(this.data);
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   lifeInsuranceList = [{name: 'Term', id: 1, count: ''}, {name: 'Traditional', id: 2, count: ''}, {name: 'ULIP', id: 3, count: ''}];
-  generalLifeInsuranceList = [{name: 'Health', id: 5, count: ''}, {name: 'Personal accident', id: 7, count: ''}, {
-    name: 'Critical illness',
-    id: 6,
-    count: ''
-  }, {
-    name: 'Motor',
-    id: 4, count: ''
-  }, {name: 'Travel', id: 8, count: ''}, {name: 'Home', id: 9, count: ''}, {name: 'Fire & special perils', id: 10, count: ''}];
+  generalLifeInsuranceList = [{name: 'Health', id: 5, count: ''},
+    {name: 'Personal accident', id: 7, count: ''},
+    {name: 'Critical illness', id: 6, count: ''},
+    {name: 'Motor', id: 4, count: ''},
+    {name: 'Travel', id: 8, count: ''},
+    {name: 'Home', id: 9, count: ''},
+    {name: 'Fire & special perils', id: 10, count: ''}];
   allInsurance = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}, {
     name: 'Health',
     id: 5
