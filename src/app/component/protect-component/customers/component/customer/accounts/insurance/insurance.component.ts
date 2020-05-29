@@ -393,7 +393,22 @@ export class InsuranceComponent implements OnInit {
 
     if (data) {
       this.dataSourceGeneralInsurance.data = data.generalInsuranceList;
-      this.dataSourceGeneralInsurance = new MatTableDataSource(this.dataSourceGeneralInsurance.data);
+      if (data.generalInsuranceList) {
+        data.generalInsuranceList.forEach(singleInsuranceData => {
+          if (singleInsuranceData.insuredMembers && singleInsuranceData.insuredMembers.length > 0) {
+            singleInsuranceData.displayHolderName = singleInsuranceData.insuredMembers[0].name;
+            if (singleInsuranceData.insuredMembers.length > 1) {
+              for (let i = 1; i < singleInsuranceData.insuredMembers.length; i++) {
+                const firstName = (singleInsuranceData.insuredMembers[i].name as string).split(' ')[0];
+                singleInsuranceData.displayHolderName += ',' + firstName;
+              }
+            }
+          } else {
+            singleInsuranceData.displayHolderName = singleInsuranceData.policyHolderName;
+          }
+        });
+      }
+      // this.dataSourceGeneralInsurance = new MatTableDataSource(this.dataSourceGeneralInsurance.data);
       this.dataSourceGeneralInsurance.sort = this.sort;
       this.generalInsuranceDataFilter = this.dataSourceGeneralInsurance.data;
       this.getStatusId(this.dataSourceGeneralInsurance.data);

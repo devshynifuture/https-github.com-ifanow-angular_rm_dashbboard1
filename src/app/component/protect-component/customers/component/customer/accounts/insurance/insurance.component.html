@@ -306,17 +306,7 @@
                   <th *matHeaderCellDef class="br textLeft w-15" mat-sort-header="policyHolderName">
                     {{showPolicyHolder}}</th>
                   <td *matCellDef="let element" class="br" mat-cell>
-                    <!--<div *ngIf="element.insuredMembers?.length > 0 && !isLoading">
-                      <ng-container *ngFor="let ele of element.insuredMembers">
-                        <div>
-                          {{(element.insuredMembers.length == 1) ? (ele.name) : (ele.name + ',')}}
-                        </div>
-                      </ng-container>
-                    </div>-->
-                    <div *ngIf="!isLoading">
-                      {{element.policyHolderName}}
-                    </div>
-                    <div *ngIf="isLoading" class="bar"> {{''}} </div>
+                    <div class="bar"> {{isLoading ? '' : element.displayHolderName}} </div>
                   </td>
                   <td *matFooterCellDef class=" p-8 text-left" mat-footer-cell></td>
                 </ng-container>
