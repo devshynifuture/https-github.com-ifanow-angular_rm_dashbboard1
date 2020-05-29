@@ -272,7 +272,7 @@ export class BankAccountsComponent implements OnInit {
       balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       interestRate: [(data.interestRate == undefined) ? null : data.interestRate],
       compound: [(data.interestCompounding == undefined) ? null : (data.interestCompounding) + ""],
-      bankName: [(data.bankName == undefined) ? '' : data.bankName, [Validators.required]],
+      bankName: [(data.bankName == undefined) ? '' : data.bankName],
       bankAcNo: [(data.userBankMappingId == undefined) ? '' : data.userBankMappingId, [Validators.required]],
       description: [(data.description == undefined) ? null : data.description,],
       // id: [(data.id == undefined) ? '' : data.id,],

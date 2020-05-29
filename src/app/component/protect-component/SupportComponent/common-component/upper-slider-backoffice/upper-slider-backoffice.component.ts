@@ -52,6 +52,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   upperHeaderName;
   isRmLogin = AuthService.getUserInfo().isRmLogin;
   deleteReorderOrDeleteDisabled = 'none';
+  filteredAumListWithIsMappedToMinusOne: any = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -188,8 +189,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
       isParent,
     }
 
-    console.log(data);
-    // 
     this.supportService.getAumReconListGetValues(data)
       .subscribe(res => {
         this.isLoading = false;
@@ -200,10 +199,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.aumList = res['aumList'];
           let arrayValue = [];
 
-          let filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
+          this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
             return element.isMapped === -1;
           });
-          filteredAumListWithIsMappedToMinusOne.forEach(element => {
+          console.log("see the difference::::::::", this.filteredAumListWithIsMappedToMinusOne, res['aumList']);
+          this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
             // check  and compare date object and can delete value
             arrayValue.push({
               name: element.shemeName,
@@ -260,7 +260,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             after_recon: res.unmappedCount
           }];
 
-          res.aumList.forEach(element => {
+          this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
             this.mutualFundIds.push(element.mutualFundId);
           });
         } else {
@@ -472,9 +472,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
       'Unit Difference',
       'Amount Difference'
     ];
-    if (this.aumList) {
+    if (this.filteredAumListWithIsMappedToMinusOne) {
       let rtName = this.getRtName(this.data.rtId);
-      this.aumList.forEach(element => {
+      this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         let data = [
           element.investorName ? element.investorName : '-',
           element.mutualFundId ? element.mutualFundId : '-',
