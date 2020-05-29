@@ -1,11 +1,11 @@
-import {AuthService} from './../../../../../auth-service/authService';
-import {EventService} from './../../../../../Data-service/event.service';
-import {SupportService} from './../../support.service';
-import {SubscriptionInject} from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
-import {ReconciliationService} from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { AuthService } from './../../../../../auth-service/authService';
+import { EventService } from './../../../../../Data-service/event.service';
+import { SupportService } from './../../support.service';
+import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-reconciliation-details-view',
@@ -25,7 +25,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   tableEntriesType: number;
   isKeepOrRemoveTransactions: any[] = [];
   tableData1: any[] = [];
-  disableFreezeBtn = false;
+  disableFreezeBtn = true;
   disableUnfreezeBtn = false;
   selection = new SelectionModel<PeriodicElement1>(true, []);
   shouldDeleteMultiple = false;
@@ -299,7 +299,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
 }
@@ -312,7 +312,7 @@ interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {unitOne: '0', unitsRta: '463.820', difference: '463.82',},
+  { unitOne: '0', unitsRta: '463.820', difference: '463.82', },
 ];
 
 interface PeriodicElement1 {
@@ -339,11 +339,11 @@ interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0},
-  {position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0},
+  { position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0 },
+  { position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0 },
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  {transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: false, id: 0},
-  {transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: true, id: 0},
+  { transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: false, id: 0 },
+  { transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: true, id: 0 },
 ];
