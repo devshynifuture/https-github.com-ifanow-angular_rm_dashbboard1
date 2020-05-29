@@ -310,7 +310,7 @@
         <div class="row pt-12 pb-12 pb-md-20">
             <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" (click)="openSummary('scheme wise')"
                 *ngIf="showSchemeWise || dataSource2.data.length > 0">
-                <div class="bg-grey lter">
+                <div class="bg-grey lter" *ngIf="showSchemeWise">
                     <h5 class="m-0 wrapper-8 f-500 roboto b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
                 <div class="scheme-wise-allocation" id="table-low">
