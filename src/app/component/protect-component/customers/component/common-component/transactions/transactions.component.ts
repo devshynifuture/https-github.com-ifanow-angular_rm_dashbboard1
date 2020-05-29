@@ -19,7 +19,7 @@ export class TransactionsComponent implements OnInit {
   @Input() data;
   transactionTypeList = [];
   advisorId = AuthService.getAdvisorId();
-  clientId = 15545;
+  clientId = AuthService.getClientId();
   investorName: any;
 
   constructor(

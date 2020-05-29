@@ -185,9 +185,9 @@ Description description: "this is futurewise Tech" -->
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
-                        ₹<span appFormatNumber>{{fixedDeposit.amountInvested}}</span>
-                        <!-- ₹{{utils.formatter(fixedDeposit.currentValue - fixedDeposit.amountInvested)}} -->
-
+                        <!-- ₹<span appFormatNumber>{{fixedDeposit.amountInvested}}</span> -->
+                        ₹<span [value]="fixedDeposit.currentValue - fixedDeposit.amountInvested" appFormatNumber>{{fixedDeposit.currentValue - fixedDeposit.amountInvested}}</span>
+                        <!-- ₹{{utils.formatter()}} -->
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

@@ -623,6 +623,8 @@ export class MutualFundSummaryComponent implements OnInit {
             .subscribe(res => {
               if (res) {
                 this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
+                dialogRef.close();
+                this.getMutualFund();
               }
             })
         }
@@ -647,16 +649,16 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   openMutualEditFund(flag, element) {
-    this.mutualFundList.forEach(ele => {
-      ele.mutualFundTransactions.forEach(tran => {
-        if (tran.id == element.id) {
-          this.selectedDataLoad = ele;
-        }
-      });
-    });
-    if(!this.selectedDataLoad){
-      this.selectedDataLoad= element
-    }
+    // this.mutualFundList.forEach(ele => {
+    //   ele.mutualFundTransactions.forEach(tran => {
+    //     if (tran.id == element.id) {
+    //       this.selectedDataLoad = ele;
+    //     }
+    //   });
+    // });
+    // if(!this.selectedDataLoad){
+    //   this.selectedDataLoad= element
+    // }
     const fragmentData = {
       flag: 'editTransaction',
       data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },

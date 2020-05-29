@@ -2,7 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h4 class="mb-0 wrapper-20">
-        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': 'Add Mutual Fund and' }}
+        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data && data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit Mutual Fund and' : 'Add Mutual Fund and'}}
         scheme level transactions
       </h4>
     </div>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="row pt-24" *ngIf="data.flag == 'editTransaction'">
+    <div class="row pt-24" *ngIf="data.flag == 'editTransaction' ||  data.flag =='editMutualFund'">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-12">Scheme name</h5>
         <p class="m-0 text-custom f-12 text-right">Last closing NAV: {{data.nav}}</p>
@@ -150,12 +150,12 @@
   </div>
 
   <hr>
-  <div class="row pl-28">
+  <div class="row pl-28" >
     <div class="col-md-12 pl-0">
       <h4 class="mb-20 text-black">Transactions</h4>
     </div>
   </div>
-  <div class="row pl-28">
+  <div class="row pl-28" >
     <div class="col-md-4 pl-0">
       <label class="f-14"> Transaction type</label>
     </div>
@@ -180,8 +180,8 @@
           <mat-form-field>
             <mat-select matInput formControlName="transactionType" class="form-control br-0">
               <mat-option>None</mat-option>
-              <mat-option [value]="item.id" *ngFor="let item of transactionTypeList"
-                (click)="setTransactionType(item.id, singleTransaction)">
+              <mat-option [value]="item.id" #type *ngFor="let item of transactionTypeList"
+                (click)="setTransactionType(item.id, singleTransaction);getIndexOfSelectedElement(type.value,singleTransaction)" >
                 {{ item.transactionType }}
               </mat-option>
             </mat-select>
@@ -194,8 +194,8 @@
       <div class="col-md-2 p-0">
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input (click)="picker.open()" matInput (dateChange)="setDateChange($event)" autocomplete="off"
-              formControlName="date" [matDatepicker]="picker" class="form-control br-0 b-0">
+            <input (click)="picker.open()" matInput (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)" autocomplete="off"
+              formControlName="date" #date [matDatepicker]="picker" class="form-control br-0 b-0">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>
@@ -207,8 +207,8 @@
       <div class="col-md-3">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput autocomplete="off" #totalUnits type="number" formControlName="transactionAmount"
-              maxlength="20" class="form-control br-0 rupess">
+            <input matInput autocomplete="off"  type="number" formControlName="transactionAmount"
+              maxlength="20" class="form-control br-0 rupess" #trnAmt (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
             <mat-error>
               This field is required
             </mat-error>
@@ -219,7 +219,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input matInput autocomplete="off" #totalNetContribution appInputValueValidation
-              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" formControlName="Units" type="number"
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units" type="number"
               maxlength="20" class="form-control br-0 rupess">
             <mat-error>
               This field is required
@@ -230,7 +230,7 @@
 
       </div>
 
-      <div class="col-md-1 d-flex pt-10 pl-0">
+      <div class="col-md-1 d-flex pt-10 pl-0" *ngIf="data.flag =='addMutualFund' || data.flag =='addTransaction'">
         <i class="material-icons text-primitive f-20 c-p float-left" *ngIf="i==transactionArray.length-1"
           (click)="addTransactions()">
           add
