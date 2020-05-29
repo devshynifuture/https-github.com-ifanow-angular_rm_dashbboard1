@@ -55,7 +55,7 @@
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber>{{(mfData) ? (mfData.total_amount_invested) : 0}}</span>
+                            <span appFormatNumber [value]="mfData ? mfData.total_amount_invested : 0"></span>
                             <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                         </td>
 
@@ -71,7 +71,7 @@
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber>{{(mfData) ? (mfData.total_current_value) : 0}}</span>
+                            <span appFormatNumber [value]="mfData ? mfData.total_current_value : '0'"></span>
                             <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                         </td>
 
@@ -86,7 +86,7 @@
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber>{{(mfData) ? (mfData.total_dividend_payout ) : 0}}</span>
+                            <span appFormatNumber [value]="mfData ? mfData.total_dividend_payout : '0'"></span>
                             <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                         </td>
 
@@ -102,7 +102,7 @@
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber>{{(grandTotal) ? (grandTotal.dividendReinvest ) : ''}}</span>
+                            <span appFormatNumber [value]="grandTotal ? grandTotal.dividendReinvest : '0'"></span>
                         </td>
 
                     </ng-container>
