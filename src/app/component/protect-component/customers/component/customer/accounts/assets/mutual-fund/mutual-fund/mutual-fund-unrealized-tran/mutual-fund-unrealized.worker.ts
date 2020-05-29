@@ -12,9 +12,9 @@ addEventListener('message', ({data}) => {
   // console.log(`addEventListener got message: ${data}`);
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
-  const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund,data.showFolio);
+  const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund, data.showFolio);
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
-  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.nav, data.mutualFund, data.transactionType, data.viewMode,data.showFolio);
+  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.nav, data.mutualFund, data.transactionType, data.viewMode, data.showFolio);
   const customDataHolder = [];
   totalValue.grandTotal = mfService.mutualFundRoundAndFormat(totalValue.grandTotal, 2);
   customDataSourceData.forEach(element => {
@@ -32,8 +32,8 @@ addEventListener('message', ({data}) => {
     } else {
 
     }
-    if(element.totalCurrentValue && element.totalTransactionAmt && !element.netGain ){
-      element.netGain  =  element.totalCurrentValue - element.totalTransactionAmt;
+    if (element.totalCurrentValue && element.totalTransactionAmt && !element.netGain) {
+      element.netGain = element.totalCurrentValue - element.totalTransactionAmt;
     }
     element.netGain = mfService.mutualFundRoundAndFormat(element.netGain, 2);
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
