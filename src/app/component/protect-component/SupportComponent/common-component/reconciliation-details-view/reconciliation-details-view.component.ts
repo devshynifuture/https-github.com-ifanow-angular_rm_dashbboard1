@@ -1,11 +1,11 @@
-import { AuthService } from './../../../../../auth-service/authService';
-import { EventService } from './../../../../../Data-service/event.service';
-import { SupportService } from './../../support.service';
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import {AuthService} from './../../../../../auth-service/authService';
+import {EventService} from './../../../../../Data-service/event.service';
+import {SupportService} from './../../support.service';
+import {SubscriptionInject} from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
+import {ReconciliationService} from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-reconciliation-details-view',
@@ -25,15 +25,15 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   tableEntriesType: number;
   isKeepOrRemoveTransactions: any[] = [];
   tableData1: any[] = [];
-  disableFreezeBtn: boolean = false;
-  disableUnfreezeBtn: boolean = false;
+  disableFreezeBtn = false;
+  disableUnfreezeBtn = false;
   selection = new SelectionModel<PeriodicElement1>(true, []);
-  shouldDeleteMultiple: boolean = false;
-  deleteMultipleTransactionArray: any[] = []
+  shouldDeleteMultiple = false;
+  deleteMultipleTransactionArray: any[] = [];
   upperTableArr: PeriodicElement[];
   advisorId = AuthService.getAdvisorId();
-  selectedFolioUnits: number = 0;
-  canDeleteTransaction: boolean = false;
+  selectedFolioUnits = 0;
+  canDeleteTransaction = false;
   filteredValues: any[];
 
   constructor(
@@ -41,7 +41,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     private reconService: ReconciliationService,
     private eventService: EventService,
     private supportService: SupportService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     console.log(this.data);
@@ -57,7 +58,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
       unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : '',
       difference: this.data.difference ? this.data.difference : ''
-    }]
+    }];
 
     this.dataSource.data = tableArr;
     this.upperTableArr = tableArr;
@@ -73,14 +74,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   singleSelectionSelect(element) {
     this.selection.toggle(element);
-    let parsedValue = parseFloat((element.units).toFixed(3));
+    const parsedValue = parseFloat((element.units).toFixed(3));
     if (this.selection.isSelected(element)) {
       this.shouldDeleteMultiple = true;
       this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
       this.deleteMultipleTransactionArray.push(element.id);
     } else {
       // this.selectedFolioUnits = 0;
-      let index = this.deleteMultipleTransactionArray.indexOf(element.id);
+      const index = this.deleteMultipleTransactionArray.indexOf(element.id);
       this.deleteMultipleTransactionArray.splice(index, 1);
       this.selectedFolioUnits = this.selectedFolioUnits - parsedValue;
       if (this.selectedFolioUnits < 0) {
@@ -103,12 +104,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       this.shouldDeleteMultiple = true;
       this.dataSource1.data.forEach(row => {
         this.selection.select(row);
-        if (this.deleteMultipleTransactionArray.includes(row['id'])) {
+        if (this.deleteMultipleTransactionArray.includes(row.id)) {
           return;
         }
-        let parsedValue = parseFloat(row.units);
+        const parsedValue = parseFloat(row.units);
         this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
-        this.deleteMultipleTransactionArray.push(row['id']);
+        this.deleteMultipleTransactionArray.push(row.id);
       });
     }
     console.log(this.deleteMultipleTransactionArray);
@@ -138,7 +139,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.deleteMultipleTransactionArray.length > 0) {
       this.deleteTransactionApi(this.deleteMultipleTransactionArray);
     } else {
-      this.eventService.openSnackBar("Please select atleast one transaction", "Dismiss")
+      this.eventService.openSnackBar('Please select atleast one transaction', 'Dismiss');
     }
   }
 
@@ -152,8 +153,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           this.disableUnfreezeBtn = false;
           this.canDeleteTransaction = false;
         }, err => {
-          console.error(err)
-        })
+          console.error(err);
+        });
     }
   }
 
@@ -168,9 +169,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           this.canDeleteTransaction = true;
         }, err => {
           console.error(err);
-        })
+        });
     } else {
-      console.error("no mutual fund id found");
+      console.error('no mutual fund id found');
     }
 
   }
@@ -180,14 +181,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.selection.clear();
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
-        console.log("this transactions are deleted:::", res);
+        console.log('this transactions are deleted:::', res);
         this.dataSource1.data = this.tableData1.filter(item => {
           return (!value.includes(item.id)) ? item : null;
         });
         this.dataSource.data.map(item => {
-          item['unitOne'] = String((res.units).toFixed(3));
-          item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
-          if (this.data && item['difference'] === '0.000') {
+          item.unitOne = String((res.units).toFixed(3));
+          item.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
+          if (this.data && item.difference === '0.000') {
             this.disableFreezeBtn = true;
           } else {
             this.disableFreezeBtn = false;
@@ -200,7 +201,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   deleteSingleTransaction(element) {
-    this.deleteTransactionApi([element['id']]);
+    this.deleteTransactionApi([element.id]);
   }
 
   unmapFolioTransaction() {
@@ -227,9 +228,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       filteredArray = this.tableData1.filter(item => {
         return item.transactionType === filterBasedOn.toUpperCase() ? item : null;
       });
-      this.dataSource1.data = filteredArray
+      this.dataSource1.data = filteredArray;
     }
-    console.log("data filtered", this.dataSource1.data);
+    console.log('data filtered', this.dataSource1.data);
   }
 
 
@@ -270,12 +271,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   putAumTransactionKeepOrRemove() {
-    let isKeepArray = [];
+    const isKeepArray = [];
     this.dataSource2.data.forEach(item => {
       isKeepArray.push({
-        id: item['id'],
-        isKeep: item['keep']
-      })
+        id: item.id,
+        isKeep: item.keep
+      });
     });
     this.isKeepOrRemoveTransactions = isKeepArray;
     console.log(this.isKeepOrRemoveTransactions);
@@ -284,7 +285,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         console.log(res);
         this.dataSource.data.map(element => {
           element.unitOne = String(parseInt(res.units).toFixed(3));
-          element.difference = String((parseInt(res.units) - parseInt(element['unitsRta'])).toFixed(3))
+          element.difference = String((parseInt(res.units) - parseInt(element.unitsRta)).toFixed(3));
           if (element.difference !== '0.000') {
             this.disableFreezeBtn = true;
           }
@@ -293,12 +294,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   shouldKeepOrRemove(value, element) {
-    let id = this.dataSource2.data.indexOf(element);
-    this.dataSource2.data[id]['keep'] = (value === 1 ? true : false);
+    const id = this.dataSource2.data.indexOf(element);
+    this.dataSource2.data[id].keep = (value === 1 ? true : false);
   }
 
   dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    this.subscriptionInject.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 
 }
@@ -309,9 +310,11 @@ interface PeriodicElement {
   difference: string;
 
 }
+
 const ELEMENT_DATA: PeriodicElement[] = [
-  { unitOne: '0', unitsRta: '463.820', difference: '463.82', },
+  {unitOne: '0', unitsRta: '463.820', difference: '463.82',},
 ];
+
 interface PeriodicElement1 {
   position: number;
   checkbox: string;
@@ -321,6 +324,7 @@ interface PeriodicElement1 {
   units: string;
   balanceUnits: string;
   action: string;
+  id: number;
 }
 
 interface PeriodicElement2 {
@@ -331,14 +335,15 @@ interface PeriodicElement2 {
   units: string;
   action: string;
   keep: boolean;
+  id: number;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ' },
-  { position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ' },
+  {position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0},
+  {position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0},
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: false },
-  { transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: true },
+  {transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: false, id: 0},
+  {transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: true, id: 0},
 ];

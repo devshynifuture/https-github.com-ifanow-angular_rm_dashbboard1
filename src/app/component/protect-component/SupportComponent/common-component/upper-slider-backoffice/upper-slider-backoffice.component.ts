@@ -560,32 +560,39 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   openDeleteDialog() {
-    const dialogData = {
-      header: 'DELETE UNMATCHED FOLIOS?',
-      body: 'Are you sure you want to delete the unmatched folios?',
-      body2: '',
-      btnYes: 'CANCEL',
-      btnNo: 'YES',
-      positiveMethod: () => {
-        console.log('successfully deleted');
-        // this.deleteAndReorder();
-        this.deleteUnfreezeTransaction();
-        dialogRef.close();
-      },
-      negativeMethod: () => {
-        console.log('aborted');
+    if (this.deleteReorderOrDeleteDisabled !== 'delete') {
+
+      const dialogData = {
+        header: 'DELETE UNMATCHED FOLIOS?',
+        body: 'Are you sure you want to delete the unmatched folios?',
+        body2: '',
+        btnYes: 'CANCEL',
+        btnNo: 'YES',
+        positiveMethod: () => {
+          console.log('successfully deleted');
+          // this.deleteAndReorder();
+          this.deleteUnfreezeTransaction();
+          dialogRef.close();
+        },
+        negativeMethod: () => {
+          console.log('aborted');
+        }
+
       }
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: dialogData,
+        autoFocus: false,
+      });
 
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+
+    } else {
+      this.eventService.openSnackBar("You can only delete Unmatched folios or Delete and reorder folios", "DISMISS");
     }
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
+    this.deleteReorderOrDeleteDisabled = 'deleteReorder';
   }
 
   deleteUnfreezeTransaction() {
@@ -692,34 +699,40 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   openDeleteAndReorderDialog() {
-    if (!this.isFranklinTab) {
-      const dialogData = {
-        header: 'DELETE & REORDER?',
-        body: 'Are you sure you want to delete and reorder the unmatched folios?',
-        body2: '',
-        btnYes: 'CANCEL',
-        btnNo: 'YES',
-        positiveMethod: () => {
-          console.log('successfully deleted');
-          this.deleteAndReorder();
-          dialogRef.close();
-        },
-        negativeMethod: () => {
-          console.log('aborted');
+    if (this.deleteReorderOrDeleteDisabled !== 'deleteReorder') {
+
+      if (!this.isFranklinTab) {
+        const dialogData = {
+          header: 'DELETE & REORDER?',
+          body: 'Are you sure you want to delete and reorder the unmatched folios?',
+          body2: '',
+          btnYes: 'CANCEL',
+          btnNo: 'YES',
+          positiveMethod: () => {
+            console.log('successfully deleted');
+            this.deleteAndReorder();
+            dialogRef.close();
+          },
+          negativeMethod: () => {
+            console.log('aborted');
+          }
+
         }
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '400px',
+          data: dialogData,
+          autoFocus: false,
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
 
       }
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
-        data: dialogData,
-        autoFocus: false,
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-
-      });
-
+    } else {
+      this.eventService.openSnackBar("You can only Delete unmatched Folios Or Delete and reorder folios", "DISMISS");
     }
+    this.deleteReorderOrDeleteDisabled = 'delete';
   }
 
 }

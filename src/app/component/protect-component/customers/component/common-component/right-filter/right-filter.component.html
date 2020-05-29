@@ -18,7 +18,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                    <mat-checkbox (change)="selectAll($event)" [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
+                    <mat-checkbox *ngIf="_data.name!='CAPITAL GAIN REPORT'"(change)="selectAll($event)" [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
                         </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of familyMember">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}
@@ -97,7 +97,8 @@
                     <!-- <mat-checkbox (change)="selectAll($event)"   [(ngModel)]="selectUnselctAllFlag"  name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlag}">{{(selectUnselctAllFlag) ? 'Uncheck all' : 'Check all' }}</span>
                         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">
+                        {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':item.displayName}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>

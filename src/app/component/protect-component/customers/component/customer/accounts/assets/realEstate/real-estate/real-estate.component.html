@@ -138,10 +138,10 @@
                                 <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewRealEstate(element)">Detailed
                                     View</button>
-                                    <button mat-menu-item>Upload file
-                                        <input (change)="fetchData('Real Estate',$event,element)" class="uploadInput" id="file-4" multiple
-                                            type="file">
-                                    </button>
+                                <button mat-menu-item>Upload file
+                                    <input (change)="fetchData('Real Estate',$event,element)" class="uploadInput"
+                                        id="file-4" multiple type="file">
+                                </button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
                             </mat-menu>
@@ -154,9 +154,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
             </table>
         </div>
-        <div *ngIf="datasource3.filteredData.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="text-center pt-12">{{noData}}</h4>
+        <div *ngIf="datasource3.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
+            <img src="assets/images/svg/documents-empty-states.svg">
+            <h4 class="text-center mt-12 mb-20">{{noData}}</h4>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')">
                 ADD NEW</button>
         </div>

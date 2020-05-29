@@ -52,7 +52,8 @@
                         <mat-option value="5">NREGA job card</mat-option>
                         <mat-option value="6">Others</mat-option>
                     </mat-select>
-                    <mat-error>This field is required</mat-error>
+                    <mat-hint>Optional</mat-hint>
+                    <!-- <mat-error>This field is required</mat-error> -->
                 </mat-form-field>
             </div>
         </div>
@@ -68,7 +69,8 @@
                         (input)="toUpperCase(addressForm.get('proofIdNum'),$event)" appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
                         formControlName="proofIdNum" class="form-control">
-                    <mat-error *ngIf="addressForm.get('proofIdNum').errors?.required">This field is required</mat-error>
+                    <!-- <mat-error *ngIf="addressForm.get('proofIdNum').errors?.required">This field is required</mat-error> -->
+                    <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="addressForm.get('proofIdNum').errors?.pattern">Invalid proof number</mat-error>
                     <mat-hint *ngIf="maxLength" align="end">{{proofNumber.value.length}}/{{maxLength}}</mat-hint>
                 </mat-form-field>
