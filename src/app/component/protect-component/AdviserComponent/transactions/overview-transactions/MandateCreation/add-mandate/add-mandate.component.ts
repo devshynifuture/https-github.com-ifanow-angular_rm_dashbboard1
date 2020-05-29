@@ -341,6 +341,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   getFileDetails(e, flag) {
+
     this.imageLoader = true;
     this.file = e.target.files[0];
     const file = e.target.files[0];
