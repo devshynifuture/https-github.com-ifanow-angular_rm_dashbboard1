@@ -56,8 +56,8 @@
                                 {{isLoading? '': stage.taskName}}
                                 <span>
                                     <!-- <img src="assets/images/svg/conversation.svg" class="c-p"> -->
-                                    <mat-icon *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null">
-                                        message</mat-icon>
+                                    <img src="/assets/images/svg/conversation.svg"
+                                        *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null">
                                     {{ stage.stageCommentCount }}
                                 </span>
                             </span>
