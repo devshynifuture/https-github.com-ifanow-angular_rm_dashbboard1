@@ -130,7 +130,8 @@
                         <button (click)="openAddPOSAVING(element)" mat-menu-item>Edit</button>
                         <button (click)="openDetailPoSaving(element)" mat-menu-item>Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('Po Savings',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('Po Savings',$event,element)" class="uploadInput" id="file-4"
+                                multiple type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button (click)="deleteModal('PO SAVINGS',element)" mat-menu-item>Delete</button>
@@ -143,9 +144,9 @@
         <tr *matRowDef="let row; columns: displayedColumns20;" mat-row></tr>
         <tr *matFooterRowDef="footerRowColumn;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
     </table>
-    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No PO savings found</h4>
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
+        <img src="assets/images/svg/documents-empty-states.svg">
+        <h4 class="text-center mt-12 mb-20">No PO savings found</h4>
         <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button>
             ADD NEW
         </button>

@@ -333,6 +333,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     // list =(this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
     list.forEach(element => {
       element.navDate = this.datePipe.transform(element.navDate, 'yyyy-MM-dd');
+      if(element.toDate){
+        element.toDate = this.datePipe.transform(element.toDate, 'yyyy-MM-dd');
+      }
       element.mutualFundTransactions = [];
       // element.mutualFundTransactions.forEach(element => {
       //   element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')

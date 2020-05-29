@@ -95,7 +95,7 @@ export class OverviewProfileComponent implements OnInit {
       },
       err => {
         console.error(err);
-        // this.hasError = true;
+        this.hasError = true;
       }
     );
   }
@@ -182,7 +182,8 @@ export class OverviewProfileComponent implements OnInit {
           this.selectedDemat = data[0];
         }
       }, err => {
-        this.bankList = false;
+        this.dematFlag = false;
+        this.dematList = undefined;
         this.showSectionError.dematList = true;
         console.error(err)
       }

@@ -359,10 +359,13 @@ export class ClientUploadComponent implements OnInit {
         if (data && data.length > 0) {
           this.bankList = data;
           this.selectedBank = data[0].bankId;
+        } else {
+          this.bankList = [];
         }
       },
       err => {
-        this.selectedBank = '';
+          this.bankList = [];
+          this.selectedBank = '';
       }
       // this.eventService.openSnackBar(err, "Dismiss")
     )
