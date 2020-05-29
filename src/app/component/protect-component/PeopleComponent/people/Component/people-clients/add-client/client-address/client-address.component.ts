@@ -120,7 +120,7 @@ export class ClientAddressComponent implements OnInit {
     }
     else if (data.value == '2') {
       regexPattern = this.validatorType.ADHAAR;
-      this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == undefined ? this.userData.aadhaarNumber : (this.proofTypeData.proofType == 2 && this.proofTypeData.proofIdNumber == undefined) ? this.userData.aadhaarNumber : (this.userMappingIdFlag == false) ? this.userData.aadhaarNumber : this.proofTypeData.proofIdNumber);
+      this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == undefined ? this.userData.aadhaarNumber : ((this.proofTypeData.proofType == 2 && this.proofTypeData.proofIdNumber == undefined) || this.userMappingIdFlag == false) ? this.userData.aadhaarNumber : (this.proofTypeData.proofIdNumber != 2 && this.userData.aadhaarNumber) ? this.userData.aadhaarNumber : this.proofTypeData.proofIdNumber);
       this.maxLength = 12;
     }
     else if (data.value == '3') {

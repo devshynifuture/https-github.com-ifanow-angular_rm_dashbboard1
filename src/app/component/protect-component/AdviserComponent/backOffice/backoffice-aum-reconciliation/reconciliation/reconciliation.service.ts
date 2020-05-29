@@ -26,7 +26,7 @@ export class ReconciliationService {
                 if (res) {
                     res.forEach(item => {
                         const { id } = item;
-                        let brokerCode = item.arnOrRia === 1 ? 'ARN - ' + item.number : item.arnOrRia === 2 ? 'RIA - ' + item.number : null;
+                        let brokerCode = item.number;
                         brokerListArr.push({
                             id,
                             brokerCode

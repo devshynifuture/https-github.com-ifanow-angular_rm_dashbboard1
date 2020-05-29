@@ -227,6 +227,7 @@ export class RetirementAccountComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
+    
     this.noData = "No scheme found";
     this.getListEPF();
     this.dataSource = new MatTableDataSource(this.data);

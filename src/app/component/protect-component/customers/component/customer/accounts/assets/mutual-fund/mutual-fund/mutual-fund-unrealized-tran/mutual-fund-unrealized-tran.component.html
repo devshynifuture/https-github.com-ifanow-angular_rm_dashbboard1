@@ -29,7 +29,7 @@
 
 
     <div class="row">
-        <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
+        <div [ngClass]="isLoading ? '': 'tran-height-2'" class="col-md-12 p-0 mb-8">
             <div *ngIf="dataSource.data.length>0">
                 <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                     class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
@@ -158,7 +158,7 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="allocation" sticky>
+                    <ng-container matColumnDef="allocation">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
                             Allocation
                         </th>
@@ -563,35 +563,35 @@
         </tr>
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Sub category name</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Amount invested</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Current value</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Dividend payout</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Dividend reinvestment</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Gain</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Absolute Return%</b>
             </td>
             <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>XIRR%</b>
             </td>
             <td
@@ -603,11 +603,11 @@
         <tr *ngFor="let item of dataSource.data"
             style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
             <td
-                style="text-align: center; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: left; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.categoryName}}
             </td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{(item.totalTransactionAmt) ? (item.totalTransactionAmt | number :'1.0-0') : 0}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -634,11 +634,11 @@
         <tr
             style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: left;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Grand Total
             </td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{grandTotal.totalTransactionAmt | number :'1.0-0'}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
