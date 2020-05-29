@@ -278,6 +278,12 @@ export class InsuranceComponent implements OnInit {
             element.sumAssured = element.sumInsuredIdv;
           }
 
+          if (element.addOns && element.addOns.length > 0) {
+            element.addOns.forEach(ele => {
+              element.sumAssured += ele.addOnSumInsured;
+            });
+          }
+
         });
         this.dataSourceGeneralInsurance.data.forEach(element => {
           this.totalSumAssured += element.sumAssured,
@@ -296,6 +302,8 @@ export class InsuranceComponent implements OnInit {
 
   getInsuranceDataResponse(data) {
     this.isLoading = false;
+    console.log('getInsuranceDataResponse data : ', data);
+
     if (data) {
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
@@ -365,6 +373,8 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceDataRes(data) {
+    console.log('getInsuranceDataRes data : ', data);
+
     if (data) {
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
@@ -389,7 +399,7 @@ export class InsuranceComponent implements OnInit {
   }
 
   getGeneralInsuranceDataRes(data) {
-
+    console.log('getGeneralInsuranceDataRes data : ', data);
     if (data) {
       this.dataSourceGeneralInsurance.data = data.generalInsuranceList;
       if (data.generalInsuranceList) {
@@ -448,7 +458,11 @@ export class InsuranceComponent implements OnInit {
         } else {
           element.sumAssured = element.sumInsuredIdv;
         }
-
+        if (element.addOns && element.addOns.length > 0) {
+          element.addOns.forEach(ele => {
+            element.sumAssured += ele.addOnSumInsured;
+          });
+        }
       });
       this.dataSourceGeneralInsurance.data.forEach(element => {
         this.totalSumAssured += element.sumAssured,
