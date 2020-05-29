@@ -93,6 +93,8 @@ export class ClientBankComponent implements OnInit {
         if (data && data.length > 0) {
           this.bankList = data[0];
           this.createBankForm(this.bankList)
+        } else {
+          this.bankList = {};
         }
       },
       err => {
