@@ -43,7 +43,7 @@
                         Voluntary contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.voluntaryContribution? "₹" : ""}}<span appFormatNumber>{{epf.voluntaryContribution? "epf.voluntaryContribution" : "-"}}</span>
+                        {{epf.voluntaryContribution? "₹" : ""}}<span appFormatNumber>{{epf.voluntaryContribution? epf.voluntaryContribution : "-"}}</span>
                     </div>
                     <!-- <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}

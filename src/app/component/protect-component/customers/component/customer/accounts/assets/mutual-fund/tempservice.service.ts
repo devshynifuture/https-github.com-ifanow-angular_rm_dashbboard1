@@ -17,12 +17,12 @@ export class TempserviceService {
         catObj = this.categoryFilterForInvestorWise(mutualFundList, 'familyMemberId', allData);
       }
       Object.keys(catObj).map(key => {
-        (reportType == 'ownerName') ? filteredArray.push({ groupName: key, pan: catObj[key][0].pan }) : filteredArray.push({ groupName: key });
+        (reportType == 'ownerName') ? filteredArray.push({groupName: key, pan: catObj[key][0].pan}) : filteredArray.push({groupName: key});
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
           if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
             array.push(singleData);
-            totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, { schemeName: true });
+            totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
             const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
             totalObj.totalXirr = obj.xirr;
             totalObj.totalAbsoluteReturn = obj.absoluteReturn;
@@ -47,6 +47,7 @@ export class TempserviceService {
       return filteredArray;
     }
   };
+  shouldRoundOff = true;
 
   sorting(data, filterId) {
     if (data) {
@@ -93,7 +94,7 @@ export class TempserviceService {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-        reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id' : reportType = 'ownerName';
+      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id' : reportType = 'ownerName';
     let catObj = {};
     let newArray = [];
 
@@ -107,20 +108,18 @@ export class TempserviceService {
       catObj[key].forEach((singleData) => {
         if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
           // this.totalObj = this.this.getEachTotalValue(singleData);
-          totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, { total: true });
+          totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, {total: true});
           // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
           const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
           totalObj.xirr = obj.xirr;
           totalObj.absReturn = obj.absoluteReturn;
-          Object.assign(totalObj, { categoryName: key });
+          Object.assign(totalObj, {categoryName: key});
         }
       });
       if (Object.keys(totalObj).length != 0) {
         newArray.push(totalObj);
         newArray = this.sorting(newArray, 'categoryName');
       }
-
-
     });
     // this.dataSource = newArray;
     // const output = {
@@ -148,7 +147,7 @@ export class TempserviceService {
       // this.initializeValues(); // for initializing total values object
       let totalObj: any = {};
       if (reportType != 'schemeName') {
-        (reportType == 'ownerName') ? filteredData.push({ groupName: key, pan: catObj[key][0].pan }) : filteredData.push({ groupName: key });
+        (reportType == 'ownerName') ? filteredData.push({groupName: key, pan: catObj[key][0].pan}) : filteredData.push({groupName: key});
 
       }
       catObj[key].forEach((singleData) => {
@@ -156,10 +155,10 @@ export class TempserviceService {
           if (viewMode == 'All Transactions') {
             if (trnType) {
               totalObj = {};
-              let result = trnType.every(function (e) {
+              let result = trnType.every(function(e) {
                 return e.selected == false;
-            });
-              if(!result){
+              });
+              if (!result) {
                 singleData.mutualFundTransactions = this.getUnrealizedDataTransaction(singleData.mutualFundTransactions, trnType);
               }
             }
@@ -179,7 +178,7 @@ export class TempserviceService {
               nav: singleData.nav,
               navDate: singleData.navDate,
               avgNav: singleData.avgCostNav,
-              pan:singleData.pan
+              pan: singleData.pan
             };
             if (reportType == 'ownerName') {
               obj.folioNumber = singleData.folioNumber;
@@ -198,7 +197,7 @@ export class TempserviceService {
               ele.indexId = (ind + 1);
               filteredData.push(ele);
             });
-            totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false), totalObj, { total: true });
+            totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false), totalObj, {total: true});
             const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
             totalObj.totalCagr = data.xirr;
             totalObj.trnAbsoluteReturn = data.absoluteReturn;
@@ -239,7 +238,7 @@ export class TempserviceService {
   getFinalTotalValue(data) { // grand total values
     let totalValue: any = {};
     data.forEach(element => {
-      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element, true), totalValue, { total: true });
+      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element, true), totalValue, {total: true});
     });
 
     return totalValue;
@@ -580,19 +579,44 @@ export class TempserviceService {
   }
 
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
-    if (data) {
-      if (isNaN(data)) {
-        return data;
-      } else {
-        // console.log(' original ', data);
-        const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN', {currency: 'INR'});
+    // if (data) {
+    //   if (isNaN(data)) {
+    //     return data;
+    //   } else {
+    //     // console.log(' original ', data);
+    //     const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
 
-        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
-        return formattedValue;
+    //     // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+    //     return formattedValue;
+    //   }
+    // } else {
+    //   return '0';
+    // }
+    if (typeof (data) === 'string') {
+      if (data.includes(',')) {
+        return data;
+      }
+    }
+    // if (!this.locale) {
+    //   this.locale = 'en-IN';
+    // }
+    if (data && data !== '') {
+      if (!isNaN(data)) {
+        let numberValue: number = parseFloat(data);
+        if (this.shouldRoundOff) { // true
+          numberValue = Math.round(numberValue);
+        }
+        data = numberValue.toLocaleString('en-IN');
+      } else {
+
       }
     } else {
-      return '0';
+      if (data !== 0) {
+        data = '';
+      }
     }
+
+    return data;
   }
 
 }

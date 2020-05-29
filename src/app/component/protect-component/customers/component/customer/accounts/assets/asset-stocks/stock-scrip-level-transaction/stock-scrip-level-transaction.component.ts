@@ -328,8 +328,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   saveSchemeHolding() {
     if (this.scipLevelTransactionForm.invalid) {
       this.checkValid = true;
-      this.scipLevelTransactionForm.get('scripName').markAsTouched();
-      this.scipLevelTransactionForm.get('portfolioName').markAsTouched();
+      this.scipLevelTransactionForm.markAllAsTouched();
       this.transactionArray.controls.forEach(element => {
         element.get('transactionType').markAsTouched();
         element.get('date').markAsTouched();

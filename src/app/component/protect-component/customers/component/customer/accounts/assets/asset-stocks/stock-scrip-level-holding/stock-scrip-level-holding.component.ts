@@ -312,8 +312,8 @@ addNewNominee(data) {
     // }
     if (this.scipLevelHoldingForm.invalid || this.HoldingArray.invalid) {
       this.checkValid = true;
-      this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
-      this.scipLevelHoldingForm.get('ownerName').markAsTouched();
+      this.scipLevelHoldingForm.markAllAsTouched();
+      // this.scipLevelHoldingForm.get('ownerName').markAsTouched();
       this.HoldingArray.controls.forEach(element => {
         element.get('holdingAsOn').markAsTouched();
         element.get('holdings').markAsTouched();
