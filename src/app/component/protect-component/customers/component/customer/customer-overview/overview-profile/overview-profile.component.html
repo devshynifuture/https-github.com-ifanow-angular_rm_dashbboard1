@@ -350,7 +350,8 @@
                             <div *ngIf="addressList==undefined && !adressFlag" class="col-md-12 addAddressClass">
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
-                                    <h4 class="text-center pt-12">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="!showSectionError.addressList">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="showSectionError.addressList">Sorry! it's not you it's us</h4>
                                     <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
                                         class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                                 </div>
@@ -375,7 +376,8 @@
                                 <h5 class=" headingDetails "> Bank </h5>
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
-                                    <h4 class="text-center pt-12">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="!showSectionError.bankList">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="showSectionError.bankList">Sorry! it's not you it's us</h4>
                                     <button (click)="openAddEdit(clientData,null,'Bank','Add')"
                                         class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
                                 </div>
@@ -440,7 +442,8 @@
                         <div *ngIf="dematList==undefined && !dematFlag" class="col-md-12 p-0 ">
                             <h5 class=" headingDetails "> Demat </h5>
                             <div class="d-flex addDenmatClass flex-column align-items-center">
-                                <h4 class="text-center pt-12">No data found</h4>
+                                <h4 class="text-center pt-12" *ngIf="!showSectionError.dematList">No data found</h4>
+                                <h4 class="text-center pt-12" *ngIf="showSectionError.dematList">Sorry! it's not you it's us</h4>
                                 <button (click)="openAddEdit(clientData,null,'Demat','Add')" class="btn-primary br-0 "
                                     mat-stroked-button> ADD DEMAT </button>
                             </div>

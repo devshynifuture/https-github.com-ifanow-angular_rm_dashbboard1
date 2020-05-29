@@ -95,7 +95,7 @@ export class OverviewProfileComponent implements OnInit {
       },
       err => {
         console.error(err);
-        this.hasError = true;
+        // this.hasError = true;
       }
     );
   }
