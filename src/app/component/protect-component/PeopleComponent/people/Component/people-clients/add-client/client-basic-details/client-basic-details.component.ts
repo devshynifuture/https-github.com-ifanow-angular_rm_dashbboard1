@@ -299,13 +299,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       console.log(this.invTaxStatusList);
     }
     this.invTaxStatus = '1';
-    this.taxStatusFormControl.reset();
-    this.taxStatusFormControl.setValue('1');
+    // this.taxStatusFormControl.reset();
+    // this.taxStatusFormControl.setValue('1');
     this.invTypeCategory = event.value;
   }
 
   changeTaxStatus(event) {
-    this.invTaxStatus = event.value;
+    this.invTaxStatus = event;
   }
 
   addRole(role) {
@@ -313,7 +313,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   saveNextClient(flag) {
-    this.taxStatusFormControl.markAllAsTouched();
+    // this.taxStatusFormControl.markAllAsTouched();
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
@@ -324,8 +324,6 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     if (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '3')) && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
-      return;
-    } else if (this.taxStatusFormControl.invalid) {
       return;
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
@@ -516,7 +514,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   saveNextFamilyMember(flag) {
     // this.basicDetails.get('clientOwner').setValidators(null);
-    this.taxStatusFormControl.markAllAsTouched();
+    // this.taxStatusFormControl.markAllAsTouched();
     const mobileList = [];
     this.mobileData.controls.forEach(element => {
       console.log(element);
@@ -564,10 +562,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    if (this.taxStatusFormControl.invalid) {
-      this.taxStatusFormControl.markAllAsTouched();
-      return;
-    }
+    // if (this.taxStatusFormControl.invalid) {
+    //   this.taxStatusFormControl.markAllAsTouched();
+    //   return;
+    // }
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     ;
     const obj = {

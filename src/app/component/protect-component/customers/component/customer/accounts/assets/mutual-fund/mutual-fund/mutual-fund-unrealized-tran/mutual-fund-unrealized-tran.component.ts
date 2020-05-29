@@ -102,6 +102,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     } else {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
         'units', 'balanceUnits', 'days', 'icons'];
+      this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+        'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'iconsTotal'];
     }
   }
 
@@ -161,16 +163,19 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           } else {
             transactionView = allClient;
           }
-          if(this.reponseData){
+          if (this.reponseData) {
             this.setDefaultFilterData.transactionView.forEach(element => {
               if (element.selected == true) {
-                this.displayedColumns.push(element.displayName)
+                this.displayedColumns.push(element.displayName);
+                this.displayedColumnsTotal.push(element.displayName + 'Total');
+
               }
             });
-          }else{
+          } else {
             transactionView.forEach(element => {
               if (element.selected == true) {
-                this.displayedColumns.push(element.displayName)
+                this.displayedColumns.push(element.displayName);
+                this.displayedColumnsTotal.push(element.displayName + 'Total');
               }
             });
           }
@@ -180,7 +185,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
-          }
+          };
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions') {
             this.isLoading = true;
@@ -197,8 +202,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.getMutualFund();
           }
         }
-        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType)
-        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' :'Sub Category wise';
+        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
+        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       },
       (error) => {
         this.mfData = this.mfGetData;
@@ -216,11 +221,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         } else {
           this.getMutualFund();
         }
-        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType)
-        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' :'Sub Category wise';
+        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
+        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       }
     );
-   
+
   }
 
   initValueOnInit() {
@@ -381,7 +386,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         transactionType: this.rightFilterData.transactionType,
         viewMode: this.viewMode,
-        showFolio:(this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
+        showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
         // mfService: this.mfService
       };
       // Create a new
@@ -438,11 +443,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         }
       });
     });
-    this.mfService.getMutualFundData()
-      .subscribe(res => {
+    // this.mfService.getMutualFundData()
+    //   .subscribe(res => {
         const fragmentData = {
           flag: 'editTransaction',
-          data: {family_member_list: res['family_member_list'], flag, ...element, ...this.selectedLoadData},
+          data: {family_member_list: ['family_member_list'], flag, ...element, ...this.selectedLoadData},
           id: 1,
           state: 'open',
           componentName: MFSchemeLevelHoldingsComponent
@@ -459,7 +464,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             }
           }
         );
-      });
+      // });
 
   }
 
@@ -690,9 +695,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-    this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData,'','');
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData, '', '');
     }, 200);
-   
+
     // if(data){
     //   this.isSpinner = false;
     // }

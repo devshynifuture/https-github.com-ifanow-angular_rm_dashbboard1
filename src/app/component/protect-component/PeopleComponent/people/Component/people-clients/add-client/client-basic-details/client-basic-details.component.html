@@ -56,18 +56,17 @@
                     <p class="m-0 roboto mob-pb-5">Tax status</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <mat-select (selectionChange)="changeTaxStatus($event.value)"
-                                        [formControl]="taxStatusFormControl"
-                                        [(ngModel)]="invTaxStatus" class="form-control">
-                              <mat-option value='' disabled>Select option</mat-option>
-                              <mat-option value="1">Resident</mat-option>
-                              <mat-option value="0">Non-resident</mat-option>
-                              <!-- (onSelectionChange)="numberFlag(singleTaxStatus)" -->
-                              <!-- <mat-option *ngFor="let singleTaxStatus of invTaxStatusList"
+                            <mat-select (selectionChange)="changeTaxStatus($event.value)" [(ngModel)]="invTaxStatus"
+                                class="form-control">
+                                <mat-option value='' disabled>Select option</mat-option>
+                                <mat-option value="1">Resident</mat-option>
+                                <mat-option value="0">Non-resident</mat-option>
+                                <!-- (onSelectionChange)="numberFlag(singleTaxStatus)" -->
+                                <!-- <mat-option *ngFor="let singleTaxStatus of invTaxStatusList"
                                   [value]="singleTaxStatus.taxStatusCode">{{singleTaxStatus.taxStatusDesc}}
                               </mat-option> -->
                             </mat-select>
-                            <mat-error>This field is required</mat-error>
+                            <!-- <mat-error>This field is required</mat-error> -->
                         </mat-form-field>
                     </div>
                 </div>

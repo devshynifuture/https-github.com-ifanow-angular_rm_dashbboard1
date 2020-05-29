@@ -1,99 +1,92 @@
-<div class="popup-header-fix-40">
+<div class="popup-header-fix w-60">
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h4 class="mb-0 wrapper-20"> {{inputData.adminName}}</h4>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
-        <i (click)="Close(true)" class="material-icons c-p pt-8 v-middle"> clear</i>
+        <i class="material-icons c-p pt-8 v-middle" (click)="Close(true)"> clear</i>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row pt-28">
+
+<div class="row pt-90">
   <div class="col-md-12">
-    <mat-tab-group (selectedIndexChange)="changeTab($event)" class="ifaOnboardingClass" id="ui-backoffice-tabs">
+    <mat-tab-group class="ifaOnboardingClass" id="ui-backoffice-tabs" (selectedIndexChange)="changeTab($event)">
       <mat-tab label="Overview">
-        <div *ngIf="showContent" class="row">
+        <div class="row" *ngIf="showContent">
           <div class="col-md-9 pl-0 miscellaneousBox">
-            <mat-form-field *ngIf="getOverview" class="example-full-width">
-                            <textarea matInput class="form-control height160" [disabled]="overviewDesc"
-                                      [(ngModel)]="getOverview.description"></textarea>
-              <button (click)="overviewDesc = false" *ngIf="overviewDesc == true"
-                      class=" bg-primary text-white right br-0 text-inherit mt-12"
-                      mat-button>EDIT
-              </button>
-              <button (click)="overviewDesc = true;updateIFAOnboardingOverview()" *ngIf="overviewDesc == false"
-                      class=" bg-primary text-white right br-0 text-inherit mt-12"
-                      mat-button>SAVE
-              </button>
+            <mat-form-field class="example-full-width" *ngIf="getOverview">
+              <textarea matInput class="form-control height160" [disabled]="overviewDesc"
+                [(ngModel)]="getOverview.description"></textarea>
+              <button mat-button *ngIf="overviewDesc == true"
+                class=" bg-primary text-white right br-0 text-inherit mt-12"
+                (click)="overviewDesc = false">EDIT</button>
+              <button mat-button *ngIf="overviewDesc == false"
+                class=" bg-primary text-white right br-0 text-inherit mt-12"
+                (click)="overviewDesc = true;updateIFAOnboardingOverview()">SAVE</button>
             </mat-form-field>
           </div>
         </div>
         <div *ngIf="!showContent" class="col-md-12 p-44 b-a mt-20">
           Cannot Display Item
         </div>
-        <div *ngIf="isSuccess == true" class="row">
-          <mat-spinner [diameter]="30" class="loader text-center"></mat-spinner>
+        <div class="row" *ngIf="isSuccess == true">
+          <mat-spinner class="loader text-center" [diameter]="30"></mat-spinner>
         </div>
       </mat-tab>
 
 
-      <mat-tab (click)="getIFAActivity()" class="pb-44" label="Onboarding activity">
+      <mat-tab label="Onboarding activity" (click)="getIFAActivity()" class="pb-44">
         <h3 class="f-500 f-16 mb-4">
           Stages
         </h3>
         <div class="cardList">
-          <div *ngFor="let stage of stageList; index as i"
-               class="row d-flex align-items-center  pt-6 pb-6 bb">
-            <div class="col-md-8 f-14 pl-0">
+          <div class="row d-flex align-items-center  pt-6 pb-6 bb" *ngFor="let stage of stageList; index as i">
+            <div class="col-md-8 f-14">
 
               <!-- *ngIf="stage.isShowComment == false" -->
-              <mat-checkbox (change)="updateActivityCompleteness(stage,$event)"
-                            [checked]="(stage.isComplete == 1)? true:false"
-                            [value]="stage.isComplete"
-                            class="mr-8"></mat-checkbox>
-              <span (click)="showComment(stage,true)"
-                    [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }"
-                    class="c-p">
-                                {{isLoading ? '' : stage.taskName}}
+              <mat-checkbox class="mr-8" [value]="stage.isComplete" [checked]="(stage.isComplete == 1)? true:false"
+                (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
+              <span class="c-p" (click)="showComment(stage,true)"
+                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
+                {{isLoading? '': stage.taskName}}
 
-                            </span>
+              </span>
             </div>
-            <div (click)="showComment(stage,true)"
-                 class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
-                            <span class="text-custom f-14">
-                                <!-- <img src="assets/images/svg/conversation.svg" class="c-p"> -->
-                              {{ stage.stageCommentCount }}
-                              <img *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null"
-                                   src="/assets/images/svg/onboarding-msg.svg">
+            <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end" (click)="showComment(stage,true)">
+              <span class="text-custom f-14">
+                <!-- <img src="assets/images/svg/conversation.svg" class="c-p"> -->
+                {{ stage.stageCommentCount }}
+                <img src="/assets/images/svg/onboarding-msg.svg"
+                  *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null" class="onboarding-icons">
 
-                            </span>
+              </span>
               <span class="material-icons c-p text-custom">
-                                {{ stage.isShowComment == true ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}
-                            </span>
+                {{ stage.isShowComment == true ? 'keyboard_arrow_down': 'keyboard_arrow_right' }}
+              </span>
             </div>
 
-            <div *ngIf="stage.isShowComment == true" [appSkeletonLoading]="isLoading"
-                 appSkeletonLoading class="bg-grey lter mt-20 w-100 p-20 skeletonAnimation">
+            <div class="bg-grey lter mt-20 w-100 p-20 skeletonAnimation" appSkeletonLoading
+              [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
               <h4 class="f-14 f-500">Comments</h4>
-              <div *ngFor="let activityStage of stageComment" class="row pb-20">
+              <div class="row pb-20" *ngFor="let activityStage of stageComment">
                 <div class="col-md-1 text-center p-0">
-                  <img
-                    [src]="activityStage.profileImage ? activityStage.profileImage : '/assets/images/svg/comment-icon.svg'"
-                    class="avatar-img">
+                  <img class="avatar-img"
+                    [src]="activityStage.profileImage ? activityStage.profileImage : '/assets/images/svg/comment-icon.svg'">
                 </div>
                 <div class="col-md-9 pl-0">
                   <div class="relClass">
-                    <div [ngClass]="{'height23': isLoading}" class="bar">
+                    <div class="bar" [ngClass]="{'height23': isLoading}">
                       <h4 class="f-14">{{activityStage.name}} <span class="text-primitive">a
-                        {{activityStage.commentActionAgo }}
-                                                </span></h4>
+                          {{activityStage.commentActionAgo }}
+                        </span> </h4>
                     </div>
                   </div>
                   <div class="relClass">
-                    <div [ngClass]="{'height23': isLoading}" class="bar">
+                    <div class="bar" [ngClass]="{'height23': isLoading}">
                       <p *ngIf="activityStage.isEditStage == true">
                         {{activityStage.commentMsg}}
                       </p>
@@ -101,45 +94,39 @@
                   </div>
                   <div *ngIf="activityStage.isEditStage == false">
                     <mat-form-field>
-                      <input [(ngModel)]="activityStage.commentMsg" class="form-control br-0" matInput
-                             maxlength="60" type="text">
+                      <input matInput type="text" (ngModel)]="activityStage.commentMsg" class="form-control br-0">
                     </mat-form-field>
                   </div>
                 </div>
                 <div class="col-md-2 p-0 text-right">
-                  <p (click)='activityCommentFunStage(activityStage,false)'
-                     *ngIf="activityStage.isEditStage == true && activityStage.isEditStageRm == true"
-                     class="f-12 underline c-p mr-8 d-inline-block"> Edit </p>
-                  <p (click)='activityCommentFunStage(activityStage,true)'
-                     *ngIf="activityStage.isEditStage == false"
-                     class="f-12 c-p mr-8 d-inline-block underline"> Save </p>
-                  <p (click)="deleteModal('commentStage',stage,activityStage)"
-                     *ngIf="activityStage.isEditStageRm == true"
-                     class="f-12 c-p d-inline-block underline"> Delete </p>
+                  <p *ngIf="activityStage.isEditStage == true && activityStage.isEditStageRm == true"
+                    class="f-12 underline c-p mr-8 d-inline-block"
+                    (click)='activityCommentFunStage(activityStage,false)'> Edit </p>
+                  <p *ngIf="activityStage.isEditStage == false" class="f-12 c-p mr-8 d-inline-block underline"
+                    (click)='activityCommentFunStage(activityStage,true)'> Save </p>
+                  <p class="f-12 c-p d-inline-block underline" *ngIf="activityStage.isEditStageRm == true"
+                    (click)="deleteModal('commentStage',stage,activityStage)"> Delete </p>
                 </div>
               </div>
             </div>
 
-            <div *ngIf="stage.isShowComment == true" [appSkeletonLoading]="isLoading"
-                 appSkeletonLoading class="bg-grey lter mb-8 w-100 p-20 skeletonAnimation">
+            <div class="bg-grey lter mb-8 w-100 p-20 skeletonAnimation" appSkeletonLoading
+              [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
               <div class="row">
                 <div class="col-md-1 text-center p-0">
                   <img src="/assets/images/svg/comment-icon.svg">
                 </div>
                 <div class="col-md-10 pl-0">
                   <div class="relClass">
-                    <div [ngClass]="{'height23': isLoading}" class="bar">
+                    <div class="bar" [ngClass]="{'height23': isLoading}">
                       <mat-form-field>
-                        <input [(ngModel)]="CommentStage" class="form-control br-0" matInput maxlength="60"
-                               type="text">
+                        <input matInput type="text" [(ngModel)]="CommentStage" class="form-control br-0">
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-1 p-0 text-right">
-                  <button (click)='addStageComment(CommentStage,stage)' class=" btn-primary"
-                          mat-button>Add
-                  </button>
+                  <button (click)='addStageComment(CommentStage,stage)' mat-button class=" btn-primary">Add</button>
                 </div>
               </div>
             </div>
@@ -150,31 +137,29 @@
 
         <div class="bg-grey lter mt-32 p-20 pb-8">
           <h4 class="f-14 f-500">Comments</h4>
-          <div *ngFor="let activity of activityCommentList" class="row pb-20">
+          <div class="row pb-20" *ngFor="let activity of activityCommentList">
             <div class="col-md-1 text-center p-0">
-              <img [src]="activity.profileImage ? activity.profileImage : '/assets/images/svg/comment-icon.svg'"
-                   class="avatar-img">
+              <img class="avatar-img"
+                [src]="activity.profileImage ? activity.profileImage : '/assets/images/svg/comment-icon.svg'">
             </div>
             <div class="col-md-9 pl-0">
               <h4 class="f-14">{{activity.name}} <span class="text-primitive">
-                                    {{ activity.commentActionAgo }} </span></h4>
+                  {{ activity.commentActionAgo }} </span> </h4>
               <p *ngIf="activity.isEdit == true">{{activity.commentMsg}}</p>
               <div *ngIf="activity.isEdit == false">
                 <mat-form-field>
-                  <input [(ngModel)]="activity.commentMsg" class="form-control br-0" matInput maxlength="60"
-                         type="text">
+                  <input matInput type="text" [(ngModel)]="activity.commentMsg" class="form-control br-0">
                 </mat-form-field>
               </div>
             </div>
             <div class="col-md-2 p-0 text-right">
-              <p (click)='activityCommentFun(activity,false)'
-                 *ngIf="activity.isEdit == true && activity.isEditRm == true"
-                 class="f-12 underline c-p mr-8 d-inline-block"> Edit
+              <p *ngIf="activity.isEdit == true && activity.isEditRm == true"
+                class="f-12 underline c-p mr-8 d-inline-block" (click)='activityCommentFun(activity,false)'> Edit
               </p>
-              <p (click)='activityCommentFun(activity,true)' *ngIf="activity.isEdit == false"
-                 class="f-12 underline c-p mr-8 d-inline-block"> Save </p>
-              <p (click)="deleteModal('comment',activity,'')" *ngIf="activity.isEditRm == true"
-                 class="f-12 underline c-p d-inline-block"> Delete </p>
+              <p *ngIf="activity.isEdit == false" class="f-12 underline c-p mr-8 d-inline-block"
+                (click)='activityCommentFun(activity,true)'> Save </p>
+              <p class="f-12 underline c-p d-inline-block" *ngIf="activity.isEditRm == true"
+                (click)="deleteModal('comment',activity,'')"> Delete </p>
             </div>
           </div>
         </div>
@@ -186,12 +171,11 @@
             </div>
             <div class="col-md-9 p-0">
               <mat-form-field>
-                <input [(ngModel)]="Comment" class="form-control br-0" matInput maxlength="60"
-                       type="text">
+                <input matInput type="text" [(ngModel)]="Comment" class="form-control br-0">
               </mat-form-field>
             </div>
             <div class="col-md-2 p-0 text-right">
-              <p (click)='makeComment(Comment,false)' class="f-12 c-p mr-8 d-inline-block"> Comment </p>
+              <p class="f-12 c-p mr-8 d-inline-block" (click)='makeComment(Comment,false)'> Comment </p>
             </div>
           </div>
         </div>
@@ -201,11 +185,11 @@
         <div class="row">
           <div class="back-office-table col-md-12 overflow-hidden">
             <h3 class="f-16">CAMS</h3>
-            <table [appSkeletonLoading]="utilservice.isLoading" [dataSource]="camsDS" appSkeletonLoading id="table-low"
-                   mat-table>
+            <table id="table-low" mat-table [dataSource]="camsDS" appSkeletonLoading
+              [appSkeletonLoading]="utilservice.isLoading">
               <ng-container matColumnDef="arn">
-                <th *matHeaderCellDef class="br" mat-header-cell> ARN/RIA</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.arnRiaDetailsId}}
                   </div>
@@ -213,8 +197,8 @@
               </ng-container>
 
               <ng-container matColumnDef="regEmailId">
-                <th *matHeaderCellDef class="br" mat-header-cell> Registered email ID</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.registeredEmail}}
                   </div>
@@ -222,14 +206,14 @@
               </ng-container>
 
               <ng-container matColumnDef="scheduleExp">
-                <th *matHeaderCellDef class="br" mat-header-cell> Schedule expires on</th>
-                <td *matCellDef="let element" class="br" mat-cell> {{element.scheduleExp}} </td>
+                <th class="br" mat-header-cell *matHeaderCellDef> Schedule expires on </th>
+                <td class="br" mat-cell *matCellDef="let element"> {{element.scheduleExp}} </td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns1" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
-            <div *ngIf="camsDS.data === null" class="col-md-12 p-0 b-a">
+            <div class="col-md-12 p-0 b-a" *ngIf="camsDS.data === null">
               <h5 class="text-center p-44">
                 No Data Found
               </h5>
@@ -240,11 +224,11 @@
         <div class="row pt-16">
           <div class="back-office-table col-md-12 overflow-hidden">
             <h3 class="f-16">Karvy (KFintech)</h3>
-            <table [appSkeletonLoading]="utilservice.isLoading" [dataSource]="karvyDS" appSkeletonLoading id="table-low"
-                   mat-table>
+            <table id="table-low" mat-table [dataSource]="karvyDS" appSkeletonLoading
+              [appSkeletonLoading]="utilservice.isLoading">
               <ng-container matColumnDef="arn">
-                <th *matHeaderCellDef class="br" mat-header-cell> ARN/RIA</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.arnRiaDetailsId}}
                   </div>
@@ -252,8 +236,8 @@
               </ng-container>
 
               <ng-container matColumnDef="loginId">
-                <th *matHeaderCellDef class="br" mat-header-cell> Login ID</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.loginId}}
                   </div>
@@ -261,8 +245,8 @@
               </ng-container>
 
               <ng-container matColumnDef="registeredId">
-                <th *matHeaderCellDef class="br" mat-header-cell> Registered email ID</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.registeredEmail}}
                   </div>
@@ -270,19 +254,19 @@
               </ng-container>
 
               <ng-container matColumnDef="userOrdering">
-                <th *matHeaderCellDef class="br" mat-header-cell> Use for file ordering?</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Use for file ordering? </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
-                                        <span
-                                          *ngIf="!utilservice.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
+                    <span
+                      *ngIf="!utilservice.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
                   </div>
                 </td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns2" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
             </table>
-            <div *ngIf="karvyDS.data === null" class="col-md-12 p-0 b-a">
+            <div class="col-md-12 p-0 b-a" *ngIf="karvyDS.data === null">
               <h5 class="text-center p-44">
                 No Data Found
               </h5>
@@ -293,11 +277,11 @@
         <div class="row pt-16">
           <div class="back-office-table col-md-12 overflow-hidden">
             <h3 class="f-16"> Franklin Templeton </h3>
-            <table [appSkeletonLoading]="utilservice.isLoading" [dataSource]="frankDS" appSkeletonLoading id="table-low"
-                   mat-table>
+            <table id="table-low" mat-table [dataSource]="frankDS" appSkeletonLoading
+              [appSkeletonLoading]="utilservice.isLoading">
               <ng-container matColumnDef="arn">
-                <th *matHeaderCellDef class="br" mat-header-cell> ARN/RIA</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.arnRiaDetailsId}}
                   </div>
@@ -305,8 +289,8 @@
               </ng-container>
 
               <ng-container matColumnDef="loginId">
-                <th *matHeaderCellDef class="br" mat-header-cell> Login ID</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.loginId}}
                   </div>
@@ -314,18 +298,18 @@
               </ng-container>
 
               <ng-container matColumnDef="registeredId">
-                <th *matHeaderCellDef class="br" mat-header-cell> Registered email ID</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.registeredEmail}}
                   </div>
                 </td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns3" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns3;" mat-row></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
             </table>
-            <div *ngIf="frankDS.data === null" class="col-md-12 p-0 b-a">
+            <div class="col-md-12 p-0 b-a" *ngIf="frankDS.data === null">
               <h5 class="text-center p-44">
                 No Data Found
               </h5>
@@ -336,11 +320,11 @@
         <div class="row pt-16 pb-90">
           <div class="back-office-table col-md-12 overflow-hidden">
             <h3 class="f-16"> CAMS Fundsnet </h3>
-            <table [appSkeletonLoading]="utilservice.isLoading" [dataSource]="fundsDS" appSkeletonLoading id="table-low"
-                   mat-table>
+            <table id="table-low" mat-table [dataSource]="fundsDS" appSkeletonLoading
+              [appSkeletonLoading]="utilservice.isLoading">
               <ng-container matColumnDef="arn">
-                <th *matHeaderCellDef class="br" mat-header-cell> ARN/RIA</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.arnRiaDetailsId}}
                   </div>
@@ -348,18 +332,18 @@
               </ng-container>
 
               <ng-container matColumnDef="loginId">
-                <th *matHeaderCellDef class="br" mat-header-cell> Login ID</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">
                     {{element.loginId}}
                   </div>
                 </td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns4" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns4;" mat-row></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
             </table>
-            <div *ngIf="fundsDS.data === null" class="col-md-12 p-0 b-a">
+            <div class="col-md-12 p-0 b-a" *ngIf="fundsDS.data === null">
               <h5 class="text-center p-44">
                 No Data Found
               </h5>
@@ -376,42 +360,41 @@
       <mat-tab label="Team members">
         <div class="row pt-16">
           <div class="back-office-table col-md-12 overflow-hidden">
-            <table [appSkeletonLoading]="utilservice.isLoading" [dataSource]="userList" appSkeletonLoading
-                   id="table-low"
-                   mat-table>
+            <table id="table-low" mat-table [dataSource]="userList" appSkeletonLoading
+              [appSkeletonLoading]="utilservice.isLoading">
 
               <ng-container matColumnDef="name">
-                <th *matHeaderCellDef class="br" mat-header-cell> Name</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">{{element.fullName}}</div>
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="email">
-                <th *matHeaderCellDef class="br" mat-header-cell> Email</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Email </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">{{element.email}}</div>
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="mobile">
-                <th *matHeaderCellDef class="br" mat-header-cell> Mobile</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Mobile </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">{{element.mobile}}</div>
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="role">
-                <th *matHeaderCellDef class="br" mat-header-cell> Role</th>
-                <td *matCellDef="let element" class="br" mat-cell>
+                <th class="br" mat-header-cell *matHeaderCellDef> Role </th>
+                <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">{{element.role?.roleName}}</div>
                 </td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div *ngIf="userList.data === null" class="col-md-12 p-0 b-a">
+            <div class="col-md-12 p-0 b-a" *ngIf="userList.data === null">
               <h5 class="text-center p-44">
                 No Data Found
               </h5>
@@ -433,13 +416,16 @@
 </div>
 
 
+
+
+
 <div class="bottom-fixed wrapper-12 pt-16">
   <div class="row">
     <div class="col-md-4">
-      <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
     </div>
     <!-- <div class="col-md-8 right text-right">
-        <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
-    </div> -->
+          <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+      </div> -->
   </div>
 </div>
