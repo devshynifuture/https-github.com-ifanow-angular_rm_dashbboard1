@@ -120,8 +120,6 @@ export class TempserviceService {
         newArray.push(totalObj);
         newArray = this.sorting(newArray, 'categoryName');
       }
-
-
     });
     // this.dataSource = newArray;
     // const output = {
