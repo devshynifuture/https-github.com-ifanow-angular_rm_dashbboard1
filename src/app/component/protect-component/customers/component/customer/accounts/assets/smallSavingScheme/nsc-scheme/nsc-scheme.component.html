@@ -63,7 +63,7 @@
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef >
+            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
                 <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="SumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span> </div>
             </td>
         </ng-container>
@@ -82,7 +82,7 @@
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right" *matFooterCellDef >
+            <td mat-footer-cell class="br text-right" *matFooterCellDef>
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
@@ -92,7 +92,7 @@
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef >
+            <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
                 <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="SumOfMaturityValue" appFormatNumber>{{SumOfMaturityValue}}</span> </div>
             </td>
         </ng-container>
@@ -138,7 +138,8 @@
                         <button mat-menu-item (click)="openAddNSC(element,'editNsc')">Edit</button>
                         <button mat-menu-item (click)="openAddNSC(element,'detailedNsc')">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('NSC',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('NSC',$event,element)" class="uploadInput" id="file-4" multiple
+                                type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('NSC',element)">Delete</button>
@@ -151,9 +152,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns17;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns17;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No NSC found </h4>
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
+        <img src="assets/images/svg/documents-empty-states.svg">
+        <h4 class="text-center mt-12 mb-20">No NSC found </h4>
         <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"> ADD NEW
         </button>
     </div>
