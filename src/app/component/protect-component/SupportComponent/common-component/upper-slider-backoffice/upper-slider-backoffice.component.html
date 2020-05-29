@@ -319,7 +319,7 @@
                         </p> -->
                     </mat-radio-button>
 
-                    <mat-radio-button [disabled]="isFranklinTab" value="2"
+                    <mat-radio-button [disabled]="isFranklinTab || deleteReorderOrDeleteDisabled === 'delete'" value="2"
                         class="example-radio-button mb-5 d-block f-14" (click)="openDeleteAndReorderDialog()">
                         Delete and reorder unmatched folios
                         <span class="f-12 bu-primary text-primary">
@@ -351,7 +351,8 @@
 
                 <div class="row">
                     <div class="col-md-12 overflow-hidden" [ngClass]="{'back-office-table': dataSource3.data !== null}">
-                        <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8">
+                        <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8"
+                            [appSkeletonLoading]="isLoading">
 
                             <!-- Symbol Column -->
                             <ng-container matColumnDef="folios">

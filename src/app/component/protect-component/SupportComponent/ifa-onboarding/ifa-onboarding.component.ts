@@ -84,21 +84,21 @@ export class IfaOnboardingComponent implements OnInit {
           data.forEach((element, index) => {
             tableArray.push({
               adminName: element.name,
-              email: element.email_id,
-              mobile: element.mobile_number,
-              rmName: element.rm_name ? element.rm_name : " - ",
-              stage: element.task_id ? this.getStageName(element.task_id) : "-",
+              email: element.emailId,
+              mobile: element.mobileNo,
+              rmName: element.rmName ? element.rmName : " - ",
+              stage: element.taskMasterId ? this.getStageName(element.taskMasterId) : "-",
               usingSince:
-                element.using_since_year +
+                element.usingSinceYear +
                 "Y " +
-                element.using_since_month +
+                element.usingSinceMonth +
                 "M",
               plan: element.plan ? element.plan : " - ",
-              team: element.team_count,
-              arn: element.arn_ria_count,
-              adminAdvisorId: element.admin_advisor_id,
+              team: element.teamMemberCount,
+              arn: element.arnRiaDetailCount,
+              adminAdvisorId: element.adminAdvisorId,
               menu: "",
-              advisorId: element.admin_advisor_id,
+              advisorId: element.adminAdvisorId,
             });
           });
           this.dataSource.data = tableArray;
