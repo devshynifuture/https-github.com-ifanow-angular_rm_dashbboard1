@@ -107,8 +107,8 @@ export class SummaryComponent implements OnInit {
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
           // this.mutualFundValue = data[3];
-          this.mutualFundValue = data.filter(element => element.assetType == 5);
-          this.mutualFundValue = this.mutualFundValue[0];
+          // this.mutualFundValue = data.filter(element => element.assetType == 5);
+          // this.mutualFundValue = this.mutualFundValue[0];
           this.fixedIncome = data.filter(element => element.assetType == 7);
           this.fixedIncome = this.fixedIncome[0];
           this.realEstate = data.filter(element => element.assetType == 8);
