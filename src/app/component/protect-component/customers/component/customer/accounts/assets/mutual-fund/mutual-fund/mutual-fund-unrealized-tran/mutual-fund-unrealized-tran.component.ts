@@ -37,7 +37,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
-  type: any = {name: ''};
   isSpinner = false;
   customDataHolder = [];
   customDataSource = new TableVirtualScrollDataSource([]);
@@ -65,6 +64,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   returnValue: any;
   selectedLoadData: any;
   showDownload: boolean = false;
+  columnHeader: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
               private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -161,12 +161,19 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           } else {
             transactionView = allClient;
           }
-          transactionView.forEach(element => {
-            if (element.selected == true) {
-              this.displayedColumns.push(element.displayName);
-              this.displayedColumnsTotal.push(element.displayName + 'Total');
-            }
-          });
+          if(this.reponseData){
+            this.setDefaultFilterData.transactionView.forEach(element => {
+              if (element.selected == true) {
+                this.displayedColumns.push(element.displayName)
+              }
+            });
+          }else{
+            transactionView.forEach(element => {
+              if (element.selected == true) {
+                this.displayedColumns.push(element.displayName)
+              }
+            });
+          }
 
           this.saveFilterData = {
             transactionView: transactionView,
@@ -190,6 +197,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.getMutualFund();
           }
         }
+        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType)
+        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' :'Sub Category wise';
       },
       (error) => {
         this.mfData = this.mfGetData;
@@ -207,9 +216,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         } else {
           this.getMutualFund();
         }
+        let type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType)
+        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' :'Sub Category wise';
       }
     );
-
+   
   }
 
   initValueOnInit() {
@@ -570,7 +581,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.mutualFund.family_member_list,
       category: this.setDefaultFilterData.category,
-      transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
+      transactionView: (this.reponseData) ? this.setDefaultFilterData.transactionView : ((this.saveFilterData) ? this.saveFilterData.transactionView : this.setDefaultFilterData.transactionView),
       scheme: this.setDefaultFilterData.scheme,
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
@@ -624,7 +635,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
               };
               this.displayColArray.push(obj);
             });
-            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
+            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);

@@ -75,6 +75,8 @@ export class DetailedViewMandateComponent implements OnInit {
   isFileUploading = false;
 
   getFileDetails(e, flag) {
+    this.showChequeStatus = undefined;
+    this.showMandateStatus = undefined;
     this.file = e.target.files[0];
     const file = e.target.files[0];
     if (flag == 4 && file.type != "application/pdf") {

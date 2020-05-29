@@ -153,11 +153,20 @@ export class MutualFundSummaryComponent implements OnInit {
           } else {
             transactionView = allClient
           }
-          transactionView.forEach(element => {
-            if (element.selected == true) {
-              this.displayedColumns.push(element.displayName)
-            }
-          });
+          if(this.reponseData){
+            this.setDefaultFilterData.transactionView.forEach(element => {
+              if (element.selected == true) {
+                this.displayedColumns.push(element.displayName)
+              }
+            });
+          }else{
+            transactionView.forEach(element => {
+              if (element.selected == true) {
+                this.displayedColumns.push(element.displayName)
+              }
+            });
+          }
+         
 
 
           this.saveFilterData = {
@@ -428,7 +437,7 @@ export class MutualFundSummaryComponent implements OnInit {
       familyMember: this.setDefaultFilterData.familyMember,
       category: this.setDefaultFilterData.category,
       // transactionView: (this.setDefaultFilterData.transactionView.length>0) ? this.setDefaultFilterData.transactionView : this.displayedColumns,
-      transactionView: (this.saveFilterData) ? this.saveFilterData.transactionView : this.displayedColumns,
+      transactionView: (this.reponseData) ? this.setDefaultFilterData.transactionView : ((this.saveFilterData) ? this.saveFilterData.transactionView : this.setDefaultFilterData.transactionView),
       overviewFilter: (this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       scheme: this.setDefaultFilterData.scheme,
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),

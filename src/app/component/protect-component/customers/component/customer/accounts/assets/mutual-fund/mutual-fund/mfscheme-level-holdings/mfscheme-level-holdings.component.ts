@@ -22,7 +22,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     ownerName: [, [Validators.required]],
     folioNumber: [, [Validators.required]],
     sip: [, [Validators.required]],
-    tag: [, [Validators.required]],
+    tag: [],
   });
   dateChanged = false;
   ownerData: any;
@@ -212,7 +212,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
 
   getSchemeLevelHoldings(data) {
-    if (data  && data.mutualFundTransactions.length != 0 && this.data.flag === 'editMutualFund') {
+    if (data  && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund' || this.data.flag === 'editTransaction')) {
       data.mutualFundTransactions.forEach(element => {
         this.transactionArray.push(this.fb.group({
           transactionType: [element.transactionTypeMasterId, [Validators.required]],
@@ -302,13 +302,14 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               investorName: (this.ownerName == null) ? this.schemeLevelHoldingForm.controls.ownerName.value : this.ownerName,
               schemeCode: this.data.schemeCode,
               folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
-              mutualFundId: this.data.id,
+              mutualFundId: this.data.mutualFundId,
               sip: this.schemeLevelHoldingForm.controls.sip.value,
               tag: this.schemeLevelHoldingForm.controls.tag.value,
               fwTransactionType: this.getTransactionName(element.transactionType),
               transactionDate: this.getDateFormatted(element.date),
               unit: element.Units,
               amount: element.transactionAmount,
+              id:element.id,
               transactionTypeId: element.transactionType,
               effect: this.getTransactionEffect(element.transactionType)
             }
@@ -439,7 +440,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
         console.log("this is object for adding transaction post::", mutualFundTransactions);
         postObj = {
-          id: this.data.id,
+          // id: this.data.id,
           mutualFundTransactions
         }
       }
@@ -448,7 +449,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         console.log('edit Trnasaction:', postObj);
         this.customerService.postEditTransactionMutualFund(postObj)
           .subscribe(res => {
-            if (res) {
+            if (res || res == 0) {
               console.log("success::", res);
               this.Close(true);
             } else {

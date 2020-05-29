@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
+
 @Component({
   selector: 'app-upper-slider-backoffice',
   templateUrl: './upper-slider-backoffice.component.html',
@@ -49,7 +50,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   canExportExcelSheet = 'false';
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   upperHeaderName;
-  isRmLogin: any;
+  isRmLogin = AuthService.getUserInfo().isRmLogin;
+  deleteReorderOrDeleteDisabled = 'none';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -57,7 +59,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private dialog: MatDialog,
     private supportService: SupportService,
     private datePipe: DatePipe,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
+    private util: UtilService
   ) { }
 
   ngOnInit() {
@@ -136,6 +139,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.handlingDataVariable();
           this.eventService.openSnackBar('No Team Member Found', "Dismiss");
         }
+      }, err => {
+        console.log(err);
       })
   }
 
@@ -173,7 +178,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getBackofficeAumReconListSummary(doStartRecon) {
-    this.isRmLogin = AuthService.getUserInfo().isRmLogin;
+
     let isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
     const data = {
       advisorIds: [...this.adminAdvisorIds],
@@ -209,11 +214,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
               transaction: '',
               mutualFundId: element.mutualFundId,
               canDeleteTransaction: new Date(res.transactionDate).getTime() > new Date(element.freezeDate).getTime(),
-              freezeDate: element.freezeDate ? element.freezeDate : null
+              freezeDate: element.freezeDate ? element.freezeDate : null,
+              investorName: element.investorName
             });
           });
           this.dataSource1.data = arrayValue;
-
+          let doneOnDate = new Date(res.doneOn);
+          let doneOnFormatted = doneOnDate.getFullYear() + '-' +
+            this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
+            this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
           // console.log("datas available till now:::::", this.data, res);
           const data = {
             advisorId: this.advisorId,
@@ -224,6 +233,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             unmatchedCountBeforeRecon: res.unmappedCount,
             transactionDate: res.transactionDate,
             rtId: this.data.rtId,
+            doneOn: doneOnFormatted,
             // when rm login is creted this will get value from localStorage
             rmId: this.rmId
           }
@@ -241,7 +251,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
           // aum date for all object is the same 
           objArr = [{
-            doneOne: new Date().getMilliseconds(),
+            doneOne: res.doneOn,
             aum_balance: res.aumList[0].aumDate,
             transaction: res.transactionDate,
             export_folios: '',
@@ -356,6 +366,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   deleteAndReorder() {
+    let isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     const data = {
       id: this.aumReconId,
       brokerId: this.brokerId,
@@ -363,12 +374,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
       rtId: this.data.rtId,
       mutualFundIds: this.mutualFundIds,
       parentId: this.parentId,
-      isParent: (this.parentId === this.advisorId) ? true : false
+      isParent
     }
     console.log("this is requestjson for delete and reorder:::: ", data)
     this.reconService.deleteAndReorder(data)
       .subscribe(res => {
         console.log(res);
+        this.getBackofficeAumFileOrderListDeleteReorder();
       }, err => {
         console.error(err);
       })
@@ -376,6 +388,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   getBackofficeAumFileOrderListDeleteReorder() {
     this.isLoading = true;
+    this.dataSource3.data = ELEMENT_DATA3;
     this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
       .subscribe(res => {
         this.isLoading = false;
@@ -415,6 +428,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.dataSource3.data = res;
         } else {
           this.dataSource3.data = null;
+          this.eventService.openSnackBar("No Data Found!", "DISMISS");
         }
       });
   }
@@ -505,7 +519,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   }
 
-  openReconciliationDetails(value, data, tableType, index, freezeDate) {
+  openReconciliationDetails(flag, data, tableType, index, freezeDate) {
     let tableData = [];
     if (tableType === 'all-folios') {
       if (this.data.flag === 'report') {
@@ -522,7 +536,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       }
     }
     const fragmentData = {
-      flag: value,
+      flag,
       data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate },
       id: 1,
       state: 'open',
@@ -575,11 +589,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   deleteUnfreezeTransaction() {
+    let isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     let data = {
       id: this.data.id,
       advisorIds: [this.advisorId],
       parentId: this.parentId,
-      isParent: (this.parentId === this.advisorId) ? true : false,
+      isParent,
       brokerId: this.brokerId,
       rtId: this.rtId,
       mutualFundIds: this.mutualFundIds
@@ -619,7 +634,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime()
+              canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime(),
+              investorName: element.investorName
             });
           });
           this.dataSource1.data = arrayValue;
