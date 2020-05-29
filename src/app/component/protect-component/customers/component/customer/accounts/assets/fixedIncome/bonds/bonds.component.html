@@ -35,7 +35,7 @@
             <div class="col-md-2" *ngIf="bonds.value.getCoOwnerName.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                        <input matInput class="form-control br-0 percentage" type="tel" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -91,7 +91,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input autocomplete="off" matInput #amountInvest type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
+                    <input autocomplete="off" matInput #amountInvest type="tel" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="amountInvest">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">
                         This field is required
                     </mat-error>
@@ -107,7 +107,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input autocomplete="off" matInput type="number" (keyup)="onChange($event,'interestRate')" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate">
+                    <input autocomplete="off" matInput type="tel" (keyup)="onChange($event,'interestRate')" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
                     </mat-error>
@@ -195,7 +195,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input autocomplete="off" matInput type="number" (keyup)="onChange($event,'rateReturns')"
+                    <input autocomplete="off" matInput type="tel" (keyup)="onChange($event,'rateReturns')"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         class="form-control br-0 percentage" formControlName="rateReturns">
                     <mat-error class="f-12 pt-4"
@@ -263,7 +263,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" matInput autocomplete="off" formControlName="bondNo" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="number" class="form-control br-0">
+                        <input autocomplete="off" matInput autocomplete="off" formControlName="bondNo" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="tel" class="form-control br-0">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -330,7 +330,7 @@
                 <div class="col-md-2" *ngIf="getNominee.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                            <input matInput class="form-control br-0 percentage" type="tel" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
                             <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                                 This field is required
                             </mat-error>
