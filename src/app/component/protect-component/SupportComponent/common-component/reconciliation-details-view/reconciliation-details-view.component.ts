@@ -73,15 +73,16 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   singleSelectionSelect(element) {
     this.selection.toggle(element);
+    let parsedValue = parseFloat((element.units).toFixed(3));
     if (this.selection.isSelected(element)) {
       this.shouldDeleteMultiple = true;
-      this.selectedFolioUnits = parseInt(this.selectedFolioUnits + parseInt(element.units).toFixed(3));
+      this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
       this.deleteMultipleTransactionArray.push(element.id);
     } else {
       // this.selectedFolioUnits = 0;
-      let index = this.deleteMultipleTransactionArray.indexOf(element);
+      let index = this.deleteMultipleTransactionArray.indexOf(element.id);
       this.deleteMultipleTransactionArray.splice(index, 1);
-      this.selectedFolioUnits = this.selectedFolioUnits - parseInt(parseInt(element.units).toFixed(3));
+      this.selectedFolioUnits = this.selectedFolioUnits - parsedValue;
       if (this.selectedFolioUnits < 0) {
         this.selectedFolioUnits = 0;
       }
@@ -105,7 +106,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         if (this.deleteMultipleTransactionArray.includes(row['id'])) {
           return;
         }
-        this.selectedFolioUnits = this.selectedFolioUnits + parseInt(row.units);
+        let parsedValue = parseFloat(row.units);
+        this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
         this.deleteMultipleTransactionArray.push(row['id']);
       });
     }
@@ -147,6 +149,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           console.log(res);
 
           this.disableFreezeBtn = true;
+          this.disableUnfreezeBtn = false;
           this.canDeleteTransaction = false;
         }, err => {
           console.error(err)
@@ -174,6 +177,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
 
   deleteTransactionApi(value) {
+    this.selection.clear();
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
         console.log("this transactions are deleted:::", res);

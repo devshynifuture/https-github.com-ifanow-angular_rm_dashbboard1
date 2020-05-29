@@ -6,17 +6,25 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 p-0">
+        <div class="col-md-4 p-0">
             <button (click)="fileUpload.click()" class="btnConfirm bg-primary text-white" mat-button>
                 Upload
                 <input [hidden]="true" #fileUpload (change)="getFileDetails($event)" class="uploadInput" id="file-4"
                     type="file">
             </button>
-            <mat-spinner *ngIf="isFileUploading" class="spinnerClass1 "></mat-spinner>
+        </div>
+        <div *ngIf="isFileUploading" class="col-md-1 p-0 align-items-center d-flex">
+            <mat-spinner class=" "></mat-spinner>
+        </div>
+
+        <div class="col-md-4 p-0 d-flex align-items-end">
+            <!-- <mat-spinner *ngIf="isFileUploading" class="spinnerClass1 "></mat-spinner> -->
+
             <span *ngIf="showStatus" class="text-primary ml-12 f-12">Uploaded successfully!</span>
             <span *ngIf="showStatus==false" class="text-danger ml-12 f-12">Uploading failed!</span>
         </div>
 
-
     </div>
+
+
 </div>
