@@ -46,8 +46,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 p-0 overflow-hidden"
-                        [ngClass]="{'back-office-table': dataSource.data !== null}">
+                    <div class="col-md-12 p-0 overflow-hidden back-office-table">
                         <!-- summary table -->
                         <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading
                             [appSkeletonLoading]="isLoading">
@@ -165,8 +164,7 @@
                         </p>
                     </div>
 
-                    <div class="col-md-12 p-0 overflow-hidden"
-                        [ngClass]="{'back-office-table': dataSource1.data !== null}">
+                    <div class="col-md-12 p-0 overflow-hidden back-office-table">
                         <!-- manual recon all folio -->
                         <div *ngIf="subTabState == 1">
 
@@ -319,7 +317,7 @@
                         </p> -->
                     </mat-radio-button>
 
-                    <mat-radio-button [disabled]="isFranklinTab || deleteReorderOrDeleteDisabled === 'delete'" value="2"
+                    <mat-radio-button [disabled]="isFranklinTab" value="2"
                         class="example-radio-button mb-5 d-block f-14" (click)="openDeleteAndReorderDialog()">
                         Delete and reorder unmatched folios
                         <span class="f-12 bu-primary text-primary">
@@ -350,7 +348,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 overflow-hidden" [ngClass]="{'back-office-table': dataSource3.data !== null}">
+                    <div class="col-md-12 overflow-hidden back-office-table">
                         <table mat-table [dataSource]="dataSource3" id="table-low" class=" mt-8"
                             [appSkeletonLoading]="isLoading">
 
