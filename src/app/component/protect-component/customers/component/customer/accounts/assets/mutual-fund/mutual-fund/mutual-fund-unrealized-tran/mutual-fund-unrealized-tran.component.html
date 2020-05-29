@@ -815,10 +815,10 @@
                     {{item.gain}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    {{item.absReturn}} </td>
+                    {{item.absoluteReturn}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
-                    {{item.xirr}} </td>
+                    {{item.cagr}} </td>
             </tr>
             <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
                 <td class="f-700"
@@ -863,13 +863,13 @@
                     {{item.totalCurrentValue}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    {{item.totalCurrentValue - item.totalTransactionAmt}} </td>
+                    {{item.netGain}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                    {{item.absReturn}} </td>
+                    {{item.trnAbsoluteReturn}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
-                    {{item.xirr}} </td>
+                    {{item.totalCagr}} </td>
                 <!-- <td *ngIf="viewMode == 'All Transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
                 </td>
