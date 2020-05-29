@@ -186,15 +186,20 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   getRiskProfileList(flag) {
     this.isLoading = true
-    this.showButton = false
+    this.showButton = false;
+    this.hasError = false;
+    this.loaderFn.increaseCounter();
     this.planService.getRiskProfile('').subscribe(
       data => this.getRiskProfilRes(data, flag)
-    );
+    ), err => {
+      this.hasError = true;
+      this.loaderFn.decreaseCounter();
+    };
   }
 
   getRiskProfilRes(data, flag) {
     this.showButton = true
-    this.isLoading = false
+    this.loaderFn.decreaseCounter();
     this.statusArray = [];
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
@@ -252,9 +257,6 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showQuestionnaire = false;
     if (data) {
       this.mergeRiskProfile(data);
-      setTimeout(() => {
-        this.percentage(this.feedsRiskProfile)
-      }, 300);
     }
   }
 
@@ -277,6 +279,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         equityAllocationLowerLimit: data.equityAllocationLowerLimit,
       }
     }
+    setTimeout(() => {
+      this.percentage(this.feedsRiskProfile)
+    }, 300);
   }
 
   open(flagValue, data) {
@@ -315,6 +320,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
   loadGlobalRiskProfile() {
     this.loaderFn.increaseCounter();
+    this.hasError = false;
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {
       if (res == null) {
         this.globalRiskProfile = [];
@@ -325,7 +331,6 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
-      this.loadRiskProfile();
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -337,6 +342,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.loaderFn.increaseCounter();
+    this.hasError = false;
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res) {
         this.feedsRiskProfile = res[0];
@@ -359,7 +365,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         }
         setTimeout(() => {
           this.percentage(this.feedsRiskProfile)
-        }, 300);
+        });
       } else {
 
         this.showResults = false;

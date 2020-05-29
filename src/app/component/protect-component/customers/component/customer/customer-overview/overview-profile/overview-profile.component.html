@@ -1,4 +1,4 @@
-<div class="profileOverview">
+<div class="profileOverview" *ngIf="!hasError">
     <div class="row">
         <div class="col-width-18 bg-grey lter ">
             <ul class="vertical-menu d-block sticky-top ">
@@ -350,7 +350,8 @@
                             <div *ngIf="addressList==undefined && !adressFlag" class="col-md-12 addAddressClass">
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
-                                    <h4 class="text-center pt-12">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="!showSectionError.addressList">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="showSectionError.addressList">Sorry! it's not you it's us</h4>
                                     <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
                                         class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                                 </div>
@@ -375,7 +376,8 @@
                                 <h5 class=" headingDetails "> Bank </h5>
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
-                                    <h4 class="text-center pt-12">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="!showSectionError.bankList">No data found</h4>
+                                    <h4 class="text-center pt-12" *ngIf="showSectionError.bankList">Sorry! it's not you it's us</h4>
                                     <button (click)="openAddEdit(clientData,null,'Bank','Add')"
                                         class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
                                 </div>
@@ -440,7 +442,8 @@
                         <div *ngIf="dematList==undefined && !dematFlag" class="col-md-12 p-0 ">
                             <h5 class=" headingDetails "> Demat </h5>
                             <div class="d-flex addDenmatClass flex-column align-items-center">
-                                <h4 class="text-center pt-12">No data found</h4>
+                                <h4 class="text-center pt-12" *ngIf="!showSectionError.dematList">No data found</h4>
+                                <h4 class="text-center pt-12" *ngIf="showSectionError.dematList">Sorry! it's not you it's us</h4>
                                 <button (click)="openAddEdit(clientData,null,'Demat','Add')" class="btn-primary br-0 "
                                     mat-stroked-button> ADD DEMAT </button>
                             </div>
@@ -496,117 +499,7 @@
 </div>
 
 
-<!-- step 2 -->
-
-<!-- <div class="row">
-          <div class="col-md-9">
-              <h5 class="mb-20 mt-20 f-500 roboto">Your risk profile helps us understand how much investment risk you can take.
-              </h5>
-              <div class="row">
-                  <div class="col-md-12">
-                      <mat-accordion>
-                          <mat-expansion-panel class="mb-20 shadowNone f-14">
-                              <mat-expansion-panel-header class="bg-grey lter">
-                                  <mat-panel-title>
-                                      1. What is your age?
-                                  </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <mat-radio-group aria-label="Select an option">
-                                  <mat-radio-button class="d-block mb-12 text-primitive f-14" value="1">0-35
-                                  </mat-radio-button>
-                                  <mat-radio-button class="d-block mb-12 text-primitive f-14" value="2">36-45
-                                  </mat-radio-button>
-                                  <mat-radio-button class="d-block mb-12 text-primitive f-14" value="3">46-55
-                                  </mat-radio-button>
-                                  <mat-radio-button class="d-block mb-12 text-primitive f-14" value="4">56-55
-                                  </mat-radio-button>
-                                  <mat-radio-button class="d-block mb-12 text-primitive f-14" value="5">>65
-                                  </mat-radio-button>
-                              </mat-radio-group>
-                          </mat-expansion-panel>
-                          <mat-expansion-panel class="mb-20 shadowNone">
-                              <mat-expansion-panel-header class="bg-grey lter">
-                                  <mat-panel-title>
-                                      2. You have saved for a big vacation.Two weeks before your departure you lose your job. What would you do?
-                                  </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-                                  to make a type specimen book. </p>
-                          </mat-expansion-panel>
-                          <mat-expansion-panel class="mb-20 shadowNone">
-                              <mat-expansion-panel-header class="bg-grey lter">
-                                  <mat-panel-title>
-                                      3. You have a substantial/huge sum of money to spare for about 6 months after which you need this sum to repay a loan, this sum is currently not invested anywhere. You would:
-                                  </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-                                  to make a type specimen book. </p>
-                          </mat-expansion-panel>
-                      </mat-accordion>
-                  </div>
-              </div>
-
-              <div class="row pt-100">
-                  <div class="col-md-12 text-right">
-                      <button mat-button class="bg-primary text-white accSubmitBtn">SUBMIT</button>
-                  </div>
-              </div>
-
-
-          </div>
-          <div class="col-md-3 mt-40">
-              <div class="progressBarBox text-center b-primitive p-20">
-                  <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
-                  <p class="f-16 mb-0 roboto">3 of 15 completed</p>
-              </div>
-          </div>
-      </div> -->
-
-<!-- step 3 -->
-
-<!-- <div class="row">
-          <div class="col-md-12 text-right mt-28">
-              <button mat-button class="btn-primary-outline mr-20 riskBtn text-primary">Retake risk
-                  assessment</button>
-              <button (click)="openHistory('add',null)" mat-button
-                  class="btn-primary-outline historyBtn text-primary">History</button>
-          </div>
-      </div>
-
-      <div class="profileRiskWidth">
-          <div class="row pb-60">
-              <div class="col-md-3 text-center">
-                  <h5 class="mb-8 roboto f-500">Your risk score</h5>
-                  <div class="numberBox">
-                      <h1 class="f-48"> 38 </h1>
-                      <p class="f-12 m-0 text-primitive">Max: 60</p>
-                  </div>
-              </div>
-
-              <div class="col-md-8 text-center">
-                  <h5 class="mb-8 roboto f-500">Your risk profile: Moderately aggressive</h5>
-                  <p class="m-0 text-primitive l-18">
-                      You are an investor who is willing to take <br> moderately high risk for moderately high
-                      returns
-                  </p>
-              </div>
-
-          </div>
-
-
-          <div class="row  ">
-              <div class="col-md-12">
-                  <h5 class="roboto f-500">Equity asset allocation </h5>
-                  <img src="/assets/images/svg/equity-map.svg">
-              </div>
-          </div>
-
-
-
-      </div> -->
-
-
-<!-- </div>
-
-    </div>
-</div> -->
+<div *ngIf="hasError" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+</div>

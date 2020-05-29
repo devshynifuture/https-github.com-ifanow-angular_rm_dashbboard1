@@ -11,6 +11,7 @@ import { appConfig } from '../../../../../../../../config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { MatDialog } from '@angular/material';
 import { IinCreationLoaderComponent } from './iin-creation-loader/iin-creation-loader.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -23,7 +24,7 @@ export class SubmitReviewInnComponent implements OnInit {
   isSuccessful = false;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-    private eventService: EventService, public dialog: MatDialog) {
+    private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
   }
 
   get data() {
@@ -190,7 +191,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
   }
 
-
+  tempObj;
   submit(singleBrokerCred) {
     // this.doneData = true;
     this.toSendObjHolderList = [];
@@ -244,6 +245,7 @@ export class SubmitReviewInnComponent implements OnInit {
       commMode: 1,
       confirmationFlag: 1,
     };
+    this.tempObj = obj1;
     this.openIinUccClient(singleBrokerCred, obj1);
     // setTimeout(() => {
     //   if (this.dialogRef) {
@@ -268,7 +270,19 @@ export class SubmitReviewInnComponent implements OnInit {
       this.dialogRef.componentInstance.setSuccessData(data);
     }
     this.isSuccessful = true;
-
+    this.tempObj.bankDetailList.forEach(element => {
+      element['userId'] = (this.tempObj.ownerName.familyMemberId) ? this.tempObj.ownerName.familyMemberId : this.tempObj.ownerName.clientId;
+      element['userType'] = this.tempObj.ownerName.userType
+      this.peopleService.addEditClientBankDetails(element).subscribe(
+        data => console.log("Address add/edit")
+      )
+    });
+    this.tempObj.holderList[0].address['userId'] = (this.tempObj.ownerName.familyMemberId) ? this.tempObj.ownerName.familyMemberId : this.tempObj.ownerName.clientId;
+    this.tempObj.holderList[0].address['userType'] = this.tempObj.ownerName.userType
+    const obj = this.tempObj.holderList[0].address
+    this.peopleService.addEditClientAddress(obj).subscribe(
+      data => console.log("Bank add/edit")
+    )
   }
 
   getTokenRes(data) {

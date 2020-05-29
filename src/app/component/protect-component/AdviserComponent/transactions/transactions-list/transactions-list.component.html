@@ -6,7 +6,7 @@
     <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
 <div class="row"> -->
 
-    <div *ngIf="credentialData||!isAdvisorSection " class="col-md-9">
+    <div *ngIf="!isLoading && ( credentialData||!isAdvisorSection )" class="col-md-9">
         <div class="row">
             <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
                 <mat-chip-list>
@@ -20,8 +20,10 @@
                     </mat-chip-list>
                 </mat-chip-list>
             </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0">
+
+
+            <div *ngIf="dataSource.data.length > 0" class="col-md-8  d-flex align-items-center justify-content-end pr-0">
+                <div class="form-group mb-0 advisorSctionClass">
                     <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedPreviousToShowDate" class="form-control br-0">
                         <mat-option value="1">Previous 1 Day</mat-option>
                         <mat-option value="7">Previous 7 Day</mat-option>
@@ -29,21 +31,19 @@
                         <mat-option value="custom">Custom Range</mat-option>
                     </mat-select>
                 </div>
-            </div>
-            <div *ngIf="isAdvisorSection" class="col-md-2 pr-0">
-                <div class="form-group mb-0">
+
+                <div *ngIf="isAdvisorSection" class="form-group advisorSctionClass mb-0">
                     <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedBroker" class="form-control br-0">
                         <mat-option *ngFor="let singleData of credentialData" [value]="singleData">
                             {{singleData.brokerCode}}
                         </mat-option>
                     </mat-select>
                 </div>
-            </div>
-            <div *ngIf="dataSource.data.length > 0" class="col-md-3 text-right pt-4 pr-0">
+
                 <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
                 <button (click)="openTransaction()" class="btn-primary addon v-middle" mat-stroked-button> ADD
-          NEW
-        </button>
+                    NEW
+                </button>
             </div>
         </div>
 
@@ -93,7 +93,7 @@
                     Amount/Units
                 </th>
                 <td *matCellDef="let element" class="br c-p text-right" mat-cell>
-                    <div class="bar">
+                    <div class="bar right">
                         <span *ngIf="element.amtUnitType=='Amount'">₹</span>
                         <span [shouldRoundOff]="false" appFormatNumber> {{element.amount}}</span>
                         <span *ngIf="!element.amtUnitType&&!isLoading ||element.amtUnitType=='Unit'"> Units</span></div>
@@ -111,32 +111,34 @@
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="transactionStatus"> Status</th>
                 <td *matCellDef="let element" class="br c-p w-14" mat-cell>
-                    <div *ngIf="element.status == 0" class="bar text-primary  f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 1" class="bar text-danger  f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 2" class="bar text-success t-10 f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 3" class="bar text-success t-10 f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 4" class="bar text-success  f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 5" class="bar text-success  f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 6" class="bar text-success t-10 f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 7" class="bar text-warning  f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
-                    </div>
-                    <div *ngIf="element.status == 8" class="bar text-success t-10 f-400 c-p">
-                        <div class="bar">{{element.transactionStatus}}</div>
+                    <div class="bar">
+                        <div *ngIf="element.status == 0" class=" text-primary  f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 1" class=" text-danger  f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 2" class=" text-success t-10 f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 3" class=" text-success t-10 f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 4" class=" text-success  f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 5" class=" text-success  f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 6" class=" text-success t-10 f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 7" class="  text-warning  f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
+                        <div *ngIf="element.status == 8" class="  text-success t-10 f-400 c-p">
+                            {{element.transactionStatus}}
+                        </div>
                     </div>
                     <!-- <div class="bar">{{element.transactionStatus}}</div> -->
                 </td>
@@ -146,8 +148,8 @@
                 <td *matCellDef="let element" class="c-p" mat-cell>
                     <div class="bar">
                         <i *ngIf="element.platformName" class="material-icons c-p text-custom">
-              keyboard_arrow_right
-            </i>
+                            keyboard_arrow_right
+                        </i>
                     </div>
                 </td>
             </ng-container>
@@ -159,11 +161,11 @@
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">{{noData}}</h4>
             <button (click)="openTransaction()" *ngIf="noData=='No transactions found'" class="btn-primary addon v-middle  " mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
             <button *ngIf="noData=='No credentials found'" [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']" class="btn-primary addon v-middle" mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
         </div>
     </div>
 </div>
