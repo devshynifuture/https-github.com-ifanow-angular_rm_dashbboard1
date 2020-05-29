@@ -71,7 +71,7 @@
     </div>
 
     <div class="row">
-        <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
+        <div [ngClass]="isLoading ? 'overflow-hidden': 'table-scroll'" class="col-md-12 p-0 mb-8">
             <table mat-table [dataSource]="customDataSource" id="tbs"
                 class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
                 *ngIf="customDataSource.data.length>0">

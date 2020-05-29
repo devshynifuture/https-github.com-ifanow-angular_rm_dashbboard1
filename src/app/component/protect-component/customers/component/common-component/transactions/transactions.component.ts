@@ -41,7 +41,7 @@ export class TransactionsComponent implements OnInit {
     console.log("this is data what we got::", this.data);
     this.currentValue = this.data.currentValue;
     this.profitOrLossValue = this.currentValue - this.data.amountInvested;
-    this.xirrValue = this.data.calculated.xirr;
+    this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
     this.initPoint();

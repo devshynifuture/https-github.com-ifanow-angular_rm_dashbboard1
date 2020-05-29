@@ -108,7 +108,7 @@ export class TempserviceService {
         if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
           // this.totalObj = this.this.getEachTotalValue(singleData);
           totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, { total: true });
-          totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
+          // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
           const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
           totalObj.xirr = obj.xirr;
           totalObj.absReturn = obj.absoluteReturn;

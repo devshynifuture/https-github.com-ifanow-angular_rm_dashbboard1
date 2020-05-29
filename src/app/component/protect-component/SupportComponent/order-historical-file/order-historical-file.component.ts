@@ -72,6 +72,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   changedArnRiaList = [];
   minFromDate;
   minToDate;
+  isMainLoading = false;
 
   constructor(
     private supportService: SupportService,
@@ -452,6 +453,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   }
 
   dialogClose(flag) {
+    this.isMainLoading = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
@@ -1545,7 +1547,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                       }
                     }
                   } else {
-                    let monthDiffr = (toDateValueObj.getMonth() - fromDateValueObj()) - 1;
+                    let monthDiffr = (toDateValueObj.getMonth() - fromDateValueObj.getMonth()) - 1;
                     startDateIter = fromDateValueObj;
                     if (startDateIter.getDate() !== 1) {
 
@@ -1758,10 +1760,12 @@ export class OrderHistoricalFileComponent implements OnInit {
 
   postFileOrderingData() {
     console.log("i need this for post call", this.requestJsonForOrderingFiles);
+    this.isMainLoading = true;
     this.supportService.postFileOrderingData(this.requestJsonForOrderingFiles)
       .subscribe(data => {
         if (data) {
           console.log("success::", data);
+          this.isMainLoading = false;
           this.dialogClose(true);
         } else {
           console.error("error::", data)
