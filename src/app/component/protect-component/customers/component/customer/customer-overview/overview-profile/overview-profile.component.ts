@@ -39,8 +39,15 @@ export class OverviewProfileComponent implements OnInit {
   adressFlag: boolean = true;
   bankFlag: boolean;
   dematFlag: boolean;
+  hasError:boolean = false;
 
   // clientData;
+  showSectionError = {
+    familyMemberList: false,
+    addressList: false,
+    dematList: false,
+    bankList: false
+  }
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute, private cancelFlagService: CancelFlagService) {
@@ -87,7 +94,8 @@ export class OverviewProfileComponent implements OnInit {
         }
       },
       err => {
-        console.error(err)
+        console.error(err);
+        this.hasError = true;
       }
     );
   }
@@ -128,6 +136,7 @@ export class OverviewProfileComponent implements OnInit {
       },
       err => {
         this.familyMemberList = undefined;
+        this.showSectionError.familyMemberList = true;
         console.error(err)
       }
     );
@@ -152,6 +161,7 @@ export class OverviewProfileComponent implements OnInit {
       },
       err => {
         this.adressFlag = false;
+        this.showSectionError.addressList = true;
         console.error(err)
       }
     );
@@ -172,7 +182,9 @@ export class OverviewProfileComponent implements OnInit {
           this.selectedDemat = data[0];
         }
       }, err => {
-        this.bankList = false;
+        this.dematFlag = false;
+        this.dematList = undefined;
+        this.showSectionError.dematList = true;
         console.error(err)
       }
     );
@@ -209,6 +221,7 @@ export class OverviewProfileComponent implements OnInit {
       err => {
         this.bankFlag = false;
         this.bankList = undefined
+        this.showSectionError.bankList = true;
         console.error(err)
       }
     );
