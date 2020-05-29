@@ -116,11 +116,55 @@
         </table>
     </div>
 </div>
-<div *ngIf="taskList == undefined && !isLoading" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No task template found</h4>
+
+<div *ngIf="taskList == undefined && !isLoading" class="row">
+    <div class="col-md-12 d-flex justify-content-center ">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/task-empty-state.svg">
+            <h4 class="mt-24 mb-12">No task templates added yet</h4>
+            <button class="btn-primary addon v-middle " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p>In order to collaborate with your team in an efficient way, you can create task templates which are custmised to how you run your practice. </p>
+            <p>You can create <strong> Linked task template </strong> or <strong> Non linked task template. </strong>
+            </p>
+            <p class="mb-0"> <strong> What is a linked task? </strong> </p>
+            <p>A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to work seamlessly without having to worry about entering the details of the linked asset/insurance/loan manually.
+            </p>
+            <p class="mb-0"> <strong> What is a non-linked task? </strong>
+                <p>A non-linked task is the opposite of a linked task. There is nothing associated with such tasks. Depending on the nature of your work, you can create such task templates. E.g: On-board a new client, fill up form, do a review meeting etc.</p>
+                <p> <strong> Note: </strong> Task templates can also have sub-tasks associated with them. You can assign default owners and turn around times to tasks as well as sub-tasks.</p>
+
+        </div>
+    </div>
 </div>
-<div *ngIf="hasError" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+
+<div *ngIf="hasError" class="row">
+    <div class="col-md-12 d-flex justify-content-center ">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/task-empty-state.svg">
+            <h4 class="mt-24 mb-12">No task templates added yet</h4>
+            <button class="btn-primary addon v-middle " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p>In order to collaborate with your team in an efficient way, you can create task templates which are custmised to how you run your practice. </p>
+            <p>You can create <strong> Linked task template </strong> or <strong> Non linked task template. </strong>
+            </p>
+            <p class="mb-0"> <strong> What is a linked task? </strong> </p>
+            <p>A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to work seamlessly without having to worry about entering the details of the linked asset/insurance/loan manually.
+            </p>
+            <p class="mb-0"> <strong> What is a non-linked task? </strong>
+                <p>A non-linked task is the opposite of a linked task. There is nothing associated with such tasks. Depending on the nature of your work, you can create such task templates. E.g: On-board a new client, fill up form, do a review meeting etc.</p>
+                <p> <strong> Note: </strong> Task templates can also have sub-tasks associated with them. You can assign default owners and turn around times to tasks as well as sub-tasks.</p>
+
+        </div>
+    </div>
+    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4> -->
 </div>

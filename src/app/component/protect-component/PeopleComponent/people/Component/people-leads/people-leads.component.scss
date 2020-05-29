@@ -2,7 +2,15 @@
     border: 1px dashed #BCC6CA;
     height: 420px;
     padding: 20px;
+    width: 357px;
     p {
         color: #484848;
     }
+}
+
+.boxEmpty {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }

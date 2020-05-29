@@ -14,7 +14,7 @@
         <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">IFSC code</h5>
         </div>
-        <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter IFSC   " autocomplete="off" (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode [maxLength]="11" matInput class="form-control">
