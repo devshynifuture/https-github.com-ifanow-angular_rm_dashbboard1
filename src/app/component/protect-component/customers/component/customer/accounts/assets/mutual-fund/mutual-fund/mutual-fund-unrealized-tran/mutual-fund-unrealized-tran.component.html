@@ -51,11 +51,11 @@
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
-                                <span>{{isLoading ? '' : ((element.totalTransactionAmt) ? (element.totalTransactionAmt | number :'1.0-0') : 0)}}</span>
+                                <span appFormatNumber>{{isLoading ? '' : ((element.totalTransactionAmt) ? (element.totalTransactionAmt) : 0)}}</span>
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span>{{(mfData) ? (mfData.total_amount_invested | number :'1.0-0') : 0}}</span>
+                            <span appFormatNumber>{{(mfData) ? (mfData.total_amount_invested) : 0}}</span>
                             <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                         </td>
 
@@ -67,11 +67,11 @@
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
-                                <span>{{isLoading ? '' : ((element.currentValue) ? (element.currentValue | number :'1.0-0') : 0)}}</span>
+                                <span appFormatNumber>{{isLoading ? '' : ((element.currentValue) ? (element.currentValue) : 0)}}</span>
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span>{{(mfData) ? (mfData.total_current_value  | number :'1.0-0') : 0}}</span>
+                            <span appFormatNumber>{{(mfData) ? (mfData.total_current_value) : 0}}</span>
                             <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                         </td>
 
@@ -82,11 +82,11 @@
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
-                                <span>{{isLoading ? '' : ((element.dividendPayout) ? (element.dividendPayout | number :'1.0-0') : 0)}}</span>
+                                <span appFormatNumber>{{isLoading ? '' : ((element.dividendPayout) ? (element.dividendPayout) : 0)}}</span>
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span>{{(mfData) ? (mfData.total_dividend_payout | number :'1.0-0') : 0}}</span>
+                            <span appFormatNumber>{{(mfData) ? (mfData.total_dividend_payout ) : 0}}</span>
                             <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                         </td>
 
@@ -98,11 +98,11 @@
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
-                                <span>{{isLoading ? '' : ((element.dividendReinvest) ? (element.dividendReinvest | number :'1.0-0') : 0)}}</span>
+                                <span appFormatNumber>{{isLoading ? '' : ((element.dividendReinvest) ? (element.dividendReinvest ) : 0)}}</span>
                             </div>
                         </td>
                         <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span>{{(grandTotal) ? (grandTotal.dividendReinvest | number :'1.0-0') : ''}}</span>
+                            <span appFormatNumber>{{(grandTotal) ? (grandTotal.dividendReinvest ) : ''}}</span>
                         </td>
 
                     </ng-container>
@@ -607,17 +607,17 @@
                 {{item.categoryName}}
             </td>
             <td
-                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{(item.totalTransactionAmt) ? (item.totalTransactionAmt | number :'1.0-0') : 0}}</td>
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>
+                {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.currentAmount) ? (item.currentAmount | number :'1.0-0') : 0}}</td>
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{(item.currentAmount) ? (item.currentAmount) : 0}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.dividendPayout) ? (item.dividendPayout | number :'1.0-0') : 0}}</td>
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{(item.dividendPayout) ? (item.dividendPayout) : 0}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.dividendReinvest) ? (item.dividendReinvest | number :'1.0-0') : 0}}</td>
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{(item.dividendReinvest) ? (item.dividendReinvest) : 0}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.totalGain) ? (item.totalGain | number:'1.2-2') : 0}}</td>
@@ -638,20 +638,20 @@
                 Grand Total
             </td>
             <td
-                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{grandTotal.totalTransactionAmt | number :'1.0-0'}}</td>
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>
+                {{grandTotal.totalTransactionAmt}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{grandTotal.currentValue}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{grandTotal.dividendPayout }}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{grandTotal.dividendReinvest}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{grandTotal.currentValue | number :'1.0-0'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{grandTotal.dividendPayout | number :'1.0-0'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{grandTotal.dividendReinvest | number :'1.0-0'}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{grandTotal.totalGain | number :'1.0-0'}}</td>
+                {{grandTotal.totalGain}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}</td>
