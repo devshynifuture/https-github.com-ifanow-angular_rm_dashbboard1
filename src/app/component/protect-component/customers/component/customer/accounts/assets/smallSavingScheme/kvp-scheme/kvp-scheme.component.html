@@ -137,7 +137,8 @@
                         <button mat-menu-item (click)="openAddKVP(element,'editKvp')">Edit</button>
                         <button mat-menu-item (click)="openAddKVP(element,'detailedKvp')">Detailed view</button>
                         <button mat-menu-item>Upload file
-                            <input (change)="fetchData('KVP',$event,element)" class="uploadInput" id="file-4" multiple type="file">
+                            <input (change)="fetchData('KVP',$event,element)" class="uploadInput" id="file-4" multiple
+                                type="file">
                         </button>
                         <button mat-menu-item>Activity</button>
                         <button mat-menu-item (click)="deleteModal('KVP',element)">Delete</button>
@@ -150,9 +151,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns18;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns18;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">No KVP found</h4>
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
+        <img src="assets/images/svg/documents-empty-states.svg">
+        <h4 class="text-center mt-12 mb-20">No KVP found</h4>
         <button mat-stroked-button (click)="openAddKVP(null,'addKvp')" class="btn-primary addon v-middle">
             ADD NEW</button>
     </div>
