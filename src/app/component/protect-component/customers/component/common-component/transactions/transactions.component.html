@@ -30,7 +30,7 @@
             <p class="m-0 f-12 text-white">CURRENT VALUE</p>
             <div class="row">
               <div class="col-md-7 p-0">
-                <h1 class="m-0 text-white f-26 proxima">₹ {{data.currentValue | number:'1.2-2'}}</h1>
+                <h1 class="m-0 text-white f-26 proxima">₹ <span appFormatNumber> {{data.currentValue}}</span></h1>
               </div>
               <div class="col-md-5 p-0" *ngIf="data.xirrValue">
                 <h5 class="m-0 text-white pt-8 proxima"> {{data.xirrValue | number:'1.2-2'}}%</h5>
@@ -39,7 +39,7 @@
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-white">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-white proxima f-26">₹ {{profitOrLossValue | number:'1.2-2'}}</h1>
+            <h1 class="m-0 text-white proxima f-26">₹ <span appFormatNumber>{{profitOrLossValue | number:'1.2-2'}}</span></h1>
           </div>
           <div class="col-md-4 pl-0 text-right">
             <p class="m-0 f-12 text-white">INVESTOR NAME</p>
@@ -58,47 +58,50 @@
       <div class="col-md-8 summary-transactions">
         <p class="m-0 f-500 roboto text-black pl-4 pb-6">Top Holdings</p>
         <div class="m-4">
-          <table mat-table [dataSource]="dataSource" class="" id="table-low">
+          <table mat-table [dataSource]="dataSource"  appSkeletonLoading [appSkeletonLoading]="isLoading"
+          *ngIf="dataSource.data.length>0" class="skeletonAnimation" id="table-low">
 
             <ng-container matColumnDef="srno">
               <th mat-header-cell *matHeaderCellDef class="br"> Sr. no. </th>
-              <td mat-cell *matCellDef="let element; index as i" class="br"> {{ i + 1}} </td>
+              <td mat-cell *matCellDef="let element; index as i" class="br"> 
+                  <div class="bar"><span *ngIf="!isLoading">{{ i + 1}}</span></div> </td>
             </ng-container>
 
             <ng-container matColumnDef="type">
               <th mat-header-cell *matHeaderCellDef class="br"> Transaction type </th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.fwTransactionType}} </td>
+              <td mat-cell *matCellDef="let element" class="br"><div class="bar"><span *ngIf="!isLoading"> {{element.fwTransactionType}}</span> </div></td>
             </ng-container>
 
             <ng-container matColumnDef="date">
               <th mat-header-cell *matHeaderCellDef class="br text-left"> Date </th>
-              <td mat-cell *matCellDef="let element" class="br text-left"> {{element.transactionDate | date:'short'}}
+              <td mat-cell *matCellDef="let element" class="br text-left"> <div class="bar"><span *ngIf="!isLoading">{{element.transactionDate | date:'dd/MM/yyyy'}}</span></div>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="amt">
               <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount </th>
-              <td mat-cell *matCellDef="let element" class="br text-right"> {{element.amount}} </td>
+              <td mat-cell *matCellDef="let element" class="br text-right"><div class="bar"><span appFormatNumber *ngIf="!isLoading">{{element.amount}}</span> </div></td>
             </ng-container>
             <ng-container matColumnDef="nav">
               <th mat-header-cell *matHeaderCellDef class="br text-right"> NAV </th>
-              <td mat-cell *matCellDef="let element" class="br text-right"> {{element.nav}} </td>
+              <td mat-cell *matCellDef="let element" class="br text-right"> <div class="bar"><span *ngIf="!isLoading">{{element.nav}}</span> </div></td>
             </ng-container>
             <ng-container matColumnDef="unit">
               <th mat-header-cell *matHeaderCellDef class="br text-right"> Unit </th>
-              <td mat-cell *matCellDef="let element" class="br text-right"> {{element.unit}} </td>
+              <td mat-cell *matCellDef="let element" class="br text-right"> <div class="bar"><span *ngIf="!isLoading">{{element.unit | number:'1.2-2'}}</span> </div></td>
             </ng-container>
             <ng-container matColumnDef="bunit">
               <th mat-header-cell *matHeaderCellDef class="br text-right"> Balance unit </th>
-              <td mat-cell *matCellDef="let element" class="br text-right"> {{element.balanceUnits}} </td>
+              <td mat-cell *matCellDef="let element" class="br text-right"> <div class="bar"><span *ngIf="!isLoading">{{element.balanceUnits | number:'1.2-2'}}</span> </div></td>
             </ng-container>
             <ng-container matColumnDef="days">
               <th mat-header-cell *matHeaderCellDef class="br text-right"> Days </th>
-              <td mat-cell *matCellDef="let element" class="br text-right"> {{element.days}} </td>
+              <td mat-cell *matCellDef="let element" class="br text-right"> <div class="bar"><span *ngIf="!isLoading">{{element.days}} </span></div></td>
             </ng-container>
             <ng-container matColumnDef="icons">
               <th *matHeaderCellDef class="f-18" mat-header-cell></th>
               <td *matCellDef="let element" class="menus-list" mat-cell>
+                  <div *ngIf="!isLoading">
                 <div [matTooltip]="'For Edit and Delete Operations, Mutual Fund need to be of type Manual'"
                   [matTooltipDisabled]="element.rtTypeId === 14" matTooltipPosition="below">
                   <button mat-icon-button [disabled]="element.rtTypeId !== 14" [matMenuTriggerFor]="menu"
@@ -110,10 +113,11 @@
                   <button mat-menu-item (click)="openMutualFund('editTransaction', element)">
                     <span>Edit</span>
                   </button>
-                  <button mat-menu-item (click)="deleteTransaction(element)">
+                  <button mat-menu-item (click)="deleteTransaction('TRANSACTION',element)">
                     <span>Delete</span>
                   </button>
                 </mat-menu>
+                </div>
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
