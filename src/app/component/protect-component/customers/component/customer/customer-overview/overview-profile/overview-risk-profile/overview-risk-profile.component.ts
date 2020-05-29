@@ -252,9 +252,6 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showQuestionnaire = false;
     if (data) {
       this.mergeRiskProfile(data);
-      setTimeout(() => {
-        this.percentage(this.feedsRiskProfile)
-      }, 300);
     }
   }
 
@@ -277,6 +274,9 @@ export class OverviewRiskProfileComponent implements OnInit {
         equityAllocationLowerLimit: data.equityAllocationLowerLimit,
       }
     }
+    setTimeout(() => {
+      this.percentage(this.feedsRiskProfile)
+    }, 300);
   }
 
   open(flagValue, data) {
@@ -359,7 +359,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         }
         setTimeout(() => {
           this.percentage(this.feedsRiskProfile)
-        }, 300);
+        });
       } else {
 
         this.showResults = false;
