@@ -255,6 +255,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   getMutualFund() {
     this.isLoading = true;
+    this.customDataSource = new TableVirtualScrollDataSource([]);
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -436,7 +439,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   openMutualEditFund(flag, element) {
 
-    this.mutualFundList.forEach(ele => {
+    this.mfData.mutualFundList.forEach(ele => {
       ele.mutualFundTransactions.forEach(tran => {
         if (tran.id == element.id) {
           this.selectedLoadData = ele;
@@ -469,15 +472,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   deleteModal(value, element) {
-    let deletedId;
-    this.mutualFund.mutualFundList.forEach(obj => {
-      element.mutualFundTransactions.forEach(ele => {
-        if (ele.id == element.id) {
-          deletedId = obj.id;
+    this.mfData.mutualFundList.forEach(ele => {
+      ele.mutualFundTransactions.forEach(tran => {
+        if (tran.id == element.id) {
+          this.selectedLoadData = ele;
         }
       });
     });
-    // console.log("this is what im sending:::", element);
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -486,48 +487,30 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        // this.subService.deleteInvoices(this.list).subscribe(
-        //   data => {
-        //     this.dataCount = 0;
-        //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
-        //     dialogRef.close(this.list);
-
-        //   },
-        //   error => this.eventService.showErrorMessage(error)
-        // );
-        // dialogRef.close(listIndex);
-        if (value === 'mutualFund') {
-          const obj = {id: deletedId};
-          this.custumService.postMutualFundDelete(obj)
-            .subscribe(res => {
-              if (res) {
-                this.eventService.openSnackBar('Deleted Successfully', 'DISMISS');
-              }
-            });
-        } else if (value === 'deleteTransaction') {
-
-          // let requestJsonObj;
-          // const data = {
-          //   id: element.id,
-          //   unit: element.unit,
-          //   effect: element.effect,
-          //   mutualFundId: ''
-          // };
-          // requestJsonObj = {
-          //   freezeDate: element.freezeDate ? element.freezeDate : null,
-          //   mutualFundTransactions: [data]
-          // }
-
-          // this.custumService.postDeleteTransactionMutualFund(requestJsonObj)
-          //   .subscribe(res => {
-          //     if (res) {
-          //       console.log("success::", res);
-          //       this.eventService.openSnackBar("Deletion Completed", "DISMISS")
-          //     } else {
-          //       this.eventService.openSnackBar("Deletion Failed", "DISMISS")
-          //     }
-          //   })
+        let requestJsonObj;
+        const data = {
+          id: element.id,
+          unit: element.unit,
+          effect: element.effect,
+          mutualFundId:  this.selectedLoadData.id
+        };
+        requestJsonObj = {
+          freezeDate: element.freezeDate ? element.freezeDate : null,
+          mutualFundTransactions: [data]
         }
+        dialogRef.close();
+        this.custumService.postDeleteTransactionMutualFund(requestJsonObj)
+          .subscribe(res => {
+            if (res) {
+              this.isLoading = true;
+              this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
+                  if (res) {
+                    this.getMutualFund();
+                    console.log("again re hitting mutual fund get:::", res)
+                  }
+            }
+          })
+
 
       },
       negativeMethod: () => {

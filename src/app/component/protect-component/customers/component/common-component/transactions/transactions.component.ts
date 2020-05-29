@@ -76,9 +76,9 @@ export class TransactionsComponent implements OnInit {
   openMutualFund(flag, element) {
     let fragmentData;
     if (flag === 'editTransaction') {
-      if(this.mfList){
-        this.data.mutualFundTransactions=this.mfList.mutualFundTransactions.filter(item => item.id === element.id);
-      }else{
+      if (this.mfList) {
+        this.data.mutualFundTransactions = this.mfList.mutualFundTransactions.filter(item => item.id === element.id);
+      } else {
         this.data.mutualFundTransactions = this.mutualFundTransactions.filter(item => item.id === element.id);
       }
       element.flag = 'editTransaction';
@@ -124,11 +124,12 @@ export class TransactionsComponent implements OnInit {
   }
   getTransactionDataBasedOnMf(res) {
     this.isLoading = false;
-    let filterData =this.mfService.doFiltering(res);
+    let filterData = this.mfService.doFiltering(res);
     this.mfList = filterData.mutualFundList;
     this.mfList = this.mfList.find((item: any) =>
-    (item.id == this.data.id)
+      (item.id == this.data.id)
     );
+    this.data=this.mfList;
     this.dataSource.data = this.mfList.mutualFundTransactions
   }
   // deleteTransaction(element) {
