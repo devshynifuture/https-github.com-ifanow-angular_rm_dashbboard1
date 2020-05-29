@@ -137,30 +137,46 @@
             </div> -->
 
             <div class="row">
-                <div class="col-md-6 pl-0">
+                <div class="col-md-5 mb-10 p-0">
                     <button (click)="uploadFileInput1.click()" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
                         Upload Cheque
                         <input #uploadFileInput1 (change)="getFileDetails($event,4)" class="uploadInput" id="file-4"
                             type="file">
                     </button>
-                    <mat-spinner *ngIf="chequeFlag" class="spinnerClass1 "></mat-spinner>
-                    <span *ngIf="showChequeStatus" class="text-primary ml-12 f-12">Uploaded successfully!</span>
-                    <span *ngIf="showChequeStatus==false" class="text-danger ml-12 f-12">Uploading failed!</span>
                 </div>
 
-                <div class="col-md-6 p-0">
+
+                <div *ngIf="chequeFlag" class="col-md-1 p-0 d-flex align-items-center">
+                    <mat-spinner class="spinnerClass1 "></mat-spinner>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end p-0">
+                    <span *ngIf="showChequeStatus" class="text-primary ml-12 f-12">Uploaded successfully!</span>
+                    <span *ngIf="showChequeStatus==false" class="text-danger ml-12 f-12">Uploading
+                        failed!</span>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-5 p-0">
                     <button *ngIf="details.formUploadFlag == 0 && details.status != 0" (click)="uploadFileInput2.click()" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
                         Upload mandate form
                         <input #uploadFileInput2 (change)="getFileDetails($event,2)" class="uploadInput" id="file-4"
                             type="file">
                     </button>
-                    <mat-spinner *ngIf="mandateFlag" class="spinnerClass1 "></mat-spinner>
-                    <span *ngIf="showMandateStatus" class="text-primary ml-12 f-12">Uploaded successfully!</span>
-                    <span *ngIf="showMandateStatus==false" class="text-danger ml-12 f-12">Uploading failed!</span>
+                </div>
+                <div *ngIf="mandateFlag" class="col-md-1 p-0 d-flex align-items-center">
+                    <mat-spinner class="spinnerClass1 "></mat-spinner>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end">
+                    <span *ngIf="showMandateStatus" class="text-primary ml-12 f-12">Uploaded
+                        successfully!</span>
+                    <span *ngIf="showMandateStatus==false" class="text-danger ml-12 f-12">Uploading
+                        failed!</span>
                 </div>
             </div>
-
-
 
 
         </div>
