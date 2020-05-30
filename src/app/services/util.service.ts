@@ -14,10 +14,6 @@ import {BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class UtilService {
-  @Input()
-  public positiveMethod: Function;
-  fragmentData: any;
-  fileURL: any;
 
   constructor(
     private eventService: EventService,
@@ -27,7 +23,11 @@ export class UtilService {
   }
 
   private static decimalPipe = new DecimalPipe('en-US');
-  private counter: number = 0;
+  @Input()
+  public positiveMethod: Function;
+  fragmentData: any;
+  fileURL: any;
+  private counter = 0;
   public isLoading = false;
   loaderObservable = new BehaviorSubject<boolean>(false);
   isLoadingObservable = this.loaderObservable.asObservable();
@@ -169,7 +169,7 @@ export class UtilService {
     let tempMail: string;
     const indexOfAt = email.indexOf('@');
     email = email.replace(/\./g, '');
-    let replaceTxt = email.substr(indexOfAt + 1, email.length);
+    const replaceTxt = email.substr(indexOfAt + 1, email.length);
     tempMail = email.replace(replaceTxt, 'X'.repeat(email.length - indexOfAt));
     return tempMail;
   }
@@ -183,8 +183,8 @@ export class UtilService {
   }
 
   addZeroBeforeNumber(num, padlen, padchar?) {
-    var pad_char = typeof padchar !== 'undefined' ? padchar : '0';
-    var pad = new Array(1 + padlen).join(pad_char);
+    const pad_char = typeof padchar !== 'undefined' ? padchar : '0';
+    const pad = new Array(1 + padlen).join(pad_char);
     return (pad + num).slice(-pad.length);
   }
 
@@ -318,13 +318,13 @@ export class UtilService {
     formGroup.patchValue(event.target.value.toUpperCase());
   }
 
-  htmlToPdf(inputData, pdfName,landscape, fragData,key=null,svg=null) {
+  htmlToPdf(inputData, pdfName, landscape, fragData = {}, key = null, svg = null) {
     const obj = {
       htmlInput: inputData,
       name: pdfName,
-      landscape: landscape,
-      key : key,
-      svg:svg
+      landscape,
+      key,
+      svg
     };
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
