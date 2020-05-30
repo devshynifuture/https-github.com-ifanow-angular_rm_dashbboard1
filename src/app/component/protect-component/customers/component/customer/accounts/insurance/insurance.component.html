@@ -3,7 +3,6 @@
         <div class="col-md-2 p-0  pt-8 pb-20 bg-grey lter">
             <div class="vertical-menu sticky-top ">
 
-
                 <ul class="d-block ">
                     <li [ngClass]="{'bg-grey lt':lifeInsuranceFlag}" class="  pb-8 c-p">
                         <div (click)="getInsuranceData(1)" class="row">
@@ -259,9 +258,10 @@
                                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                                 <tr *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
                             </table>
-                            <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0" class="w-100 d-flex flex-column align-items-center">
-                                <img class="width400" src="assets/images/svg/noDataFound.svg">
-                                <h4 class="text-center pt-12">No Data Found</h4>
+
+                            <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
+                                 <img src="assets/images/svg/documents-empty-states.svg">
+                                 <h4 class="text-center mt-12 mb-20">No Data Found</h4>
                                 <button (click)="openAddInsurance(null)" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                 </button>
                             </div>
@@ -403,9 +403,9 @@
                                 <tr *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
                             </table>
 
-                            <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance.data.length == 0" class="w-100 d-flex flex-column align-items-center">
-                                <img class="width400" src="assets/images/svg/noDataFound.svg">
-                                <h4 class="text-center pt-12">No Data Found</h4>
+                            <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
+                                <img src="assets/images/svg/documents-empty-states.svg">
+                                <h4 class="text-center mt-12 mb-20">No Data Found</h4>
                                 <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                 </button>
                             </div>
