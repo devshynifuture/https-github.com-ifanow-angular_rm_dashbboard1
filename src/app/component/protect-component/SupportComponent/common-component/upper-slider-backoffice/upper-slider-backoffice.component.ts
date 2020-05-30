@@ -301,12 +301,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
       });
       data = {
         advisorIds: [...this.adminAdvisorIds],
-        folio: this.mutualFundIds
+        parentId: this.advisorId,
+        isParent: true,
+        // folio: this.mutualFundIds
       };
     }
     // if (this.didAumReportListGot) {
     this.isLoadingForDuplicate = true;
-    this.reconService.getDuplicateFolioDataValues(data)
+    // this.reconService.getDuplicateFolioDataValues(data)
+    this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         this.isLoadingForDuplicate = false;
         if (res) {

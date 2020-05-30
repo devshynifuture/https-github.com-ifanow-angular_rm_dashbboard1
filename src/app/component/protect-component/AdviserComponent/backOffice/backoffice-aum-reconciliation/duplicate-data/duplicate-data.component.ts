@@ -1,11 +1,11 @@
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import { ReconciliationDetailsViewComponent } from 'src/app/component/protect-component/SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
-import { UtilService } from 'src/app/services/util.service';
-import { ReconciliationService } from '../reconciliation/reconciliation.service';
-import { EventService } from '../../../../../../Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionInject} from './../../../Subscriptions/subscription-inject.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource, MatSort} from '@angular/material';
+import {ReconciliationDetailsViewComponent} from 'src/app/component/protect-component/SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
+import {UtilService} from 'src/app/services/util.service';
+import {ReconciliationService} from '../reconciliation/reconciliation.service';
+import {EventService} from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-duplicate-data',
@@ -22,7 +22,8 @@ export class DuplicateDataComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private reconService: ReconciliationService,
     private eventService: EventService
-  ) { }
+  ) {
+  }
 
   advisorId = AuthService.getAdvisorId();
 
@@ -33,13 +34,14 @@ export class DuplicateDataComponent implements OnInit {
   isLoading: boolean = false;
   aumList: [] = [];
   duplicateDataList: DuplicateI[] = [];
+
   ngOnInit() {
     this.teamMemberListGet();
     this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
       .subscribe(data => {
         if (data && data.length !== 0) {
           data.forEach(element => {
@@ -48,9 +50,9 @@ export class DuplicateDataComponent implements OnInit {
           this.duplicateFolioData();
         } else {
           this.adminAdvisorIds = [...this.advisorId];
-          this.eventService.openSnackBar("No Team Member Found", "Dismiss");
+          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
         }
-      })
+      });
   }
 
   openReconciliationDetails(value, data, tableType) {
@@ -60,7 +62,7 @@ export class DuplicateDataComponent implements OnInit {
     }
     const fragmentData = {
       flag: value,
-      data: { ...data, tableType, brokerId: this.brokerId, tableData },
+      data: {...data, tableType, brokerId: this.brokerId, tableData},
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
@@ -87,7 +89,7 @@ export class DuplicateDataComponent implements OnInit {
       advisorIds: [...this.adminAdvisorIds],
       parentId: this.parentId,
       isParent: (this.parentId === this.advisorId) ? true : false
-    }
+    };
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         if (res) {
@@ -104,16 +106,16 @@ export class DuplicateDataComponent implements OnInit {
               difference: String(parseInt(item.balanceUnit.toFixed(3)) - parseInt(item.aumUnits.toFixed(3))),
               transactions: '',
               date: item.aumDate,
-            })
+            });
           });
           this.dataSource.data = this.duplicateDataList;
           this.isLoading = false;
         } else {
           this.isLoading = false;
-          this.eventService.openSnackBar("No Duplicate Data Found!!!", "Dismiss");
+          this.eventService.openSnackBar('No Duplicate Data Found!!!', 'Dismiss');
           this.dataSource.data = null;
         }
-      })
+      });
   }
 
 }
@@ -130,7 +132,7 @@ export interface DuplicateI {
 }
 
 export const ELEMENT_DATA: DuplicateI[] = [
-  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '' },
-  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '' },
-  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '' },
-] 
+  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: ''},
+  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: ''},
+  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: ''},
+];
