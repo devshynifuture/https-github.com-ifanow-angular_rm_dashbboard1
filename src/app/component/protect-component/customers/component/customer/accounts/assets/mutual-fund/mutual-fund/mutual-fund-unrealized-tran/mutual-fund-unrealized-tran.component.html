@@ -532,7 +532,7 @@
        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
           <td
              style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-             <b>Sub category name</b>
+             <b>{{(columnHeader) ? columnHeader : 'Sub Category Name'}}</b>
           </td>
           <td
              style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -630,7 +630,7 @@
           </td>
           <td
              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-             {{grandTotal.totalGain}}
+             {{grandTotal.totalGain | number:'1.2-2'}}
           </td>
           <td
              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -727,15 +727,15 @@
           <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
              <td class="f-700" colspan="8"
                 style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-                {{item.schemeName}}
+                {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
              </td>
              <td class="f-700" colspan="5"
-                style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
-                Current NAV:{{item.nav}}
+                style="padding: 12px;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
+                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on {{item.navDate | date:'dd/MM/yyyy'}}
              </td>
           </tr>
           <tr style="page-break-inside: avoid">
-             <td *ngIf="item.name || item.pan || item.folio" colspan="13"
+             <td *ngIf="item.name || item.folio" colspan="13"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
              </td>
@@ -744,7 +744,7 @@
              style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
              <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                {{i + 1}}
+                {{item.indexId}}
              </td>
              <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -907,7 +907,7 @@
        </tr>
        <tbody *ngFor="let item of customDataSource.data ;index as i">
           <tr style="page-break-inside: avoid">
-             <td *ngIf="item.groupName" colspan="4"
+             <td *ngIf="item.groupName" colspan="8"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 {{item.groupName}}
              </td>
@@ -915,15 +915,15 @@
           <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
              <td class="f-700" colspan="4"
                 style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-                {{item.schemeName}}
+                {{item.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+item.pan): '' }}
              </td>
              <td class="f-700" colspan="4"
-                style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
-                Current NAV:{{item.nav}}
+                style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;border-bottom: 1px solid #DADCE0;line-height: 16px !important;color: #202020;text-align: center;">
+                Avg Cost NAV: {{item.avgNav}} | Current NAV: {{item.nav}} | NAV as on {{item.navDate | date:'dd/MM/yyyy'}}
              </td>
           </tr>
-          <tr style="page-break-inside: avoid">
-             <td *ngIf="item.name || item.pan || item.folio" colspan="8"
+          <tr style="page-break-inside: avoid" *ngIf="item.name || item.folio" >
+             <td colspan="8"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
              </td>
@@ -932,7 +932,7 @@
              style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
              <td
                 style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;text-align: left;">
-                {{i + 1}}
+                {{item.indexId}}
              </td>
              <td
                 style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
