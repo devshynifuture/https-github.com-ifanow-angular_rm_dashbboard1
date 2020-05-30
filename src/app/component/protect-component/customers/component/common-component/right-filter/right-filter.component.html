@@ -208,9 +208,9 @@
         </mat-expansion-panel-header>
         <div class="borderTopbox" *ngIf="panelOpenState == true">
             <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
-                    {{'FY '+item.from+' - '+item.to}}
-                </mat-checkbox>
+                <mat-radio-button   [checked]="item.selected" (change)="changeFinancialYear(item)" [disabled]="item.disabled">
+                   <span  [matTooltipPosition]="'right'" [matTooltip]="item.disabled ? 'No capital gains on this financial year.' : ''"  > {{'FY '+item.from+' - '+item.to}}</span>
+                </mat-radio-button>
             </mat-list-item>
         </div>
     </mat-expansion-panel>

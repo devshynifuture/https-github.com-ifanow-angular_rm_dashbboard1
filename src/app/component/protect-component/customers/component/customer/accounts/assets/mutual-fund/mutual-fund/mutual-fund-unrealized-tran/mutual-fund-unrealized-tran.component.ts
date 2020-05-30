@@ -65,6 +65,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   selectedLoadData: any;
   showDownload: boolean = false;
   columnHeader: any;
+  pdfDataFornTRansaction:any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
               private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -401,6 +402,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.dataSource.data = (data.dataSourceData);
         // this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
+        this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
@@ -678,7 +680,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test','true', this.fragmentData, '', '');
     }, 200);
 
     // if(data){

@@ -178,10 +178,11 @@ export class TempserviceService {
               nav: singleData.nav,
               navDate: singleData.navDate,
               avgNav: singleData.avgCostNav,
-              pan: singleData.pan
+              // pan: singleData.pan
             };
             if (reportType == 'ownerName') {
               obj.folioNumber = singleData.folioNumber;
+             obj.pan = singleData.pan;
             }
             filteredData.push(obj);
             if (reportType != 'ownerName') {
