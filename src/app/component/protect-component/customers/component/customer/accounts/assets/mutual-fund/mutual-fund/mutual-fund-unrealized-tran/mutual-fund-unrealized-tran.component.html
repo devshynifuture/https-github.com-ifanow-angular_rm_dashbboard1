@@ -653,7 +653,7 @@
        </tr>
     </table>
     <!-- Unrealized Transactions -->
-    <table *ngIf="viewMode == 'viewMode == 'Unrealized Transactions'"
+    <table *ngIf="viewMode == 'Unrealized Transactions'"
        style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
           <td
@@ -680,7 +680,7 @@
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Units</b>
           </td>
-          <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions' "
+          <td *ngIf="viewMode == 'Unrealized Transactions'"
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Current value</b>
           </td>
@@ -696,11 +696,11 @@
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Total amount</b>
           </td>
-          <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+          <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions'"
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Balance units</b>
           </td>
-          <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+          <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions'"
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Days</b>
           </td>
@@ -708,7 +708,7 @@
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Gain</b>
           </td>
-          <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions' "
+          <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions'"
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Absolute Return%</b>
           </td>
@@ -777,7 +777,7 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.dividendPayout}} 
              </td>
-             <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions' "
+             <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions'"
                 appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.dividendReinvest}} 
@@ -803,7 +803,7 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.absoluteReturn}} 
              </td>
-             <td *ngIf=" viewMode=='unrealized transactions' || viewMode=='Unrealized Transactions'" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
+             <td *ngIf="viewMode=='Unrealized Transactions' || viewMode == 'unrealized transactions'" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
                 #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                 {{item.cagr}} 
              </td>
@@ -861,7 +861,7 @@
                 style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.trnAbsoluteReturn}} 
              </td>
-             <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions' " class="f-700"
+             <td *ngIf="viewMode == 'Unrealized Transactions' || viewMode == 'unrealized transactions'" class="f-700"
                 style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                 {{item.totalCagr}} 
              </td>
