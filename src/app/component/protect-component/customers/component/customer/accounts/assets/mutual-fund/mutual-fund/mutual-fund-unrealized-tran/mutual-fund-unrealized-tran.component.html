@@ -677,7 +677,7 @@
     </table>
 
     <!-- Unrealized Transactions -->
-    <table *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+    <table
         style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
@@ -743,7 +743,7 @@
         </tr>
 
         <tbody *ngFor="let item of customDataSource.data ;index as i">
-            <tr style="page-break-inside: avoid">
+            <tr *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" style="page-break-inside: avoid">
                 <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
                     style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}
@@ -754,7 +754,7 @@
                 </td>
             </tr>
 
-            <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
+            <tr *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions' && (item.schemeName || item.nav)" style="page-break-inside: avoid">
                 <td class="f-700" colspan="8"
                     style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                     {{item.schemeName}}</td>
@@ -763,9 +763,35 @@
                     Current NAV:{{item.nav}}</td>
             </tr>
 
-            <tr style="page-break-inside: avoid">
+            <tr *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" style="page-break-inside: avoid">
                 <td *ngIf="item.name || item.pan || item.folio" colspan="13"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                    {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
+                </td>
+            </tr>
+            <tr *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" style="page-break-inside: avoid">
+                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
+                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                    {{item.groupName}}
+                </td>
+                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
+                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                    {{item.groupName}}
+                </td>
+            </tr>
+
+            <tr *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions' && (item.schemeName || item.nav)" style="page-break-inside: avoid">
+                <td class="f-700" colspan="8"
+                    style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
+                    {{item.schemeName}}</td>
+                <td class="f-700" colspan="5"
+                    style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
+                    Current NAV:{{item.nav}}</td>
+            </tr>
+
+            <tr *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" style="page-break-inside: avoid">
+                <td *ngIf="item.name || item.pan || item.folio" colspan="13"
+                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
                 </td>
             </tr>
@@ -837,48 +863,48 @@
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                 </td>
                 <td *ngIf="item.totalTransactionAmt" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     {{item.totalTransactionAmt}}</td>
                 <td class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
                 </td>
                 <td *ngIf="item.totalUnit" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
                     {{item.totalUnit}}</td>
                 <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                     {{item.totalBalanceUnit}} </td>
                 <td *ngIf="viewMode == 'All Transactions'" class="f-700"
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                     {{item.totalCurrentValue}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     {{item.dividendPayout}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                     {{item.dividendReinvest}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     {{item.totalCurrentValue}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                     {{item.netGain}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     {{item.trnAbsoluteReturn}} </td>
                 <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                     {{item.totalCagr}} </td>
 
             </tr>
         </tbody>
     </table>
 
-    <!-- All Transactions -->
-    <table *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+    <!-- All Transactions
+    <table 
         style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
@@ -890,56 +916,56 @@
                 <b>Transaction Type</b>
             </td>
             <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Transaction date</b>
             </td>
             <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Transaction amount</b>
             </td>
             <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Transaction NAV</b>
             </td>
             <td
-                style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Units</b>
             </td>
 
             <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Balance units</b>
             </td>
             <td
-                style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <b>Days</b>
             </td>
         </tr>
 
         <tbody *ngFor="let item of customDataSource.data ;index as i">
             <tr style="page-break-inside: avoid">
-                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="4"
+                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
                     style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}
                 </td>
-                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="4"
+                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
                     style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}
                 </td>
             </tr>
 
             <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
-                <td class="f-700" colspan="4"
+                <td class="f-700" colspan="8"
                     style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                     {{item.schemeName}}</td>
-                <td class="f-700" colspan="4"
+                <td class="f-700" colspan="5"
                     style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
                     Current NAV:{{item.nav}}</td>
             </tr>
 
             <tr style="page-break-inside: avoid">
-                <td *ngIf="item.name || item.pan || item.folio" colspan="8"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                <td *ngIf="item.name || item.pan || item.folio" colspan="13"
+                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
                 </td>
             </tr>
@@ -947,10 +973,10 @@
             <tr *ngIf="item.fwTransactionType || item.category"
                 style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
                 <td
-                    style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;text-align: left;">
+                    style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
                     {{i + 1}}</td>
                 <td
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                     <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
                     </span>
                 </td>
@@ -979,14 +1005,14 @@
                     style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
                 </td>
                 <td class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;border-left: 1px solid #DADCE0;">
+                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
                     Total
                 </td>
                 <td class="f-700"
                     style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                 </td>
                 <td *ngIf="item.totalTransactionAmt" class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
+                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                     {{item.totalTransactionAmt}}</td>
                 <td class="f-700"
                     style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
@@ -1002,6 +1028,6 @@
                 </td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
 </div>
