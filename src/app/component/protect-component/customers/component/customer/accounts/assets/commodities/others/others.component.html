@@ -197,7 +197,7 @@
             </div>
         </div>
         <div formArrayName="getNomineeName">
-            <div class="row pt-36" *ngFor="let obj of others.controls['getNomineeName'].controls; let pointIndex=index"
+            <div class="row pt-48" *ngFor="let obj of others.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
@@ -255,7 +255,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveOthers()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="saveOthers()" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveOthers()">Save</button> -->
         </div>

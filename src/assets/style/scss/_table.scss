@@ -115,9 +115,14 @@ table {
     white-space: initial;
   }
 
-  tr {
+  tr.mat-header-row {
     border: 1px solid #DADCE0;
-    height: 40px;
+    height: 48px !important;
+  }
+
+  tr.mat-row {
+    border: 1px solid #DADCE0;
+    height: 36px;
   }
 
   thead tr {

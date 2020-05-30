@@ -5,7 +5,7 @@
                 src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center " *ngIf="data">
-            <p class="f-16 m-0">ARN-83865
+            <p class="f-16 m-0">{{arnRiaCode? arnRiaCode: ""}}
                 {{ upperHeaderName ? upperHeaderName: '' }}
             </p>
         </div>
@@ -375,7 +375,7 @@
                                 </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        {{element.fileOrderDateTime !== '-' ? ( element.fileOrderDateTime | date:'short') : ''}}
+                                        {{element.fileOrderDateTime !== '-' ? ( element.fileOrderDateTime | date:'dd/MM/yyyy') : ''}}
                                     </div>
                                 </td>
                             </ng-container>
