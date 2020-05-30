@@ -37,8 +37,8 @@ export class IfasDetailsComponent implements OnInit {
   ifasData: any;
   getOverview: any;
   franklineData = new MatTableDataSource(ELEMENT_RT_DATA);
-  camsData = new MatTableDataSource(ELEMENT_RT_DATA);;
-  karvyData = new MatTableDataSource(ELEMENT_RT_DATA);;
+  camsData = new MatTableDataSource(ELEMENT_RT_DATA);
+  karvyData = new MatTableDataSource(ELEMENT_RT_DATA);
   isLoading: boolean = false;
   brokerList: any;
   brokerListCams: any;
