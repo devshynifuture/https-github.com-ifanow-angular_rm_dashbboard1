@@ -1,15 +1,15 @@
-import {AuthService} from './../../../../../auth-service/authService';
-import {SupportService} from './../../support.service';
-import {ExcelService} from './../../../customers/component/customer/excel.service';
-import {ConfirmDialogComponent} from './../../../common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from './../../../../../Data-service/event.service';
-import {UtilService} from './../../../../../services/util.service';
-import {Component, OnInit} from '@angular/core';
-import {ReconciliationDetailsViewComponent} from '../reconciliation-details-view/reconciliation-details-view.component';
-import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {DatePipe} from '@angular/common';
-import {ReconciliationService} from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { AuthService } from './../../../../../auth-service/authService';
+import { SupportService } from './../../support.service';
+import { ExcelService } from './../../../customers/component/customer/excel.service';
+import { ConfirmDialogComponent } from './../../../common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from './../../../../../Data-service/event.service';
+import { UtilService } from './../../../../../services/util.service';
+import { Component, OnInit } from '@angular/core';
+import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
+import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { DatePipe } from '@angular/common';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
 @Component({
@@ -52,6 +52,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isRmLogin = AuthService.getUserInfo().isRmLogin;
   deleteReorderOrDeleteDisabled = 'none';
   filteredAumListWithIsMappedToMinusOne: any = [];
+  reportDuplicateFoliosIsMappedToMinusOne: any[];
+  arnRiaCode;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -65,9 +67,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.data.hasOwnProperty('arnRiaCode')) {
+      this.arnRiaCode = this.data.arnRiaCode;
+    }
     this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : this.data.advisorId;
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.getRtaList();
-
   }
 
   rtaList = [];
@@ -126,7 +131,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -276,7 +281,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
     let data;
     if (this.data.flag == 'report') {
       let mutualFundIds = [];
-      this.aumListReportValue.forEach(element => {
+      this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+        return item.isMapped === -1
+      });
+      this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
         mutualFundIds.push(element.mutualFundId);
       });
       data = {
@@ -284,6 +292,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
         folio: mutualFundIds
       };
     } else {
+      let mutualFundIds = [];
+      this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+        return item.isMapped === -1
+      });
+      this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
+        mutualFundIds.push(element.mutualFundId);
+      });
       data = {
         advisorIds: [...this.adminAdvisorIds],
         folio: this.mutualFundIds
@@ -389,7 +404,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   getBackofficeAumFileOrderListDeleteReorder() {
     this.isLoading = true;
     this.dataSource3.data = ELEMENT_DATA3;
-    this.supportService.getBackofficeAumOrderListValues({aumReconId: this.aumReconId})
+    this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
       .subscribe(res => {
         this.isLoading = false;
         console.log(res);
@@ -398,7 +413,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               let obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios], {type: 'text/plain'})
+                file: new Blob([element.folios], { type: 'text/plain' })
               };
               element.folios = obj;
             }
@@ -435,7 +450,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   saveFile(blob) {
     const userData = AuthService.getUserInfo();
-    saveAs(blob, userData.fullName + '-' + 'ordered-folios' + '.txt');
+    let username;
+    if (this.data.hasOwnProperty('clientName')) {
+      username = this.data.clientName;
+    } else {
+      username = userData.name ? userData.name : userData.fullName;
+    }
+    saveAs(blob, username + '-' + 'ordered-folios' + '.txt');
   }
 
   exportToExcelSheet(value, element) {
@@ -445,17 +466,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     // creation of excel sheet
     let headerData = [
-      {width: 20, key: 'Investor Name'},
-      {width: 20, key: 'Asset Id'},
-      {width: 25, key: 'Scheme Name'},
-      {width: 18, key: 'Scheme Code'},
-      {width: 18, key: 'Folio Number'},
-      {width: 18, key: 'RTA Type'},
-      {width: 18, key: 'IFANOW Units'},
-      {width: 15, key: 'RTA Units'},
-      {width: 10, key: 'RTA Bal as on'},
-      {width: 10, key: 'Unit Difference'},
-      {width: 10, key: 'Amount Difference'}
+      { width: 40, key: 'Investor Name' },
+      { width: 15, key: 'Asset Id' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 15, key: 'Scheme Code' },
+      { width: 20, key: 'Folio Number' },
+      { width: 15, key: 'RTA Type' },
+      { width: 15, key: 'IFANOW Units' },
+      { width: 15, key: 'RTA Units' },
+      { width: 15, key: 'RTA Bal as on' },
+      { width: 15, key: 'Unit Difference' },
+      { width: 20, key: 'Amount Difference' }
     ];
     let excelData = [];
     let footer = [];
@@ -482,16 +503,16 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.schemeCode ? element.schemeCode : '-',
           element.folioNumber ? element.folioNumber : '-',
           rtName,
-          element.calculatedUnits ? element.calculatedUnits : '-',
-          element.aumUnits ? element.aumUnits : '-',
+          element.calculatedUnits ? element.calculatedUnits : '0',
+          element.aumUnits ? element.aumUnits : '0',
           element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
-          element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '-',
-          'amt difference',
-        ];
+          element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '0',
+          ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
+        ]
 
         excelData.push(Object.assign(data));
       });
-      ExcelService.exportExcel(headerData, header, excelData, footer, value);
+      ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         let rtName = this.getRtName(this.data.rtId);
@@ -503,15 +524,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.schemeCode ? element.schemeCode : '-',
             element.folioNumber ? element.folioNumber : '-',
             rtName,
-            element.calculatedUnits ? element.calculatedUnits : '-',
-            element.aumUnits ? element.aumUnits : '-',
+            element.calculatedUnits ? element.calculatedUnits : '0',
+            element.aumUnits ? element.aumUnits : '0',
             element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
-            element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '-',
-            'amt difference',
-          ];
-          excelData.push(Object.assign(data));
+            element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '0',
+            ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
+          ]
+          excelData.push(Object.assign(data))
         });
-        ExcelService.exportExcel(headerData, header, excelData, footer, value);
+        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
       } else {
         this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
       }
@@ -525,19 +546,19 @@ export class UpperSliderBackofficeComponent implements OnInit {
       if (this.data.flag === 'report') {
         tableData = this.aumListReportValue[index].mutualFundTransaction;
       } else {
-        tableData = this.aumList[index].mutualFundTransaction;
+        tableData = this.filteredAumListWithIsMappedToMinusOne[index].mutualFundTransaction;
       }
     }
     if (tableType === 'duplicate-folios') {
       if (this.data.flag === 'report') {
-        // tableData = this.aumListReportValue;
+        tableData = this.aumListReportValue;
       } else {
         tableData = data.mutualFundTransaction;
       }
     }
     const fragmentData = {
       flag,
-      data: {...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate},
+      data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
@@ -688,7 +709,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // post call
     this.postReqForBackOfficeUnmatchedFolios();
 
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
   setSubTabState(state) {
@@ -749,9 +770,9 @@ interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: ''},
-  {doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: ''},
-  {doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: ''},
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
 ];
 
 
@@ -765,13 +786,13 @@ interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
 ];
 
 const ELEMENT_DATA2: PeriodicElement1[] = [
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
 ];
 
 interface PeriodicElement3 {

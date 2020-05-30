@@ -57,13 +57,13 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
       flag,
       id: 1,
       data: {
-        ...data,
+        clientName: this.dataToSend.clientName,
+        arnRiaCode: this.selectedOption.brokerCode,
         advisorId: this.dataToSend.advisorId,
         startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
         brokerId: this.selectArnRiaForm.get('arnOrRia').value,
         rtId: this.rtId,
         flag,
-
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,

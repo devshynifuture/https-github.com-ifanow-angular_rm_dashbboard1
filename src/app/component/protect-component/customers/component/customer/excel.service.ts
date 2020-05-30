@@ -23,7 +23,7 @@ export class ExcelService {
 
   constructor() { }
 
-  static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any) {
+  static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, clientName?) {
     const wb = new Excel.Workbook();
     const ws = wb.addWorksheet();
     const meta1 = ws.getCell('A1');
@@ -36,13 +36,16 @@ export class ExcelService {
     let userData = AuthService.getUserInfo();
     let username;
 
-    if (userData.hasOwnProperty('fullName')) {
+    if (clientName) {
+      username = clientName;
+    } else if (userData.hasOwnProperty('fullName')) {
       username = userData.fullName;
     } else {
       username = userData.name;
     }
+
     ws.getCell('A1').value = 'Type of report - ' + metaData;
-    ws.getCell('A2').value = `Client name - ` + username;
+    ws.getCell('A2').value = `Client name - ` + clientName;
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     const head = ws.getRow(5);
     head.font = { bold: true };
