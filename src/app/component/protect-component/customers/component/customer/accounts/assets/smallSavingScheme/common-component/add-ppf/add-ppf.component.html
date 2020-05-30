@@ -104,7 +104,7 @@
             <div class="row pt-40"  *ngFor="let obj of ppfSchemeForm.controls['extendedGroup'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
                 <div class="col-xl-5  col-lg-5 pr-0 text-right">
-                    <h5 class="m-0 pt-12">Have you extended your maturityDate (block {{pointIndex+1}})?</h5>
+                    <h5 class="m-0 pt-12">Have you extended your maturity date (block {{pointIndex+1}})?</h5>
                 </div>
                 <div class="col-xl-6 col-lg-7 pr-0 fddate">
                     <mat-radio-group aria-label="Select an option" (change)="getMaturityDate($event)" id="custom-radio"
