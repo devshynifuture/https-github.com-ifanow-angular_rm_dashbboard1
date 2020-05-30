@@ -137,7 +137,9 @@ export class BackofficeFileUploadComponent implements OnInit {
   successFileUpload(fileType, fileName) {
     let obj = {
       fileType: fileType,
-      fileName: fileName
+      fileName: fileName,
+      advisorId: this.advisorId,
+      arnRiaDetailId: this.arnRiaId
     }
     this.reconService.successBackOfficeFileToUpload(obj).subscribe((data) => {
       this.fileName = "";
