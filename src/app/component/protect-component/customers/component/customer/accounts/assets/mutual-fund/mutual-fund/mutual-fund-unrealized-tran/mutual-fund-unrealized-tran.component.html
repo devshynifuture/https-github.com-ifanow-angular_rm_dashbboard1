@@ -719,11 +719,7 @@
        </tr>
        <tbody *ngFor="let item of customDataSource.data ;index as i">
           <tr style="page-break-inside: avoid">
-             <td *ngIf="item.groupName && viewMode == 'unrealized transactions'" colspan="12"
-                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                {{item.groupName}}
-             </td>
-             <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
+             <td *ngIf="item.groupName" colspan="12"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 {{item.groupName}}
              </td>
@@ -741,7 +737,7 @@
           <tr style="page-break-inside: avoid">
              <td *ngIf="item.name || item.pan || item.folio" colspan="13"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
+                {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
              </td>
           </tr>
           <tr *ngIf="item.fwTransactionType || item.category"
@@ -911,11 +907,7 @@
        </tr>
        <tbody *ngFor="let item of customDataSource.data ;index as i">
           <tr style="page-break-inside: avoid">
-             <td *ngIf="item.groupName && viewMode == 'unrealized transactions'" colspan="4"
-                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                {{item.groupName}}
-             </td>
-             <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="4"
+             <td *ngIf="item.groupName" colspan="4"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 {{item.groupName}}
              </td>
@@ -933,7 +925,7 @@
           <tr style="page-break-inside: avoid">
              <td *ngIf="item.name || item.pan || item.folio" colspan="8"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
+                {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
              </td>
           </tr>
           <tr *ngIf="item.fwTransactionType || item.category"

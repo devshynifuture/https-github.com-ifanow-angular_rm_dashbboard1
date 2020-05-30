@@ -20,23 +20,29 @@
         </div>
     </div>
 </div>
-<div *ngIf="selectedVal=='Equities'" class="skeletonAnimation" [appSkeletonLoading]="StockFeedFlag" appSkeletonLoading>
+<div *ngIf="selectedVal=='Equities'">
+
+    <div class="skeletonAnimation" [appSkeletonLoading]="StockFeedFlag" appSkeletonLoading class="row">
+        <div class="col-md-4 relClass">
+            <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
+                <span *ngIf="!StockFeedFlag"> test</span>
+            </div>
+        </div>
+        <div class="col-md-4 relClass">
+            <div [ngClass]="{'height23': StockFeedFlag}" class="bar">
+                <span *ngIf="!StockFeedFlag"> test</span>
+            </div>
+        </div>
+        <div [ngClass]="{'height23': StockFeedFlag}" class="col-md-4 relClass">
+            <div class="bar">
+                <span *ngIf="!StockFeedFlag"> test</span>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- <div class="row">
-        <div class="col-md-4 relClass">
-            <div class="bar"> test</div>
-        </div>
-        <div class="col-md-4 relClass">
-            <div class="bar"> test</div>
-        </div>
-        <div class="col-md-4 relClass">
-            <div class="bar"> test</div>
-        </div>
-    </div> -->
-
-
-
-    <div class="row">
         <div class="col-md-5  p-0">
             <p class="text-black roboto m-0 pl-4 pb-8 f-300">BSE Sensex</p>
         </div>
@@ -95,7 +101,7 @@
             </span>
 
         </div>
-    </div>
+    </div> -->
 
 </div>
 
