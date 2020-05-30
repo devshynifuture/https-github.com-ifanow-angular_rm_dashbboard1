@@ -294,7 +294,7 @@ export class MfServiceService {
     //     );
     // });
 
-    if (dataForFilter.showFolio == 2) {
+    if (dataForFilter.showFolio == '2') {
       mutualFundList = mutualFundList.filter((item: any) =>
        (item.balanceUnit!=0 && item.balanceUnit > 0) || item.folioNumber != 0 
       );
@@ -460,7 +460,7 @@ export class MfServiceService {
       transactionView:transactionView,
       reportType :(rightSideData) ? (rightSideData.reportType.length > 0 ? rightSideData.reportType[0].name : 'Sub Category wise') : 'Sub Category wise',
       reportAsOn:(rightSideData) ? rightSideData.reportAsOn : new Date(),
-      showFolio : (rightSideData) ? rightSideData.showFolio : '2',
+      showFolio : (rightSideData) ? rightSideData.showFolio+'' : '2',
       fromDate :(rightSideData) ? rightSideData.fromDate : new Date(date.setFullYear(date.getFullYear() - 1)),
       toDate :(rightSideData) ? rightSideData.toDate: new Date(),
       overviewFilter:overviewFilter,
