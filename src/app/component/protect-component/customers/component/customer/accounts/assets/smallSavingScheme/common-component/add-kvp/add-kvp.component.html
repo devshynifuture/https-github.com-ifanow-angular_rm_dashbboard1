@@ -160,11 +160,11 @@
             <!-- <app-add-nominee [ownerName]="ownerName" [data]="kvpData" (outputEvent)="getFormDataNominee($event)">
             </app-add-nominee> -->
             
-            <div class="row pt-32">
+            <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">Linked bank account</h5>
                 </div>
-                <div class="col-md-5 form-group">
+                <div class="col-md-5">
                     <mat-form-field>
                         <mat-select class="form-control" formControlName="bankAccNum" matInput>
                             <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
@@ -195,7 +195,7 @@
                 </div>
             </div>
             <div formArrayName="getNomineeName">
-                <div class="row pt-36"
+                <div class="row pt-40"
                     *ngFor="let obj of KVPFormScheme.controls['getNomineeName'].controls; let pointIndex=index"
                     [formGroupName]="pointIndex">
                     <div class="col-md-5 pr-0 text-right">

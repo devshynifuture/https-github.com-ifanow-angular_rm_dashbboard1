@@ -45,7 +45,7 @@
                     </div>
 
                     <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']" routerLinkActive="router-link-active" class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
-                        {{user.clientCount}} client<span *ngIf="user.clientCount>1">(s)</span></h3>
+                        {{user.clientCount}} clients<span *ngIf="user.clientCount>1"></span></h3>
                 </div>
             </div>
         </mat-card>
