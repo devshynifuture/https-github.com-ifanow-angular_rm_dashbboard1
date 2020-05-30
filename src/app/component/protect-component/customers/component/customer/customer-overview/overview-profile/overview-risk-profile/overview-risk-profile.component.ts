@@ -79,7 +79,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     Highcharts.setOptions({
       chart: {
         type: 'bar',
-        margin: [5, 25, 10, 60],
+        margin: [5, 25, 30, 60],
       },
       credits: { enabled: false },
       exporting: { enabled: false },
@@ -94,9 +94,6 @@ export class OverviewRiskProfileComponent implements OnInit {
       },
 
       yAxis: {
-        min: 0,
-        minPadding: 0,
-        maxPadding: 0,
         tickColor: 'black',
         tickWidth: 1,
         tickLength: 3,
@@ -146,6 +143,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       yAxis: {
         min: 0,
         max: 100,
+        offset:18,
         lineWidth: 2,
         lineColor: 'black',
         tickLength: 4,
