@@ -1,150 +1,160 @@
     .boxGrey {
-        height: 185px;
+      height: 185px;
+      color: #83959D;
+      padding: 12px;
+
+      //overflow: hidden;
+      //position: relative;
+      p.selectMoreDetails {
         color: #83959D;
-        padding: 12px;
-        //overflow: hidden;
-        //position: relative;
-        p.selectMoreDetails {
-            color: #83959D;
-            font-size: 14px;
-            text-align: center;
-            position: absolute;
-            left: 0px;
-            right: 0px;
-            top: 50%;
-            cursor: pointer;
-        }
-    }
-    
-    .mat-row:last-child {
-        font-weight: normal !important;
-        text-align: left !important;
-    }
-    
-    .documentBreadCrumb {
-        padding: 0px;
-        background-color: transparent;
-        font-family: "Roboto", sans-serif !important;
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 1rem;
-        list-style: none;
-        border-radius: .25rem;
-        margin: 0px;
-        li {
-            padding: 0px !important;
-            font-family: "Roboto", sans-serif !important;
-            font-size: 18px !important;
-            color: #000000 !important;
-            height: auto;
-            line-height: normal;
-            margin-bottom: 0;
-            a {
-                font-size: 18px;
-                font-family: "Roboto", sans-serif !important;
-                color: #000000 !important;
-                i {
-                    vertical-align: bottom;
-                }
-            }
-        }
-    }
-    
-    .breadcrumb-item+.breadcrumb-item::before {
-        content: ">";
-        font-size: 19px;
-        margin-top: -2px;
-    }
-    
-    .input_class {
-        position: relative;
-        input {
-            height: 36px;
-            color: #83959D;
-            padding-left: 30px !important;
-            width: 200px;
-        }
-        img {
-            position: absolute;
-            left: 9px;
-            top: 10px;
-        }
-    }
-    
-    .gridIcon {
-        height: 24px;
-        margin-top: 5px;
-    }
-    
-    .inputfile {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
+        font-size: 14px;
+        text-align: center;
         position: absolute;
-        z-index: -1;
+        left: 0px;
+        right: 0px;
+        top: 50%;
+        cursor: pointer;
+      }
     }
-    
+
+    .mat-row:last-child {
+      font-weight: normal !important;
+      text-align: left !important;
+    }
+
+    .documentBreadCrumb {
+      padding: 0px;
+      background-color: transparent;
+      font-family: "Roboto", sans-serif !important;
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      list-style: none;
+      border-radius: .25rem;
+      margin: 0px;
+
+      li {
+        padding: 0px !important;
+        font-family: "Roboto", sans-serif !important;
+        font-size: 18px !important;
+        color: #000000 !important;
+        height: auto;
+        line-height: normal;
+        margin-bottom: 0;
+
+        a {
+          font-size: 18px;
+          font-family: "Roboto", sans-serif !important;
+          color: #000000 !important;
+
+          i {
+            vertical-align: bottom;
+          }
+        }
+      }
+    }
+
+    .breadcrumb-item+.breadcrumb-item::before {
+      content: ">";
+      font-size: 19px;
+      margin-top: 0px;
+    }
+
+    .input_class {
+      position: relative;
+
+      input {
+        height: 36px;
+        color: #83959D;
+        padding-left: 30px !important;
+        width: 200px;
+      }
+
+      img {
+        position: absolute;
+        left: 9px;
+        top: 10px;
+      }
+    }
+
+    .gridIcon {
+      height: 24px;
+      margin-top: 5px;
+    }
+
+    .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+
     .inputfile+label img {
-        vertical-align: middle;
-        fill: currentColor;
-        margin-top: -0.25em;
-        margin-right: 0.25em;
+      vertical-align: middle;
+      fill: currentColor;
+      margin-top: -0.25em;
+      margin-right: 0.25em;
     }
-    
+
     .documentsTable {
-        tbody td {
-            padding: 7px 8px !important;
-        }
+      tbody td {
+        padding: 7px 8px !important;
+      }
     }
-    
-     ::ng-deep .options {
-        li {
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-        label {
-            padding: 0 !important;
-        }
+
+    ::ng-deep .options {
+      li {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      label {
+        padding: 0 !important;
+      }
     }
-    
+
     .document-side-menu {
-        margin-top: 38px;
-        .vertical-menu {
-            height: 100vh;
-            display: block !important;
-            width: 100%;
-            text-align: left;
-        }
-        li {
-            height: 40px;
-            line-height: 40px;
-            padding: 0 0px 0 24px !important;
-            font-size: 14px;
-            text-align: left;
-            margin-bottom: 10px;
-        }
+      margin-top: 38px;
+
+      .vertical-menu {
+        height: 100vh;
+        display: block !important;
+        width: 100%;
+        text-align: left;
+      }
+
+      li {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 0px 0 24px !important;
+        font-size: 14px;
+        text-align: left;
+        margin-bottom: 10px;
+      }
     }
-    
+
     .document-side-menu {
-        .menuListDocument {
-            .documentBreadCrumb {
-                .paddingLeftNone {
-                    padding-left: 0px !important;
-                }
-            }
-            li {
-                line-height: normal !important;
-                padding: 0 0px 0 10px !important;
-                display: flex;
-                margin-bottom: 0px;
-            }
+      .menuListDocument {
+        .documentBreadCrumb {
+          .paddingLeftNone {
+            padding-left: 0px !important;
+          }
         }
+
+        li {
+          line-height: normal !important;
+          padding: 0 0px 0 10px !important;
+          display: flex;
+          margin-bottom: 0px;
+        }
+      }
     }
-    
+
     .sticky-top {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 130px;
-        z-index: 0;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 130px;
+      z-index: 0;
     }

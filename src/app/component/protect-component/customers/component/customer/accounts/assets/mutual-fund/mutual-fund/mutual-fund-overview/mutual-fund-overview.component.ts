@@ -317,7 +317,13 @@ export class MutualFundOverviewComponent implements OnInit {
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.mfData = data;
-      this.cashFlowXirr = (this.mfData.mutualFundCategoryMastersList.length > 0) ? this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr : 0;
+      if(this.mfData.mutualFundCategoryMastersList.length>0){
+        if(this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits <0){
+          this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[1].cashFlowxirr
+        }else{
+          this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr
+        }
+      }
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment);
       let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category')
       sortedData = sortedData.filter((item: any) =>

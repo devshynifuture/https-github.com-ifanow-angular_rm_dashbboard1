@@ -17,6 +17,7 @@ import { EducationComponent } from './education/education.component';
 import { VideosComponent } from './videos/videos.component';
 import { SummaryModule } from '../../accounts/summary/summary.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
   imports: [
     CommonModule,
     OverviewMyfeedRoutingModule,
+    CustomDirectiveModule,
     MaterialModule,
     NgCircleProgressModule,
     HighchartsChartModule,

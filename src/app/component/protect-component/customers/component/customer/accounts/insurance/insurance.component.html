@@ -367,7 +367,7 @@
                     remaining
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
-                    <div class="bar"> {{element.durationRemaining}} </div>
+                    <div class="bar"> {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}} </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                 </ng-container>
@@ -544,8 +544,8 @@
         appFormatNumber
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.sumAssured) ? (item.sumAssured) : 0}}</td>
       <td
-        appFormatNumber
-        style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.currentValue == 'Infinity' ? 0 : item.currentValue)}}</td>
+        appFormatNumbercurrentVa
+        style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.lue == 'Infinity' ? 0 : item.currentValue)}}</td>
       <td
         appFormatNumber
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
@@ -713,7 +713,7 @@
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"> {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-        {{item.durationRemaining}} </td>
+        {{item.statusId == 'EXPIRED' ? '-' : item.durationRemaining}} </td>
       <td
         style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
         {{(item.policyType) ? item.policyType : item.planName}}</td>
