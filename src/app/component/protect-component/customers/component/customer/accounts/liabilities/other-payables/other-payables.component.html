@@ -21,9 +21,6 @@
                 <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
             </div>
 
-
-
-
             <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
                 <img src="assets/images/svg/up-down.svg">
             </a>
@@ -178,12 +175,18 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
         </table>
-        <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
-            <img class="width400" src="assets/images/svg/clients-img.svg">
-            <h4 class="text-center pt-12">No Data Found</h4>
-            <button (click)="open('addLiabilities','Add')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+
+
+    </div>
+    <div *ngIf="dataSource.data.length == 0" class="row pt-70">
+        <div class="d-flex align-items-center col-md-12 flex-column justify-content-center">
+            <img src="assets/images/svg/documents-empty-states.svg">
+            <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+            <button (click)="open('addLiabilities','Add')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                NEW
             </button>
         </div>
+
     </div>
 </div>
 <!-- -------------------- pdf ---------------------------- -->
