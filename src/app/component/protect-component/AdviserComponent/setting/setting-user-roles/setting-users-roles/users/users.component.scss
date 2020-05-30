@@ -52,3 +52,34 @@
 .txt-underline:hover {
     text-decoration: underline !important;
 }
+
+.dashedClass {
+    border: 1px dashed #BCC6CA;
+    height: 420px;
+    padding: 20px;
+    width: 357px;
+    p {
+        color: #484848;
+    }
+    strong {
+        font-weight: 600 !important;
+    }
+    ul {
+        display: block;
+        li {
+            font-size: 14px;
+            font-family: "proxima-nova", sans-serif;
+            font-weight: 300;
+            text-align: left;
+            padding-left: 25px;
+            color: #484848;
+        }
+    }
+}
+
+.boxEmpty {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

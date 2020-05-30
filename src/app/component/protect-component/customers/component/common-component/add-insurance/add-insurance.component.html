@@ -166,11 +166,12 @@
                 <div class="form-group mb-0">
                     <label class="f-14 roboto">Frequency</label>
                     <mat-form-field>
-                        <mat-select matInput formControlName="premiumDetailsFrequency" #frequency autocomplete="off" class="form-control br-0">
-                            <mat-option value='1'>Monthly</mat-option>
-                            <mat-option value='2'>Quarterly</mat-option>
-                            <mat-option value='3'>Half yearly</mat-option>
-                            <mat-option value='4'>Yearly</mat-option>
+                        <mat-select matInput formControlName="premiumDetailsFrequency" #frequency autocomplete="off"
+                                    class="form-control br-0">
+                          <mat-option value='12'>Monthly</mat-option>
+                          <mat-option value='4'>Quarterly</mat-option>
+                          <mat-option value='2'>Half yearly</mat-option>
+                          <mat-option value='1'>Yearly</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>

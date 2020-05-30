@@ -183,7 +183,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
     }
 
-    if (this.data && this.data.flag === 'addTransaction') {
+    if (this.data && this.data.flag === 'addTransaction' || this.data.flag === 'editTransaction') {
       this.schemeLevelHoldingForm.get('ownerName').disable();
       this.schemeLevelHoldingForm.get('folioNumber').disable();
       this.schemeLevelHoldingForm.get('sip').disable();

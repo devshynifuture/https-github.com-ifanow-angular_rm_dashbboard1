@@ -1391,8 +1391,13 @@
                 }
 
                 #ui-mf-transactions {
-                  background-color: #F5F7F7 !important;
+                  background-color: #E5E5E5 !important;
                   min-height: 100vh;
+
+                  .mat-chip-list-wrapper .mat-standard-chip {
+                    border: 1px solid rgba(0, 0, 0, 0.12);
+                    font-weight: 400;
+                  }
                 }
 
                 #mutualfund-main-popup {

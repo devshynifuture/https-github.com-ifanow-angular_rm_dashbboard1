@@ -5,6 +5,36 @@
   }
 }
 
+.face-sheet-radio {
+  display: flex;
+
+  .mat-radio-button {
+    min-width: 0px !important;
+    font-size: 10px !important;
+  }
+
+  // .mat-radio-inner-circle,
+  // .mat-radio-outer-circle,
+  // .mat-radio-container,
+  // .mat-radio-outer-circle {
+  //   height: 10px !important;
+  //   width: 10px !important;
+  // }
+
+
+
+  .mat-radio-label {
+    display: grid !important;
+    padding: 0 !important;
+  }
+
+
+
+  .mat-radio-label {
+    display: block !important;
+  }
+}
+
 // .mutualfunds-capital-equity#tabele-low {
 
 //   #table-low th.mat-column-header-row-first-group,
@@ -216,13 +246,13 @@
     tbody td {
       padding: 0px 8px !important;
     }
-  }
 
-  .menus-list {
     .mat-icon-button {
       line-height: 30px !important;
       height: 30px !important;
+      width: 24px !important;
     }
+
   }
 }
 

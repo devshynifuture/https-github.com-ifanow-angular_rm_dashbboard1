@@ -112,15 +112,16 @@
             </table>
         </div>
         <div *ngIf="clientDatasource.data.length==0" class="row pt-32">
-            <div class="col-md-7 d-flex align-items-center  flex-column ">
-                <img src="assets/images/svg/clients-empty-states.svg">
-                <h4 class="mt-24 mb-12">No clients added yet</h4>
-                <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
-                    ADD NEW
-                </button>
-            </div>
+            <div class="col-md-12 d-flex justify-content-center ">
+                <div class="boxEmpty mt-32">
+                    <img src="assets/images/svg/clients-empty-states.svg">
+                    <h4 class="mt-24 mb-12">No clients added yet</h4>
+                    <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
+                        ADD NEW
+                    </button>
+                </div>
 
-            <div class="col-md-5">
+
                 <div class="dashedClass">
                     <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio master files. Once you do, all the clients will automatically reflect here.</p>
                     <p> How to do it: You can manually upload your folio master file from here. Or share your RTA details with us here, we will upload them for you quickly.</p>

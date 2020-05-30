@@ -286,7 +286,7 @@
                         <div class="col-md-12 p-0 ">
                             <button mat-stroked-button class="btn-primary mr-8" (click)="cropImg(profileImg)">EDIT
                                 IMAGE</button>
-                            <button mat-stroked-button class="btn-primary" (click)="resetWebImage()">SET TO
+                            <button mat-stroked-button class="text-primary" (click)="resetWebImage()">SET TO
                                 DEFAULT</button>
                         </div>
 
@@ -298,7 +298,8 @@
             <div class="row pt-44" *ngIf="selectedTab == 2">
                 <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
                     <h5 class="mb-0 mt-8 f-14">Your logo</h5>
-                    <p class="f-12 text-primitive text-primitive">This logo is visible on various reports (MF, Financial
+                    <p class="f-12 text-primitive roboto f-400">This logo is visible on various reports (MF,<br>
+                        Financial
                         Plan etc.).
                     </p>
                 </div>
@@ -340,7 +341,8 @@
                     <div class="row pt-24">
                         <button mat-stroked-button class="btn-primary mr-8" (click)="cropImg(reportImg)">EDIT
                             IMAGE</button>
-                        <button mat-stroked-button class="btn-primary" (click)="resetWebImage()">SET TO DEFAULT</button>
+                        <button mat-stroked-button class="text-primary" (click)="resetWebImage()">SET TO
+                            DEFAULT</button>
                     </div>
                 </div>
             </div>
