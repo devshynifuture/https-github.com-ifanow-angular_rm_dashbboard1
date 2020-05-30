@@ -342,14 +342,14 @@
                 </th>
                 <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                    <div class="bar">
-                      <span>{{element.dividendReinvest}}</span>
+                      <span>{{(element.dividendReinvest) ? element.dividendReinvest : 0}}</span>
                    </div>
                 </td>
              </ng-container>
              <ng-container matColumnDef="dividendReinvestTotal">
                 <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                    <div class="bar">
-                      <span>{{element.dividendReinvest}}</span>
+                      <span>{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
                    </div>
                 </td>
              </ng-container>
