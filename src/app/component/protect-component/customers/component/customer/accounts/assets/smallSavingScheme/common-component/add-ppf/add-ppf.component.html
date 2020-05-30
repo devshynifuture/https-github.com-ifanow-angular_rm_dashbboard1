@@ -181,7 +181,7 @@
                         <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                             #futureContribution class="form-control rupess br-0" formControlName="futureContribution"
                             matInput maxlength="20" type="text">
-                        <mat-error class="f-12">
+                        <mat-error class="f-12" *ngIf="!ppfSchemeForm.get('futureContribution').errors?.max">
                             This field is required
                         </mat-error>
                         <mat-error *ngIf="(ppfSchemeForm.get('futureContribution').errors?.max)" class="f-12">
@@ -247,9 +247,9 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" class="form-control br-0" 
-                                formControlName="ppfNo" matInput type="text">
+                                formControlName="ppfNo" #ppfNum matInput type="text" maxlength="20">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <!-- <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint> -->
+                            <mat-hint align="end" class="f-12">{{ppfNum.value.length}}/20</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>

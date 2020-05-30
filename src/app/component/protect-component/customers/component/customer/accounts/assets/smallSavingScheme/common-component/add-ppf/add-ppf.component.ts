@@ -333,7 +333,7 @@ addNewNominee(data) {
       accountBalance: [data.accountBalance, [ Validators.min(500)]],//Validators.max(150000)
       balanceAsOn: [data.balanceAsOn?new Date(data.balanceAsOn):''],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
-      futureContribution: [data.futureApproxcontribution, [Validators.required]],
+      futureContribution: [data.futureApproxcontribution, [Validators.required, Validators.max(150000)]],
       extenMaturity: [''],
       ppfNo:[data.ppfNumber],
       frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],

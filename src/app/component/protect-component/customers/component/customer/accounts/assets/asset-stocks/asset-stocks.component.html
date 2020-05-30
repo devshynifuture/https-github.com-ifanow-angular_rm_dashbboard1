@@ -112,7 +112,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-7 pl-4 pr-0">
+      <div class="col-md-7 pl-4 pr-0" *ngIf="categories">
         <div class="row">
           <div class="col-md-4 p-0 b-a">
             <div class="highcharts-figure" id="piechartStock"></div>
@@ -125,17 +125,16 @@
               <div class="col-md-6">
                 <p class="f-500 text-black mb-0">Banking</p>
               </div>
-              <div class="col-md-3 pl-0">
-                <!-- <p class="text-black mb-0">5,24,819</p> -->
-                {{categories.Banking?'₹':''}}<span *ngIf="categories.Banking" [value]="categories.Banking.currentValue" appFormatNumber>{{categories.Banking.currentValue}}</span>
-                <span *ngIf="!categories.Banking" >₹0</span>
-                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
-              </div>
-              <div class="col-md-2 pl-0">
+              <div class="col-md-3 pl-0"  >
                 <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" *ngIf="!categories.Banking">{{0 | number: '1.2-2'}}%</p>
-                <p class="text-black mb-0" *ngIf="categories.Banking">{{categories.Banking.perrcentage | number: '1.2-2'}}%</p>
+                <span   >₹0</span>
               </div>
+             
+              <div class="col-md-2 pl-0"  >
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+              </div>
+             
             </div>
             <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
@@ -144,16 +143,14 @@
               <div class="col-md-6">
                 <p class="f-500 text-black mb-0">Information technology</p>
               </div>
-              <div class="col-md-3 pl-0">
-                <!-- <p class="text-black mb-0">5,24,819</p> -->
-                {{categories.Banking?'₹':''}}<span *ngIf="categories.Banking" [value]="categories.Banking.currentValue" appFormatNumber>{{categories.Banking.currentValue}}</span>
-                <span *ngIf="!categories.Banking" >₹0</span>
-                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
-              </div>
-              <div class="col-md-2 pl-0">
+              <div class="col-md-3 pl-0"  >
                 <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" *ngIf="!categories.Banking">{{0 | number: '1.2-2'}}%</p>
-                <p class="text-black mb-0" *ngIf="categories.Banking">{{categories.Banking.perrcentage | number: '1.2-2'}}%</p>
+                <span   >₹0</span>
+              </div>
+             
+              <div class="col-md-2 pl-0"  >
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row b-b pt-10 pb-10">
@@ -163,16 +160,14 @@
               <div class="col-md-6">
                 <p class="f-500 text-black mb-0">FMCG</p>
               </div>
-              <div class="col-md-3 pl-0">
-                <!-- <p class="text-black mb-0">5,24,819</p> -->
-                {{categories.Banking?'₹':''}}<span *ngIf="categories.Banking" [value]="categories.Banking.currentValue" appFormatNumber>{{categories.Banking.currentValue}}</span>
-                <span *ngIf="!categories.Banking" >₹0</span>
-                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
-              </div>
-              <div class="col-md-2 pl-0">
+              <div class="col-md-3 pl-0"  >
                 <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" *ngIf="!categories.Banking">{{0 | number: '1.2-2'}}%</p>
-                <p class="text-black mb-0" *ngIf="categories.Banking">{{categories.Banking.perrcentage | number: '1.2-2'}}%</p>
+                <span   >₹0</span>
+              </div>
+             
+              <div class="col-md-2 pl-0"  >
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row b-b pt-10 pb-10">
@@ -182,16 +177,21 @@
               <div class="col-md-6">
                 <p class="f-500 text-black mb-0">Auto ancillaries</p>
               </div>
-              <div class="col-md-3 pl-0">
-                <!-- <p class="text-black mb-0">5,24,819</p> -->
-                {{categories.Auto_Ancillaries?'₹':''}}<span *ngIf="categories.Auto_Ancillaries" [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
-                <span *ngIf="!categories.Auto_Ancillaries" >₹0</span>
-                <!-- <p class="text-black mb-0">{{categories.Auto Ancillaries}}</p> -->
-              </div>
-              <div class="col-md-2 pl-0">
+              <div class="col-md-3 pl-0" *ngIf="categories.Auto_Ancillaries == undefined">
                 <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" *ngIf="!categories.Auto_Ancillaries">{{0 | number: '1.2-2'}}%</p>
-                <p class="text-black mb-0" *ngIf="categories.Auto_Ancillaries">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}%</p>
+                <span >₹0</span>
+              </div>
+              <div class="col-md-3 pl-0" *ngIf="categories.Auto_Ancillaries != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                {{categories.Auto_Ancillaries?'₹':''}}<span [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
+              </div>
+              <div class="col-md-2 pl-0" *ngIf="categories.Auto_Ancillaries == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+              </div>
+              <div class="col-md-2 pl-0" *ngIf="categories.Auto_Ancillaries != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
             <div class="row pt-10 pb-10">
@@ -201,15 +201,21 @@
               <div class="col-md-6">
                 <p class="f-500 text-black mb-0">Others</p>
               </div>
-              <div class="col-md-3 pl-0">
-                <!-- <p class="text-black mb-0">5,24,819</p> -->
-                <span *ngIf="!categories.OTHERS" >₹0</span>
-
-                {{categories.OTHERS?'₹':''}}<span *ngIf="categories.OTHERS" [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
+              <div class="col-md-3 pl-0" *ngIf="!categories.OTHERS">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <span >₹0</span>
               </div>
-              <div class="col-md-2 pl-0">
-                <p class="text-black mb-0" *ngIf="!categories.OTHERS.perrcentage">{{0 | number: '1.2-2'}}%</p>
-                <p class="text-black mb-0" *ngIf="categories.OTHERS.perrcentage">{{categories.OTHERS.perrcentage | number: '1.2-2'}}%</p>
+              <div class="col-md-3 pl-0" *ngIf="categories.OTHERS">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
+              </div>
+              <div class="col-md-2 pl-0" *ngIf="!categories.OTHERS">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+              </div>
+              <div class="col-md-2 pl-0" *ngIf="categories.OTHERS">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{categories.OTHERS.perrcentage | number: '1.2-2'}}%</p>
               </div>
             </div>
           </div>
