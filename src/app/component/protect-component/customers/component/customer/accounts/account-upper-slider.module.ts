@@ -6,6 +6,8 @@ import {ChartModule} from 'angular-highcharts';
 import {MaterialModule} from '../../../../../../material/material';
 import {FactSheetComponent} from '../../common-component/fact-shit/fact-sheet.component';
 import {TransactionsComponent} from '../../common-component/transactions/transactions.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 const componentList = [
   FactSheetComponent,
@@ -14,6 +16,10 @@ const componentList = [
 @NgModule({
   declarations: [componentList],
   imports: [
+    ReactiveFormsModule,
+    MaterialModule,
+    CustomDirectiveModule,
+    CustomCommonModule,
     CommonModule,
     MaterialModule,
     ChartModule,

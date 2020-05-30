@@ -59,6 +59,9 @@
                     <mat-error>
                         This field is required
                     </mat-error>
+                    <mat-error *ngIf="(singleTransForm.get('futureContribution').errors?.max)" class="f-12">
+                        Should be less than 150000
+                    </mat-error>
                     <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>

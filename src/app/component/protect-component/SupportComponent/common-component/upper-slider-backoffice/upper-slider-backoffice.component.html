@@ -375,7 +375,7 @@
                                 </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        {{element.fileOrderDateTime !== '-' ? ( element.fileOrderDateTime | date:'short') : ''}}
+                                        {{element.fileOrderDateTime !== '-' ? ( element.fileOrderDateTime | date:'dd/MM/yyyy') : ''}}
                                     </div>
                                 </td>
                             </ng-container>

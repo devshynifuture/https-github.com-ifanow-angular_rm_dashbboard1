@@ -98,7 +98,7 @@
                         </mat-checkbox> -->
                 <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">
-                        {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':item.displayName}}
+                        {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
@@ -208,9 +208,9 @@
         </mat-expansion-panel-header>
         <div class="borderTopbox" *ngIf="panelOpenState == true">
             <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
-                    {{'FY '+item.from+' - '+item.to}}
-                </mat-checkbox>
+                <mat-radio-button   [checked]="item.selected" (change)="changeFinancialYear(item)" [disabled]="item.disabled">
+                   <span  [matTooltipPosition]="'right'" [matTooltip]="item.disabled ? 'No capital gains on this financial year.' : ''"  > {{'FY '+item.from+' - '+item.to}}</span>
+                </mat-radio-button>
             </mat-list-item>
         </div>
     </mat-expansion-panel>

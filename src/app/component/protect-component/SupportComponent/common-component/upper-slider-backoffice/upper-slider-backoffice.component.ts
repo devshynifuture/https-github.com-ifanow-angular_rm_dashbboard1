@@ -12,7 +12,6 @@ import { DatePipe } from '@angular/common';
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
-
 @Component({
   selector: 'app-upper-slider-backoffice',
   templateUrl: './upper-slider-backoffice.component.html',
@@ -64,7 +63,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private datePipe: DatePipe,
     private reconService: ReconciliationService,
     private util: UtilService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     if (this.data.hasOwnProperty('arnRiaCode')) {
@@ -94,7 +94,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.upperHeaderName = this.getRtName(this.data.rtId);
           this.teamMemberListGet();
         } else {
-          this.eventService.openSnackBar("Error In Fetching RTA List", "Dismiss");
+          this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
         }
       });
   }
@@ -112,7 +112,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     if (this.data.startRecon) {
       this.rtId = this.data.rtId;
-      this.isFranklinTab = (this.getRtName(this.rtId) === "FRANKLIN_TEMPLETON") ? true : false;
+      this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN_TEMPLETON') ? true : false;
 
       console.log('start recon is true::::');
       this.isLoading = true;
@@ -127,14 +127,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.getBackofficeAumFileOrderListDeleteReorder();
 
     }
-    console.log("this is data that we got from franklin:::::::", this.data);
+    console.log('this is data that we got from franklin:::::::', this.data);
   }
 
   teamMemberListGet() {
     this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
-          console.log("team members: ", data)
+          console.log('team members: ', data);
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
           });
@@ -143,11 +143,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
         } else {
           this.adminAdvisorIds = [this.advisorId];
           this.handlingDataVariable();
-          this.eventService.openSnackBar('No Team Member Found', "Dismiss");
+          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
         }
       }, err => {
         console.log(err);
-      })
+      });
   }
 
   bindDataWithSummaryTable() {
@@ -167,12 +167,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getDataFromObsAfterDeletingTransacn() {
-    console.log("updoate ifanow units function called");
+    console.log('updoate ifanow units function called');
     this.supportService.getDataThroughObs().subscribe(res => {
-      console.log("this is something coming from obs:::::::::::", res);
+      console.log('this is something coming from obs:::::::::::', res);
       if (res !== '') {
         // update units ifanow
-        console.log("this is response that im getting::::", res);
+        console.log('this is response that im getting::::', res);
         this.dataSource1.data.map(item => {
           item['unitsIfanow'] = String((res.units).toFixed(3));
           item['difference'] = String((parseInt(item['unitsIfanow']) - parseInt(item['unitsRta'])).toFixed(3));
@@ -180,7 +180,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         this.getBackofficeAumReconListSummary(false);
         this.getDuplicateFolioList();
       }
-    })
+    });
   }
 
   getBackofficeAumReconListSummary(doStartRecon) {
@@ -192,13 +192,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
       rt: this.data.rtId,
       parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
       isParent,
-    }
+    };
 
     this.supportService.getAumReconListGetValues(data)
       .subscribe(res => {
         this.isLoading = false;
         let objArr = [];
-        console.log("this is summary values::::", res);
+        console.log('this is summary values::::', res);
         if (res && res['aumList']) {
           this.canExportExcelSheet = 'true';
           this.aumList = res['aumList'];
@@ -207,7 +207,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
             return element.isMapped === -1;
           });
-          console.log("see the difference::::::::", this.filteredAumListWithIsMappedToMinusOne, res['aumList']);
+          console.log('see the difference::::::::', this.filteredAumListWithIsMappedToMinusOne, res['aumList']);
           this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
             // check  and compare date object and can delete value
             arrayValue.push({
@@ -241,11 +241,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
             doneOn: doneOnFormatted,
             // when rm login is creted this will get value from localStorage
             rmId: this.rmId
-          }
+          };
           if (doStartRecon) {
             this.reconService.putBackofficeReconAdd(data)
               .subscribe(res => {
-                console.log("started reconciliation::::::::::::", res);
+                console.log('started reconciliation::::::::::::', res);
                 if (this.data.startRecon) {
                   this.aumReconId = res;
                 }
@@ -254,7 +254,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
               });
           }
 
-          // aum date for all object is the same 
+          // aum date for all object is the same
           objArr = [{
             doneOne: res.doneOn,
             aum_balance: res.aumList[0].aumDate,
@@ -290,7 +290,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       data = {
         advisorIds: [this.advisorId],
         folio: mutualFundIds
-      }
+      };
     } else {
       let mutualFundIds = [];
       this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
@@ -300,67 +300,67 @@ export class UpperSliderBackofficeComponent implements OnInit {
         mutualFundIds.push(element.mutualFundId);
       });
       data = {
-        advisorIds: [... this.adminAdvisorIds],
-        folio: mutualFundIds
-      }
+        advisorIds: [...this.adminAdvisorIds],
+        folio: this.mutualFundIds
+      };
     }
-    if (this.didAumReportListGot) {
-      this.isLoadingForDuplicate = true;
-      this.reconService.getDuplicateFolioDataValues(data)
-        .subscribe(res => {
-          this.isLoadingForDuplicate = false;
-          if (res) {
-            console.log("this is some duplicate values:::::::::", res, this.aumList);
-            let filteredArrValue = [];
-            let arrValue = [];
-            if (this.data.flag === 'report') {
-              res.forEach(element => {
-                filteredArrValue = this.reportDuplicateFoliosIsMappedToMinusOne.filter(item => {
-                  return item.mutualFundId === element.id ? item : null;
-                });
+    // if (this.didAumReportListGot) {
+    this.isLoadingForDuplicate = true;
+    this.reconService.getDuplicateFolioDataValues(data)
+      .subscribe(res => {
+        this.isLoadingForDuplicate = false;
+        if (res) {
+          console.log('this is some duplicate values:::::::::', res, this.aumList);
+          let filteredArrValue = [];
+          let arrValue = [];
+          if (this.data.flag === 'report') {
+            res.forEach(element => {
+              filteredArrValue = this.aumListReportValue.filter(item => {
+                return item.mutualFundId === element.id ? item : null;
               });
-            } else {
-              res.forEach(element => {
-                filteredArrValue = this.aumList.filter(item => {
-                  return item.mutualFundId === element.id ? item : null;
-                });
-              });
-            }
-
-
-            console.log("htis is filered value::::", filteredArrValue);
-            filteredArrValue.forEach(item => {
-              arrValue.push({
-                id: item.id,
-                name: item.shemeName,
-                folioNumber: item.folioNumber,
-                mutualFundId: item.mutualFundId,
-                advisorId: item.advisorId,
-                brokerId: item.broker_id,
-                unitsRta: (item.aumUnits).toFixed(3),
-                unitsIfanow: (item.calculatedUnits).toFixed(3),
-                difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
-                freezeDate: item.freezeDate ? item.freezeDate : null,
-                isMapped: item.isMapped,
-                aumDate: item.aumDate,
-                brokerCode: item.brokerCode,
-                schemeCode: item.schemeCode,
-                mutualFundTransaction: item.mutualFundTransaction,
-                transactions: ''
-              })
-            })
-            this.dataSource2.data = arrValue;
+            });
           } else {
-            this.dataSource2.data = null;
+            res.forEach(element => {
+              filteredArrValue = this.aumList.filter(item => {
+                return item.mutualFundId === element.id ? item : null;
+              });
+            });
           }
 
-        }, err => {
-          console.error(err);
-        });
-    } else {
-      this.eventService.openSnackBar("No Aum Report List Found", "Dismiss");
-      this.dataSource2.data = null;
-    }
+
+          console.log('htis is filered value::::', filteredArrValue);
+          filteredArrValue.forEach(item => {
+            arrValue.push({
+              id: item.id,
+              name: item.shemeName,
+              folioNumber: item.folioNumber,
+              mutualFundId: item.mutualFundId,
+              advisorId: item.advisorId,
+              brokerId: item.broker_id,
+              unitsRta: (item.aumUnits).toFixed(3),
+              unitsIfanow: (item.calculatedUnits).toFixed(3),
+              difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+              freezeDate: item.freezeDate ? item.freezeDate : null,
+              isMapped: item.isMapped,
+              aumDate: item.aumDate,
+              brokerCode: item.brokerCode,
+              schemeCode: item.schemeCode,
+              mutualFundTransaction: item.mutualFundTransaction,
+              transactions: ''
+            });
+          });
+          this.dataSource2.data = arrValue;
+        } else {
+          this.dataSource2.data = null;
+        }
+
+      }, err => {
+        console.error(err);
+      });
+    // } else {
+    //   this.eventService.openSnackBar("No Aum Report List Found", "Dismiss");
+    //   this.dataSource2.data = null;
+    // }
   }
 
   retryFileOrder() {
@@ -370,14 +370,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
     };
     this.reconService.putFileOrderRetry(data)
       .subscribe(res => {
-        console.log("retried values:::::::", res);
+        console.log('retried values:::::::', res);
 
         if (res === 1) {
           this.getBackofficeAumFileOrderListDeleteReorder();
         }
       }, err => {
         console.error(err);
-      })
+      });
   }
 
   deleteAndReorder() {
@@ -390,15 +390,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
       mutualFundIds: this.mutualFundIds,
       parentId: this.parentId,
       isParent
-    }
-    console.log("this is requestjson for delete and reorder:::: ", data);
+    };
+    console.log('this is requestjson for delete and reorder:::: ', data);
     this.reconService.deleteAndReorder(data)
       .subscribe(res => {
         console.log(res);
         this.getBackofficeAumFileOrderListDeleteReorder();
       }, err => {
         console.error(err);
-      })
+      });
   }
 
   getBackofficeAumFileOrderListDeleteReorder() {
@@ -413,8 +413,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               let obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios], { type: "text/plain" })
-              }
+                file: new Blob([element.folios], { type: 'text/plain' })
+              };
               element.folios = obj;
             }
             return element;
@@ -422,28 +422,28 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
           res.map(item => {
             if (!item.hasOwnProperty('fileOrderDateTime')) {
-              item.fileOrderDateTime = '-'
+              item.fileOrderDateTime = '-';
             }
             if (!item.hasOwnProperty('referenceId')) {
-              item.referenceId = '-'
+              item.referenceId = '-';
             }
             if (!item.hasOwnProperty('transactionAddedInFiles')) {
-              item.transactionAddedInFiles = '-'
+              item.transactionAddedInFiles = '-';
             }
             if (!item.hasOwnProperty('transactionAdded')) {
-              item.transactionAdded = '-'
+              item.transactionAdded = '-';
             }
             if (!item.hasOwnProperty('fileName')) {
-              item.fileName = '-'
+              item.fileName = '-';
             }
             item.fileUrl && item.fileUrl !== '' ? item.fileUrl : null;
-          })
+          });
 
-          console.log("deleted reorder values::::", res);
+          console.log('deleted reorder values::::', res);
           this.dataSource3.data = res;
         } else {
           this.dataSource3.data = null;
-          this.eventService.openSnackBar("No Data Found!", "DISMISS");
+          this.eventService.openSnackBar('No Data Found!', 'DISMISS');
         }
       });
   }
@@ -464,7 +464,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.isFranklinTab = this.getRtName(this.data.rtId) === 'FRANKLIN_TEMPLETON' ? true : false;
 
 
-    // creation of excel sheet 
+    // creation of excel sheet
     let headerData = [
       { width: 40, key: 'Investor Name' },
       { width: 15, key: 'Asset Id' },
@@ -534,7 +534,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         });
         ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
       } else {
-        this.eventService.openSnackBar("No Aum Report List Found", "Dismiss")
+        this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
       }
     }
 
@@ -553,7 +553,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       if (this.data.flag === 'report') {
         tableData = this.aumListReportValue;
       } else {
-        tableData = data.mutualFundTransaction
+        tableData = data.mutualFundTransaction;
       }
     }
     const fragmentData = {
@@ -599,7 +599,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           console.log('aborted');
         }
 
-      }
+      };
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         width: '400px',
         data: dialogData,
@@ -611,7 +611,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       });
 
     } else {
-      this.eventService.openSnackBar("You can only delete Unmatched folios or Delete and reorder folios", "DISMISS");
+      this.eventService.openSnackBar('You can only delete Unmatched folios or Delete and reorder folios', 'DISMISS');
     }
     this.deleteReorderOrDeleteDisabled = 'deleteReorder';
   }
@@ -626,14 +626,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
       brokerId: this.brokerId,
       rtId: this.rtId,
       mutualFundIds: this.mutualFundIds
-    }
+    };
 
     this.reconService.deleteUnfreezeTransaction(data)
       .subscribe(res => {
-        console.log("this is delete unfreeze transaction:::", res);
+        console.log('this is delete unfreeze transaction:::', res);
       }, err => {
-        console.error(err)
-      })
+        console.error(err);
+      });
 
   }
 
@@ -646,11 +646,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.reconService.getAumReportListValues(data)
       .subscribe(res => {
         this.isLoading = false;
-        console.log("this is aum report list get:::", res);
+        console.log('this is aum report list get:::', res);
         if (res) {
           this.didAumReportListGot = true;
           this.canExportExcelSheet = 'true';
-          console.log("this is aum report list get:::", res);
+          console.log('this is aum report list get:::', res);
           let arrayValue = [];
           this.aumListReportValue = res;
           res.forEach(element => {
@@ -673,8 +673,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.dataSource1.data = null;
         }
       }, err => {
-        console.error(err)
-      })
+        console.error(err);
+      });
   }
 
   postReqForBackOfficeUnmatchedFolios() {
@@ -688,18 +688,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
           aumUnits: element.aumUnits,
           mutualFundUnits: element.calculatedUnits,
           aumDate: this.datePipe.transform(element.aumDate, 'yyyy-MM-dd'),
-        })
+        });
       });
 
-      console.log("this is what we are sending to post req::", data);
+      console.log('this is what we are sending to post req::', data);
 
       // need to discuss with ajay
       this.reconService.postBackOfficeUnmatchedFoliosData(data)
         .subscribe(res => {
-          console.log(" backoffice unmateched Folio, post ", res);
+          console.log(' backoffice unmateched Folio, post ', res);
         }, err => {
           console.error(err);
-        })
+        });
     }
 
   }
@@ -738,7 +738,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             console.log('aborted');
           }
 
-        }
+        };
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           width: '400px',
           data: dialogData,
@@ -751,7 +751,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
       }
     } else {
-      this.eventService.openSnackBar("You can only Delete unmatched Folios Or Delete and reorder folios", "DISMISS");
+      this.eventService.openSnackBar('You can only Delete unmatched Folios Or Delete and reorder folios', 'DISMISS');
     }
     this.deleteReorderOrDeleteDisabled = 'delete';
   }
@@ -768,12 +768,12 @@ interface PeriodicElement {
   export_folios: string;
 
 }
+
 const ELEMENT_DATA: PeriodicElement[] = [
   { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
   { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
   { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
 ];
-
 
 
 interface PeriodicElement1 {
@@ -806,8 +806,36 @@ interface PeriodicElement3 {
   fileUrl: string;
 
 }
+
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { folios: '', fileOrderDateTime: '', status: '', referenceId: '', transactionAddedInFiles: '', transactionAdded: '', fileName: '', fileUrl: '' },
-  { folios: '', fileOrderDateTime: '', status: '', referenceId: '', transactionAddedInFiles: '', transactionAdded: '', fileName: '', fileUrl: '' },
-  { folios: '', fileOrderDateTime: '', status: '', referenceId: '', transactionAddedInFiles: '', transactionAdded: '', fileName: '', fileUrl: '' },
+  {
+    folios: '',
+    fileOrderDateTime: '',
+    status: '',
+    referenceId: '',
+    transactionAddedInFiles: '',
+    transactionAdded: '',
+    fileName: '',
+    fileUrl: ''
+  },
+  {
+    folios: '',
+    fileOrderDateTime: '',
+    status: '',
+    referenceId: '',
+    transactionAddedInFiles: '',
+    transactionAdded: '',
+    fileName: '',
+    fileUrl: ''
+  },
+  {
+    folios: '',
+    fileOrderDateTime: '',
+    status: '',
+    referenceId: '',
+    transactionAddedInFiles: '',
+    transactionAdded: '',
+    fileName: '',
+    fileUrl: ''
+  },
 ];

@@ -61,7 +61,7 @@
     <div class="row pt-44">
         <div class="col-md-5 pr-0  text-right">
             <h5 class="m-0 pt-8">Last drawn salary </h5>
-            <p class="m-0 f-12 text-custom">basic+DA</p>
+            <p class="m-0 f-12 text-custom">Basic+DA</p>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -80,7 +80,7 @@
     </div>
     <div class="row pt-24">
         <div class="col-md-5 pr-0  text-right">
-            <h5 class="m-0 pt-20 ">Date of Joining the organization</h5>
+            <h5 class="m-0 pt-20 ">Date of joining the organization</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
@@ -180,7 +180,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
-            <div class="col-md-5 form-group">
+            <div class="col-md-5">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="bankAcNo" matInput>
                         <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
@@ -195,7 +195,7 @@
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
-        <div class="row pt-40">
+        <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>
             </div>
@@ -251,10 +251,10 @@
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <i *ngIf="gratuity.value.getNomineeName.length < 3"
-                        class="material-icons text-primitive f-20 c-p float-left"
+                        class="material-icons text-primitive c-p float-left"
                         (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="gratuity.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive f-20 c-p pl-10"
+                        class="material-icons text-primitive c-p pl-10"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 

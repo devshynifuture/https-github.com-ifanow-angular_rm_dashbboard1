@@ -281,15 +281,16 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
+      ssyNo:[data.ssyNo],
       guardian: [data.guardianName?data.guardianName:'', [Validators.required]],
-      accBalance: [data.accountBalance, [ Validators.min(250), Validators.max(150000)]],
+      accBalance: [data.accountBalance, []],
       balanceAsOn: [new Date(data.balanceAsOn)],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
       frquency: [data.frequency ? data.frequency: '', [Validators.required]],
       description: [data.description],
       linkedAcc: [data.userBankMappingId],
-      bankName: [data.bankName],
+      // bankName: [data.bankName],
       nominees: this.nominees,
       agentName: [data.agentName],
       getNomineeName: this.fb.array([this.fb.group({
@@ -395,7 +396,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
       });
     }
     else{
-      this.ssySchemeForm.get('accBalance').setValidators([Validators.required, Validators.min(250), Validators.max(150000)]);
+      this.ssySchemeForm.get('accBalance').setValidators([Validators.required]);
       this.ssySchemeForm.get('accBalance').updateValueAndValidity();
       this.ssySchemeForm.get('balanceAsOn').setValidators([Validators.required]);
       // this.ssySchemeForm.get('balanceAsOn').updateValueAndValidity();
@@ -427,13 +428,14 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
           "clientId":this.clientId,
           "id": this.editApi? this.editApi.id : 0,
           "familyMemberId": this.familyMemberId,
+          "ssyNo": this.ssySchemeForm.value.ssyNo,
           // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "ownerList": this.ssySchemeForm.value.getCoOwnerName,
           "accountBalance":parseInt(this.ssySchemeForm.get('accBalance').value),
           "balanceAsOn": this.dateFormatPipe.transform(this.ssySchemeForm.get('balanceAsOn').value, 'dd/MM/yyyy'),
           "commencementDate": this.dateFormatPipe.transform(this.ssySchemeForm.get('commDate').value, 'dd/MM/yyyy'),
           "description": this.ssySchemeForm.get('description').value,
-          "bankName": this.ssySchemeForm.get('bankName').value,
+          // "bankName": this.ssySchemeForm.get('bankName').value,
           "linkedBankAccount": this.ssySchemeForm.get('linkedAcc').value,
           "userBankMappingId": this.ssySchemeForm.get('linkedAcc').value,
           "agentName": this.ssySchemeForm.get('agentName').value,
