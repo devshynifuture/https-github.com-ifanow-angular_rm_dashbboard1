@@ -49,7 +49,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   // displayedColumns: string[];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
-  viewMode: string;
+  viewMode: string = '';
   reponseData: any;
   setDefaultFilterData: any;
   mfGetData: any;

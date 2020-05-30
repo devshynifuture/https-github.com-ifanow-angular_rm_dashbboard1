@@ -30,13 +30,14 @@
     </div>
 </div>
 <div class="overflow-hidden mt-8 real-estate">
-    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading
+        [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
-            <td mat-footer-cell class=" text-right f-500  pl-4" *matFooterCellDef> </td>
+            <td mat-footer-cell class=" text-right f-500 bl-1 pl-4" *matFooterCellDef> </td>
 
         </ng-container>
         <ng-container matColumnDef="owner">
@@ -59,7 +60,8 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue"
+                        appFormatNumber>{{SumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -75,7 +77,8 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested"
+                        appFormatNumber>{{sumOfAmountInvested}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="number">
@@ -128,7 +131,7 @@
                     </mat-menu>
                 </div>
             </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+            <td *matFooterCellDef class="br text-right br" mat-footer-cell></td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

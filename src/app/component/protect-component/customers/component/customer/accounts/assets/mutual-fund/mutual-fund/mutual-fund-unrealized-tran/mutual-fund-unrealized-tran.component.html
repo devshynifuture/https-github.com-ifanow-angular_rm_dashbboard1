@@ -325,14 +325,14 @@
                 </th>
                 <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                    <div class="bar">
-                      <span>{{element.dividendPayout}}</span>
+                      <span>{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
                    </div>
                 </td>
              </ng-container>
              <ng-container matColumnDef="dividendPayoutTotal">
                 <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                    <div class="bar">
-                      <span>{{element.dividendPayout}}</span>
+                      <span>{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
                    </div>
                 </td>
              </ng-container>
@@ -342,14 +342,14 @@
                 </th>
                 <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                    <div class="bar">
-                      <span>{{element.dividendReinvest}}</span>
+                      <span>{{(element.dividendReinvest) ? element.dividendReinvest : 0}}</span>
                    </div>
                 </td>
              </ng-container>
              <ng-container matColumnDef="dividendReinvestTotal">
                 <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                    <div class="bar">
-                      <span>{{element.dividendReinvest}}</span>
+                      <span>{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
                    </div>
                 </td>
              </ng-container>
@@ -696,14 +696,17 @@
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Total amount</b>
           </td>
-          <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+          <!-- *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" -->
+          <!-- <td 
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Balance units</b>
-          </td>
-          <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+          </td> -->
+
+          <!-- *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" -->
+          <!-- <td
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Days</b>
-          </td>
+          </td> -->
           <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
              <b>Gain</b>
@@ -719,7 +722,7 @@
        </tr>
        <tbody *ngFor="let item of customDataSource.data ;index as i">
           <tr style="page-break-inside: avoid">
-             <td *ngIf="item.groupName" colspan="12"
+             <td *ngIf="item.groupName" colspan="13"
                 style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                 {{item.groupName}}
              </td>
@@ -775,26 +778,28 @@
              <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
                 appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.dividendPayout}} 
+                {{(item.dividendPayout) ? item.dividendPayout : 0}} 
              </td>
              <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
                 appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.dividendReinvest}} 
+                {{(item.dividendReinvest) ? item.dividendReinvest : 0}} 
              </td>
              <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
                 appFormatNumber
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.currentAmount}} 
              </td>
-             <td *ngIf="viewMode == 'All Transactions'"
+             <!-- *ngIf="viewMode == 'All Transactions'" -->
+             <!-- <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.balanceUnits}} 
-             </td>
-             <td *ngIf="viewMode == 'All Transactions'"
+             </td> -->
+             <!-- *ngIf="viewMode == 'All Transactions'" -->
+             <!-- <td 
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.days}} 
-             </td>
+             </td> -->
              <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.gain}} 
