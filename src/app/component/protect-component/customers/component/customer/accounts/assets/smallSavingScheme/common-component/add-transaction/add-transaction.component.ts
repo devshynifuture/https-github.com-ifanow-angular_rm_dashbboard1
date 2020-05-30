@@ -38,7 +38,7 @@ export class AddTransactionComponent implements OnInit {
     data.transactionList.forEach(element => {
       this.getTransFormList.push(this.fb.group({
         date: [new Date(element.transactionDate), [Validators.required]],
-        amount: [element.amount, Validators.required],
+        amount: [element.amount, Validators.required,Validators.max(150000)],
         type: [element.transactionType, Validators.required],
         id: [(element.id + ''), Validators.required],
         assetId:[element.assetId],

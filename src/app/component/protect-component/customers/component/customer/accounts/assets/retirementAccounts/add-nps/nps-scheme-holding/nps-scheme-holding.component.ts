@@ -54,6 +54,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   idForscheme: any;
   idForscheme1: any[];
   clientId: any;
+  maxDate = new Date();
   nomineesListFM:any = [];
   callMethod:any;
   dataFM = [];

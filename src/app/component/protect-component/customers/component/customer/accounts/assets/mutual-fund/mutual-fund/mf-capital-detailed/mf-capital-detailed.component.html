@@ -487,10 +487,10 @@
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"> <span *ngIf="element.amount || element.amount == 0"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? element.amount : 0)}}</span>
+                                appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
                             <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
                                 class=" f-600 amt text-right"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? element.purchaseAmount : 0)}}</span>
+                                appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? (element.purchaseAmount | number:'1.2-2'): 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber

@@ -281,6 +281,7 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
+      ssyNo:[data.ssyNo],
       guardian: [data.guardianName?data.guardianName:'', [Validators.required]],
       accBalance: [data.accountBalance, []],
       balanceAsOn: [new Date(data.balanceAsOn)],
@@ -427,6 +428,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
           "clientId":this.clientId,
           "id": this.editApi? this.editApi.id : 0,
           "familyMemberId": this.familyMemberId,
+          "ssyNo": this.ssySchemeForm.value.ssyNo,
           // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "ownerList": this.ssySchemeForm.value.getCoOwnerName,
           "accountBalance":parseInt(this.ssySchemeForm.get('accBalance').value),
