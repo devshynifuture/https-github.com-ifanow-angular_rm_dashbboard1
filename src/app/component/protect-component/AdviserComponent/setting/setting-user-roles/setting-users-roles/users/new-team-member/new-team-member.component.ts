@@ -192,7 +192,7 @@ export class NewTeamMemberComponent implements OnInit {
     }, (err) => {
       console.error(err);
       this.barButtonOptions.active = false;
-      this.eventService.openSnackBar('Error occured.', "Dismiss");
+      this.eventService.openSnackBar(err.message, "Dismiss");
     });
   }
 
@@ -209,7 +209,7 @@ export class NewTeamMemberComponent implements OnInit {
     }, (err) => {
       console.error(err);
       this.barButtonOptions.active = false;
-      this.eventService.openSnackBar('Error occured.', "Dismiss");
+      this.eventService.openSnackBar(err.message, "Dismiss");
     });
   }
 

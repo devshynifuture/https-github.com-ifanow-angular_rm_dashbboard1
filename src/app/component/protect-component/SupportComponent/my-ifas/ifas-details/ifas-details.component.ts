@@ -37,8 +37,8 @@ export class IfasDetailsComponent implements OnInit {
   ifasData: any;
   getOverview: any;
   franklineData = new MatTableDataSource(ELEMENT_RT_DATA);
-  camsData = new MatTableDataSource(ELEMENT_RT_DATA);;
-  karvyData = new MatTableDataSource(ELEMENT_RT_DATA);;
+  camsData = new MatTableDataSource(ELEMENT_RT_DATA);
+  karvyData = new MatTableDataSource(ELEMENT_RT_DATA);
   isLoading: boolean = false;
   brokerList: any;
   brokerListCams: any;
@@ -223,7 +223,8 @@ export class IfasDetailsComponent implements OnInit {
         ...data,
         startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
         rtId,
-        flag
+        flag,
+        clientName: '',
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
@@ -248,7 +249,7 @@ export class IfasDetailsComponent implements OnInit {
   openSelectArnRiaDialog(data, value, rtId) {
     const Fragmentdata = {
       brokerCodeValue: data,
-      mainData: value,
+      mainData: { ...value, clientName: this.ifasData.adminName },
       rtId,
     };
     const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {

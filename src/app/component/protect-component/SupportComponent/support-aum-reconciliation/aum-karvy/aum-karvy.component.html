@@ -79,14 +79,14 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header="aumBalanceDate" class="b-a"> AUM Balance Date
                 </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.aumBalanceDate | date:'short'}} </div>
+                    <div class="bar"> {{element.aumBalanceDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="transactionDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header="transactionDate" class="b-a"> Transaction Date
                 </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.transactionDate | date:'short'}} </div>
+                    <div class="bar"> {{element.transactionDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="report">

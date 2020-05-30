@@ -55,7 +55,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineeList: any=[];
   advisorId: any;
   nomineesListFM: any=[];
-
+maxDate= new Date();
   clientId: any;
   nexNomineePer = 0;
   getPerAllocation: number;

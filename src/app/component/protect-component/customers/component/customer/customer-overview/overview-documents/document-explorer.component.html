@@ -60,8 +60,6 @@
                                 </p>
                             </li>
                             <li>
-                                <!-- <img *ngIf="openFolderName.length > 3" [matMenuTriggerFor]="menu4" class="c-p"
-                                    src="/assets/images/svg/dark-three-dot.svg"> -->
                                 <span *ngIf="openFolderName.length > 3" [matMenuTriggerFor]="menu4"
                                     class="material-icons c-p">
                                     more_horiz
@@ -76,12 +74,14 @@
                                     </div>
                                 </mat-menu>
                             </li>
-                            <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index">
-                                <div *ngIf="openFolderName.length > 3">
-                                    <p class="text-black roboto f-18" *ngIf="i == openFolderName.length-1">
-                                        {{folder.openFolderNm}} </p>
-                                </div>
-                            </li>
+                            <ol class="documentBreadCrumb">
+                                <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index">
+                                    <div *ngIf="openFolderName.length > 3">
+                                        <p class="text-black roboto f-18" *ngIf="i == openFolderName.length-1">
+                                            {{folder.openFolderNm}} </p>
+                                    </div>
+                                </li>
+                            </ol>
                         </ol>
                     </div>
                     <div class="col-md-6 p-0 d-flex justify-content-end">

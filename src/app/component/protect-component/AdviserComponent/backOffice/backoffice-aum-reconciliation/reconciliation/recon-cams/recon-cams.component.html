@@ -36,7 +36,7 @@
                 <th mat-header-cell *matHeaderCellDef> Last Done On </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{ element.doneOn | date: 'yyyy-MM-dd' }}
+                        {{ element.doneOn | date: 'dd/MM/yyyy' }}
                     </div>
                 </td>
             </ng-container>
@@ -76,7 +76,7 @@
                 <th mat-header-cell *matHeaderCellDef> AUM Balance </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.aumBalanceDate | date: 'yyyy-MM-dd'}}
+                        {{element.aumBalanceDate | date: 'dd/MM/yyyy'}}
                     </div>
                 </td>
             </ng-container>
@@ -84,7 +84,7 @@
                 <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{ element.transactionDate | date: 'yyyy-MM-dd'}}
+                        {{ element.transactionDate | date: 'dd/MM/yyyy'}}
                     </div>
                 </td>
             </ng-container>
