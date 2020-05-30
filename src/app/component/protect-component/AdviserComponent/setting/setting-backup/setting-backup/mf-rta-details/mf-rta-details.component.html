@@ -8,8 +8,7 @@
                 ADD NEW
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list"
-                    (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
+                <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
             </mat-menu>
         </div>
     </div>
@@ -17,8 +16,7 @@
         <div class="row" *ngIf="camsDS.data.length > 0">
             <div class="col-md-7 p-0 camsTable">
                 <h5 class="m-0 pt-24">CAMS</h5>
-                <table mat-table [dataSource]="camsDS" class="mt-8 skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
+                <table mat-table [dataSource]="camsDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
@@ -27,7 +25,7 @@
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
@@ -35,21 +33,20 @@
                             <div class="bar">{{element.registeredEmail}} </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Weight Column -->
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell *matHeaderCellDef class="br"> Mailback password </th>
                         <td mat-cell *matCellDef="let element" class="br  ">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template
-                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="symbol">
                         <th mat-header-cell *matHeaderCellDef> </th>
@@ -65,7 +62,7 @@
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
@@ -74,19 +71,18 @@
         <div class="row" *ngIf="karvyDS.data.length > 0">
             <div class="col-md-12 p-0 camsTable">
                 <h5 class="m-0 pt-24">Karvy (KFintech)</h5>
-                <table mat-table [dataSource]="karvyDS" class="mt-8 skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
-        
+                <table mat-table [dataSource]="karvyDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 {{getARNId(element.arnRiaDetailsId)}}
                             </div>
-        
+
                         </td>
                     </ng-container>
-        
+
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
@@ -96,21 +92,20 @@
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Weight Column -->
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
                         <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
                             <div class="bar w-100">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template
-                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
@@ -125,8 +120,7 @@
                         <td mat-cell *matCellDef="let element" class="br  ">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template
-                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -159,20 +153,19 @@
                 </table>
             </div>
         </div>
-        
+
         <div class="row" *ngIf="frankDS.data.length > 0">
             <div class="col-md-10 p-0 camsTable">
                 <h5 class="m-0 pt-24">Franklin Templeton</h5>
-                <table mat-table [dataSource]="frankDS" class="mt-8 skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
-        
+                <table mat-table [dataSource]="frankDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar"> {{getARNId(element.arnRiaDetailsId)}} </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
@@ -180,21 +173,20 @@
                             <div class="bar"> {{element.loginId}} </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Weight Column -->
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template
-                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
@@ -207,14 +199,13 @@
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template
-                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell class="text-center" *matCellDef="let element" [matMenuTriggerFor]="menu">
@@ -234,20 +225,19 @@
                 </table>
             </div>
         </div>
-        
+
         <div class="row" *ngIf="fundsDS.data.length > 0">
             <div class="col-md-11 p-0 camsTable pb-44">
                 <h5 class="m-0 pt-24">CAMS Fundsnet</h5>
-                <table mat-table [dataSource]="fundsDS" class="mt-8 skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
-        
+                <table mat-table [dataSource]="fundsDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td valign="top" mat-cell *matCellDef="let element" class="br">
                             <div class="bar"> {{getARNId(element.arnRiaDetailsId)}} </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
@@ -255,21 +245,20 @@
                             <div class="bar"> {{element.loginId}} </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Weight Column -->
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
                         <td valign="top" mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template
-                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef class="br p-5"> Secret Question </th>
@@ -288,8 +277,7 @@
                                 <div *ngIf="!utilService.isLoading">
                                     <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
                                         <ng-container>
-                                            <ng-template
-                                                *ngTemplateOutlet="templateRef; context:{element :{element:questionSet.answer, toggleValue: true}}">
+                                            <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:questionSet.answer, toggleValue: true}}">
                                             </ng-template>
                                         </ng-container>
                                     </div>
@@ -297,7 +285,7 @@
                             </div>
                         </td>
                     </ng-container>
-        
+
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td valign="top" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu">
@@ -330,11 +318,54 @@
 </ng-container>
 
 
-<div *ngIf="hasError" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+<div *ngIf="hasError" class="row pt-60">
+
+    <div class="col-md-12 d-flex justify-content-center ">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/mf-rta-details-empty-state.svg">
+            <h4 class="mt-24 mb-12"> No details added yet </h4>
+            <button class="btn-primary addon v-middle " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p>When you provide your RTA credentials, the system will automatically order and upload all the relevant RTA feeds for you in no time. </p>
+            <p>You can provide your CAMS, Karvy and Franklin Templeton credentials. If you would like to access CAMS SOA (Statement of accounts) then we need your Fundsnet details too.</p>
+            <p class="m-0">If you are not registered for any of the above, then checkout how to register with:</p>
+            <p class="m-0"> - CAMS </p>
+            <p class="m-0"> - Karvy </p>
+            <p class="m-0"> - Franklin Templeton </p>
+            <p> - Fundsnet</p>
+            <p>Please note that for full automation of mutual fund feeds to work, your registered email ID with these RTA needs to be a Gmail ID. Checkout the process of changing your registered email ID here. </p>
+        </div>
+    </div>
+
+
+    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4> -->
 </div>
-<div *ngIf="mfRTAlist.length == 0 && !utilService.isLoading" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No MF RTA detail found</h4>
+<div *ngIf="mfRTAlist.length == 0 && !utilService.isLoading" class="row pt-60">
+    <div class="col-md-12 d-flex justify-content-center ">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/mf-rta-details-empty-state.svg">
+            <h4 class="mt-24 mb-12"> No details added yet </h4>
+            <button class="btn-primary addon v-middle " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p>When you provide your RTA credentials, the system will automatically order and upload all the relevant RTA feeds for you in no time. </p>
+            <p>You can provide your CAMS, Karvy and Franklin Templeton credentials. If you would like to access CAMS SOA (Statement of accounts) then we need your Fundsnet details too.</p>
+            <p class="m-0">If you are not registered for any of the above, then checkout how to register with:</p>
+            <p class="m-0"> - CAMS </p>
+            <p class="m-0"> - Karvy </p>
+            <p class="m-0"> - Franklin Templeton </p>
+            <p> - Fundsnet</p>
+            <p>Please note that for full automation of mutual fund feeds to work, your registered email ID with these RTA needs to be a Gmail ID. Checkout the process of changing your registered email ID here. </p>
+        </div>
+    </div>
+    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No MF RTA detail found</h4> -->
 </div>

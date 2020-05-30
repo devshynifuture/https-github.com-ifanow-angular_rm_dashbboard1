@@ -90,15 +90,9 @@
                 <mat-form-field><input autocomplete="off" matInput #accountBalance class="form-control rupess br-0"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         formControlName="accBalance" matInput maxlength="10" type="text">
-                    <mat-error class="f-12" *ngIf="(ssySchemeForm.get('accBalance').errors?.required)"> This field
+                    <mat-error class="f-12"> This field
                         is required</mat-error>
                     <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
-                    <mat-error *ngIf="(ssySchemeForm.get('accBalance').errors?.min)" class="f-12">
-                        Should be greater than or equal to 250
-                    </mat-error>
-                    <mat-error *ngIf="(ssySchemeForm.get('accBalance').errors?.max)" class="f-12">
-                        Should be less than 150000
-                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -234,7 +228,7 @@
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
         </div>
-        <div class="row pt-48">
+        <!-- <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Bank name</h5>
             </div>
@@ -247,7 +241,7 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div formArrayName="getNomineeName">
             <div class="row pt-36"
                 *ngFor="let obj of ssySchemeForm.controls['getNomineeName'].controls; let pointIndex=index"

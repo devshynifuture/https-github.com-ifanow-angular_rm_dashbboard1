@@ -151,7 +151,7 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Linked bank account</h5>
                     </div>
-                    <div class="col-md-5 form-group">
+                    <div class="col-md-5">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="linkedBankAccount" matInput>
                                 <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
@@ -167,7 +167,7 @@
                         <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
                     </div>
                 </div>
-                <div class="row pt-48">
+                <div class="row pt-32">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Description</h5>
                     </div>
@@ -214,8 +214,8 @@
                             </div>
                         </div>
                         <div class="col-md-2 p-0 d-flex align-items-center">
-                            <i *ngIf="nscFormField.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
-                            <i *ngIf="nscFormField.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
+                            <i *ngIf="nscFormField.value.getNomineeName.length < 3" class="material-icons text-primitive c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                            <i *ngIf="nscFormField.value.getNomineeName.length > 1" class="material-icons text-primitive c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
                         </div>
 
                     </div>

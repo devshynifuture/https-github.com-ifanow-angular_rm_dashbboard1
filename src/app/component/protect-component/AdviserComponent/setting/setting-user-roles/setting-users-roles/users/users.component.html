@@ -51,14 +51,72 @@
         </mat-card>
     </div>
 </div>
-<div *ngIf="userList==undefined && !isLoading && !hasError" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="pt-12">No Team members found</h4>
-    <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
-        ADD NEW
-    </button>
+
+<div *ngIf="userList==undefined && !isLoading && !hasError" class="row">
+    <div class="col-md-12 d-flex justify-content-center">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/team-members-empty-state.svg">
+            <h4 class="mt-24 mb-12">No team members added yet</h4>
+            <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p> We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on IFANOW. For starters, </p>
+            <ul>
+                <li>
+                    - You can assign specific roles to your team members based on your practice
+                </li>
+                <li>
+                    - You can set up hierarchies
+                </li>
+                <li>
+                    - You can collaborate on tasks
+                </li>
+                <li>
+                    - Assign clients and do much more
+                </li>
+            </ul>
+
+            <p class="mt-20"> Still have questions? Watch this video: </p>
+
+        </div>
+    </div>
 </div>
-<div *ngIf="userList==undefined && !isLoading && hasError" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+
+<div *ngIf="userList==undefined && !isLoading && hasError" class="row">
+    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4> -->
+
+    <div class="col-md-12 d-flex justify-content-center">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/team-members-empty-state.svg">
+            <h4 class="mt-24 mb-12">No team members added yet</h4>
+            <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p> We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on IFANOW. For starters, </p>
+            <ul>
+                <li>
+                    - You can assign specific roles to your team members based on your practice
+                </li>
+                <li>
+                    - You can set up hierarchies
+                </li>
+                <li>
+                    - You can collaborate on tasks
+                </li>
+                <li>
+                    - Assign clients and do much more
+                </li>
+            </ul>
+
+            <p class="mt-20"> Still have questions? Watch this video: </p>
+
+        </div>
+    </div>
 </div>
