@@ -55,6 +55,7 @@ export class OthersComponent implements OnInit {
   editData: any;
   callMethod: { methodName: string; ParamValue: any; };
   nominees: any;
+  todayDate = new Date();
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
   }
