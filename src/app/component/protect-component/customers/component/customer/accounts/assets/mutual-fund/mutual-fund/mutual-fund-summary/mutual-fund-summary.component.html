@@ -100,7 +100,7 @@
                     </td>
 
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span appFormatNumber>{{(mfData) ? (mfData.total_amount_invested) : 0}}</span>
+                        <span appFormatNumber [value]="mfData ? mfData.total_amount_invested : '0'"></span>
                     </td>
                 </ng-container>
 
@@ -116,7 +116,7 @@
                     </td>
 
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                        <div appFormatNumber>{{(mfData) ? (mfData.total_current_value) : 0}}</div>
+                        <div appFormatNumber [value]="mfData ? mfData.total_current_value : '0'"></div>
                     </td>
 
                 </ng-container>
@@ -135,7 +135,7 @@
 
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                         <div class="bar">
-                            <span appFormatNumber>{{(mfData) ? (mfData.total_unrealized_gain ) : 0}}</span>
+                            <span appFormatNumber [value]="mfData ? mfData.total_unrealized_gain  : '0'"></span>
                         </div>
                     </td>
                 </ng-container>
@@ -186,7 +186,7 @@
                     </td>
 
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span appFormatNumber>{{(mfData) ? (mfData.total_dividend_payout ) : 0}}</span>
+                        <span appFormatNumber [value]="mfData ? mfData.total_dividend_payout : 0"></span>
                     </td>
                 </ng-container>
 
@@ -202,7 +202,7 @@
                     </td>
 
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span appFormatNumber>{{(grandTotal) ? (grandTotal.withdrawals) : 0}}</span>
+                        <span appFormatNumber [value]="grandTotal ? grandTotal.withdrawals : '0'"></span>
                     </td>
                 </ng-container>
 
@@ -253,7 +253,7 @@
                         </div>
                     </td> -->
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span appFormatNumber>{{(grandTotal) ? (grandTotal.sip) : 0}}</span>
+                        <span appFormatNumber  [value]="grandTotal ? grandTotal.sip : '0'"></span>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>

@@ -655,10 +655,11 @@
 
 
                 <ng-container matColumnDef="header-row-second-group">
-                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
-                        AGAINST
-                        (PURCHASES)<br>
-                        AS ON 31 JAN 2018 </th>
+                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
+                            AGAINST
+                            (PURCHASES)<br>
+                            <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">{{fromDate.getFullYear() > 2018}}AS ON 31 JAN
+                                2018</span></th>
                 </ng-container>
                 <ng-container matColumnDef="header-row-third-group">
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="7" class="header-tables"> GAIN/LOSS </th>

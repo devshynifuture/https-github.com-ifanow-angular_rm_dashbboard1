@@ -286,29 +286,38 @@ export class RightFilterComponent implements OnInit {
     let calculatingYears = []
     let sortingYeras: any;
     if (this._data.capitalGainData) {
-      // let redemptionList = this._data.capitalGainData.redemptionList
-      // redemptionList.forEach(element => {
-      //   let year = element.financialYear;
-      //   let date = new Date(element.transactionDate);
-
-      //   let finDate = new Date(year, 3, 1);
-      //   if (date < finDate) {
-      //     year = (element.financialYear - 1)
-      //   }
-      //   const obj = {
-      //     "from": year,
-      //     "to": (year + 1),
-      //   }
-      //   calculatingYears.push(obj);
-      // });
-      // console.log(calculatingYears);
-      // let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
-      // sortingYeras = filteredYears.sort((a, b) =>
-      //   a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
-      // );
-      // this.financialYears = sortingYeras;
-      this.financialYears=[{'from':2010,'to':2011,'selected':true},{'from':2011,'to':2012,'selected':true},{'from':2012,'to':2013,'selected':true},{'from':2013,'to':2014,'selected':true},{'from':2014,'to':2015,'selected':true},
-      {'from':2015,'to':2016,'selected':true},{'from':2016,'to':2017,'selected':true},{'from':2017,'to':2018,'selected':true},{'from':2018,'to':2019,'selected':true},{'from':2019,'to':2020,'selected':true},{'from':2020,'to':2021,'selected':true}]
+      let redemptionList = this._data.capitalGainData.redemptionList
+      redemptionList.forEach(element => {
+        if(element.purchaceAgainstRedemptionTransactions.length > 0){
+          let year = element.financialYear;
+          let date = new Date(element.transactionDate);
+  
+          let finDate = new Date(year, 3, 1);
+          if (date < finDate) {
+            year = (element.financialYear - 1)
+          }
+          const obj = {
+            "from": year,
+            "to": (year + 1),
+          }
+          calculatingYears.push(obj);
+        }
+      });
+      console.log(calculatingYears);
+      let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
+      sortingYeras = filteredYears.sort((a, b) =>
+        a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
+      );
+      let calculatedFinYears = sortingYeras;
+      this.financialYears=[{'from':2010,'to':2011,'selected':true,'disabled':true},{'from':2011,'to':2012,'selected':true,'disabled':true},{'from':2012,'to':2013,'selected':true,'disabled':true},{'from':2013,'to':2014,'selected':true,'disabled':true},{'from':2014,'to':2015,'selected':true,'disabled':true},
+      {'from':2015,'to':2016,'selected':true,'disabled':true},{'from':2016,'to':2017,'selected':true,'disabled':true},{'from':2017,'to':2018,'selected':true,'disabled':true},{'from':2018,'to':2019,'selected':true,'disabled':true},{'from':2019,'to':2020,'selected':true,'disabled':true},{'from':2020,'to':2021,'selected':true,'disabled':true}]
+      calculatedFinYears.forEach(element => {
+        this.financialYears.forEach(item => {
+          if(element.from == item.from){
+            item.disabled = false;
+          }
+        })
+      });
       this.financialYears.filter(function (element) {
         if (element.from == 2019 && element.to == 2020) {
           element.selected = true;
@@ -830,6 +839,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect('', '');
   }
   changeFinancialYear(value) {
+    value.selected=true;
     (this.financialYearsObj.length == 0) ? this.showError = null : (this.financialYearsObj.length == 1 && !this.financialYearsObj[0].selected) ? this.showError = 'financial year' : this.showError = null;
     if (value.from <= 2017) {
       this.showGrandfathering = false;
