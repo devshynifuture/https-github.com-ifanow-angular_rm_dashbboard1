@@ -74,6 +74,22 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        Quarterly payout
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
+                        ₹<span appFormatNumber>{{data.quarterlyPayout}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Total payouts received till now
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
+                        ₹<span appFormatNumber>{{data.totalAmountReceived}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">

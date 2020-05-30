@@ -56,10 +56,10 @@
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput type="text" autocomplete="off" formControlName="amount" maxlength="10" #partPayment class="form-control rupess br-0">
-                    <mat-error>
+                    <mat-error *ngIf="!singleTransForm.controls['amount'].hasError('max')">
                         This field is required
                     </mat-error>
-                    <mat-error *ngIf="(singleTransForm.get('futureContribution').errors?.max)" class="f-12">
+                    <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
                         Should be less than 150000
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint>

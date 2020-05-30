@@ -20,7 +20,8 @@ export class DetailedNscComponent implements OnInit {
   ngOnInit() {
     this.nominee = this.data.nominees;
     this.bankList = this.enumService.getBank();
-
+    console.log(this.bankList,"this.bankList");
+    
   }
 
   close() {
