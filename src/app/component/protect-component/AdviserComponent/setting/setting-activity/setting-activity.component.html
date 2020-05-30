@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-3 text-right" *ngIf="!hasError && !isLoading">
         <!-- ng build prod issue expected argument added empty strings  -->
-        <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
+        <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()" *ngIf="taskList"> ADD NEW</button>
     </div>
     <div class="col-md-12" *ngIf="taskList && linkedTaskList.length > 0">
         Linked task template
