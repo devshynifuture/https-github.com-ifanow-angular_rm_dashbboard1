@@ -814,14 +814,15 @@
 
         <tr>
             <td style="text-align: left;">
-                <img width="100px" *ngIf="advisorData" [src]="advisorData.profilePic">
+                <img width="100px" *ngIf="clientData" [src]="">
             </td>
             <td style="text-align: right;">
-                <p style="margin: 0px; font-weight: 600;" *ngIf="advisorData">
-                    {{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;" *ngIf="advisorData">Himachal Pradesh</p>
-                <p style="margin: 0px; font-size: 14px;" *ngIf="advisorData"> <strong> Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;" *ngIf="advisorData"> <strong> Email : </strong> {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="clientData">
+                    {{(userInfo.name) ? userInfo.name : '-'}}</p>
+                <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="clientData"> <strong> Number: </strong> {{(userInfo.mobileList[0].mobileNo) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="clientData"> <strong> Email : </strong> {{(userInfo.emailList[0]) ? userInfo.emailList[0].emailId : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on : </strong> {{reportDate | date:'dd/MM/yyyy' }}</p>
             </td>
         </tr>
 
@@ -834,9 +835,10 @@
             <td colspan="2" style=" border: 1px solid #dee5e7; border-bottom: transparent;" valign="top">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <th bgcolor="#F5F7F7" style="font-size: 16px;  border-bottom: transparent; height: 40px; padding-left: 15px; text-align: left; color: #000000">
-                            Summary
-                        </th>
+                        <p style="margin: 0px; font-size: 14px;padding-top: 4px;" *ngIf="clientData">Client name :
+                            {{(clientData.name) ? clientData.name : '-'}}</p>
+                        <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
+                            Summary</p>
                     </tr>
                     <tr>
                         <td style=" padding-top: 15px; padding-bottom: 10px; padding-left: 15px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">

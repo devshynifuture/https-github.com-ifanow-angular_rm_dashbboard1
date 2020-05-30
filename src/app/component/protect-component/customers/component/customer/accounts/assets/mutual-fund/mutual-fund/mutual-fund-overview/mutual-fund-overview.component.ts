@@ -87,15 +87,27 @@ export class MutualFundOverviewComponent implements OnInit {
   svg: string;
   chart: Highcharts.Chart;
   reponseData: any;
+  userInfo: any;
+  clientData: any;
+  getAdvisorDetail: any;
+  reportDate: Date;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
+
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails()
+    console.log('advisorData', this.userInfo)
+    console.log('clientData', this.clientData)
+    console.log('getAdvisorDetail', this.getAdvisorDetail)
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
   ngOnInit() {
+    this.reportDate = new Date()
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getFilterData(1);
@@ -129,7 +141,6 @@ export class MutualFundOverviewComponent implements OnInit {
     } else {
       this.getMutualFundData();
     }
-    this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
   }
   getTransactionTypeData() {
     const obj = {
@@ -317,10 +328,10 @@ export class MutualFundOverviewComponent implements OnInit {
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.mfData = data;
-      if(this.mfData.mutualFundCategoryMastersList.length>0){
-        if(this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits <0){
+      if (this.mfData.mutualFundCategoryMastersList.length > 0) {
+        if (this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits < 0) {
           this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[1].cashFlowxirr
-        }else{
+        } else {
           this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr
         }
       }
@@ -521,7 +532,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log(this.svg)
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', false,this.fragmentData, 'showPieChart', this.svg)
+    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', false, this.fragmentData, 'showPieChart', this.svg)
     console.log('return value ====', this.returnValue)
   }
   getReportWiseCalculation(data) {
