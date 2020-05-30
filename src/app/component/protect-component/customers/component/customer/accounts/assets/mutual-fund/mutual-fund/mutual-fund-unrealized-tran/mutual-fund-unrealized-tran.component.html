@@ -1,1033 +1,1007 @@
 <div *ngIf="viewMode" class="wrapper-8">
     <div class="row pb-12">
-        <div class="col-md-6 pl-0">
-            <h4 class="m-0 text-black roboto pt-8">
-                <mat-spinner *ngIf="isSpinner" [diameter]="10"></mat-spinner>
-                Mutual fund
-                {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
-            </h4>
-        </div>
-        <div *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)"
-            class="col-md-6 p-0 justify-content-end d-flex align-items-center">
-            <div class="pdfClass">
-                <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
-                    <img src="assets/images/svg/download-bordered.svg">
-                </a>
-
-                <mat-menu #menu5="matMenu">
-                    <button (click)="generatePdf()" mat-menu-item>PDF
-                    </button>
-                    <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
-                </mat-menu>
-                <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
-            </div>
-            <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
-                <i class="material-icons">filter_list</i>FILTERS
-            </button>
-        </div>
+       <div class="col-md-6 pl-0">
+          <h4 class="m-0 text-black roboto pt-8">
+             <mat-spinner *ngIf="isSpinner" [diameter]="10"></mat-spinner>
+             Mutual fund
+             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
+          </h4>
+       </div>
+       <div *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)"
+          class="col-md-6 p-0 justify-content-end d-flex align-items-center">
+          <div class="pdfClass">
+             <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+             <img src="assets/images/svg/download-bordered.svg">
+             </a>
+             <mat-menu #menu5="matMenu">
+                <button (click)="generatePdf()" mat-menu-item>PDF
+                </button>
+                <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+             </mat-menu>
+             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
+          </div>
+          <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
+          <i class="material-icons">filter_list</i>FILTERS
+          </button>
+       </div>
     </div>
-
-
     <div class="row">
-        <div [ngClass]="isLoading ? '': 'tran-height-2'" class="col-md-12 p-0 mb-8">
-            <div *ngIf="dataSource.data.length>0">
-                <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-                    class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
-                    <ng-container matColumnDef="categoryName">
-                        <th *matHeaderCellDef class="br" mat-header-cell>
-                            {{(columnHeader) ? columnHeader : 'Sub Category Name'}}
-                        </th>
-                        <td *matCellDef="let element" class="br" mat-cell>
-                            <div class="bar">{{element.categoryName}}</div>
-                        </td>
-                        <td *matFooterCellDef class="br f-600 p-8 proximaFont text-left" mat-footer-cell>Grand Total
-                        </td>
-
-                    </ng-container>
-
-                    <ng-container matColumnDef="amtInvested">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Amount invested
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span
-                                    appFormatNumber>{{isLoading ? '' : ((element.totalTransactionAmt) ? (element.totalTransactionAmt) : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber [value]="mfData ? mfData.total_amount_invested : 0"></span>
-                            <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
-                        </td>
-
-                    </ng-container>
-
-                    <ng-container matColumnDef="currentValue">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Current value
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span
-                                    appFormatNumber>{{isLoading ? '' : ((element.currentValue) ? (element.currentValue) : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber [value]="mfData ? mfData.total_current_value : '0'"></span>
-                            <!--                  <div>{{ grandTotal.currentValue }}</div>-->
-                        </td>
-
-                    </ng-container>
-                    <ng-container matColumnDef="dividendPayout">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Dividend payout
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span
-                                    appFormatNumber>{{isLoading ? '' : ((element.dividendPayout) ? (element.dividendPayout) : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber [value]="mfData ? mfData.total_dividend_payout : '0'"></span>
-                            <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
-                        </td>
-
-                    </ng-container>
-
-                    <ng-container matColumnDef="dividendReinvest">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Dividend reinvestment
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span
-                                    appFormatNumber>{{isLoading ? '' : ((element.dividendReinvest) ? (element.dividendReinvest ) : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                            <span appFormatNumber [value]="grandTotal ? grandTotal.dividendReinvest : '0'"></span>
-                        </td>
-
-                    </ng-container>
-
-                    <ng-container matColumnDef="gain">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Gain
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span>{{isLoading ? '' : ((element.totalGain) ? (element.totalGain + grandTotal.dividendPayout | number:'1.2-2') : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-
-                            <div class="bar">
-                                {{(grandTotal) ? ((grandTotal.totalGain + grandTotal.dividendPayout)| number:'1.2-2') : 0}}
-
-                            </div>
-                        </td>
-
-                    </ng-container>
-                    <ng-container matColumnDef="absReturn">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Absolute Return
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span>{{isLoading ? '' : ((element.absReturn) ? (element.absReturn | number:'1.2-2') : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
-                            <div class="bar">
-                                {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
-
-                            </div>
-                        </td>
-
-                    </ng-container>
-
-                    <ng-container matColumnDef="xirr">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            XIRR
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span>{{isLoading ? '' : ((element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
-                            <div class="bar">{{(mfData) ? (mfData.total_xirr | number:'1.2-2') : 0}}
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="allocation">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Allocation
-                        </th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">
-                                <span>{{isLoading ? '' : ((element.allocationPer) ? (element.allocationPer | number:'1.2-2') : 0)}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
-                            <div class="bar">
-                                {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <tr *matHeaderRowDef="displayedColumns2; sticky: true" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
-                    <tr *matFooterRowDef="displayedColumns2;sticky: false" [hidden]="isLoading" mat-footer-row>
-                    </tr>
-                </table>
-            </div>
-        </div>
+       <div [ngClass]="isLoading ? '': 'tran-height-2'" class="col-md-12 p-0 mb-8">
+          <div *ngIf="dataSource.data.length>0">
+             <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
+             class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
+             <ng-container matColumnDef="categoryName">
+                <th *matHeaderCellDef class="br" mat-header-cell>
+                   {{(columnHeader) ? columnHeader : 'Sub Category Name'}}
+                </th>
+                <td *matCellDef="let element" class="br" mat-cell>
+                   <div class="bar">{{element.categoryName}}</div>
+                </td>
+                <td *matFooterCellDef class="br f-600 p-8 proximaFont text-left" mat-footer-cell>Grand Total
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="amtInvested">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Amount invested
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span
+                         appFormatNumber>{{isLoading ? '' : ((element.totalTransactionAmt) ? (element.totalTransactionAmt) : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+                   <span appFormatNumber [value]="mfData ? mfData.total_amount_invested : 0"></span>
+                   <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="currentValue">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Current value
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span
+                         appFormatNumber>{{isLoading ? '' : ((element.currentValue) ? (element.currentValue) : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+                   <span appFormatNumber [value]="mfData ? mfData.total_current_value : '0'"></span>
+                   <!-- <div>{{ grandTotal.currentValue }}</div>-->
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="dividendPayout">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Dividend payout
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span
+                         appFormatNumber>{{isLoading ? '' : ((element.dividendPayout) ? (element.dividendPayout) : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+                   <span appFormatNumber [value]="mfData ? mfData.total_dividend_payout : '0'"></span>
+                   <!-- <div> {{ grandTotal.dividendPayout }}</div>-->
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="dividendReinvest">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Dividend reinvestment
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span
+                         appFormatNumber>{{isLoading ? '' : ((element.dividendReinvest) ? (element.dividendReinvest ) : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+                   <span appFormatNumber [value]="grandTotal ? grandTotal.dividendReinvest : '0'"></span>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="gain">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Gain
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span>{{isLoading ? '' : ((element.totalGain) ? (element.totalGain + grandTotal.dividendPayout | number:'1.2-2') : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+                   <div class="bar">
+                      {{(grandTotal) ? ((grandTotal.totalGain + grandTotal.dividendPayout)| number:'1.2-2') : 0}}
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="absReturn">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Absolute Return
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span>{{isLoading ? '' : ((element.absReturn) ? (element.absReturn | number:'1.2-2') : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
+                   <div class="bar">
+                      {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="xirr">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   XIRR
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span>{{isLoading ? '' : ((element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
+                   <div class="bar">{{(mfData) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="allocation">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Allocation
+                </th>
+                <td *matCellDef="let element" class="br text-right" mat-cell>
+                   <div class="bar">
+                      <span>{{isLoading ? '' : ((element.allocationPer) ? (element.allocationPer | number:'1.2-2') : 0)}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
+                   <div class="bar">
+                      {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
+                   </div>
+                </td>
+             </ng-container>
+             <tr *matHeaderRowDef="displayedColumns2; sticky: true" mat-header-row></tr>
+             <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
+             <tr *matFooterRowDef="displayedColumns2;sticky: false" [hidden]="isLoading" mat-footer-row>
+             </tr>
+             </table>
+          </div>
+       </div>
     </div>
-
-
-
     <div class="row secoundTable">
-        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-            <cdk-virtual-scroll-viewport *ngIf="customDataSource.data.length>0" class="tran-height-2" tvsItemSize>
-
-                <!--      <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
-                <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="customDataSource" appSkeletonLoading
-                    class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
-                    <ng-container matColumnDef="no" sticky>
-                        <th *matHeaderCellDef class="br" mat-header-cell>Sr no.</th>
-                        <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
-                            <div class="bar"><span *ngIf="element.indexId">{{element.indexId}}</span></div>
-                        </td>
-                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                    </ng-container>
-                    <ng-container matColumnDef="noTotal" sticky>
-                        <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
-                            <div class="bar"><span>{{element.indexId}}</span></div>
-                        </td>
-                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                    </ng-container>
-                    <ng-container matColumnDef="transactionType">
-                        <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
-                        </th>
-                        <td *matCellDef="let element" class="br zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.fwTransactionType}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="transactionTypeTotal">
-                        <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
-                        </th>
-                        <td *matCellDef="let element" class="br zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.total}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="transactionDate">
-                        <th *matHeaderCellDef class="br text-left" mat-header-cell>
-                            Transaction date
-                        </th>
-                        <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
-                            <div class="bar">
-                                {{element.transactionDate | date:'dd/MM/yyyy'}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="transactionDateTotal">
-                        <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
-                            <div class="bar">
-                                {{element.transactionDate | date:'dd/MM/yyyy'}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="transactionAmount">
-                        <th *matHeaderCellDef class="br text-left" mat-header-cell>
-                            Transaction amount
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.amount}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="transactionAmountTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span *ngIf="element.totalTransactionAmt"
-                                    class="f-700">{{element.totalTransactionAmt}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="transactionNav">
-                        <th *matHeaderCellDef class="br   text-right" mat-header-cell>
-                            Transaction NAV
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.purchasePrice}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="transactionNavTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <!--                <span class="f-700">{{element.totalNav}}</span>-->
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="units">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>Units</th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span *ngIf="element.unit || element.unit == 0">{{element.unit}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="unitsTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.totalUnit}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="balanceUnits">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Balance units
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.balanceUnits}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br f-600 text-right zIndex" mat-footer-cell>
-                            {{grandTotal.totalBalanceUnit}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="balanceUnitsTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.totalUnit}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="days">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="days">
-                            Days
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                {{element.days}}
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br text-right zIndex" mat-footer-cell>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="daysTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                {{element.days}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="currentValue">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Current value
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.currentAmount}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="currentValueTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span class="f-700">{{element.totalCurrentValue}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendPayout">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Dividend payout
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.dividendPayout}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendPayoutTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.dividendPayout}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendReinvest">
-                        <th *matHeaderCellDef class="br text-right zIndex" mat-header-cell>
-                            Dividend reinvestment
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.dividendReinvest}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendReinvestTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.dividendReinvest}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="totalAmount">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Total amount
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
-                            <div class="bar"><span>{{element.currentAmount}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="totalAmountTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.totalCurrentValue}}</span>
-                            </div>
-                        </td>
-
-                    </ng-container>
-                    <ng-container matColumnDef="gain">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Gain
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.gain}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="gainTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.netGain}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="absReturn">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Absolute Return%
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.absoluteReturn}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="absReturnTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.trnAbsoluteReturn}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="xirr">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            XIRR%
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.cagr}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="xirrTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.totalCagr}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="groupHeader">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="text-center zIndex text-primary">
-                            <div class="bar">{{group.groupName}}
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="groupHeader2">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="zIndex">
-                            <div class="bar d-flex w-100">
-                                <p class="w-50 m-0">
-                                    {{group.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}
-                                </p>
-                                <p class="text-right w-50 m-0">Avg Cost NAV: {{group.avgNav}} | Current NAV:
-                                    {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}</p>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="groupHeader3">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="text-center zIndex text-primary">
-                            <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons" sticky>
-                        <th *matHeaderCellDef class="" mat-header-cell></th>
-                        <td *matCellDef="let element" class="zIndex" mat-cell>
-                            <div *ngIf="!isLoading">
-                                <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
-                                <mat-menu #menu25="matMenu">
-                                    <div [matTooltipDisabled]="element.rtTypeId === 14"
-                                        [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
-                                        matTooltipPosition="below">
-                                        <button (click)="openMutualEditFund('editTransaction',element)"
-                                            [disabled]="element.rtTypeId !== 14" mat-menu-item>Edit
-                                            Transaction
-                                        </button>
-                                    </div>
-                                    <div [matTooltipDisabled]="element.rtTypeId === 14"
-                                        [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'"
-                                        matTooltipPosition="below">
-                                        <button (click)="deleteModal('TRANSACTION', element)"
-                                            [disabled]="element.rtTypeId !== 14" mat-menu-item>Delete
-                                            Transaction
-                                        </button>
-                                    </div>
-                                    <!-- <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
-                                        Transaction
-                                    </button> -->
-
-                                </mat-menu>
-                            </div>
-                        </td>
-
-                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                    </ng-container>
-                    <ng-container matColumnDef="iconsTotal" sticky>
-                        <td *matCellDef="let element" class="zIndex" mat-cell>
-                        </td>
-                    </ng-container>
-                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
-
-                    <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                    <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
-                    <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-                    <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
-                    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
-
-                </table>
-                <!--      </div>-->
-            </cdk-virtual-scroll-viewport>
-
-            <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
-                <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="text-center pt-12"> No data found</h4>
-            </div>
-        </div>
+       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
+          <cdk-virtual-scroll-viewport *ngIf="customDataSource.data.length>0" class="tran-height-2" tvsItemSize>
+             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
+             <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="customDataSource" appSkeletonLoading
+             class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
+             <ng-container matColumnDef="no" sticky>
+                <th *matHeaderCellDef class="br" mat-header-cell>Sr no.</th>
+                <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
+                   <div class="bar"><span *ngIf="element.indexId">{{element.indexId}}</span></div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+             </ng-container>
+             <ng-container matColumnDef="noTotal" sticky>
+                <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
+                   <div class="bar"><span>{{element.indexId}}</span></div>
+                </td>
+                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+             </ng-container>
+             <ng-container matColumnDef="transactionType">
+                <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
+                </th>
+                <td *matCellDef="let element" class="br zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.fwTransactionType}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionTypeTotal">
+                <th *matHeaderCellDef class="br" mat-header-cell> Transaction Type
+                </th>
+                <td *matCellDef="let element" class="br zIndex" mat-cell>
+                   <div class="bar">
+                      <span class="f-700">{{element.total}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionDate">
+                <th *matHeaderCellDef class="br text-left" mat-header-cell>
+                   Transaction date
+                </th>
+                <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
+                   <div class="bar">
+                      {{element.transactionDate | date:'dd/MM/yyyy'}}
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionDateTotal">
+                <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
+                   <div class="bar">
+                      {{element.transactionDate | date:'dd/MM/yyyy'}}
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionAmount">
+                <th *matHeaderCellDef class="br text-left" mat-header-cell>
+                   Transaction amount
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar"><span>{{element.amount}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionAmountTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span *ngIf="element.totalTransactionAmt"
+                         class="f-700">{{element.totalTransactionAmt}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionNav">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Transaction NAV
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar"><span>{{element.purchasePrice}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="transactionNavTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <!-- <span class="f-700">{{element.totalNav}}</span>-->
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="units">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>Units</th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar"><span *ngIf="element.unit || element.unit == 0">{{element.unit}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="unitsTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span class="f-700">{{element.totalUnit}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="balanceUnits">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Balance units
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.balanceUnits}}</span>
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br f-600 text-right zIndex" mat-footer-cell>
+                   {{grandTotal.totalBalanceUnit}}
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="balanceUnitsTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span class="f-700">{{element.totalUnit}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="days">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="days">
+                   Days
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      {{element.days}}
+                   </div>
+                </td>
+                <td *matFooterCellDef class="br text-right zIndex" mat-footer-cell>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="daysTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      {{element.days}}
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="currentValue">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Current value
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar"><span>{{element.currentAmount}}</span></div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="currentValueTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar"><span class="f-700">{{element.totalCurrentValue}}</span></div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="dividendPayout">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Dividend payout
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.dividendPayout}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="dividendPayoutTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.dividendPayout}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="dividendReinvest">
+                <th *matHeaderCellDef class="br text-right zIndex" mat-header-cell>
+                   Dividend reinvestment
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.dividendReinvest}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="dividendReinvestTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.dividendReinvest}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="totalAmount">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Total amount
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
+                   <div class="bar"><span>{{element.currentAmount}}</span></div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="totalAmountTotal">
+                <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
+                   <div class="bar">
+                      <span class="f-700">{{element.totalCurrentValue}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="gain">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Gain
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.gain}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="gainTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.netGain}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="absReturn">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   Absolute Return%
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar"><span>{{element.absoluteReturn}}</span></div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="absReturnTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.trnAbsoluteReturn}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="xirr">
+                <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                   XIRR%
+                </th>
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.cagr}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="xirrTotal">
+                <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                   <div class="bar">
+                      <span>{{element.totalCagr}}</span>
+                   </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="groupHeader">
+                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
+                class="text-center zIndex text-primary">
+                <div class="bar">{{group.groupName}}
+                </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="groupHeader2">
+                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="zIndex">
+                <div class="bar d-flex w-100">
+                   <p class="w-50 m-0">
+                      {{group.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}
+                   </p>
+                   <p class="text-right w-50 m-0">Avg Cost NAV: {{group.avgNav}} | Current NAV:
+                      {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}
+                   </p>
+                </div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="groupHeader3">
+                <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
+                class="text-center zIndex text-primary">
+                <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="icons" sticky>
+                <th *matHeaderCellDef class="" mat-header-cell></th>
+                <td *matCellDef="let element" class="zIndex" mat-cell>
+                   <div *ngIf="!isLoading">
+                      <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                      <mat-menu #menu25="matMenu">
+                         <div [matTooltipDisabled]="element.rtTypeId === 14"
+                         [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"
+                         matTooltipPosition="below">
+                         <button (click)="openMutualEditFund('editTransaction',element)"
+                         [disabled]="element.rtTypeId !== 14" mat-menu-item>Edit
+                         Transaction
+                         </button>
+                   </div>
+                   <div [matTooltipDisabled]="element.rtTypeId === 14"
+                   [matTooltip]="'To delete Transaction, Mutual Fund need to be of type Manual'"
+                   matTooltipPosition="below">
+                   <button (click)="deleteModal('TRANSACTION', element)"
+                   [disabled]="element.rtTypeId !== 14" mat-menu-item>Delete
+                   Transaction
+                   </button>
+       </div>
+       <!-- <button (click)="deleteModal('TRANSACTION', element)" mat-menu-item>Delete
+          Transaction
+          </button> -->
+       </mat-menu>
     </div>
-
-</div>
-
-
-<!-- -------------------- pdf ---------------------------- -->
-
-<div #unrealizedTranTemplate *ngIf="showDownload" class="hide" id="template">
-
+    </td>
+    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+    </ng-container>
+    <ng-container matColumnDef="iconsTotal" sticky>
+    <td *matCellDef="let element" class="zIndex" mat-cell>
+    </td>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
+    <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
+    <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
+    <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
+    <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
+    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
+    </table>
+    <!-- </div>-->
+    </cdk-virtual-scroll-viewport>
+    <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
+       <img class="width300" src="assets/images/svg/noDataFound.svg">
+       <h4 class="text-center pt-12"> No data found</h4>
+    </div>
+ </div>
+ </div>
+ </div>
+ <!-- -------------------- pdf ---------------------------- -->
+ <div #unrealizedTranTemplate *ngIf="showDownload" class="hide" id="template">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
-        <tr>
-            <td colspan="9"
-                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Mutual fund {{(this.viewMode == 'All Transactions') ? 'all transactions' : 'unrealized transactions'}}
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="9">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                    <tr>
-                        <td style="text-align: left;">
-                            <img *ngIf="advisorData" [src]="advisorData.profilePic" width="100px">
-                        </td>
-
-                        <td style="text-align: right;">
-                            <p *ngIf="advisorData" style="margin: 0px; font-weight: 600;">
-                                {{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
-                            <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
-                            <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;"><strong>
-                                    Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
-                            <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;"><strong> Email
-                                    : </strong> {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="9" style="padding: 10px;"></td>
-        </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Sub category name</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Amount invested</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Current value</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Dividend payout</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Dividend reinvestment</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Gain</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Absolute Return%</b>
-            </td>
-            <td
-                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>XIRR%</b>
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Allocation%</b>
-            </td>
-        </tr>
-
-        <tr *ngFor="let item of dataSource.data"
-            style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td
-                style="text-align: left; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                {{item.categoryName}}
-            </td>
-            <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber>
-                {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.currentAmount) ? (item.currentAmount) : 0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.dividendPayout) ? (item.dividendPayout) : 0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{(item.dividendReinvest) ? (item.dividendReinvest) : 0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.totalGain) ? (item.totalGain | number:'1.2-2') : 0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.absReturn) ? (item.absReturn | number:'1.2-2') : 0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.allocationPer) ? (item.allocationPer | number:'1.2-2') : 0}}</td>
-        </tr>
-        <tr
-            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td
-                style="text-align: left;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                Grand Total
-            </td>
-            <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-                appFormatNumber>
-                {{grandTotal.totalTransactionAmt}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{grandTotal.currentValue}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{grandTotal.dividendPayout }}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-                appFormatNumber>
-                {{grandTotal.dividendReinvest}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{grandTotal.totalGain}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(grandTotal.xirr) ? (grandTotal.xirr | number:'1.2-2') : 0}}</td>
-            <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}</td>
-        </tr>
+       <tr>
+          <td colspan="9"
+             style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+             Mutual fund {{(this.viewMode == 'All Transactions') ? 'all transactions' : 'unrealized transactions'}}
+          </td>
+       </tr>
+       <tr>
+          <td colspan="9">
+             <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                   <td style="text-align: left;">
+                      <img *ngIf="advisorData" [src]="advisorData.profilePic" width="100px">
+                   </td>
+                   <td style="text-align: right;">
+                      <p *ngIf="advisorData" style="margin: 0px; font-weight: 600;">
+                         {{(advisorData.fullName) ? advisorData.fullName : '-'}}
+                      </p>
+                      <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
+                      <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;"><strong>
+                         Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}
+                      </p>
+                      <p *ngIf="advisorData" style="margin: 0px; font-size: 14px;"><strong> Email
+                         : </strong> {{(advisorData.emailId) ? advisorData.emailId : '-'}}
+                      </p>
+                   </td>
+                </tr>
+             </table>
+          </td>
+       </tr>
+       <tr>
+          <td colspan="9" style="padding: 10px;"></td>
+       </tr>
+       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+          <td
+             style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Sub category name</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Amount invested</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Current value</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Dividend payout</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Dividend reinvestment</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Gain</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Absolute Return%</b>
+          </td>
+          <td
+             style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>XIRR%</b>
+          </td>
+          <td
+             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Allocation%</b>
+          </td>
+       </tr>
+       <tr *ngFor="let item of dataSource.data"
+          style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+          <td
+             style="text-align: left; padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             {{item.categoryName}}
+          </td>
+          <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+             appFormatNumber>
+             {{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}
+          </td>
+          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             appFormatNumber>
+             {{(item.currentAmount) ? (item.currentAmount) : 0}}
+          </td>
+          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             appFormatNumber>
+             {{(item.dividendPayout) ? (item.dividendPayout) : 0}}
+          </td>
+          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             appFormatNumber>
+             {{(item.dividendReinvest) ? (item.dividendReinvest) : 0}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(item.totalGain) ? (item.totalGain | number:'1.2-2') : 0}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(item.absReturn) ? (item.absReturn | number:'1.2-2') : 0}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(item.allocationPer) ? (item.allocationPer | number:'1.2-2') : 0}}
+          </td>
+       </tr>
+       <tr
+          style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+          <td
+             style="text-align: left;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             Grand Total
+          </td>
+          <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+             appFormatNumber>
+             {{grandTotal.totalTransactionAmt}}
+          </td>
+          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             appFormatNumber>
+             {{grandTotal.currentValue}}
+          </td>
+          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             appFormatNumber>
+             {{grandTotal.dividendPayout }}
+          </td>
+          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             appFormatNumber>
+             {{grandTotal.dividendReinvest}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{grandTotal.totalGain}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(grandTotal.xirr) ? (grandTotal.xirr | number:'1.2-2') : 0}}
+          </td>
+          <td
+             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
+          </td>
+       </tr>
     </table>
-
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <td style="height: 30px;">
-
-            </td>
-        </tr>
+       <tr>
+          <td style="height: 30px;">
+          </td>
+       </tr>
     </table>
-
     <!-- Unrealized Transactions -->
-    <table
-        style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Sr no.</b>
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction Type</b>
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction date</b>
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction amount</b>
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction NAV</b>
-            </td>
-            <td
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Units</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Current value</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Dividend payout</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Dividend reinvestment</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Total amount</b>
-            </td>
-            <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Balance units</b>
-            </td>
-            <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Days</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Gain</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Absolute Return%</b>
-            </td>
-            <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>XIRR%</b>
-            </td>
-        </tr>
-
-        <tbody *ngFor="let item of customDataSource.data ;index as i">
-            <tr *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" style="page-break-inside: avoid">
-                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}
-                </td>
-                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}
-                </td>
-            </tr>
-
-            <tr *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions' && (item.schemeName || item.nav)" style="page-break-inside: avoid">
-                <td class="f-700" colspan="8"
-                    style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-                    {{item.schemeName}}</td>
-                <td class="f-700" colspan="5"
-                    style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
-                    Current NAV:{{item.nav}}</td>
-            </tr>
-
-            <tr *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" style="page-break-inside: avoid">
-                <td *ngIf="item.name || item.pan || item.folio" colspan="13"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
-                </td>
-            </tr>
-            <tr *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" style="page-break-inside: avoid">
-                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}
-                </td>
-                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}
-                </td>
-            </tr>
-
-            <tr *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions' && (item.schemeName || item.nav)" style="page-break-inside: avoid">
-                <td class="f-700" colspan="8"
-                    style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-                    {{item.schemeName}}</td>
-                <td class="f-700" colspan="5"
-                    style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
-                    Current NAV:{{item.nav}}</td>
-            </tr>
-
-            <tr *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" style="page-break-inside: avoid">
-                <td *ngIf="item.name || item.pan || item.folio" colspan="13"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
-                </td>
-            </tr>
-
-            <tr *ngIf="item.fwTransactionType || item.category"
-                style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
-                <td
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                    {{i + 1}}</td>
-                <td
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
-                    </span>
-                </td>
-                <td
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.transactionDate | date:'dd/MM/yyyy'}} </td>
-                <td
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span>{{item.amount}}</span></td>
-                <td
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span>{{item.purchasePrice}}</span>
-                </td>
-                <td
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span>{{item.unit}}</span></td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                    appFormatNumber
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.currentAmount}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                    appFormatNumber
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.dividendPayout}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                    appFormatNumber
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.dividendReinvest}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                    appFormatNumber
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.currentAmount}} </td>
-                <td *ngIf="viewMode == 'All Transactions'"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.balanceUnits}} </td>
-                <td *ngIf="viewMode == 'All Transactions'"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.days}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.gain}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.absoluteReturn}} </td>
-                <td *ngIf=" viewMode=='unrealized transactions' || viewMode=='Unrealized Transactions'" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
-                    #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
-                    {{item.cagr}} </td>
-            </tr>
-            <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
-                <td class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                </td>
-                <td class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                    Total
-                </td>
-                <td class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
-                </td>
-                <td *ngIf="item.totalTransactionAmt" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{item.totalTransactionAmt}}</td>
-                <td class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                </td>
-                <td *ngIf="item.totalUnit" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
-                    {{item.totalUnit}}</td>
-                <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.totalBalanceUnit}} </td>
-                <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.totalCurrentValue}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{item.dividendPayout}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.dividendReinvest}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{item.totalCurrentValue}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.netGain}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{item.trnAbsoluteReturn}} </td>
-                <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
-                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
-                    {{item.totalCagr}} </td>
-
-            </tr>
-        </tbody>
+    <table *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
+       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+          <td
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Sr no.</b>
+          </td>
+          <td
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Transaction Type</b>
+          </td>
+          <td
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Transaction date</b>
+          </td>
+          <td
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Transaction amount</b>
+          </td>
+          <td
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Transaction NAV</b>
+          </td>
+          <td
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Units</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Current value</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Dividend payout</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Dividend reinvestment</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Total amount</b>
+          </td>
+          <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Balance units</b>
+          </td>
+          <td *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Days</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Gain</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Absolute Return%</b>
+          </td>
+          <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>XIRR%</b>
+          </td>
+       </tr>
+       <tbody *ngFor="let item of customDataSource.data ;index as i">
+          <tr style="page-break-inside: avoid">
+             <td *ngIf="item.groupName && viewMode == 'unrealized transactions'" colspan="12"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}
+             </td>
+             <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}
+             </td>
+          </tr>
+          <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
+             <td class="f-700" colspan="8"
+                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
+                {{item.schemeName}}
+             </td>
+             <td class="f-700" colspan="5"
+                style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
+                Current NAV:{{item.nav}}
+             </td>
+          </tr>
+          <tr style="page-break-inside: avoid">
+             <td *ngIf="item.name || item.pan || item.folio" colspan="13"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
+             </td>
+          </tr>
+          <tr *ngIf="item.fwTransactionType || item.category"
+             style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
+             <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
+                {{i + 1}}
+             </td>
+             <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
+                </span>
+             </td>
+             <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.transactionDate | date:'dd/MM/yyyy'}} 
+             </td>
+             <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span>{{item.amount}}</span>
+             </td>
+             <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span>{{item.purchasePrice}}</span>
+             </td>
+             <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span>{{item.unit}}</span>
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+                appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.currentAmount}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+                appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.dividendPayout}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+                appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.dividendReinvest}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+                appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.currentAmount}} 
+             </td>
+             <td *ngIf="viewMode == 'All Transactions'"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.balanceUnits}} 
+             </td>
+             <td *ngIf="viewMode == 'All Transactions'"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.days}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.gain}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.absoluteReturn}} 
+             </td>
+             <td *ngIf=" viewMode=='unrealized transactions' || viewMode=='Unrealized Transactions'" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
+                #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+                {{item.cagr}} 
+             </td>
+          </tr>
+          <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
+             <td class="f-700"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
+             </td>
+             <td class="f-700"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
+                Total
+             </td>
+             <td class="f-700"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+             </td>
+             <td *ngIf="item.totalTransactionAmt" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.totalTransactionAmt}}
+             </td>
+             <td class="f-700"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
+             </td>
+             <td *ngIf="item.totalUnit" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
+                {{item.totalUnit}}
+             </td>
+             <td *ngIf="viewMode == 'All Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.totalBalanceUnit}} 
+             </td>
+             <td *ngIf="viewMode == 'All Transactions'" class="f-700"
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.totalCurrentValue}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.dividendPayout}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.dividendReinvest}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.totalCurrentValue}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.netGain}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.trnAbsoluteReturn}} 
+             </td>
+             <td *ngIf="viewMode == 'unrealized transactions' || viewMode == 'Unrealized Transactions'" class="f-700"
+                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+                {{item.totalCagr}} 
+             </td>
+          </tr>
+       </tbody>
     </table>
-
-    <!-- All Transactions
-    <table 
-        style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td
-                style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Sr no.</b>
-            </td>
-            <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction Type</b>
-            </td>
-            <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction date</b>
-            </td>
-            <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction amount</b>
-            </td>
-            <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Transaction NAV</b>
-            </td>
-            <td
-                style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Units</b>
-            </td>
-
-            <td
-                style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Balance units</b>
-            </td>
-            <td
-                style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                <b>Days</b>
-            </td>
-        </tr>
-
-        <tbody *ngFor="let item of customDataSource.data ;index as i">
-            <tr style="page-break-inside: avoid">
-                <td *ngIf="item.groupName  && viewMode == 'unrealized transactions'" colspan="12"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}
-                </td>
-                <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="10"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}
-                </td>
-            </tr>
-
-            <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
-                <td class="f-700" colspan="8"
-                    style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
-                    {{item.schemeName}}</td>
-                <td class="f-700" colspan="5"
-                    style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
-                    Current NAV:{{item.nav}}</td>
-            </tr>
-
-            <tr style="page-break-inside: avoid">
-                <td *ngIf="item.name || item.pan || item.folio" colspan="13"
-                    style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
-                </td>
-            </tr>
-
-            <tr *ngIf="item.fwTransactionType || item.category"
-                style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
-                <td
-                    style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                    {{i + 1}}</td>
-                <td
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
-                    </span>
-                </td>
-                <td
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.transactionDate | date:'dd/MM/yyyy'}} </td>
-                <td
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span>{{item.amount}}</span></td>
-                <td
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span>{{item.purchasePrice}}</span>
-                </td>
-                <td
-                    style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span>{{item.unit}}</span></td>
-                <td
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.balanceUnits}} </td>
-                <td
-                    style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.days}} </td>
-            </tr>
-            <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
-                <td class="f-700"
-                    style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                </td>
-                <td class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                    Total
-                </td>
-                <td class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
-                </td>
-                <td *ngIf="item.totalTransactionAmt" class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                    {{item.totalTransactionAmt}}</td>
-                <td class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-                </td>
-                <td *ngIf="item.totalUnit" class="f-700"
-                    style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
-                    {{item.totalUnit}}</td>
-                <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-                    style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.totalBalanceUnit}} </td>
-                <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-                    style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                </td>
-            </tr>
-        </tbody>
-    </table> -->
-
-</div>
+    <!-- All Transactions -->
+    <table *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
+       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+          <td
+             style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Sr no.</b>
+          </td>
+          <td
+             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+             <b>Transaction Type</b>
+          </td>
+          <td
+             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             <b>Transaction date</b>
+          </td>
+          <td
+             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             <b>Transaction amount</b>
+          </td>
+          <td
+             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             <b>Transaction NAV</b>
+          </td>
+          <td
+             style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             <b>Units</b>
+          </td>
+          <td
+             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             <b>Balance units</b>
+          </td>
+          <td
+             style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             <b>Days</b>
+          </td>
+       </tr>
+       <tbody *ngFor="let item of customDataSource.data ;index as i">
+          <tr style="page-break-inside: avoid">
+             <td *ngIf="item.groupName && viewMode == 'unrealized transactions'" colspan="4"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}
+             </td>
+             <td *ngIf="item.groupName && viewMode == 'All transactions'" colspan="4"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}
+             </td>
+          </tr>
+          <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid">
+             <td class="f-700" colspan="4"
+                style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
+                {{item.schemeName}}
+             </td>
+             <td class="f-700" colspan="4"
+                style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;">
+                Current NAV:{{item.nav}}
+             </td>
+          </tr>
+          <tr style="page-break-inside: avoid">
+             <td *ngIf="item.name || item.pan || item.folio" colspan="8"
+                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
+             </td>
+          </tr>
+          <tr *ngIf="item.fwTransactionType || item.category"
+             style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
+             <td
+                style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;text-align: left;">
+                {{i + 1}}
+             </td>
+             <td
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+                <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
+                </span>
+             </td>
+             <td
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.transactionDate | date:'dd/MM/yyyy'}} 
+             </td>
+             <td
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span>{{item.amount}}</span>
+             </td>
+             <td
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span>{{item.purchasePrice}}</span>
+             </td>
+             <td
+                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span>{{item.unit}}</span>
+             </td>
+             <td
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.balanceUnits}} 
+             </td>
+             <td
+                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.days}} 
+             </td>
+          </tr>
+          <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
+             <td class="f-700"
+                style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
+             </td>
+             <td class="f-700"
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;border-left: 1px solid #DADCE0;">
+                Total
+             </td>
+             <td class="f-700"
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+             </td>
+             <td *ngIf="item.totalTransactionAmt" class="f-700"
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
+                {{item.totalTransactionAmt}}
+             </td>
+             <td class="f-700"
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
+             </td>
+             <td *ngIf="item.totalUnit" class="f-700"
+                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
+                {{item.totalUnit}}
+             </td>
+             <td *ngIf="viewMode == 'All Transactions'" class="f-700"
+                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.totalBalanceUnit}} 
+             </td>
+             <td *ngIf="viewMode == 'All Transactions'" class="f-700"
+                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+             </td>
+          </tr>
+       </tbody>
+    </table>
+ </div>
