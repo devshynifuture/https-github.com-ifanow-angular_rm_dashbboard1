@@ -256,6 +256,29 @@
   }
 }
 
+.fixed-deposit,
+.table-header-normal {
+  #tbs .mat-sort-header-button {
+    white-space: nowrap !important;
+  }
+}
+
+.right-hc {
+  .mat-sort-header-container {
+    float: right !important;
+  }
+}
+
+.right-hcb {
+  .mat-sort-header-container {
+    float: right !important;
+  }
+
+  .mat-sort-header-button {
+    text-align: right;
+  }
+}
+
 @media(max-width:1142px) {
   // .mat-radio-button#mat-radio-3 {
   //   min-width: 135px;

@@ -7,7 +7,7 @@ export class TempserviceService {
     let array = [];
     let sortedData = [];
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'ownerName';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Investor wise') ? reportType = 'ownerName' :reportType = 'ownerName';
     const filteredArray = [];
     let catObj;
     if (mutualFundList) {
@@ -20,7 +20,7 @@ export class TempserviceService {
         (reportType == 'ownerName') ? filteredArray.push({groupName: key, pan: catObj[key][0].pan}) : filteredArray.push({groupName: key});
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
-          if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
+          if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
             array.push(singleData);
             totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
             const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
@@ -106,7 +106,7 @@ export class TempserviceService {
     Object.keys(catObj).map(key => {
       let totalObj: any = {};
       catObj[key].forEach((singleData) => {
-        if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
+        if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
           // this.totalObj = this.this.getEachTotalValue(singleData);
           totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, {total: true});
           // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
@@ -151,7 +151,7 @@ export class TempserviceService {
 
       }
       catObj[key].forEach((singleData) => {
-        if ((folio == 2) ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
+        if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
           if (viewMode == 'All Transactions') {
             if (trnType) {
               totalObj = {};
@@ -178,10 +178,11 @@ export class TempserviceService {
               nav: singleData.nav,
               navDate: singleData.navDate,
               avgNav: singleData.avgCostNav,
-              pan: singleData.pan
+              // pan: singleData.pan
             };
             if (reportType == 'ownerName') {
               obj.folioNumber = singleData.folioNumber;
+             obj.pan = singleData.pan;
             }
             filteredData.push(obj);
             if (reportType != 'ownerName') {
@@ -522,7 +523,7 @@ export class TempserviceService {
     const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
     const mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
     let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
-    if (dataForFilter.showFolio == 2) {
+    if (dataForFilter.showFolio == '2') {
       mutualFundList = mutualFundList.filter((item: any) =>
         (item.balanceUnit != 0 && item.balanceUnit > 0) || item.folioNumber != 0
       );

@@ -208,9 +208,9 @@
         </mat-expansion-panel-header>
         <div class="borderTopbox" *ngIf="panelOpenState == true">
             <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                <mat-checkbox [(ngModel)]="item.selected" (change)="changeFinancialYear(item)">
-                    {{'FY '+item.from+' - '+item.to}}
-                </mat-checkbox>
+                <mat-radio-button   [checked]="item.selected" (change)="changeFinancialYear(item)" [disabled]="item.disabled">
+                   <span  [matTooltipPosition]="'right'" [matTooltip]="item.disabled ? 'No capital gains on this financial year.' : ''"  > {{'FY '+item.from+' - '+item.to}}</span>
+                </mat-radio-button>
             </mat-list-item>
         </div>
     </mat-expansion-panel>
@@ -285,10 +285,10 @@
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
                 <mat-radio-button value="1"
-                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==1,'text-primary':summaryFilerForm.get('showFolios').value==1,'b-a':summaryFilerForm.get('showFolios').value==2}">
+                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value=='1','text-primary':summaryFilerForm.get('showFolios').value=='1','b-a':summaryFilerForm.get('showFolios').value=='2'}">
                     Yes</mat-radio-button>
                 <mat-radio-button value="2"
-                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==2,'text-primary':summaryFilerForm.get('showFolios').value==2,'b-a':summaryFilerForm.get('showFolios').value==1}">
+                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value=='2','text-primary':summaryFilerForm.get('showFolios').value=='2','b-a':summaryFilerForm.get('showFolios').value=='1'}">
                     No</mat-radio-button>
             </mat-radio-group>
 
