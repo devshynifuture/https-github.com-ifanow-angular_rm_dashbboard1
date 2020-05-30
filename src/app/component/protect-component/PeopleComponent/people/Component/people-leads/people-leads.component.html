@@ -127,14 +127,15 @@
         </table>
         <div *ngIf="leadDataSource.data.length==0" class="row pt-32">
 
-            <div class="col-md-7 d-flex align-items-center  flex-column ">
-                <img src="assets/images/svg/leads-empty-states.svg">
-                <h4 class="mt-24 mb-12">No leads added yet</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
-                    ADD NEW</button>
-            </div>
+            <div class="col-md-12 d-flex justify-content-center ">
+                <div class="boxEmpty mt-32">
+                    <img src="assets/images/svg/leads-empty-states.svg">
+                    <h4 class="mt-24 mb-12">No leads added yet</h4>
+                    <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
+                        ADD NEW</button>
+                </div>
 
-            <div class="col-md-5">
+
                 <div class="dashedClass">
                     <p>You can manually add your leads from here. </p>
                     <p> Tip: You can also create a dedicated sign-up page for leads who come to your website. So, let’s say you are doing a workshop (IAP) or a webinar etc., then you can simply give your audience the link to this page and they can self sign-up.

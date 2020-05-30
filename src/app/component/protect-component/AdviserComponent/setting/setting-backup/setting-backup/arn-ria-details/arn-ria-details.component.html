@@ -83,11 +83,46 @@
     </div>
 </div>
 
-<div *ngIf="hasError" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+<div *ngIf="hasError" class="row pt-60">
+
+    <div class="col-md-12 d-flex justify-content-center ">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/arn-ria-details-empty-state.svg">
+            <h4 class="mt-24 mb-12"> No details added yet </h4>
+            <button class="btn-primary addon v-middle " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p>ARN/RIA details are needed so that you can manage your client’s mutual fund portfolios in an organized manner. </p>
+            <p>Once you provide these details along with MF RTA details in the nex tab, the system will automatically order and upload all the relevant RTA feeds for you in no time.</p>
+            <p>Still have questions? Watch video</p>
+        </div>
+    </div>
+
+    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4> -->
 </div>
-<div *ngIf="arnobjs.length == 0 && !utilService.isLoading && !hasError" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No ARN/RIA details found</h4>
+
+
+<div *ngIf="arnobjs.length == 0 && !utilService.isLoading && !hasError" class="row pt-60">
+    <div class="col-md-12 d-flex justify-content-center ">
+        <div class="boxEmpty mt-52">
+            <img src="assets/images/svg/arn-ria-details-empty-state.svg">
+            <h4 class="mt-24 mb-12"> No details added yet </h4>
+            <button class="btn-primary addon v-middle " mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
+        <div class="dashedClass">
+            <p>ARN/RIA details are needed so that you can manage your client’s mutual fund portfolios in an organized manner. </p>
+            <p>Once you provide these details along with MF RTA details in the nex tab, the system will automatically order and upload all the relevant RTA feeds for you in no time.</p>
+            <p>Still have questions? Watch video</p>
+        </div>
+    </div>
+
+    <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No ARN/RIA details found</h4> -->
 </div>
