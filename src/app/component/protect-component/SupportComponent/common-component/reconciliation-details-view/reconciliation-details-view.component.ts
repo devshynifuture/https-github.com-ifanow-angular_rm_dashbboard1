@@ -64,11 +64,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.upperTableArr = tableArr;
     this.disableUnfreezeBtn = false;
 
-    if (this.data && this.data.difference === '0.000') {
-      this.disableFreezeBtn = false;
-    } else {
-      this.disableFreezeBtn = true;
-    }
+    // if (this.data && this.data.difference === '0.000') {
+    //   this.disableFreezeBtn = false;
+    // } else {
+    //   this.disableFreezeBtn = true;
+    // }
     this.allFolioTransactionTableDataBinding();
   }
 
@@ -235,8 +235,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
 
   allFolioTransactionTableDataBinding() {
+    this.canDeleteTransaction = this.data.canDeleteTransaction ? this.data.canDeleteTransaction : false;
     if (this.data.tableData.length !== 0) {
-      this.canDeleteTransaction = this.data.canDeleteTransaction ? this.data.canDeleteTransaction : false;
 
       this.data.tableData.forEach(element => {
         this.tableData1.push({

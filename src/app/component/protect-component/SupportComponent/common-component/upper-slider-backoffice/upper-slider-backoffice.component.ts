@@ -293,6 +293,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       };
     } else {
       let mutualFundIds = [];
+      let isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
       this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
         return item.isMapped === -1
       });
@@ -301,7 +302,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
       });
       data = {
         advisorIds: [...this.adminAdvisorIds],
-        folio: this.mutualFundIds
+        folio: this.mutualFundIds,
+        parentId: this.parentId,
+        isParent
       };
     }
     // if (this.didAumReportListGot) {
