@@ -60,14 +60,14 @@ export const pieChart = (data) => {
                     }
                 }, {
                     name: 'Other',
-                    y: data.OTHERS.perrcentage,
+                    y: data.OTHERS?data.OTHERS.perrcentage:0,
                     color: '#A0AEB4',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'Auto ancillaries',
-                    y: data.Auto_Ancillaries.perrcentage,
+                    y: data.Auto_Ancillaries?data.Auto_Ancillaries.perrcentage:0,
                     color: '#FF7272',
                     dataLabels: {
                         enabled: false

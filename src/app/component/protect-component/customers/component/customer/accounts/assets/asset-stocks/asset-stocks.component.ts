@@ -69,10 +69,12 @@ export class AssetStocksComponent implements OnInit {
   categories:any;
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
+    if(data){
+      this.categories = data.categories;
+    }
     if (data.portfolios.length != 0) {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
-      this.categories = data.categories;
       
     } else {
       this.noData = 'No Stocks Found';
