@@ -53,6 +53,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isRmLogin = AuthService.getUserInfo().isRmLogin;
   deleteReorderOrDeleteDisabled = 'none';
   filteredAumListWithIsMappedToMinusOne: any = [];
+  reportDuplicateFoliosIsMappedToMinusOne: any[];
+  arnRiaCode;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -65,9 +67,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.data.hasOwnProperty('arnRiaCode')) {
+      this.arnRiaCode = this.data.arnRiaCode;
+    }
     this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : this.data.advisorId;
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.getRtaList();
-
   }
 
   rtaList = [];
@@ -276,7 +281,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
     let data;
     if (this.data.flag == 'report') {
       let mutualFundIds = [];
-      this.aumListReportValue.forEach(element => {
+      this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+        return item.isMapped === -1
+      });
+      this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
         mutualFundIds.push(element.mutualFundId);
       });
       data = {
@@ -284,9 +292,16 @@ export class UpperSliderBackofficeComponent implements OnInit {
         folio: mutualFundIds
       }
     } else {
+      let mutualFundIds = [];
+      this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+        return item.isMapped === -1
+      });
+      this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
+        mutualFundIds.push(element.mutualFundId);
+      });
       data = {
         advisorIds: [... this.adminAdvisorIds],
-        folio: this.mutualFundIds
+        folio: mutualFundIds
       }
     }
     if (this.didAumReportListGot) {
@@ -300,7 +315,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             let arrValue = [];
             if (this.data.flag === 'report') {
               res.forEach(element => {
-                filteredArrValue = this.aumListReportValue.filter(item => {
+                filteredArrValue = this.reportDuplicateFoliosIsMappedToMinusOne.filter(item => {
                   return item.mutualFundId === element.id ? item : null;
                 });
               });
@@ -376,7 +391,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       parentId: this.parentId,
       isParent
     }
-    console.log("this is requestjson for delete and reorder:::: ", data)
+    console.log("this is requestjson for delete and reorder:::: ", data);
     this.reconService.deleteAndReorder(data)
       .subscribe(res => {
         console.log(res);
@@ -435,7 +450,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   saveFile(blob) {
     const userData = AuthService.getUserInfo();
-    saveAs(blob, userData.fullName + '-' + 'ordered-folios' + '.txt');
+    let username;
+    if (this.data.hasOwnProperty('clientName')) {
+      username = this.data.clientName;
+    } else {
+      username = userData.name ? userData.name : userData.fullName;
+    }
+    saveAs(blob, username + '-' + 'ordered-folios' + '.txt');
   }
 
   exportToExcelSheet(value, element) {
@@ -445,17 +466,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     // creation of excel sheet 
     let headerData = [
-      { width: 20, key: 'Investor Name' },
-      { width: 20, key: 'Asset Id' },
-      { width: 25, key: 'Scheme Name' },
-      { width: 18, key: 'Scheme Code' },
-      { width: 18, key: 'Folio Number' },
-      { width: 18, key: 'RTA Type' },
-      { width: 18, key: 'IFANOW Units' },
+      { width: 40, key: 'Investor Name' },
+      { width: 15, key: 'Asset Id' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 15, key: 'Scheme Code' },
+      { width: 20, key: 'Folio Number' },
+      { width: 15, key: 'RTA Type' },
+      { width: 15, key: 'IFANOW Units' },
       { width: 15, key: 'RTA Units' },
-      { width: 10, key: 'RTA Bal as on' },
-      { width: 10, key: 'Unit Difference' },
-      { width: 10, key: 'Amount Difference' }
+      { width: 15, key: 'RTA Bal as on' },
+      { width: 15, key: 'Unit Difference' },
+      { width: 20, key: 'Amount Difference' }
     ];
     let excelData = [];
     let footer = [];
@@ -482,16 +503,16 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.schemeCode ? element.schemeCode : '-',
           element.folioNumber ? element.folioNumber : '-',
           rtName,
-          element.calculatedUnits ? element.calculatedUnits : '-',
-          element.aumUnits ? element.aumUnits : '-',
+          element.calculatedUnits ? element.calculatedUnits : '0',
+          element.aumUnits ? element.aumUnits : '0',
           element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
-          element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '-',
-          'amt difference',
+          element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '0',
+          ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ]
 
         excelData.push(Object.assign(data));
       });
-      ExcelService.exportExcel(headerData, header, excelData, footer, value);
+      ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         let rtName = this.getRtName(this.data.rtId);
@@ -503,15 +524,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.schemeCode ? element.schemeCode : '-',
             element.folioNumber ? element.folioNumber : '-',
             rtName,
-            element.calculatedUnits ? element.calculatedUnits : '-',
-            element.aumUnits ? element.aumUnits : '-',
+            element.calculatedUnits ? element.calculatedUnits : '0',
+            element.aumUnits ? element.aumUnits : '0',
             element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
-            element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '-',
-            'amt difference',
+            element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '0',
+            ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ]
           excelData.push(Object.assign(data))
         });
-        ExcelService.exportExcel(headerData, header, excelData, footer, value);
+        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
       } else {
         this.eventService.openSnackBar("No Aum Report List Found", "Dismiss")
       }
@@ -525,12 +546,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
       if (this.data.flag === 'report') {
         tableData = this.aumListReportValue[index].mutualFundTransaction;
       } else {
-        tableData = this.aumList[index].mutualFundTransaction;
+        tableData = this.filteredAumListWithIsMappedToMinusOne[index].mutualFundTransaction;
       }
     }
     if (tableType === 'duplicate-folios') {
       if (this.data.flag === 'report') {
-        // tableData = this.aumListReportValue;
+        tableData = this.aumListReportValue;
       } else {
         tableData = data.mutualFundTransaction
       }
