@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +112,11 @@ export class PeopleService {
   }
 
   getClientFamilyMemberListAsset(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId);
+    // requestDataForOwnerList = {age: 18, greaterOrLesser: 1, clientId: 0};
+    let httpParams = new HttpParams().set('clientId', data.clientId);
+    if (data.age) {
+      httpParams = httpParams.set('age', data.age).set('greaterOrLesser', data.greaterOrLesser);
+    }
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, httpParams);
   }
 
