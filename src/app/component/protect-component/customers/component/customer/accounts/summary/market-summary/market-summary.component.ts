@@ -44,6 +44,7 @@ export class MarketSummaryComponent implements OnInit {
         console.log(data);
         if (data) {
           this.deptDataFlag = false;
+          data.current_value = Math.round(data.current_value.replace(',', ''));
           this.deptData = data;
           this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
           data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage)
@@ -58,10 +59,12 @@ export class MarketSummaryComponent implements OnInit {
     const { bse, nse, gold, silver } = data;
     bse.date = new Date(bse.date).getTime();
     if (bse) {
+      bse.current_value = Math.round((bse.current_value).replace(',', ''));
       bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
       bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage)
     }
     if (nse) {
+      nse.current_value = Math.round((nse.current_value).replace(',', ''));
       nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
       nse['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
     }
@@ -72,6 +75,9 @@ export class MarketSummaryComponent implements OnInit {
       gold.carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(gold.carat_24.change_in_percentage.replace('%', ''))
     }
     if (silver) {
+      silver.current_value = (silver.current_value).replace('₹', '')
+      silver.current_value = (silver.current_value).replace(',', '')
+      silver.current_value = Math.round(silver.current_value);
       silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
       silver['colourFlag'] = this.checkNumberPositiveAndNegative(silver.change_in_percentage)
     }
@@ -86,6 +92,7 @@ export class MarketSummaryComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
+          data.current_value = Math.round(data.current_value.replace(',', ''));
           this.nifty500DataFlag = false
           data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''))
           this.nifty500Data = data;
