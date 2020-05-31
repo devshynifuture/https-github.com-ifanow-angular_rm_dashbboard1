@@ -122,7 +122,6 @@ export class AssetsComponent implements OnInit {
     // this.viewMode = 'tab2';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    console.log('this is client id:::', this.clientId);
     this.getAssetCountGLobalData();
     this.stateOfPanel.mode = 'side';
     this.stateOfPanel.open();

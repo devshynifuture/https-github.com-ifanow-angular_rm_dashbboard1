@@ -103,18 +103,18 @@
 
               <div class="memberSlider">
                 <div *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
-                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==2"
+                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId===2 || singleMembers.relationshipId===10"
                     src="/assets/images/svg/man-profile.svg" width="48px">
-                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3"
+                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId===3"
                     src="/assets/images/svg/women-profile-icon.svg" width="48px">
-                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==4"
+                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId===4"
                     style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/son-profile.svg" width="36px">
-                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==5"
+                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId===5"
                     style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/daughter-profile.svg"
                     width="36px">
-                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==7"
+                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId===7"
                     src="/assets/images/svg/mother-profile.svg" width="48px">
-                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==6"
+                  <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId===6"
                     src="/assets/images/svg/father-profile.svg" width="48px">
                   <div (click)="open('edit',singleMembers)" class="familyList">
                     <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
@@ -123,12 +123,13 @@
                         ...</span>
                     </h4>
                     <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
-                      <span *ngIf="singleMembers.relationshipId==2">Wife </span>
-                      <span *ngIf="singleMembers.relationshipId==3">Son</span>
-                      <span *ngIf="singleMembers.relationshipId==4">Daughter</span>
-                      <span *ngIf="singleMembers.relationshipId==5">Mother</span>
-                      <span *ngIf="singleMembers.relationshipId==6">Father</span>
-                      <span *ngIf="singleMembers.relationshipId==7">Others</span>
+                      <span *ngIf="singleMembers.relationshipId===2">Husband </span>
+                      <span *ngIf="singleMembers.relationshipId===3">Wife </span>
+                      <span *ngIf="singleMembers.relationshipId===4">Son</span>
+                      <span *ngIf="singleMembers.relationshipId===5">Daughter</span>
+                      <span *ngIf="singleMembers.relationshipId===7">Mother</span>
+                      <span *ngIf="singleMembers.relationshipId===6">Father</span>
+                      <span *ngIf="singleMembers.relationshipId===10">Others</span>
                     </p>
                     <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                       {{singleMembers.age}} Yrs</p>
