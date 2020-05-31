@@ -60,22 +60,6 @@
                       {{npsData.description ? npsData.description:'-'}}
                   </div>
               </div>
-              <div class="row bb p-8 b-l br" *ngIf="!npsData.nomineeList">
-                  <div class="col-md-8 text-left f-14 roboto p-0" >
-                      Nominee
-                  </div>
-                  <div class="col-md-4 text-right f-14 roboto p-0">
-                      -
-                  </div>
-              </div>
-              <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.nomineeList; let i = index">
-                  <div class="col-md-8 text-left f-14 roboto p-0" >
-                      Nominee {{i + 1}}
-                  </div>
-                  <div class="col-md-4 text-right f-14 roboto p-0">
-                      {{obj.name}}
-                  </div>
-              </div>
           </div>
 
           <h4 class="mt-32 mb-10">Holdings</h4>
@@ -133,22 +117,22 @@
 
         <h4 class="mt-32 mb-10" >Nominees details</h4>
           <div class="insurance-ui bt">
-              <div class="row bb p-8 b-l br" *ngIf="npsData.nomineeList.length <= 0">
-                  <div class="col-md-8 text-left f-14 roboto p-0" >
-                      Nominee
-                  </div>
-                  <div class="col-md-4 text-right f-14 roboto p-0">
-                      -
-                  </div>
-              </div>
-              <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.nomineeList; let i = index">
-                  <div class="col-md-8 text-left f-14 roboto p-0" >
-                      Nominee {{i + 1}}
-                  </div>
-                  <div class="col-md-4 text-right f-14 roboto p-0">
-                      {{obj.name}}
-                  </div>
-              </div>
+            <div class="row bb p-8 b-l br" *ngIf="npsData.nomineeList.length == 0 ">
+                <div class="col-md-8 text-left f-14 roboto p-0" >
+                    Nominee
+                </div>
+                <div class="col-md-4 text-right f-14 roboto p-0">
+                    -
+                </div>
+            </div>
+            <div class="row bb p-8 b-l br" [hidden]="!npsData.nomineeList" *ngFor="let obj of npsData.nomineeList; let i = index">
+                <div class="col-md-8 text-left f-14 roboto p-0" >
+                    Nominee {{i + 1}}
+                </div>
+                <div class="col-md-4 text-right f-14 roboto p-0">
+                    {{obj.name}} <span *ngIf="npsData.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                </div>
+            </div>
           </div>
         
       </div>

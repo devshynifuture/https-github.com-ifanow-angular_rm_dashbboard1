@@ -168,7 +168,6 @@ export class FixedIncomeComponent implements OnInit {
   getFixedDepositRes(data) {
     this.isLoading = false;
     this.totalSum = data;
-    console.log('getFixedDepositRes ********** ', data);
     if (data == undefined) {
       this.noData = "No scheme found";
       this.dataSource.data = [];
@@ -177,7 +176,6 @@ export class FixedIncomeComponent implements OnInit {
       this.dataList = data.assetList;
       this.dataSource.data = data.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
-      console.log('soted &&&&&&&&&', this.dataSource);
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumCurrentValue = 0;
       this.dataSource.filteredData.forEach((o) => {
@@ -339,10 +337,8 @@ export class FixedIncomeComponent implements OnInit {
         this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -372,12 +368,9 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getFixedDepositList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
@@ -392,11 +385,8 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-
+          this.getFixedDepositList();
         }
         rightSideDataSub.unsubscribe();
       }
@@ -430,8 +420,6 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getRecurringDepositList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
@@ -455,8 +443,6 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getBondsList();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }
@@ -477,7 +463,6 @@ export class FixedIncomeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
 
         }
         rightSideDataSub.unsubscribe();

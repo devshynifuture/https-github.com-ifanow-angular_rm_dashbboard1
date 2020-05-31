@@ -130,7 +130,7 @@
                       <span *ngIf="singleMembers.relationshipId==5">Daughter</span>
                       <span *ngIf="singleMembers.relationshipId==7">Mother</span>
                       <span *ngIf="singleMembers.relationshipId==6">Father</span>
-                      <span *ngIf="singleMembers.relationshipId>=8||singleMembers.relationshipId==0">Others</span>
+                      <span *ngIf="singleMembers.relationshipId>=8 || singleMembers.relationshipId==0">Others</span>
                     </p>
                     <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                       {{singleMembers.age}} Yrs</p>

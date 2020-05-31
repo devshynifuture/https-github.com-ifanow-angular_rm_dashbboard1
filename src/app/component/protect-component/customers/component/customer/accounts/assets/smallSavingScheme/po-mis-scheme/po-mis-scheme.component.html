@@ -59,6 +59,7 @@
                 <div *ngFor="let owner of element.ownerList; let i = index">
                     <span *ngIf="i == 0">{{owner.name}}</span>
                 </div>
+                <span *ngIf="element.ownerList && element.ownerList.length > 1"> + {{element.ownerList.length - 1}}</span>
             </td>
             <td *matFooterCellDef class="br text-right pr-20 f-600 " mat-footer-cell>
                 {{isLoading ? '' : 'Total' }}
@@ -146,7 +147,14 @@
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
-
+        <ng-container matColumnDef="poMisNo">
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br w-10 t-left">POMIS number
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
+                <div class="bar"> {{element.poMisNumber?element.poMisNumber:'-'}} </div>
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="br"> </td>
+        </ng-container>
         <ng-container matColumnDef="desc">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description</th>
             <td *matCellDef="let element" class="br" mat-cell>
@@ -173,7 +181,7 @@
                             <input (change)="fetchData('Po MIS',$event,element)" class="uploadInput" id="file-4"
                                 multiple type="file">
                         </button>
-                        <button mat-menu-item>Activity</button>
+                        <!-- <button mat-menu-item>Activity</button> -->
                         <button (click)="deleteModal('PO MIS',element)" mat-menu-item>Delete</button>
                     </mat-menu>
                 </div>
