@@ -249,6 +249,7 @@ addNewNominee(data) {
       amtInvested: [data.amountInvested?data.amountInvested:'', [Validators.required, Validators.min(1000), Validators.max(1500000)]],
       commDate: [data.commencementDate?new Date(data.commencementDate):'', [Validators.required]],
       poBranch: [data.postOfficeBranch?data.postOfficeBranch:''],
+      scssNumber:[data.scssNumber],
       nominees: this.nominees,
       bankAccNumber: [data.userBankMappingId?data.userBankMappingId:''],
       description: [data.description?data.description:''],
@@ -326,6 +327,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.scssSchemeForm
         postOfficeBranch: this.scssSchemeForm.get('poBranch').value,
         bankAccountNumber: this.scssSchemeForm.get('bankAccNumber').value,
         userBankMappingId: this.scssSchemeForm.get('bankAccNumber').value,
+        scssNumber:this.scssSchemeForm.get('scssNumber').value,
         // ownerTypeId: this.scssSchemeForm.get('ownershipType').value,
         nomineeList: this.scssSchemeForm.value.getNomineeName,
         description: this.scssSchemeForm.get('description').value

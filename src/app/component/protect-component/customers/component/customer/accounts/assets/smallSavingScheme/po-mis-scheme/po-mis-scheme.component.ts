@@ -52,7 +52,7 @@ export class PoMisSchemeComponent implements OnInit {
       this.clientData = AuthService.getClientData()
     }
 
-  displayedColumns = ['no', 'owner', 'cvalue', 'payoutTill', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
+  displayedColumns = ['no', 'owner', 'cvalue', 'payoutTill', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'poMisNo', 'desc', 'status', 'icons'];
 
 
   ngOnInit() {
