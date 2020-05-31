@@ -9,6 +9,7 @@ import { EventService } from "../../../../../../Data-service/event.service";
 export class UpperCustomerComponent implements OnInit {
   selected = 0;
   fragmentData: any;
+  changedFlag: any;
   @Input() set data(data) {
     this.fragmentData = data;
     console.log("this is what im getting:: from called function::", data);
@@ -24,10 +25,13 @@ export class UpperCustomerComponent implements OnInit {
     const fragmentData = {
       direction: 'top',
       state: 'close',
-      refreshRequired: flag
+      refreshRequired:(this.changedFlag) ? this.changedFlag : flag
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
 
+  }
+  outputResponse(value){
+    this.changedFlag=value;
   }
 }

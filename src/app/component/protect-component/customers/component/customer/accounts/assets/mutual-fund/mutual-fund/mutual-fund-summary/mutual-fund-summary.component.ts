@@ -97,6 +97,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
   }
   getFilterData(value) {
+     this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+
     this.isLoading = true;
     this.changeInput.emit(true);
     this.mfService.getMfData()
@@ -703,9 +705,23 @@ export class MutualFundSummaryComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             if (UtilService.isRefreshRequired(upperSliderData)) {
+              this.ngOnInit();
               // code to refresh ...
-              this.getMutualFund();
+              // this.getMutualFund();
+              // this.getMutualFundResponse(upperSliderData);
+            //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            //   this.mfService.getDataForMfGet()
+            // .subscribe(res => {
+            //   this.mfGetData = res;
+            // })
+            // if(this.mfGetData){
+            //   this.isLoading = true;
+            //   this.changeInput.emit(true);
+            //   this.getMutualFundResponse(this.mfGetData)
+            // }
+            
             }
+            
             // this.getClientSubscriptionList();
             subscription.unsubscribe();
           }

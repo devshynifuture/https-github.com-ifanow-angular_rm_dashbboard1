@@ -1,5 +1,5 @@
 import { AuthService } from './../../../../../../auth-service/authService';
-import { Component, OnInit, Input, NgModule, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, NgModule, ViewChildren, EventEmitter, Output } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MFSchemeLevelHoldingsComponent } from '../../customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -44,12 +44,13 @@ export class TransactionsComponent implements OnInit {
 
   mutualFundTransactions = [];
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() changeInput = new EventEmitter();
 
   ngOnInit() {
     console.log("this is data what we got::", this.data);
     this.currentValue = this.data.currentValue;
-    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
     this.profitOrLossValue = this.currentValue - this.data.amountInvested;
+    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
     this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 2);
     this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
@@ -126,6 +127,7 @@ export class TransactionsComponent implements OnInit {
     );
   }
   getTransactionDataBasedOnMf(res) {
+    let setDataForMf=res;
     this.isLoading = false;
     let filterData = this.mfService.doFiltering(res);
     this.mfList = filterData.mutualFundList;
@@ -135,12 +137,17 @@ export class TransactionsComponent implements OnInit {
     this.data=this.mfList;
     this.dataSource.data = this.mfList.mutualFundTransactions
     this.currentValue = this.mfList.currentValue;
-    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
     this.profitOrLossValue = this.currentValue - this.mfList.amountInvested;
+    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
     this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 2);
     this.xirrValue = this.mfList.xirr;
     this.investorName = this.mfList.ownerName;
     this.folioNumber = this.mfList.folioNumber;
+    setDataForMf = this.mfService.doFiltering(setDataForMf)
+    this.mfService.setDataForMfGet(setDataForMf);
+    this.changeInput.emit(true);
+
+
   }
   // deleteTransaction(element) {
   //   let requestJsonObj;

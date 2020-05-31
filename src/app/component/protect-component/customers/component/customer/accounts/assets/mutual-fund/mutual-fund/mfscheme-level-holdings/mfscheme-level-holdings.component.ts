@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { ReconciliationService } from '../../../../../../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -19,6 +20,21 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./mfscheme-level-holdings.component.scss']
 })
 export class MFSchemeLevelHoldingsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   schemeLevelHoldingForm: any = this.fb.group({
     ownerName: [, [Validators.required]],
     folioNumber: [, [Validators.required]],
@@ -291,6 +307,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   saveMfSchemeLevel() {
+    this.barButtonOptions.active = true;
     if (this.schemeLevelHoldingForm.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       // this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
@@ -408,6 +425,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           .subscribe(res => {
             if (res) {
               console.log("this is what i am getting:::: after adding mutual fund", res);
+              this.barButtonOptions.active = false;
               this.Close(true);
             }
           })
@@ -452,6 +470,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
                   .subscribe(res => {
                     if (res) {
                       console.log("success:: edit mutual fund", res);
+                      this.barButtonOptions.active = false;
                       this.Close(true);
                     } else {
                       this.eventService.openSnackBar(res, "Dismiss");
@@ -468,6 +487,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             .subscribe(res => {
               if (res) {
                 console.log("success:: edit mutual fund", res);
+                this.barButtonOptions.active = false;
                 this.Close(true);
               } else {
                 this.eventService.openSnackBar(res, "Dismiss");
@@ -490,6 +510,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           .subscribe(res => {
             if (res || res == 0) {
               console.log("success::", res);
+              this.barButtonOptions.active = false;
               this.Close(true);
             } else {
               this.eventService.openSnackBar(res, "Dismiss");
@@ -505,6 +526,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             if (res) {
               console.log("success::", res);
               this.mfService.sendUpdatedTransactionAfterAdd(res);
+              this.barButtonOptions.active = false;
               this.Close(true);
             } else {
               this.eventService.openSnackBar(res, "Dismiss");
