@@ -322,10 +322,17 @@ export class MutualFundSummaryComponent implements OnInit {
       // }
     }
     if (typeof Worker !== 'undefined') {
-      if (!this.inputData) {
+      if (this.reponseData) {
         this.rightFilterData.reportType = [];
         this.rightFilterData.reportType[0] = {
-          name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+          name: this.reponseData ? this.setDefaultFilterData.reportType : this.saveFilterData.reportType,
+          selected: true
+        }
+        
+      }else if(!this.inputData && !this.reponseData){
+        this.rightFilterData.reportType = [];
+        this.rightFilterData.reportType[0] = {
+          name:(this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
           selected: true
         }
       }
@@ -348,6 +355,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.changeInput.emit(false);
       };
       worker.postMessage(input);
+      
     } else {
       // Web workers are not supported in this environment.
       // You should add a fallback so that your program still executes correctly.
