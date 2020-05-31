@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 })
 export class MfServiceService {
   advisorData: any;
+  shouldRoundOff=true;
   constructor(private settingService: SettingsService, private authService: AuthService, private datePipe: DatePipe) {
   }
 
@@ -470,6 +471,46 @@ export class MfServiceService {
 
     }
     return obj;
+  }
+  mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
+    // if (data) {
+    //   if (isNaN(data)) {
+    //     return data;
+    //   } else {
+    //     // console.log(' original ', data);
+    //     const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
+
+    //     // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+    //     return formattedValue;
+    //   }
+    // } else {
+    //   return '0';
+    // }
+    if (typeof (data) === 'string') {
+      if (data.includes(',')) {
+        return data;
+      }
+    }
+    // if (!this.locale) {
+    //   this.locale = 'en-IN';
+    // }
+    if (data && data !== '') {
+      if (!isNaN(data)) {
+        let numberValue: number = parseFloat(data);
+        if (this.shouldRoundOff) { // true
+          numberValue = Math.round(numberValue);
+        }
+        data = numberValue.toLocaleString('en-IN');
+      } else {
+
+      }
+    } else {
+      if (data !== 0) {
+        data = '';
+      }
+    }
+
+    return data;
   }
   getOtherFilter(orgData,filterData,orgId,FilterId,name){
     if(filterData){

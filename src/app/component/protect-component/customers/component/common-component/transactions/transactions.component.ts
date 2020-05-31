@@ -10,6 +10,7 @@ import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { SkeletonLoadingDirective } from 'src/app/common/directives/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { TempserviceService } from '../../customer/accounts/assets/mutual-fund/tempservice.service';
 
 @Component({
   selector: 'app-transactions',
@@ -47,7 +48,9 @@ export class TransactionsComponent implements OnInit {
   ngOnInit() {
     console.log("this is data what we got::", this.data);
     this.currentValue = this.data.currentValue;
+    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
     this.profitOrLossValue = this.currentValue - this.data.amountInvested;
+    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 2);
     this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
@@ -131,6 +134,13 @@ export class TransactionsComponent implements OnInit {
     );
     this.data=this.mfList;
     this.dataSource.data = this.mfList.mutualFundTransactions
+    this.currentValue = this.mfList.currentValue;
+    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
+    this.profitOrLossValue = this.currentValue - this.mfList.amountInvested;
+    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 2);
+    this.xirrValue = this.mfList.xirr;
+    this.investorName = this.mfList.ownerName;
+    this.folioNumber = this.mfList.folioNumber;
   }
   // deleteTransaction(element) {
   //   let requestJsonObj;
