@@ -121,6 +121,8 @@ export class MutualFundComponent implements OnInit {
     this.viewMode = data;
     this.mfService.changeViewMode(this.viewMode);
     this.sendData.emit(data);
+    this.typeWiseData = ''
+
     // this.mfData.viewMode = data;
   }
 

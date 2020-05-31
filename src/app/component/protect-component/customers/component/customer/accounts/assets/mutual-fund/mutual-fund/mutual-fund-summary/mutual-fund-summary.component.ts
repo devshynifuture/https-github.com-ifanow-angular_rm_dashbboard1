@@ -97,6 +97,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
   }
   getFilterData(value) {
+     this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+
     this.isLoading = true;
     this.changeInput.emit(true);
     this.mfService.getMfData()
@@ -322,10 +324,17 @@ export class MutualFundSummaryComponent implements OnInit {
       // }
     }
     if (typeof Worker !== 'undefined') {
-      if (!this.inputData) {
+      if (this.reponseData) {
         this.rightFilterData.reportType = [];
         this.rightFilterData.reportType[0] = {
-          name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
+          name: this.reponseData ? this.setDefaultFilterData.reportType : this.saveFilterData.reportType,
+          selected: true
+        }
+        
+      }else if(!this.inputData && !this.reponseData){
+        this.rightFilterData.reportType = [];
+        this.rightFilterData.reportType[0] = {
+          name:(this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
           selected: true
         }
       }
@@ -348,6 +357,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.changeInput.emit(false);
       };
       worker.postMessage(input);
+      
     } else {
       // Web workers are not supported in this environment.
       // You should add a fallback so that your program still executes correctly.
@@ -695,9 +705,23 @@ export class MutualFundSummaryComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             if (UtilService.isRefreshRequired(upperSliderData)) {
+              this.ngOnInit();
               // code to refresh ...
-              this.getMutualFund();
+              // this.getMutualFund();
+              // this.getMutualFundResponse(upperSliderData);
+            //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            //   this.mfService.getDataForMfGet()
+            // .subscribe(res => {
+            //   this.mfGetData = res;
+            // })
+            // if(this.mfGetData){
+            //   this.isLoading = true;
+            //   this.changeInput.emit(true);
+            //   this.getMutualFundResponse(this.mfGetData)
+            // }
+            
             }
+            
             // this.getClientSubscriptionList();
             subscription.unsubscribe();
           }

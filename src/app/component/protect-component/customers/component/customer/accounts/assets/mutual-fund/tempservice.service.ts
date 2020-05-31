@@ -27,12 +27,13 @@ export class TempserviceService {
             totalObj.totalXirr = obj.xirr;
             totalObj.totalAbsoluteReturn = obj.absoluteReturn;
           } else {
-            if (filteredArray.length > 0) {
-              if (array.length == 0) {
+            if (filteredArray.length > 0 && array.length == 0) {
                 if (filteredArray[filteredArray.length - 1].groupName) {
-                  filteredArray.pop();
+                  if(catObj[key].length <= 1){
+                    filteredArray.pop();
+                  }
                 }
-              }
+              
             }
           }
 

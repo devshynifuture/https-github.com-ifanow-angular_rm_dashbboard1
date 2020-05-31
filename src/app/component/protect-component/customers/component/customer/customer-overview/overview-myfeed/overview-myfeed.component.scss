@@ -17,7 +17,6 @@
         align-items: center;
         padding-left: 32px;
         border-left: 6px solid transparent;
-        cursor: pointer;
     }
     .activeClass {
         background: #D9DEE1;
@@ -50,7 +49,7 @@
         }
     }
     .scrollingDiv {
-        margin-top: 10px;
+        // margin-top: 10px;
         .fundBox {
             min-width: 240px;
             height: 170px;
@@ -95,7 +94,6 @@
             margin-right: 20px;
             .spanClass {
                 display: inline-block;
-                border: 1px solid #008FFF;
                 padding: 0px 4px;
                 border-radius: 2px;
             }
@@ -165,8 +163,8 @@
 }
 
 .scrolling_myFeed {
-    height: 500px;
-    overflow-y: scroll;
+    // height: 500px;
+    // overflow-y: scroll;
 }
 
 ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
@@ -179,9 +177,195 @@
     height: 30px !important;
 }
 
+.piechartMutualFund {
+    height: 258px;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #EBEBEB;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+ ::ng-deep .highcharts-credits {
+    display: none !important;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 360px;
+    max-width: 800px;
+    height: 330px;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #EBEBEB;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+#cashFlow {
+    height: 400px;
+}
+
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 310px;
+    max-width: 800px;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #EBEBEB;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+.disable-checkbox {
+    pointer-events: none;
+}
+
+.documentImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.pointUl {
+    display: block;
+    margin-top: 60px;
+    li {
+        text-align: left;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+}
+
+.pointNumber {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.next-slide {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    cursor: pointer;
+}
+
+.tableOne {
+    tr.mat-header-row {
+        height: 35px;
+    }
+}
+
+.boxTable {
+    #table-low thead tr {
+        background-color: transparent !important;
+    }
+}
+
 .sticky-top {
-    //position: -webkit-sticky;
+    //  position: -webkit-sticky;
     position: sticky;
     top: 140px;
     z-index: 1020;
+}
+
+::ng-deep .feedSumaaryMarket .toggleBtnClass .mat-button-toggle {
+    width: 75px !important;
 }

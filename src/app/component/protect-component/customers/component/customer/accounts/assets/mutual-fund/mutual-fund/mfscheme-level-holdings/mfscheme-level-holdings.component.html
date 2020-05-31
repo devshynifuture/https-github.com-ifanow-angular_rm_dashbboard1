@@ -77,11 +77,10 @@
       </div>
       <div class="col-md-5">
         <div class="form-group">
-            <!-- [matAutocomplete]="auto" -->
+          <!-- [matAutocomplete]="auto" -->
           <mat-form-field floatLabel="never" appearance="standard">
             <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
-              aria-label="schemeName"  [(ngModel)]="data.schemeName"
-              [formControl]="schemeNameControl">
+              aria-label="schemeName" [(ngModel)]="data.schemeName" [formControl]="schemeNameControl">
             <br>
             <ng-container *ngIf="filteredSchemeError">
               <span class="f-12">
@@ -150,12 +149,12 @@
   </div>
 
   <hr>
-  <div class="row pl-28" >
+  <div class="row pl-28">
     <div class="col-md-12 pl-0">
       <h4 class="mb-20 text-black">Transactions</h4>
     </div>
   </div>
-  <div class="row pl-28" >
+  <div class="row pl-28">
     <div class="col-md-4 pl-0">
       <label class="f-14"> Transaction type</label>
     </div>
@@ -181,7 +180,7 @@
             <mat-select matInput formControlName="transactionType" class="form-control br-0">
               <mat-option>None</mat-option>
               <mat-option [value]="item.id" #type *ngFor="let item of transactionTypeList"
-                (click)="setTransactionType(item.id, singleTransaction);getIndexOfSelectedElement(type.value,singleTransaction)" >
+                (click)="setTransactionType(item.id, singleTransaction);getIndexOfSelectedElement(type.value,singleTransaction)">
                 {{ item.transactionType }}
               </mat-option>
             </mat-select>
@@ -194,8 +193,9 @@
       <div class="col-md-2 p-0">
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input (click)="picker.open()" matInput (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)" autocomplete="off"
-              formControlName="date" #date [matDatepicker]="picker" class="form-control br-0 b-0">
+            <input (click)="picker.open()" matInput
+              (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)"
+              autocomplete="off" formControlName="date" #date [matDatepicker]="picker" class="form-control br-0 b-0">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>
@@ -207,8 +207,9 @@
       <div class="col-md-3">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput autocomplete="off"  type="number" formControlName="transactionAmount"
-              maxlength="20" class="form-control br-0 rupess" #trnAmt (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
+            <input matInput autocomplete="off" type="number" formControlName="transactionAmount" maxlength="20"
+              class="form-control br-0 rupess" #trnAmt
+              (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
             <mat-error>
               This field is required
             </mat-error>
@@ -219,8 +220,9 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input matInput autocomplete="off" #totalNetContribution appInputValueValidation
-              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units" type="number"
-              maxlength="20" class="form-control br-0 rupess">
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits
+              (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units"
+              type="number" maxlength="20" class="form-control br-0 rupess">
             <mat-error>
               This field is required
             </mat-error>
@@ -250,7 +252,10 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button>
+      <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button> -->
+      <app-progress-button class="btn-bottom br-0 text-inherit c-p" (click)="saveMfSchemeLevel()"
+        [options]="barButtonOptions">
+      </app-progress-button>
     </div>
   </div>
 </div>
