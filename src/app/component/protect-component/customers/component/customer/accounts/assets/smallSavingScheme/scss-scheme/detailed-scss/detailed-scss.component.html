@@ -95,7 +95,7 @@
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
                         ₹<span appFormatNumber>{{data.maturityValue}}</span>
                     </div>
-                    
+
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
@@ -113,10 +113,10 @@
                         {{data.postOfficeBranch}}
                     </div>
                 </div>
-                
+
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Bank account number
+                        Linked bank account
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId" *ngFor="let bank of bankList">
                         <div [ngSwitch]="data.userBankMappingId">

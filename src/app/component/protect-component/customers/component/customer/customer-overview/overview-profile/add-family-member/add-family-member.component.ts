@@ -22,13 +22,15 @@ export class AddFamilyMemberComponent implements OnInit {
   familyMemberList = {
     firstRow: [],
     secondRow: [
-      {name: 'Father', imgUrl: '/assets/images/svg/father-profile.svg', selected: false, relationshipTypeId: 6},
-      {name: 'Mother', imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 7}
+      {name: 'Father', imgUrl: '/assets/images/svg/father-profile.svg', selected: false, relationshipTypeId: 6, genderId: 1},
+      {name: 'Mother', genderId: 2, imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 7}
     ],
     thirdRow: [
-      {name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, count: 1, relationshipTypeId: 4},
-      {name: 'Daughter', imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 5},
-      {name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 10}
+      {
+        name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, genderId: 1, count: 1, relationshipTypeId: 4
+      },
+      {name: 'Daughter', genderId: 2, imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 5},
+      {name: 'Others', genderId: 3, imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 10}
     ]
   };
 
@@ -84,14 +86,14 @@ export class AddFamilyMemberComponent implements OnInit {
           name: 'Husband',
           imgUrl: '/assets/images/svg/wife-profile.svg',
           selected: false,
-          relationshipTypeId: 2
+          relationshipTypeId: 2, genderId: 1
         });
       } else {
         this.familyMemberList.firstRow.push({
             name: 'Wife',
             imgUrl: '/assets/images/svg/wife-profile.svg',
             selected: false,
-            relationshipTypeId: 3
+            relationshipTypeId: 3, genderId: 2
           }
         );
       }
@@ -132,64 +134,13 @@ export class AddFamilyMemberComponent implements OnInit {
           isKycCompliant: 0,
           taxStatusId: 1,
           residentFlag: 1,
-          emailList: [
-            {
-              verificationStatus: 0,
-              id: 0,
-              userType: 0,
-              isActive: 1,
-              userId: 0,
-              email: null
-            }
-          ],
           displayName: element.get('name').value,
-          guardianId: 0,
-          martialStatusId: 0,
-          isActive: 0,
-          addressModelList: null,
-          occupationId: 0,
-          id: 0,
-          dematList: null,
-          pan: null,
-          familyMemberType: (element.get('relationTypeId').value == 3 || element.get('relationTypeId').value == 4) ? 2 : 1,
+          familyMemberType: (element.get('relationTypeId').value == 4 || element.get('relationTypeId').value == 5) ? 2 : 1,// Minor : Major
           clientId: AuthService.getClientData().clientId,
-          genderId: 0,
+          genderId: element.get('genderId').value,
           dateOfBirth: this.datePipe.transform(element.get('date').value._d, 'dd/MM/yyyy'),
-          bankDetailList: null,
           relationshipId: element.get('relationTypeId').value,
-          mobileList: [
-            {
-              verificationStatus: 0,
-              id: 0,
-              userType: 0,
-              mobileNo: 0,
-              isActive: 1,
-              userId: 0
-            }
-          ],
-          anniversaryDate: null,
-          aadhaarNumber: null,
-          name: element.get('name').value,
-          bioRemarkId: 0,
-          bioRemark: {
-            bio: null,
-            remark: null,
-            id: 0
-          },
-          guardianData: {
-            mobileList: null,
-            aadhaarNumber: null,
-            anniversaryDate: null,
-            occupationId: 0,
-            emailList: null,
-            name: null,
-            genderId: 0,
-            martialStatusId: 0,
-            id: 0,
-            pan: null,
-            relationshipId: 0,
-            birthDate: null
-          }
+          name: element.get('name').value
         });
       });
 
@@ -245,6 +196,8 @@ export class AddFamilyMemberComponent implements OnInit {
             name: [, [Validators.required]],
             date: [, [Validators.required]],
             relationTypeId: [element.relationshipTypeId],
+            genderId: [element.genderId],
+
             maxDateValue: [this.maxDateForAdultDob]
           }));
         this.familyMemberNameList.push(element.name);
@@ -255,6 +208,8 @@ export class AddFamilyMemberComponent implements OnInit {
         this.getFamilyListList.push(this.fb.group({
           name: [, [Validators.required]],
           date: [, [Validators.required]],
+          genderId: [element.genderId],
+
           relationTypeId: [element.relationshipTypeId],
           maxDateValue: [this.maxDateForAdultDob]
         }));
@@ -266,6 +221,8 @@ export class AddFamilyMemberComponent implements OnInit {
         this.getFamilyListList.push(this.fb.group({
           name: [, [Validators.required]],
           date: [, [Validators.required]],
+          genderId: [element.genderId],
+
           relationTypeId: [element.relationshipTypeId],
           maxDateValue: [new Date()]
         }));

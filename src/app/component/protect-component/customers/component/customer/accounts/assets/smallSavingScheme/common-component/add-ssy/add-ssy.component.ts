@@ -1,23 +1,24 @@
-import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { DatePipe } from '@angular/common';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {MAT_DATE_FORMATS, MatDialog, MatInput} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {DatePipe} from '@angular/common';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
+
 @Component({
   selector: 'app-add-ssy',
   templateUrl: './add-ssy.component.html',
   styleUrls: ['./add-ssy.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ]
 })
 export class AddSsyComponent implements OnInit {
@@ -43,6 +44,9 @@ export class AddSsyComponent implements OnInit {
   familyMemberId: any;
   ssySchemeForm: any;
   ownerData: any;
+  requestDataForOwnerList = {age: 18, greaterOrLesser: 1, clientId: 0};
+  requestDataForGuardList = {age: 18, greaterOrLesser: 2, clientId: 0};
+
   isOptionalField: boolean;
   advisorId: any;
   editApi: any;
@@ -54,240 +58,251 @@ export class AddSsyComponent implements OnInit {
   nominees: any[];
   commencementDate: any;
   flag: any;
-  callMethod:any;
-  bankList:any = [];
+  callMethod: any;
+  bankList: any = [];
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   transactionViewData =
     {
       optionList: [
-        { name: 'Deposit', value: 1 },
-        { name: 'Withdrawal', value: 2 }
+        {name: 'Deposit', value: 1},
+        {name: 'Withdrawal', value: 2}
       ],
       transactionHeader: ['Transaction Type', 'Date', 'Amount']
-    }
+    };
   @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
   adviceShowHeaderAndFooter: boolean = true;
   DOB: any;
 
-  constructor(private dateFormatPipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, private datePipe: DatePipe,public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private dateFormatPipe: DatePipe,
+              public utils: UtilService, private eventService: EventService,
+              private fb: FormBuilder, private subInjectService: SubscriptionInject,
+              private cusService: CustomerService, private datePipe: DatePipe,
+              public dialog: MatDialog, private enumService: EnumServiceService) {
+  }
 
   @Input()
   set data(data) {
     this.clientId = AuthService.getClientId();
-    this.isOptionalField = true
+    this.requestDataForOwnerList.clientId = this.clientId;
+    this.requestDataForGuardList.clientId = this.clientId;
+    this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getdataForm(data);
     this.inputData = data;
   }
- 
+
   get data() {
     return this.inputData;
   }
+
   getFormDataNominee(data) {
-    console.log(data)
-    this.nomineesList = data.controls
+    console.log(data);
+    this.nomineesList = data.controls;
   }
+
   setCommencementDate(date) {
-    this.commencementDate = date
-   console.log(this.age(this.selectOwner[0].dateOfBirth), "owner age", new Date(this.selectOwner[0].dateOfBirth));
-   if(new Date(this.selectOwner[0].dateOfBirth).getTime() > new Date(this.ssySchemeForm.get('commDate').value).getTime())
-   {
-    this.ssySchemeForm.get('commDate').setErrors({ before: true });
-   }
-    else if(this.age(this.selectOwner[0].dateOfBirth) > 21){
-      this.ssySchemeForm.get('commDate').setErrors({ incorrect: true });
-    }
-    else{
-      this.ssySchemeForm.get('commDate').setErrors({ before: false });
+    this.commencementDate = date;
+    console.log(this.age(this.selectOwner[0].dateOfBirth), 'owner age', new Date(this.selectOwner[0].dateOfBirth));
+    if (new Date(this.selectOwner[0].dateOfBirth).getTime() > new Date(this.ssySchemeForm.get('commDate').value).getTime()) {
+      this.ssySchemeForm.get('commDate').setErrors({before: true});
+    } else if (this.age(this.selectOwner[0].dateOfBirth) > 21) {
+      this.ssySchemeForm.get('commDate').setErrors({incorrect: true});
+    } else {
+      this.ssySchemeForm.get('commDate').setErrors({before: false});
       this.ssySchemeForm.get('commDate').updateValueAndValidity();
-      this.ssySchemeForm.get('commDate').setErrors({ incorrect: false });
+      this.ssySchemeForm.get('commDate').setErrors({incorrect: false});
       this.ssySchemeForm.get('commDate').updateValueAndValidity();
     }
   }
 
-  age(birthday)
-{
-  birthday = new Date(birthday).getTime();
-  // let startDate = new Date(this.ssySchemeForm.value.commDate).getTime();
-  // return new Number((new Date().getTime() - birthday.getTime()) / startDate).toFixed(0);
-   let dt2 = new Date(this.ssySchemeForm.value.commDate).getTime();
+  age(birthday) {
+    birthday = new Date(birthday).getTime();
+    // let startDate = new Date(this.ssySchemeForm.value.commDate).getTime();
+    // return new Number((new Date().getTime() - birthday.getTime()) / startDate).toFixed(0);
+    let dt2 = new Date(this.ssySchemeForm.value.commDate).getTime();
 
-  var diff =(dt2 - birthday) / 1000;
-   diff /= (60 * 60 * 24);
-  return Math.abs(Math.round(diff/365.25));
-}
+    var diff = (dt2 - birthday) / 1000;
+    diff /= (60 * 60 * 24);
+    return Math.abs(Math.round(diff / 365.25));
+  }
 
   // ===================owner-nominee directive=====================//
- display(value) {
-  console.log('value selected', value)
-  this.ownerName = value.userName;
-  this.familyMemberId = value.id
-}
-
-lisNominee(value) {
-  this.ownerData.Fmember = value;
-  this.nomineesListFM = Object.assign([], value);
-}
-selectOwner:any;
-disabledMember(value, type) {
-  this.callMethod = {
-    methodName : "disabledMember",
-    ParamValue : value,
-    disControl : type
+  display(value) {
+    console.log('value selected', value);
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id;
   }
-  setTimeout(() => {
-    this.selectOwner = this.nomineesListFM.filter((m)=> m.id == this.ssySchemeForm.value.getCoOwnerName[0].familyMemberId)
-   }, 1000);
-  if(value == "owner"){
-    this.ssySchemeForm.get('commDate').reset();
+
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
-}
 
-displayControler(con) {
-  console.log('value selected', con);
-  if(con.owner != null && con.owner){
-    this.ssySchemeForm.controls.getCoOwnerName = con.owner;
-  }
-  if(con.nominee != null && con.nominee){
-    this.ssySchemeForm.controls.getNomineeName = con.nominee;
-  }
-}
+  selectOwner: any;
 
-onChangeJointOwnership(data) {
-  this.callMethod = {
-    methodName : "onChangeJointOwnership",
-    ParamValue : data
-  }
-}
-
-/***owner***/ 
-
-get getCoOwner() {
-  return this.ssySchemeForm.get('getCoOwnerName') as FormArray;
-}
-
-addNewCoOwner(data) {
-  this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (data) {
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: 'disabledMember',
+      ParamValue: value,
+      disControl: type
+    };
     setTimeout(() => {
-     this.disabledMember(null,null);
-    }, 1300);
-  }
-
-  if(this.getCoOwner.value.length > 1 && !data){
-   let share = 100/this.getCoOwner.value.length;
-   for (let e in this.getCoOwner.controls) {
-    if(!Number.isInteger(share) && e == "0"){
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-    }
-    else{
-      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-    }
-   }
-  }
-  
-}
-
-removeCoOwner(item) {
-  this.getCoOwner.removeAt(item);
-  if (this.ssySchemeForm.value.getCoOwnerName.length == 1) {
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  } else {
-    let share = 100/this.getCoOwner.value.length;
-    for (let e in this.getCoOwner.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
-      }
-    }
-  }
-  this.disabledMember(null, null);
-}
-/***owner***/ 
-
-/***nominee***/ 
-
-get getNominee() {
-  return this.ssySchemeForm.get('getNomineeName') as FormArray;
-}
-
-removeNewNominee(item) {
-  this.disabledMember(null, null);
-  this.getNominee.removeAt(item);
-  if (this.ssySchemeForm.value.getNomineeName.length == 1) {
-    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
-  } else {
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
-      }
-    }
-  }
-}
-
-
-
-addNewNominee(data) {
-  this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
-  }));
-  if (!data || this.getNominee.value.length < 1) {
-    for (let e in this.getNominee.controls) {
-      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      this.selectOwner = this.nomineesListFM.filter((m) => m.id == this.ssySchemeForm.value.getCoOwnerName[0].familyMemberId);
+    }, 1000);
+    if (value == 'owner') {
+      this.ssySchemeForm.get('commDate').reset();
     }
   }
 
-  if(this.getNominee.value.length > 1 && !data){
-    let share = 100/this.getNominee.value.length;
-    for (let e in this.getNominee.controls) {
-      if(!Number.isInteger(share) && e == "0"){
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-      }
-      else{
-        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+  displayControler(con) {
+    console.log('value selected', con);
+    if (con.owner != null && con.owner) {
+      this.ssySchemeForm.controls.getCoOwnerName = con.owner;
+    }
+    if (con.nominee != null && con.nominee) {
+      this.ssySchemeForm.controls.getNomineeName = con.nominee;
+    }
+  }
+
+  onChangeJointOwnership(data) {
+    this.callMethod = {
+      methodName: 'onChangeJointOwnership',
+      ParamValue: data
+    };
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.ssySchemeForm.get('getCoOwnerName') as FormArray;
+  }
+
+  addNewCoOwner(data) {
+    this.getCoOwner.push(this.fb.group({
+      name: [data ? data.name : '', [Validators.required]],
+      share: [data ? data.share : '', [Validators.required]],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      isClient: [data ? data.isClient : 0]
+    }));
+    if (data) {
+      setTimeout(() => {
+        this.disabledMember(null, null);
+      }, 1300);
+    }
+
+    if (this.getCoOwner.value.length > 1 && !data) {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == '0') {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        } else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
       }
     }
-   }
-   
-  
-}
-/***nominee***/ 
+
+  }
+
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+    if (this.ssySchemeForm.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    } else {
+      let share = 100 / this.getCoOwner.value.length;
+      for (let e in this.getCoOwner.controls) {
+        if (!Number.isInteger(share) && e == '0') {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+        } else {
+          this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+        }
+      }
+    }
+    this.disabledMember(null, null);
+  }
+
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.ssySchemeForm.get('getNomineeName') as FormArray;
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+    if (this.ssySchemeForm.value.getNomineeName.length == 1) {
+      this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+    } else {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == '0') {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        } else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+  }
+
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''],
+      sharePercentage: [data ? data.sharePercentage : 0],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      isClient: [data ? data.isClient : 0]
+    }));
+    if (!data || this.getNominee.value.length < 1) {
+      for (let e in this.getNominee.controls) {
+        this.getNominee.controls[e].get('sharePercentage').setValue(0);
+      }
+    }
+
+    if (this.getNominee.value.length > 1 && !data) {
+      let share = 100 / this.getNominee.value.length;
+      for (let e in this.getNominee.controls) {
+        if (!Number.isInteger(share) && e == '0') {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+        } else {
+          this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+        }
+      }
+    }
+
+
+  }
+
+  /***nominee***/
 // ===================owner-nominee directive=====================//
   getdataForm(data) {
     if (data == undefined) {
       data = {};
-      this.flag = "addSSY";
-    }
-    else {
+      this.flag = 'addSSY';
+    } else {
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
-      this.flag = "editSSY";
+      this.flag = 'editSSY';
     }
     this.ssyData = data;
     this.ssySchemeForm = this.fb.group({
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['',[Validators.required]],
-        share: [0,[Validators.required]],
+        name: ['', [Validators.required]],
+        share: [0, [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
-      ssyNo:[data.ssyNo],
-      guardian: [data.guardianName?data.guardianName:'', [Validators.required]],
+      ssyNo: [data.ssyNo],
+      guardian: [data.guardianName ? data.guardianName : '', [Validators.required]],
       accBalance: [data.accountBalance, []],
       balanceAsOn: [new Date(data.balanceAsOn)],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
-      frquency: [data.frequency ? data.frequency: '', [Validators.required]],
+      frquency: [data.frequency ? data.frequency : '', [Validators.required]],
       description: [data.description],
       linkedAcc: [data.userBankMappingId],
       // bankName: [data.bankName],
@@ -297,42 +312,43 @@ addNewNominee(data) {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id:[0]
+        id: [0]
       })])
-    })
+    });
     // ==============owner-nominee Data ========================\\
-  /***owner***/ 
-  if(this.ssySchemeForm.value.getCoOwnerName.length == 1){
-    this.getCoOwner.controls['0'].get('share').setValue('100');
-  }
+    /***owner***/
+    if (this.ssySchemeForm.value.getCoOwnerName.length == 1) {
+      this.getCoOwner.controls['0'].get('share').setValue('100');
+    }
 
-  if (data.ownerList) {
-    this.getCoOwner.removeAt(0);
-    data.ownerList.forEach(element => {
-      this.addNewCoOwner(element);
-    });
-  }
-  
-/***owner***/ 
+    if (data.ownerList) {
+      this.getCoOwner.removeAt(0);
+      data.ownerList.forEach(element => {
+        this.addNewCoOwner(element);
+      });
+    }
 
-/***nominee***/ 
-if(data.nomineeList){
-  if(data.nomineeList.length > 0){
-      
-    this.getNominee.removeAt(0);
-    data.nomineeList.forEach(element => {
-      this.addNewNominee(element);
-    });
-  }
-}
-/***nominee***/ 
+    /***owner***/
 
-this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
-// ==============owner-nominee Data ========================\\ 
-    this.DOB = data.dateOfBirth
+    /***nominee***/
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
+
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
+    }
+    /***nominee***/
+
+    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.ssySchemeForm};
+// ==============owner-nominee Data ========================\\
+    this.DOB = data.dateOfBirth;
     // this.ownerData = this.ssySchemeForm.controls;
     // this.familyMemberId = data.familyMemberId;
   }
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;
@@ -342,60 +358,60 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     this.bankList = this.enumService.getBank();
 
   }
+
   moreFields() {
-    (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
+    (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true;
   }
 
-  removedList:any=[];
+  removedList: any = [];
+
   getFormData(data) {
-    console.log(data)
-    if(data.removed){
+    console.log(data);
+    if (data.removed) {
       this.transactionData = data.data.controls;
-      this.removedList=data.removed;
-    }else{
-    this.commencementDate = this.ssySchemeForm.controls.commDate.value;
-    this.transactionData = data.controls
+      this.removedList = data.removed;
+    } else {
+      this.commencementDate = this.ssySchemeForm.controls.commDate.value;
+      this.transactionData = data.controls;
     }
   }
 
   addSSYScheme() {
-    let transactionFlag, finalTransctList = []
+    let transactionFlag, finalTransctList = [];
 
     this.removedList.forEach(Fg => {
       if (Fg.value) {
         let obj = {
-          "id":Fg.value.id,
-          "transactionDate":Fg.value.date,
-          "amount": Fg.value.amount,
-          "transactionType":Fg.value.type,
-          "isActive":Fg.value.isActive
-        }
+          'id': Fg.value.id,
+          'transactionDate': Fg.value.date,
+          'amount': Fg.value.amount,
+          'transactionType': Fg.value.type,
+          'isActive': Fg.value.isActive
+        };
         finalTransctList.push(obj);
       }
     });
 
     if (this.transactionData.length > 0) {
-      this.ssySchemeForm.get('accBalance').setValidators("");
-      this.ssySchemeForm.get('accBalance').updateValueAndValidity()
-      this.ssySchemeForm.get('balanceAsOn').setValidators(""),
-      this.ssySchemeForm.get('balanceAsOn').updateValueAndValidity()
+      this.ssySchemeForm.get('accBalance').setValidators('');
+      this.ssySchemeForm.get('accBalance').updateValueAndValidity();
+      this.ssySchemeForm.get('balanceAsOn').setValidators(''),
+        this.ssySchemeForm.get('balanceAsOn').updateValueAndValidity();
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
-            "id":element.value.id,
-            "transactionDate":element.controls.date.value._d?element.controls.date.value._d:element.controls.date.value,
-            "amount": element.controls.amount.value,
-            "transactionType": element.controls.type.value,
-            "isActive":element.value.isActive == 0?element.value.isActive:1
-          }
+            'id': element.value.id,
+            'transactionDate': element.controls.date.value._d ? element.controls.date.value._d : element.controls.date.value,
+            'amount': element.controls.amount.value,
+            'transactionType': element.controls.type.value,
+            'isActive': element.value.isActive == 0 ? element.value.isActive : 1
+          };
           finalTransctList.push(obj);
-        }
-        else {
+        } else {
           transactionFlag = false;
         }
       });
-    }
-    else{
+    } else {
       this.ssySchemeForm.get('accBalance').setValidators([Validators.required]);
       this.ssySchemeForm.get('accBalance').updateValueAndValidity();
       this.ssySchemeForm.get('balanceAsOn').setValidators([Validators.required]);
@@ -417,122 +433,120 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     // }
     if (this.ssySchemeForm.invalid) {
       this.ssySchemeForm.markAllAsTouched();
-    }
-    else if (transactionFlag == false) {
+    } else if (transactionFlag == false) {
       return;
-    }
-    else {
-        this.barButtonOptions.active = true;
-        let obj = {
-          "advisorId":this.advisorId,
-          "clientId":this.clientId,
-          "id": this.editApi? this.editApi.id : 0,
-          "familyMemberId": this.familyMemberId,
-          "ssyNo": this.ssySchemeForm.value.ssyNo,
-          // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
-          "ownerList": this.ssySchemeForm.value.getCoOwnerName,
-          "accountBalance":parseInt(this.ssySchemeForm.get('accBalance').value),
-          "balanceAsOn": this.dateFormatPipe.transform(this.ssySchemeForm.get('balanceAsOn').value, 'dd/MM/yyyy'),
-          "commencementDate": this.dateFormatPipe.transform(this.ssySchemeForm.get('commDate').value, 'dd/MM/yyyy'),
-          "description": this.ssySchemeForm.get('description').value,
-          // "bankName": this.ssySchemeForm.get('bankName').value,
-          "linkedBankAccount": this.ssySchemeForm.get('linkedAcc').value,
-          "userBankMappingId": this.ssySchemeForm.get('linkedAcc').value,
-          "agentName": this.ssySchemeForm.get('agentName').value,
-          "guardianName": this.ssySchemeForm.get('guardian').value,
-          "nominees": this.nominees,
-          "futureApproxContribution": parseInt(this.ssySchemeForm.get('futureAppx').value),
-          "frequency": parseInt(this.ssySchemeForm.get('frquency').value),
-          "transactionList": finalTransctList,
-          'nomineeList': this.ssySchemeForm.value.getNomineeName,
-          'familyMemberDob': this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
-          "parentId": 0,
-          "realOrFictitious": 1
-        }
+    } else {
+      this.barButtonOptions.active = true;
+      let obj = {
+        'advisorId': this.advisorId,
+        'clientId': this.clientId,
+        'id': this.editApi ? this.editApi.id : 0,
+        'familyMemberId': this.familyMemberId,
+        'ssyNo': this.ssySchemeForm.value.ssyNo,
+        // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
+        'ownerList': this.ssySchemeForm.value.getCoOwnerName,
+        'accountBalance': parseInt(this.ssySchemeForm.get('accBalance').value),
+        'balanceAsOn': this.dateFormatPipe.transform(this.ssySchemeForm.get('balanceAsOn').value, 'dd/MM/yyyy'),
+        'commencementDate': this.dateFormatPipe.transform(this.ssySchemeForm.get('commDate').value, 'dd/MM/yyyy'),
+        'description': this.ssySchemeForm.get('description').value,
+        // "bankName": this.ssySchemeForm.get('bankName').value,
+        'linkedBankAccount': this.ssySchemeForm.get('linkedAcc').value,
+        'userBankMappingId': this.ssySchemeForm.get('linkedAcc').value,
+        'agentName': this.ssySchemeForm.get('agentName').value,
+        'guardianName': this.ssySchemeForm.get('guardian').value,
+        'nominees': this.nominees,
+        'futureApproxContribution': parseInt(this.ssySchemeForm.get('futureAppx').value),
+        'frequency': parseInt(this.ssySchemeForm.get('frquency').value),
+        'transactionList': finalTransctList,
+        'nomineeList': this.ssySchemeForm.value.getNomineeName,
+        'familyMemberDob': this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
+        'parentId': 0,
+        'realOrFictitious': 1
+      };
 
-        let adviceObj = {
-          // advice_id: this.advisorId,
-          adviceStatusId: 5,
-          stringObject: obj,
-          adviceDescription: "manualAssetDescription"
-        }
+      let adviceObj = {
+        // advice_id: this.advisorId,
+        adviceStatusId: 5,
+        stringObject: obj,
+        adviceDescription: 'manualAssetDescription'
+      };
 
-        obj.nomineeList.forEach((element, index) => {
-          if(element.name == ''){
-            this.removeNewNominee(index);
-          }
-        });
-        obj.nomineeList= this.ssySchemeForm.value.getNomineeName;
-      if(this.flag == 'editSSY') { 
+      obj.nomineeList.forEach((element, index) => {
+        if (element.name == '') {
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList = this.ssySchemeForm.value.getNomineeName;
+      if (this.flag == 'editSSY') {
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
-          error =>{
+          error => {
             this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error)
-          } 
-        )
+            this.eventService.showErrorMessage(error);
+          }
+        );
+      } else if (this.flag == 'addSSY') {
+        this.cusService.addSSYScheme(obj).subscribe(
+          data => this.addSSYSchemeResponse(data),
+          error => {
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
+        );
+      } else {
+        this.cusService.getAdviceSsy(adviceObj).subscribe(
+          data => this.getAdviceSsyRes(data),
+          err => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
       }
-      else if (this.flag == 'addSSY') {
-         this.cusService.addSSYScheme(obj).subscribe(
-           data => this.addSSYSchemeResponse(data),
-           error =>{
-             this.barButtonOptions.active = false;
-             this.eventService.showErrorMessage(error)
-           } 
-         )
-       } else {
-         this.cusService.getAdviceSsy(adviceObj).subscribe(
-           data => this.getAdviceSsyRes(data),
-           err =>{
-            this.barButtonOptions.active = false;
-             this.eventService.openSnackBar(err, "Dismiss")
-           } 
-         );
-       }
-        // let obj =
-        // {
-        //   "clientId": this.clientId,
-        //   "advisorId": this.advisorId,
-        //   "familyMemberId": this.familyMemberId,
-        //   "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
-        //   "accountBalance": this.ssySchemeForm.get('accBalance').value,
-        //   "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
-        //   "commencementDate": this.ssySchemeForm.get('commDate').value,
-        //   "description": this.ssySchemeForm.get('description').value,
-        //   "bankName": this.ssySchemeForm.get('bankName').value,
-        //   "linkedBankAccount": this.ssySchemeForm.get('linkedAcc').value,
-        //   "agentName": this.ssySchemeForm.get('agentName').value,
-        //   "guardianName": this.ssySchemeForm.get('guardian').value,
-        //   "nominees": this.nominees,
-        //   "ssyFutureContributionList": [{
-        //     "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
-        //     "frequency": this.ssySchemeForm.get('futureAppx').value,
-        //   }],
-        //   "ssyTransactionList": finalTransctList,
-        //   'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
-        // }
-        
+      // let obj =
+      // {
+      //   "clientId": this.clientId,
+      //   "advisorId": this.advisorId,
+      //   "familyMemberId": this.familyMemberId,
+      //   "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
+      //   "accountBalance": this.ssySchemeForm.get('accBalance').value,
+      //   "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
+      //   "commencementDate": this.ssySchemeForm.get('commDate').value,
+      //   "description": this.ssySchemeForm.get('description').value,
+      //   "bankName": this.ssySchemeForm.get('bankName').value,
+      //   "linkedBankAccount": this.ssySchemeForm.get('linkedAcc').value,
+      //   "agentName": this.ssySchemeForm.get('agentName').value,
+      //   "guardianName": this.ssySchemeForm.get('guardian').value,
+      //   "nominees": this.nominees,
+      //   "ssyFutureContributionList": [{
+      //     "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
+      //     "frequency": this.ssySchemeForm.get('futureAppx').value,
+      //   }],
+      //   "ssyTransactionList": finalTransctList,
+      //   'familyMemberDob': this.dateFormatPipe.transform(this.ownerName.dateOfBirth, 'dd/MM/yyyy')
+      // }
 
-      
+
     }
   }
+
   getAdviceSsyRes(data) {
     this.barButtonOptions.active = false;
     console.log(data);
-    this.eventService.openSnackBar("SSY is added", "Dismiss");
-    this.close(true)
+    this.eventService.openSnackBar('SSY is added', 'Dismiss');
+    this.close(true);
 
   }
+
   addSSYSchemeResponse(data) {
     this.barButtonOptions.active = false;
-    (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
-    console.log(data)
-    this.close(true)
+    (this.editApi) ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'added');
+    console.log(data);
+    this.close(true);
   }
 
   close(flag) {
-    this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.isOptionalField = true;
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
 
@@ -546,8 +560,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     }
   }
 
-   //link bank
-   openDialog(eventData): void {
+  //link bank
+  openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
       data: this.bankList
@@ -557,8 +571,9 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
       setTimeout(() => {
         this.bankList = this.enumService.getBank();
       }, 5000);
-    })
+    });
 
   }
+
 //link bank
 }
