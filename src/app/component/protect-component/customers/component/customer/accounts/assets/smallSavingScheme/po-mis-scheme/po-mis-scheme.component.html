@@ -59,6 +59,7 @@
                 <div *ngFor="let owner of element.ownerList; let i = index">
                     <span *ngIf="i == 0">{{owner.name}}</span>
                 </div>
+                <span *ngIf="element.ownerList && element.ownerList.length > 1"> + {{element.ownerList.length - 1}}</span>
             </td>
             <td *matFooterCellDef class="br text-right pr-20 f-600 " mat-footer-cell>
                 {{isLoading ? '' : 'Total' }}
@@ -180,7 +181,7 @@
                             <input (change)="fetchData('Po MIS',$event,element)" class="uploadInput" id="file-4"
                                 multiple type="file">
                         </button>
-                        <button mat-menu-item>Activity</button>
+                        <!-- <button mat-menu-item>Activity</button> -->
                         <button (click)="deleteModal('PO MIS',element)" mat-menu-item>Delete</button>
                     </mat-menu>
                 </div>
