@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { MatDialog } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 @Component({
@@ -13,6 +14,21 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./stock-scrip-level-transaction.component.scss']
 })
 export class StockScripLevelTransactionComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   ownerData: any;
   portfolioList: any;
   familyWisePortfolio = [];
@@ -337,6 +353,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
       })
     }
     else {
+      this.barButtonOptions.active = true;
+
       // if (this.editApiData) {
       //   let finalStocks = [];
       //   this.transactionArray.controls.forEach(element => {
@@ -433,16 +451,24 @@ export class StockScripLevelTransactionComponent implements OnInit {
           data => {
             console.log(data);
             this.Close();
+            this.barButtonOptions.active = false;
           },
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
         )
       } else {
         this.cusService.addAssetStocks(obj).subscribe(
           data => {
             console.log(data);
+            this.barButtonOptions.active = false;
             this.Close();
           },
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
         )
       }
 

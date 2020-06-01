@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -11,6 +12,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./add-asset-stocks.component.scss']
 })
 export class AddAssetStocksComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   assetForm: any;
   ownerData: any;
   advisorId: any;
@@ -244,6 +260,7 @@ addNewNominee(data) {
       this.assetForm.markAllAsTouched();
     }
     else {
+      this.barButtonOptions.active = true;
       if (this.editApiData) {
         let obj =
         {
@@ -265,8 +282,14 @@ addNewNominee(data) {
           ]
         }
         this.cusService.editStockData(obj).subscribe(
-          data => this.submitStockDataRes(data),
-          error => this.eventService.showErrorMessage(error)
+          data =>{
+            this.barButtonOptions.active = false;
+            this.submitStockDataRes(data);
+          }, 
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
         )
       }
       else {
@@ -289,8 +312,14 @@ addNewNominee(data) {
           ]
         }
         this.cusService.addAssetStocks(obj).subscribe(
-          data => this.submitStockDataRes(data),
-          error => this.eventService.showErrorMessage(error)
+          data =>{
+            this.barButtonOptions.active = false;
+            this.submitStockDataRes(data);
+          },
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
         )
       }
       // stock type portfolio summary

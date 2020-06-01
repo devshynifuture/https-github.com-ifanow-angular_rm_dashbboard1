@@ -802,3 +802,10 @@ button.primary-sm {
     white-space: normal;
   }
 }
+
+.hide-arrow {
+  .mat-sort-header-arrow {
+
+    display: none !important;
+  }
+}
