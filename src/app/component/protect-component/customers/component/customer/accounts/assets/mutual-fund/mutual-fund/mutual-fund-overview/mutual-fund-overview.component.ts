@@ -91,6 +91,7 @@ export class MutualFundOverviewComponent implements OnInit {
   clientData: any;
   getAdvisorDetail: any;
   reportDate: Date;
+  details: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -98,6 +99,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
     this.getAdvisorDetail = AuthService.getAdvisorDetails()
+    this.details = AuthService.getProfileDetails();
     console.log('advisorData', this.userInfo)
     console.log('clientData', this.clientData)
     console.log('getAdvisorDetail', this.getAdvisorDetail)

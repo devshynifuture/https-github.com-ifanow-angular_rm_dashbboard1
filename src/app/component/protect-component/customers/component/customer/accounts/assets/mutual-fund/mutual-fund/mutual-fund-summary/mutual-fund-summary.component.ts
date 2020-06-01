@@ -43,7 +43,9 @@ export class MutualFundSummaryComponent implements OnInit {
   displayColumnsPDf: any;
   fragmentData = { isSpinner: false };
   advisorData: any;
-
+  userInfo = AuthService.getUserInfo();
+  clientData = AuthService.getClientData();
+  details = AuthService.getProfileDetails();
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
   // schemeWiseForFilter: any[];
@@ -64,6 +66,7 @@ export class MutualFundSummaryComponent implements OnInit {
   returnValue: any;
   selectedDataLoad: any;
   showDownload: boolean = false;
+  reportDate: Date;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -90,6 +93,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
 
   ngOnInit() {
+    this.reportDate = new Date()
     console.log('displayedColumns',this.displayedColumns)
     this.mfService.getViewMode()
       .subscribe(res => {
@@ -196,6 +200,7 @@ export class MutualFundSummaryComponent implements OnInit {
           this.getMutualFund();
         }
       }
+      
 
     );
 
