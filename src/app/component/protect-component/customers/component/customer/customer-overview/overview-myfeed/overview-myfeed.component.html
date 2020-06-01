@@ -101,8 +101,8 @@
                     <!-- portfolio section -->
                     <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded">
                         <div class="row">
-                            <div class="col-md-8 pl-0 d-flex align-items-center">
-                                <h5 class="roboto mb-8">Portfolio</h5>
+                            <div class="col-md-8  d-flex align-items-center">
+                                <h5 class="roboto ml-12 mb-8">Portfolio</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/customer/detail/account/summary']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
@@ -112,7 +112,7 @@
 
                         <div class="scrollingDiv d-flex row">
                             <!-- portfolio data present -->
-                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
+                            <ngx-slick-carousel class="carousel  pr-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
                                 <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
                                     <div class="row">
                                         <div class="col-md-9  pr-0">
@@ -239,8 +239,7 @@
                                                 Add your family members
                                             </h5>
                                             <p>
-                                                Adding details about your family members is
-                                                important to ensure your financial information is captured completely.
+                                                Adding details about your family members is important to ensure your financial information is captured completely
                                             </p>
 
                                             <button [routerLink]="['/customer/detail/overview/profile']" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -252,7 +251,7 @@
 
                                         </div>
                                         <div class="col-md-5 pr-0">
-                                            <img src="/assets/images/svg/vault-icon.svg">
+                                            <img src="/assets/images/svg/family-members-icon.svg">
                                         </div>
                                     </div>
                                 </div>
@@ -454,7 +453,7 @@
                         </div>
 
                         <div class="row" *ngIf="!documentVault || documentVault.length == 0">
-                            <div class="col-md-12 pl-0">
+                            <div class="col-md-12  ">
                                 <div class="bg-white vaultbBox">
                                     <div class="row">
                                         <div class="col-md-7 pr-0">

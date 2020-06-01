@@ -200,6 +200,34 @@ export class MutualFundSummaryComponent implements OnInit {
     );
 
   }
+  styleObject(header): Object {
+
+    if (header == 'schemeName'){
+      Object.assign( this.customDataSource.data , {schemeName: true});
+    }else if(header == 'amountInvested'){
+      Object.assign( this.customDataSource.data , {amountInvested: true});
+    }else if(header == 'currentValue'){
+      Object.assign( this.customDataSource.data , {currentValue: true});
+    }else if(header == 'unrealizedProfit'){
+      Object.assign( this.customDataSource.data , {unrealizedProfit: true});
+    }else if(header == 'absoluteReturn'){
+      Object.assign( this.customDataSource.data , {absoluteReturn: true});
+    }else if(header == 'xirr'){
+      Object.assign( this.customDataSource.data , {xirr: true});
+    }else if(header == 'dividendPayout'){
+      Object.assign( this.customDataSource.data , {dividendPayout: true});
+    }else if(header == 'switchOut'){
+      Object.assign( this.customDataSource.data , {switchOut: true});
+    }else if(header == 'balanceUnit'){
+      Object.assign( this.customDataSource.data , {balanceUnit: true});
+    }else if(header == 'navDate'){
+      Object.assign( this.customDataSource.data , {navDate: true});
+    }else if(header == 'sipAmount'){
+      Object.assign( this.customDataSource.data , {sipAmount: true});
+    }
+
+    return {}
+}
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
@@ -295,7 +323,9 @@ export class MutualFundSummaryComponent implements OnInit {
       filterArray.push(obj)
     });
     this.displayColumnsPDf = filterArray;
-
+    this.displayedColumns.forEach(element => {
+      this.styleObject(element)
+    });
   }
   asyncFilter(mutualFund) {
     if (this.inputData == 'category wise') {
@@ -353,6 +383,10 @@ export class MutualFundSummaryComponent implements OnInit {
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
         this.customDataSource.data = data.customDataSourceData;
+        this.displayedColumns.forEach(element => {
+          this.styleObject(element)
+        });
+        console.log('header data',this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
@@ -600,6 +634,9 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
+    this.displayedColumns.forEach(element => {
+      this.styleObject(element)
+    });
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
