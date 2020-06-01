@@ -11,7 +11,7 @@
 </div>
 
 <div class="wrapper-40 pt-72" id="ui-biller">
-    <mat-tab-group [selectedIndex]="selected" animationDuration="0ms"  id="ui-biller-tabs">
+    <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" id="ui-biller-tabs">
         <mat-tab class="active " label="Profile">
             <div [formGroup]="profileDetailsForm" class="">
                 <div class="row pt-40 pb-44">
@@ -195,7 +195,7 @@
                                     </i>
                                 </div>
                                 <div class="row pt-16">
-                                    <div class="col-md-12 p-0">
+                                    <div class="col-md-12 p-0 d-flex">
                                         <!-- (click)="file.click()"-->
                                         <app-progress-button *ngIf="logoImg!=undefined" (btnClick)="uploadImage()"
                                             [options]="barButtonOptions">
@@ -430,7 +430,7 @@
         <div class="col-md-4 pl-8">
             <h5 (click)="Close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div class="col-md-8 right text-right full-end">
             <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button
                 mat-raised-button>PREVIOUS
             </button>
