@@ -890,10 +890,10 @@
         align="center; page-break-before: always;">
 
         <tr>
-            <td style="text-align: left;">
+            <td style="text-align: left;" >
                 <img width="100px" *ngIf="details" [src]="details.profilePic">
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: right;" >
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                     {{(userInfo.name) ? userInfo.name : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
@@ -901,8 +901,8 @@
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
                     {{(details) ? details.emailId : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on : </strong>
-                    {{reportDate | date:'dd/MM/yyyy' }}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong>  Report as on : {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                    </p>
             </td>
         </tr>
 
@@ -915,7 +915,7 @@
             <td colspan="2" style=" border: 1px solid #dee5e7; border-bottom: transparent;" valign="top">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <p style="margin: 0px; font-size: 14px;padding-top: 4px;" *ngIf="clientData">Client name :
+                        <p style="margin: 0px; font-weight: 600; font-size: 14px;padding-top: 4px;" *ngIf="clientData">Client name :
                             {{(clientData.name) ? clientData.name : '-'}}</p>
                         <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
                             Summary</p>
