@@ -1,16 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {EnumDataService} from '../../../../../services/enum-data.service';
-import {MatTabGroup} from '@angular/material';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../subscription.service';
-import {SubscriptionDataService} from '../subscription-data.service';
-import {apiConfig} from '../../../../../config/main-config';
-import {appConfig} from '../../../../../config/component-config';
-import {FileUploadService} from '../../../../../services/file-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { EnumDataService } from '../../../../../services/enum-data.service';
+import { MatTabGroup } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../subscription.service';
+import { SubscriptionDataService } from '../subscription-data.service';
+import { apiConfig } from '../../../../../config/main-config';
+import { appConfig } from '../../../../../config/component-config';
+import { FileUploadService } from '../../../../../services/file-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-subscription',
@@ -24,7 +24,7 @@ export class SubscriptionComponent implements OnInit {
     this._value = value;
   }
 
-  @ViewChild(MatTabGroup, {static: true}) tabGroup: MatTabGroup;
+  @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
 
   constructor(private utilservice: UtilService, private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private subService: SubscriptionService, private route: ActivatedRoute) {
     this.eventService.sidebarSubscribeData.subscribe(
@@ -41,6 +41,7 @@ export class SubscriptionComponent implements OnInit {
   label: any = 'plans';
 
   ngOnInit() {
+    this.enumDataService.getClientRole();
     // this.getActiveParam();
     // this.route.paramMap.subscribe(params => {
     //   if(this.label != 'plans'){
