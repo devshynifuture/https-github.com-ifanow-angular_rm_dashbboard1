@@ -202,6 +202,10 @@ export class OverviewMyfeedComponent implements OnInit {
       hasData: false,
       displaySection: false,
     },
+    familyMembers: {
+      dataLoaded: false,
+      hasData: false,
+    }
   };
   hasError: boolean = false;
 
@@ -221,9 +225,11 @@ export class OverviewMyfeedComponent implements OnInit {
   portfolioSummaryData: any[] = [];
   familyWiseAllocation: any[] = [];
   appearancePortfolio:any = {};
+  familyMembers: any[] = [];
 
   ngOnInit() {
     this.loadLogicBasedOnRoleType();
+    this.getFamilyMembersList();
     this.loadCustomerProfile();
     this.getAppearanceSettings();
     this.initializePieChart();
@@ -286,6 +292,7 @@ export class OverviewMyfeedComponent implements OnInit {
         this.tabsLoaded.customerProfile.dataLoaded = true;
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
+        this.tabsLoaded.customerProfile.dataLoaded = false;
         this.loaderFn.decreaseCounter();
       }
     )
@@ -490,6 +497,7 @@ export class OverviewMyfeedComponent implements OnInit {
       this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
+      this.tabsLoaded.riskProfile.dataLoaded = false;
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
@@ -508,6 +516,7 @@ export class OverviewMyfeedComponent implements OnInit {
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.globalRiskProfile.dataLoaded = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -533,6 +542,7 @@ export class OverviewMyfeedComponent implements OnInit {
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.recentTransactions.dataLoaded = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -555,6 +565,7 @@ export class OverviewMyfeedComponent implements OnInit {
         }
         this.tabsLoaded.goalsData.dataLoaded = true;
       }, err => {
+        this.tabsLoaded.goalsData.hasData = false;
         this.eventService.openSnackBar(err, "Dismiss")
         this.loaderFn.decreaseCounter();
         this.hasError = true;
@@ -751,6 +762,25 @@ export class OverviewMyfeedComponent implements OnInit {
     }
   }
 
+  getFamilyMembersList() {
+    this.loaderFn.increaseCounter();
+    const obj = {
+      clientId: this.clientId,
+      id: 0 // why is this required?
+    };
+    this.customerService.getFamilyMembers(obj).subscribe(
+      data => {
+        this.familyMembers = data;
+        this.tabsLoaded.familyMembers.dataLoaded = true;
+        this.tabsLoaded.familyMembers.hasData = true;
+      },
+      err => {
+        this.tabsLoaded.familyMembers.dataLoaded = false;
+        this.eventService.openSnackBar(err, "Dismiss");
+        console.error(err);
+      }
+    );
+  }
 
   // copied from MF overview
   asyncFilter(mutualFund, categoryList) {

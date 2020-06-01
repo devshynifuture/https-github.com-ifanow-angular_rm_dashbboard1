@@ -70,7 +70,8 @@
         </ng-container>
 
         <ng-container matColumnDef="cvalue">
-            <th *matHeaderCellDef class="br right-hcb w-13 text-right" mat-header-cell mat-sort-header="currentValue">
+            <th *matHeaderCellDef class="br right-hcb w-13 text-right hide-arrow" mat-header-cell
+                mat-sort-header="currentValue">
                 Current value
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
@@ -84,7 +85,8 @@
         </ng-container>
 
         <ng-container matColumnDef="rate">
-            <th *matHeaderCellDef class="br right-hcb w-6 text-right" mat-header-cell mat-sort-header="rate"> Rate</th>
+            <th *matHeaderCellDef class="br right-hcb w-6 text-right hide-arrow" mat-header-cell mat-sort-header="rate">
+                Rate</th>
             <td *matCellDef="let element" class="br amt text-right" mat-cell>
                 <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading? "%" : ""}}</div>
             </td>
@@ -92,7 +94,8 @@
         </ng-container>
 
         <ng-container matColumnDef="balanceM">
-            <th *matHeaderCellDef class="br right-hcb w-14 text-right" mat-header-cell mat-sort-header="balance">Balance
+            <th *matHeaderCellDef class="br right-hcb w-14 text-right hide-arrow" mat-header-cell
+                mat-sort-header="balance">Balance
                 mentioned
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">

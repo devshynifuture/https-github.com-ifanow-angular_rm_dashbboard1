@@ -39,7 +39,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mutualFundListFilter: any[];
   isSpinner = false;
   customDataHolder = [];
-  customDataSource = new TableVirtualScrollDataSource([]);
+  customDataSource = new TableVirtualScrollDataSource();
   @ViewChild('tableEl', { static: false }) tableEl;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
@@ -47,6 +47,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   // displayedColumns: string[];
+  userInfo = AuthService.getUserInfo();
+  clientData = AuthService.getClientData();
+  details = AuthService.getProfileDetails();
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
   viewMode: string = '';
@@ -67,6 +70,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   columnHeader: any;
   pdfDataFornTRansaction: any;
   addedData: boolean;
+  reportDate: Date;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -88,6 +92,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reportDate = new Date()
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
