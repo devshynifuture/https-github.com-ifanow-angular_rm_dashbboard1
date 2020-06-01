@@ -253,7 +253,7 @@
                         </div>
                     </td> -->
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                        <span appFormatNumber [value]="grandTotal ? grandTotal.sip : '0'"></span>
+                        <span appFormatNumber  [value]="grandTotal ? grandTotal.sip : '0'"></span>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -402,49 +402,54 @@
             <td colspan="12">
                 <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
 
-                    <tr style="background: #F5F7F7;" *ngFor="let item of displayedColumns">
-                        <td *ngIf="item == 'schemeName'"
+                    <tr style="background: #F5F7F7;" >
+                        <!-- <td *ngFor="let item of displayedColumns"
+                        style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b *ngIf="item!='icons'"><span>{{item}}</span></b>
+                    </td> -->
+
+                        <td
                             style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Scheme name</b>
                         </td>
 
-                        <td *ngIf="item == 'amountInvested'"
+                        <td
                             style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Amount invested</b>
                         </td>
-                        <td *ngIf="item == 'currentValue'"
+                        <td
                             style="width:6%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Current value</b>
                         </td>
-                        <td *ngIf="item == 'unrealizedProfit'"
+                        <td
                             style="width:8%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Unrealized profit</b>
                         </td>
-                        <td *ngIf="item == 'absoluteReturn'"
+                        <td
                             style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Abs Ret %</b>
                         </td>
-                        <td *ngIf="item == 'xirr'"
+                        <td
                             style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>XIRR %</b>
                         </td>
-                        <td *ngIf="item == 'dividendPayout'"
+                        <td
                             style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Dividend payout</b>
                         </td>
-                        <td *ngIf="item == 'switchOut'"
+                        <td
                             style="width:9%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Withdrawal/Switch outs</b>
                         </td>
-                        <td *ngIf="item == 'balanceUnit'"
+                        <td
                             style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Balance Unit</b>
                         </td>
-                        <td *ngIf="item == 'navDate'"
+                        <td
                             style="width:9%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>NAV Date</b>
                         </td>
-                        <td *ngIf="item == 'sipAmount'"
+                        <td
                             style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>SIP</b>
                         </td>
