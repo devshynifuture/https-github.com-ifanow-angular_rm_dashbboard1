@@ -20,7 +20,8 @@ export class OwnerNomineeDirective {
   showErrorOwner = false;
   emitedNOminee: any = [];
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService,
+              private peopleService: PeopleService) {
   }
 
   @Input() set callMethod(callMethod: any) {
@@ -44,7 +45,15 @@ export class OwnerNomineeDirective {
     }
   }
 
-  @Input() clientIdData;
+  _requestData;
+  @Input() set requestData(data) {
+    this._requestData = data;
+  };
+
+  get() {
+    return this._requestData;
+  }
+
   @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
@@ -70,16 +79,18 @@ export class OwnerNomineeDirective {
     this.emitedNOminee = data.Fmember;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if ((this.clientId || this.clientIdData) && data.Fmember.length <= 0) {
+    if ((this.clientId || this.requestData) && data.Fmember.length <= 0) {
       this.getListFamilyMem();
     }
   }
 
   getListFamilyMem(): any {
-    const obj = {
+    let obj = {
       clientId: this.clientId,
     };
-
+    if (this._requestData) {
+      obj = this._requestData;
+    }
     if (this.sendData.length <= 0) {
       this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
         data => this.getListOfFamilyByClientRes(data)
@@ -95,7 +106,7 @@ export class OwnerNomineeDirective {
       }, 100);
     });
     this.sendData = data;
-    console.log(this.sendData,'familyList');
+    console.log(this.sendData, 'familyList');
     this.disabledMember(null);
     this.valueChange1.emit(this.sendData);
   }

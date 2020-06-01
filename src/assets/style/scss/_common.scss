@@ -790,3 +790,14 @@ button.primary-sm {
     overflow-y: hidden !important;
   }
 }
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  &:hover {
+    text-overflow: unset;
+    overflow: auto;
+    white-space: normal;
+  }
+}

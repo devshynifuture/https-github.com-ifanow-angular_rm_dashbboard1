@@ -322,8 +322,10 @@ export class MutualFundOverviewComponent implements OnInit {
           this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         }
         this.MfServiceService.setFilterValues(this.setDefaultFilterData);
+        if(!this.mfGetData){
+          this.MfServiceService.setDataForMfGet(this.mutualFund);
+        }
         this.MfServiceService.setMfData(this.mutualFund);
-        this.MfServiceService.setDataForMfGet(this.mutualFund);
 
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)

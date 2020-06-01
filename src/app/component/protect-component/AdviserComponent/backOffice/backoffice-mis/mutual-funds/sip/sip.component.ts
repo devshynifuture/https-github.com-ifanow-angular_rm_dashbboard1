@@ -34,8 +34,8 @@ export class SipComponent implements OnInit {
   constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
 
   ngOnInit() {
-    this.parentId = AuthService.getParentId();
     this.advisorId = AuthService.getAdvisorId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.clientId = AuthService.getClientId();
     this.viewMode = 'Select option';
     if (this.parentId !== 0) {

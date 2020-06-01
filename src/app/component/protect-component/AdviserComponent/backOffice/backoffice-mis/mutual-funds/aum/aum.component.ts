@@ -39,7 +39,7 @@ export class AumComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.parentId = AuthService.getParentId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.viewMode = 'Select option';
     if (this.parentId !== 0) {
       this.getArnRiaList();

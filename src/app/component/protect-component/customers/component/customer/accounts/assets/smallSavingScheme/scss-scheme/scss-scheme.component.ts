@@ -53,7 +53,7 @@ export class ScssSchemeComponent implements OnInit {
       this.clientData = AuthService.getClientData()
     }
 
-  displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'mValue', 'desc', 'status', 'icons'];
+  displayedColumns19 = ['no', 'owner','cValue', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'mValue', 'desc', 'status', 'icons'];
 
 
   ngOnInit() {

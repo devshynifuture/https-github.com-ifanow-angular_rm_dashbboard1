@@ -31,16 +31,16 @@
             <p class="m-0 f-12">CURRENT VALUE</p>
             <div class="row">
               <div class="col-md-7 p-0">
-                <h1 class="m-0 f-26 proxima">₹ <span appFormatNumber> {{data.currentValue}}</span></h1>
+                <h1 class="m-0 f-26 proxima">₹ <span > {{currentValue}}</span></h1>
               </div>
-              <div class="col-md-5 p-0" *ngIf="data.xirrValue">
-                <h5 class="m-0 pt-8 proxima"> {{data.xirrValue | number:'1.2-2'}}%</h5>
+              <div class="col-md-5 p-0" >
+                <h5 class="m-0 pt-8 proxima"> {{xirrValue | number:'1.2-2'}}%</h5>
               </div>
             </div>
           </div>
           <div class="col-md-4 p-0">
-            <p class="m-0 f-12 text-white">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-white proxima f-26">₹ <span appFormatNumber>{{profitOrLossValue}}</span></h1>
+            <p class="m-0 f-12">PROFIT (LOSS)</p>
+            <h1 class="m-0  proxima f-26">₹ <span >{{profitOrLossValue}}</span></h1>
           </div>
           <div class="col-md-4 pl-0 text-right pt-6">
             <p class="m-0 f-12">INVESTOR NAME</p>

@@ -74,21 +74,37 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        Quarterly payout
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
+                        ₹<span appFormatNumber>{{data.quarterlyPayout}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Total payouts received till now
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
+                        ₹<span appFormatNumber>{{data.totalAmountReceived}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
                         ₹<span appFormatNumber>{{data.maturityValue}}</span>
                     </div>
-                    
+
                 </div>
-                <!-- <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total Interest earned
+                        SCSS Number
                     </div>
-                    <div [value]="data.maturityValue - data.amountInvested" class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{data.maturityValue - data.amountInvested}}
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.scssNumber? data.scssNumber :'-'}}
                     </div>
-                </div> -->
+                </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         PO branch
@@ -97,10 +113,10 @@
                         {{data.postOfficeBranch}}
                     </div>
                 </div>
-                
+
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Bank account number
+                        Linked bank account
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId" *ngFor="let bank of bankList">
                         <div [ngSwitch]="data.userBankMappingId">

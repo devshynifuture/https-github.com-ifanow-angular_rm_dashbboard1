@@ -1,13 +1,19 @@
 <div class="wrapper-8">
     <div class="row pt-10 pb-28">
         <div class="col-md-8 pl-0">
-            <button mat-button (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom proximaFont">
+            <button mat-button (click)="getfixedIncomeData('1')"
+                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+                class="br-0 text-custom proximaFont">
                 Fixed deposit
             </button>
-            <button mat-button (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom proximaFont">
+            <button mat-button (click)="getfixedIncomeData('2')"
+                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+                class="br-0 text-custom proximaFont">
                 Recurring deposits
             </button>
-            <button mat-button (click)="getfixedIncomeData('3')" [ngClass]="{'mat-stroked-button': showRequring == '3','text-primary':showRequring == '3'}" class="br-0 text-custom proximaFont">
+            <button mat-button (click)="getfixedIncomeData('3')"
+                [ngClass]="{'mat-stroked-button': showRequring == '3','text-primary':showRequring == '3'}"
+                class="br-0 text-custom proximaFont">
                 Bonds
             </button>
         </div>
@@ -19,7 +25,8 @@
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
 
-            <div *ngIf="dataSource.filteredData.length > 0" class="col-md-6 p-0  d-flex align-items-center justify-content-end ">
+            <div *ngIf="dataSource.filteredData.length > 0"
+                class="col-md-6 p-0  d-flex align-items-center justify-content-end ">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -51,7 +58,8 @@
                     <!-- <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button> -->
                 </mat-menu>
-                <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
                 </button>
 
                 <mat-menu #filterFixedIncomeTable>
@@ -64,36 +72,43 @@
                     <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
                 CORPORATE FD
               </button> -->
-                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                        (click)="filterFixedIncome(null, 'All')">
                         All
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'LIVE')">
                         STATUS - LIVE
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'MATURED')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'MATURED')">
                         STATUS - Matured
                     </button>
                 </mat-menu>
 
-                <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
+                <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                    (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
                 </button>
             </div>
 
         </div>
-        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mt-8 overflow-hidden newFont tableHeightClass fixed-DEPOSIT">
-            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div [ngClass]="{'table-scroll':isLoading==false }"
+            class="col-md-12 p-0 mt-8 overflow-hidden newFont tableHeightClass fixed-deposit">
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
+                [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
 
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
                     <td *matCellDef="let element let i = index;" class="br " mat-cell>
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-right">
+                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-right bl-1">
 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-15"> Owner</th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner</th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"></div>
                         <div *ngFor="let owner of element.ownerList; let i = index">
@@ -107,7 +122,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
-                    <th mat-sort-header="fdType" mat-header-cell *matHeaderCellDef class="br w-8 textLeft"> FD type</th>
+                    <th mat-sort-header="fdType" mat-header-cell *matHeaderCellDef class="br textLeft"> FD type</th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             {{ (element.fdType) ? (element.fdType == 1) ? 'Bank FD' : 'Corporate FD' : '' }}
@@ -116,7 +131,7 @@
                     <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br w-11 rightText">
+                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br right-hcb">
                         Current value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -124,12 +139,13 @@
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                        <div *ngIf="totalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCurrentValue" appFormatNumber>{{sumCurrentValue}}</span></div>
+                        <div *ngIf="totalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCurrentValue"
+                                appFormatNumber>{{sumCurrentValue}}</span></div>
                     </td>
 
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="interestRate" mat-header-cell *matHeaderCellDef class="br w-6 rightText">Rate
+                    <th mat-sort-header="interestRate" mat-header-cell *matHeaderCellDef class="br right-hcb">Rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
                         <div class="bar"> {{element.interestRate | number: '1.2-2'}}{{!isLoading? "%" : ""}} </div>
@@ -137,17 +153,21 @@
                     <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br w-14 rightText text-right"> Amount invested
+                    <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
+                        class="br right-hcb text-right"> Amount invested
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{element.amountInvested}}</span> </div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{element.amountInvested}}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br proximaFont amt text-right f-600 p-8">
-                        <div *ngIf="totalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumAmountInvested" appFormatNumber>{{sumAmountInvested}}</span></div>
+                        <div *ngIf="totalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumAmountInvested"
+                                appFormatNumber>{{sumAmountInvested}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mdate">
-                    <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br textLeft"> Maturity date
+                    <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br textLeft"> Maturity
+                        date
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-left">
                         <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
@@ -155,14 +175,16 @@
                     <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br w-12 rightText">
+                    <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br right-hcb">
                         Maturity value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.maturityValue}}</span></div>
+                        <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
+                                appFormatNumber>{{ element.maturityValue}}</span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br text-right proximaFont amt f-600 p-8">
-                        <div *ngIf="totalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumMaturityValue" appFormatNumber>{{sumMaturityValue}}</span></div>
+                        <div *ngIf="totalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumMaturityValue"
+                                appFormatNumber>{{sumMaturityValue}}</span></div>
                         <!-- <div class="bar"> {{isLoading ? '' : sumMaturityValue || '-'}} </div> -->
                     </td>
                 </ng-container>
@@ -200,20 +222,22 @@
 
 
                             <mat-menu #menu4="matMenu">
-                                <button (click)="openPortfolioSummary('addFixedDeposit',element)" mat-menu-item>Edit</button>
-                                <button (click)="openDetailedFixedDeposit('addFixedDeposit',element)" mat-menu-item>Detailed
+                                <button (click)="openPortfolioSummary('addFixedDeposit',element)"
+                                    mat-menu-item>Edit</button>
+                                <button (click)="openDetailedFixedDeposit('addFixedDeposit',element)"
+                                    mat-menu-item>Detailed
                                     View
                                 </button>
                                 <button mat-menu-item>Upload file
                                     <input (change)="fetchData('Fixed Deposits',$event,element)" class="uploadInput"
                                         id="file-4" multiple type="file">
                                 </button>
-                                <button mat-menu-item>Activity</button>
+                                <!-- <button mat-menu-item>Activity</button> -->
                                 <button (click)="deleteModal('FIXED DEPOSIT',element)" mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
+                    <td mat-footer-cell *matFooterCellDef class="br"></td>
                 </ng-container>
 
 
@@ -228,7 +252,8 @@
                 <img src="assets/images/svg/documents-empty-states.svg">
 
                 <h4 class="text-center mt-12 mb-20"> No Fixed deposit found</h4>
-                <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
+                <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                    (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
                 </button>
             </div>
         </div>
@@ -266,16 +291,20 @@
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
                 </mat-menu>
-                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
                 </button>
                 <mat-menu #filterRecurring>
-                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                        (click)="filterFixedIncome(null, 'All')">
                         All
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'LIVE')">
                         STATUS - LIVE
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'MATURED')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'MATURED')">
                         STATUS - MATURED
                     </button>
                 </mat-menu>
@@ -287,13 +316,15 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 fixed-DEPOSIT ">
 
-            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #recurringDepositTable="matSort" mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #recurringDepositTable="matSort"
+                mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
                     <td mat-cell *matCellDef="let element let i = index;" class="br">
                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class=" pl-4 f-600 text-left"></td>
+                    <td mat-footer-cell *matFooterCellDef class=" pl-4 f-600 text-left bl-1"></td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-15"> Owner</th>
@@ -306,19 +337,22 @@
                     <td mat-footer-cell *matFooterCellDef class="pl-4 pr-16 br f-600 text-right"> Total</td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br rightText w-11 text-right ">
+                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
+                        class="br right-hcb w-11 text-right ">
                         Current value
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br amt rightText text-right">
+                    <td mat-cell *matCellDef="let element" class="br amt right-hcb text-right">
                         <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue" appFormatNumber>{{totalCurrentValue}}</span></div>
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue"
+                                appFormatNumber>{{totalCurrentValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="interestRate" mat-header-cell *matHeaderCellDef class="br rightText w-6 text-right ">
+                    <th mat-sort-header="interestRate" mat-header-cell *matHeaderCellDef
+                        class="br right-hcb w-6 text-right ">
                         Rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right ">
@@ -327,18 +361,21 @@
                     <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-sort-header="monthlyContribution" mat-header-cell *matHeaderCellDef class="br rightTextHide w-11 text-right">
+                    <th mat-sort-header="monthlyContribution" mat-header-cell *matHeaderCellDef
+                        class="br rightTextHide w-11 text-right right-hcb">
                         Monthly contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.monthlyContribution }}</span> </div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                appFormatNumber>{{element.monthlyContribution }}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMonthlyContribution" appFormatNumber>{{sumOfMonthlyContribution}}</span></div>
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMonthlyContribution"
+                                appFormatNumber>{{sumOfMonthlyContribution}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br rightText text-left">
+                    <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br right-hcb">
                         Maturity value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right">
@@ -346,7 +383,8 @@
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue"
+                                appFormatNumber>{{sumOfMaturityValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mdate">
@@ -397,12 +435,12 @@
                                     <input (change)="fetchData('Recurring Deposits',$event,element)" class="uploadInput"
                                         id="file-4" multiple type="file">
                                 </button>
-                                <button mat-menu-item>Activity</button>
+                                <!-- <button mat-menu-item>Activity</button> -->
                                 <button mat-menu-item (click)="deleteModal('RECURRING DEPOSIT',element)">Delete</button>
                             </mat-menu>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
+                    <td mat-footer-cell *matFooterCellDef class="br"></td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns5; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
@@ -452,16 +490,20 @@
                     <button mat-menu-item>Option 3</button>
                 </mat-menu>
 
-                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
                 </button>
                 <mat-menu #filterRecurring>
-                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+                        (click)="filterFixedIncome(null, 'All')">
                         All
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'LIVE')">
                         STATUS - LIVE
                     </button>
-                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'MATURED')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                        (click)="filterFixedIncome('statusId', 'MATURED')">
                         STATUS - MATURED
                     </button>
                 </mat-menu>
@@ -471,13 +513,15 @@
         </div>
         <div class=" p-0 col-md-12  mt-8  fixed-DEPOSIT">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden tableHeightClass">
-                <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #bondListTable="matSort" mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #bondListTable="matSort" mat-table
+                    [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>
                         <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
                         <td mat-cell *matCellDef="let element let i = index;" class="br">
                             <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                         </td>
-                        <td mat-footer-cell *matFooterCellDef class=" pl-4 f-600 text-left"> </td>
+                        <td mat-footer-cell *matFooterCellDef class=" pl-4 f-600 text-left bl-1"> </td>
                     </ng-container>
 
                     <ng-container matColumnDef="owner">
@@ -492,20 +536,24 @@
                     </ng-container>
 
                     <ng-container matColumnDef="cvalue">
-                        <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br rightTextHide text-right  ">
+                        <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
+                            class="br rightTextHide text-right  right-hcb">
                             Current value
                         </th>
 
                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
+                            <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                    appFormatNumber>{{element.currentValue }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCurrentValueB" appFormatNumber>{{sumCurrentValueB}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCurrentValueB"
+                                    appFormatNumber>{{sumCurrentValueB}}</span></div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="camt">
-                        <th mat-sort-header="couponAmount" mat-header-cell *matHeaderCellDef class="br rightTextHide  text-right">
+                        <th mat-sort-header="couponAmount" mat-header-cell *matHeaderCellDef
+                            class="br rightTextHide  text-right right-hcb">
                             Coupon amount
                         </th>
 
@@ -518,20 +566,24 @@
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCouponAmount" appFormatNumber>{{sumCouponAmount}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCouponAmount"
+                                    appFormatNumber>{{sumCouponAmount}}</span></div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="amt">
-                        <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br rightTextHide">
+                        <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
+                            class="br rightTextHide right-hcb">
                             Amount invested
                         </th>
 
                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
+                            <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                    appFormatNumber>{{element.amountInvested }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumAmountInvestedB" appFormatNumber>{{sumAmountInvestedB}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumAmountInvestedB"
+                                    appFormatNumber>{{sumAmountInvestedB}}</span></div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="cdate">
@@ -543,7 +595,8 @@
                         <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                     </ng-container>
                     <ng-container matColumnDef="rate">
-                        <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br  rightTextHide">
+                        <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef
+                            class="br  rightTextHide right-hcb">
                             Coupon rate</th>
                         <td mat-cell *matCellDef="let element" class="br amt text-right ">
                             <div class="bar"> {{element.couponRate | number: '1.2-2'}} {{!isLoading? "%" : ""}}</div>
@@ -551,15 +604,18 @@
                         <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                     </ng-container>
                     <ng-container matColumnDef="mvalue">
-                        <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br rightTextHide text-right">
+                        <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef
+                            class="br rightTextHide text-right right-hcb">
                             Maturity value
                         </th>
                         <td mat-cell *matCellDef="let element" class="br  text-right amt">
                             <!-- <div class="bar" appFormatNumber> {{ element.maturityValue }} </div> -->
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
+                            <div class="bar">{{!isLoading? "₹" : ""}}<span
+                                    appFormatNumber>{{element.maturityValue }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span [value]="sumMaturityValue" appFormatNumber>{{sumMaturityValue}}</span> </div>
+                            <div class="bar">{{!isLoading? "₹" : ""}}<span [value]="sumMaturityValue"
+                                    appFormatNumber>{{sumMaturityValue}}</span> </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="tenure">
@@ -608,12 +664,12 @@
                                         <input (change)="fetchData('Bonds',$event,element)" class="uploadInput"
                                             id="file-4" multiple type="file">
                                     </button>
-                                    <button mat-menu-item>Activity</button>
+                                    <!-- <button mat-menu-item>Activity</button> -->
                                     <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
                                 </mat-menu>
                             </div>
                         </td>
-                        <td mat-footer-cell *matFooterCellDef></td>
+                        <td mat-footer-cell *matFooterCellDef class="br"></td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns6; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
