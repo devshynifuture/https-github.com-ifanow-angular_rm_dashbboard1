@@ -190,7 +190,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.profileDetailsForm = this.fb.group({
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
-      gstinNum: [(data.gstin), [Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
+      gstinNum: [(data.gstin), [Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
       panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
@@ -221,7 +221,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().companyDisplayName.maxLength = 50;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
-    this.getFormControlBank().nameOnBank.maxLength = 25;
+    this.getFormControlBank().nameOnBank.maxLength = 50;
     this.getFormControlBank().bankName.maxLength = 35;
     this.getFormControlBank().acNo.maxLength = 16;
     this.getFormControlBank().ifscCode.maxLength = 11;
@@ -362,7 +362,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
           this.bankDetailsForm.controls[element].markAsTouched();
         }
       }
-    } 
+    }
     // if (this.profileDetailsForm.invalid) {
     //   this.profileDetailsForm.get("companyDisplayName").markAsTouched();
     //   this.profileDetailsForm.get("gstinNum").markAsTouched();
