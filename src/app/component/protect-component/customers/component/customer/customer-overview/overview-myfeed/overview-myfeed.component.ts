@@ -312,7 +312,8 @@ export class OverviewMyfeedComponent implements OnInit {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
-        plotShadow: false
+        plotShadow: false,
+        animation: false
       },
       title: {
         text: '',
@@ -339,9 +340,13 @@ export class OverviewMyfeedComponent implements OnInit {
           size: '120%'
         }
       },
+      exporting: {
+        enabled: false
+      },
       series: [{
         type: 'pie',
         name: 'Asset allocation',
+        animation: false,
         innerSize: '60%',
         data: this.chartData
       }]
@@ -350,6 +355,7 @@ export class OverviewMyfeedComponent implements OnInit {
 
     chartConfig.series = [{
       type: 'pie',
+      animation: false,
       name: 'MF Asset allocation',
       innerSize: '60%',
       data: this.mfAllocationData
@@ -662,6 +668,7 @@ export class OverviewMyfeedComponent implements OnInit {
     this.assetAllocationPieConfig.addSeries({
       type: 'pie',
       name: 'Asset allocation',
+      animation: false,
       innerSize: '60%',
       data: data,
     }, true, true);
@@ -824,7 +831,7 @@ export class OverviewMyfeedComponent implements OnInit {
         name: 'Browser share',
         innerSize: '60%',
         data: this.mfAllocationData,
-      }, true, true)
+      }, true, false)
   }
 
 
@@ -861,8 +868,9 @@ export class OverviewMyfeedComponent implements OnInit {
       type: 'pie',
       name: 'Browser share',
       innerSize: '60%',
+      animation: false,
       data: this.mfSubCatAllocationData,
-    }, true, true)
+    }, true, false)
 
   }
 
