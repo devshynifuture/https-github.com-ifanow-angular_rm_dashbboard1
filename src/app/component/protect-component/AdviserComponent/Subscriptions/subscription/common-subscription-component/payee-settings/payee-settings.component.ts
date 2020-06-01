@@ -183,19 +183,19 @@ export class PayeeSettingsComponent implements OnInit {
     (data == 'Add') ? data = {} : data
     this.clientData = data.clientData ? data.clientData : data;
     this.payeeSettingsForm = this.fb.group({
-      customerName: [data.name, [Validators.required]],
+      customerName: [data.name ? data.name : '', [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
-      customerType: [data.customerTypeId],
-      companyName: [data.companyName],
+      customerType: [(data.customerTypeId) ? data.customerTypeId : '', [Validators.required]],
+      companyName: [data.companyName, [Validators.required]],
       emailId: [data.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
-      gstTreatment: data.gstTreatmentId,
+      gstTreatment: [data.gstTreatmentId ? data.gstTreatmentId : '', [Validators.required]],
       gstIn: [data.gstin],
       billingAddress: [data.billerAddress, [Validators.required]],
-      city: [data.city],
-      state: [data.state],
-      country: [data.country],
+      city: [data.city, [Validators.required]],
+      state: [data.state, [Validators.required]],
+      country: [data.country, [Validators.required]],
       pincode: [data.zipCode, [Validators.required, Validators.minLength(6)]],
       id: [data.id]
     });
@@ -242,12 +242,13 @@ export class PayeeSettingsComponent implements OnInit {
   savePayeeSettings() {
     // this.inputData
     if (this.payeeSettingsForm.invalid) {
-      for (let element in this.payeeSettingsForm.controls) {
-        if (this.payeeSettingsForm.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.payeeSettingsForm.controls[element].markAsTouched();
-        }
-      }
+      // for (let element in this.payeeSettingsForm.controls) {
+      //   if (this.payeeSettingsForm.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      //     this.payeeSettingsForm.controls[element].markAsTouched();
+      //   }
+      // }
+      this.payeeSettingsForm.markAllAsTouched();
     } else {
       this.barButtonOptions.active = true;
       if (this.payeeSettingsForm.controls.id.value != undefined) {
@@ -260,7 +261,7 @@ export class PayeeSettingsComponent implements OnInit {
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
-          customerTypeId:this.payeeSettingsForm.controls.customerType.value,
+          customerTypeId: this.payeeSettingsForm.controls.customerType.value,
           email: this.payeeSettingsForm.controls.emailId.value,
           gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           gstin: (this.payeeSettingsForm.controls.gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
@@ -292,7 +293,7 @@ export class PayeeSettingsComponent implements OnInit {
           gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           email: this.getFormControl().emailId.value,
           // customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
-          customerTypeId:this.getFormControl().customerType.value,
+          customerTypeId: this.getFormControl().customerType.value,
           primaryContact: this.getFormControl().primaryContact.value,
           companyName: this.getFormControl().companyName.value,
           companyDisplayName: this.getFormControl().displayName.value,
