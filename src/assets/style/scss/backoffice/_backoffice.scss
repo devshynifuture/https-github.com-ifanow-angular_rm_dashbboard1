@@ -60,3 +60,27 @@
   min-width: auto !important;
 
 }
+
+.recon-cams,
+.recon-karvy,
+.recon-franklin {
+  tr.mat-header-row {
+    height: 40px !important;
+  }
+
+  tr.mat-row {
+    height: 39px !important;
+  }
+
+  #table-low tbody td {
+    padding: 1px 8px !important;
+  }
+
+  .reports-cams,
+  .report-karvy,
+  .report-franklin {
+    height: 28px !important;
+    line-height: 26px !important;
+    padding: 0px 10px !important;
+  }
+}

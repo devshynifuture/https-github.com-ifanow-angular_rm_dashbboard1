@@ -162,11 +162,10 @@
     padding-left: 30px;
 }
 
-.scrolling_myFeed {
-    // height: 500px;
-    // overflow-y: scroll;
-}
-
+// .scrolling_myFeed {
+//     // height: 500px;
+//     // overflow-y: scroll;
+// }
 ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     line-height: 30px !important;
     padding: 0 !important;
@@ -178,7 +177,7 @@
 }
 
 .piechartMutualFund {
-    height: 258px;
+    height: 270px;
 }
 
 .highcharts-data-table table {
@@ -368,4 +367,9 @@
 
 ::ng-deep .feedSumaaryMarket .toggleBtnClass .mat-button-toggle {
     width: 75px !important;
+}
+
+::ng-deep .heightBox svg {
+    height: 250px !important;
+    width: 240px !important;
 }
