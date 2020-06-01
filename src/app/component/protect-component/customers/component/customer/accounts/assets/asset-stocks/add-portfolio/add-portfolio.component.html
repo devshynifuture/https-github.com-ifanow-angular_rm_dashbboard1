@@ -1,10 +1,24 @@
-<h4><strong>NEW PORTFOLIO</strong></h4>
-<div [formGroup]="portfolioGroup" class="form-group">
-    <mat-form-field class="example-full-width">
-        <input class="form-control" formControlName="portfolioName" autocomplete="off" matInput>
-        <mat-error>This field is required</mat-error>
-        <p>{{dialogData.name}}</p>
-    </mat-form-field>
+<div class="p-20">
+    <h4> New protfolio</h4> {{dialogData.name}}
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div [formGroup]="portfolioGroup" class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input class="form-control" formControlName="portfolioName" autocomplete="off" matInput>
+                    <mat-error>This field is required</mat-error>
+                    <p>{{dialogData.name}}</p>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 p-0 text-right">
+
+            <button class="text-primitive p-0 mr-12" mat-button (click)="close()">Cancel</button>
+            <button mat-button class="text-danger p-0" (click)="addPortfolio()">Save</button>
+        </div>
+    </div>
+
 </div>
-<button mat-raised-button (click)="close()">Cancel</button>
-<button mat-raised-button color="primary" (click)="addPortfolio()">Save</button>

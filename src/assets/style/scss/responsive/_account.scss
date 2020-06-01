@@ -256,6 +256,21 @@
   }
 }
 
+.grand-total-mfcapital {
+  width: 100%;
+
+  #table-low {
+    tr {
+      border-bottom: 0px !important;
+    }
+
+    thead tr,
+    th {
+      background-color: #fff !important;
+    }
+  }
+}
+
 .fixed-deposit,
 .table-header-normal {
   #tbs .mat-sort-header-button {
@@ -267,12 +282,20 @@
   .mat-sort-header-container {
     float: right !important;
   }
+
+  // .mat-sort-header-arrow {
+  //   display: none;
+  // }
 }
 
 .right-hcb {
   .mat-sort-header-container {
     float: right !important;
   }
+
+  // .mat-sort-header-arrow {
+  //   display: none;
+  // }
 
   .mat-sort-header-button {
     text-align: right;

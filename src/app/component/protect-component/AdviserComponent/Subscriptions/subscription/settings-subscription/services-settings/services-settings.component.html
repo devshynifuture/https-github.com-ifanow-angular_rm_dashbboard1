@@ -101,10 +101,12 @@
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
                                         <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
                                             class="m-0 p-0 text-lighter lh-16 f-16">
-                                            {{singleService.averageFees}}%</h4>
+                                            {{singleService.averageFees}}%/<span>{{singleService.billEveryMode}}</span>
+                                        </h4>
                                         <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
                                             class="m-0 p-0 text-lighter lh-16 f-16">
-                                            ₹{{singleService.averageFees}}</h4>
+                                            ₹{{singleService.averageFees}}/<span>{{singleService.billEveryMode}}</span>
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -159,9 +161,9 @@
                         </div> -->
                     </mat-card-content>
 
-                    <mat-card-actions (click)="openFragment(singleService,'services')"
-                        class="block text-center pt-20 pb-20 mb-0">
-                        <button class="btn-header addon mb-12 mt-8 br-0" mat-stroked-button>INFO</button>
+                    <mat-card-actions class="block text-center pt-20 pb-20 mb-0">
+                        <button (click)="openFragment(singleService,'services')"
+                            class="btn-header addon mb-12 mt-8 br-0" mat-stroked-button>INFO</button>
                     </mat-card-actions>
                 </div>
             </mat-card>
