@@ -42,7 +42,8 @@
                                 <div class="mb-0 pt-8 plan-description relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
                                         <div class="l-h" [ngClass]="singlePlan.read? '':'height80'">
-                                            {{singlePlan.description}}
+                                            <span *ngIf="!isLoading">
+                                                {{(singlePlan.description)?singlePlan.description:'N/A'}}</span>
                                         </div>
 
                                         <div (click)="singlePlan.read = singlePlan.read? false : true"
