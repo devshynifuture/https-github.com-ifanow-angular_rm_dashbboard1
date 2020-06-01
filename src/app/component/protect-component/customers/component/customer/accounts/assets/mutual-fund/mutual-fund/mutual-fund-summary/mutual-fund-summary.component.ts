@@ -90,6 +90,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
 
   ngOnInit() {
+    console.log('displayedColumns',this.displayedColumns)
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
