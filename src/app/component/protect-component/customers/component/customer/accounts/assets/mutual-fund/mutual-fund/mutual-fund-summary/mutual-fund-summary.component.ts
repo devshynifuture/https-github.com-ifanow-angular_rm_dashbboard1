@@ -634,6 +634,9 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
+    this.displayedColumns.forEach(element => {
+      this.styleObject(element)
+    });
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
