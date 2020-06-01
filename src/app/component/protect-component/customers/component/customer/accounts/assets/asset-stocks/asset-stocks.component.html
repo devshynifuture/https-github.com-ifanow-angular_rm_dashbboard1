@@ -26,8 +26,7 @@
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
-                    class="material-icons">add</i>ADD NEW
+            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"> ADD NEW
             </button>
             <mat-menu #menu1="matMenu" class="add-new">
                 <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
@@ -244,7 +243,7 @@
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">{{element.scripName}} </div>
                     </td>
-                    <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell style="background-color: #fff !important;"> Total
+                    <th *matFooterCellDef [attr.colspan]="5" class="br text-black text-right f-600" mat-header-cell style="background-color: #fff !important;"> Total
                     </th>
                 </ng-container>
                 <ng-container matColumnDef="owner">
@@ -285,7 +284,7 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar">₹<span appFormatNumber>{{element.amountInvested}}</span></div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber class="br text-right f-600 pr-8" mat-footer-cell>
                         ₹<span [value]="singlePortfolio.totalAmountInvested" appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
@@ -293,7 +292,7 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar">₹<span appFormatNumber>{{element.currentMarketValue}}</span></div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber class="br text-right f-600 pr-8" mat-footer-cell>
                         ₹<span [value]="singlePortfolio.totalCurrentValue" appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
                     </td>
                 </ng-container>
@@ -302,7 +301,7 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar">₹<span appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber class="br text-right f-600 pr-8" mat-footer-cell>
                         ₹<span [value]="singlePortfolio.totalUnrealizedGainLoss" appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
                     </td>
                 </ng-container>
@@ -311,7 +310,7 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar">₹<span appFormatNumber>{{element.absoluteReturn}}</span></div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber class="br text-right f-600 pr-8" mat-footer-cell>
                         ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
                     </td>
                 </ng-container>
@@ -320,7 +319,7 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar">{{element.xirr}}</div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber class="br text-right f-600" mat-footer-cell>
                         {{ singlePortfolio.xirr}}</td>
                 </ng-container>
                 <ng-container matColumnDef="dividend">
@@ -328,7 +327,7 @@
                     <td *matCellDef="let element" class="br text-right" mat-cell>
                         <div class="bar">{{element.dividend}}</div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         {{ singlePortfolio.dividend}}
                     </td>
                 </ng-container>
