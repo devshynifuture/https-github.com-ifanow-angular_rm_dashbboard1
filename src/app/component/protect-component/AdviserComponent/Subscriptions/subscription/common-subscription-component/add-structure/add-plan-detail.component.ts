@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from '../../../../../../../services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-plan-detail',
@@ -34,13 +35,15 @@ export class AddPlanDetailComponent implements OnInit {
   isCheckPlanData: any;
   validatorType = ValidatorType;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  clientRoles: any;
 
   constructor(private eventService: EventService, private subinject: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService) {
+    private fb: FormBuilder, private subService: SubscriptionService, private enumService: EnumServiceService) {
   }
 
   @Input() set data(data) {
     this.isCheckPlanData = data;
+    this.clientRoles = this.enumService.getClientRole();
     this.getSinglePlanData(data);
   }
 
@@ -52,7 +55,7 @@ export class AddPlanDetailComponent implements OnInit {
     planName: ['', [Validators.required]],
     code: ['', [Validators.required]],
     description: [''],
-    role: ['',[Validators.required]]
+    role: ['', [Validators.required]]
   });
 
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};
@@ -71,7 +74,7 @@ export class AddPlanDetailComponent implements OnInit {
       planName: [data, [Validators.required]],
       code: [data, [Validators.required]],
       description: [data],
-      role: ['',[Validators.required]]
+      role: ['', [Validators.required]]
     });
 
   }
@@ -82,32 +85,34 @@ export class AddPlanDetailComponent implements OnInit {
 
 
   getSinglePlanData(data) {
-    
+
     if (data.id != undefined) {
       this.editApiCall = data;
       this.planDataForm.get('planName').setValue(data.name);
       this.planDataForm.get('code').setValue(data.code);
       this.planDataForm.get('description').setValue(data.description);
-      (data.role)?this.planDataForm.get('role').setValue(data.role):'';
+      (data.role) ? this.planDataForm.get('role').setValue(data.roleId) : '';
     }
   }
 
   addPlanData(state) {
     if (this.planDataForm.invalid) {
-      for (let element in this.planDataForm.controls) {
-        if (this.planDataForm.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.planDataForm.controls[element].markAsTouched();
-        }
-      }
-    }else {
+      // for (let element in this.planDataForm.controls) {
+      //   if (this.planDataForm.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      //     this.planDataForm.controls[element].markAsTouched();
+      //   }
+      // }
+      this.planDataForm.markAllAsTouched();
+      return;
+    } else {
       this.barButtonOptions.active = true;
-      
+
       if (this.editApiCall == undefined) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,
-          role: this.getFormControl().role.value,
+          roleId: this.getFormControl().role.value,
           // "advisorId": 12345,
           advisorId: this.advisorId,
           // logoUrl: 'url',
@@ -116,13 +121,13 @@ export class AddPlanDetailComponent implements OnInit {
           code: this.getFormControl().code.value
         };
         this.subService.addSettingPlanOverviewData(obj).subscribe(
-          data =>{
+          data => {
             this.addPlanDataResponse(data, obj, state);
             this.barButtonOptions.active = false;
           },
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
-            
+
           }
         );
       } else {
@@ -131,15 +136,15 @@ export class AddPlanDetailComponent implements OnInit {
           description: this.getFormControl().description.value,
           code: this.getFormControl().code.value,
           id: this.editApiCall.id,
-          role: this.getFormControl().role.value,
+          roleId: this.getFormControl().role.value,
         };
         this.subService.editPlanSettings(obj).subscribe(
-          data =>{
-           this.addPlanDataResponse(data, obj, state);
-           this.barButtonOptions.active = false;
+          data => {
+            this.addPlanDataResponse(data, obj, state);
+            this.barButtonOptions.active = false;
 
           },
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
           }
         );
