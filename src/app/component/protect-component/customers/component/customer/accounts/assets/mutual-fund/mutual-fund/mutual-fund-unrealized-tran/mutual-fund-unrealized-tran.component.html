@@ -494,7 +494,7 @@
    </div>
 </div>
 <!-- -------------------- pdf ---------------------------- -->
-<div #unrealizedTranTemplate *ngIf="showDownload" class="hide" id="template">
+<div #unrealizedTranTemplate id="template" class="hide" *ngIf="showDownload == true">
    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
       <tr>
          <td colspan="9"
@@ -655,66 +655,55 @@
    <table *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-         <td
+         <td *ngIf="customDataSource.data.no == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Sr no.</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionType == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Transaction Type</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionDate == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Transaction date</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionAmount == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Transaction amount</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionNav == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Transaction NAV</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.units == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Units</b>
          </td>
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.currentValue == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Current value</b>
          </td>
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.dividendPayout == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Dividend payout</b>
          </td>
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.dividendReinvest == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Dividend reinvestment</b>
          </td>
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.totalAmount == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Total amount</b>
          </td>
-         <!-- *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" -->
-         <!-- <td 
-             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-             <b>Balance units</b>
-          </td> -->
-
-         <!-- *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'" -->
-         <!-- <td
-             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-             <b>Days</b>
-          </td> -->
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.gain == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Gain</b>
          </td>
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.absoluteReturn == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Absolute Return%</b>
          </td>
-         <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+         <td *ngIf="customDataSource.data.xirr == true"
             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>XIRR%</b>
          </td>
@@ -745,124 +734,107 @@
          </tr>
          <tr *ngIf="item.fwTransactionType || item.category"
             style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
-            <td
+            <td *ngIf="customDataSource.data.no == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
                {{item.indexId}}
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionType == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
                </span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionDate == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.transactionDate | date:'dd/MM/yyyy'}}
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionAmount == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>{{item.amount}}</span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionNav == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>{{item.purchasePrice}}</span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.units == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>{{item.unit}}</span>
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" appFormatNumber
+            <td *ngIf="customDataSource.data.currentValue == true" appFormatNumber
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.currentAmount}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" appFormatNumber
+            <td *ngIf="customDataSource.data.dividendPayout == true"appFormatNumber
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{(item.dividendPayout) ? item.dividendPayout : 0}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" appFormatNumber
+            <td *ngIf="customDataSource.data.dividendReinvest == true" appFormatNumber
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{(item.dividendReinvest) ? item.dividendReinvest : 0}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" appFormatNumber
+            <td *ngIf="customDataSource.data.totalAmount == true" appFormatNumber
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.currentAmount}}
             </td>
-            <!-- *ngIf="viewMode == 'All Transactions'" -->
-            <!-- <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.balanceUnits}} 
-             </td> -->
-            <!-- *ngIf="viewMode == 'All Transactions'" -->
-            <!-- <td 
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{item.days}} 
-             </td> -->
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+            <td *ngIf="customDataSource.data.gain == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.gain}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
+            <td *ngIf="customDataSource.data.absoluteReturn == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.absoluteReturn}}
             </td>
-            <td *ngIf=" viewMode=='unrealized transactions' || viewMode=='Unrealized Transactions'" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
+            <td *ngIf="customDataSource.data.xirr == true" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
                 #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                {{item.cagr}}
             </td>
          </tr>
          <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.no == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
             </td>
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.transactionType == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
                Total
             </td>
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.transactionDate == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
             </td>
-            <td *ngIf="item.totalTransactionAmt" class="f-700"
+            <td  class="f-700"*ngIf="item.totalTransactionAmt && customDataSource.data.transactionAmount == true"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                {{item.totalTransactionAmt}}
             </td>
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.transactionNav == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
             </td>
-            <td *ngIf="item.totalUnit" class="f-700"
+            <td class="f-700"*ngIf="item.totalUnit && customDataSource.data.units == true"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
                {{item.totalUnit}}
             </td>
-            <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-               style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-               {{item.totalBalanceUnit}}
-            </td>
-            <td *ngIf="viewMode == 'All Transactions'" class="f-700"
-               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.currentValue == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.totalCurrentValue}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.dividendPayout == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                {{item.dividendPayout}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.dividendReinvest == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.dividendReinvest}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.totalAmount == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                {{item.totalCurrentValue}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.gain == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.netGain}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.absoluteReturn == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                {{item.trnAbsoluteReturn}}
             </td>
-            <td *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)" class="f-700"
+            <td *ngIf="item.totalUnit && customDataSource.data.xirr == true" class="f-700"
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                {{item.totalCagr}}
             </td>
@@ -873,35 +845,35 @@
    <table *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
       style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-         <td
+         <td *ngIf="customDataSource.data.no == true"
             style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Sr no.</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionType == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>Transaction Type</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionDate == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             <b>Transaction date</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionAmount == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             <b>Transaction amount</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.transactionNav == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             <b>Transaction NAV</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.units == true"
             style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             <b>Units</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.balanceUnits == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             <b>Balance units</b>
          </td>
-         <td
+         <td *ngIf="customDataSource.data.days == true"
             style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             <b>Days</b>
          </td>
@@ -932,67 +904,67 @@
          </tr>
          <tr *ngIf="item.fwTransactionType || item.category"
             style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
-            <td
+            <td *ngIf="customDataSource.data.no == true"
                style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;text-align: left;">
                {{item.indexId}}
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionType == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType) ? item.fwTransactionType : '-'}}
                </span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionDate == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.transactionDate | date:'dd/MM/yyyy'}}
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionAmount == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>{{item.amount}}</span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.transactionNav == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>{{item.purchasePrice}}</span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.units == true"
                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>{{item.unit}}</span>
             </td>
-            <td
+            <td *ngIf="customDataSource.data.balanceUnits == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.balanceUnits}}
             </td>
-            <td
+            <td *ngIf="customDataSource.data.days == true"
                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.days}}
             </td>
          </tr>
          <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.no == true"
                style="width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
             </td>
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.transactionType == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;border-left: 1px solid #DADCE0;">
                Total
             </td>
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.transactionDate == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
             </td>
-            <td *ngIf="item.totalTransactionAmt" class="f-700"
+            <td  class="f-700"*ngIf="item.totalTransactionAmt && customDataSource.data.transactionAmount == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
                {{item.totalTransactionAmt}}
             </td>
-            <td class="f-700"
+            <td class="f-700"*ngIf="customDataSource.data.transactionNav == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
             </td>
-            <td *ngIf="item.totalUnit" class="f-700"
+            <td class="f-700"*ngIf="item.totalUnit && customDataSource.data.units == true"
                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
                {{item.totalUnit}}
             </td>
-            <td *ngIf="viewMode == 'All Transactions'" class="f-700"
+            <td  class="f-700"*ngIf="customDataSource.data.balanceUnits == true"
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                {{item.totalBalanceUnit}}
             </td>
-            <td *ngIf="viewMode == 'All Transactions'" class="f-700"
+            <td  class="f-700"*ngIf="customDataSource.data.days == true"
                style="width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
          </tr>
