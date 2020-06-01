@@ -178,7 +178,7 @@
 }
 
 .piechartMutualFund {
-    height: 258px;
+    height: 270px;
 }
 
 .highcharts-data-table table {
@@ -368,4 +368,9 @@
 
 ::ng-deep .feedSumaaryMarket .toggleBtnClass .mat-button-toggle {
     width: 75px !important;
+}
+
+::ng-deep .heightBox svg {
+    height: 250px !important;
+    width: 240px !important;
 }
