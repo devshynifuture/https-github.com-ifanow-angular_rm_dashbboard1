@@ -76,7 +76,10 @@
                                         <div class="wrapper-16 relClass">
                                             <p class="f-12">GST</p>
                                             <div class="bar">
-                                                <h5 class="height20">{{singleBillerProfile.gstin}}</h5>
+                                                <h5 class="height20">
+                                                    <span
+                                                        *ngIf="!isLoading">{{(singleBillerProfile.gstin)?singleBillerProfile.gstin:'N/A'}}</span>
+                                                </h5>
                                             </div>
                                             <p class="f-12 pt-24">PAN</p>
                                             <div class="bar">

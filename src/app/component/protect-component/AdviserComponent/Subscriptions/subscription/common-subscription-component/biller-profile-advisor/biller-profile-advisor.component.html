@@ -36,6 +36,27 @@
                         </div>
                         <div class="row pt-44">
                             <div class="col-md-5 pr-0">
+                                <h5 class="text-right m-0 pt-16">GST treatment</h5>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select formControlName="gstTreatmentId" class="form-control">
+                                            <mat-option value='1'>Applicable</mat-option>
+                                            <mat-option value='2'>Not applicable
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row pt-0">
+                                    <div class="col-md-8">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="profileDetailsForm.get('gstTreatmentId').value=='1'" class="row pt-44">
+                            <div class="col-md-5 pr-0">
                                 <h5 class="text-right m-0 pt-16">GSTIN number</h5>
                             </div>
                             <div class="col-md-7">
@@ -115,7 +136,8 @@
                                             appInputValueValidation [maxLength]="6" class="form-control br-0 text-left"
                                             formControlName="pincode" matInput minlength="6" type="text"
                                             (focusout)="getPostalPin($event.target.value,'profileDetailsForm')">
-                                        <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}
+                                        <mat-error class="f-12">
+                                            {{pinInvalid?'Invalid pincode':'Pincode is required'}}
                                         </mat-error>
                                         <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
                                     </mat-form-field>
