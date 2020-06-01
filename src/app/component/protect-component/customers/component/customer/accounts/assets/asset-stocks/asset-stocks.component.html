@@ -82,7 +82,7 @@
           <div class="col-md-12 p-0">
             <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
             <h2 *ngIf="assetStockData" appFormatNumber class="m-0 f-300 text-black pt-4 pl-8 pb-24">
-              ₹<span [value]="assetStockData.grandTotalCurrentValue" appFormatNumber>{{assetStockData.grandTotalCurrentValue}}</span>
+              ₹<span [value]="assetStockData.grandTotalCurrentValue" appFormatNumber>{{assetStockData.grandTotalCurrentValue?'assetStockData.grandTotalCurrentValue':0}}</span>
             </h2>
           </div>
           <div class="col-md-12 p-0">
@@ -90,19 +90,19 @@
               <div class="col-md-4 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Amount invested</p>
                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
-                  ₹<span [value]="assetStockData.grandTotalAmountInvested" appFormatNumber>{{assetStockData.grandTotalAmountInvested}}</span>
+                  ₹<span [value]="assetStockData.grandTotalAmountInvested" appFormatNumber>{{assetStockData.grandTotalAmountInvested?'assetStockData.grandTotalAmountInvested':0}}</span>
                 </h5>
               </div>
               <div class="col-md-5 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
-                  ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss}}</span>
+                  ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss?'assetStockData.grandTotalUnrealizedGainLoss':0}}</span>
                 </h5>
               </div>
               <div class="col-md-3 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Returns</p>
                 <h5 *ngIf="assetStockData" class="m-0 text-danger">
-                  ₹<span [value]="assetStockData.grandTotalAbsReturns" appFormatNumber>{{assetStockData.grandTotalAbsReturns}}</span>
+                  ₹<span [value]="assetStockData.grandTotalAbsReturns" appFormatNumber>{{assetStockData.grandTotalAbsReturns?'assetStockData.grandTotalAbsReturns':0}}</span>
                   <i class="material-icons text-danger v-sub f-18 f-700">
                     arrow_upward
                   </i>
@@ -114,10 +114,10 @@
       </div>
       <div class="col-md-7 pl-4 pr-0" *ngIf="categories">
         <div class="row">
-          <div class="col-md-4 p-0 b-a">
-            <div class="highcharts-figure" id="piechartStock"></div>
+          <div class="col-md-4 p-0 b-a" *ngIf="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS">
+            <div  class="highcharts-figure" id="piechartStock"></div>
           </div>
-          <div class="col-md-8 b-a bl-0 p-0">
+          <div class=" b-a p-0" [ngClass]="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS?'col-md-8':'col-md-12'" [ngStyle]="{'border-left':categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS? 'none':''}">
             <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
                 <div class="hw-16 mt-2 bg-primary"></div>
@@ -315,13 +315,13 @@
             ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
           </td>
         </ng-container>
-        <ng-container matColumnDef="xirr">
+        <!-- <ng-container matColumnDef="xirr">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> XIRR %</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
             <div class="bar">{{element.xirr}}</div>
           </td>
           <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>{{ singlePortfolio.xirr}}</td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="dividend">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Dividend</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
