@@ -8,6 +8,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -86,7 +87,7 @@ export class PayeeSettingsComponent implements OnInit {
   clientData: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, ) {
+    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService) {
   }
 
   get data() {
@@ -100,6 +101,7 @@ export class PayeeSettingsComponent implements OnInit {
       delete data.id;
     }
     // this.clientId = AuthService.getClientId()
+    this.getListFamilyMem(data);
     this.getClientPayeeSettings(data);
   }
 
@@ -107,14 +109,12 @@ export class PayeeSettingsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }
-  getListFamilyMem() {
-    this.advisorId = AuthService.getAdvisorId();
-    // this.clientId = AuthService.getClientId();
+  getListFamilyMem(data) {
     const obj = {
-      advisorId: this.advisorId,
-      clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
+      userId: data.userId,
+      userType: 2
     };
-    this.subService.getListOfFamilyByClient(obj).subscribe(
+    this.peopleService.getClientFamilyMembers(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }
@@ -208,7 +208,6 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
-    this.getListFamilyMem();
   }
 
   getRightSliderData(data) {
@@ -260,7 +259,7 @@ export class PayeeSettingsComponent implements OnInit {
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
-          customerTypeId:this.payeeSettingsForm.controls.customerType.value,
+          customerTypeId: this.payeeSettingsForm.controls.customerType.value,
           email: this.payeeSettingsForm.controls.emailId.value,
           gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           gstin: (this.payeeSettingsForm.controls.gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
@@ -292,7 +291,7 @@ export class PayeeSettingsComponent implements OnInit {
           gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           email: this.getFormControl().emailId.value,
           // customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
-          customerTypeId:this.getFormControl().customerType.value,
+          customerTypeId: this.getFormControl().customerType.value,
           primaryContact: this.getFormControl().primaryContact.value,
           companyName: this.getFormControl().companyName.value,
           companyDisplayName: this.getFormControl().displayName.value,
