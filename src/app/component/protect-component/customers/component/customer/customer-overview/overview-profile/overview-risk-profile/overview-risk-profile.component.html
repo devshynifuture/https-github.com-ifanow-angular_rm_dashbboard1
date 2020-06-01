@@ -17,6 +17,12 @@
     <!-- end empty state -->
     <div class="row">
         <div class="col-md-9" *ngIf="!isEmpty">
+            <div class="col-md-12 p-0 d-flex justify-content-between pb-12" *ngIf="showResults && !isEmpty && !loaderFn.loading">
+                <button mat-flat-button class="b-a-custom text-primary pl-8 pr-8" (click)="takeTests()">Retake
+                    assessment</button>
+                <button mat-flat-button class="b-a-custom ml-12 text-primary risk-profile-history"
+                    (click)="open('riskProfile', null)">History</button>
+            </div>
             <!-- results -->
             <div *ngIf="feedsRiskProfile.riskProfileId && !loaderFn.loading && showResults">
                 <div class="pt-32 pb-44">
@@ -144,16 +150,10 @@
         <div class="col-md-3 p-0" *ngIf="!isEmpty && !loaderFn.loading">
 
 
-            <div class="p-20 b-primitive mt-12 sticky-risk-pofile">
+            <div class="p-20 b-primitive mt-12 sticky-risk-pofile" *ngIf="showQuestionnaire">
 
                 <div class="row">
-                    <div class="col-md-12 p-0 d-flex justify-content-between pb-12" *ngIf="showResults">
-                        <button mat-flat-button class="b-a-custom text-primary pl-8 pr-8" (click)="takeTests()">Retake
-                            assessment</button>
-                        <button mat-flat-button class="b-a-custom ml-12 text-primary risk-profile-history"
-                            (click)="open('riskProfile', null)">History</button>
-                    </div>
-                    <div class="col-md-12 p-0" *ngIf="showQuestionnaire">
+                    <div class="col-md-12 p-0">
                         <mat-progress-bar mode="determinate" [value]="(statusArray.length/15) * 100"></mat-progress-bar>
                         <h5 class="pt-8 m-0 pt-12 text-center">{{statusArray.length}} of 15 completed</h5>
                     </div>
