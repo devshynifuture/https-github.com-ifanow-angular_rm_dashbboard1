@@ -258,11 +258,11 @@ ul {
   background: #CACFD2;
 }
 
-#aumtabs .mat-tab-label,
-#aumtabs1 .mat-tab-label {
-  min-width: 120px;
-  height: 40px !important;
-}
+// #aumtabs .mat-tab-label,
+// #aumtabs1 .mat-tab-label {
+//   min-width: 120px;
+//   height: 40px !important;
+// }
 
 #uifolios .mat-form-field-appearance-outline .mat-form-field-infix {
   padding: .6em 0 1em 0 !important;
@@ -795,6 +795,7 @@ button.primary-sm {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
   &:hover {
     text-overflow: unset;
     overflow: auto;
