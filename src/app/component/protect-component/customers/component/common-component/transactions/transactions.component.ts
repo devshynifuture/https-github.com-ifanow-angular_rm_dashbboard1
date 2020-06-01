@@ -27,6 +27,7 @@ export class TransactionsComponent implements OnInit {
   investorName: any;
   isLoading = false;
   mfList: any;
+  nav: any;
 
   constructor(
     private UtilService: UtilService,
@@ -55,6 +56,7 @@ export class TransactionsComponent implements OnInit {
     this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
+    this.nav=this.data.nav;
     this.initPoint();
     this.getTransactionTypeList()
   }
@@ -143,6 +145,7 @@ export class TransactionsComponent implements OnInit {
     this.xirrValue = this.mfList.xirr;
     this.investorName = this.mfList.ownerName;
     this.folioNumber = this.mfList.folioNumber;
+    this.nav=this.mfList.nav;
     setDataForMf = this.mfService.doFiltering(setDataForMf)
     this.mfService.setDataForMfGet(setDataForMf);
     this.changeInput.emit(true);

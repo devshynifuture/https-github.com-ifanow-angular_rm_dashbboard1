@@ -27,7 +27,7 @@
             </button>
             <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button>
             <mat-menu #menu1="matMenu" class="add-new">
-                <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
+                <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/dark-three-dot.svg">
@@ -39,7 +39,7 @@
                             </p>
                         </div>
                     </div>
-                </button>
+                </button> -->
                 <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </button>
-                <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/dark-download.svg">
@@ -65,7 +65,7 @@
                             </p>
                         </div>
                     </div>
-                </button>
+                </button> -->
             </mat-menu>
         </div>
     </div>
@@ -323,7 +323,7 @@
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
                     ADD NEW</button>
                 <mat-menu #menu1="matMenu" class="add-new">
-                    <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
+                    <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -335,7 +335,7 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
                     <button (click)="openMutualFund('holding',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
@@ -349,7 +349,7 @@
                             </div>
                         </div>
                     </button>
-                    <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                    <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-download.svg">
@@ -361,7 +361,7 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
                 </mat-menu>
             </div>
         </div>

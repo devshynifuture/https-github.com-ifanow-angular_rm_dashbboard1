@@ -235,10 +235,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund' || this.data.flag === 'editTransaction')) {
       data.mutualFundTransactions.forEach(element => {
         this.transactionArray.push(this.fb.group({
-          transactionType: [element.transactionTypeMasterId, [Validators.required]],
-          date: [new Date(element.transactionDate), [Validators.required]],
-          transactionAmount: [element.amount, [Validators.required]],
-          Units: [element.unit, [Validators.required]],
+          transactionType: [element.transactionTypeMasterId],
+          date: [new Date(element.transactionDate)],
+          transactionAmount: [element.amount],
+          Units: [element.unit],
           id: [element.id],
           isEdited: element.isEdited,
           previousUnit: element.previousUnit,
@@ -336,13 +336,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               mutualFundId: this.data.mutualFundId,
               sip: this.schemeLevelHoldingForm.controls.sip.value,
               tag: this.schemeLevelHoldingForm.controls.tag.value,
-              fwTransactionType: this.getTransactionName(element.transactionType),
-              transactionDate: this.getDateFormatted(element.date),
+              fwTransactionType: (element.transactionType) ? this.getTransactionName(element.transactionType) : null,
+              transactionDate: (element.date) ? this.getDateFormatted(element.date) : null,
               unit: element.Units,
               amount: element.transactionAmount,
               id: element.id,
               transactionTypeId: element.transactionType,
-              effect: this.getTransactionEffect(element.transactionType),
+              effect: (element.transactionType) ? this.getTransactionEffect(element.transactionType) : null,
               isEdited: element.isEdited,
               previousUnit: element.previousUnit,
               previousEffect: element.previousEffect
@@ -354,12 +354,12 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
               schemeCode: this.data.schemeCode,
               mutualFundId: this.data.id,
-              fwTransactionType: this.getTransactionName(element.transactionType),
-              transactionDate: this.getDateFormatted(element.date),
+              fwTransactionType:(element.transactionType) ? this.getTransactionName(element.transactionType) : null,
+              transactionDate:element.date ? this.getDateFormatted(element.date) : null,
               unit: element.Units,
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
-              effect: this.getTransactionEffect(element.transactionType)
+              effect: element.transactionType ? this.getTransactionEffect(element.transactionType) :  null
             }
             mutualFundTransactions.push(obj1);
           }
@@ -370,12 +370,12 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               folioNumber: this.schemeLevelHoldingForm.controls.folioNumber.value,
               schemeCode: this.schemeObj['schemeCode'],
               // mutualFundId: this.data.id,
-              fwTransactionType: this.getTransactionName(element.transactionType),
-              transactionDate: this.getDateFormatted(element.date),
+              fwTransactionType: element.transactionType ? this.getTransactionName(element.transactionType) : null,
+              transactionDate:element.date ? this.getDateFormatted(element.date) : null,
               unit: element.Units,
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
-              effect: this.getTransactionEffect(element.transactionType)
+              effect: element.transactionType ? this.getTransactionEffect(element.transactionType) : null
             }
             mutualFundTransactions.push(obj1);
           } else if (this.data.flag == 'editMutualFund' || this.addEditMutualFund === 'edit') {
@@ -385,12 +385,12 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               // schemeCode: this.schemeObj['schemeCode'],
               schemeCode: this.data.schemeCode,
               mutualFundId: this.data.id,
-              fwTransactionType: this.getTransactionName(element.transactionType),
+              fwTransactionType:element.transactionType? this.getTransactionName(element.transactionType) : null,
               transactionDate: this.getDateFormatted(element.date),
               unit: element.Units,
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
-              effect: this.getTransactionEffect(element.transactionType),
+              effect: element.transactionType ? this.getTransactionEffect(element.transactionType) : null,
               isEdited: element.isEdited,
               previousUnit: element.previousUnit,
               previousEffect: element.previousEffect,
@@ -421,6 +421,11 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           mutualFundTransactions
         }
         console.log(postObj);
+        if(mutualFundTransactions.length > 0){
+          if(!mutualFundTransactions[0].transactionTypeId){
+            delete postObj.mutualFundTransactions
+          }
+        }
         this.customerService.postMutualFundAdd(postObj)
           .subscribe(res => {
             if (res) {

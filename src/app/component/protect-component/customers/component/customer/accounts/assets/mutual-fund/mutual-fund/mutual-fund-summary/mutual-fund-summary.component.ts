@@ -67,6 +67,7 @@ export class MutualFundSummaryComponent implements OnInit {
   selectedDataLoad: any;
   showDownload: boolean = false;
   reportDate: Date;
+  addedData: boolean;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -237,6 +238,11 @@ export class MutualFundSummaryComponent implements OnInit {
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
+      if(this.addedData){
+        this.mfService.setDataForMfGet(this.mfData);
+        this.mfService.setMfData(this.mfData);
+      }
+      this.addedData=false;
       // this.mutualFundList = this.mutualFund.mutualFundList;
       this.mutualFundList = this.mfData.mutualFundList;
       this.advisorData = this.mutualFund.advisorData;
@@ -612,6 +618,7 @@ export class MutualFundSummaryComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // code to refresh
+            this.addedData=true;
             this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -677,6 +684,7 @@ export class MutualFundSummaryComponent implements OnInit {
               if (res) {
                 this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
                 dialogRef.close();
+                this.addedData=true;
                 this.getMutualFund();
               }
             })

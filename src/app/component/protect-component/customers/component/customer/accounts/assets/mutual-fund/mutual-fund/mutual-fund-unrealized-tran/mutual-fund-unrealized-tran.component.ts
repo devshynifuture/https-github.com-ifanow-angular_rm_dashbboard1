@@ -66,6 +66,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   showDownload: boolean = false;
   columnHeader: any;
   pdfDataFornTRansaction: any;
+  addedData: boolean;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -356,6 +357,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (data) {
       this.mfData = data;
       // this.mutualFund = data;
+      if(this.addedData){
+        this.mfService.setDataForMfGet(this.mfData);
+        this.mfService.setMfData(this.mfData);
+      }
+      this.addedData=false;
       this.mfService.changeShowMutualFundDropDown(false);
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
@@ -529,6 +535,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.addedData=true;
             this.getMutualFund();
           }
           // console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -574,6 +581,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
               this.isLoading = true;
               this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
               if (res) {
+                this.addedData=true;
                 this.getMutualFund();
                 console.log("again re hitting mutual fund get:::", res)
               }
