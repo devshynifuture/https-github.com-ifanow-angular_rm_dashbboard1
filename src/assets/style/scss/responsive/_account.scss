@@ -256,6 +256,21 @@
   }
 }
 
+.grand-total-mfcapital {
+  width: 100%;
+
+  #table-low {
+    tr {
+      border-bottom: 0px !important;
+    }
+
+    thead tr,
+    th {
+      background-color: #fff !important;
+    }
+  }
+}
+
 .fixed-deposit,
 .table-header-normal {
   #tbs .mat-sort-header-button {

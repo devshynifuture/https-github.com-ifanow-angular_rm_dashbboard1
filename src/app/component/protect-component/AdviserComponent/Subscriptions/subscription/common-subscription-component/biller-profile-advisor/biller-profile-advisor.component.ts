@@ -190,6 +190,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.profileDetailsForm = this.fb.group({
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
+      gstTreatmentId: [data.gstTreatmentId ? String(data.gstTreatmentId) : '1', [Validators.required]],
       gstinNum: [(data.gstin), [Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
       panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
@@ -412,7 +413,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
       companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
       country: this.profileDetailsForm.controls.country.value,
       footnote: this.MiscellaneousData.controls.footnote.value,
-      gstin: this.profileDetailsForm.controls.gstinNum.value,
+      gstin: (this.profileDetailsForm.controls.gstTreatmentId.value == '1') ? this.profileDetailsForm.controls.gstinNum.value : null,
+      gstTreatmentId: this.profileDetailsForm.controls.gstTreatmentId.value,
       ifscCode: this.bankDetailsForm.controls.ifscCode.value,
       logoUrl: this.logoImg,
       nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
