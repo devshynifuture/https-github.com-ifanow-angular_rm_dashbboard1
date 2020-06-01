@@ -1,13 +1,13 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -43,7 +43,7 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetData;
   selectedOtherAssets = [];
   pricing = false;
-  @ViewChild('htmlTag', {static: true}) htmltag: ElementRef;
+  @ViewChild('htmlTag', { static: true }) htmltag: ElementRef;
   variableFees = true;
   serviceId: any;
   dataToSend: any;
@@ -51,7 +51,7 @@ export class AddVariableFeeComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
+    private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
   }
 
   otherAssetDataId: any;
@@ -64,6 +64,7 @@ export class AddVariableFeeComponent implements OnInit {
 
     if (data == '') {
       // this.otherAssetData=UtilService.
+      this.getFeeFormUpperData(data)
       this.otherAssetData = Object.assign([], stock);
       return;
     } else {
@@ -172,7 +173,7 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     if (this.serviceId == undefined) {
       this.otherAssetData.forEach(element => {
         element.isActive = 0;
@@ -253,7 +254,7 @@ export class AddVariableFeeComponent implements OnInit {
         }
       };
       this.dataToSend = obj;
-      Object.assign(this.dataToSend, {id: this.serviceId});
+      Object.assign(this.dataToSend, { id: this.serviceId });
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
           data => {
@@ -283,13 +284,13 @@ export class AddVariableFeeComponent implements OnInit {
 
   saveVariableFeeDataResponse(data, obj) {
     this.eventService.openSnackBar('Service is created', 'OK');
-    this.subInjectService.changeNewRightSliderState({flag: 'added', state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data });
   }
 
   saveFeeTypeDataEditResponse(data) {
     this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
     this.eventService.openSnackBar('Service is edited', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data: this.dataToSend});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
   }
 
   select(assetData) {
