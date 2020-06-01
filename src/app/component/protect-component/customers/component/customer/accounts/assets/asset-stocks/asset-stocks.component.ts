@@ -19,10 +19,10 @@ import { pieChart } from './highChart-pichart';
 })
 export class AssetStocksComponent implements OnInit {
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret',
-    'xirr', 'dividend', 'icons'];
+     'dividend', 'icons'];
 
   footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',
-    'xirr', 'dividend', 'icons'];
+     'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
   clientId: any;
