@@ -50,8 +50,8 @@
 
     <div [ngClass]="{'table-scroll':isLoading==false }">
         <!-- {{dataCount == dataSource.data.length}} -->
-        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class=" skeletonAnimation"
-            id="tbs" mat-table matSort>
+        <table *ngIf="dataSource.data.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
+            appSkeletonLoading class=" skeletonAnimation" id="tbs" mat-table matSort>
             <ng-container matColumnDef="checkbox" sticky>
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
                     <mat-checkbox (change)="selectAll($event)" name="selectAll"
