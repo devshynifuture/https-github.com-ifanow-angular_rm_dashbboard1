@@ -55,13 +55,18 @@
                             <!-- <input 
                                    class="form-control br-0 text-left" formControlName="role"
                                     matInput  type="text"> -->
-                            <mat-select formControlName="role" class="form-control br-0">
+                            <!-- <mat-select formControlName="role" class="form-control br-0">
                                 <mat-option value="" disabled> Select role</mat-option>
                                 <mat-option value="1">Role 1</mat-option>
                                 <mat-option value="2">Role 2</mat-option>
                                 <mat-option value="3">Role 3</mat-option>
                                 <mat-option value="4">Role 4</mat-option>
                                 <mat-option value="5">Role 5</mat-option>
+                            </mat-select> -->
+                            <mat-select formControlName="role" class="form-control">
+                                <mat-option value='' disabled>Select roles</mat-option>
+                                <mat-option [value]="role.id" *ngFor="let role of clientRoles">
+                                    {{role.roleName}}</mat-option>
                             </mat-select>
                             <mat-error class="f-12">
                                 Client role is required
