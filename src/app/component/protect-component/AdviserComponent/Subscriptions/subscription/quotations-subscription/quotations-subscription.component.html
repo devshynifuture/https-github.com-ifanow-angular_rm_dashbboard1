@@ -1,7 +1,7 @@
 <div class="bg-white pt-130">
     <div [ngClass]="dataSource.data.length > 0 || isFilter ? 'block' : 'none'">
         <!-- (scroll)="scrollCall(true)" -->
-        <div class="p-20 pb-0 filterBox">
+        <div [ngClass]="{'event-none': isLoading}" class="p-20 pb-0 filterBox">
             <div class="row">
                 <div class="col-md-1 p-0">
                     <h4 class="pt-8 mb-0">Quotations</h4>

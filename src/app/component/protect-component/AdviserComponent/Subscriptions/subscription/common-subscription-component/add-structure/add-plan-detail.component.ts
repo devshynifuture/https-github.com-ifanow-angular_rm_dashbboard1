@@ -91,7 +91,7 @@ export class AddPlanDetailComponent implements OnInit {
       this.planDataForm.get('planName').setValue(data.name);
       this.planDataForm.get('code').setValue(data.code);
       this.planDataForm.get('description').setValue(data.description);
-      (data.role) ? this.planDataForm.get('role').setValue(data.roleId) : '';
+      (data.roleId) ? this.planDataForm.get('role').setValue(data.roleId) : '';
     }
   }
 
