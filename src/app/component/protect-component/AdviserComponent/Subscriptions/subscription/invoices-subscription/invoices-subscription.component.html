@@ -1,7 +1,7 @@
 <div *ngIf="invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white pt-130">
     <!-- (scroll)="scrollCall(true)" -->
     <div *ngIf="dataSource.data.length > 0 || isFilter" class="bg-white p-20 pb-0 filterBox">
-        <div class="row">
+        <div [ngClass]="{'event-none': isLoading}" class="row">
 
             <div class="col-md-1 p-0">
                 <h4 class="pt-8 mb-0">Invoices</h4>
