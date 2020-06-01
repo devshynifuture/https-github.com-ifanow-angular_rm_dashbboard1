@@ -292,6 +292,7 @@ export class OverviewMyfeedComponent implements OnInit {
         this.tabsLoaded.customerProfile.dataLoaded = true;
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
+        this.tabsLoaded.customerProfile.dataLoaded = false;
         this.loaderFn.decreaseCounter();
       }
     )
@@ -496,6 +497,7 @@ export class OverviewMyfeedComponent implements OnInit {
       this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
+      this.tabsLoaded.riskProfile.dataLoaded = false;
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
@@ -514,6 +516,7 @@ export class OverviewMyfeedComponent implements OnInit {
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.globalRiskProfile.dataLoaded = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -539,6 +542,7 @@ export class OverviewMyfeedComponent implements OnInit {
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.recentTransactions.dataLoaded = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -561,6 +565,7 @@ export class OverviewMyfeedComponent implements OnInit {
         }
         this.tabsLoaded.goalsData.dataLoaded = true;
       }, err => {
+        this.tabsLoaded.goalsData.hasData = false;
         this.eventService.openSnackBar(err, "Dismiss")
         this.loaderFn.decreaseCounter();
         this.hasError = true;
