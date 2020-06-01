@@ -53,13 +53,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="owner">
-            <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="ownerName"> Owner</th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <th *matHeaderCellDef class="br w-17" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+            <td *matCellDef="let element" class="br w-17" mat-cell>
                 <div class="bar"></div>
                 <div *ngFor="let owner of element.ownerList; let i = index">
                     <span *ngIf="i == 0">{{owner.name}}</span>
                 </div>
-                <span *ngIf="element.ownerList && element.ownerList.length > 1"> + {{element.ownerList.length - 1}}</span>
+                <span *ngIf="element.ownerList && element.ownerList.length > 1"> +
+                    {{element.ownerList.length - 1}}</span>
             </td>
             <td *matFooterCellDef class="br text-right pr-20 f-600 " mat-footer-cell>
                 {{isLoading ? '' : 'Total' }}
@@ -94,7 +95,7 @@
         </ng-container>
 
         <ng-container matColumnDef="payoutTill">
-            <th mat-sort-header="TotalPayoutTillNow" mat-header-cell *matHeaderCellDef class="br text-right textRight">
+            <th mat-sort-header="TotalPayoutTillNow" mat-header-cell *matHeaderCellDef class="br text-right right-hc">
                 Payout received till now
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
@@ -109,7 +110,7 @@
 
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br right-hcb text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-left">
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{element.rate | number: '1.2-2'}}{{isLoading ? ' ' : '%'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
