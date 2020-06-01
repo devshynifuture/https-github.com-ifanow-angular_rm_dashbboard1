@@ -26,7 +26,8 @@
                 <ng-container matColumnDef="email">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="userEmailId"> Email</th>
                     <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
-                        <div class="bar"> {{element.userEmailId}} </div>
+                        <div class="bar"><span
+                                *ngIf="!isLoading">{{(element.userEmailId)?element.userEmailId:'N/A'}}</span> </div>
                     </td>
                 </ng-container>
 
@@ -35,7 +36,8 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="mobileNumber"> Contact no.
                     </th>
                     <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
-                        <div class="bar"> {{element.mobileNumber}} </div>
+                        <div class="bar"><span *ngIf="!isLoading">
+                                {{element.mobileNumber?element.mobileNumber:'N/A'}}</span> </div>
                     </td>
                 </ng-container>
 
