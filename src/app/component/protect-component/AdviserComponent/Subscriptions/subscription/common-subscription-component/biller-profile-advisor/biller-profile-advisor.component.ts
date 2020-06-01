@@ -317,6 +317,12 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlBank().pincodeB.setValue("")
     }
     else {
+      let pincode;
+      pincode = data.address.match(/\d/g);
+      pincode = pincode.join("");
+      pincode = pincode.substring(pincode.length - 6, pincode.length)
+      data.address = data.address.replace(String(pincode), '')
+      data.address = data.address.replace('-', '')
       let bankPin = data.address.split('A');
       this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
       this.getFormControlBank().cityB.setValue(data.district)
@@ -324,7 +330,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlBank().stateB.setValue(data.state)
       this.getFormControlBank().address.setValue(data.address)
       this.getFormControlBank().bankName.setValue(data.bankcode)
-
+      this.getFormControlBank().pincodeB.setValue(pincode)
       this.ifsciInvalid = false;
     }
   }

@@ -62,7 +62,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br right-hcb w-11 text-right">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
+                class="br right-hcb w-11 text-right hide-arrow">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
@@ -73,14 +74,16 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br right-hcb w-7 t-right"> Rate </th>
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br right-hcb w-7 t-right hide-arrow">
+                Rate </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar"> {{element.rate | number: '1.2-2'}} {{isLoading ? '' : '%' }} </div>
             </td>
             <td mat-footer-cell class="br text-right " *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br right-hcb w-16 text-right">
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
+                class="br right-hcb w-16 text-right hide-arrow">
                 Total amount invested </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
@@ -91,7 +94,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="number">
-            <th mat-sort-header="number" mat-header-cell *matHeaderCellDef class="br   text-right right-hcb w-14">
+            <th mat-sort-header="number" mat-header-cell *matHeaderCellDef
+                class="br   text-right right-hcb w-14 hide-arrow">
                 Account number
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right t-7">
