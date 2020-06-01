@@ -11,7 +11,7 @@
 </div>
 
 <div class="wrapper-40 pt-72" id="ui-biller">
-    <mat-tab-group [selectedIndex]="selected" animationDuration="0ms"  id="ui-biller-tabs">
+    <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" id="ui-biller-tabs">
         <mat-tab class="active " label="Profile">
             <div [formGroup]="profileDetailsForm" class="">
                 <div class="row pt-40 pb-44">
@@ -46,12 +46,13 @@
                                             formControlName="gstinNum" matInput
                                             (changedValue)="getFormControlProfile().gstinNum.setValue($event)"
                                             maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
-                                        <mat-error *ngIf="profileDetailsForm.get('gstinNum').errors?.required"
-                                            class="f-12">GSTIN number is required</mat-error>
+                                        <!-- <mat-error *ngIf="profileDetailsForm.get('gstinNum').errors?.required"
+                                            class="f-12">GSTIN number is required</mat-error> -->
                                         <mat-error *ngIf="(profileDetailsForm.get('gstinNum').errors?.pattern)"
                                             class="f-12">
                                             Enter valid GSTIN number
                                         </mat-error>
+                                        <mat-hint>Optional</mat-hint>
                                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                                     </mat-form-field>
                                 </div>
@@ -234,7 +235,7 @@
                                         appInputValueValidation
                                         maxLength="{{getFormControlBank().nameOnBank.maxLength}}" type="text">
                                     <mat-error class="f-12">This field is required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/25</mat-hint>
+                                    <mat-hint align="end" class="f-12">{{nameOnBank.value.length}}/50</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
