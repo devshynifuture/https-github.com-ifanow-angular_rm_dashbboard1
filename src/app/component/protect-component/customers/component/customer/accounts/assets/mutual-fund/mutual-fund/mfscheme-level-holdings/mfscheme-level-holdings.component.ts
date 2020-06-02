@@ -242,7 +242,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           transactionAmount: [element.amount],
           Units: [element.unit],
           id: [element.id],
-          assetMutualFundTransactionTypeMasterId: [element.assetMutualFundTransactionTypeMasterId],
+          assetMutualFundTransactionTypeMasterId: [element.asse],
           isEdited: element.isEdited,
           previousUnit: element.previousUnit,
           previousEffect: element.effect
@@ -429,7 +429,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           tag: this.schemeLevelHoldingForm.controls.tag.value,
           realOrFictitious: 0,
           parentId: this.parentId,
-          mutualFundTransactions, assetMutualFundTransactionTypeMasterId: (element.assetMutualFundTransactionTypeMasterId) ? this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId) : null,
+          mutualFundTransactions
         }
         console.log(postObj);
         if (mutualFundTransactions.length > 0) {
