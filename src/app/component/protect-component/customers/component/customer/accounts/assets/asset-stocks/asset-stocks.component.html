@@ -207,27 +207,98 @@
                     </div>
                 </div>
             </div>
-            <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
-                <div class="col-md-12 p-0">
-                    <div class="bg-white">
-                        <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}}
-                        </h5>
-                    </div>
-                </div>
-                <!-- <div *ngFor="let singlePortfolioCategory of singlePortfolio.categoryWiseStockList">
-         <div class="col-md-12 p-0">
-           <div class="bg-white text-center">
-               <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolioCategory.categoryName}} 
-               </h5>
-           </div>
-       </div>
-     </div> -->
-                <div class="stock-overview">
-                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
-                        <!-- <ng-container matColumnDef="static-header">
-          <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
-              class=" text-center text-primary bg-white" mat-header-cell>
-            dasdasdasd
+        </div>
+      </div>  
+          <div class="stock-overview">
+            <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
+                <!-- <ng-container matColumnDef="static-header">
+           <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
+               class=" text-center text-primary bg-white" mat-header-cell>
+             dasdasdasd
+           </td>
+         </ng-container>-->
+         <ng-container matColumnDef="groupHeader">
+          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="text-center text-primary f-500">
+            {{group.group}}</td>
+        </ng-container>
+                <ng-container matColumnDef="scrip">
+                    <th *matHeaderCellDef="let element let i = index" class="br" mat-header-cell><div > Scrip</div></th>
+                    <!-- prod fix -->
+                    <!-- <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>{{singlePortfolioCategory.categoryName}}</th> -->
+                    <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>Category name</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar">{{element.scripName}} </div>
+                    </td>
+                    <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell style="background-color: #fff !important;"> Total
+                    </th>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell></th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar" *ngIf="!element.scripName">{{singlePortfolio.ownerList[0].name}}</div>
+                        <div class="bar" *ngIf="element.scripName">{{element.ownerList[0].name}}</div>
+                    </td>
+                    <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+  
+                </ng-container>
+                <ng-container matColumnDef="bal">
+                    <th *matHeaderCellDef class="br text-right" mat-header-cell> Balance shares</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell></th>
+  
+                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                        <div class="bar">₹<span appFormatNumber>{{element.balanceShares}}</span></div>
+                    </td>
+                    <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+  
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <th *matHeaderCellDef class="br text-right" mat-header-cell> Average price</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell></th>
+  
+                    <td *matCellDef="let element" class="br  text-right" mat-cell>
+                        <div class="bar">₹<span appFormatNumber>{{element.averagePrice}}</span></div>
+                    </td>
+                    <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+  
+                </ng-container>
+                <ng-container matColumnDef="mprice">
+                    <th *matHeaderCellDef class="br text-right" mat-header-cell> Market price</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell></th>
+  
+                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                        <div class="bar">₹<span appFormatNumber>{{element.scripCurrentValue}}</span></div>
+                    </td>
+                    <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
+  
+        </ng-container>
+        <ng-container matColumnDef="amt">
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Amount invested</th>
+          <th *matHeaderCellDef class="br" mat-header-cell></th>
+  
+          <td *matCellDef="let element" class="br text-right" mat-cell>
+            <div class="bar">₹<span appFormatNumber>{{element.amountInvested}}</span></div>
+          </td>
+          <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+            ₹<span [value]="singlePortfolio.totalAmountInvested" appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Current value</th>
+          <th *matHeaderCellDef class="br" mat-header-cell></th>
+  
+          <td *matCellDef="let element" class="br text-right" mat-cell>
+            <div class="bar">₹<span appFormatNumber>{{element.currentMarketValue}}</span></div>
+          </td>
+          <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+            ₹<span [value]="singlePortfolio.totalCurrentValue" appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="gain">
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Unrealized gain/loss</th>
+          <th *matHeaderCellDef class="br" mat-header-cell></th>
+  
+          <td *matCellDef="let element" class="br text-right" mat-cell>
+            <div class="bar">₹<span appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
           </td>
         </ng-container>-->
                         <ng-container matColumnDef="groupHeader">
