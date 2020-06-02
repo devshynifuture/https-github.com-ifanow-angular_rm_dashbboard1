@@ -45,7 +45,7 @@ table {
 }
 
 ::ng-deep .add-new {
-    min-width: 300px;
+    min-width: 300px !important;
     .mat-menu-item {
         height: 90px;
         line-height: 28px;
