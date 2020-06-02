@@ -7,6 +7,10 @@
 .t-left {
   .mat-sort-header-container {
     float: left !important;
+
+    .mat-sort-header-button {
+      text-align: left !important;
+    }
   }
 }
 
@@ -161,7 +165,7 @@ table {
   }
 
   td.mat-footer-cell:first-of-type {
-    padding-left: 4px !important;
+    padding-left: 6px !important;
   }
 
   .greentext {

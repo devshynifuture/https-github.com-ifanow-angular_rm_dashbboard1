@@ -291,49 +291,7 @@
                   }
                 }
 
-                #ui-misreport {
-                  // margin-top: 65px;
 
-                  h3.top-head {
-                    @include heading;
-                  }
-
-                  li {
-                    padding-top: 5px;
-                    padding-bottom: 5px;
-                  }
-
-                  li:after {
-                    @include breadcrumbafter;
-                  }
-
-                  li:last-child:after {
-                    content: '';
-                  }
-
-                  a {
-                    text-decoration: none;
-                    color: #83959D;
-                  }
-
-                  .mat-tab-label {
-                    padding: 0px 15px !important;
-                    font-weight: 500;
-                    font-size: 13px;
-                    line-height: 16px;
-                    color: #595252;
-                    text-transform: uppercase;
-                  }
-
-                  .actions {
-                    color: #757575;
-                    text-align: right;
-                  }
-
-                  .mat-progress-bar-fill::after {
-                    background-color: $white;
-                  }
-                }
 
                 #ui-dashboard {
                   .h-513 {
@@ -1237,7 +1195,7 @@
                 .real-estate,
                 .gold,
                 .other,
-                .superannuation,
+                .cash-bank .superannuation,
                 .mutualfunds-capital-equity,
                 .mutualfunds-capital-debt,
                 .mutualfunds-capital-dividend-summary,
@@ -2139,3 +2097,5 @@
                   border-left: transparent;
                   border-right: transparent;
                 }
+
+                .cash-bank {}

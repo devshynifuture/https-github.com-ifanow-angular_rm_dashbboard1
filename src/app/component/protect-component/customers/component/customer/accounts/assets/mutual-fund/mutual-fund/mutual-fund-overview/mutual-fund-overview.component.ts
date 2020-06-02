@@ -91,6 +91,8 @@ export class MutualFundOverviewComponent implements OnInit {
   clientData: any;
   getAdvisorDetail: any;
   reportDate: Date;
+  details: any;
+  addedData: boolean;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
@@ -98,6 +100,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
     this.getAdvisorDetail = AuthService.getAdvisorDetails()
+    this.details = AuthService.getProfileDetails();
     console.log('advisorData', this.userInfo)
     console.log('clientData', this.clientData)
     console.log('getAdvisorDetail', this.getAdvisorDetail)
@@ -308,7 +311,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.MfServiceService.changeShowMutualFundDropDown(false);
       this.filterData = this.MfServiceService.doFiltering(data);
       if (!this.rightFilterData) {
-        if (this.mutualFund == '') {
+        if (this.addedData == true || this.mutualFund == '') {
           this.mutualFund = this.filterData
         } else {
           this.mfService.getMfData()
@@ -322,11 +325,11 @@ export class MutualFundOverviewComponent implements OnInit {
           this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         }
         this.MfServiceService.setFilterValues(this.setDefaultFilterData);
-        if(!this.mfGetData){
+        if(this.addedData == true || !this.mfGetData){
           this.MfServiceService.setDataForMfGet(this.mutualFund);
         }
         this.MfServiceService.setMfData(this.mutualFund);
-
+        this.addedData = false;
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.mfData = data;
@@ -677,6 +680,7 @@ export class MutualFundOverviewComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.addedData = true;
             this.getMutualFundData();
           }
           rightSideDataSub.unsubscribe();

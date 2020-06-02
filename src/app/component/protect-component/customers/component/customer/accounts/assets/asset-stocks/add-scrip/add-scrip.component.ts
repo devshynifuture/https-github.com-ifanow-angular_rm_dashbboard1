@@ -13,6 +13,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 export class AddScripComponent implements OnInit {
   advisorId: any;
   clientId: any;
+  maxDate = new Date();
 
   constructor(private eventService: EventService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddScripComponent>, private cusService: CustomerService) { }
 

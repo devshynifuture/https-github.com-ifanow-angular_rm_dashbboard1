@@ -59,7 +59,8 @@
             <td mat-footer-cell class="br text-right pr-20 f-600" *matFooterCellDef> Total</td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
+                class="br w-11 right-hcb text-right hide-arrow">
                 Current value
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -71,7 +72,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-8 right-hcb text-right  "> Rate
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef
+                class="br w-8 right-hcb text-right hide-arrow "> Rate
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading ?'%':''}} </div>
@@ -79,7 +81,8 @@
             <td mat-footer-cell class="br text-left" *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="invested">
-            <th mat-sort-header="invested" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right">
+            <th mat-sort-header="invested" mat-header-cell *matHeaderCellDef
+                class="br w-11 right-hcb text-right hide-arrow">
                 Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -89,7 +92,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right">
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef
+                class="br w-11 right-hcb text-right hide-arrow">
                 Maturity value
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">

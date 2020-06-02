@@ -1,13 +1,13 @@
 <div [formGroup]="portfolioForm" class="form-group mb-0">
     <mat-form-field>
-        <mat-select class="form-control br-0" formControlName="portfolioName"
-            >
+        <mat-select class="form-control br-0" formControlName="portfolioName">
             <mat-option value=''>Select portfolio</mat-option>
             <mat-option [value]="singlePortfolio.portfolioName" (click)="selectPortfolio(singlePortfolio)" *ngFor="let singlePortfolio of familyWisePortfolio">
                 {{singlePortfolio.portfolioName}}
             </mat-option>
-            <mat-option (click)="openAddPortfolio()"><strong><i class="material-icons">add</i>New
-                    Portfolio</strong></mat-option>
+            <mat-option class="flexCenter" (click)="openAddPortfolio()">
+                <i class="material-icons">add</i> New Portfolio
+            </mat-option>
         </mat-select>
         <mat-error>This field is required</mat-error>
     </mat-form-field>

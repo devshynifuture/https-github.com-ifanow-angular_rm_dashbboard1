@@ -6,6 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import { objectEach } from 'highcharts';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -13,6 +14,21 @@ import { objectEach } from 'highcharts';
   styleUrls: ['./stock-scrip-level-holding.component.scss']
 })
 export class StockScripLevelHoldingComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   scipLevelHoldingForm: any;
   ownerData: any;
   advisorId: any;
@@ -322,6 +338,8 @@ addNewNominee(data) {
       })
     }
     else{
+      this.barButtonOptions.active = true;
+
       // if (this.editApiData) {
       //   let finalStocks = []
       //   this.HoldingArray.controls.forEach(element => {
@@ -439,9 +457,13 @@ addNewNominee(data) {
           this.cusService.editStockData(obj).subscribe(
             data => {
               console.log(data);
+              this.barButtonOptions.active = false;
               this.Close();
             },
-            error => this.eventService.showErrorMessage(error)
+            error => {
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
           )
         }
         else{
@@ -450,8 +472,12 @@ addNewNominee(data) {
             data => {
               console.log(data);
               this.Close();
+              this.barButtonOptions.active = false;
             },
-            error => this.eventService.showErrorMessage(error)
+            error => {
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
           )
         }
       // }

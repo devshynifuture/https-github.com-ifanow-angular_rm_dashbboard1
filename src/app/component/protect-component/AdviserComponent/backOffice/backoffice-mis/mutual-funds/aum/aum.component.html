@@ -17,7 +17,8 @@
                     </button>
                     <mat-menu #menu="matMenu">
                         <div *ngFor="let item of arnRiaList">
-                            <button (click)="changeValueOfArnRia(item)" mat-menu-item [value]="item.value">{{item.number}}</button>
+                            <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                [value]="item.value">{{item.number}}</button>
                         </div>
                     </mat-menu>
                 </div>
@@ -28,33 +29,38 @@
                     <div class="col-md-9 p-0">
                         <div class="row">
                             <div class="col-md-4 pr-0">
-                                <div class="bg-aum pt-24 pb-24 text-center br-2 height180">
-                                    <h1 *ngIf="MiscData1" class="text-white f-44 f-300 pt-32">
-                                        {{MiscData1.totalAumRupees}}
-                                    </h1>
-                                    <p class="f-16 pt-4 text-white">TOTAL AUM</p>
+                                <div class="bg-grey lter pt-24 pb-24 text-center br-2 height180">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0">
+                                            <h1 *ngIf="MiscData1" class="text-diff f-44 f-300 pt-32">
+                                                {{MiscData1.totalAumRupees}}
+                                            </h1>
+                                            <p class="f-16 pt-4 text-diff">TOTAL AUM</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4 pr-0">
-                                <div class="bg-foliocount br-2 height180 pr-20 pl-12">
+                                <div class="bg-grey lter br-2 height180 pr-20 pl-12">
                                     <div class="row pt-12">
                                         <div *ngIf="MiscData1" class="col-md-5 text-left p-0">
                                             <div class="pl-12">
-                                                <h1 class="f-24 text-white mb-0 pb-8">{{MiscData1.totalFolioCount}}
+                                                <h1 class="f-24 ttext-diff mb-0 pb-8">{{MiscData1.totalFolioCount}}
                                                 </h1>
-                                                <p class="f-12 text-white mb-0">Folio Count</p>
+                                                <p class="f-12 text-diff mb-0">Folio Count</p>
                                             </div>
                                         </div>
                                         <div *ngIf="MiscData1" class="col-md-7 p-0 text-right">
-                                            <h1 class="text-white f-24 mb-0 pb-8"><span appFormatNumber>{{MiscData1.averageFolioSize}}</span>
+                                            <h1 class="text-diff f-24 mb-0 pb-8"><span
+                                                    appFormatNumber>{{MiscData1.averageFolioSize}}</span>
                                             </h1>
-                                            <p class="f-12 mb-0 text-white">Average Folio Size</p>
+                                            <p class="f-12 mb-0 text-diff">Average Folio Size</p>
                                         </div>
                                         <div class="col-md-12 pr-0">
                                             <div class="pt-20">
-                                                <mat-progress-bar class="text-white" mode="determinate" value="10">
+                                                <mat-progress-bar class="text-diff" mode="determinate" value="10">
                                                 </mat-progress-bar>
-                                                <p class="text-white f-12 pt-4 mb-0 pb-8">10 % Clients without MF
+                                                <p class="text-diff f-12 pt-4 mb-0 pb-8">10 % Clients without MF
                                                 </p>
                                             </div>
                                         </div>
@@ -62,13 +68,14 @@
                                 </div>
                             </div>
                             <div class="col-md-4 pr-0">
-                                <div class="bg-goal p-16 br-2 pt-12 height180">
+                                <div class="bg-grey lter p-16 br-2 pt-12 height180">
                                     <div class="row">
                                         <div class="col-md-12 p-0">
                                             <div class="text-center">
-                                                <h1 class="text-white f-300 f-40 mb-4 pt-8">13.22%</h1>
+                                                <h1 class="text-diff f-300 f-40 mb-4 pt-8">13.22%</h1>
 
-                                                <p class="text-white f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4% (716 folios) are currently linked to financial goals of your clients
+                                                <p class="text-diff f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4% (716
+                                                    folios) are currently linked to financial goals of your clients
                                                 </p>
                                             </div>
                                         </div>
@@ -76,13 +83,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mt-20">
+                            <div class="col-md-12 mt-24">
                                 <p class=" f-16 mb-4 text-muted">Filter Options</p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 d-flex">
+                            <div class="col-md-12 d-flex pr-0">
                                 <div class="width183 borderLine">
                                     <div class="row">
                                         <div class="col-md-3 pt-12 pl-8">

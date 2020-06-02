@@ -24,7 +24,7 @@ export class PlansSettingsComponent implements OnInit {
   button: any;
 
   //showLoader;
-  planSettingData:any = [];
+  planSettingData: any = [];
   isLoading = false;
   advisorId;
 
@@ -55,15 +55,15 @@ export class PlansSettingsComponent implements OnInit {
   }
 
   getSettingsPlanResponse(data) {
-    if(data != undefined){
-    this.isLoading = false;
-    for(let p of data){
-      p['read'] = false;
+    if (data != undefined) {
+      this.isLoading = false;
+      for (let p of data) {
+        p['read'] = false;
+      }
+      this.planSettingData = data;
+
     }
-    this.planSettingData = data;
-    
-    }
-    else{
+    else {
       this.planSettingData = [];
     }
     //this.showLoader = false;
@@ -104,7 +104,7 @@ export class PlansSettingsComponent implements OnInit {
 
 
   openFragment(singlePlan, data) {
-    this.location.replaceState('/subscription-upper');
+    // this.location.replaceState('/subscription-upper');
     (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
     const fragmentData = {
       flag: 'plan',
@@ -120,7 +120,7 @@ export class PlansSettingsComponent implements OnInit {
     AuthService.setSubscriptionUpperSliderData(fragmentData)
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
-        
+
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
             this.planSettingData = [{}, {}];

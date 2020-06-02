@@ -242,6 +242,10 @@ export class LoginComponent implements OnInit {
             }
           },
           err => {
+            if (err == "Something went wrong !") {
+              this.eventService.openSnackBar(err, "Dismiss")
+              return
+            }
             // console.error(err);
             // this.eventService.openSnackBar(err, 'Dismiss');
             (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');

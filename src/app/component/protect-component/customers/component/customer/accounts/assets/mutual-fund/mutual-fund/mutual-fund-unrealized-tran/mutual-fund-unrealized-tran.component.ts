@@ -1,18 +1,18 @@
-import {AuthService} from './../../../../../../../../../../auth-service/authService';
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {MfServiceService} from '../../mf-service.service';
-import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {map} from 'rxjs/operators';
-import {DatePipe} from '@angular/common';
-import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
+import { AuthService } from './../../../../../../../../../../auth-service/authService';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MfServiceService } from '../../mf-service.service';
+import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -39,14 +39,17 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mutualFundListFilter: any[];
   isSpinner = false;
   customDataHolder = [];
-  customDataSource = new TableVirtualScrollDataSource([]);
-  @ViewChild('tableEl', {static: false}) tableEl;
-  rightFilterData: any = {reportType: ''};
+  customDataSource = new TableVirtualScrollDataSource();
+  @ViewChild('tableEl', { static: false }) tableEl;
+  rightFilterData: any = { reportType: '' };
   adviorData: any;
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   // displayedColumns: string[];
+  userInfo = AuthService.getUserInfo();
+  clientData = AuthService.getClientData();
+  details = AuthService.getProfileDetails();
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
   viewMode: string = '';
@@ -65,12 +68,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   selectedLoadData: any;
   showDownload: boolean = false;
   columnHeader: any;
-  pdfDataFornTRansaction:any;
+  pdfDataFornTRansaction: any;
+  addedData: boolean;
+  reportDate: Date;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
-              private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private excel: ExcelGenService,
-              private custumService: CustomerService, private eventService: EventService,
+    private subInjectService: SubscriptionInject, private utilService: UtilService,
+    private mfService: MfServiceService, private excel: ExcelGenService,
+    private custumService: CustomerService, private eventService: EventService,
               /*private changeDetectorRef: ChangeDetectorRef*/) {
   }
 
@@ -87,6 +92,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reportDate = new Date()
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -172,6 +178,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
               }
             });
+            if (this.viewMode == 'Unrealized Transactions'){
+              this.displayedColumns.forEach(element => {
+                this.styleObjectUnrealised(element)
+              });
+            }else{
+              this.displayedColumns.forEach(element => {
+                this.styleObjectTransaction(element)
+              });
+            }
           } else {
             transactionView.forEach(element => {
               if (element.selected == true) {
@@ -228,7 +243,56 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     );
 
   }
+  styleObjectTransaction(header) {
 
+    if (header == 'no') {
+      Object.assign(this.customDataSource.data, { no: true });
+    } else if (header == 'transactionType') {
+      Object.assign(this.customDataSource.data, { transactionType: true });
+    } else if (header == 'transactionDate') {
+      Object.assign(this.customDataSource.data, { transactionDate: true });
+    } else if (header == 'transactionAmount') {
+      Object.assign(this.customDataSource.data, { transactionAmount: true });
+    } else if (header == 'transactionNav') {
+      Object.assign(this.customDataSource.data, { transactionNav: true });
+    } else if (header == 'units') {
+      Object.assign(this.customDataSource.data, { units: true });
+    } else if (header == 'balanceUnits') {
+      Object.assign(this.customDataSource.data, { balanceUnits: true });
+    } else if (header == 'days') {
+      Object.assign(this.customDataSource.data, { days: true });
+    }
+
+  }
+  styleObjectUnrealised(header){
+    if (header == 'no') {
+      Object.assign(this.customDataSource.data, { no: true });
+    } else if (header == 'transactionType') {
+      Object.assign(this.customDataSource.data, { transactionType: true });
+    } else if (header == 'transactionDate') {
+      Object.assign(this.customDataSource.data, { transactionDate: true });
+    } else if (header == 'transactionAmount') {
+      Object.assign(this.customDataSource.data, { transactionAmount: true });
+    } else if (header == 'transactionNav') {
+      Object.assign(this.customDataSource.data, { transactionNav: true });
+    } else if (header == 'currentValue') {
+      Object.assign(this.customDataSource.data, { currentValue: true });
+    }  else if (header == 'dividendPayout') {
+      Object.assign(this.customDataSource.data, { dividendPayout: true });
+    }  else if (header == 'dividendReinvest') {
+      Object.assign(this.customDataSource.data, { dividendReinvest: true });
+    }  else if (header == 'totalAmount') {
+      Object.assign(this.customDataSource.data, { totalAmount: true });
+    }  else if (header == 'units') {
+      Object.assign(this.customDataSource.data, { units: true });
+    } else if (header == 'gain') {
+      Object.assign(this.customDataSource.data, { gain: true });
+    } else if (header == 'absReturn') {
+      Object.assign(this.customDataSource.data, { absReturn: true });
+    }else if (header == 'xirr') {
+      Object.assign(this.customDataSource.data, { xirr: true });
+    }
+  }
   initValueOnInit() {
 
     if (this.mutualFund.mutualFundList.length > 0) {
@@ -298,6 +362,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (data) {
       this.mfData = data;
       // this.mutualFund = data;
+      if(this.addedData){
+        this.mfService.setDataForMfGet(this.mfData);
+        this.mfService.setMfData(this.mfData);
+      }
+      this.addedData=false;
       this.mfService.changeShowMutualFundDropDown(false);
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
@@ -342,8 +411,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     // list =(this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
     list.forEach(element => {
       element.navDate = new Date(element.navDate);
-      if(element.toDate){
-        element.toDate =new Date(element.toDate);
+      if (element.toDate) {
+        element.toDate = new Date(element.toDate);
       }
       element.mutualFundTransactions = [];
       // element.mutualFundTransactions.forEach(element => {
@@ -394,8 +463,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
-      worker.onmessage = ({data}) => {
+      const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
+      worker.onmessage = ({ data }) => {
         console.log('startTime ', new Date());
         console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
@@ -404,6 +473,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
         this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
+        if(this.viewMode == 'All Transactions'|| this.viewMode == 'all transactions'){
+          this.displayedColumns.forEach(element => {
+            this.styleObjectTransaction(element)
+          });
+        }else{
+          this.displayedColumns.forEach(element => {
+            this.styleObjectUnrealised(element)
+          });
+        }
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         this.changeInput.emit(false);
@@ -450,26 +528,27 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     });
     // this.mfService.getMutualFundData()
     //   .subscribe(res => {
-        const fragmentData = {
-          flag: 'editTransaction',
-          data: {family_member_list: ['family_member_list'], flag, ...element, ...this.selectedLoadData},
-          id: 1,
-          state: 'open',
-          componentName: MFSchemeLevelHoldingsComponent
-        };
-        const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-          sideBarData => {
-            // console.log('this is sidebardata in subs subs : ', sideBarData);
-            if (UtilService.isDialogClose(sideBarData)) {
-              if (UtilService.isRefreshRequired(sideBarData)) {
-                this.getMutualFund();
-              }
-              // console.log('this is sidebardata in subs subs 2: ', sideBarData);
-              rightSideDataSub.unsubscribe();
-            }
+    const fragmentData = {
+      flag: 'editTransaction',
+      data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedLoadData },
+      id: 1,
+      state: 'open',
+      componentName: MFSchemeLevelHoldingsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.addedData=true;
+            this.getMutualFund();
           }
-        );
-      // });
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+    // });
 
   }
 
@@ -494,7 +573,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           id: element.id,
           unit: element.unit,
           effect: element.effect,
-          mutualFundId:  this.selectedLoadData.id
+          mutualFundId: this.selectedLoadData.id
         };
         requestJsonObj = {
           freezeDate: element.freezeDate ? element.freezeDate : null,
@@ -506,10 +585,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             if (res) {
               this.isLoading = true;
               this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-                  if (res) {
-                    this.getMutualFund();
-                    console.log("again re hitting mutual fund get:::", res)
-                  }
+              if (res) {
+                this.addedData=true;
+                this.getMutualFund();
+                console.log("again re hitting mutual fund get:::", res)
+              }
             }
           })
 
@@ -680,7 +760,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test','true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', 'true', this.fragmentData, '', '');
     }, 200);
 
     // if(data){

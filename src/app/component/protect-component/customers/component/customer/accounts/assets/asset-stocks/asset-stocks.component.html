@@ -1,5 +1,5 @@
 <div class="wrapper-8 pb-44">
-  <!-- <div class="row">
+    <!-- <div class="row">
     <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
       <button [matMenuTriggerFor]="menu" class="ba-black br-0" mat-stroked-button>
         Overview Report
@@ -15,22 +15,22 @@
       </mat-menu>
     </div>
   </div> -->
-  <div class="row pt-24">
-    <div class="col-md-4 p-0">
-      <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
-    </div>
-    <div *ngIf="portfolioData!=undefined" class="col-md-8 p-0 right text-right">
-      <img src="assets/images/svg/download-bordered.svg" class="c-p">
-      <img src="assets/images/svg/up-down.svg" class="c-p">
-      <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-      <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+    <div class="row pt-24">
+        <div class="col-md-4 p-0">
+            <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
+        </div>
+        <div *ngIf="portfolioData!=undefined" class="col-md-8 p-0 right text-right">
+            <img src="assets/images/svg/download-bordered.svg" class="c-p">
+            <img src="assets/images/svg/up-down.svg" class="c-p">
+            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
           class="material-icons">filter_list</i>FILTERS
       </button>
-      <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
+            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
           class="material-icons">add</i>ADD NEW
       </button>
-      <mat-menu #menu1="matMenu" class="add-new">
-        <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
+            <mat-menu #menu1="matMenu" class="add-new">
+                <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
           <div class="row">
             <div class="col-md-2 pr-8 text-right">
               <img src="assets/images/svg/dark-three-dot.svg">
@@ -43,7 +43,7 @@
             </div>
           </div>
         </button>
-        <button (click)="openAddStock('holding',null)" mat-menu-item class="b-b">
+                <button (click)="openAddStock('holding',null)" mat-menu-item class="b-b">
           <div class="row">
             <div class="col-md-2 pr-8 text-right">
               <img src="assets/images/svg/dark-download.svg">
@@ -56,7 +56,7 @@
             </div>
           </div>
         </button>
-        <button (click)="openAddStock('transaction',null)" mat-menu-item class="b-b">
+                <button (click)="openAddStock('transaction',null)" mat-menu-item class="b-b">
           <div class="row">
             <div class="col-md-2 pr-8 text-right">
               <img src="assets/images/svg/scheme-icon.svg">
@@ -69,9 +69,9 @@
             </div>
           </div>
         </button>
-      </mat-menu>
+            </mat-menu>
+        </div>
     </div>
-  </div>
   <div class="overflow-y">
     <div class="row pt-12 w-1024">
       <div class="col-md-5 pl-0 pr-4">
@@ -82,7 +82,7 @@
           <div class="col-md-12 p-0">
             <p class="m-0 text-custom pt-16 pl-8 roboto">Current value</p>
             <h2 *ngIf="assetStockData" appFormatNumber class="m-0 f-300 text-black pt-4 pl-8 pb-24">
-              ₹<span [value]="assetStockData.grandTotalCurrentValue" appFormatNumber>{{assetStockData.grandTotalCurrentValue}}</span>
+              ₹<span [value]="assetStockData.grandTotalCurrentValue" appFormatNumber>{{assetStockData.grandTotalCurrentValue?'assetStockData.grandTotalCurrentValue':0}}</span>
             </h2>
           </div>
           <div class="col-md-12 p-0">
@@ -90,19 +90,19 @@
               <div class="col-md-4 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Amount invested</p>
                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
-                  ₹<span [value]="assetStockData.grandTotalAmountInvested" appFormatNumber>{{assetStockData.grandTotalAmountInvested}}</span>
+                  ₹<span [value]="assetStockData.grandTotalAmountInvested" appFormatNumber>{{assetStockData.grandTotalAmountInvested?'assetStockData.grandTotalAmountInvested':0}}</span>
                 </h5>
               </div>
               <div class="col-md-5 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
-                  ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss}}</span>
+                  ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss?'assetStockData.grandTotalUnrealizedGainLoss':0}}</span>
                 </h5>
               </div>
               <div class="col-md-3 pr-0 pl-12">
                 <p class="text-custom m-0 roboto">Returns</p>
                 <h5 *ngIf="assetStockData" class="m-0 text-danger">
-                  ₹<span [value]="assetStockData.grandTotalAbsReturns" appFormatNumber>{{assetStockData.grandTotalAbsReturns}}</span>
+                  ₹<span [value]="assetStockData.grandTotalAbsReturns" appFormatNumber>{{assetStockData.grandTotalAbsReturns?'assetStockData.grandTotalAbsReturns':0}}</span>
                   <i class="material-icons text-danger v-sub f-18 f-700">
                     arrow_upward
                   </i>
@@ -114,170 +114,168 @@
       </div>
       <div class="col-md-7 pl-4 pr-0" *ngIf="categories">
         <div class="row">
-          <div class="col-md-4 p-0 b-a">
-            <div class="highcharts-figure" id="piechartStock"></div>
+          <div class="col-md-4 p-0 b-a" *ngIf="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS">
+            <div  class="highcharts-figure" id="piechartStock"></div>
           </div>
-          <div class="col-md-8 b-a bl-0 p-0">
+          <div class=" b-a p-0" [ngClass]="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS?'col-md-8':'col-md-12'" [ngStyle]="{'border-left':categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS? 'none':''}">
             <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
-                <div class="hw-16 mt-2 bg-primary"></div>
+                  <div class="hw-16 mt-2 bg-primary"></div>
               </div>
               <div class="col-md-6">
-                <p class="f-500 text-black mb-0">Banking</p>
+                  <p class="f-500 text-black mb-0">Banking</p>
               </div>
-              <div class="col-md-3 pl-0"  >
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <span   >₹0</span>
+              <div class="col-md-3 pl-0">
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <span>₹0</span>
               </div>
-             
-              <div class="col-md-2 pl-0"  >
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+
+              <div class="col-md-2 pl-0">
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
               </div>
-             
-            </div>
-            <div class="row b-b pt-10 pb-10">
+
+          </div>
+          <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
-                <div class="hw-16 mt-2 bg-success"></div>
+                  <div class="hw-16 mt-2 bg-success"></div>
               </div>
               <div class="col-md-6">
-                <p class="f-500 text-black mb-0">Information technology</p>
+                  <p class="f-500 text-black mb-0">Information technology</p>
               </div>
-              <div class="col-md-3 pl-0"  >
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <span   >₹0</span>
+              <div class="col-md-3 pl-0">
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <span>₹0</span>
               </div>
-             
-              <div class="col-md-2 pl-0"  >
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+
+              <div class="col-md-2 pl-0">
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
               </div>
-            </div>
-            <div class="row b-b pt-10 pb-10">
+          </div>
+          <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
-                <div class="hw-16 mt-2 bg-warning"></div>
+                  <div class="hw-16 mt-2 bg-warning"></div>
               </div>
               <div class="col-md-6">
-                <p class="f-500 text-black mb-0">FMCG</p>
+                  <p class="f-500 text-black mb-0">FMCG</p>
               </div>
-              <div class="col-md-3 pl-0"  >
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <span   >₹0</span>
+              <div class="col-md-3 pl-0">
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <span>₹0</span>
               </div>
-             
-              <div class="col-md-2 pl-0"  >
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+
+              <div class="col-md-2 pl-0">
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
               </div>
-            </div>
-            <div class="row b-b pt-10 pb-10">
+          </div>
+          <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
-                <div class="hw-16 mt-2 bg-danger"></div>
+                  <div class="hw-16 mt-2 bg-danger"></div>
               </div>
               <div class="col-md-6">
-                <p class="f-500 text-black mb-0">Auto ancillaries</p>
+                  <p class="f-500 text-black mb-0">Auto ancillaries</p>
               </div>
               <div class="col-md-3 pl-0" *ngIf="categories.Auto_Ancillaries == undefined">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <span >₹0</span>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <span>₹0</span>
               </div>
               <div class="col-md-3 pl-0" *ngIf="categories.Auto_Ancillaries != undefined">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                {{categories.Auto_Ancillaries?'₹':''}}<span [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  {{categories.Auto_Ancillaries?'₹':''}}<span [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
               </div>
               <div class="col-md-2 pl-0" *ngIf="categories.Auto_Ancillaries == undefined">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
               </div>
               <div class="col-md-2 pl-0" *ngIf="categories.Auto_Ancillaries != undefined">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}%</p>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}%</p>
               </div>
-            </div>
-            <div class="row pt-10 pb-10">
+          </div>
+          <div class="row pt-10 pb-10">
               <div class="col-md-1">
-                <div class="hw-16 mt-2 bg-grey dker"></div>
+                  <div class="hw-16 mt-2 bg-grey dker"></div>
               </div>
               <div class="col-md-6">
-                <p class="f-500 text-black mb-0">Others</p>
+                  <p class="f-500 text-black mb-0">Others</p>
               </div>
               <div class="col-md-3 pl-0" *ngIf="!categories.OTHERS">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <span >₹0</span>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <span>₹0</span>
               </div>
               <div class="col-md-3 pl-0" *ngIf="categories.OTHERS">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
               </div>
               <div class="col-md-2 pl-0" *ngIf="!categories.OTHERS">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0" >{{0 | number: '1.2-2'}}%</p>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
               </div>
               <div class="col-md-2 pl-0" *ngIf="categories.OTHERS">
-                <!-- <p class="text-black mb-0">23.43%</p> -->
-                <p class="text-black mb-0">{{categories.OTHERS.perrcentage | number: '1.2-2'}}%</p>
+                  <!-- <p class="text-black mb-0">23.43%</p> -->
+                  <p class="text-black mb-0">{{categories.OTHERS.perrcentage | number: '1.2-2'}}%</p>
               </div>
-            </div>
           </div>
+           
         </div>
-      </div>
     </div>
   </div>
-  <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
-    <div class="col-md-12 p-0">
-      <div class="bg-white">
-        <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}}
-          | {{singlePortfolio.ownerName}}</h5>
-      </div>
-    </div>
-    <div class="stock-overview">
-      <table [dataSource]="singlePortfolio.stockList" mat-table id="table-low">
-        <!-- <ng-container matColumnDef="static-header">
+    <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
+        <div class="col-md-12 p-0">
+            <div class="bg-white">
+                <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}} | {{singlePortfolio.ownerName}}
+                </h5>
+            </div>
+        </div>
+        <div class="stock-overview">
+            <table [dataSource]="singlePortfolio.stockList" mat-table id="table-low">
+                <!-- <ng-container matColumnDef="static-header">
            <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
                class=" text-center text-primary bg-white" mat-header-cell>
              dasdasdasd
            </td>
          </ng-container>-->
-        <ng-container matColumnDef="scrip">
-          <th *matHeaderCellDef class="br" mat-header-cell> Scrip</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar" >{{element.scripName}} </div>
-          </td>
-          <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell
-            style="background-color: #fff !important;"> Total
-          </th>
-        </ng-container>
-        <ng-container matColumnDef="owner">
-          <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
-          <td mat-cell *matCellDef="let element" class="br">
-            <div class="bar" *ngIf="!element.scripName">{{singlePortfolio.ownerList[0].name}}</div>
-            <div class="bar" *ngIf="element.scripName">{{element.ownerList[0].name}}</div>
-        </td>
-          <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+                <ng-container matColumnDef="scrip">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Scrip</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar">{{element.scripName}} </div>
+                    </td>
+                    <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell style="background-color: #fff !important;"> Total
+                    </th>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar" *ngIf="!element.scripName">{{singlePortfolio.ownerList[0].name}}</div>
+                        <div class="bar" *ngIf="element.scripName">{{element.ownerList[0].name}}</div>
+                    </td>
+                    <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
-        </ng-container>
-        <ng-container matColumnDef="bal">
-          <th *matHeaderCellDef class="br text-right" mat-header-cell> Balance shares</th>
-          <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar">₹<span appFormatNumber>{{element.balanceShares}}</span></div>
-          </td>
-          <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+                </ng-container>
+                <ng-container matColumnDef="bal">
+                    <th *matHeaderCellDef class="br text-right" mat-header-cell> Balance shares</th>
+                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                        <div class="bar">₹<span appFormatNumber>{{element.balanceShares}}</span></div>
+                    </td>
+                    <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
-        </ng-container>
-        <ng-container matColumnDef="price">
-          <th *matHeaderCellDef class="br text-right" mat-header-cell> Average price</th>
-          <td *matCellDef="let element" class="br  text-right" mat-cell>
-            <div class="bar">₹<span appFormatNumber>{{element.averagePrice}}</span></div>
-          </td>
-          <th *matFooterCellDef class="br text-right" mat-header-cell></th>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <th *matHeaderCellDef class="br text-right" mat-header-cell> Average price</th>
+                    <td *matCellDef="let element" class="br  text-right" mat-cell>
+                        <div class="bar">₹<span appFormatNumber>{{element.averagePrice}}</span></div>
+                    </td>
+                    <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
-        </ng-container>
-        <ng-container matColumnDef="mprice">
-          <th *matHeaderCellDef class="br text-right" mat-header-cell> Market price</th>
-          <td *matCellDef="let element" class="br text-right" mat-cell>
-            <div class="bar">₹<span appFormatNumber>{{element.scripCurrentValue}}</span></div>
-          </td>
-          <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
+                </ng-container>
+                <ng-container matColumnDef="mprice">
+                    <th *matHeaderCellDef class="br text-right" mat-header-cell> Market price</th>
+                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                        <div class="bar">₹<span appFormatNumber>{{element.scripCurrentValue}}</span></div>
+                    </td>
+                    <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
 
         </ng-container>
         <ng-container matColumnDef="amt">
@@ -315,13 +313,13 @@
             ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
           </td>
         </ng-container>
-        <ng-container matColumnDef="xirr">
+        <!-- <ng-container matColumnDef="xirr">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> XIRR %</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
             <div class="bar">{{element.xirr}}</div>
           </td>
           <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>{{ singlePortfolio.xirr}}</td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="dividend">
           <th *matHeaderCellDef class="br text-right" mat-header-cell> Dividend</th>
           <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -336,38 +334,38 @@
         </ng-container>
 
 
-        <ng-container matColumnDef="icons">
-          <th *matHeaderCellDef class="" mat-header-cell></th>
-          <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
-              class="material-icons c-p text-black">
+                <ng-container matColumnDef="icons">
+                    <th *matHeaderCellDef class="" mat-header-cell></th>
+                    <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25" class="material-icons c-p text-black">
               more_vert
             </i>
-            <mat-menu #menu25="matMenu">
-              <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
-              <button mat-menu-item>Detailed view</button>
-              <!-- <button mat-menu-item>Activity</button> -->
-              <button mat-menu-item (click)="deleteModal('STOCK',element)">Delete</button>
-            </mat-menu>
-          </td>
+                        <mat-menu #menu25="matMenu">
+                            <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
+                            <button mat-menu-item>Detailed view</button>
+                            <!-- <button mat-menu-item>Activity</button> -->
+                            <button mat-menu-item (click)="deleteModal('STOCK',element)">Delete</button>
+                        </mat-menu>
+                    </td>
 
-          <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell></td>
-        </ng-container>
-        <tr *matHeaderRowDef="displayedColumns25; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns25;" mat-row></tr>
-        <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-        <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr>
+                    <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell></td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns25; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns25;" mat-row></tr>
+                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
+                <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr>
 
-        <!--        <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>-->
-      </table>
+                <!--        <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>-->
+            </table>
+        </div>
     </div>
-  </div>
-  <div *ngIf="portfolioData==undefined" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">{{noData }}</h4>
-    <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
+    <div *ngIf="portfolioData==undefined" class="d-flex flex-column align-items-center">
+        <img src="assets/images/svg/documents-empty-states.svg">
+        <h4 class="text-center mt-12 mb-20">{{noData }}</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
     </button>
-    <mat-menu #menu1="matMenu" class="add-new">
-      <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
+
+        <mat-menu #menu1="matMenu" class="add-new">
+            <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
         <div class="row">
           <div class="col-md-2 pr-8 text-right">
             <img src="assets/images/svg/dark-three-dot.svg">
@@ -380,7 +378,7 @@
           </div>
         </div>
       </button>
-      <button (click)="openAddStock('holding',null)" mat-menu-item class="b-b">
+            <button (click)="openAddStock('holding',null)" mat-menu-item class="b-b">
         <div class="row">
           <div class="col-md-2 pr-8 text-right">
             <img src="assets/images/svg/dark-download.svg">
@@ -393,7 +391,7 @@
           </div>
         </div>
       </button>
-      <button (click)="openAddStock('transaction',null)" mat-menu-item class="b-b">
+            <button (click)="openAddStock('transaction',null)" mat-menu-item class="b-b">
         <div class="row">
           <div class="col-md-2 pr-8 text-right">
             <img src="assets/images/svg/scheme-icon.svg">
@@ -406,85 +404,7 @@
           </div>
         </div>
       </button>
-    </mat-menu>
-  </div>
+        </mat-menu>
+    </div>
 
-  <!-- <div class="row pt-12">
-      <div class="col-md-12 p-0">
-          <div class="bg-white">
-              <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">SHAREKHAN PORTFOLIO | SHILPA JAIN</h5>
-          </div>
-      </div>
-      <div class="stock-overview" id="table-low">
-          <table mat-table [dataSource]="dataSource25">
-              <ng-container matColumnDef="static-header">
-                  <td mat-header-cell *matHeaderCellDef colspan="12" class=" text-center text-primary bg-white">
-                      Pharmaceuticals
-                  </td>
-              </ng-container>
-              <ng-container matColumnDef="scrip">
-                  <th mat-header-cell *matHeaderCellDef class="br t-18"> Scrip </th>
-                  <td mat-cell *matCellDef="let element" class="br t-18"> {{element.scrip}} </td>
-              </ng-container>
-              <ng-container matColumnDef="owner">
-                  <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
-                  <td mat-cell *matCellDef="let element" class="br t-18"> {{element.owner}} </td>
-              </ng-container>
-              <ng-container matColumnDef="bal">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance shares </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.bal}} </td>
-              </ng-container>
-              <ng-container matColumnDef="price">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Average price </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.price}} </td>
-              </ng-container>
-              <ng-container matColumnDef="mprice">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Market price </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.mprice}} </td>
-              </ng-container>
-              <ng-container matColumnDef="amt">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Amount invested </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.amt}} </td>
-              </ng-container>
-              <ng-container matColumnDef="cvalue">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Current value </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.cvalue}} </td>
-              </ng-container>
-              <ng-container matColumnDef="gain">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Unrealized gain/loss </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.gain}} </td>
-              </ng-container>
-              <ng-container matColumnDef="ret">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Absolute returns % </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.ret}} </td>
-              </ng-container>
-              <ng-container matColumnDef="xirr">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> XIRR % </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.xirr}} </td>
-              </ng-container>
-              <ng-container matColumnDef="dividend">
-                  <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Dividend </th>
-                  <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.dividend}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="icons">
-                  <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                  <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                          [matMenuTriggerFor]="menu25">
-                          more_vert
-                      </i>
-                      <mat-menu #menu25="matMenu">
-                          <button mat-menu-item>Edit</button>
-                          <button mat-menu-item>Detailed view</button>
-                          <button mat-menu-item>Activity</button>
-                          <button mat-menu-item>Delete</button>
-                      </mat-menu>
-                  </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns25; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns25;"></tr>
-              <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>
-          </table>
-      </div>
-  </div> -->
 </div>

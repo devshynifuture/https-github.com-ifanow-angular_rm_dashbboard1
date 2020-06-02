@@ -26,10 +26,10 @@ export class ServicesSettingsComponent implements OnInit {
 
   // showLoader;
 
-  serviceSettingData:any = [{},{}];
+  serviceSettingData: any = [{}, {}];
   isLoading = false;
   advisorId;
-  read:boolean = false;
+  read: boolean = false;
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
@@ -72,7 +72,7 @@ export class ServicesSettingsComponent implements OnInit {
       Name: 'service-upper-slider'
     };
     // this.router.navigate(['/subscription-upper'], { state: { ...fragmentData } })
-    
+
     AuthService.setSubscriptionUpperSliderData(fragmentData)
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
@@ -105,15 +105,18 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   getServiceSettingSubResponse(data) {
-    if(data != undefined){
+    if (data != undefined) {
       this.isLoading = false;
       this.feesDisplay = false
-      for(let s of data){
+      for (let s of data) {
         s['read'] = false;
       }
+      data.forEach(element => {
+        element['billEveryMode'] = (element.servicePricing.billEvery == 1) ? 'Monthly' : (element.servicePricing.billEvery == 3) ? 'Quarterly' : (element.servicePricing.billEvery == 6) ? 'Half-yearly' : 'Yearly'
+      });
       this.serviceSettingData = data;
     }
-    else{
+    else {
       this.serviceSettingData = [];
 
     }
@@ -121,7 +124,7 @@ export class ServicesSettingsComponent implements OnInit {
     // this.showLoader = false;
   }
 
-  
+
 
   getFileErrorResponse(err) {
     this.dataService.openSnackBar(err, 'Dismiss');

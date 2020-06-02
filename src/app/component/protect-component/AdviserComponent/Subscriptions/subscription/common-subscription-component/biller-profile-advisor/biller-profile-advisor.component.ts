@@ -190,7 +190,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.profileDetailsForm = this.fb.group({
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
-      gstinNum: [(data.gstin), [Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
+      gstTreatmentId: [data.gstTreatmentId ? String(data.gstTreatmentId) : '1', [Validators.required]],
+      gstinNum: [(data.gstin), [Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
       panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
@@ -221,7 +222,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().companyDisplayName.maxLength = 50;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
-    this.getFormControlBank().nameOnBank.maxLength = 25;
+    this.getFormControlBank().nameOnBank.maxLength = 50;
     this.getFormControlBank().bankName.maxLength = 35;
     this.getFormControlBank().acNo.maxLength = 16;
     this.getFormControlBank().ifscCode.maxLength = 11;
@@ -316,6 +317,12 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlBank().pincodeB.setValue("")
     }
     else {
+      let pincode;
+      pincode = data.address.match(/\d/g);
+      pincode = pincode.join("");
+      pincode = pincode.substring(pincode.length - 6, pincode.length)
+      data.address = data.address.replace(String(pincode), '')
+      data.address = data.address.replace('-', '')
       let bankPin = data.address.split('A');
       this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
       this.getFormControlBank().cityB.setValue(data.district)
@@ -323,7 +330,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.getFormControlBank().stateB.setValue(data.state)
       this.getFormControlBank().address.setValue(data.address)
       this.getFormControlBank().bankName.setValue(data.bankcode)
-
+      this.getFormControlBank().pincodeB.setValue(pincode)
       this.ifsciInvalid = false;
     }
   }
@@ -362,7 +369,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
           this.bankDetailsForm.controls[element].markAsTouched();
         }
       }
-    } 
+    }
     // if (this.profileDetailsForm.invalid) {
     //   this.profileDetailsForm.get("companyDisplayName").markAsTouched();
     //   this.profileDetailsForm.get("gstinNum").markAsTouched();
@@ -412,7 +419,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
       companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
       country: this.profileDetailsForm.controls.country.value,
       footnote: this.MiscellaneousData.controls.footnote.value,
-      gstin: this.profileDetailsForm.controls.gstinNum.value,
+      gstin: (this.profileDetailsForm.controls.gstTreatmentId.value == '1') ? this.profileDetailsForm.controls.gstinNum.value : null,
+      gstTreatmentId: this.profileDetailsForm.controls.gstTreatmentId.value,
       ifscCode: this.bankDetailsForm.controls.ifscCode.value,
       logoUrl: this.logoImg,
       nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
