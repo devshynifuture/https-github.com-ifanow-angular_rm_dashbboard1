@@ -209,6 +209,12 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
+
+    this.familyMemberId = data.familyMemberId;
+  }
+
+  toUpperCase(formControl, event) {
+    this.utils.toUpperCase(formControl, event);
   }
 
   getRightSliderData(data) {
@@ -257,7 +263,7 @@ export class PayeeSettingsComponent implements OnInit {
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id,
+          familyMemberId: this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',

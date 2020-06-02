@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option disabled value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of family" [value]="f.name" (click)="getOwnerName(f)">
                         <span>{{f.name}}</span>
                     </mat-option>
@@ -119,7 +119,8 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #pan class="form-control br-0" formControlName="pan" matInput maxlength="10" type="text">
+                <input (input)="toUpperCase(payeeSettingsForm.get('pan'),$event)" #pan class="form-control br-0"
+                    formControlName="pan" matInput maxlength="10" type="text">
                 <mat-error *ngIf="payeeSettingsForm.get('pan').errors?.required && payeeSettingsForm.get('pan').touched"
                     class="f-12">
                     This field is required

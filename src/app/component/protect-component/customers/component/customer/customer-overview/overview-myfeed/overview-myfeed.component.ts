@@ -265,7 +265,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
     this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop - 60;
   }
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   checkOffsetTop() {
     console.log(window.pageYOffset)
     if (window.pageYOffset < this.portFolioSectionOffset) {
