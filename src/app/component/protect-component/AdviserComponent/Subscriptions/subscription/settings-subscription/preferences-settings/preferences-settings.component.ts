@@ -170,7 +170,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getProfileBillerDataResponse(data) {
     this.isLoading = false;
-    for(let p of data){
+    for (let p of data) {
       p['read'] = false;
     }
     this.billerProfileData = data;
@@ -198,7 +198,7 @@ export class PreferencesSettingsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)){
+          if (UtilService.isRefreshRequired(sideBarData)) {
             this.getProfileBillerData()
           }
           rightSideDataSub.unsubscribe();
@@ -221,11 +221,11 @@ export class PreferencesSettingsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const obj = {
-          advisorId: this.advisorId,
-          id: singleBillerProfile.id
-        }
-        this.subService.deleteSubSettingBillerProfile(obj).subscribe(
+        // const obj = {
+        //   advisorId: this.advisorId,
+        //   id: singleBillerProfile.id
+        // }
+        this.subService.deleteSubSettingBillerProfile(singleBillerProfile.id).subscribe(
           data => {
             this.getProfileBillerData();
             dialogRef.close();

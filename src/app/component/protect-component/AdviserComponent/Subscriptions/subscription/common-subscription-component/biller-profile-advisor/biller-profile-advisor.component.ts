@@ -190,8 +190,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.profileDetailsForm = this.fb.group({
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
-      gstTreatmentId: [data.gstTreatmentId ? String(data.gstTreatmentId) : '1', [Validators.required]],
-      gstinNum: [(data.gstin), [Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]],
+      gstTreatmentId: [data.gstTreatmentId ? String(data.gstTreatmentId) : '1'],
+      gstinNum: [(data.gstin)],
       panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
@@ -230,6 +230,32 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlMisc().footnote.maxLength = 500;
     this.getFrormControlMisc().terms.maxLength = 500;
     this.logoImg = data.logoUrl;
+    if (this.profileDetailsForm.get('gstTreatmentId').value == 1) {
+      this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
+    }
+    else {
+      this.profileDetailsForm.get('gstinNum').setValidators(null);
+    }
+    this.profileDetailsForm.get('gstinNum').updateValueAndValidity()
+  }
+  changeGstField(value) {
+    if (value == 1) {
+      this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
+    }
+    else {
+      this.profileDetailsForm.get('gstinNum').setValidators(null);
+    }
+    this.profileDetailsForm.get('gstinNum').updateValueAndValidity()
+  }
+
+  toUpperCase(formControl, event) {
+    this.utils.toUpperCase(formControl, event);
+  }
+
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
   }
 
   Close(data) {
@@ -356,19 +382,17 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   submitBillerForm() {
     if (this.profileDetailsForm.invalid) {
-      for (let element in this.profileDetailsForm.controls) {
-        if (this.profileDetailsForm.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.profileDetailsForm.controls[element].markAsTouched();
-        }
-      }
+      // for (let element in this.profileDetailsForm.controls) {
+      //   if (this.profileDetailsForm.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      //     this.profileDetailsForm.controls[element].markAsTouched();
+      //   }
+      // }
+      this.profileDetailsForm.markAllAsTouched();
+      return;
     } else if (this.bankDetailsForm.invalid) {
-      for (let element in this.bankDetailsForm.controls) {
-        if (this.bankDetailsForm.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.bankDetailsForm.controls[element].markAsTouched();
-        }
-      }
+      this.bankDetailsForm.markAllAsTouched();
+      return
     }
     // if (this.profileDetailsForm.invalid) {
     //   this.profileDetailsForm.get("companyDisplayName").markAsTouched();
