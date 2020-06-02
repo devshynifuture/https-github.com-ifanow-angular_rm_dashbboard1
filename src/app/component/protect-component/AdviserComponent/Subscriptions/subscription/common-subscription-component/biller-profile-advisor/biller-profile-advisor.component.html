@@ -310,7 +310,7 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #ifscCode (input)="toUpperCase(profileDetailsForm.get('ifscCode'),$event)"
+                                    <input #ifscCode (input)="toUpperCase(bankDetailsForm.get('ifscCode'),$event)"
                                         [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                         (changedValue)="getFormControlBank().ifscCode.setValue($event)"
                                         class="form-control br-0 text-left" formControlName="ifscCode" matInput
