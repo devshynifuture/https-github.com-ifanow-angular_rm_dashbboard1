@@ -70,11 +70,13 @@
         <mat-form-field>
           <mat-select matInput class="form-control br-0" formControlName="type">
             <mat-option value="" disabled>Select option</mat-option>
+            <mat-option *ngFor="let option of enumService.getRealEstateType();index as i" [value]="option.value">
+              {{option.name}}</mat-option><!--
             <mat-option value="0">Self Occupied property</mat-option>
             <mat-option value="1">Let out property</mat-option>
             <mat-option value="2">Commercial land</mat-option>
             <mat-option value="3">Agricultural land</mat-option>
-            <mat-option value="4">Non agricultural land</mat-option>
+            <mat-option value="4">Non agricultural land</mat-option>-->
           </mat-select>
           <mat-error class="f-12"
                      [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
