@@ -165,6 +165,20 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   getFilterData(value) {
+    this.isLoading = true;
+    this.changeInput.emit(true);
+    this.showSummaryBar = true;
+    this.showSchemeWise = true;
+    this.showCashFlow = true;
+    this.showFamilyMember = true;
+    this.showCategory = true;
+    this.showSubCategory = true;
+    this.dataSource4 = new MatTableDataSource([{}, {}, {}]);
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
+    this.dataSource3 = new MatTableDataSource([{}, {}, {}]);
+    this.datasource1 = new MatTableDataSource([{}, {}, {}]);
+   
     const obj = {
       advisor_id: this.advisorId,
       clientId: this.clientId,
@@ -272,13 +286,8 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundData() {
-    this.isLoading = true;
-    this.changeInput.emit(true);
-    this.dataSource4 = new MatTableDataSource([{}, {}, {}]);
-    this.dataSource = new MatTableDataSource([{}, {}, {}]);
-    this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
-    this.dataSource3 = new MatTableDataSource([{}, {}, {}]);
-    this.datasource1 = new MatTableDataSource([{}, {}, {}]);
+   
+
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
@@ -681,7 +690,10 @@ export class MutualFundOverviewComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.addedData = true;
-            this.getMutualFundData();
+            this.MfServiceService.setDataForMfGet('');
+            this.MfServiceService.setMfData('');
+            // this.getMutualFundData();
+            this.ngOnInit();
           }
           rightSideDataSub.unsubscribe();
 

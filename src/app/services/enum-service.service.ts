@@ -100,21 +100,22 @@ export class EnumServiceService {
 
   getRealEstateType() {
     if (this.realEstateTypeList.length == 0) {
-      this.realEstateTypeList.push({value: 0, name: 'Self Occupied property'});
-      this.realEstateTypeList.push({value: 1, name: 'Let out property'});
-      this.realEstateTypeList.push({value: 2, name: 'Commercial land'});
-      this.realEstateTypeList.push({value: 3, name: 'Agricultural land'});
-      this.realEstateTypeList.push({value: 4, name: 'Non agricultural land'});
+      this.realEstateTypeList.push({value: '0', name: 'Self Occupied property'});
+      this.realEstateTypeList.push({value: '1', name: 'Let out property'});
+      this.realEstateTypeList.push({value: '2', name: 'Commercial land'});
+      this.realEstateTypeList.push({value: '3', name: 'Agricultural land'});
+      this.realEstateTypeList.push({value: '4', name: 'Non agricultural land'});
     }
     return this.realEstateTypeList;
   }
 
   getRealEstateTypeStringFromValue(value) {
+    let name = '';
     this.getRealEstateType().forEach(singleType => {
       if (singleType.value == value) {
-        return singleType.name;
+        name = singleType.name;
       }
     });
-    return null;
+    return name;
   }
 }

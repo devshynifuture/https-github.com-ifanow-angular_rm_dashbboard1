@@ -1,7 +1,7 @@
 <div class="profileOverview" *ngIf="!hasError">
   <div class="row">
-    <div class="col-width-18 bg-grey lter ">
-      <ul class="vertical-menu d-block sticky-top ">
+    <div class="col-width-18 bg-grey lter pt-8">
+      <ul class="vertical-menu d-block ">
         <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}" class="c-p">
           <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
         </li>
@@ -18,8 +18,8 @@
     </div>
 
 
-    <div *ngIf="Tab=='Tab1'" class="col-width-79 pl-4">
-      <div class="bg-grey lter p-9 mt-20">
+    <div *ngIf="Tab=='Tab1'" class="col-width-79">
+      <div class="bg-grey lter p-9">
         <div class="row">
           <div class="col-md-10">
             <div class="row">
@@ -39,7 +39,7 @@
               </div>
               <div class="col-md-10 pl-12">
                 <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading
-                     class="profileDetails overflow-hidden skeletonAnimation">
+                  class="profileDetails overflow-hidden skeletonAnimation">
                   <div class="relClass">
                     <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                       <h1 class="f-26 roboto f-500">
@@ -58,7 +58,7 @@
                           Years
                         </span>
                         <a (click)="openAgePopup()" *ngIf="!letsideBarLoader && clientOverviewData.age==0"
-                           class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                          class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                       </h5>
                     </div>
                   </div>
@@ -104,24 +104,23 @@
               <div class="memberSlider">
                 <div *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
                   <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==2"
-                       src="/assets/images/svg/man-profile.svg" width="48px">
+                    src="/assets/images/svg/man-profile.svg" width="48px">
                   <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3"
-                       src="/assets/images/svg/women-profile-icon.svg" width="48px">
+                    src="/assets/images/svg/women-profile-icon.svg" width="48px">
                   <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==4"
-                       style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/son-profile.svg"
-                       width="36px">
+                    style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/son-profile.svg" width="36px">
                   <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==5"
-                       style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/daughter-profile.svg"
-                       width="36px">
+                    style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/daughter-profile.svg"
+                    width="36px">
                   <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==7"
-                       src="/assets/images/svg/mother-profile.svg" width="48px">
+                    src="/assets/images/svg/mother-profile.svg" width="48px">
                   <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==6"
-                       src="/assets/images/svg/father-profile.svg" width="48px">
+                    src="/assets/images/svg/father-profile.svg" width="48px">
                   <div (click)="open('edit',singleMembers)" class="familyList">
                     <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
                       <span *ngIf="singleMembers.shortName==undefined">{{singleMembers.name}}</span><span
-                      *ngIf="singleMembers.shortName" matTooltip="{{singleMembers.name}}">{{singleMembers.shortName}}
-                      ...</span>
+                        *ngIf="singleMembers.shortName" matTooltip="{{singleMembers.name}}">{{singleMembers.shortName}}
+                        ...</span>
                     </h4>
                     <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                       <span *ngIf="singleMembers.relationshipId==2">Husband </span>
@@ -162,7 +161,7 @@
 
               <div *ngIf="!letsideBarLoader" class=" col-md-2 text-right ">
                 <a (click)="openClient('edit client',clientOverviewData)"
-                   class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                  class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
               </div>
 
             </div>
@@ -233,7 +232,7 @@
                     <div class="bar height23">
                       <p class=" f-14 roboto f-500 m-0 ">
                         <span *ngIf="!letsideBarLoader"><span
-                          *ngIf="clientOverviewData.emailList.length>0">{{clientOverviewData.emailList[0].email}}</span></span>
+                            *ngIf="clientOverviewData.emailList.length>0">{{clientOverviewData.emailList[0].email}}</span></span>
                       </p>
                     </div>
                   </div>
@@ -319,7 +318,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-8">
                   <p class=" f-12 mb-0 mt-8 text-primitive ">PERMANENT</p>
                   <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
-                     class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                 </div>
                 <p class=" f-14 ">
                   {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}}
@@ -339,7 +338,7 @@
                   <h4 *ngIf="!showSectionError.addressList" class="text-center pt-12 f-14">No address found</h4>
                   <h4 *ngIf="showSectionError.addressList" class="text-center pt-12">Sorry! it's not you it's us</h4>
                   <p (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
-                     class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
+                    class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
                   </p>
                 </div>
               </div>
@@ -365,7 +364,7 @@
                   <h4 *ngIf="!showSectionError.bankList" class="text-center pt-12 f-14">No bank found</h4>
                   <h4 *ngIf="showSectionError.bankList" class="text-center pt-12">Sorry! it's not you it's us</h4>
                   <p (click)="openAddEdit(clientData,null,'Bank','Add')"
-                     class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add
+                    class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add
                     new
                   </p>
                 </div>
@@ -382,7 +381,7 @@
 
                   </div>
                   <div *ngIf="bankList && bankList.length>1"
-                       class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                    class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
                     <span class=" f-12 text-primitive ">{{i + 1}} of {{bankList.length}}</span>
                     <span class=" arrow-primitive arrowSlider c-p ">
                       <i (click)="previous('bank',i)" class=" material-icons f-17 text-primitive ">
@@ -407,7 +406,7 @@
                   </div>
                   <div class=" col-md-2 p-0 text-right ">
                     <a (click)="openAddEdit(clientData,selectedBankData,'Bank','Edit')"
-                       class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                      class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                   </div>
                 </div>
               </div>
@@ -430,7 +429,7 @@
                 <h4 *ngIf="!showSectionError.dematList" class="text-center pt-12 f-14">No demat found</h4>
                 <h4 *ngIf="showSectionError.dematList" class="text-center pt-12">Sorry! it's not you it's us</h4>
                 <p (click)="openAddEdit(clientData,null,'Demat','Add')"
-                   class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
+                  class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
                 </p>
               </div>
             </div>
@@ -466,7 +465,7 @@
                   </div>
                   <div class=" col-md-2 p-0 text-right ">
                     <a (click)="openAddEdit(clientData,selectedDemat,'Demat','Edit')"
-                       class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                      class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                   </div>
                 </div>
               </div>

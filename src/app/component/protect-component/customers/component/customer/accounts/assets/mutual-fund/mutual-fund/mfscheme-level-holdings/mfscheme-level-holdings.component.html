@@ -180,7 +180,7 @@
             <mat-select matInput formControlName="transactionType" class="form-control br-0">
               <mat-option>None</mat-option>
               <mat-option [value]="item.id" #type *ngFor="let item of transactionTypeList"
-                (click)="setTransactionType(item.id, singleTransaction);getIndexOfSelectedElement(type.value,singleTransaction)">
+                (click)="setTransactionType(item.id, singleTransaction,item);getIndexOfSelectedElement(type.value,singleTransaction)">
                 {{ item.transactionType }}
               </mat-option>
             </mat-select>
