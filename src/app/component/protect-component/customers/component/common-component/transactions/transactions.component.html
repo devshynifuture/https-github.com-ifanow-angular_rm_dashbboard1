@@ -27,17 +27,23 @@
     <div class="row d-flex justify-content-center p-20">
       <div class="col-md-9 p-0">
         <div class="row trans-bg">
-          <div class="col-md-4 p-0 pt-6">
+          <div class="col-md-3 p-0 pt-6">
             <p class="m-0 f-12">CURRENT VALUE</p>
             <div class="row">
               <div class="col-md-12 d-flex p-0">
                 <h1 class="m-0 f-26 proxima">₹ <span> {{currentValue}}</span></h1>
-
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 p-0 pt-6">
+            <p class="m-0 f-12">XIIR VALUE</p>
+            <div class="row">
+              <div class="col-md-12 d-flex p-0">
                 <h5 class="m-0 pt-8 proxima pl-8"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue | number:'1.2-2'}}%</h5>
               </div>
             </div>
           </div>
-          <div class="col-md-4 p-0 pt-6">
+          <div class="col-md-3 p-0 pt-6">
             <p class="m-0 f-12">PROFIT (LOSS)</p>
             <h1 class="m-0  proxima f-26">₹ <span>{{profitOrLossValue}}</span></h1>
           </div>
