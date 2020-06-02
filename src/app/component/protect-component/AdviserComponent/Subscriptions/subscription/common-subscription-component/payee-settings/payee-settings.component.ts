@@ -101,7 +101,7 @@ export class PayeeSettingsComponent implements OnInit {
       delete data.id;
     }
     // this.clientId = AuthService.getClientId()
-    this.getListFamilyMem(data);
+    this.getListFamilyMem();
     this.getClientPayeeSettings(data);
   }
 
@@ -109,12 +109,14 @@ export class PayeeSettingsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }
-  getListFamilyMem(data) {
+  getListFamilyMem() {
+    this.advisorId = AuthService.getAdvisorId();
+    // this.clientId = AuthService.getClientId();
     const obj = {
-      userId: data.userId,
-      userType: 2
+      advisorId: this.advisorId,
+      clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
     };
-    this.peopleService.getClientFamilyMembers(obj).subscribe(
+    this.subService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }
