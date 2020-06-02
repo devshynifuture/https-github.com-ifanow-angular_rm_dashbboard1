@@ -1,8 +1,11 @@
+.test-right-padder {}
+
 @media(max-width:1224px) {
   #ui-subscriptions {
     h3 {
       font-size: 18px;
     }
+
     .mat-tab-link {
       font-size: 12px !important;
       min-width: 100px !important;

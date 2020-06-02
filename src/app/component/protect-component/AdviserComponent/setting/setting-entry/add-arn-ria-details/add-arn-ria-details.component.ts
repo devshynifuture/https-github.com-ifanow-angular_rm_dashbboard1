@@ -38,7 +38,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     disabled: false,
     fullWidth: false,
   };
-  maxArnLength = 12;
+  maxArnLength = 9;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -117,7 +117,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         if (value == 2) {
           this.arnRiaFG.controls.euin.clearValidators();
           this.arnRiaFG.controls.euin.setValue('');
-          this.maxArnLength = 12;
+          this.maxArnLength = 9;
           this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)])
         } else {
           this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);

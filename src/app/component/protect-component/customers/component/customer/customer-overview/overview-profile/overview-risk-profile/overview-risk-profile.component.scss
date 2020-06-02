@@ -153,3 +153,9 @@ p {
 ::ng-deep .riskProfileBox .mat-expansion-panel-header {
   padding: 0px 20px;
 }
+
+.riskProfileBox {
+  mat-expansion-panel-header {
+    height: 100% !important;
+  }
+}

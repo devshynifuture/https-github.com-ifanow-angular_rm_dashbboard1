@@ -15,7 +15,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EducationComponent } from './education/education.component';
 import { VideosComponent } from './videos/videos.component';
-import { SummaryModule } from '../../accounts/summary/summary.module';
+import { SummaryModule } from '../../accounts/portfolio-summary/summary.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 

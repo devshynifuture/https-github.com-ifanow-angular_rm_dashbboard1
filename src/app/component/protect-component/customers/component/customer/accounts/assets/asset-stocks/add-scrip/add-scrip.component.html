@@ -1,63 +1,73 @@
-<div class="pl-28 pt-24">
-    <h3><strong>Add a scrip </strong></h3>
-    <h5><strong>Can't find your scrip?Add from here</strong></h5>
+<div class="row b-b">
+    <div class="col-md-12 mt-16">
+        <h3 class="mb-2">Add a scrip </h3>
+        <p> Can't find your scrip?Add from here </p>
+    </div>
 </div>
-<div [formGroup]="scripForm">
-    <div class="row pt-4">
-        <div class="col-md-4">
-            <p class="text-right">Script type</p>
+
+<div class="p-20">
+    <div [formGroup]="scripForm">
+        <div class="row pt-4">
+            <div class="col-md-4 d-flex align-items-center justify-content-end ">
+                <p class="text-right">Script type</p>
+            </div>
+            <div class="col-md-8 pl-0 form-group">
+                <mat-radio-group formControlName="scripType">
+                    <mat-radio-button value="1" class="b-a-custom text-primary custom-radio">
+                        Domestic
+                    </mat-radio-button>
+                    <mat-radio-button value="2" class="b-a ">International
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
         </div>
-        <div class="col-md-8">
-            <mat-radio-group formControlName="scripType">
-                <mat-radio-button value="1" class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Domestic
-                </mat-radio-button>
-                <mat-radio-button value="2" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">International
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <p class="t-right">Script name</p>
-        </div>
-        <div class="col-md-7">
-            <mat-form-field>
-                <div class="form-group">
+        <div class="row">
+            <div class="col-md-4 d-flex align-items-center justify-content-end">
+                <p class="text-right">Script name</p>
+            </div>
+            <div class="col-md-8 pl-0 form-group">
+                <mat-form-field>
                     <input matInput class="form-control w-98 br-0" formControlName="scripName">
-                </div>
-                <mat-error>This field is required</mat-error>
-            </mat-form-field>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col-md-4">
-            <h3 class="t-right">Price details</h3>
-            <p>Enter price in INR Price has to be uploaded manually</p>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field>
-                <div class="form-group">
-                    <input matInput type="number" class="form-control" formControlName="priceDetailsMarketPrice">
-                </div>
-                <mat-error>This field is required</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field>
-                <div class="form-group form-group_one mb-0">
-                    <mat-form-field>
-                        <input (click)="balanceAsOn.open()" matInput autocomplete="off" [max]="maxDate" class="form-control br-0" [matDatepicker]="balanceAsOn" formControlName="priceDetailsPriceAsOn">
-                        <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
-                        <mat-datepicker #balanceAsOn></mat-datepicker>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <mat-error>This field is required</mat-error>
-            </mat-form-field>
+        <div class="row pt-4">
+            <div class="col-md-4  ">
+                <p class="text-right mb-0">Price details </p>
+                <p class="text-right l-14 f-12">Enter price in INR Price has to be uploaded manually</p>
+            </div>
+            <div class="col-md-4 pl-0">
+                <mat-form-field>
+                    <div class="form-group">
+                        <input matInput type="number" class="form-control" formControlName="priceDetailsMarketPrice">
+                    </div>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 pl-0">
+                <mat-form-field>
+                    <div class="form-group form-group_one mb-0">
+                        <mat-form-field class="ba-date">
+                            <input (click)="balanceAsOn.open()" matInput autocomplete="off" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="balanceAsOn" formControlName="priceDetailsPriceAsOn">
+                            <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+                            <mat-datepicker #balanceAsOn></mat-datepicker>
+                            <mat-error>This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
 </div>
 
-<button mat-raised-button>CANCEL</button>
-<button mat-raised-button class="text-danger" (click)="saveScrip()">ADD</button>
+
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button class="text-primitive p-0 mr-12" mat-button (click)="close()">Cancel</button>
+
+        <button mat-button class="text-danger p-0" (click)="saveScrip()">Save</button>
+    </div>
+</div>

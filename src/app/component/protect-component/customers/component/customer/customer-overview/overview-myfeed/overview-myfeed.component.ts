@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { LoaderFunction } from 'src/app/services/util.service';
@@ -23,7 +23,7 @@ import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.s
     slideInAnimation,
   ]
 })
-export class OverviewMyfeedComponent implements OnInit {
+export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy {
   clientData: any;
   advisorId: any;
   orgDetails: any;
@@ -33,6 +33,7 @@ export class OverviewMyfeedComponent implements OnInit {
   cashflowColumns = ['bankName', 'inflow', 'outflow', 'netflow'];
   displayedColumns: string[] = ['description', 'date', 'amount'];
   cashFlowViewDataSource = [];
+  welcomeMessage = '';
 
   chartData: any[] = [
     {
@@ -130,6 +131,8 @@ export class OverviewMyfeedComponent implements OnInit {
   ]
   mfSubCatAllocationData:any[] = [];
   worker:Worker;
+  currentViewId = 1;
+  greeterFnID:any;
 
   constructor(
     private customerService: CustomerService,
@@ -152,6 +155,8 @@ export class OverviewMyfeedComponent implements OnInit {
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
     this.advisorImg = this.advisorInfo.profilePic;
+    this.greeter();
+    this.greeterFnID = setInterval(()=> this.greeter(), 1000);
   }
 
   tabsLoaded = {
@@ -227,6 +232,18 @@ export class OverviewMyfeedComponent implements OnInit {
   appearancePortfolio:any = {};
   familyMembers: any[] = [];
 
+
+  // highlight scroll links solution
+  // https://stackoverflow.com/a/54447174
+  @ViewChild('allFeedsSection', {static: true}) allFeedsSection: ElementRef;
+  @ViewChild('riskProfileSection', {static: true}) riskProfileSection: ElementRef;
+  @ViewChild('cashFlowSection', {static: true}) cashFlowSection: ElementRef;
+  @ViewChild('portFolioSection', {static: true}) portFolioSection: ElementRef;
+  allFeedsSectionOffset:any = 0;
+  riskProfileSectionOffset:any = 0;
+  cashFlowSectionOffset:any = 0;
+  portFolioSectionOffset:any = 0;
+
   ngOnInit() {
     this.loadLogicBasedOnRoleType();
     this.getFamilyMembersList();
@@ -242,7 +259,36 @@ export class OverviewMyfeedComponent implements OnInit {
     // this.loadGoalsData(); // Not to be implemented for demo purpose
     this.loadCashFlowSummary(); // needs better implementation
     this.getMFPortfolioData();
+  }
 
+  ngAfterViewInit() {
+    // offset by 60, the height of upper nav
+    this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
+  }
+
+  @HostListener('window:scroll')
+  checkOffsetTop() {
+    this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
+    if (window.pageYOffset < this.portFolioSectionOffset) {
+      this.currentViewId = 1;
+    } else if (window.pageYOffset < this.cashFlowSectionOffset) {
+      this.currentViewId = 2;
+    } else if (window.pageYOffset < this.riskProfileSectionOffset) {
+      this.currentViewId = 3;
+    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
+      this.currentViewId = 4;
+    }
+  }
+
+  goToSectionView(scrollOffset) {
+    // offset by 60, the height of upper nav
+    window.scrollTo(0, scrollOffset)
   }
 
   // logic to decide which apis to load and not load
@@ -466,8 +512,9 @@ export class OverviewMyfeedComponent implements OnInit {
     }
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
-      if (res == null) {
+      if (res == null || res.fileStats.length == 0) {
         this.documentVault = {};
+        this.tabsLoaded.documentsVault.hasData = false;
       } else {
         this.tabsLoaded.documentsVault.hasData = true;
         this.documentVault = res;
@@ -935,5 +982,18 @@ export class OverviewMyfeedComponent implements OnInit {
 
   ngOnDestroy(){
     if(this.worker) this.worker.terminate();
+    clearInterval(this.greeterFnID);
+  }
+
+  greeter() {
+    var date = new Date();  
+    var hour = date.getHours();  
+    if (hour < 12) {  
+      this.welcomeMessage = "Good morning";  
+    } else if (hour < 17) {  
+      this.welcomeMessage = "Good afternoon";  
+    } else {  
+      this.welcomeMessage = "Good evening";  
+    }  
   }
 }

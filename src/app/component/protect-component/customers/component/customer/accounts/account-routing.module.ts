@@ -11,7 +11,7 @@ const routes: Routes = [{
 
     {
       path: 'summary',
-      loadChildren: () => import('./summary/summary.module').then(m => m.SummaryModule),
+      loadChildren: () => import('./portfolio-summary/summary.module').then(m => m.SummaryModule),
       // data: { animation: 'Tab1', preload: true }
 
       // outlet: 'accountRouterOutlet'
