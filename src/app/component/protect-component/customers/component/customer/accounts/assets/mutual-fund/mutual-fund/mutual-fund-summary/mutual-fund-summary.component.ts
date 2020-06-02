@@ -105,7 +105,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
   }
   getFilterData(value) {
-    this.customDataSource =[]
+    this.customDataSource =[];
+    let transactionView = [];
      this.summary = new MatTableDataSource([{}, {}, {}]);
 
     this.isLoading = true;
@@ -133,7 +134,6 @@ export class MutualFundSummaryComponent implements OnInit {
         if (data) {
           let allClient = [];
           let currentClient = [];
-          let transactionView = [];
           let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
@@ -196,6 +196,13 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       },
       (error) => {
+        this.displayedColumns.forEach(element => {
+          const obj = {
+            displayName: element,
+            selected: true
+          }
+          this.setDefaultFilterData.transactionView.push(obj)
+        });
         if (this.mfGetData) {
           this.getMutualFundResponse(this.mfGetData)
         } else if (this.mutualFund) {
@@ -627,7 +634,10 @@ export class MutualFundSummaryComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // code to refresh
             this.addedData=true;
-            this.getMutualFund();
+             this.mfService.setDataForMfGet('');
+                this.mfService.setMfData('');
+                this.ngOnInit();
+            // this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -693,7 +703,11 @@ export class MutualFundSummaryComponent implements OnInit {
                 this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
                 dialogRef.close();
                 this.addedData=true;
-                this.getMutualFund();
+                this.mfService.setDataForMfGet('');
+                this.mfService.setMfData('');
+                this.ngOnInit();
+
+                // this.getMutualFund();
               }
             })
         }
