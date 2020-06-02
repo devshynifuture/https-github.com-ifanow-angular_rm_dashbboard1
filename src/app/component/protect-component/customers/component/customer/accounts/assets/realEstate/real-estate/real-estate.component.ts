@@ -140,18 +140,11 @@ export class RealEstateComponent implements OnInit {
       this.hideFilter = true;
     } else if (data.assetList.length > 0) {
       console.log('getRealEstateRes', data);
-      // data.realEstateList.forEach(element => {
-      //   if (element.ownerList.length != 0) {
-      //     const array = element.ownerList;
-      //     const ownerName = array.filter(element => element.owner != false)
-      //     if (ownerName.length != 0) {
-      //       this.ownerName = ownerName[0].ownerName;
-      //       element.ownerName = this.ownerName;
-      //     }
-      //   }
-      // });
       this.dataList = data.assetList;
       this.datasource3.data = data.assetList;
+      data.assetList.forEach(singleAsset => {
+        singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
+      });
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfPurchaseValue;

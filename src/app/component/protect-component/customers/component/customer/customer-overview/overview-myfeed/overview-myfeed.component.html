@@ -3,27 +3,27 @@
         <div class="col-md-3  pr-24">
             <ul class="d-block sticky-top myFeedUi">
                 <li>
-                    <a class="f-14 roboto"> All feeds</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)"> All feeds</a>
                 </li>
 
                 <li>
-                    <a class="f-14 roboto"> Portfolio</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 2}" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
                 </li>
 <!-- 
                 <li>
                     <a class="f-14 roboto"> Plan</a>
                 </li> -->
+<!-- 
+                <li>
+                    <a class="f-14 roboto" > Activity</a>
+                </li> -->
 
                 <li>
-                    <a class="f-14 roboto"> Activity</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 3}" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
                 </li>
 
                 <li>
-                    <a class="f-14 roboto"> Transactions</a>
-                </li>
-
-                <li>
-                    <a class="f-14 roboto"> Profile</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 4}" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
                 </li>
 <!-- 
                 <li>
@@ -38,7 +38,7 @@
 
         <div class="col-md-6 mb-20">
             <div class="feedInformation">
-                <div class="clientNameBox">
+                <div class="clientNameBox" #allFeedsSection>
                     <h3 class="m-0 roboto">Good Evening {{clientData.name}}</h3>
                     <p class="m-0 roboto">Your personalized money feed is ready! </p>
                 </div>
@@ -73,7 +73,7 @@
                     </div>
 
                     <!-- Portfolio Asset allocation chart -->
-                    <div class="wrapperBox">
+                    <div class="wrapperBox" #portFolioSection>
                         <div class="row">
                             <div class="col-md-12  ">
                                 <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
@@ -419,20 +419,23 @@
 
 
                         <div class="row">
-                            <div class="col-md-12  " *ngIf="documentVault && documentVault.length > 0">
-                                <div class="bg-white vaultbBox" *ngFor="let docs of documentVault">
+                            <div class="col-md-12" *ngIf="tabsLoaded.documentsVault.dataLoaded && tabsLoaded.documentsVault.hasData">
+                                <div class="bg-white vaultbBox">
                                     <div class="row">
                                         <div class="col-md-7 pr-0">
                                             <h5 class="roboto f-500">
                                                 Your secure online vault
                                             </h5>
-                                            <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                            <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                            <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                            <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                            <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                            <span *ngFor="let fam of documentVault.familyStats | slice:0:5">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==2" src="/assets/images/svg/man-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==4" src="/assets/images/svg/son-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==7" src="/assets/images/svg/mother-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==6" src="/assets/images/svg/father-profile.svg">
+                                            </span>
 
-                                            <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalKbs/1024 | number : '0.0-2'}} space used</p>
+                                            <p class="mb-0">{{documentVault.fileStats[0].filesCount}} items in your vault {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} space used</p>
 
                                             <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                                 Access your vault
@@ -450,7 +453,7 @@
                             </div>
                         </div>
 
-                        <div class="row" *ngIf="!documentVault || documentVault.length == 0">
+                        <div class="row" *ngIf="!(tabsLoaded.documentsVault.dataLoaded && tabsLoaded.documentsVault.hasData)">
                             <div class="col-md-12  ">
                                 <div class="bg-white vaultbBox">
                                     <div class="row">
@@ -564,8 +567,183 @@
                         </div>
                     </div>
 
-                    <!-- risk profile -->
+                    <!-- cashflow -->
+                    <!-- to be used later if ever the api created -->
+                    <div class="wrapperBox boxTable" #cashFlowSection>
+                        <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
+                            <ng-container *ngFor="let flowData of cashflowData.cashflowData">
+                                {{flowData.familyMemberFullName}}
+                                <table mat-table [dataSource]="flowData.cashflowLedgger" class="mb-12 tableOne" id="table-low">
+                                    <ng-container matColumnDef="bankName">
+                                        <th mat-header-cell *matHeaderCellDef class="br w-40 topborderPrimitive"> Bank A/c
+                                        </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                            <div class="bar"> {{element.bankName}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="inflow">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                            In-flows </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                            <div class="bar"> <span appFormatNumber [shouldRoundOff]="false">{{element.inflow}}</span> </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="outflow">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                            Out-flows </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
+                                            <div class="bar"> <span appFormatNumber [shouldRoundOff]="false">{{element.outflow}}</span> </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="netflow">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                            Net-flows </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
+                                            <div class="bar"> <span appFormatNumber [shouldRoundOff]="false">{{element.netflow}}</span> </div>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
+                                </table>
+                            </ng-container>
+                            <ng-container>
+                                <table mat-table [dataSource]="cashflowData.total" class="mb-12" id="table-low">
+                                    <ng-container matColumnDef="bankName">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
+                                        </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                            <div class="bar"> {{element.bankName}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="inflow">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                            In-flows </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                            <div class="bar"> <span appFormatNumber [shouldRoundOff]="false">{{element.inflow}}</span> </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="outflow">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                            Out-flows </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
+                                            <div class="bar"> <span appFormatNumber [shouldRoundOff]="false">{{element.outflow}}</span> </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="netflow">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                            Net-flows </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
+                                            <div class="bar"> <span appFormatNumber [shouldRoundOff]="false">{{element.netflow}}</span> </div>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
+                                </table>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="!tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
+                            <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
+                                <ng-container matColumnDef="bankName">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
+                                    </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                        <div class="bar"> {{element.bankName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="inflow">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                        In-flows </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                        <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="outflow">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                        Out-flows
+                                    </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
+                                        <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="netflow">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                        Out-flows
+                                    </th>
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
+                                        <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
+                            </table>
+                        </ng-container>
+                    </div>
+
+                    
+
+
+                    <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
+                        <div class="row">
+                            <div class="col-md-12  ">
+                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <div class="borderChatBox bg-white">
+                                    <div class="row">
+                                        <div class="col-md-7 heightBox pr-0">
+                                            <div class="piechartMutualFund" [chart]="mfAllocationPieConfig"></div>
+                                        </div>
+                                        <div class="col-md-5  ">
+                                            <ul class="pointUl">
+                                                <li *ngFor="let data of mfAllocationData">
+                                                    <span class="pointNumber" [style.background-color]="data.color">
+                                                    </span>
+                                                    <span class="f-14 mr-8" appFormatNumber>{{(data.y | number : '0.0-2')}}</span>
+                                                    <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Asset allocation chart -->
+                    <div class="wrapperBox" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <h5 class="roboto ml-12 mb-0">Sub category wise summary - mutual funds</h5>
+                                <div class="borderChatBox bg-white">
+                                    <div class="row">
+                                        <div class="col-md-6 p-0">
+                                            <div class="piechartMutualFund" [chart]="mfSubCategoryPieConfig"></div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
+                                            <ul class="pointUl">
+                                                <li *ngFor="let data of mfSubCatAllocationData">
+                                                    <span class="pointNumber" [style.background-color]="data.color">
+                                                    </span>
+                                                    <span class="f-14 mr-8" appFormatNumber>{{(data.y | number : '0.0-2')}}</span>
+                                                    <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- risk profile -->
+                    <div class="wrapperBox" #riskProfileSection>
                         <div class="row">
                             <div class="col-md-12  mb-10 d-flex align-items-center">
                                 <h5 class="roboto ml-12 mb-0">Risk profile</h5>
@@ -619,179 +797,6 @@
                                         </div>
                                         <div class="col-md-5 pr-0">
                                             <img src="/assets/images/svg/vault-icon.svg">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- cashflow -->
-                    <!-- to be used later if ever the api created -->
-                    <div class="wrapperBox boxTable">
-                        <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
-                            <ng-container *ngFor="let flowData of cashflowData.cashflowData">
-                                {{flowData.familyMemberFullName}}
-                                <table mat-table [dataSource]="flowData.cashflowLedgger" class="mb-12 tableOne" id="table-low">
-                                    <ng-container matColumnDef="bankName">
-                                        <th mat-header-cell *matHeaderCellDef class="br w-40 topborderPrimitive"> Bank A/c
-                                        </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
-                                            <div class="bar"> {{element.bankName}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="inflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
-                                            In-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
-                                            <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span> </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="outflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
-                                            Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
-                                            <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="netflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
-                                            Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
-                                            <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
-                                        </td>
-                                    </ng-container>
-                                    <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
-                                </table>
-                            </ng-container>
-                            <ng-container>
-                                <table mat-table [dataSource]="cashflowData.total" class="mb-12" id="table-low">
-                                    <ng-container matColumnDef="bankName">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
-                                        </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
-                                            <div class="bar"> {{element.bankName}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="inflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
-                                            In-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
-                                            <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span> </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="outflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
-                                            Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
-                                            <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="netflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
-                                            Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
-                                            <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
-                                        </td>
-                                    </ng-container>
-                                    <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
-                                </table>
-                            </ng-container>
-                        </ng-container>
-                        <ng-container *ngIf="!tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
-                            <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
-                                <ng-container matColumnDef="bankName">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
-                                    </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
-                                        <div class="bar"> {{element.bankName}} </div>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="inflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
-                                        In-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
-                                        <div class="bar"> <span appFormatNumber>{{element.inflow | number : '0.0-2'}}</span>
-                                        </div>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="outflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
-                                        Out-flows
-                                    </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
-                                        <div class="bar"> <span appFormatNumber>{{element.outflow | number : '0.0-2'}}</span> </div>
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="netflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
-                                        Out-flows
-                                    </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
-                                        <div class="bar"> <span appFormatNumber>{{element.netflow | number : '0.0-2'}}</span> </div>
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
-                            </table>
-                        </ng-container>
-                    </div>
-
-                    <!-- MF allocation overview -->
-
-
-                    <!-- Portfolio Asset allocation chart -->
-                    <div class="wrapperBox">
-                        <div class="row">
-                            <div class="col-md-12  ">
-                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
-                                <div class="borderChatBox bg-white">
-                                    <div class="row">
-                                        <div class="col-md-7 heightBox pr-0">
-                                            <div class="piechartMutualFund" [chart]="mfAllocationPieConfig"></div>
-                                        </div>
-                                        <div class="col-md-5  ">
-                                            <ul class="pointUl">
-                                                <li *ngFor="let data of mfAllocationData">
-                                                    <span class="pointNumber" [style.background-color]="data.color">
-                                                    </span>
-                                                    <span class="f-14 mr-8" appFormatNumber>{{(data.y | number : '0.0-2')}}</span>
-                                                    <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Portfolio Asset allocation chart -->
-                    <div class="wrapperBox" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
-                        <div class="row">
-                            <div class="col-md-12 ">
-                                <h5 class="roboto ml-12 mb-0">Sub category wise summary - mutual funds</h5>
-                                <div class="borderChatBox bg-white">
-                                    <div class="row">
-                                        <div class="col-md-6 p-0">
-                                            <div class="piechartMutualFund" [chart]="mfSubCategoryPieConfig"></div>
-                                        </div>
-                                        <div class="col-md-6 pr-0">
-                                            <ul class="pointUl">
-                                                <li *ngFor="let data of mfSubCatAllocationData">
-                                                    <span class="pointNumber" [style.background-color]="data.color">
-                                                    </span>
-                                                    <span class="f-14 mr-8" appFormatNumber>{{(data.y | number : '0.0-2')}}</span>
-                                                    <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
-                                                </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>

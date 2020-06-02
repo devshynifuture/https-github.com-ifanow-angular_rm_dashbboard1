@@ -2,17 +2,17 @@
 
     <div class="bg-white pb-36 ">
         <div *ngIf="documentSettingData.length > 0">
-            <div class="wrapper-20 pt-0 pr-0">
-                <div class="row">
+            <div class="wrapper-20 pt-10 pr-0">
+                <!-- <div class="row">
                     <div class="col-md-8 p-0">
                         <h4 class="pt-20 pb-28 m-0"> </h4>
                     </div>
                     <div class="col-md-4 right text-right pr-20">
-                        <!-- <button mat-stroked-button class="btn-default help-btn br-0"
+                        <button mat-stroked-button class="btn-default help-btn br-0"
                             (click)="OpenHelp('clientHelp','open35',Questions)">HELP
-                        </button> -->
+                        </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0" (click)="openFragment('documents',null)">
                         <mat-card class="example-card height-484 bg-grey lter b-a">
