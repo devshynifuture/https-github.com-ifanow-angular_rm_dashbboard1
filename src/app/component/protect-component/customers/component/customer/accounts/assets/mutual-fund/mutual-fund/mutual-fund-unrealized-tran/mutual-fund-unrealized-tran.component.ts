@@ -226,6 +226,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       },
       (error) => {
+        this.setDefaultFilterData.transactionView=[];
         this.displayedColumns.forEach(element => {
           const obj = {
             displayName: element,

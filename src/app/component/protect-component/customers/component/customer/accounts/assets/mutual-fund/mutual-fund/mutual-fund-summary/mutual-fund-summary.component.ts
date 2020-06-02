@@ -196,6 +196,7 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       },
       (error) => {
+        this.setDefaultFilterData.transactionView=[];
         this.displayedColumns.forEach(element => {
           const obj = {
             displayName: element,
