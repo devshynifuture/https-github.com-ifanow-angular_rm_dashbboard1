@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ReconciliationService} from '../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {Subscription} from 'rxjs';
-import {BackofficeFileUploadService} from '../backoffice-file-upload.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ReconciliationService } from '../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { Subscription } from 'rxjs';
+import { BackofficeFileUploadService } from '../backoffice-file-upload.service';
 
 export interface PeriodicElement {
   name: string;
@@ -24,20 +24,21 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
   advisorId: any;
   isLoading = false;
   listData: any = [];
-  dataSource;
-  @ViewChild(MatSort, {static: true}) sortList: MatSort;
+  dataSource = new MatTableDataSource([{}, {}, {}]);
+  @ViewChild(MatSort, { static: true }) sortList: MatSort;
   filter: any = {
     rt: 0,
-    status: 0
+    status: 2
   };
 
-  constructor(private reconService: ReconciliationService, private BackOffice: BackofficeFileUploadService) {
-  }
+  constructor(
+    private reconService: ReconciliationService,
+    private BackOffice: BackofficeFileUploadService
+  ) { }
 
   private unSubcrip: Subscription;
 
   ngOnInit() {
-    this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
@@ -48,21 +49,18 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
   }
 
   getBackOfficeFolio(filter) {
-    let obj = {
-      advisorId: this.advisorId,
-      rt: filter.rt,
-      status: filter.status
-    };
-    this.reconService.getBackOfficeFolio({advisorId: this.advisorId}).subscribe((data) => {
-     if(data){
-      this.listData = data;
-      this.dataSource = new MatTableDataSource(this.listData);
-      this.dataSource.sort = this.sortList;
-      this.isLoading = false;
-    } else {
-      this.dataSource = []
-      this.isLoading = false;
-    }
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    this.reconService.getBackOfficeFolio({ advisorId: this.advisorId }).subscribe((data) => {
+      if (data) {
+        this.listData = data;
+        this.dataSource.data = this.listData;
+        this.dataSource.sort = this.sortList;
+        this.isLoading = false;
+      } else {
+        this.dataSource.data = null;
+        this.isLoading = false;
+      }
     });
   }
 

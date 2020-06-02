@@ -5,6 +5,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { BackofficeFileUploadService } from '../backoffice-file-upload.service';
 import { Subscription } from 'rxjs';
+import { EventService } from '../../../../../../Data-service/event.service';
 
 export interface PeriodicElement {
   name: string;
@@ -32,10 +33,15 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   dataSource = new MatTableDataSource([{}, {}, {}]);
   filterObj: any;
   @ViewChild(MatSort, { static: true }) sortList: MatSort;
-  constructor(private reconService: ReconciliationService, public router: ActivatedRoute, private BackOffice: BackofficeFileUploadService) { }
+  constructor(
+    private reconService: ReconciliationService,
+    public router: ActivatedRoute,
+    private BackOffice: BackofficeFileUploadService,
+    private eventService: EventService) { }
+
   filter: any = {
     rt: 0,
-    status: 0
+    status: 2
   };
   private unSubcrip: Subscription;
 
@@ -63,12 +69,14 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
       this.isLoading = false;
       if (data) {
         this.listData = data;
-        console.log("this::", data);
         this.dataSource.data = this.listData;
         this.dataSource.sort = this.sortList;
       } else {
         this.dataSource.data = null;
       }
+    }, err => {
+      this.eventService.openSnackBar(err, "DISMISS")
+      this.dataSource.data = null;
     });
   }
 

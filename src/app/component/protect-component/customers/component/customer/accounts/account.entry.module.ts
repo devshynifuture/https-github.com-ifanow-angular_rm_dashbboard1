@@ -15,6 +15,7 @@ import { PortfolioFieldComponent } from './assets/asset-stocks/portfolio-field/p
 import { ScripFieldComponent } from './assets/asset-stocks/scrip-field/scrip-field.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 export const componentList = [
   UpperCustomerComponent,
   AddAssetStocksComponent,
@@ -37,7 +38,8 @@ export const componentList = [
     CustomDirectiveModule,
     AccountCommonModule,
     AccountUpperSliderModule,
-    CustomCommonModule
+    CustomCommonModule,
+    MatProgressBarModule,
   ],
   exports: [
     FormsModule,
