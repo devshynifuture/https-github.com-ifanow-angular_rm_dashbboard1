@@ -357,7 +357,7 @@ export class AddPoRdComponent implements OnInit {
       this.PORDForm.markAllAsTouched();
     } else {
       this.barButtonOptions.active = true;
-      const obj = {
+      const obj: any = {
         clientId: this.clientId,
         advisorId: this.advisorId,
         ownerList: this.PORDForm.value.getCoOwnerName,
