@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-plan-rightslider',
@@ -30,6 +30,7 @@ export class PlanRightsliderComponent implements OnInit {
   selectedPlan;
   clientData;
   advisorId;
+  noDataFoundFlag: any;
   set data(data) {
     this.clientData = data;
   }
@@ -46,7 +47,15 @@ export class PlanRightsliderComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.subService.getPlanOfAdvisorClients(obj).subscribe(
-      data => this.planSettingData = data
+      data => {
+        if (data && data.length > 0) {
+          this.noDataFoundFlag = false;
+          this.planSettingData = data
+        }
+        else {
+          this.noDataFoundFlag = true;
+        }
+      }
     );
   }
 

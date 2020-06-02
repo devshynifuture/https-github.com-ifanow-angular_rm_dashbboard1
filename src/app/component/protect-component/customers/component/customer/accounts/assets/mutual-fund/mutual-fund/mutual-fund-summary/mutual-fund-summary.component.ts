@@ -105,6 +105,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
   }
   getFilterData(value) {
+    this.customDataSource =[];
+    let transactionView = [];
      this.summary = new MatTableDataSource([{}, {}, {}]);
 
     this.isLoading = true;
@@ -132,7 +134,6 @@ export class MutualFundSummaryComponent implements OnInit {
         if (data) {
           let allClient = [];
           let currentClient = [];
-          let transactionView = [];
           let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
@@ -195,6 +196,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       },
       (error) => {
+        this.setDefaultFilterData.transactionView=[];
+        this.displayedColumns.forEach(element => {
+          const obj = {
+            displayName: element,
+            selected: true
+          }
+          this.setDefaultFilterData.transactionView.push(obj)
+        });
         if (this.mfGetData) {
           this.getMutualFundResponse(this.mfGetData)
         } else if (this.mutualFund) {
@@ -271,6 +280,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   getMutualFund() {
     this.isLoading = true;
+    this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
@@ -396,6 +406,8 @@ export class MutualFundSummaryComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
+        this.customDataSource.data =[]
+        this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
         this.customDataSource.data = data.customDataSourceData;
         this.displayedColumns.forEach(element => {
@@ -623,7 +635,10 @@ export class MutualFundSummaryComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // code to refresh
             this.addedData=true;
-            this.getMutualFund();
+             this.mfService.setDataForMfGet('');
+                this.mfService.setMfData('');
+                this.ngOnInit();
+            // this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -689,7 +704,11 @@ export class MutualFundSummaryComponent implements OnInit {
                 this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
                 dialogRef.close();
                 this.addedData=true;
-                this.getMutualFund();
+                this.mfService.setDataForMfGet('');
+                this.mfService.setMfData('');
+                this.ngOnInit();
+
+                // this.getMutualFund();
               }
             })
         }
