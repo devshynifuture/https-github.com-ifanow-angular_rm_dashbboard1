@@ -214,7 +214,7 @@ export class OverviewMyfeedComponent implements OnInit {
   recentTransactions: any[] = [];
   riskProfile: any[] = [];
   globalRiskProfile: any[] = [];
-  documentVault: any[] = [];
+  documentVault: any = {};
   adviseData: any = null;
   goalsData: any[] = [];
   cashflowData: any = {};
@@ -467,10 +467,14 @@ export class OverviewMyfeedComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
       if (res == null) {
-        this.documentVault = [];
+        this.documentVault = {};
       } else {
         this.tabsLoaded.documentsVault.hasData = true;
         this.documentVault = res;
+        this.documentVault.familyStats.unshift({
+          relationshipId: (this.clientData.genderId == 1 ? 2 : 3),
+          genderId: 0
+        })
       }
       this.tabsLoaded.documentsVault.dataLoaded = true;
       this.loaderFn.decreaseCounter();
