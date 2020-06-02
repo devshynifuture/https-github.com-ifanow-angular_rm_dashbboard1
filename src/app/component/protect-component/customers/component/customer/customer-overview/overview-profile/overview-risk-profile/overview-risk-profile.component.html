@@ -35,7 +35,7 @@
                         </div>
                     </div> -->
                     <div class="row pt-52">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-7"></div>
                                 <div class="col-md-5 p-0">
@@ -58,7 +58,8 @@
                                     *ngIf="feedsRiskProfile.riskProfileId == 1">
                                 <img src="/assets/images/svg/moderately-aggressive.svg"
                                     *ngIf="feedsRiskProfile.riskProfileId == 2">
-                                <img src="/assets/images/svg/moderate.svg" *ngIf="feedsRiskProfile.riskProfileId == 3">
+                                <img src="/assets/images/svg/moderate.svg" *ngIf="feedsRiskProfile.riskProfileId == 3"
+                                    class="center-item ">
                                 <div class="text-center">
                                     <img src="/assets/images/svg/moderately-conservative.svg"
                                         *ngIf="feedsRiskProfile.riskProfileId == 4" class="h-105">
@@ -66,16 +67,17 @@
                                 <img src="/assets/images/svg/conservative.svg"
                                     *ngIf="feedsRiskProfile.riskProfileId == 5">
                             </div>
-                            <p class="m-0 text-custom roboto f-400 text-center">
+                            <p class="m-0 text-custom roboto f-400 text-center pl-16 pr-16">
                                 {{riskProfileDesc(feedsRiskProfile.riskProfileId)}}</p>
 
                         </div>
                     </div>
 
                     <div class="row pt-48">
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10 text-center">
 
-                            <h5 class="mb-4 f-500 roboto width545 text-black">Equity asset allocation </h5>
+                            <h5 class="mb-4 f-500 roboto pl-52 text-black">Equity asset allocation </h5>
 
                             <div id="container1"></div>
                             <!-- <img src="/assets/images/svg/assest-allocation.svg" class="w-100"> -->
