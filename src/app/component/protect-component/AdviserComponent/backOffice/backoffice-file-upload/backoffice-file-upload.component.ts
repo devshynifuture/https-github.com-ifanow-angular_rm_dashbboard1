@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { BackofficeFileUploadService } from './backoffice-file-upload.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../setting/settings.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-backoffice-file-upload',
@@ -21,16 +22,20 @@ export class BackofficeFileUploadComponent implements OnInit {
   filterList: any;
   arnRiaList = [];
   arnRiaId;
+  showFilter = true;
   filter: any = {
     rt: 0,
-    status: 0
+    status: 2
   }
   constructor(
     private reconService: ReconciliationService,
     private eventService: EventService,
     private http: HttpService,
     private BackOffice: BackofficeFileUploadService,
-    private settingService: SettingsService) { }
+    private settingService: SettingsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -89,6 +94,10 @@ export class BackofficeFileUploadComponent implements OnInit {
     }
   }
 
+  setShowFilter(value) {
+    this.showFilter = value;
+  }
+
   uploadTargetFile() {
     this.uploadButton = false;
 
@@ -118,7 +127,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   setDefaultRtAndStatus() {
-    this.filterStatus = "0";
+    this.filterStatus = "2";
     this.filterRTA = "0";
   }
 
@@ -145,7 +154,9 @@ export class BackofficeFileUploadComponent implements OnInit {
       this.fileName = "";
       this.fileSize = "";
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
-    })
+      // reload
+      this.setFilter();
+    });
   }
 
   setFilter() {
@@ -153,7 +164,11 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.filter.rt = this.filterRTA;
     this.BackOffice.addFilterData(this.filter);
   }
-  refresh(flag) {
+  setDefaultFilter() {
+    this.BackOffice.addFilterData({ rt: 0, status: 2 });
+  }
 
+  refresh(flag) {
+    this.setFilter()
   }
 }
