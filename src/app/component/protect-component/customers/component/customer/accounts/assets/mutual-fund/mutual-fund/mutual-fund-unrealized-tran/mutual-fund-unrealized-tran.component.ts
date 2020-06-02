@@ -180,7 +180,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
               }
             });
-            if (this.viewMode == 'Unrealized Transactions'){
+            if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions'){
               this.displayedColumns.forEach(element => {
                 this.styleObjectUnrealised(element)
               });
