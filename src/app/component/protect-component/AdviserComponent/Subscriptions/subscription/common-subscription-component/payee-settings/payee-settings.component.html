@@ -192,7 +192,7 @@
         <div class="col-md-6 pr-0">
             <h5 class="m-0">Pin code</h5>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <mat-form-field>
                 <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                     (focusout)="getPostalPin($event.target.value)" appInputValueValidation
@@ -200,6 +200,9 @@
                 <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                 <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
             </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-spinner *ngIf="isLoader" [diameter]="30"></mat-spinner>
         </div>
     </div>
     <div class="row">
