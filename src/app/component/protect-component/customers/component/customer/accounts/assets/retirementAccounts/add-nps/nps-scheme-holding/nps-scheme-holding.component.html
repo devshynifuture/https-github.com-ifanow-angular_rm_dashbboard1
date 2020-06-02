@@ -77,7 +77,7 @@
         </div>
     </div>
     <div class="row pl-28">
-        <div class="col-md-4 pl-0">
+        <div class="col-md-5 pl-0">
             <label class="f-14"> Scheme name</label>
         </div>
 
@@ -90,8 +90,8 @@
                 <div class="col-md-4 pl-2">
                     <label class=" f-14"> Holdings as on </label>
                 </div>
-                <div class="col-md-5 pl-2 pr-0">
-                    <label class=" f-14"> Total invested amount</label>
+                <div class="col-md-4 pl-2 pr-0">
+                    <label class=" f-14"> Invested amount</label>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
 
     <div formArrayName="holdingList">
         <div class="row pb-36 pl-28" *ngFor="let creds of holdings.controls; let i = index; let last = last" [formGroupName]="i">
-            <div class="col-md-4 pl-0">
+            <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
                     <!-- <mat-form-field class="example-full-width">
                         <input 
@@ -160,7 +160,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-5 pl-0">
+                    <div class="col-md-4 pl-0">
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
                                 <input autocomplete="off" matInput #totalNetContribution type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalAmountInvested">
@@ -174,18 +174,20 @@
 
                     </div>
 
+                    <div class="col-md-1 d-flex justify-content-center align-items-center pl-0">
+                        <i class="material-icons text-custom c-p f-20" (click)="addHoldings()">
+                            add
+                        </i>
+                        <i class="material-icons text-custom c-p f-20 pl-10" (click)="removeHoldings(i)">
+                            remove
+                        </i>
+                    </div>
+
 
                 </div>
             </div>
 
-            <div class="col-md-1 d-flex justify-content-center align-items-center pl-0">
-                <i class="material-icons text-custom c-p f-20" (click)="addHoldings()">
-                    add
-                </i>
-                <i class="material-icons text-custom c-p f-20 pl-10" (click)="removeHoldings(i)">
-                    remove
-                </i>
-            </div>
+
         </div>
     </div>
     <hr class="ml-16 mr-16">
