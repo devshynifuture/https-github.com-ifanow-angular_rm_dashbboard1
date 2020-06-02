@@ -20,7 +20,11 @@
                         <mat-select class="form-control" [(ngModel)]="selectedFileType">
                             <!-- formControlName="lead" -->
                             <mat-option value="">Select option</mat-option>
-                            <mat-option [value]="type.id" *ngFor="let type of fileType">{{type.name}}</mat-option>
+                            <mat-optgroup *ngFor="let group of fileType" [label]="group.category">
+                                <mat-option *ngFor="let type of group.value" [value]="type.id">
+                                    {{ type.name }}
+                                </mat-option>
+                            </mat-optgroup>
                             <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
                         </mat-select>
                         <mat-error>This field is required</mat-error>
@@ -107,7 +111,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-1 p-0 pr-8 left">
+                        <div class="col-md-1 p-0 pr-8 left pt-2">
                             <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
 
                         </div>

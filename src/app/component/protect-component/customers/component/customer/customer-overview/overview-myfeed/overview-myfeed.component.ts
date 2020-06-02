@@ -214,7 +214,7 @@ export class OverviewMyfeedComponent implements OnInit {
   recentTransactions: any[] = [];
   riskProfile: any[] = [];
   globalRiskProfile: any[] = [];
-  documentVault: any[] = [];
+  documentVault: any = {};
   adviseData: any = null;
   goalsData: any[] = [];
   cashflowData: any = {};
@@ -467,10 +467,14 @@ export class OverviewMyfeedComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
       if (res == null) {
-        this.documentVault = [];
+        this.documentVault = {};
       } else {
         this.tabsLoaded.documentsVault.hasData = true;
         this.documentVault = res;
+        this.documentVault.familyStats.unshift({
+          relationshipId: (this.clientData.genderId == 1 ? 2 : 3),
+          genderId: 0
+        })
       }
       this.tabsLoaded.documentsVault.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -607,6 +611,7 @@ export class OverviewMyfeedComponent implements OnInit {
 
   createCashflowFamilyObj(data) {
     let tnx = [];
+    // create list of all transactions
     if (data.income && data.income.length > 0) {
       tnx.push(data.income)
     }
@@ -615,6 +620,7 @@ export class OverviewMyfeedComponent implements OnInit {
     }
     tnx = tnx.flat();
 
+    // show empty state if no data
     if(tnx.length == 0) {
       this.cashflowData = {
         emptyData: [{
@@ -627,45 +633,64 @@ export class OverviewMyfeedComponent implements OnInit {
       this.tabsLoaded.cashflowData.hasData = false;
       return;
     }
-    let familyMembers = [...new Set(tnx.map(obj => obj.ownerName))];
+
+    // group by family
+    let familyMembers = [...new Set(tnx.map(obj => obj.familyMemberId))];
     let totalIncome = 0;
     let totalExpense = 0;
 
+    // create view obj
     let leddger = familyMembers.map((famId) => {
-      let transactions = tnx.filter((tnx) => tnx.ownerName == famId);
-      let income = 0;
-      let expense = 0;
-      transactions.forEach((obj) => {
-        if (obj.inputOutputFlag > 0) {
-          income += obj.currentValue;
-        } else {
-          expense += obj.currentValue;
+      // get all transactions of a particular family member
+      let transactions = tnx.filter((tnx) => tnx.familyMemberId == famId);
+
+      // get all accounts of the family member (banks and non-banks)
+      let all_accounts = [...new Set(transactions.map(obj => obj.userBankMappingId))];
+
+      // create bank wise leddger objs
+      let cashflowLedgger = all_accounts.map(bank =>{
+        // filter transactions as per bank
+        let account_transactions = transactions.filter(tnx => tnx.userBankMappingId == bank);
+        let account_income = 0;
+        let account_expense = 0;
+
+        // group inflow and outflows as per the bank
+        account_transactions.forEach((obj) => {
+          if (obj.inputOutputFlag > 0) {
+            totalIncome += obj.currentValue;
+            account_income += obj.currentValue;
+          } else {
+            totalExpense += obj.currentValue;
+            account_expense += obj.currentValue;
+          }
+        })
+        let leddger = {
+          bankName: 'need to be mapped' + bank,
+          inflow: account_income,
+          outflow: account_expense,
+          netflow: account_income - account_expense
         }
+
+        // non linked bank = 0
+        if(bank == 0) {
+          leddger.bankName = "Non-linked bank";
+        }
+        return leddger;
       })
 
-      totalExpense += expense;
-      totalIncome += income;
-
+      // create leddger table obj for each family
       return {
         familyMemberId: famId,
         familyMemberFullName: transactions[0].ownerName,
-        cashflowLedgger: [
-          {
-
-            bankName: 'N/A',
-            inflow: income,
-            outflow: expense,
-            netflow: income - expense
-          }
-        ]
+        cashflowLedgger: cashflowLedgger
       }
     })
 
     let total = [{
       bankName: 'All In-flows & Out-flows',
-      inflow: totalIncome,
-      outflow: totalExpense,
-      netflow: totalIncome - totalExpense,
+      inflow: totalIncome.toFixed(2),
+      outflow: totalExpense.toFixed(2),
+      netflow: (totalIncome - totalExpense).toFixed(2),
     }]
 
     this.cashflowData = {
