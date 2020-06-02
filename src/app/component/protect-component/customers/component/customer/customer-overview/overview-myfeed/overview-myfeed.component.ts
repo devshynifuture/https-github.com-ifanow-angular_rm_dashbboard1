@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { LoaderFunction } from 'src/app/services/util.service';
@@ -23,7 +23,7 @@ import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.s
     slideInAnimation,
   ]
 })
-export class OverviewMyfeedComponent implements OnInit {
+export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
   clientData: any;
   advisorId: any;
   orgDetails: any;
@@ -130,6 +130,7 @@ export class OverviewMyfeedComponent implements OnInit {
   ]
   mfSubCatAllocationData:any[] = [];
   worker:Worker;
+  currentViewId = 1;
 
   constructor(
     private customerService: CustomerService,
@@ -227,6 +228,18 @@ export class OverviewMyfeedComponent implements OnInit {
   appearancePortfolio:any = {};
   familyMembers: any[] = [];
 
+
+  // highlight scroll links solution
+  // https://stackoverflow.com/a/54447174
+  @ViewChild('allFeedsSection', {static: true}) allFeedsSection: ElementRef;
+  @ViewChild('riskProfileSection', {static: true}) riskProfileSection: ElementRef;
+  @ViewChild('cashFlowSection', {static: true}) cashFlowSection: ElementRef;
+  @ViewChild('portFolioSection', {static: true}) portFolioSection: ElementRef;
+  allFeedsSectionOffset:any = 0;
+  riskProfileSectionOffset:any = 0;
+  cashFlowSectionOffset:any = 0;
+  portFolioSectionOffset:any = 0;
+
   ngOnInit() {
     this.loadLogicBasedOnRoleType();
     this.getFamilyMembersList();
@@ -242,7 +255,33 @@ export class OverviewMyfeedComponent implements OnInit {
     // this.loadGoalsData(); // Not to be implemented for demo purpose
     this.loadCashFlowSummary(); // needs better implementation
     this.getMFPortfolioData();
+  }
 
+  ngAfterViewInit() {
+    // offset by 60, the height of upper nav
+    this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop - 60;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop - 60;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop - 60;
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  checkOffsetTop() {
+    console.log(window.pageYOffset)
+    if (window.pageYOffset < this.portFolioSectionOffset) {
+      this.currentViewId = 1;
+    } else if (window.pageYOffset < this.cashFlowSectionOffset) {
+      this.currentViewId = 2;
+    } else if (window.pageYOffset < this.riskProfileSectionOffset) {
+      this.currentViewId = 3;
+    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
+      this.currentViewId = 4;
+    }
+  }
+
+  goToSectionView(scrollOffset) {
+    // offset by 60, the height of upper nav
+    window.scrollTo(0, scrollOffset)
   }
 
   // logic to decide which apis to load and not load

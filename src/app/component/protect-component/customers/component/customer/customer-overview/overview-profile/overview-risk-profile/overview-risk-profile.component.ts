@@ -139,7 +139,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     var chart1 = new Highcharts.Chart({
 
       chart: { renderTo: 'container1' },
-      xAxis: { categories: ['<span class="hc-cat-title">Equity%</span>'] },
+      xAxis: { categories: ['<span class="hc-cat-title"></span>'] },
       yAxis: {
         min: 0,
         max: 100,
@@ -150,7 +150,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         labels: { y: 10, format: '{value}%', style: { fontSize: '12px', fontWeight: 'bold', color: 'black' } },
         plotBands: [
           { from: 0, to: data.equityAllocationLowerLimit, color: '#D9DEE1' },
-          { from: data.equityAllocationLowerLimit, to: data.equityAllocationUpperLimit, color: '#4790ff' },
+          { from: data.equityAllocationLowerLimit, to: data.equityAllocationUpperLimit, color: '#008FFF' },
           { from: data.equityAllocationUpperLimit, to: 100, color: '#D9DEE1' },]
       },
       series: [{ name: 'Measure', pointWidth: 10, data: [0], type: undefined },
