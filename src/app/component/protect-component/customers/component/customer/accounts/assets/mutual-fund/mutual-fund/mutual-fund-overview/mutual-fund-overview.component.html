@@ -26,7 +26,7 @@
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD
                     NEW</button>
                 <mat-menu #menu1="matMenu" class="add-new">
-                    <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
+                    <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -38,7 +38,7 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
                     <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </button>
-                    <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                    <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-download.svg">
@@ -68,7 +68,7 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
                 </mat-menu>
             </div>
         </div>
@@ -839,7 +839,7 @@
         <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
         </button>
         <mat-menu #menu1="matMenu" class="add-new">
-            <button mat-menu-item class="b-b">
+            <!-- <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">
                         <img src="assets/images/svg/dark-three-dot.svg">
@@ -851,7 +851,7 @@
                         </p>
                     </div>
                 </div>
-            </button>
+            </button> -->
             <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">
@@ -865,7 +865,7 @@
                     </div>
                 </div>
             </button>
-            <button mat-menu-item class="b-b">
+            <!-- <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">
                         <img src="assets/images/svg/scheme-icon.svg">
@@ -877,7 +877,7 @@
                         </p>
                     </div>
                 </div>
-            </button>
+            </button> -->
         </mat-menu>
     </div>
 </div>
@@ -890,10 +890,10 @@
         align="center; page-break-before: always;">
 
         <tr>
-            <td style="text-align: left;">
+            <td style="text-align: left;" >
                 <img width="100px" *ngIf="details" [src]="details.profilePic">
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: right;" >
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                     {{(userInfo.name) ? userInfo.name : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
@@ -901,8 +901,8 @@
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
                     {{(details) ? details.emailId : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on : </strong>
-                    {{reportDate | date:'dd/MM/yyyy' }}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong>  Report as on : {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                    </p>
             </td>
         </tr>
 
@@ -915,7 +915,7 @@
             <td colspan="2" style=" border: 1px solid #dee5e7; border-bottom: transparent;" valign="top">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <p style="margin: 0px; font-size: 14px;padding-top: 4px;" *ngIf="clientData">Client name :
+                        <p style="margin: 0px; font-weight: 600; font-size: 14px;padding-top: 4px;" *ngIf="clientData">Client name :
                             {{(clientData.name) ? clientData.name : '-'}}</p>
                         <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
                             Summary</p>

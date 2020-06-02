@@ -1195,7 +1195,7 @@
                 .real-estate,
                 .gold,
                 .other,
-                .superannuation,
+                .cash-bank .superannuation,
                 .mutualfunds-capital-equity,
                 .mutualfunds-capital-debt,
                 .mutualfunds-capital-dividend-summary,
@@ -2097,3 +2097,5 @@
                   border-left: transparent;
                   border-right: transparent;
                 }
+
+                .cash-bank {}

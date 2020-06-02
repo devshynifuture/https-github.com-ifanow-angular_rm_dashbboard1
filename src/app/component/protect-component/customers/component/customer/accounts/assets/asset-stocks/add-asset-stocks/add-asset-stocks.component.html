@@ -133,7 +133,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-2">
-            <button mat-stroked-button class="br-0 btn-bottom right" (click)="submitStockData()">Save</button>
+            <app-progress-button (btnClick)="submitStockData()" [options]="barButtonOptions">
+            </app-progress-button>
+            <!-- <button mat-stroked-button class="br-0 btn-bottom right" (click)="submitStockData()">Save</button> -->
         </div>
     </div>
 </div>
