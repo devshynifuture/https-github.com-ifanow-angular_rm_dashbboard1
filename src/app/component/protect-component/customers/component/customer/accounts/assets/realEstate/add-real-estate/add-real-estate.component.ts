@@ -7,6 +7,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {MatInput} from '@angular/material';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EnumServiceService} from '../../../../../../../../../services/enum-service.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -68,7 +69,10 @@ export class AddRealEstateComponent implements OnInit {
   adviceShowHeaderFooter = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
-  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) {
+  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject,
+              private fb: FormBuilder, public custmService: CustomerService,
+              public eventService: EventService, public utils: UtilService,
+              public enumService: EnumServiceService) {
   }
 
   @Input()
@@ -410,15 +414,15 @@ export class AddRealEstateComponent implements OnInit {
         isClient: 0
       })]),
       // ownerPercent: [data.ownerPerc, [Validators.required]],
-      familyMemberId: [this.familyMemberId, ],
+      familyMemberId: [this.familyMemberId,],
       type: [(data.typeId == undefined) ? '' : (data.typeId) + '', [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       purchasePeriod: [(data.purchasePeriod == undefined) ? null : new Date(data.purchasePeriod)],
-      purchaseValue: [data.purchaseValue, ],
-      unit: [String(data.unitId), ],
-      ratePerUnit: [data.ratePerUnit, ],
-      stampDuty: [data.stampDutyCharge, ],
-      registration: [data.registrationCharge, ],
+      purchaseValue: [data.purchaseValue,],
+      unit: [String(data.unitId),],
+      ratePerUnit: [data.ratePerUnit,],
+      stampDuty: [data.stampDutyCharge,],
+      registration: [data.registrationCharge,],
       gst: [data.gstCharge],
       location: [data.location],
       description: [data.description],

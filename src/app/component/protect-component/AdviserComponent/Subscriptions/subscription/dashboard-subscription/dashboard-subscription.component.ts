@@ -1,20 +1,20 @@
-import {ActivatedRoute, Router} from '@angular/router';
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionService} from '../../subscription.service';
-import {EnumServiceService} from '../../../../../../services/enum-service.service';
-import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {Chart} from 'angular-highcharts';
-import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
-import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
-import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
-import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionService } from '../../subscription.service';
+import { EnumServiceService } from '../../../../../../services/enum-service.service';
+import { UtilService } from '../../../../../../services/util.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { Chart } from 'angular-highcharts';
+import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
+import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
+import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
+import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
 
 export interface PeriodicElement {
   name: string;
@@ -24,7 +24,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019'},
+  { name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019' },
   { name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-' },
   { name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-' },
 
@@ -194,13 +194,13 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   getTotalRecivedByDash() {
     this.isLoading = true;
-    const beginDate = new Date();
-    beginDate.setMonth(beginDate.getMonth() - 1);
-    const endDate = new Date();
+    // const beginDate = new Date();
+    // beginDate.setMonth(beginDate.getMonth() - 1);
+    // const endDate = new Date();
     const obj = {
       advisorId: this.advisorId,
-      fromDate: this.formatDate(beginDate),
-      toDate: this.formatDate(endDate)
+      fromDate: new Date().getTime(),
+      toDate: new Date().getTime()
     };
     this.subService.getTotalRecived(obj).subscribe(
       data => this.getTotalRecivedRes(data)
