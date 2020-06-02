@@ -242,21 +242,21 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         transactionAmount: [this.data.amount],
         Units: [this.data.unit],
         id: [this.data.id],
-        assetMutualFundTransactionTypeMasterId: [this.data.assetTypeTransactionId],
+        assetMutualFundTransactionTypeMasterId: [this.data.assetMutualFundTransactionTypeMasterId],
         isEdited: this.data.isEdited,
         previousUnit: this.data.previousUnit,
         previousEffect: this.data.effect
       }))
     }else{
       if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund')) {
-        data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; }) => {
+        data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetMutualFundTransactionTypeMasterId :any;assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; }) => {
           this.transactionArray.push(this.fb.group({
             transactionType: [element.transactionTypeMasterId],
             date: [new Date(element.transactionDate)],
             transactionAmount: [element.amount],
             Units: [element.unit],
             id: [element.id],
-            assetMutualFundTransactionTypeMasterId: [element.assetTypeTransactionId],
+            assetMutualFundTransactionTypeMasterId: [element.assetMutualFundTransactionTypeMasterId],
             isEdited: element.isEdited,
             previousUnit: element.previousUnit,
             previousEffect: element.effect
@@ -370,7 +370,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               isEdited: element.isEdited,
               previousUnit: element.previousUnit,
               previousEffect: element.previousEffect,
-              assetMutualFundTransactionTypeMasterId:this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId),
+              assetMutualFundTransactionTypeMasterId:(element.assetMutualFundTransactionTypeMasterId) ? this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId) : null,
             }
             mutualFundTransactions.push(obj1);
           } else if (this.data && this.data.flag === 'addTransaction') {
@@ -385,7 +385,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
               effect: element.transactionType ? this.getTransactionEffect(element.transactionType) : null,
-              assetMutualFundTransactionTypeMasterId:this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId),
+              assetMutualFundTransactionTypeMasterId:(element.assetMutualFundTransactionTypeMasterId) ? this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId) : null,
             }
             mutualFundTransactions.push(obj1);
           }
@@ -402,7 +402,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
               effect: element.transactionType ? this.getTransactionEffect(element.transactionType) : null,
-              assetMutualFundTransactionTypeMasterId:this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId),
+              assetMutualFundTransactionTypeMasterId:(element.assetMutualFundTransactionTypeMasterId) ? this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId) : null,
             }
             mutualFundTransactions.push(obj1);
           } else if (this.data.flag == 'editMutualFund' || this.addEditMutualFund === 'edit') {
@@ -422,7 +422,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               previousUnit: element.previousUnit,
               previousEffect: element.previousEffect,
               id: element.id,
-              assetMutualFundTransactionTypeMasterId:this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId),
+              assetMutualFundTransactionTypeMasterId:(element.assetMutualFundTransactionTypeMasterId) ? this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId) : null,
             }
             mutualFundTransactions.push(obj1);
           }
