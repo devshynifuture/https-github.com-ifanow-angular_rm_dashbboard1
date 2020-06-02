@@ -25,8 +25,8 @@
                         <div class="form-group">
                             <mat-form-field>
                                 <input [matAutocomplete]="auto1" [readonly]="invoiceInSub =='invoiceSubscription'"
-                                    aria-label="client" class="form-control br-0 pl-8" formControlName="clientName"
-                                    matInput>
+                                    aria-label="client" aria-label="State" placeholder="You can search display name"
+                                    class="form-control br-0 pl-8" formControlName="clientName" matInput>
                                 <mat-autocomplete #auto1="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectClient($event , c)"
                                         *ngFor="let c of clientList" [value]="c.clientName">
@@ -56,7 +56,7 @@
                             <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
                         </div>
                         <div class="col-md-6">
-                            <p class="mb-0 f-12 text-custom text-right">
+                            <p *ngIf="editAdd1" class="mb-0 f-12 text-custom text-right">
                                 {{getFormControlEdit().billerAddress.value?.length ? getFormControlEdit().billerAddress.value.length : 0}}
                                 /150
                             </p>
@@ -75,7 +75,7 @@
                             <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
                         </div>
                         <div class="col-md-6">
-                            <p class="mb-0 f-12 text-custom text-right">
+                            <p *ngIf="editAdd2" class="mb-0 f-12 text-custom text-right">
                                 {{getFormControlEdit().billingAddress.value?.length ? getFormControlEdit().billingAddress.value.length : 0}}
                                 /150
                             </p>
