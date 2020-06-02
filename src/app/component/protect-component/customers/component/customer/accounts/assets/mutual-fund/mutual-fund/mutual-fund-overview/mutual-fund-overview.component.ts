@@ -274,11 +274,17 @@ export class MutualFundOverviewComponent implements OnInit {
   getMutualFundData() {
     this.isLoading = true;
     this.changeInput.emit(true);
+    this.showSummaryBar = true;
     this.dataSource4 = new MatTableDataSource([{}, {}, {}]);
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    this.showFamilyMember = true;
     this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
+    this.showSchemeWise = true;
     this.dataSource3 = new MatTableDataSource([{}, {}, {}]);
+    this.showSubCategory = true;
     this.datasource1 = new MatTableDataSource([{}, {}, {}]);
+    this.showCashFlow = true;
+
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
