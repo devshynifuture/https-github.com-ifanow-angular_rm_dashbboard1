@@ -46,7 +46,7 @@
             <mat-form-field>
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input (click)="balanceAsOn.open()" matInput autocomplete="off" class="form-control br-0" [matDatepicker]="balanceAsOn" formControlName="priceDetailsPriceAsOn">
+                        <input (click)="balanceAsOn.open()" matInput autocomplete="off" [max]="maxDate" class="form-control br-0" [matDatepicker]="balanceAsOn" formControlName="priceDetailsPriceAsOn">
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error>This field is required

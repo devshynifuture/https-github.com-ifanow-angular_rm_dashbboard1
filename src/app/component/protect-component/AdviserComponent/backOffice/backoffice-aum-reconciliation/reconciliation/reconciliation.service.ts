@@ -120,6 +120,10 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FOLIO, data);
     }
 
+    getBackofficeFolioAumList(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILEUPLOAD_AUM_LIST_GET, data);
+    }
+
     successBackOfficeFileToUpload(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_SUCCESS_FILE_UPLOAD, data)
     }

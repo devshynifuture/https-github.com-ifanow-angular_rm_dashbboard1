@@ -53,6 +53,17 @@ export class ScripFieldComponent implements OnInit {
       error => this.eventService.showErrorMessage(error)
     )
   }
+
+  filterScripList(data) {
+    let obj = {
+      searchString: data
+    }
+    this.cusService.filterScripList(obj).subscribe(
+      data => this.getScripListRes(data),
+      error => this.eventService.showErrorMessage(error)
+    )
+  }
+
   getScripListRes(data) {
     console.log(data, "scripList")
     this.scripList = data.scripName;

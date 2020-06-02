@@ -1071,6 +1071,7 @@ export class RightFilterComponent implements OnInit {
       this.folio.forEach(item => item.selected = true);
       // this.transactionView.forEach(item => item.selected = true);
       this.category.forEach(item => item.selected = true);
+      this.showError =''
 
     }else{
       this.familyMember.forEach(item => item.selected = false);
