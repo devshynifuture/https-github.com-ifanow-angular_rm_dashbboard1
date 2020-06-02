@@ -2,30 +2,30 @@
     <div class="row">
         <div class="col-md-3  pr-24">
             <ul class="d-block sticky-top myFeedUi">
-                <li>
-                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)"> All feeds</a>
+                <li [ngClass]="{'activeClass': currentViewId == 1}">
+                    <a class="f-14 roboto" (click)="goToSectionView(60)"> All feeds</a>
                 </li>
 
-                <li>
-                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 2}" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
+                <li [ngClass]="{'activeClass': currentViewId == 2}">
+                    <a class="f-14 roboto" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
                 </li>
-<!-- 
+                <!-- 
                 <li>
                     <a class="f-14 roboto"> Plan</a>
                 </li> -->
-<!-- 
+                <!-- 
                 <li>
                     <a class="f-14 roboto" > Activity</a>
                 </li> -->
 
-                <li>
-                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 3}" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
+                <li [ngClass]="{'activeClass': currentViewId == 3}">
+                    <a class="f-14 roboto" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
                 </li>
 
-                <li>
-                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 4}" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
+                <li [ngClass]="{'activeClass': currentViewId == 4}">
+                    <a class="f-14 roboto" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
                 </li>
-<!-- 
+                <!-- 
                 <li>
                     <a class="f-14 roboto"> Education</a>
                 </li>
@@ -427,12 +427,18 @@
                                                 Your secure online vault
                                             </h5>
                                             <span *ngFor="let fam of documentVault.familyStats | slice:0:5">
-                                                <img class="documentImg" *ngIf="fam.relationshipId==2" src="/assets/images/svg/man-profile.svg">
-                                                <img class="documentImg" *ngIf="fam.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
-                                                <img class="documentImg" *ngIf="fam.relationshipId==4" src="/assets/images/svg/son-profile.svg">
-                                                <img class="documentImg" *ngIf="fam.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
-                                                <img class="documentImg" *ngIf="fam.relationshipId==7" src="/assets/images/svg/mother-profile.svg">
-                                                <img class="documentImg" *ngIf="fam.relationshipId==6" src="/assets/images/svg/father-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==2"
+                                                    src="/assets/images/svg/man-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==3"
+                                                    src="/assets/images/svg/women-profile-icon.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==4"
+                                                    src="/assets/images/svg/son-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==5"
+                                                    src="/assets/images/svg/daughter-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==7"
+                                                    src="/assets/images/svg/mother-profile.svg">
+                                                <img class="documentImg" *ngIf="fam.relationshipId==6"
+                                                    src="/assets/images/svg/father-profile.svg">
                                             </span>
 
                                             <p class="mb-0">{{documentVault.fileStats[0].filesCount}} items in your vault {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} space used</p>
@@ -685,7 +691,7 @@
                         </ng-container>
                     </div>
 
-                    
+
 
 
                     <!-- Portfolio Asset allocation chart -->
