@@ -251,7 +251,9 @@
         </ng-container>
                 <ng-container matColumnDef="scrip">
                     <th *matHeaderCellDef="let element let i = index" class="br" mat-header-cell><div > Scrip</div></th>
-                    <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>{{singlePortfolioCategory.categoryName}}</th>
+                    <!-- prod fix -->
+                    <!-- <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>{{singlePortfolioCategory.categoryName}}</th> -->
+                    <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>Category name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar">{{element.scripName}} </div>
                     </td>
