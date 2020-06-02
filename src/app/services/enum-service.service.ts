@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { element } from 'protractor';
+import {Injectable} from '@angular/core';
+import {element} from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,8 @@ export class EnumServiceService {
   bankList: any = [];
   clientRoleList: any = [];
   proofTypeList: any = [];
+  const;
+  realEstateTypeList = [];
 
   constructor() {
   }
@@ -91,8 +93,28 @@ export class EnumServiceService {
   public filterTaxStatusList(taxStatusId) {
     let individualTaxData, minorTaxData, corporateTaxData;
     individualTaxData = this.globalEnumData.individualTaxList.filter(element => element.taxStatusCode == taxStatusId);
-    minorTaxData = this.globalEnumData.minorTaxList.filter(element => element.taxStatusCode == taxStatusId)
-    corporateTaxData = this.globalEnumData.corporateTaxList.filter(element => element.taxStatusCode == taxStatusId)
+    minorTaxData = this.globalEnumData.minorTaxList.filter(element => element.taxStatusCode == taxStatusId);
+    corporateTaxData = this.globalEnumData.corporateTaxList.filter(element => element.taxStatusCode == taxStatusId);
     return (individualTaxData.length > 0) ? individualTaxData : (minorTaxData.length > 0) ? minorTaxData : corporateTaxData;
+  }
+
+  getRealEstateType() {
+    if (this.realEstateTypeList.length == 0) {
+      this.realEstateTypeList.push({value: 0, name: 'Self Occupied property'});
+      this.realEstateTypeList.push({value: 1, name: 'Let out property'});
+      this.realEstateTypeList.push({value: 2, name: 'Commercial land'});
+      this.realEstateTypeList.push({value: 3, name: 'Agricultural land'});
+      this.realEstateTypeList.push({value: 4, name: 'Non agricultural land'});
+    }
+    return this.realEstateTypeList;
+  }
+
+  getRealEstateTypeStringFromValue(value) {
+    this.getRealEstateType().forEach(singleType => {
+      if (singleType.value == value) {
+        return singleType.name;
+      }
+    });
+    return null;
   }
 }
