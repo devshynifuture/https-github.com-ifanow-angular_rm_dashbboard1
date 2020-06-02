@@ -1,6 +1,8 @@
 import * as Highcharts from 'highcharts';
 
 export const pieChart = (data) => {
+    console.log(data,"pieChart");
+    
     Highcharts.chart('piechartStock', {
         chart: {
             plotBackgroundColor: null,
@@ -10,7 +12,7 @@ export const pieChart = (data) => {
         title: {
             text: '',
             align: 'center',
-            verticalAlign: 'middle',
+            verticalAlign: 'middle',    
             y: 60
         },
         tooltip: {
