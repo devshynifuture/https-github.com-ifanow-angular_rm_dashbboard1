@@ -13,19 +13,14 @@
 
 <div class="mb-48 pt-100 pb-48 mb-44" [formGroup]="schemeHoldingsNPS">
     <div formArrayName="getCoOwnerName">
-        <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
-            *ngFor="let obj of schemeHoldingsNPS.controls['getCoOwnerName'].controls; let pointIndex=index"
-            [formGroupName]="pointIndex">
+        <div [ngClass]="{'pt-36': pointIndex>0}" class="row" *ngFor="let obj of schemeHoldingsNPS.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
             </div>
             <div class="pr-0" [ngClass]="schemeHoldingsNPS.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                            (selectionChange)="disabledMember($event.value,'owner')"
-                            (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
-                            class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -40,8 +35,7 @@
             <div class="col-md-2" *ngIf="schemeHoldingsNPS.value.getCoOwnerName.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                            (focusout)="onChangeJointOwnership('owner')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -52,11 +46,8 @@
                 </div>
             </div>
             <div class="col-md-2 pr-0 d-flex align-items-center">
-                <i *ngIf="schemeHoldingsNPS.value.getCoOwnerName.length < 3"
-                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
-                <i *ngIf="schemeHoldingsNPS.value.getCoOwnerName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
+                <i *ngIf="schemeHoldingsNPS.value.getCoOwnerName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="schemeHoldingsNPS.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
         </div>
@@ -68,7 +59,7 @@
         <div class="col-md-5 pr-0">
             <mat-form-field>
                 <!-- (change)="getIntPayout()" prod build -->
-                <mat-select #payOpt formControlName="schemeChoice" class="form-control br-0" >
+                <mat-select #payOpt formControlName="schemeChoice" class="form-control br-0">
                     <mat-option value="" disabled> Select option</mat-option>
                     <mat-option [value]="1"> Active</mat-option>
                     <mat-option [value]="2">Auto</mat-option>
@@ -79,7 +70,7 @@
             </mat-form-field>
         </div>
     </div>
-    
+
     <div class="row pl-28">
         <div class="col-md-12 pl-0 mt-65">
             <h4 class="mb-20 text-black">Holdings</h4>
@@ -92,14 +83,14 @@
 
         <div class="col-md-7 pl-0">
             <div class="row">
-                <div class="col-md-4 pl-0">
+                <div class="col-md-3 pl-0">
                     <label class=" f-14"> Total units </label>
                 </div>
 
                 <div class="col-md-4 pl-2">
                     <label class=" f-14"> Holdings as on </label>
                 </div>
-                <div class="col-md-4 pl-2 pr-0">
+                <div class="col-md-5 pl-2 pr-0">
                     <label class=" f-14"> Total invested amount</label>
                 </div>
             </div>
@@ -108,8 +99,7 @@
     </div>
 
     <div formArrayName="holdingList">
-        <div class="row pb-36 pl-28" *ngFor="let creds of holdings.controls; let i = index; let last = last"
-            [formGroupName]="i">
+        <div class="row pb-36 pl-28" *ngFor="let creds of holdings.controls; let i = index; let last = last" [formGroupName]="i">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <!-- <mat-form-field class="example-full-width">
@@ -126,9 +116,8 @@
                         </mat-error>
                       </mat-form-field> -->
                     <mat-form-field>
-                        <input autocomplete="off" matInput aria-label="State" #name  [matAutocomplete]="auto" (keyup)="filterSchemeOptions(name.value)"
-                            class="form-control br-0 pl-8" formControlName="schemeName">
-                        <mat-autocomplete #auto="matAutocomplete" >
+                        <input autocomplete="off" matInput aria-label="State" #name [matAutocomplete]="auto" (keyup)="filterSchemeOptions(name.value)" class="form-control br-0 pl-8" formControlName="schemeName">
+                        <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" (click)="setGroupValue({scheme:s, index: i})" [value]="s.name">{{s.name}}
                             </mat-option>
                         </mat-autocomplete>
@@ -146,12 +135,10 @@
 
             <div class="col-md-7 p-0">
                 <div class="row">
-                    <div class="col-md-4 pl-0">
+                    <div class="col-md-3 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #totalUnits type="text" appInputValueValidation
-                                    [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
-                                    class="form-control br-0 rupess" formControlName="totalUnits">
+                                <input autocomplete="off" matInput #totalUnits type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalUnits">
                                 <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
                                 <!-- <mat-hint align="end" class="f-12">{{totalUnits.value.length}}/10</mat-hint> -->
                                 <mat-error class="f-12">
@@ -164,9 +151,7 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field class="ba-date">
-                                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput
-                                    formControlName="holdingAsOn" [matDatepicker]="picker" [max]="maxDate" class="form-control br-0 b-0"
-                                    readonly>
+                                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput formControlName="holdingAsOn" [matDatepicker]="picker" [max]="maxDate" class="form-control br-0 b-0" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error class="f-12">
@@ -175,12 +160,10 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-4 pl-0">
+                    <div class="col-md-5 pl-0">
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #totalNetContribution type="text"
-                                    appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
-                                    class="form-control br-0 rupess" formControlName="totalAmountInvested">
+                                <input autocomplete="off" matInput #totalNetContribution type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="totalAmountInvested">
                                 <mat-hint align="end" class="f-12">{{totalNetContribution.value.length}}/10</mat-hint>
                                 <mat-error class="f-12">
                                     This field is required
@@ -203,13 +186,7 @@
                     remove
                 </i>
             </div>
-
-
-
-
         </div>
-
-
     </div>
     <hr class="ml-16 mr-16">
 
@@ -219,7 +196,7 @@
         </div>
         <div class="col-md-7 p-0">
             <div class="row">
-                
+
                 <div class="col-md-4 pl-0">
                     <h5 class="m-0 f-14 ">Frequency</h5>
                 </div>
@@ -266,9 +243,7 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
-                                <input autocomplete="off" matInput #currentValue type="text" appInputValueValidation
-                                    [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10"
-                                    class="form-control br-0 rupess" formControlName="approxContribution">
+                                <input autocomplete="off" matInput #currentValue type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="approxContribution">
                                 <mat-hint align="end" class="f-12">{{currentValue.value.length}}/10</mat-hint>
                                 <mat-error class="f-12">
                                     This field is required
@@ -293,16 +268,14 @@
         </div>
 
     </div>
-    
+
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-8">PRAN</h5>
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <input autocomplete="off" matInput #pran type="text" appInputValueValidation
-                    [inputValidator]="validatorType.NUMBER_ONLY" maxlength="12" class="form-control br-0 rupess"
-                    formControlName="pran">
+                <input autocomplete="off" matInput #pran type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="12" class="form-control br-0 rupess" formControlName="pran">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
@@ -325,7 +298,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div  class="col-md-1 p-0 pt-8 d-flex">
+        <div class="col-md-1 p-0 pt-8 d-flex">
             <!-- prod build -->
             <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
         </div>
@@ -336,26 +309,21 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <input autocomplete="off" matInput #description maxlength="60" type="text" class="form-control br-0"
-                    formControlName="description">
+                <input autocomplete="off" matInput #description maxlength="60" type="text" class="form-control br-0" formControlName="description">
                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                 <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
             </mat-form-field>
         </div>
     </div>
     <div formArrayName="getNomineeName" class="pb-36">
-        <div class="row pt-36 "
-            *ngFor="let obj of schemeHoldingsNPS.controls['getNomineeName'].controls; let pointIndex=index"
-            [formGroupName]="pointIndex">
+        <div class="row pt-36 " *ngFor="let obj of schemeHoldingsNPS.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
             </div>
             <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                            (selectionChange)="disabledMember($event.value,'nominee')"
-                            (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -370,8 +338,7 @@
             <div class="col-md-2" *ngIf="getNominee.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number"
-                            formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
                         <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -382,11 +349,8 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length < 3"
-                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
             </div>
 
         </div>
@@ -399,7 +363,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveSchemeHolding()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="saveSchemeHolding()" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

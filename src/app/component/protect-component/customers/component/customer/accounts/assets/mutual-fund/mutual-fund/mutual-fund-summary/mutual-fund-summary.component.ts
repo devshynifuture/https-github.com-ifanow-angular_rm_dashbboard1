@@ -37,7 +37,7 @@ export class MutualFundSummaryComponent implements OnInit {
   mutualFundList: any[];
   rightFilterData: any = { reportType: '' };
   totalObj: any;
-  customDataSource = new MatTableDataSource([{}, {}, {}]);
+  summary = new MatTableDataSource([{}, {}, {}]);
   catObj: {};
   isLoading = false; // added for prod build
   displayColumnsPDf: any;
@@ -67,6 +67,8 @@ export class MutualFundSummaryComponent implements OnInit {
   selectedDataLoad: any;
   showDownload: boolean = false;
   reportDate: Date;
+  customDataSource: any;
+  
   addedData: boolean;
   @Input()
   set data(data) {
@@ -103,7 +105,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
   }
   getFilterData(value) {
-     this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+    this.customDataSource =[]
+     this.summary = new MatTableDataSource([{}, {}, {}]);
 
     this.isLoading = true;
     this.changeInput.emit(true);
@@ -263,12 +266,14 @@ export class MutualFundSummaryComponent implements OnInit {
       this.isLoading = false;
       this.changeInput.emit(false);
       this.customDataSource.data = [];
+      this.summary.data = [];
     }
   }
 
   getMutualFund() {
     this.isLoading = true;
-    this.customDataSource.data = [{}, {}, {}];
+    this.customDataSource.data = [];
+    this.summary.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -393,6 +398,9 @@ export class MutualFundSummaryComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
+        this.customDataSource.data =[]
+        this.summary.data = [{}, {}, {}];
+        this.summary.data = data.customDataSourceData;
         this.customDataSource.data = data.customDataSourceData;
         this.displayedColumns.forEach(element => {
           this.styleObject(element)
@@ -513,7 +521,7 @@ export class MutualFundSummaryComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
-            this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            this.summary = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
