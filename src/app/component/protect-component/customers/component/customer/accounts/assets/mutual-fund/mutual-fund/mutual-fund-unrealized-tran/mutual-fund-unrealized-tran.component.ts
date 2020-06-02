@@ -550,10 +550,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   openMutualEditFund(flag, element) {
+    let sendData:any;
+    // this.mfData.mutualFundList.forEach(element => {
+    //  element.mutualFundTransactions.filter(item => item.id === element.id);
+    // });
+
 
     this.mfData.mutualFundList.forEach(ele => {
       ele.mutualFundTransactions.forEach(tran => {
         if (tran.id == element.id) {
+          sendData=tran;
           this.selectedLoadData = ele;
         }
       });
@@ -562,7 +568,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     //   .subscribe(res => {
     const fragmentData = {
       flag: 'editTransaction',
-      data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedLoadData },
+      data: { family_member_list: ['family_member_list'], flag, ...sendData, ...this.selectedLoadData },
       id: 1,
       state: 'open',
       componentName: MFSchemeLevelHoldingsComponent
