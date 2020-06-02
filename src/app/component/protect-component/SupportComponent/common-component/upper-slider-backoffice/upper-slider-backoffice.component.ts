@@ -423,7 +423,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               let obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios], { type: 'text/plain' })
+                file: new Blob([element.folios.split(',').join('\n')], { type: 'text/plain' })
               };
               element.folios = obj;
             }
