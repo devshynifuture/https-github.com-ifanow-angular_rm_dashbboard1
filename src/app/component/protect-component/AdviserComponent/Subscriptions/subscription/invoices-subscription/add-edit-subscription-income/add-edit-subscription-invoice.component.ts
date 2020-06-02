@@ -82,14 +82,14 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.storeData = data;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if(data.id == undefined || data.flag){
+    if (data.id == undefined || data.flag) {
       this.getClients();
     }
     this.initFormsAndVariable(data);
   }
 
   ngOnInit() {
-   
+
     this.advisorId = AuthService.getAdvisorId();
     this.showErr = false;
     this.getServicesList();
@@ -129,9 +129,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required, Validators.min(1.00)]],
       discount: [(data.discount == undefined) ? 0 : data.discount],
       dueDate: [new Date(data.dueDate), [Validators.required]],
-      footnote: [data.footnote, [ Validators.maxLength(500)]],
+      footnote: [data.footnote, [Validators.maxLength(500)]],
       terms: [data.terms, [Validators.maxLength(500)]],
-      taxStatus: [data=='' || !data.cgst ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)' ],
+      taxStatus: [data == '' || !data.cgst ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
       [Validators.required]],
       subTotal: [(!data.subTotal) ? '' : data.subTotal],
@@ -282,12 +282,13 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     // }
 
     if (this.showDateError || this.editPayment.invalid) {
-      for (let element in this.editPayment.controls) {
-        if (this.editPayment.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.editPayment.controls[element].markAsTouched();
-        }
-      }
+      // for (let element in this.editPayment.controls) {
+      //   if (this.editPayment.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      //     this.editPayment.controls[element].markAsTouched();
+      //   }
+      // }
+      this.editPayment.markAllAsTouched();
     }
     //  else if (isNaN(this.editPayment.controls.finalAmount.value)) {
     //   this.showErr = true;
@@ -300,10 +301,10 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         billerAddress: this.editPayment.value.billerAddress,
         billingAddress: this.editPayment.value.billingAddress,
         invoiceNumber: this.editPayment.value.invoiceNumber,
-        billerName : this.billerName,
+        billerName: this.billerName,
         subTotal: this.editPayment.value.finalAmount,
-        discount: this.editPayment.value.discount==''?0:this.editPayment.value.discount,
-        finalAmount:parseInt(this.finAmount),
+        discount: this.editPayment.value.discount == '' ? 0 : this.editPayment.value.discount,
+        finalAmount: parseInt(this.finAmount),
         invoiceDate: this.editPayment.value.invoiceDate,
         dueDate: this.editPayment.value.dueDate,
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
@@ -317,7 +318,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       };
       let service;
       if (this.storeData.id == 0 || this.storeData.id == null) {
-          obj['advisorBillerProfileId'] = (!this.storeData.advisorBillerProfileId) ? this.advisorBillerProfileId : this.storeData.advisorBillerProfileId,
+        obj['advisorBillerProfileId'] = (!this.storeData.advisorBillerProfileId) ? this.advisorBillerProfileId : this.storeData.advisorBillerProfileId,
           obj['clientId'] = (this.upperData == undefined) ? this.clientId : this.upperData.id,
           obj['advisorId'] = this.advisorId,
           obj['clientBillerId'] = this.storeData.clientBillerId,
@@ -325,9 +326,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
             serviceName: this.editPayment.value.serviceName
           }];
         obj['services'] = service,
-        this.subService.addInvoice(obj).subscribe(
-          data => this.addInvoiceRes(data)
-        );
+          this.subService.addInvoice(obj).subscribe(
+            data => this.addInvoiceRes(data)
+          );
       } else {
         service = [{
           serviceName: this.editPayment.value.serviceName,
@@ -340,9 +341,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
           obj['auto'] = this.editPayment.value.auto,
           // finalAmount: this.editPayment.value.finalAmount,
           obj['services'] = service,
-        this.subService.updateInvoiceInfo(obj).subscribe(
-          data => this.updateInvoiceInfoRes(data)
-        );
+          this.subService.updateInvoiceInfo(obj).subscribe(
+            data => this.updateInvoiceInfoRes(data)
+          );
       }
     }
 
@@ -358,14 +359,14 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   getClients() {
     const obj = {
       advisorId: this.advisorId,
-      clientId :(this.upperData == undefined)? 0:this.upperData.id
+      clientId: (this.upperData == undefined) ? 0 : this.upperData.id
     };
     this.subService.getClientList(obj).subscribe(
       data => this.getClientListRes(data)
     );
   }
-  selectService(service){
-  
+  selectService(service) {
+
     this.editPayment.get("finalAmount").setValue(service.price)
     this.finAmount = service.price
   }
