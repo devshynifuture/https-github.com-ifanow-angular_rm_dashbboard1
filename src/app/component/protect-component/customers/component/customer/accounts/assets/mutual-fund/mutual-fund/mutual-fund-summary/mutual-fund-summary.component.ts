@@ -262,6 +262,8 @@ export class MutualFundSummaryComponent implements OnInit {
       if(this.addedData){
         this.mfService.setDataForMfGet(this.mfData);
         this.mfService.setMfData(this.mfData);
+        this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
+        this.mfService.setFilterValues(this.setDefaultFilterData);
       }
       this.addedData=false;
       // this.mutualFundList = this.mutualFund.mutualFundList;
@@ -315,6 +317,9 @@ export class MutualFundSummaryComponent implements OnInit {
   getMutualFundResponse(data) {
     if (data) {
       this.mfData = data;
+      if(this.addedData){
+        this.mutualFund = this.mfData
+      }
       // this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();

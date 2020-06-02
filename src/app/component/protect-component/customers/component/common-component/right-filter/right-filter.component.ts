@@ -1095,7 +1095,7 @@ export class RightFilterComponent implements OnInit {
 
   generateReport() {
     this.barButtonOptions.active = true;
-    var todayDate = new Date().toISOString().slice(0, 10);
+    var todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
     if (this.transactionPeriod == false && this._data.name != 'CAPITAL GAIN REPORT') {
       if (this.summaryFilerForm.get('reportAsOn').invalid) {
