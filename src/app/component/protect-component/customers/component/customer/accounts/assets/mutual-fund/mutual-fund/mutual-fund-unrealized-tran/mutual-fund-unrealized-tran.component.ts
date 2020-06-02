@@ -39,7 +39,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mutualFundListFilter: any[];
   isSpinner = false;
   customDataHolder = [];
-  customDataSource = new TableVirtualScrollDataSource([]);
   @ViewChild('tableEl', { static: false }) tableEl;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
@@ -66,6 +65,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   showDownload: boolean = false;
   columnHeader: any;
   pdfDataFornTRansaction: any;
+  unrealisedData: TableVirtualScrollDataSource<any>;
+  customDataSource: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -306,7 +307,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.isLoading = false;
       this.changeInput.emit(false);
       // this.customDataSource.data = [];
-      this.customDataSource = new TableVirtualScrollDataSource([]);
+      this.unrealisedData = new TableVirtualScrollDataSource([]);
+      this.customDataSource = [];
       this.customDataHolder = [];
       // this.changeDetectorRef.detectChanges();
     }
@@ -314,7 +316,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   getMutualFund() {
     this.isLoading = true;
-    this.customDataSource = new TableVirtualScrollDataSource([]);
+    this.unrealisedData = new TableVirtualScrollDataSource([]);
+    this.customDataSource = []
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     const obj = {
@@ -422,7 +425,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.isLoading = false;
         this.dataSource.data = [];
         // this.customDataSource.data = [];
-        this.customDataSource = new TableVirtualScrollDataSource([]);
+        this.unrealisedData = new TableVirtualScrollDataSource([]);
+        this.customDataSource = [];
         this.customDataHolder = [];
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
@@ -459,7 +463,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.grandTotal = data.totalValue;
         this.dataSource.data = (data.dataSourceData);
         // this.customDataSource.data = (data.customDataSourceData);
-        this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
+        this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
+        this.customDataSource = (data.customDataSourceData)
         this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
         if(this.viewMode == 'All Transactions'|| this.viewMode == 'all transactions'){
@@ -662,8 +667,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.dataSource.data = ([{}, {}, {}]);
             // this.customDataSource.data = ([{}, {}, {}]);
-            this.customDataSource = new TableVirtualScrollDataSource([]);
-
+            this.customDataSource = [];
+            this.unrealisedData = new TableVirtualScrollDataSource([]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
