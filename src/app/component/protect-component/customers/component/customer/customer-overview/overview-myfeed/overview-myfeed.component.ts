@@ -264,13 +264,17 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   ngAfterViewInit() {
     // offset by 60, the height of upper nav
     this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
-    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop - 60;
-    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop - 60;
-    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop - 60;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
   }
 
   @HostListener('window:scroll')
   checkOffsetTop() {
+    this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
     if (window.pageYOffset < this.portFolioSectionOffset) {
       this.currentViewId = 1;
     } else if (window.pageYOffset < this.cashFlowSectionOffset) {
