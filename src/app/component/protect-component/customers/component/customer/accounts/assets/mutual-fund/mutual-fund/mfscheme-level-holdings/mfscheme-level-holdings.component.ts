@@ -247,10 +247,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       });
     } else {
       this.transactionArray.push(this.fb.group({
-        transactionType: [, [Validators.required]],
-        date: [, [Validators.required]],
-        transactionAmount: [, [Validators.required]],
-        Units: [, [Validators.required]],
+        transactionType: [],
+        date: [],
+        transactionAmount: [],
+        Units: [],
         id: [],
         isEdited: false,
         previousUnit: [],
@@ -268,10 +268,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   get transactionArray() { return this.transactionList.transactionListArray as FormArray };
   addTransactions() {
     this.transactionArray.push(this.fb.group({
-      transactionType: [, [Validators.required]],
-      date: [, [Validators.required]],
-      transactionAmount: [, [Validators.required]],
-      Units: [, [Validators.required]],
+      transactionType: [],
+      date: [],
+      transactionAmount: [],
+      Units: [],
       id: [],
       isEdited: false,
       previousUnit: [],
@@ -307,7 +307,6 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   saveMfSchemeLevel() {
-    this.barButtonOptions.active = true;
     if (this.schemeLevelHoldingForm.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       // this.schemeLevelHoldingForm.get('ownerName').markAsTouched();
@@ -323,6 +322,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.markAllAsTouched()
     } else {
+      this.barButtonOptions.active = true;
       let mutualFundTransactions = [];
       this.transactionArray.value.forEach(element => {
         console.log("single element", element);

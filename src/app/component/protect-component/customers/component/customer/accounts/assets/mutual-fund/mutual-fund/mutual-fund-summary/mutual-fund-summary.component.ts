@@ -196,14 +196,24 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       },
       (error) => {
-        this.setDefaultFilterData.transactionView=[];
-        this.displayedColumns.forEach(element => {
-          const obj = {
-            displayName: element,
-            selected: true
-          }
-          this.setDefaultFilterData.transactionView.push(obj)
-        });
+        if(this.reponseData){
+          this.displayedColumns=[];
+          this.setDefaultFilterData.transactionView.forEach(element => {
+            if(element.selected==true){
+              this.displayedColumns.push(element.displayName)
+            }
+          });
+        }else{
+          
+          this.setDefaultFilterData.transactionView=[];
+          this.displayedColumns.forEach(element => {
+            const obj = {
+              displayName: element,
+              selected: true
+            }
+            this.setDefaultFilterData.transactionView.push(obj)
+          });
+        }
         if (this.mfGetData) {
           this.getMutualFundResponse(this.mfGetData)
         } else if (this.mutualFund) {
