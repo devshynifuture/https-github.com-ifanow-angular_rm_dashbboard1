@@ -235,35 +235,51 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
 
   getSchemeLevelHoldings(data) {
-    if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund' || this.data.flag === 'editTransaction')) {
-      data.mutualFundTransactions.forEach(element => {
-        this.transactionArray.push(this.fb.group({
-          transactionType: [element.transactionTypeMasterId],
-          date: [new Date(element.transactionDate)],
-          transactionAmount: [element.amount],
-          Units: [element.unit],
-          id: [element.id],
-          assetMutualFundTransactionTypeMasterId: [element.assetTypeTransactionId],
-          isEdited: element.isEdited,
-          previousUnit: element.previousUnit,
-          previousEffect: element.effect
-        }))
-      });
-    } else {
+    if(data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && this.data.flag == 'editTransaction'){
       this.transactionArray.push(this.fb.group({
-        transactionType: [],
-        date: [],
-        transactionAmount: [],
-        Units: [],
-        id: [],
-        assetMutualFundTransactionTypeMasterId: [],
-        isEdited: false,
-        previousUnit: [],
-        previousEffect: []
-
+        transactionType: [this.data.transactionTypeMasterId],
+        date: [new Date(this.data.transactionDate)],
+        transactionAmount: [this.data.amount],
+        Units: [this.data.unit],
+        id: [this.data.id],
+        assetMutualFundTransactionTypeMasterId: [this.data.assetTypeTransactionId],
+        isEdited: this.data.isEdited,
+        previousUnit: this.data.previousUnit,
+        previousEffect: this.data.effect
       }))
+    }else{
+      if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund')) {
+        data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; }) => {
+          this.transactionArray.push(this.fb.group({
+            transactionType: [element.transactionTypeMasterId],
+            date: [new Date(element.transactionDate)],
+            transactionAmount: [element.amount],
+            Units: [element.unit],
+            id: [element.id],
+            assetMutualFundTransactionTypeMasterId: [element.assetTypeTransactionId],
+            isEdited: element.isEdited,
+            previousUnit: element.previousUnit,
+            previousEffect: element.effect
+          }))
+        });
+      } 
+      else {
+        this.transactionArray.push(this.fb.group({
+          transactionType: [],
+          date: [],
+          transactionAmount: [],
+          Units: [],
+          id: [],
+          assetMutualFundTransactionTypeMasterId: [],
+          isEdited: false,
+          previousUnit: [],
+          previousEffect: []
+  
+        }))
+      }
+  
     }
-
+   
     this.ownerData = this.schemeLevelHoldingForm.controls;
   }
   transactionListForm = this.fb.group({
