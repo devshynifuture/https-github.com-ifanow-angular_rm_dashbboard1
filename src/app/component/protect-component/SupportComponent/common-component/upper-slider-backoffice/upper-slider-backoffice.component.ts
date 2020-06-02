@@ -207,8 +207,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
             return element.isMapped === -1;
           });
-          console.log('see the difference::::::::', this.filteredAumListWithIsMappedToMinusOne, res['aumList']);
-          this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+
+          let arrWithTransactionCheckedTrue = this.filteredAumListWithIsMappedToMinusOne.filter(item => {
+            return item.transactionCheck === true;
+          });
+
+          console.log('see the difference::::::::', this.filteredAumListWithIsMappedToMinusOne, res['aumList'], arrWithTransactionCheckedTrue);
+
+          arrWithTransactionCheckedTrue.forEach(element => {
             // check  and compare date object and can delete value
             arrayValue.push({
               name: element.shemeName,
@@ -294,15 +300,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
     } else {
       let mutualFundIds = [];
       let isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
-      this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+      this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
         return item.isMapped === -1
       });
-      this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
+      this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         mutualFundIds.push(element.mutualFundId);
       });
       data = {
         advisorIds: [...this.adminAdvisorIds],
-        folio: this.mutualFundIds,
+        folio: mutualFundIds,
         parentId: this.parentId,
         isParent
       };
@@ -654,10 +660,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
         if (res) {
           this.didAumReportListGot = true;
           this.canExportExcelSheet = 'true';
-          console.log('this is aum report list get:::', res);
           let arrayValue = [];
           this.aumListReportValue = res;
-          res.forEach(element => {
+          let reportListWithIsMapMinusOneAndTransacCheckTrue = this.aumListReportValue.filter(item => {
+            return item.isMapped === -1 && item.transactionCheck === true;
+          });
+          console.log('this is aum report ismap -1 and transac check true::', reportListWithIsMapMinusOneAndTransacCheckTrue);
+          reportListWithIsMapMinusOneAndTransacCheckTrue.forEach(element => {
             arrayValue.push({
               name: element.shemeName,
               folioNumber: element.folioNumber,

@@ -26,6 +26,17 @@
                 </mat-select>
             </div>
         </div>
+        <div class="col-md-2">
+            <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
+            <mat-select class="b-a text-left form-control" formControlName="selectBrokerId" placeholder="Select broker">
+                <mat-option>
+                    Select Option
+                </mat-option>
+                <mat-option *ngFor="let broker of brokerList" [value]="broker.id" (click)="getAumReconHistoryData()">
+                    {{ broker.brokerCode }}
+                </mat-option>
+            </mat-select>
+        </div>
     </div>
 </div>
 <div class="row pb-44"
@@ -74,8 +85,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="aumBalanceDate">
-                <th mat-header-cell *matHeaderCellDef class="text-left"> AUM Balance </th>
-                <td mat-cell *matCellDef="let element" class="text-left">
+                <th mat-header-cell *matHeaderCellDef class="text-left "> AUM Balance </th>
+                <td mat-cell *matCellDef="let element" class="text-left ">
                     <div class="bar">
                         {{element.aumBalanceDate | date: 'dd/MM/yyyy'}}
                     </div>
@@ -129,7 +140,7 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-stroked-button class="btn-primary report-karvy"
+                    <button mat-stroked-button class="btn-primary report-karvy" color="primary"
                         (click)="openAumReconciliation('report',element)">
                         Report
                     </button>

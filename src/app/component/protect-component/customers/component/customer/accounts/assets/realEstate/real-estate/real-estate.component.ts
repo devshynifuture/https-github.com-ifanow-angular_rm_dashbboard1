@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
-import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { PdfGenService } from 'src/app/services/pdf-gen.service';
-import { FileUploadServiceService } from '../../file-upload-service.service';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
+import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
+import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import {PdfGenService} from 'src/app/services/pdf-gen.service';
+import {FileUploadServiceService} from '../../file-upload-service.service';
+import {EnumServiceService} from '../../../../../../../../../services/enum-service.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -30,8 +31,8 @@ export class RealEstateComponent implements OnInit {
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
   footer = [];
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
@@ -42,11 +43,12 @@ export class RealEstateComponent implements OnInit {
   clientData: any;
   myFiles: any;
 
-  constructor( public subInjectService: SubscriptionInject,
-    public custmService: CustomerService, public cusService: CustomerService,
-     private excel:ExcelGenService,  private pdfGen:PdfGenService,
-     private fileUpload : FileUploadServiceService,
-    public eventService: EventService, public dialog: MatDialog) {
+  constructor(public subInjectService: SubscriptionInject,
+              public custmService: CustomerService, public cusService: CustomerService,
+              private excel: ExcelGenService, private pdfGen: PdfGenService,
+              private fileUpload: FileUploadServiceService,
+              public enumService: EnumServiceService,
+              public eventService: EventService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -57,32 +59,34 @@ export class RealEstateComponent implements OnInit {
 
   }
 
-  Excel(tableTitle){
+  Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows,tableTitle)
+    this.excel.generateExcel(rows, tableTitle);
   }
+
   fetchData(value, fileName, element) {
-    this.isLoadingUpload = true
+    this.isLoadingUpload = true;
     let obj = {
       advisorId: this.advisorId,
       clientId: element.clientId,
       familyMemberId: element.familyMemberId,
       asset: value
-    }
+    };
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
-      this.file = fileName
-      this.fileUpload.uploadFile(fileName)
+      this.file = fileName;
+      this.fileUpload.uploadFile(fileName);
     }
     setTimeout(() => {
-      this.isLoadingUpload = false
+      this.isLoadingUpload = false;
     }, 7000);
   }
-  pdf(tableTitle){
+
+  pdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -134,8 +138,7 @@ export class RealEstateComponent implements OnInit {
       this.noData = 'No Real estate found';
       this.datasource3.data = [];
       this.hideFilter = true;
-    }
-    else if (data.assetList.length > 0) {
+    } else if (data.assetList.length > 0) {
       console.log('getRealEstateRes', data);
       // data.realEstateList.forEach(element => {
       //   if (element.ownerList.length != 0) {
@@ -169,7 +172,7 @@ export class RealEstateComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteRealEstate(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
             this.getRealEstate();
           },
@@ -220,29 +223,30 @@ export class RealEstateComponent implements OnInit {
     );
   }
 
-  activeFilter:any = 'All';
-  dataList:any;
-  hideFilter:boolean = false;
+  activeFilter: any = 'All';
+  dataList: any;
+  hideFilter: boolean = false;
+
   filterData(key: string, value: any) {
-    
+
     let dataFiltered = [];
     this.activeFilter = value;
-    if(value == "All" || value == "LIVE"){ //status is hardcoded not coming from backend
+    if (value == 'All' || value == 'LIVE') { //status is hardcoded not coming from backend
       dataFiltered = this.dataList;
-    }
-    else{
-      dataFiltered = this.dataList.filter(function (item) {
+    } else {
+      dataFiltered = this.dataList.filter(function(item) {
         return item[key] === value;
       });
-      if(dataFiltered.length <= 0){
+      if (dataFiltered.length <= 0) {
         this.hideFilter = false;
       }
     }
-    
+
     this.datasource3.data = dataFiltered;
     // this.dataSource = new MatTableDataSource(data);
     this.datasource3.sort = this.sort;
   }
+
   detailedViewRealEstate(data) {
     const fragmentData = {
       flag: 'DetailedViewRealEstateComponent',
@@ -293,5 +297,5 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     desc: 'ICICI FD',
     status: ''
   },
-  { no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: '' },
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ''},
 ];

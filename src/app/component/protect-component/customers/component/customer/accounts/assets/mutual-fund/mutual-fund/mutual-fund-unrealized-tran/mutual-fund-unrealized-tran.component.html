@@ -7,7 +7,7 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div *ngIf="!isLoading && (customDataSource.data.length > 0 || dataSource.data.length > 0)"
+      <div *ngIf="!isLoading && (unrealisedData.data.length > 0 || dataSource.data.length > 0)"
          class="col-md-6 p-0 justify-content-end d-flex align-items-center">
          <div class="pdfClass">
             <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
@@ -168,9 +168,9 @@
    </div>
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport *ngIf="customDataSource.data.length>0" class="tran-height-2" tvsItemSize>
+         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2" tvsItemSize>
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
-            <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="customDataSource" appSkeletonLoading
+            <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
                <ng-container matColumnDef="no" sticky>
                   <th *matHeaderCellDef class="br" mat-header-cell>Sr no.</th>

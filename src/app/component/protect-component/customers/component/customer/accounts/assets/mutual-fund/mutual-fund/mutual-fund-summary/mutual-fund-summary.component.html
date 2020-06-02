@@ -4,7 +4,7 @@
             <h4 class="m-0 text-black roboto pt-8">Mutual fund summary</h4>
         </div>
         <div class="col-md-8 p-0 justify-content-end d-flex align-items-center"
-            *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (customDataSource.data.length > 0)">
+            *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (summary.data.length > 0)">
             <div class="pdfClass">
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
@@ -72,9 +72,9 @@
 
     <div class="row">
         <div [ngClass]="isLoading ? 'overflow-hidden': 'table-scroll'" class="col-md-12 p-0 mb-8">
-            <table mat-table [dataSource]="customDataSource" id="tbs"
+            <table mat-table [dataSource]="summary" id="tbs"
                 class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                *ngIf="customDataSource.data.length>0">
+                *ngIf="summary.data.length>0">
 
                 <ng-container matColumnDef="schemeName">
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -317,7 +317,7 @@
 
 
             </table>
-            <div *ngIf="customDataSource.data.length == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="summary.data.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No data found</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
@@ -407,7 +407,7 @@
                        
                     </tr>
                     <tr style="background: #F5F7F7;">
-                        <td *ngIf="customDataSource.data.schemeName == true"
+                        <td *ngIf="customDataSource.data?.schemeName == true"
                             style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Scheme name</b>
                         </td>
@@ -473,7 +473,7 @@
                                 </tr>
                                 <tr *ngIf="item.id">
 
-                                    <td valign="top" *ngIf="customDataSource.data.schemeName == true"
+                                    <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
                                         style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{item.schemeName+'|'+item.folioNumber+'|'+item.ownerName}}
                                     </td>
@@ -535,7 +535,7 @@
                                 </tr>
 
                                 <tr *ngIf="item.schemeName=='Total'">
-                                    <td valign="top" *ngIf="customDataSource.data.schemeName == true"
+                                    <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
                                         style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                        {{item.schemeName}}
                                     </td>
@@ -591,7 +591,7 @@
                     </tr>
 
                     <tr>
-                        <td valign="top" *ngIf="customDataSource.data.schemeName == true"
+                        <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
                             style="width:26%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             Grand Total</td>
                         <td valign="top" *ngIf="customDataSource.data.currentValue == true"
