@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { LoaderFunction } from 'src/app/services/util.service';
@@ -23,7 +23,7 @@ import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.s
     slideInAnimation,
   ]
 })
-export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
+export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy {
   clientData: any;
   advisorId: any;
   orgDetails: any;
@@ -33,6 +33,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
   cashflowColumns = ['bankName', 'inflow', 'outflow', 'netflow'];
   displayedColumns: string[] = ['description', 'date', 'amount'];
   cashFlowViewDataSource = [];
+  welcomeMessage = '';
 
   chartData: any[] = [
     {
@@ -131,6 +132,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
   mfSubCatAllocationData:any[] = [];
   worker:Worker;
   currentViewId = 1;
+  greeterFnID:any;
 
   constructor(
     private customerService: CustomerService,
@@ -153,6 +155,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
     this.advisorImg = this.advisorInfo.profilePic;
+    this.greeter();
+    this.greeterFnID = setInterval(()=> this.greeter(), 1000);
   }
 
   tabsLoaded = {
@@ -267,7 +271,6 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll')
   checkOffsetTop() {
-    console.log(window.pageYOffset)
     if (window.pageYOffset < this.portFolioSectionOffset) {
       this.currentViewId = 1;
     } else if (window.pageYOffset < this.cashFlowSectionOffset) {
@@ -505,8 +508,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
     }
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
-      if (res == null) {
+      if (res == null || res.fileStats.length == 0) {
         this.documentVault = {};
+        this.tabsLoaded.documentsVault.hasData = false;
       } else {
         this.tabsLoaded.documentsVault.hasData = true;
         this.documentVault = res;
@@ -974,5 +978,18 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy(){
     if(this.worker) this.worker.terminate();
+    clearInterval(this.greeterFnID);
+  }
+
+  greeter() {
+    var date = new Date();  
+    var hour = date.getHours();  
+    if (hour < 12) {  
+      this.welcomeMessage = "Good morning";  
+    } else if (hour < 17) {  
+      this.welcomeMessage = "Good afternoon";  
+    } else {  
+      this.welcomeMessage = "Good evening";  
+    }  
   }
 }
