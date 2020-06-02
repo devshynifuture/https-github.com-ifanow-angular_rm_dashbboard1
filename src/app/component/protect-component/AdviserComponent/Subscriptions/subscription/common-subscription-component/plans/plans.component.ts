@@ -30,7 +30,7 @@ export class PlansComponent implements OnInit {
   _upperData: any;
   flag: any;
 
-  constructor(private subService: SubscriptionService, private eventService: EventService,private router:Router,private location:Location) {
+  constructor(private subService: SubscriptionService, private eventService: EventService, private router: Router, private location: Location) {
   }
 
   @Output() changePlanData = new EventEmitter();
@@ -78,7 +78,6 @@ export class PlansComponent implements OnInit {
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,
-
       serviceId: this.upperData ? this.upperData.id : null
     };
     this.subService.getPlansMappedToAdvisor(obj).subscribe(
@@ -96,7 +95,7 @@ export class PlansComponent implements OnInit {
   getPlansMappedResponse(data) {
     this.isLoading = false;
     // if(this.servicePlanData && this.servicePlanData !== null && this.servicePlanData !== undefined){
-    if(data){
+    if (data) {
       this.servicePlanData = data;
       this.servicePlanData.forEach(element => {
         if (element.selected == true) {
@@ -104,8 +103,8 @@ export class PlansComponent implements OnInit {
         }
       }
       );
-    }else{
-      this.servicePlanData=[];
+    } else {
+      this.servicePlanData = [];
     }
 
 
@@ -124,7 +123,7 @@ export class PlansComponent implements OnInit {
 
   getPlansMappedToAdvisorResponse(data) {
     this.isLoading = false;
-    
+
     if (data && data !== undefined && data !== null) {
       for (let p of data) {
         p['read'] = false;
@@ -135,8 +134,8 @@ export class PlansComponent implements OnInit {
           this.mappedPlan.push(element);
         }
       });
-    }else{
-      this.servicePlanData=[];
+    } else {
+      this.servicePlanData = [];
     }
   }
 
@@ -214,9 +213,9 @@ export class PlansComponent implements OnInit {
     // this.dialogClose()
     this.changePlanData.emit(this.upperData);
     this.eventService.openSnackBar('Plans is mapped', 'OK');
-    this.router.navigate(['/admin/subscription/settings','documents']);
+    this.router.navigate(['/admin/subscription/settings', 'documents']);
     this.location.replaceState('/admin/subscription/settings/documents');
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
   saveDocumentPlanMapping() {

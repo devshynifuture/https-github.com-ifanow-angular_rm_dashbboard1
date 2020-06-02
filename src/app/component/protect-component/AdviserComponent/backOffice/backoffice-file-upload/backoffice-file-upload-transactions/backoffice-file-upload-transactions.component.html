@@ -4,8 +4,8 @@
         <table mat-table matSort [dataSource]="dataSource" id="table-low" class="mt-8 mb-12 "
             [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br">Name</th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <th mat-header-cell *matHeaderCellDef class="br w-40">Name</th>
+                <td mat-cell *matCellDef="let element" class="br w-40">
                     <div class="bar">
                         {{element.uploadedFileName}}
                     </div>

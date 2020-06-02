@@ -290,7 +290,7 @@ export class AddVariableFeeComponent implements OnInit {
   saveFeeTypeDataEditResponse(data) {
     this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
     this.eventService.openSnackBar('Service is edited', 'OK');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   select(assetData) {
