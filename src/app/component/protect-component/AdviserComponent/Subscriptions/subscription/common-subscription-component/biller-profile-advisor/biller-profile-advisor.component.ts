@@ -69,6 +69,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   postOfficeDataCircle: any;
   postOfficeDataCountry: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  ifscFlag: boolean;
+  pincodeFlag: boolean;
 
   // validatorType = ValidatorType;
 
@@ -289,7 +291,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     let obj = {
       ifsc: ifsc
     }
-
+    this.ifscFlag = true;
     if (ifsc != "") {
       this.subService.getBankAddress(obj).subscribe(data => {
         this.bankData(data)
@@ -297,6 +299,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
       },
         err => {
+          this.ifscFlag = false;
           this.bankData(err)
         })
     }
@@ -308,6 +311,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     let obj = {
       zipCode: value
     }
+    this.pincodeFlag = true;
     if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
         this.PinData(data, state)
@@ -315,9 +319,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
     else {
       this.pinInvalid = false;
+      this.pincodeFlag = false;
     }
   }
   PinData(data, state) {
+    this.pincodeFlag = false;
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
       this.getFormControlProfile().ifscCode.setErrors(this.pinInvalid);
@@ -333,6 +339,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
   ifsciInvalid: boolean;
   bankData(data) {
+    this.ifscFlag = false;
     if (data.status != undefined) {
       this.ifsciInvalid = true;
       this.getFormControlBank().ifscCode.setErrors(this.ifsciInvalid);
