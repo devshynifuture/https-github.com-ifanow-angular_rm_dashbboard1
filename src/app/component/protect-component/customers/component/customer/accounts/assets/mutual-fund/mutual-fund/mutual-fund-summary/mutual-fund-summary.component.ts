@@ -105,6 +105,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
   }
   getFilterData(value) {
+    this.customDataSource =[]
      this.summary = new MatTableDataSource([{}, {}, {}]);
 
     this.isLoading = true;
@@ -271,6 +272,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   getMutualFund() {
     this.isLoading = true;
+    this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
@@ -396,6 +398,8 @@ export class MutualFundSummaryComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
+        this.customDataSource.data =[]
+        this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
         this.customDataSource.data = data.customDataSourceData;
         this.displayedColumns.forEach(element => {

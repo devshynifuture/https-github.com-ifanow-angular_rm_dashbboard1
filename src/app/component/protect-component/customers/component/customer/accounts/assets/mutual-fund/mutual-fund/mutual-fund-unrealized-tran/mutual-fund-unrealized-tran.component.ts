@@ -68,10 +68,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   showDownload: boolean = false;
   columnHeader: any;
   pdfDataFornTRansaction: any;
-  unrealisedData: TableVirtualScrollDataSource<any>;
   addedData: boolean;
   reportDate: Date;
   customDataSource: any;
+  unrealisedData: TableVirtualScrollDataSource<any>;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -94,6 +94,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   ngOnInit() {
     this.reportDate = new Date()
+    this.unrealisedData = new TableVirtualScrollDataSource([]);
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -179,7 +180,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
               }
             });
-            if (this.viewMode == 'Unrealized Transactions'){
+            if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions'){
               this.displayedColumns.forEach(element => {
                 this.styleObjectUnrealised(element)
               });
@@ -314,7 +315,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.changeInput.emit(false);
       // this.customDataSource.data = [];
       this.unrealisedData = new TableVirtualScrollDataSource([]);
-      this.customDataSource = [];
+      this.customDataSource.data = [];
       this.customDataHolder = [];
       // this.changeDetectorRef.detectChanges();
     }
@@ -474,8 +475,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.grandTotal = data.totalValue;
         this.dataSource.data = (data.dataSourceData);
         // this.customDataSource.data = (data.customDataSourceData);
+        this.customDataSource = []
+        this.customDataSource.data = []
         this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
-        this.customDataSource = (data.customDataSourceData)
+        this.customDataSource.data = (data.customDataSourceData)
         this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
         if(this.viewMode == 'All Transactions'|| this.viewMode == 'all transactions'){
