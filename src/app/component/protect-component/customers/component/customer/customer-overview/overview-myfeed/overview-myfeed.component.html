@@ -3,11 +3,11 @@
         <div class="col-md-3  pr-24">
             <ul class="d-block sticky-top myFeedUi">
                 <li>
-                    <a class="f-14 roboto" target="all_feeds"> All feeds</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)"> All feeds</a>
                 </li>
 
                 <li>
-                    <a class="f-14 roboto" target="portfolio_data"> Portfolio</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 2}" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
                 </li>
 <!-- 
                 <li>
@@ -19,11 +19,11 @@
                 </li> -->
 
                 <li>
-                    <a class="f-14 roboto" target="cashflow_data"> Transactions</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 3}" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
                 </li>
 
                 <li>
-                    <a class="f-14 roboto" target="risk_profile"> Profile</a>
+                    <a class="f-14 roboto" [ngClass]="{'activeClass': currentViewId == 4}" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
                 </li>
 <!-- 
                 <li>
@@ -36,15 +36,15 @@
             </ul>
         </div>
 
-        <div class="col-md-6 mb-20" id="all_feeds">
+        <div class="col-md-6 mb-20">
             <div class="feedInformation">
-                <div class="clientNameBox">
+                <div class="clientNameBox" #allFeedsSection>
                     <h3 class="m-0 roboto">Good Evening {{clientData.name}}</h3>
                     <p class="m-0 roboto">Your personalized money feed is ready! </p>
                 </div>
                 <div class="scrolling_myFeed">
                     <!-- your account intro -->
-                    <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus" id="portfolio_data">
+                    <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                         <div class="row">
                             <div class="col-md-12 ml-12 mb-10 d-flex align-items-center">
                                 <h5 class="roboto m-0 ">Your account</h5>
@@ -73,7 +73,7 @@
                     </div>
 
                     <!-- Portfolio Asset allocation chart -->
-                    <div class="wrapperBox">
+                    <div class="wrapperBox" #portFolioSection>
                         <div class="row">
                             <div class="col-md-12  ">
                                 <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
@@ -567,71 +567,9 @@
                         </div>
                     </div>
 
-                    <!-- risk profile -->
-                    <div class="wrapperBox" id="risk_profile">
-                        <div class="row">
-                            <div class="col-md-12  mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0">Risk profile</h5>
-                            </div>
-                        </div>
-
-                        <div class="riskProfileBox p-20 bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
-                            <div class="row" *ngFor="let risk of riskProfile">
-                                <div class="col-md-4 text-center">
-                                    <p class="f-16 roboto mb-8 f-500">Your risk score</p>
-                                    <div class="numberBox">
-                                        <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
-                                        <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-8 text-center">
-                                    <h5 class="roboto f-500">
-                                        Your risk profile: {{risk.riskProfileStatus}}
-                                    </h5>
-                                    <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
-
-                                    <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
-                                    <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
-                                    <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
-                                    <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
-                                    <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
-                            <div class="col-md-12  ">
-                                <div class="bg-white vaultbBox">
-                                    <div class="row">
-                                        <div class="col-md-7 pr-0">
-                                            <h5 class="roboto f-500">
-                                                Do you know you risk profile?
-                                            </h5>
-                                            <p>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                            </p>
-
-                                            <button [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab2'}" routerLinkActive="router-link-active" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
-                                                Take the test
-                                            </button>
-
-                                            <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
-
-
-                                        </div>
-                                        <div class="col-md-5 pr-0">
-                                            <img src="/assets/images/svg/vault-icon.svg">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- cashflow -->
                     <!-- to be used later if ever the api created -->
-                    <div class="wrapperBox boxTable" id="cashflow_data">
+                    <div class="wrapperBox boxTable" #cashFlowSection>
                         <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
                             <ng-container *ngFor="let flowData of cashflowData.cashflowData">
                                 {{flowData.familyMemberFullName}}
@@ -747,7 +685,7 @@
                         </ng-container>
                     </div>
 
-                    <!-- MF allocation overview -->
+                    
 
 
                     <!-- Portfolio Asset allocation chart -->
@@ -795,6 +733,70 @@
                                                     <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- risk profile -->
+                    <div class="wrapperBox" #riskProfileSection>
+                        <div class="row">
+                            <div class="col-md-12  mb-10 d-flex align-items-center">
+                                <h5 class="roboto ml-12 mb-0">Risk profile</h5>
+                            </div>
+                        </div>
+
+                        <div class="riskProfileBox p-20 bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
+                            <div class="row" *ngFor="let risk of riskProfile">
+                                <div class="col-md-4 text-center">
+                                    <p class="f-16 roboto mb-8 f-500">Your risk score</p>
+                                    <div class="numberBox">
+                                        <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
+                                        <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 text-center">
+                                    <h5 class="roboto f-500">
+                                        Your risk profile: {{risk.riskProfileStatus}}
+                                    </h5>
+                                    <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
+
+                                    <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                                    <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                                    <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                                    <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                                    <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
+                            <div class="col-md-12  ">
+                                <div class="bg-white vaultbBox">
+                                    <div class="row">
+                                        <div class="col-md-7 pr-0">
+                                            <h5 class="roboto f-500">
+                                                Do you know you risk profile?
+                                            </h5>
+                                            <p>
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                            </p>
+
+                                            <button [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab2'}" routerLinkActive="router-link-active" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                                Take the test
+                                            </button>
+
+                                            <!-- <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox> -->
+
+
+                                        </div>
+                                        <div class="col-md-5 pr-0">
+                                            <img src="/assets/images/svg/vault-icon.svg">
                                         </div>
                                     </div>
                                 </div>
