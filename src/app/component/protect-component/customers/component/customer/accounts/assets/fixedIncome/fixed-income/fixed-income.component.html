@@ -51,8 +51,9 @@
                     <!-- <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button> -->
                 </mat-menu>
-                <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
-                </button>
+                <!-- <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                </button> -->
 
                 <mat-menu #filterFixedIncomeTable>
                     <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
@@ -75,7 +76,8 @@
                     </button>
                 </mat-menu>
 
-                <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
+                <button mat-stroked-button class="btn-primary proximaFont addon v-middle ml-8"
+                    (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
                 </button>
             </div>
 
@@ -266,8 +268,9 @@
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
                 </mat-menu>
-                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
-                </button>
+                <!-- <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                </button> -->
                 <mat-menu #filterRecurring>
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
                         All
@@ -279,7 +282,7 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)">
+                <button mat-stroked-button class="btn-primary addon v-middle ml-8" (click)="openAddRecurringDeposit(null)">
                     ADD
                     NEW
                 </button>
@@ -310,7 +313,7 @@
                         Current value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt right-hcb text-right">
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span>
+                        <div class="bar">{{!isLoading && element.currentValue? "₹" : ""}}<span appFormatNumber>{{element.currentValue?element.currentValue:isLoading?'':'-' }}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
@@ -452,8 +455,9 @@
                     <button mat-menu-item>Option 3</button>
                 </mat-menu>
 
-                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
-                </button>
+                <!-- <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                </button> -->
                 <mat-menu #filterRecurring>
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
                         All
@@ -465,7 +469,7 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"> ADD NEW
+                <button mat-stroked-button class="btn-primary addon v-middle  ml-8" (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>
         </div>

@@ -442,7 +442,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
-        "ownerList": this.scipLevelTransactionForm.value.getCoOwnerName,
+        "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelTransactionForm.value.getCoOwnerName,
         "portfolioName": this.portfolioData ? this.portfolioData.portfolioName : this.scipLevelTransactionForm.value.portfolioName,
         "stockList": finalStocks
       }

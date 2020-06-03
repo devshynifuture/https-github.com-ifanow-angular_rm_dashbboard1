@@ -121,7 +121,7 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
                         class="c-p" mat-cell>
-                        <div class="bar"> {{element.email}} </div>
+                        <div class="bar"> <span *ngIf="!isLoading">{{(element.email)?element.email:'N/A'}}</span> </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="duedate">

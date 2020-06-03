@@ -449,7 +449,7 @@ addNewNominee(data) {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.scipLevelHoldingForm.value.getCoOwnerName[0].familyMemberId,
-          "ownerList": this.scipLevelHoldingForm.value.getCoOwnerName,
+          "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelHoldingForm.value.getCoOwnerName,
           "portfolioName": this.scipLevelHoldingForm.value.portfolioName,
           "stockList": finalStocks,
         }

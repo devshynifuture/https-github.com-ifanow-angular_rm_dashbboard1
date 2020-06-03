@@ -109,7 +109,7 @@
                         Last billing date
                     </th>
                     <td *matCellDef="let element" class="t-10" mat-cell>
-                        <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
+                        <div class="bar"> {{element.previousBillDate}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="nextbilling">
@@ -118,7 +118,7 @@
                         Next billing date
                     </th>
                     <td *matCellDef="let element" class="text-left pr-8 t-15" mat-cell>
-                        <div class="bar text-left"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
+                        <div class="bar text-left"> {{element.nextBillDate}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="feemode">

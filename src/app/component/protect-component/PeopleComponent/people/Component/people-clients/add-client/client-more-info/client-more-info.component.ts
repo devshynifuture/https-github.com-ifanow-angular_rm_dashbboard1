@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType, UtilService } from 'src/app/services/util.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DatePipe} from '@angular/common';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-more-info',
@@ -41,8 +41,8 @@ export class ClientMoreInfoComponent implements OnInit {
   disableBtn = false;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-    private peopleService: PeopleService, private eventService: EventService,
-    private datePipe: DatePipe) {
+              private peopleService: PeopleService, private eventService: EventService,
+              private datePipe: DatePipe) {
   }
 
   @Input() fieldFlag;
@@ -51,25 +51,25 @@ export class ClientMoreInfoComponent implements OnInit {
   @Output() cancelTab = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
   date = new Date();
+
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.moreInfoData = data;
     console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
       this.occupationList = [
-        { name: "Goverment", value: 1 },
-        { name: "Service", value: 2 },
-        { name: "Private", value: 3 },
-        { name: "Business", value: 4 },
-        { name: "Self-Occupied", value: 5 },
-        { name: "Home maker", value: 6 },
-        { name: "Student", value: 7 },
-        { name: "Retired", value: 8 }
-      ]
+        {name: 'Goverment', value: 1},
+        {name: 'Service', value: 2},
+        {name: 'Private', value: 3},
+        {name: 'Business', value: 4},
+        {name: 'Self-Occupied', value: 5},
+        {name: 'Home maker', value: 6},
+        {name: 'Student', value: 7},
+        {name: 'Retired', value: 8}
+      ];
       if (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) {
         this.moreInfoData.categoryTypeflag = 'Individual';
-      }
-      else {
+      } else {
         this.moreInfoData.categoryTypeflag = 'familyMinor';
       }
       this.createMoreInfoForm(data);
@@ -79,17 +79,16 @@ export class ClientMoreInfoComponent implements OnInit {
         return;
       } else {
         this.occupationList = [
-          { name: 'Goverment', value: 1 },
-          { name: 'Service', value: 2 },
-          { name: 'Private sector', value: 3 },
-          { name: 'Business', value: 4 },
-          { name: 'Self-Occupied', value: 5 },
-        ]
+          {name: 'Goverment', value: 1},
+          {name: 'Service', value: 2},
+          {name: 'Private sector', value: 3},
+          {name: 'Business', value: 4},
+          {name: 'Self-Occupied', value: 5},
+        ];
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
           this.moreInfoData.categoryTypeflag = 'Individual';
           this.moreInfoData.invCategory = '1';
-        }
-        else if (this.moreInfoData.clientType == 2) {
+        } else if (this.moreInfoData.clientType == 2) {
           this.moreInfoData.categoryTypeflag = 'familyMinor';
           this.moreInfoData.invCategory = '2';
 
@@ -145,14 +144,14 @@ export class ClientMoreInfoComponent implements OnInit {
     if (this.moreInfoForm.invalid) {
       this.moreInfoForm.markAllAsTouched();
       return;
-    }
-    else {
+    } else {
       if (this.moreInfoData.guardianData) {
-        this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
-        this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
+        this.moreInfoData.guardianData.aadhaarNumber = this.moreInfoForm.value.adhharGuardian;
+        this.moreInfoData.guardianData.birthDate = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy');
       }
       (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
+        adminAdvisorId: AuthService.getAdminId(),
         residentFlag: this.moreInfoData.residentFlag,
         taxStatusId: this.moreInfoData.taxStatusId,
         advisorId: this.moreInfoData.advisorId,
@@ -196,16 +195,15 @@ export class ClientMoreInfoComponent implements OnInit {
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
-          }
-          else {
+          } else {
             this.barButtonOptions.active = false;
             this.close(data);
           }
         },
         err => {
           this.disableBtn = false;
-          this.eventService.openSnackBar(err, 'Dismiss')
-          this.barButtonOptions.active = false
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions.active = false;
         }
       );
     }
@@ -213,8 +211,8 @@ export class ClientMoreInfoComponent implements OnInit {
 
   saveNextFamilyMember(flag) {
     if (this.moreInfoData.guardianData) {
-      this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
-      this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
+      this.moreInfoData.guardianData.aadhaarNumber = this.moreInfoForm.value.adhharGuardian;
+      this.moreInfoData.guardianData.birthDate = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy');
     }
     if (this.moreInfoForm.invalid) {
       this.moreInfoForm.markAllAsTouched();
@@ -222,6 +220,8 @@ export class ClientMoreInfoComponent implements OnInit {
     }
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     const obj = {
+      adminAdvisorId: AuthService.getAdminId(),
+      advisorId: AuthService.getClientData().advisorId,
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
       residentFlag: this.moreInfoData.residentFlag,
@@ -269,31 +269,30 @@ export class ClientMoreInfoComponent implements OnInit {
     };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        this.disableBtn = false
+        this.disableBtn = false;
         console.log(data);
         this.clientData.emit(data);
         this.barButtonOptions.active = false;
         if (flag == 'Next') {
           this.tabChange.emit(1);
           this.saveNextData.emit(true);
-        }
-        else {
+        } else {
           this.disableBtn = false;
           this.barButtonOptions.active = false;
           this.close(data);
         }
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss')
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.barButtonOptions.active = false;
-        this.disableBtn = false
+        this.disableBtn = false;
       }
     );
   }
 
   close(data) {
     (data == 'close') ? this.cancelTab.emit('close') :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 
 }
