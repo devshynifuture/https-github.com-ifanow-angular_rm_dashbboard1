@@ -146,16 +146,17 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     if (this.stepper.selectedIndex == 2) {
       let date = new Date(this.subscriptionDetails.controls.activationDate.value);
-      (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly";
       if (this.clientData.feeTypeId == 1) {
         if (this.clientData.billingNature == "2") {
-
+          this.billEveryMsg = "yearly"
         }
         else {
+          (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
           if (this.clientData.billingMode == '1') {
           }
           else {
             if (this.clientData.billingCycle == 1) {
+              // this.billEveryMsg = "monthly"
               date.setMonth(date.getMonth() + this.clientData.billEvery)
             }
             else {
@@ -165,6 +166,7 @@ export class CreateSubscriptionComponent implements OnInit {
         }
       }
       else {
+        (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
         if (this.clientData.billingCycle == 1) {
           date.setMonth(date.getMonth() + this.clientData.billEvery)
         }
@@ -290,6 +292,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.feeModeData = feeModeData;
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
+    this.subscriptionDetails.controls.subscription.disable();
     this.billersData = data.billers;
     this.payeesData = data.payees;
   }
@@ -307,6 +310,11 @@ export class CreateSubscriptionComponent implements OnInit {
         id: this.clientData.subId,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
+        services: [
+          {
+            serviceName: this.payeeSettingData.serviceName,
+            description: ''
+          }],
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
@@ -343,8 +351,12 @@ export class CreateSubscriptionComponent implements OnInit {
       const obj = {
         id: this.clientData.subId,
         advisorId: this.advisorId,
-
         billerProfileId: this.selectedBiller.id,
+        services: [
+          {
+            serviceName: this.payeeSettingData.serviceName,
+            description: ''
+          }],
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,

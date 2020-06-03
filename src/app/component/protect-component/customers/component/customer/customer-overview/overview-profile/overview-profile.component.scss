@@ -12,6 +12,7 @@
     max-width: 18.666667%;
     padding-left: 15px;
     // padding-right: 15px;
+    height: calc(100vh - 117px);
   }
 
   .col-width-79 {
@@ -92,6 +93,7 @@
     margin-right: 9px;
     margin-top: 8px;
     position: relative;
+    // padding-left: 8px;
 
     .familyDelete {
       position: absolute;
@@ -273,9 +275,10 @@
   .vertical-menu {
     // height: 100vh;
     display: block !important;
-    width: 100%;
+    width: 18%;
     text-align: left;
     height: calc(100vh - 116px);
+    position: fixed;
   }
 
   li {

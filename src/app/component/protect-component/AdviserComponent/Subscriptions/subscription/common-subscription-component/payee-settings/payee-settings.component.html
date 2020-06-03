@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerName" class="form-control br-0">
-                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option disabled value=''>Search family members</mat-option>
                     <mat-option *ngFor="let f of family" [value]="f.name" (click)="getOwnerName(f)">
                         <span>{{f.name}}</span>
                     </mat-option>
@@ -32,14 +32,16 @@
             <p class="m-0 text-custom f-12">This name will appear in invoices</p>
         </div>
         <div class="col-md-6">
-            <mat-form-field class="w-100">
-                <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40"
-                    type="text">
-                <mat-error class="f-12">
-                    This field is required
-                </mat-error>
-                <mat-hint align="end" class="f-12">{{displayName.value.length}}/40</mat-hint>
-            </mat-form-field>
+            <div class="form-group">
+                <mat-form-field class="w-100">
+                    <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40"
+                        type="text">
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{displayName.value.length}}/40</mat-hint>
+                </mat-form-field>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -119,7 +121,8 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #pan class="form-control br-0" formControlName="pan" matInput maxlength="10" type="text">
+                <input (input)="toUpperCase(payeeSettingsForm.get('pan'),$event)" #pan class="form-control br-0"
+                    formControlName="pan" matInput maxlength="10" type="text">
                 <mat-error *ngIf="payeeSettingsForm.get('pan').errors?.required && payeeSettingsForm.get('pan').touched"
                     class="f-12">
                     This field is required
@@ -191,7 +194,7 @@
         <div class="col-md-6 pr-0">
             <h5 class="m-0">Pin code</h5>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <mat-form-field>
                 <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                     (focusout)="getPostalPin($event.target.value)" appInputValueValidation
@@ -199,6 +202,9 @@
                 <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
                 <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
             </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-spinner *ngIf="isLoader" [diameter]="30"></mat-spinner>
         </div>
     </div>
     <div class="row">

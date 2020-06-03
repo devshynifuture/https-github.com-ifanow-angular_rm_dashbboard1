@@ -230,7 +230,7 @@ export class AddVariableFeeComponent implements OnInit {
           feeTypeId: parseInt(feeType),
           pricingList: [
             {
-              id: (this._data != undefined) ? this._data.servicePricing.id : '',
+              id: (this._data != undefined) ? this._data.servicePricing.pricingList[0].id : '',
               directRegular: 1,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value > 100 ? 100 : this.variableFeeData.controls.directFees.controls.debt.value,
@@ -290,7 +290,7 @@ export class AddVariableFeeComponent implements OnInit {
   saveFeeTypeDataEditResponse(data) {
     this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
     this.eventService.openSnackBar('Service is edited', 'OK');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   select(assetData) {

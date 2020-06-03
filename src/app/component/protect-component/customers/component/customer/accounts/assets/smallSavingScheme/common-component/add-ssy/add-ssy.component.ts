@@ -22,6 +22,42 @@ import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
   ]
 })
 export class AddSsyComponent implements OnInit {
+
+  constructor(private dateFormatPipe: DatePipe,
+              public utils: UtilService, private eventService: EventService,
+              private fb: FormBuilder, private subInjectService: SubscriptionInject,
+              private cusService: CustomerService, private datePipe: DatePipe,
+              public dialog: MatDialog, private enumService: EnumServiceService) {
+  }
+
+  @Input()
+  set data(data) {
+    this.clientId = AuthService.getClientId();
+    this.requestDataForOwnerList.clientId = this.clientId;
+    this.requestDataForGuardList.clientId = this.clientId;
+    this.isOptionalField = true;
+    this.advisorId = AuthService.getAdvisorId();
+    this.getdataForm(data);
+    this.inputData = data;
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
+  /***owner***/
+
+  get getCoOwner() {
+    return this.ssySchemeForm.get('getCoOwnerName') as FormArray;
+  }
+
+  /***owner***/
+
+  /***nominee***/
+
+  get getNominee() {
+    return this.ssySchemeForm.get('getNomineeName') as FormArray;
+  }
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -70,31 +106,13 @@ export class AddSsyComponent implements OnInit {
       ],
       transactionHeader: ['Transaction Type', 'Date', 'Amount']
     };
-  @Input() popupHeaderText: string = 'Add Sukanya samriddhi yojana (SSY)';
-  adviceShowHeaderAndFooter: boolean = true;
+  @Input() popupHeaderText = 'Add Sukanya samriddhi yojana (SSY)';
+  adviceShowHeaderAndFooter = true;
   DOB: any;
 
-  constructor(private dateFormatPipe: DatePipe,
-              public utils: UtilService, private eventService: EventService,
-              private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private cusService: CustomerService, private datePipe: DatePipe,
-              public dialog: MatDialog, private enumService: EnumServiceService) {
-  }
+  selectOwner: any;
 
-  @Input()
-  set data(data) {
-    this.clientId = AuthService.getClientId();
-    this.requestDataForOwnerList.clientId = this.clientId;
-    this.requestDataForGuardList.clientId = this.clientId;
-    this.isOptionalField = true;
-    this.advisorId = AuthService.getAdvisorId();
-    this.getdataForm(data);
-    this.inputData = data;
-  }
-
-  get data() {
-    return this.inputData;
-  }
+  removedList: any = [];
 
   getFormDataNominee(data) {
     console.log(data);
@@ -120,9 +138,9 @@ export class AddSsyComponent implements OnInit {
     birthday = new Date(birthday).getTime();
     // let startDate = new Date(this.ssySchemeForm.value.commDate).getTime();
     // return new Number((new Date().getTime() - birthday.getTime()) / startDate).toFixed(0);
-    let dt2 = new Date(this.ssySchemeForm.value.commDate).getTime();
+    const dt2 = new Date(this.ssySchemeForm.value.commDate).getTime();
 
-    var diff = (dt2 - birthday) / 1000;
+    let diff = (dt2 - birthday) / 1000;
     diff /= (60 * 60 * 24);
     return Math.abs(Math.round(diff / 365.25));
   }
@@ -138,8 +156,6 @@ export class AddSsyComponent implements OnInit {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
-
-  selectOwner: any;
 
   disabledMember(value, type) {
     this.callMethod = {
@@ -172,12 +188,6 @@ export class AddSsyComponent implements OnInit {
     };
   }
 
-  /***owner***/
-
-  get getCoOwner() {
-    return this.ssySchemeForm.get('getCoOwnerName') as FormArray;
-  }
-
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
       name: [data ? data.name : '', [Validators.required]],
@@ -193,8 +203,8 @@ export class AddSsyComponent implements OnInit {
     }
 
     if (this.getCoOwner.value.length > 1 && !data) {
-      let share = 100 / this.getCoOwner.value.length;
-      for (let e in this.getCoOwner.controls) {
+      const share = 100 / this.getCoOwner.value.length;
+      for (const e in this.getCoOwner.controls) {
         if (!Number.isInteger(share) && e == '0') {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         } else {
@@ -210,8 +220,8 @@ export class AddSsyComponent implements OnInit {
     if (this.ssySchemeForm.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     } else {
-      let share = 100 / this.getCoOwner.value.length;
-      for (let e in this.getCoOwner.controls) {
+      const share = 100 / this.getCoOwner.value.length;
+      for (const e in this.getCoOwner.controls) {
         if (!Number.isInteger(share) && e == '0') {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
         } else {
@@ -222,22 +232,14 @@ export class AddSsyComponent implements OnInit {
     this.disabledMember(null, null);
   }
 
-  /***owner***/
-
-  /***nominee***/
-
-  get getNominee() {
-    return this.ssySchemeForm.get('getNomineeName') as FormArray;
-  }
-
   removeNewNominee(item) {
     this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.ssySchemeForm.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
-      let share = 100 / this.getNominee.value.length;
-      for (let e in this.getNominee.controls) {
+      const share = 100 / this.getNominee.value.length;
+      for (const e in this.getNominee.controls) {
         if (!Number.isInteger(share) && e == '0') {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         } else {
@@ -257,14 +259,14 @@ export class AddSsyComponent implements OnInit {
       isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
-      for (let e in this.getNominee.controls) {
+      for (const e in this.getNominee.controls) {
         this.getNominee.controls[e].get('sharePercentage').setValue(0);
       }
     }
 
     if (this.getNominee.value.length > 1 && !data) {
-      let share = 100 / this.getNominee.value.length;
-      for (let e in this.getNominee.controls) {
+      const share = 100 / this.getNominee.value.length;
+      for (const e in this.getNominee.controls) {
         if (!Number.isInteger(share) && e == '0') {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
         } else {
@@ -363,8 +365,6 @@ export class AddSsyComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true;
   }
 
-  removedList: any = [];
-
   getFormData(data) {
     console.log(data);
     if (data.removed) {
@@ -381,12 +381,12 @@ export class AddSsyComponent implements OnInit {
 
     this.removedList.forEach(Fg => {
       if (Fg.value) {
-        let obj = {
-          'id': Fg.value.id,
-          'transactionDate': Fg.value.date,
-          'amount': Fg.value.amount,
-          'transactionType': Fg.value.type,
-          'isActive': Fg.value.isActive
+        const obj = {
+          id: Fg.value.id,
+          transactionDate: Fg.value.date,
+          amount: Fg.value.amount,
+          transactionType: Fg.value.type,
+          isActive: Fg.value.isActive
         };
         finalTransctList.push(obj);
       }
@@ -399,12 +399,12 @@ export class AddSsyComponent implements OnInit {
         this.ssySchemeForm.get('balanceAsOn').updateValueAndValidity();
       this.transactionData.forEach(element => {
         if (element.valid) {
-          let obj = {
-            'id': element.value.id,
-            'transactionDate': element.controls.date.value._d ? element.controls.date.value._d : element.controls.date.value,
-            'amount': element.controls.amount.value,
-            'transactionType': element.controls.type.value,
-            'isActive': element.value.isActive == 0 ? element.value.isActive : 1
+          const obj = {
+            id: element.value.id,
+            transactionDate: element.controls.date.value._d ? element.controls.date.value._d : element.controls.date.value,
+            amount: element.controls.amount.value,
+            transactionType: element.controls.type.value,
+            isActive: element.value.isActive == 0 ? element.value.isActive : 1
           };
           finalTransctList.push(obj);
         } else {
@@ -437,34 +437,34 @@ export class AddSsyComponent implements OnInit {
       return;
     } else {
       this.barButtonOptions.active = true;
-      let obj = {
-        'advisorId': this.advisorId,
-        'clientId': this.clientId,
-        'id': this.editApi ? this.editApi.id : 0,
-        'familyMemberId': this.familyMemberId,
-        'ssyNo': this.ssySchemeForm.value.ssyNo,
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        id: this.editApi ? this.editApi.id : 0,
+        familyMemberId: this.familyMemberId,
+        ssyNo: this.ssySchemeForm.value.ssyNo,
         // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
-        'ownerList': this.ssySchemeForm.value.getCoOwnerName,
-        'accountBalance': parseInt(this.ssySchemeForm.get('accBalance').value),
-        'balanceAsOn': this.dateFormatPipe.transform(this.ssySchemeForm.get('balanceAsOn').value, 'dd/MM/yyyy'),
-        'commencementDate': this.dateFormatPipe.transform(this.ssySchemeForm.get('commDate').value, 'dd/MM/yyyy'),
-        'description': this.ssySchemeForm.get('description').value,
+        ownerList: this.ssySchemeForm.value.getCoOwnerName,
+        accountBalance: parseInt(this.ssySchemeForm.get('accBalance').value),
+        balanceAsOn: this.dateFormatPipe.transform(this.ssySchemeForm.get('balanceAsOn').value, 'dd/MM/yyyy'),
+        commencementDate: this.dateFormatPipe.transform(this.ssySchemeForm.get('commDate').value, 'dd/MM/yyyy'),
+        description: this.ssySchemeForm.get('description').value,
         // "bankName": this.ssySchemeForm.get('bankName').value,
-        'linkedBankAccount': this.ssySchemeForm.get('linkedAcc').value,
-        'userBankMappingId': this.ssySchemeForm.get('linkedAcc').value,
-        'agentName': this.ssySchemeForm.get('agentName').value,
-        'guardianName': this.ssySchemeForm.get('guardian').value,
-        'nominees': this.nominees,
-        'futureApproxContribution': parseInt(this.ssySchemeForm.get('futureAppx').value),
-        'frequency': parseInt(this.ssySchemeForm.get('frquency').value),
-        'transactionList': finalTransctList,
-        'nomineeList': this.ssySchemeForm.value.getNomineeName,
-        'familyMemberDob': this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
-        'parentId': 0,
-        'realOrFictitious': 1
+        linkedBankAccount: this.ssySchemeForm.get('linkedAcc').value,
+        userBankMappingId: this.ssySchemeForm.get('linkedAcc').value,
+        agentName: this.ssySchemeForm.get('agentName').value,
+        guardianName: this.ssySchemeForm.get('guardian').value,
+        nominees: this.nominees,
+        futureApproxContribution: parseInt(this.ssySchemeForm.get('futureAppx').value),
+        frequency: parseInt(this.ssySchemeForm.get('frquency').value),
+        transactionList: finalTransctList,
+        nomineeList: this.ssySchemeForm.value.getNomineeName,
+        familyMemberDob: this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
+        parentId: 0,
+        realOrFictitious: 1
       };
 
-      let adviceObj = {
+      const adviceObj = {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
@@ -560,7 +560,7 @@ export class AddSsyComponent implements OnInit {
     }
   }
 
-  //link bank
+  // link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
@@ -575,5 +575,5 @@ export class AddSsyComponent implements OnInit {
 
   }
 
-//link bank
+// link bank
 }

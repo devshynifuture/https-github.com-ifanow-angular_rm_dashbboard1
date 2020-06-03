@@ -38,6 +38,7 @@ export class PreferencesSettingsComponent implements OnInit {
   viewMode = 'tab1';
   dataTOget: object;
   saveUpdateFlag: any;
+  invoiceNumber: any;
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
     public dialog: MatDialog, private subscription: SubscriptionService,
@@ -156,10 +157,16 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   savePrefixResponse(data) {
+    this.viewMode == 'tab2' ? this.eventService.openSnackBar("Invoice updated sucessfully", "Dismiss") : this.eventService.openSnackBar("Subscription updated sucessfully", "Dismiss");
     this.barButtonOptions.active = false;
     this.prefixData.get('prefix').setValue(data.prefix);
     this.prefixData.get('nextNo').setValue(data.nextNumber);
     // this.prefixData = data;
+  }
+
+
+  toUpperCase(formControl, event) {
+    this.utilservice.toUpperCase(formControl, event);
   }
 
   resetPrefix() {
@@ -170,7 +177,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getProfileBillerDataResponse(data) {
     this.isLoading = false;
-    for(let p of data){
+    for (let p of data) {
       p['read'] = false;
     }
     this.billerProfileData = data;
@@ -181,9 +188,14 @@ export class PreferencesSettingsComponent implements OnInit {
     this.saveUpdateFlag = data;
     this.prefixData = this.fb.group({
       prefix: [data.prefix, [Validators.required]],
-      nextNo: [data.nextNumber, [Validators.required]]
+      nextNo: [data.nextNumber, [Validators.required, Validators.min(data.nextNumber)]]
     });
+    this.invoiceNumber = data.nextNumber;
+  }
 
+  changeNextNumberValidation() {
+    this.prefixData.controls.nextNo.setValidators([Validators.required]);
+    this.prefixData.controls.nextNo.updateValueAndValidity();
   }
 
   Open(singleProfile, value) {
@@ -198,7 +210,7 @@ export class PreferencesSettingsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)){
+          if (UtilService.isRefreshRequired(sideBarData)) {
             this.getProfileBillerData()
           }
           rightSideDataSub.unsubscribe();
@@ -221,11 +233,11 @@ export class PreferencesSettingsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const obj = {
-          advisorId: this.advisorId,
-          id: singleBillerProfile.id
-        }
-        this.subService.deleteSubSettingBillerProfile(obj).subscribe(
+        // const obj = {
+        //   advisorId: this.advisorId,
+        //   id: singleBillerProfile.id
+        // }
+        this.subService.deleteSubSettingBillerProfile(singleBillerProfile.id).subscribe(
           data => {
             this.getProfileBillerData();
             dialogRef.close();

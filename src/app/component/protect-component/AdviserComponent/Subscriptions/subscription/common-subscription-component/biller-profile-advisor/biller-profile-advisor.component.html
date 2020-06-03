@@ -23,8 +23,9 @@
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input #companyDisplayName autofocus class="form-control br-0 text-left"
-                                            formControlName="companyDisplayName" matInput
+                                        <input #companyDisplayName (input)="capitalise($event)" autofocus
+                                            class="form-control br-0 text-left" formControlName="companyDisplayName"
+                                            matInput
                                             maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}"
                                             type="text">
                                         <mat-error class="f-12">Company display name is required</mat-error>
@@ -41,12 +42,13 @@
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-select formControlName="gstTreatmentId" class="form-control">
+                                        <mat-select (selectionChange)="changeGstField($event.value)"
+                                            formControlName="gstTreatmentId" class="form-control">
                                             <mat-option value='1'>Applicable</mat-option>
                                             <mat-option value='2'>Not applicable
                                             </mat-option>
                                         </mat-select>
-                                        <mat-error>This field is required</mat-error>
+                                        <!-- <mat-error class="f-12">This field is required</mat-error> -->
                                     </mat-form-field>
                                 </div>
                                 <div class="row pt-0">
@@ -62,18 +64,19 @@
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC"
-                                            appInputValueValidation autofocus class="form-control br-0 text-left"
-                                            formControlName="gstinNum" matInput
-                                            (changedValue)="getFormControlProfile().gstinNum.setValue($event)"
+                                        <input #gstinNum
+                                            (input)="toUpperCase(profileDetailsForm.get('gstinNum'),$event)"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            autofocus class="form-control br-0 text-left" formControlName="gstinNum"
+                                            matInput (changedValue)="getFormControlProfile().gstinNum.setValue($event)"
                                             maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
-                                        <!-- <mat-error *ngIf="profileDetailsForm.get('gstinNum').errors?.required"
-                                            class="f-12">GSTIN number is required</mat-error> -->
+                                        <mat-error *ngIf="profileDetailsForm.get('gstinNum').errors?.required"
+                                            class="f-12">GSTIN number is required</mat-error>
                                         <mat-error *ngIf="(profileDetailsForm.get('gstinNum').errors?.pattern)"
                                             class="f-12">
                                             Enter valid GSTIN number
                                         </mat-error>
-                                        <mat-hint>Optional</mat-hint>
+                                        <!-- <mat-hint>Optional</mat-hint> -->
                                         <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                                     </mat-form-field>
                                 </div>
@@ -90,7 +93,8 @@
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                                        <input #panNum (input)="toUpperCase(profileDetailsForm.get('panNum'),$event)"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
                                             (changedValue)="getFormControlProfile().panNum.setValue($event)"
                                             appInputValueValidation class="form-control br-0" formControlName="panNum"
                                             matInput type="text">
@@ -129,7 +133,7 @@
                             <div class="col-md-5">
                                 <h5 class="text-right m-0 pt-16">Pincode</h5>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <input #pincode [inputValidator]="validatorType.NUMBER_ONLY"
@@ -142,6 +146,9 @@
                                         <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
                                     </mat-form-field>
                                 </div>
+                            </div>
+                            <div class="col-md-1">
+                                <mat-spinner *ngIf="pincodeFlag" [diameter]="30"></mat-spinner>
                             </div>
 
                         </div>
@@ -250,8 +257,8 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #nameOnBank matInput autofocus class="form-control br-0 text-left"
-                                        formControlName="nameOnBank"
+                                    <input #nameOnBank (input)="capitalise($event)" matInput autofocus
+                                        class="form-control br-0 text-left" formControlName="nameOnBank"
                                         (changedValue)="getFormControlBank().nameOnBank.setValue($event)"
                                         [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
                                         appInputValueValidation
@@ -303,11 +310,11 @@
                         <div class="col-md-5">
                             <h5 class="text-right m-0 pt-8">IFSC code </h5>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC"
-                                        appInputValueValidation
+                                    <input #ifscCode (input)="toUpperCase(bankDetailsForm.get('ifscCode'),$event)"
+                                        [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                         (changedValue)="getFormControlBank().ifscCode.setValue($event)"
                                         class="form-control br-0 text-left" formControlName="ifscCode" matInput
                                         maxLength="{{getFormControlBank().ifscCode.maxLength}}"
@@ -317,6 +324,9 @@
                                     <mat-hint align="end" class="f-12">{{ifscCode.value.length}}/11</mat-hint>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="col-md-1">
+                            <mat-spinner *ngIf="ifscFlag" [diameter]="30"></mat-spinner>
                         </div>
                     </div>
                     <div class="row pt-44 pb-24">
@@ -338,7 +348,7 @@
                         <div class="col-md-5">
                             <h5 class="text-right m-0 pt-8">Pincode</h5>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="form-group mb-0">
                                 <!-- (focusout)="getPostalPin($event.target.value,'bankDetailsForm')"  -->
                                 <mat-form-field>
@@ -351,7 +361,9 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
+                        <div class="col-md-1">
+                            <mat-spinner *ngIf="pincodeFlag" [diameter]="30"></mat-spinner>
+                        </div>
                     </div>
                     <div class="row pt-44">
                         <div class="col-md-5">

@@ -14,10 +14,10 @@
                         [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)"
+                    <!-- <li (click)="viewMode ='tab3';getPrefixData(2)"
                         [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
-                    </li>
+                    </li> -->
                     <li (click)="viewMode ='tab4';getPrefixData(3)"
                         [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
@@ -190,7 +190,9 @@
                                 <h5 class="m-0 mb-5 f-14 text-black">Invoice prefix</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
-                                        <input matInput type="text" class="form-control br-0" formControlName="prefix">
+                                        <input matInput type="text"
+                                            (input)="toUpperCase(prefixData.get('prefix'),$event);changeNextNumberValidation()"
+                                            class="form-control br-0" formControlName="prefix">
                                         <mat-error class="f-12">Invoice prefix required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
@@ -201,7 +203,10 @@
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
                                         <input matInput class="form-control br-0" formControlName="nextNo" type="text">
-                                        <mat-error class="f-12">Invoice next number required</mat-error>
+                                        <mat-error *ngIf="prefixData.get('nextNo').errors?.required" class="f-12">
+                                            Invoice next number required</mat-error>
+                                        <mat-error *ngIf="prefixData.get('nextNo').errors?.min">
+                                            Number must be greater than {{invoiceNumber}}</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
@@ -218,10 +223,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngSwitchCase="'tab3'">
-                    <!-- <div *ngIf="showLoader">
-                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div> -->
+                <!-- <div *ngSwitchCase="'tab3'">
                     <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <div class="row pl-44">
@@ -246,8 +248,6 @@
                                 </div>
                             </div>
                             <div class="col-md-12 pt-44 d-flex">
-                                <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
-                                </button> -->
                                 <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)"
                                     [options]="barButtonOptions" style="box-shadow: none;">
                                 </app-progress-button>
@@ -257,7 +257,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
                 <div *ngSwitchCase="'tab4'">
                     <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
@@ -267,7 +267,9 @@
                                 <h5 class="m-0 mb-5 f-14 text-black">Subscription prefix</h5>
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
-                                        <input matInput type="text" class="form-control br-0" formControlName="prefix">
+                                        <input matInput type="text"
+                                            (input)="toUpperCase(prefixData.get('prefix'),$event);changeNextNumberValidation()"
+                                            class="form-control br-0" formControlName="prefix">
                                         <mat-error class="f-12">Subscription prefix required</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
@@ -278,7 +280,11 @@
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
                                         <input matInput class="form-control br-0" formControlName="nextNo" type="text">
-                                        <mat-error class="f-12">Subscription next number required</mat-error>
+                                        <mat-error *ngIf="prefixData.get('nextNo').errors?.required" class="f-12">
+                                            Subscription
+                                            next number required</mat-error>
+                                        <mat-error *ngIf="prefixData.get('nextNo').errors?.min">
+                                            Number must be greater than {{invoiceNumber}}</mat-error>
                                     </mat-form-field>
                                     <div class="bar height23" *ngIf="isLoading"> </div>
                                 </div>
@@ -343,7 +349,7 @@
                                     </mat-card>
                                 </div>
                             </div>
-                            <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[1])">
+                            <!-- <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[1])">
                                 <div class="example-card">
                                     <mat-card class="p-0 b-a">
                                         <div class="bg-grey lter wrapper-16 pl-24">
@@ -368,9 +374,7 @@
                                         </div>
                                     </mat-card>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row pt-20 pb-20">
+                            </div> -->
                             <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[2])">
                                 <div class="example-card">
                                     <mat-card class="p-0 b-a">
@@ -397,6 +401,9 @@
                                     </mat-card>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row pt-20 pb-20">
+
                             <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[3])">
                                 <div class="example-card">
                                     <mat-card class="p-0 b-a">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { LoaderFunction } from 'src/app/services/util.service';
@@ -13,6 +13,7 @@ import { OrgSettingServiceService } from 'src/app/component/protect-component/Ad
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { DatePipe } from '@angular/common';
 import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.service';
+import { WebworkerService } from 'src/app/services/web-worker.service';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -23,7 +24,7 @@ import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.s
     slideInAnimation,
   ]
 })
-export class OverviewMyfeedComponent implements OnInit {
+export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy {
   clientData: any;
   advisorId: any;
   orgDetails: any;
@@ -33,6 +34,7 @@ export class OverviewMyfeedComponent implements OnInit {
   cashflowColumns = ['bankName', 'inflow', 'outflow', 'netflow'];
   displayedColumns: string[] = ['description', 'date', 'amount'];
   cashFlowViewDataSource = [];
+  welcomeMessage = '';
 
   chartData: any[] = [
     {
@@ -92,36 +94,36 @@ export class OverviewMyfeedComponent implements OnInit {
   filterData: any;
   mfAllocationData:any[] = [
     {
-      name: 'Equity',
-      y: 20,
+      name: 'EQUITY',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[0],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Debt',
-      y: 20,
+      name: 'DEBT',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[1],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Hybrid',
-      y: 20,
+      name: 'HYBRID',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[2],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Solution oriented',
-      y: 20,
+      name: 'SOLUTION ORIENTED',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Others',
-      y: 20,
+      name: 'OTHERS',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {
         enabled: false
@@ -130,6 +132,9 @@ export class OverviewMyfeedComponent implements OnInit {
   ]
   mfSubCatAllocationData:any[] = [];
   worker:Worker;
+  currentViewId = 1;
+  greeterFnID:any;
+  mutualFund: any;
 
   constructor(
     private customerService: CustomerService,
@@ -142,6 +147,7 @@ export class OverviewMyfeedComponent implements OnInit {
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
+    private workerService: WebworkerService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -152,6 +158,8 @@ export class OverviewMyfeedComponent implements OnInit {
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
     this.advisorImg = this.advisorInfo.profilePic;
+    this.greeter();
+    this.greeterFnID = setInterval(()=> this.greeter(), 1000);
   }
 
   tabsLoaded = {
@@ -214,7 +222,7 @@ export class OverviewMyfeedComponent implements OnInit {
   recentTransactions: any[] = [];
   riskProfile: any[] = [];
   globalRiskProfile: any[] = [];
-  documentVault: any[] = [];
+  documentVault: any = {};
   adviseData: any = null;
   goalsData: any[] = [];
   cashflowData: any = {};
@@ -226,6 +234,18 @@ export class OverviewMyfeedComponent implements OnInit {
   familyWiseAllocation: any[] = [];
   appearancePortfolio:any = {};
   familyMembers: any[] = [];
+
+
+  // highlight scroll links solution
+  // https://stackoverflow.com/a/54447174
+  @ViewChild('allFeedsSection', {static: true}) allFeedsSection: ElementRef;
+  @ViewChild('riskProfileSection', {static: true}) riskProfileSection: ElementRef;
+  @ViewChild('cashFlowSection', {static: true}) cashFlowSection: ElementRef;
+  @ViewChild('portFolioSection', {static: true}) portFolioSection: ElementRef;
+  allFeedsSectionOffset:any = 0;
+  riskProfileSectionOffset:any = 0;
+  cashFlowSectionOffset:any = 0;
+  portFolioSectionOffset:any = 0;
 
   ngOnInit() {
     this.loadLogicBasedOnRoleType();
@@ -242,7 +262,36 @@ export class OverviewMyfeedComponent implements OnInit {
     // this.loadGoalsData(); // Not to be implemented for demo purpose
     this.loadCashFlowSummary(); // needs better implementation
     this.getMFPortfolioData();
+  }
 
+  ngAfterViewInit() {
+    // offset by 60, the height of upper nav
+    this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
+  }
+
+  @HostListener('window:scroll')
+  checkOffsetTop() {
+    this.allFeedsSectionOffset = this.allFeedsSection.nativeElement.offsetTop;
+    this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
+    this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
+    this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
+    if (window.pageYOffset < this.portFolioSectionOffset) {
+      this.currentViewId = 1;
+    } else if (window.pageYOffset < this.cashFlowSectionOffset) {
+      this.currentViewId = 2;
+    } else if (window.pageYOffset < this.riskProfileSectionOffset) {
+      this.currentViewId = 3;
+    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
+      this.currentViewId = 4;
+    }
+  }
+
+  goToSectionView(scrollOffset) {
+    // offset by 60, the height of upper nav
+    window.scrollTo(0, scrollOffset)
   }
 
   // logic to decide which apis to load and not load
@@ -253,6 +302,7 @@ export class OverviewMyfeedComponent implements OnInit {
     console.log(this.enumSerice.getClientRole());
     // break intentionally not applied. DO NOT ADD BREAKS!!!!!
     switch(this.clientData.advisorOrClientRole) {
+      case 0: // because currently system is giving it as 0 :(
       case 7:
       case 6:
         this.tabsLoaded.goalsData.displaySection = true;
@@ -271,8 +321,8 @@ export class OverviewMyfeedComponent implements OnInit {
   // Load data from various apis
   loadCustomerProfile() {
     const obj = {
-      advisorId: this.advisorId,
-      // clientId: 1,
+      // advisorId: this.advisorId,
+      clientId: this.clientId,
       userId: this.clientData.userId
     }
 
@@ -466,11 +516,16 @@ export class OverviewMyfeedComponent implements OnInit {
     }
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
-      if (res == null) {
-        this.documentVault = [];
+      if (res == null || res.fileStats.length == 0) {
+        this.documentVault = {};
+        this.tabsLoaded.documentsVault.hasData = false;
       } else {
         this.tabsLoaded.documentsVault.hasData = true;
         this.documentVault = res;
+        this.documentVault.familyStats.unshift({
+          relationshipId: (this.clientData.genderId == 1 ? 2 : 3),
+          genderId: 0
+        })
       }
       this.tabsLoaded.documentsVault.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -488,8 +543,9 @@ export class OverviewMyfeedComponent implements OnInit {
     }
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
-      if (res == null) {
+      if (res == null || res[0].id === 0) {
         this.riskProfile = [];
+        this.tabsLoaded.riskProfile.hasData = false;
       } else {
         this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;
@@ -808,6 +864,7 @@ export class OverviewMyfeedComponent implements OnInit {
     if (typeof Worker !== 'undefined') {
       const input = {
         mutualFundList: mutualFund,
+        mutualFund: this.mutualFund,
         type: '',
         // mfService: this.mfService
       };
@@ -830,6 +887,7 @@ export class OverviewMyfeedComponent implements OnInit {
   getMutualFundResponse(data) {
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
+      this.mutualFund = this.filterData;
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.generateSubCategorywiseAllocationData(data); // For subCategoryWiseAllocation
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
@@ -838,18 +896,49 @@ export class OverviewMyfeedComponent implements OnInit {
 
 
   generateMFallocationChartData(data) {// function for calculating percentage
-    this.mfAllocationData = [];
+    // this.mfAllocationData = [];
     let counter = 0;
     data.forEach(element => {
       switch(element.category) {
         case 'DEBT':
+            this.mfAllocationData.push({
+              name: element.category,
+              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+              color: AppConstants.DONUT_CHART_COLORS[1],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            counter ++;
+            break;
+
         case 'EQUITY':
+            this.mfAllocationData.push({
+              name: element.category,
+              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+              color: AppConstants.DONUT_CHART_COLORS[0],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            counter ++;
+            break;
         case 'HYBRID':
+            this.mfAllocationData.push({
+              name: element.category,
+              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+              color: AppConstants.DONUT_CHART_COLORS[2],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            counter ++;
+            break;
         case 'SOLUTION ORIENTED':
           this.mfAllocationData.push({
             name: element.category,
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[counter],
+            color: AppConstants.DONUT_CHART_COLORS[3],
             dataLabels: {
               enabled: false
             }
@@ -858,9 +947,9 @@ export class OverviewMyfeedComponent implements OnInit {
           break;
         default:
           this.mfAllocationData.push({
-            name: 'Others',
+            name: 'OTHERS',
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[counter],
+            color: AppConstants.DONUT_CHART_COLORS[4],
             dataLabels: {
               enabled: false
             }
@@ -869,6 +958,7 @@ export class OverviewMyfeedComponent implements OnInit {
           break;
       }
     });
+    this.mfAllocationData = [...new Map(this.mfAllocationData.map(item => [item.name, item])).values()];
     this.mfAllocationData.forEach(e => {
       e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
     })
@@ -931,5 +1021,18 @@ export class OverviewMyfeedComponent implements OnInit {
 
   ngOnDestroy(){
     if(this.worker) this.worker.terminate();
+    clearInterval(this.greeterFnID);
+  }
+
+  greeter() {
+    var date = new Date();  
+    var hour = date.getHours();  
+    if (hour < 12) {  
+      this.welcomeMessage = "Good morning";  
+    } else if (hour < 17) {  
+      this.welcomeMessage = "Good afternoon";  
+    } else {  
+      this.welcomeMessage = "Good evening";  
+    }  
   }
 }

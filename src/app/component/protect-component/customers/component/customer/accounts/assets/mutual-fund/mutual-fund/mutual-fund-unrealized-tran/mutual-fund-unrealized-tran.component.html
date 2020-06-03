@@ -486,7 +486,7 @@
             </table>
             <!-- </div>-->
          </cdk-virtual-scroll-viewport>
-         <div *ngIf="!isLoading &&  customDataSource.data?.length == 0" class="d-flex flex-column align-items-center">
+         <div *ngIf="!isLoading &&  customDataSource.data?.length == 0 || dataSource.data?.length == 0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12"> No data found</h4>
          </div>

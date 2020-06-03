@@ -85,6 +85,7 @@ export class PayeeSettingsComponent implements OnInit {
   familyMemberId: any;
   showGstin: boolean = false;
   clientData: any;
+  isLoader: boolean;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
     private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService) {
@@ -123,6 +124,7 @@ export class PayeeSettingsComponent implements OnInit {
   pinInvalid: boolean = false;
 
   getPostalPin(value) {
+    this.isLoader = true
     let obj = {
       zipCode: value
     }
@@ -132,6 +134,7 @@ export class PayeeSettingsComponent implements OnInit {
       })
     }
     else {
+      this.isLoader = false;
       this.pinInvalid = false;
     }
   }
@@ -139,7 +142,7 @@ export class PayeeSettingsComponent implements OnInit {
   PinData(data) {
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
-
+      this.isLoader = false;
       this.getFormControl().pincode.setErrors(this.pinInvalid);
       this.getFormControl().city.setValue("");
       this.getFormControl().country.setValue("");
@@ -147,9 +150,13 @@ export class PayeeSettingsComponent implements OnInit {
 
     }
     else {
+      this.isLoader = false;
       this.getFormControl().city.setValue(data[0].PostOffice[0].District);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.getFormControl().city.disable();
+      this.getFormControl().country.disable();
+      this.getFormControl().state.disable();
       this.pinInvalid = false;
     }
   }
@@ -209,6 +216,12 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
+
+    this.familyMemberId = data.familyMemberId;
+  }
+
+  toUpperCase(formControl, event) {
+    this.utils.toUpperCase(formControl, event);
   }
 
   getRightSliderData(data) {
@@ -257,7 +270,7 @@ export class PayeeSettingsComponent implements OnInit {
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id,
+          familyMemberId: this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
