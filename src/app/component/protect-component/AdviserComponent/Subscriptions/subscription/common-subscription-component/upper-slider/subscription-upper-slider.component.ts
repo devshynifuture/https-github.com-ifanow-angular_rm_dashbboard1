@@ -24,6 +24,7 @@ import { Location } from '@angular/common';
 export class SubscriptionUpperSliderComponent extends DialogContainerComponent implements OnInit {
 
   fragmentDataSubsUpper: any;
+  logoText = 'Your Logo here';
 
   get data() {
     return this.fragmentDataSubsUpper;
@@ -36,7 +37,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   isRefreshData = false;
   addedData: any;
 
-  constructor(private router: Router, private authService: AuthService,
+  constructor(private router: Router, public authService: AuthService,
     protected eventService: EventService, protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService, private location: Location,
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
