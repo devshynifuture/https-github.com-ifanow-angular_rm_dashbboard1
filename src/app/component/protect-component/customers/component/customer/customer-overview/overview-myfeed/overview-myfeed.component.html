@@ -559,56 +559,6 @@
                         </ng-container>
                     </div>
 
-
-                    <!-- Recent transactions as per rta -->
-                    <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
-                        <div class="row">
-                            <div class="col-md-8   d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Recent transactions (As per RTA feeds)</h5>
-                            </div>
-                            <div class="col-md-4 text-right">
-                                <a [routerLink]="['/admin/transactions/overview']"
-                                    class="viewBtn c-p mb-8 text-primitive br-2 f-12"> View all </a>
-                            </div>
-                        </div>
-
-                        <div class="scrollingDiv d-flex">
-
-                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig"
-                                #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
-                                <div class="transactionsBox bg-white col-md-8" ngxSlickItem
-                                    *ngFor="let tnx of rtaFeedsData">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="mb-5">{{tnx.fwTransactionType}}</p>
-                                        </div>
-                                        <div class="col-md-4 text-right">
-                                            <p class="mb-5 text-primitive">{{tnx.type}}</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
-                                        </div>
-                                        <div class="col-md-5 pl-0 text-right">
-                                            <p class="text-primitive mb-10 f-12">
-                                                {{tnx.transactionDate | date:'dd/MM h:mm a'}}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                            <p class="mb-4">{{tnx.investorName}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ngx-slick-carousel>
-                        </div>
-                    </div>
-
                     <!-- recent transactions-->
                     <div class="wrapperBox"
                         *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
