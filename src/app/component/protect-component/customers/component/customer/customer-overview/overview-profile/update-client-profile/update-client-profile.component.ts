@@ -76,8 +76,8 @@ export class UpdateClientProfileComponent implements OnInit {
   saveImage() {
     if (this.showCropper) {
       this.barButtonOptions.active = true;
-      if (this.barButtonOptions.active) return;
-      this.loaderFn.increaseCounter();
+      // if (this.barButtonOptions.active) return;
+      // this.loaderFn.increaseCounter();
       const tags = this.clientId + ',client_profile_logo,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
       PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'client_profile_logo', tags,
