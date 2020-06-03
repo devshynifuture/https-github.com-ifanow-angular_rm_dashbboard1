@@ -237,6 +237,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   logout() {
+    this.clientList = [];
+    this.enumDataService.setSearchData(this.clientList)
     this.authService.logout();
     this.router.navigate(['/login']);
   }
