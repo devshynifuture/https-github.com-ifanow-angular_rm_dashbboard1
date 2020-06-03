@@ -38,6 +38,7 @@ export class AddNscComponent implements OnInit {
   };
   validatorType = ValidatorType
   maxDate = new Date();
+  minDate = new Date(2000, 1, 1);
   advisorId: any;
   inputData: any;
   ownerData: any;

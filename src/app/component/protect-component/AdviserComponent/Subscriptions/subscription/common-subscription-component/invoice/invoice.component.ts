@@ -1,14 +1,14 @@
-import {ValidatorType} from './../../../../../../../services/util.service';
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
+import { ValidatorType } from './../../../../../../../services/util.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 
 export interface PeriodicElement {
@@ -47,15 +47,15 @@ export class InvoiceComponent implements OnInit {
 
   // invoiceTemplate
   gstTreatment = [
-    {name: 'Registered Business - Regular', value: 0},
-    {name: 'Registered Business - Composition', value: 1},
-    {name: 'Unregistered Business', value: 2}
+    { name: 'Registered Business - Regular', value: 0 },
+    { name: 'Registered Business - Composition', value: 1 },
+    { name: 'Unregistered Business', value: 2 }
   ];
 
-  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
+  @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -174,16 +174,16 @@ export class InvoiceComponent implements OnInit {
       event.preventDefault();
     }
   }
-  addStatus(value,status){
+  addStatus(value, status) {
     let obj = {
-      id:value.id,
-      status:status.value
+      id: value.id,
+      status: status.value
     }
     this.subService.getInvoiceStatus(obj).subscribe(
       data => this.getInvoiceStatusRes(data)
     );
   }
-  getInvoiceStatusRes(data){
+  getInvoiceStatusRes(data) {
     this.Close('close', true);
   }
   dontAllowTyping(event, maxLength: number) {
@@ -221,7 +221,7 @@ export class InvoiceComponent implements OnInit {
       this.showPaymentRecive = true;
     }
     if (data) {
-      if(this.feeCollectionMode!=undefined){
+      if (this.feeCollectionMode != undefined) {
         this.feeCollectionMode.forEach(o => {
           o.value = parseInt(o.value);
           this.dataSource.forEach(sub => {
@@ -243,8 +243,8 @@ export class InvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-        ? this.showDateError = "invoice date should be greater than due" :
-        this.showDateError = undefined;
+          ? this.showDateError = "invoice date should be greater than due" :
+          this.showDateError = undefined;
     }
   }
 
@@ -278,7 +278,7 @@ export class InvoiceComponent implements OnInit {
       clientBillerId: [(data.clientBillerId == undefined) ? '' : data.clientBillerId],
       clientId: [(data.clientId == undefined) ? '' : data.clientId],
     });
-
+    this.editPayment.controls.invoiceNumber.disable();
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
@@ -300,7 +300,7 @@ export class InvoiceComponent implements OnInit {
   getClients() {
     const obj = {
       advisorId: this.advisorId,
-      clientId :(this.storeData.id == undefined)? 0:this.storeData.id
+      clientId: (this.storeData.id == undefined) ? 0 : this.storeData.id
     };
     this.subService.getClientList(obj).subscribe(
       data => this.getClientListRes(data)
@@ -353,7 +353,7 @@ export class InvoiceComponent implements OnInit {
 
   getRecordPayment(data) {
     this.recordData = data
-    if(data!=""){
+    if (data != "") {
       this.getPayReceive(data.id);
     }
   }
@@ -361,14 +361,14 @@ export class InvoiceComponent implements OnInit {
   getInvoiceData(data) {
     this.copyStoreData = data;
     this.storeData = data;
-    if(data.status==5 || data.status==6){
-      this.moreStatus=data.status;
-    }else{
-      this.moreStatus="";
+    if (data.status == 5 || data.status == 6) {
+      this.moreStatus = data.status;
+    } else {
+      this.moreStatus = "";
     }
-    if (this.storeData.balanceDue == 0 || this.storeData.status==1) {
+    if (this.storeData.balanceDue == 0 || this.storeData.status == 1) {
       this.rpyment = false
-    }else {
+    } else {
       this.rpyment = true;
     }
     this.clientId = AuthService.getClientId();
@@ -395,6 +395,8 @@ export class InvoiceComponent implements OnInit {
       // fromDate : [data.services[0].fromDate,[Validators.required]],
 
     });
+    this.editPayment.controls.invoiceNumber.disable();
+    this.editPayment.controls.finalAmount.disable();
     this.igstTaxAmount = data.igstTaxAmount
     this.cgstTaxAmount = data.cgstTaxAmount
     this.sgstTaxAmount = data.sgstTaxAmount
@@ -434,7 +436,7 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.value.discount = 0
     }
     this.changeTaxStatus(this.editPayment.value.taxStatus)
-   
+
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
       return;
@@ -578,10 +580,10 @@ export class InvoiceComponent implements OnInit {
 
   cancel(value) {
     if (value != undefined) {
-      this.storeData.balanceDue = (value.balanceDue)?value.balanceDue:'';
-      this.storeData.status=value.status;
-      if(value.status==1){
-        this.rpyment=false
+      this.storeData.balanceDue = (value.balanceDue) ? value.balanceDue : '';
+      this.storeData.status = value.status;
+      if (value.status == 1) {
+        this.rpyment = false
       }
     }
     this.showRecord = false;
@@ -600,17 +602,17 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
-    if (data.balanceDue == 0 || this.storeData.status==1) {
+    if (data.balanceDue == 0 || this.storeData.status == 1) {
       this.rpyment = false
-    }else{
-      this.rpyment =true
+    } else {
+      this.rpyment = true
     }
-    if(data.status==5 || data.status==6){
-      this.moreStatus=data.status;
-    }else{
-      this.moreStatus="";
-    }   
-     this.recordData = data;
+    if (data.status == 5 || data.status == 6) {
+      this.moreStatus = data.status;
+    } else {
+      this.moreStatus = "";
+    }
+    this.recordData = data;
     this.storeData = data;
     const obj = {
       invoiceId: data.id
@@ -654,8 +656,8 @@ export class InvoiceComponent implements OnInit {
       this.feeCalc = false;
     } else {
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
-      this.subInjectService.changeNewRightSliderState({ state: 'close'});
-      this.subInjectService.changeUpperRightSliderState({ state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.subInjectService.changeUpperRightSliderState({ state: 'close' });
       this.valueChange.emit(closeObj);
     }
 
@@ -673,7 +675,7 @@ export class InvoiceComponent implements OnInit {
         ...this.storeData,
         documentName: this.storeData.invoiceNumber,
         // docText: this.invoiceTemplate.nativeElement.innerHTML
-        docText:'',
+        docText: '',
       }],
       isInv: true
     }
@@ -777,7 +779,7 @@ export class InvoiceComponent implements OnInit {
 
   generatePdf() {
     let para = document.getElementById('template');
-    this.utils.htmlToPdf(para.innerHTML, 'Test','')
+    this.utils.htmlToPdf(para.innerHTML, 'Test', '')
   }
 
 
