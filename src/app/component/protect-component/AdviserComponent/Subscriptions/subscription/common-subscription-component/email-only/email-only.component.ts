@@ -107,7 +107,7 @@ export class EmailOnlyComponent implements OnInit {
     this.getAllEmails();
   }
 
-  getAllEmails(){
+  getAllEmails() {
     let obj = {
       userId: this.advisorId,
       // advisorId: this.advisorId
@@ -173,7 +173,7 @@ export class EmailOnlyComponent implements OnInit {
       });
     });
   }
-  
+
   close(flag) {
     this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
@@ -228,7 +228,7 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   sendEmail() {
-    if (this.emailIdList.length == 0) {
+    if (this._inputData.fromEmail == undefined) {
       this.eventService.openSnackBar('Please enter to email');
       return;
     }

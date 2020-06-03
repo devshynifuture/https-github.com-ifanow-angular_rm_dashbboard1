@@ -25,11 +25,12 @@
                 </div>
                 <div class="mat-button-focus-overlay"></div>
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)" >ADD NEW</button>
+            <button mat-stroked-button class="btn-primary addon v-middle"
+                (click)="openMutualFund('addMutualFund',null)">ADD NEW</button>
             <!-- <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button> -->
 
             <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
-                <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
+            <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/dark-three-dot.svg">
@@ -42,7 +43,7 @@
                         </div>
                     </div>
                 </button> -->
-                <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+            <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/scheme-icon.svg">
@@ -55,7 +56,7 @@
                         </div>
                     </div>
                 </button> -->
-                <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+            <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/dark-download.svg">
@@ -74,9 +75,8 @@
 
     <div class="row">
         <div [ngClass]="isLoading ? 'overflow-hidden': 'table-scroll'" class="col-md-12 p-0 mb-8">
-            <table mat-table [dataSource]="summary" id="tbs"
-                class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                *ngIf="summary.data.length>0">
+            <table mat-table [dataSource]="summary" id="tbs" class="mutualfunds-capital-equity skeletonAnimation"
+                appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="summary.data.length>0">
 
                 <ng-container matColumnDef="schemeName">
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -269,7 +269,7 @@
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
                     <td *matCellDef="let element" class="" mat-cell>
-                        <div *ngIf="!isLoading">
+                        <div *ngIf="!isLoading && element.schemeName!='Total'">
                             <img class="c-p" [matMenuTriggerFor]="menu25" src="/assets/images/svg/dot-menu.svg">
                             <mat-menu #menu25="matMenu">
                                 <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
@@ -324,10 +324,11 @@
                 <h4 class="text-center pt-12"> No data found</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
                     ADD NEW</button> -->
-                    <button mat-stroked-button (click)="openMutualFund('addMutualFund',null)" class="btn-primary addon v-middle" >
-                        ADD NEW</button>
+                <button mat-stroked-button (click)="openMutualFund('addMutualFund',null)"
+                    class="btn-primary addon v-middle">
+                    ADD NEW</button>
                 <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
-                    <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
+                <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -340,7 +341,7 @@
                             </div>
                         </div>
                     </button> -->
-                    <!-- <button  (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+                <!-- <button  (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -353,7 +354,7 @@
                             </div>
                         </div>
                     </button> -->
-                    <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-download.svg">
@@ -391,10 +392,15 @@
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                     {{(userInfo.name) ? userInfo.name : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong> {{(details) ? details.emailId : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report - {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType)}}</strong> </p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong>  Report as on : {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
+                    {{(details) ? details.emailId : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
+                        {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType)}}</strong>
+                </p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
+                        {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>
             </td>
         </tr>
 
@@ -406,9 +412,10 @@
             <td colspan="12">
                 <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
                     <tr>
-                        <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">Client name :
+                        <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+                            Client name :
                             {{(clientData.name) ? clientData.name : '-'}}</p>
-                       
+
                     </tr>
                     <tr style="background: #F5F7F7;">
                         <td *ngIf="customDataSource.data?.schemeName == true"
@@ -541,7 +548,7 @@
                                 <tr *ngIf="item.schemeName=='Total'">
                                     <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
                                         style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                       {{item.schemeName}}
+                                        {{item.schemeName}}
                                     </td>
                                     <td valign="top" *ngIf="customDataSource.data.amountInvested == true"
                                         style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"

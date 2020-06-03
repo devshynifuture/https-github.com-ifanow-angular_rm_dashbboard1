@@ -991,13 +991,17 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   generateSubCategorywiseAllocationData(data) {
-    data = this.mfServiceService.sorting(data, 'currentValue');
+    data = data.sort((a, b) =>
+    a.currentValue > b.currentValue ? -1 : (a.currentValue === b.currentValue ? 0 : 1)
+  );
+
     console.log(data);
     let counter = 0;
     this.mfSubCatAllocationData = [];
     let othersData = {
       name: 'Others',
       y:0,
+      percentage:0,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {enabled:false}
     }
@@ -1005,7 +1009,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       if(ind < 4) {
         this.mfSubCatAllocationData.push({
           name: data.subCategory,
-          y: parseFloat((data.allocatedPercentage).toFixed(2)),
+          y: data.currentValue,
+          percentage:data.allocatedPercentage,
           color: AppConstants.DONUT_CHART_COLORS[counter],
           dataLabels: {
             enabled: false
@@ -1013,7 +1018,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         })
         counter ++;
       } else {
-        othersData.y += data.allocatedPercentage
+        othersData.y += data.currentValue
+        othersData.percentage += data.allocatedPercentage
+
       }
     })
     this.mfSubCatAllocationData.push(othersData);
