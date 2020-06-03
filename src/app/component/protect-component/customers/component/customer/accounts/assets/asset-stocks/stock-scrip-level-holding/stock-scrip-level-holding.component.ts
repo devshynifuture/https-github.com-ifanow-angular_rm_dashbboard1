@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import { objectEach } from 'highcharts';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -50,7 +51,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   checkValid:boolean= false;
   callMethod: { methodName: string; ParamValue: any; };
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog,  private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -388,7 +389,7 @@ addNewNominee(data) {
                     "holdingOrTransaction": 1,
                     "quantity": element.get('holdings').value,
                     "transactionTypeOrScripNameId":element.value.scripNameId?element.value.scripNameId:this.scripData.id,
-                    "holdingOrTransactionDate": element.get('holdingAsOn').value,
+                    "holdingOrTransactionDate": this.datePipe.transform(element.get('holdingAsOn').value, 'yyyy-MM-dd'),
                     "investedOrTransactionAmount": element.get('investedAmt').value,
                     // "isDeleted": element.get('isDeleted').value,
                     'id':element.get('id').value
@@ -421,7 +422,7 @@ addNewNominee(data) {
                     "id": d.id,
                       "holdingOrTransaction": 2,
                       "quantity": d.holdings,
-                      "holdingOrTransactionDate": new Date(d.holdingAsOn),
+                      "holdingOrTransactionDate": this.datePipe.transform(d.holdingAsOn, 'yyyy-MM-dd'),
                       "transactionTypeOrScripNameId": d.scripNameId,
                       "investedOrTransactionAmount": d.investedAmt,
                       // 'isDeleted':  d.isDeleted, 
