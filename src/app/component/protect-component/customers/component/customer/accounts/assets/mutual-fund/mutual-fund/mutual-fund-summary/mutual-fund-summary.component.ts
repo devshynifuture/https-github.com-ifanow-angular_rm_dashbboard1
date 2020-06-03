@@ -770,7 +770,11 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getMutualFund();
+            this.addedData=true;
+            this.mfService.setDataForMfGet('');
+            this.mfService.setMfData('');
+            this.ngOnInit();
+            // this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
