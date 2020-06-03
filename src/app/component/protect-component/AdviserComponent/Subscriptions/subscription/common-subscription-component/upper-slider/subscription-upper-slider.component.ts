@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {Router} from '@angular/router';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {DialogContainerComponent} from 'src/app/common/dialog-container/dialog-container.component';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from 'src/app/animation/animation';
-import {DynamicComponentService} from 'src/app/services/dynamic-component.service';
-import {Location} from '@angular/common';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { DialogContainerComponent } from 'src/app/common/dialog-container/dialog-container.component';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from 'src/app/animation/animation';
+import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-subscription-upper-slider',
@@ -37,10 +37,10 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   addedData: any;
 
   constructor(private router: Router, private authService: AuthService,
-              protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService, private location: Location
-              // public dialogRef: MatDialogRef<UpperSliderComponent>,
-              // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
+    protected eventService: EventService, protected subinject: SubscriptionInject,
+    protected dynamicComponentService: DynamicComponentService, private location: Location,
+    // public dialogRef: MatDialogRef<UpperSliderComponent>,
+    // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
   ) {
     super(eventService, subinject, dynamicComponentService);
     // this.eventService.rightSliderData.subscribe(
@@ -91,7 +91,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
 
   set data(data) {
     this.referenceData = data;
-    this.fragmentDataSubsUpper = {data};
+    this.fragmentDataSubsUpper = { data };
   }
 
   ngOnInit() {
@@ -128,9 +128,9 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     }
     sessionStorage.removeItem('subUpperData');
     if (this.isRefreshData) {
-      this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
     } else {
-      this.eventService.changeUpperSliderState({state: 'close', refreshRequired: false});
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
     }
   }
 

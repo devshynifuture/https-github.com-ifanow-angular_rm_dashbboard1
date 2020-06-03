@@ -1,5 +1,5 @@
 <div class="bg-white" id="ui-settingsHeaders">
-    <div class="bg-white">
+    <div class="bg-white pt-60">
         <!-- <h1 class="cusotm-haeding-main">Subscriptions</h1>
 
       <nav (selectedTabChange)="tabClick($event)" class="text-right" id="ui-customer-secondhead" mat-align-tabs="end"
@@ -9,24 +9,24 @@
         <a [routerLink]="'./setting-documents'" mat-tab-link routerLinkActive="active">Documents</a>
         <a [routerLink]="'./setting-preferences'" mat-tab-link routerLinkActive="active">Preferenes</a>
       </nav> -->
-        <mat-tab-group class="bg-white mt-60" mat-align-tabs="" animationDuration="0ms" [selectedIndex]="selected" (click)="navTab()"
-            id="ui-settings-subs">
-            <mat-tab label="PLANS" >
+        <mat-tab-group class="bg-white" mat-align-tabs="" animationDuration="0ms" [selectedIndex]="selected"
+            (click)="navTab()" id="ui-settings-subs">
+            <mat-tab label="PLANS">
                 <ng-template matTabContent>
                     <app-plans-settings></app-plans-settings>
                 </ng-template>
             </mat-tab>
-            <mat-tab label="SERVICES" >
+            <mat-tab label="SERVICES">
                 <ng-template matTabContent>
                     <app-services-settings></app-services-settings>
                 </ng-template>
             </mat-tab>
-            <mat-tab label="DOCUMENTS" >
+            <mat-tab label="DOCUMENTS">
                 <ng-template matTabContent>
                     <app-documents-settings></app-documents-settings>
                 </ng-template>
             </mat-tab>
-            <mat-tab label="PREFERENCES" >
+            <mat-tab label="PREFERENCES">
                 <ng-template matTabContent>
                     <app-preferences-settings></app-preferences-settings>
                 </ng-template>
