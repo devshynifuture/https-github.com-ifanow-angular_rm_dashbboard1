@@ -293,8 +293,8 @@
             </mat-radio-group>
 
         </div>
-        <div class="col-md-6 pl-0" *ngIf=" _data.name=='CAPITAL GAIN REPORT' && this.showGrandfathering && ((this._data.capitalGainData) ? (this._data.capitalGainData.fromDateYear >= 2018) : '')">
-            <h5 class="m-0 pb-8">Grandfathering?</h5>
+        <div class="col-md-6 pl-0" *ngIf=" _data.name=='CAPITAL GAIN REPORT' && (this._data.capitalGainData.fromDateYear >= 2018 || this.showGrandfathering)">
+            <h5 class="m-0 pb-8">{{this.showGrandfathering}}Grandfathering?{{this._data.capitalGainData.fromDateYear}}</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="grandfathering">
                 <mat-radio-button value="1"
                     [ngClass]="{'b-a-custom': summaryFilerForm.get('grandfathering').value==1,'text-primary':summaryFilerForm.get('grandfathering').value==1,'b-a':summaryFilerForm.get('grandfathering').value==2}">

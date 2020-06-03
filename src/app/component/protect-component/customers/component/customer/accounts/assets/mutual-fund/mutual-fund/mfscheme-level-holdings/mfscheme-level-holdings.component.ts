@@ -69,7 +69,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     private util: UtilService,
     private mfService: MfServiceService,
     private reconService: ReconciliationService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cusService:CustomerService
   ) { }
   familyMemberList = [];
   errorMsg = '';
@@ -313,15 +314,33 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.dateChanged = true;
   }
   removeTransactions(index) {
+    let id ;
+    let deletedTrn;
     if(this.transactionArray.controls[index].value.id){
-      let id = this.transactionArray.controls[index].value.id;
-      this.customerService.deletePartPayment(id).subscribe(
-        data => {
-          console.log('delete',data)
+       id = this.transactionArray.controls[index].value.id;
+        deletedTrn = this.data.mutualFundTransactions.filter(item => item.id === id);
+    }
+    if(deletedTrn){
+      let requestJsonObj;
+      const data = {
+        id: deletedTrn[0].id,
+        unit: deletedTrn[0].unit,
+        effect: deletedTrn[0].effect,
+        mutualFundId: this.data.id
+      };
+      requestJsonObj = {
+        freezeDate: deletedTrn[0].freezeDate ? deletedTrn[0].freezeDate : null,
+        mutualFundTransactions: [data]
+      }
+      this.cusService.postDeleteTransactionMutualFund(requestJsonObj)
+      .subscribe(res => {
+        if (res) {
+          this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
         }
-      )
+      });
     }
     (this.transactionArray.length == 1) ? console.log("cannot remove") : this.transactionArray.removeAt(index)
+  
   }
   display(value) {
     console.log('value selected', value)
