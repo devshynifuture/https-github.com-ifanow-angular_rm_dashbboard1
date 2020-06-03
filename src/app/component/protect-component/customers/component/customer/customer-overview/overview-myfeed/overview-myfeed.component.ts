@@ -318,8 +318,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   // Load data from various apis
   loadCustomerProfile() {
     const obj = {
-      advisorId: this.advisorId,
-      // clientId: 1,
+      // advisorId: this.advisorId,
+      clientId: this.clientId,
       userId: this.clientData.userId
     }
 
