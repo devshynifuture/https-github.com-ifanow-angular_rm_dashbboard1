@@ -79,7 +79,7 @@ export class SubscriptionDetailsComponent implements OnInit {
       feeMode: [this._payeeData.feeMode, [Validators.required]],
       dueDateFrequency: [5, [Validators.required]]
     });
-
+    this.subscriptionDetails.controls.subscriptionNumber.disable();
     this.feeMode = this.enumService.getFeeCollectionModeData();
 
   }
