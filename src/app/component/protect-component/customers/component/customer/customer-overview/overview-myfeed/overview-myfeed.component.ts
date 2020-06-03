@@ -13,6 +13,7 @@ import { OrgSettingServiceService } from 'src/app/component/protect-component/Ad
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { DatePipe } from '@angular/common';
 import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.service';
+import { WebworkerService } from 'src/app/services/web-worker.service';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -93,36 +94,36 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   filterData: any;
   mfAllocationData:any[] = [
     {
-      name: 'Equity',
-      y: 20,
+      name: 'EQUITY',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[0],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Debt',
-      y: 20,
+      name: 'DEBT',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[1],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Hybrid',
-      y: 20,
+      name: 'HYBRID',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[2],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Solution oriented',
-      y: 20,
+      name: 'SOLUTION ORIENTED',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Others',
-      y: 20,
+      name: 'OTHERS',
+      y: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {
         enabled: false
@@ -133,6 +134,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   worker:Worker;
   currentViewId = 1;
   greeterFnID:any;
+  mutualFund: any;
 
   constructor(
     private customerService: CustomerService,
@@ -145,6 +147,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
+    private workerService: WebworkerService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -861,6 +864,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     if (typeof Worker !== 'undefined') {
       const input = {
         mutualFundList: mutualFund,
+        mutualFund: this.mutualFund,
         type: '',
         // mfService: this.mfService
       };
@@ -883,6 +887,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   getMutualFundResponse(data) {
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
+      this.mutualFund = this.filterData;
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
       this.generateSubCategorywiseAllocationData(data); // For subCategoryWiseAllocation
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
@@ -891,18 +896,49 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   generateMFallocationChartData(data) {// function for calculating percentage
-    this.mfAllocationData = [];
+    // this.mfAllocationData = [];
     let counter = 0;
     data.forEach(element => {
       switch(element.category) {
         case 'DEBT':
+            this.mfAllocationData.push({
+              name: element.category,
+              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+              color: AppConstants.DONUT_CHART_COLORS[1],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            counter ++;
+            break;
+
         case 'EQUITY':
+            this.mfAllocationData.push({
+              name: element.category,
+              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+              color: AppConstants.DONUT_CHART_COLORS[0],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            counter ++;
+            break;
         case 'HYBRID':
+            this.mfAllocationData.push({
+              name: element.category,
+              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+              color: AppConstants.DONUT_CHART_COLORS[2],
+              dataLabels: {
+                enabled: false
+              }
+            })
+            counter ++;
+            break;
         case 'SOLUTION ORIENTED':
           this.mfAllocationData.push({
             name: element.category,
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[counter],
+            color: AppConstants.DONUT_CHART_COLORS[3],
             dataLabels: {
               enabled: false
             }
@@ -911,9 +947,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           break;
         default:
           this.mfAllocationData.push({
-            name: 'Others',
+            name: 'OTHERS',
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[counter],
+            color: AppConstants.DONUT_CHART_COLORS[4],
             dataLabels: {
               enabled: false
             }
@@ -922,6 +958,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           break;
       }
     });
+    this.mfAllocationData = [...new Map(this.mfAllocationData.map(item => [item.name, item])).values()];
     this.mfAllocationData.forEach(e => {
       e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
     })
