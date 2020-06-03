@@ -147,7 +147,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                            <h3 class="mb-20">₹<span appFormatNumber>{{portData.currentValue}}</span>
+                                            <h3 class="mb-20 roboto">₹<span appFormatNumber>{{portData.currentValue}}</span>
                                             </h3>
                                         </div>
                                     </div>
@@ -155,13 +155,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                            <p class="m-0" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
+                                            <p class="m-0 roboto" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
                                                 ₹<span appFormatNumber>{{portData.investedAmount}}</span>
                                             </p>
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                            <p class="m-0" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
+                                            <p class="m-0 roboto" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
                                                 ₹<span appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
                                             </p>
                                         </div>
@@ -187,18 +187,18 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                        <h3 class="mb-20">₹0</h3>
+                                        <h3 class="mb-20 roboto">₹0</h3>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                        <p class="m-0">₹0</p>
+                                        <p class="m-0 roboto">₹0</p>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                        <p class="m-0 text-success">₹0</p>
+                                        <p class="m-0 roboto text-success">₹0</p>
                                     </div>
                                 </div>
 
@@ -218,20 +218,22 @@
                                         <div class="col-md-4">
                                             <div class="border-Right-line">
                                                 <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
-                                                ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                                <span class="roboto"> ₹<span
+                                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-md-4 pr-8">
                                             <div class="border-Right-line">
                                                 <h5 class="f-14  mb-0 text-primitive">Amount invested</h5>
-                                                <span class="text-success"> ₹<span
+                                                <span class="text-success roboto"> ₹<span
                                                         appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <h5 class="f-14 mb-0 text-primitive">Returns</h5>
-                                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success roboto">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
                                             <i class="material-icons f-14 f-700 text-success" *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
                                                 <span>arrow_upward</span>
                                             </i>
@@ -266,20 +268,20 @@
                                         <div class="col-md-4">
                                             <div class="border-Right-line">
                                                 <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
-                                                <span class="text-black"> ₹0 </span>
+                                                <span class="text-black roboto"> ₹0 </span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 pr-8">
                                             <div class="border-Right-line">
                                                 <h5 class="f-14 mb-0 text-primitive">Amount invested</h5>
-                                                <span class="text-success"> ₹0 </span>
+                                                <span class="text-success roboto"> ₹0 </span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <h5 class="f-14 mb-0 text-primitive">Returns</h5>
-                                            <span class="text-success"> 0.00% </span>
+                                            <span class="text-success roboto"> 0.00% </span>
                                         </div>
                                     </div>
 
@@ -318,7 +320,8 @@
                                                 <li *ngFor="let data of mfSubCatAllocationData">
                                                     <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
-                                                    <span class="f-14 mr-8">₹<span appFormatNumber>{{(data.y)}}</span> {{'('+(data.percentage | number:'1.2-2')+')'}}</span>
+                                                    <span class="f-14 mr-8 roboto">₹<span
+                                                            appFormatNumber>{{(data.y)}}</span> {{'('+(data.percentage | number:'1.2-2')+')'}}</span>
                                                     <p class=" l-14 f-14 mr-8 text-primitive mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
@@ -838,8 +841,7 @@
                                         </div>
                                         <div class="col-md-5 pr-0">
                                             <img src="/assets/images/svg/moderate.svg">
-                                            <span>Conservative</span>
-                                            <span>Aggressive</span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -910,7 +912,7 @@
                                                 Add documents
                                             </button>
                                         </div>
-                                        <div class="col-md-5 pr-0">
+                                        <div class="col-md-5 text-center pr-0">
                                             <img src="/assets/images/svg/vault-icon.svg">
                                         </div>
                                     </div>
@@ -948,7 +950,7 @@
 
 
                                         </div>
-                                        <div class="col-md-5 pr-0">
+                                        <div class="col-md-5 text-center pr-0">
                                             <img src="/assets/images/svg/family-members-icon.svg">
                                         </div>
                                     </div>
