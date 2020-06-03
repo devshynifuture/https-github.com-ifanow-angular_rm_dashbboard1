@@ -211,14 +211,13 @@ export class InvoicesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getInvoiceList();
-
           }
           rightSideDataSub.unsubscribe();
         }
       });
   }
 
-  
+
 
   getCancelInvoiceSubscription(data) {
     this.ngOnInit();

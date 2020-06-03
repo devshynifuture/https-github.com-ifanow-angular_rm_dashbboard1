@@ -53,7 +53,7 @@ export class ServicesComponent implements OnInit {
   }
 
   constructor(private eventService: EventService,
-    private subService: SubscriptionService, private subinject: SubscriptionInject,private router:Router,private location:Location) {
+    private subService: SubscriptionService, private subinject: SubscriptionInject, private router: Router, private location: Location) {
   }
 
   ngOnInit() {
@@ -91,7 +91,7 @@ export class ServicesComponent implements OnInit {
 
     this.planServiceData = data;
     if (data) {
-      for(let S of data){
+      for (let S of data) {
         S['read'] = false;
       }
       this.planServiceData.forEach(element => {
@@ -161,7 +161,7 @@ export class ServicesComponent implements OnInit {
     this.mappedData = this.mappedData.filter(delData => delData.id != data.id)
   }
 
-  
+
 
   savePlanMapToService() {
     this.barButtonOptions.active = true;
@@ -176,7 +176,7 @@ export class ServicesComponent implements OnInit {
   mapDocumentToPlan() {
     const obj = [];
     let data = {}
-    if(this.mappedData.length > 0){
+    if (this.mappedData.length > 0) {
       this.mappedData.forEach(planData => {
         data = {
           // advisorId: 12345,
@@ -188,7 +188,7 @@ export class ServicesComponent implements OnInit {
         obj.push(data);
       });
     }
-    else{
+    else {
       data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
@@ -199,10 +199,10 @@ export class ServicesComponent implements OnInit {
       obj.push(data);
     }
     this.subService.mapDocumentToService(obj).subscribe(
-      data =>{
+      data => {
         this.mapPlanToServiceRes(data)
       },
-      err =>{
+      err => {
         this.barButtonOptions.active = false;
       }
     );
@@ -212,9 +212,9 @@ export class ServicesComponent implements OnInit {
     this.changeServiceData.emit(this.planData);
     this.eventService.openSnackBar('Service is mapped', 'OK');
     this.barButtonOptions.active = false;
-    this.router.navigate(['/admin/subscription/settings','documents']);
+    this.router.navigate(['/admin/subscription/settings', 'documents']);
     this.location.replaceState('/admin/subscription/settings/documents');
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
     // this.dialogClose()
   }
   savePlanMapToServiceResponse(data) {
@@ -254,10 +254,10 @@ export class ServicesComponent implements OnInit {
     }
 
     this.subService.mapServiceToPlanData(obj).subscribe(
-      data =>{
+      data => {
         this.savePlanMapToServiceResponse(data);
       },
-      err =>{
+      err => {
         this.barButtonOptions.active = false;
       }
     );

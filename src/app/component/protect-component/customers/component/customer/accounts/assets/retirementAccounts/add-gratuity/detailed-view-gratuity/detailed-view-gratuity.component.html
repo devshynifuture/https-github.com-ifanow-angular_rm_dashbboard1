@@ -43,7 +43,8 @@
                         Last drawn salary (basic + DA) 
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.amountReceived ?gratuity.amountReceived:'-'}}
+                        {{gratuity.amountReceived? "₹" : ""}}<span appFormatNumber>{{gratuity.amountReceived? gratuity.amountReceived : "-"}}</span>
+                        <!-- {{gratuity.amountReceived ?gratuity.amountReceived:'-'}} -->
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

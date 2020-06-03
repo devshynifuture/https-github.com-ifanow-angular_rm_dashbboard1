@@ -6,6 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../customer.service';
 import { MatDialog } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   nomineesList: any[] = [];
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -404,7 +405,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
             "id": element.get('id').value,
             "holdingOrTransaction": 2,
             "quantity": element.get('quantity').value,
-            "holdingOrTransactionDate": element.get('date').value,
+            "holdingOrTransactionDate": this.datePipe.transform(element.get('date').value, 'yyyy-MM-dd'),
             "transactionTypeOrScripNameId": element.get('transactionType').value,
             "investedOrTransactionAmount": element.get('transactionAmount').value,
             'isDeleted':  element.get('isDeleted').value,  
@@ -421,7 +422,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
                   "id": d.id,
                     "holdingOrTransaction": 2,
                     "quantity": d.quantity,
-                    "holdingOrTransactionDate": d.date,
+                    "holdingOrTransactionDate": this.datePipe.transform(d.date, 'yyyy-MM-dd'),
                     "transactionTypeOrScripNameId": d.transactionType,
                     "investedOrTransactionAmount": d.transactionAmount,
                     'isDeleted':  d.isDeleted, 
