@@ -384,3 +384,7 @@
         text-align: left;
     }
 }
+
+::ng-deep .boxTable #table-low tbody td {
+    vertical-align: middle;
+}

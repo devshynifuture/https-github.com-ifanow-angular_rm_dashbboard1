@@ -40,6 +40,7 @@ export class AddEPFComponent implements OnInit {
   currentYear: any = new Date().getFullYear();
   validatorType = ValidatorType
   maxDate = new Date();
+  balanceDate = new Date(2011, 4, 1);
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isBalanceAsOn = false;
   isAnnualSalGrowth = false;

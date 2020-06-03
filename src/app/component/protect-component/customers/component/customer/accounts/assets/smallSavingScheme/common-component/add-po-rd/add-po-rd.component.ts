@@ -38,7 +38,8 @@ export class AddPoRdComponent implements OnInit {
   };
   validatorType = ValidatorType;
   maxDate = new Date();
-  isOptionalField: any;
+  minDate = new Date(2002, 1, 1);
+  isOptionalField: any; 
   inputData: any;
   ownerName: any;
   familyMemberId: any;

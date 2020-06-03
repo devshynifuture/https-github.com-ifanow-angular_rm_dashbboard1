@@ -145,6 +145,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       // fromDate : [data.services[0].fromDate,[Validators.required]],
 
     });
+    this.editPayment.controls.invoiceNumber.disable();
+    this.editPayment.controls.finalAmount.disable();
     this.igstTaxAmount = data.igstTaxAmount;
     this.cgstTaxAmount = data.cgstTaxAmount;
     this.sgstTaxAmount = data.sgstTaxAmount;
@@ -382,6 +384,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.invoiceDate.setValue(new Date());
     this.editPayment.controls.dueDate.setValue(new Date());
     this.editPayment.controls.taxStatus.setValue("IGST(18%)");
+    this.editPayment.controls.invoiceNumber.disable()
   }
 
   getServicesList() {

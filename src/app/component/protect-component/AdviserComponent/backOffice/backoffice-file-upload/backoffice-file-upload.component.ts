@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class BackofficeFileUploadComponent implements OnInit {
   filterRTA: any = 0;
-  filterStatus: any = 0;
+  filterStatus: any = 2;
   selectedFileType: any = "";
   fileType: any;
   advisorId: any;
@@ -127,6 +127,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   setDefaultRtAndStatus() {
+    this.showFilter = true;
     this.filterStatus = "2";
     this.filterRTA = "0";
   }

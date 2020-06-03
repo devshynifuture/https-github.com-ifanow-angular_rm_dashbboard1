@@ -27,6 +27,7 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
   listData: any = [];
   dataSource = new MatTableDataSource([{}, {}, {}]);
   @ViewChild(MatSort, { static: true }) sortList: MatSort;
+  rtList: any = [];
   constructor(private reconService: ReconciliationService, private BackOffice: BackofficeFileUploadService) { }
   filter: any = {
     rt: 0,
@@ -36,12 +37,21 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
-    this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
-      this.filter = data;
-      this.getBackOfficeSipStp();
-    })
-    this.getBackOfficeSipStp();
+    this.getRtList();
+  }
 
+  getRtList() {
+    this.reconService.getRTListValues({})
+      .subscribe(data => {
+        if (data) {
+          this.rtList = data;
+          this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
+            this.filter = data;
+            this.getBackOfficeSipStp();
+          })
+          this.getBackOfficeSipStp();
+        }
+      })
   }
 
   getBackOfficeSipStp() {
@@ -51,16 +61,20 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
       if (data) {
         this.listData = data;
         this.dataSource.data = this.listData;
-        this.dataSource.sort = this.sortList;
+        if (this.sortList) {
+          this.dataSource.sort = this.sortList;
+        }
         this.isLoading = false;
       } else {
-        this.dataSource.data = null;
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     })
   }
 
   ngOnDestroy() {
-    this.unSubcrip.unsubscribe();
+    if (this.unSubcrip) {
+      this.unSubcrip.unsubscribe();
+    }
   }
 }

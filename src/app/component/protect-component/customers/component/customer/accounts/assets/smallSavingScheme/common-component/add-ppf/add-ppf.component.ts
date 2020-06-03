@@ -38,6 +38,8 @@ export class AddPpfComponent implements OnInit {
   };
   validatorType = ValidatorType
   maxDate = new Date();
+  minDate = new Date(1968, 4, 1);
+
   isOptionalField: boolean;
   advisorId: any;
   ownerName: any;

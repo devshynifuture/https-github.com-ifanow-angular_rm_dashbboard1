@@ -1,15 +1,15 @@
-import {AuthService} from './../../../../../auth-service/authService';
-import {SupportService} from './../../support.service';
-import {ExcelService} from './../../../customers/component/customer/excel.service';
-import {ConfirmDialogComponent} from './../../../common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from './../../../../../Data-service/event.service';
-import {UtilService} from './../../../../../services/util.service';
-import {Component, OnInit} from '@angular/core';
-import {ReconciliationDetailsViewComponent} from '../reconciliation-details-view/reconciliation-details-view.component';
-import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {DatePipe} from '@angular/common';
-import {ReconciliationService} from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { AuthService } from './../../../../../auth-service/authService';
+import { SupportService } from './../../support.service';
+import { ExcelService } from './../../../customers/component/customer/excel.service';
+import { ConfirmDialogComponent } from './../../../common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from './../../../../../Data-service/event.service';
+import { UtilService } from './../../../../../services/util.service';
+import { Component, OnInit } from '@angular/core';
+import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
+import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { DatePipe } from '@angular/common';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
 @Component({
@@ -131,7 +131,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -313,64 +313,65 @@ export class UpperSliderBackofficeComponent implements OnInit {
         isParent
       };
     }
-    if (this.didAumReportListGot) {
-      this.isLoadingForDuplicate = true;
-      this.reconService.getDuplicateFolioDataValues(data)
-        // this.reconService.getDuplicateDataValues(data)
-        .subscribe(res => {
-          this.isLoadingForDuplicate = false;
-          if (res) {
-            console.log('this is some duplicate values:::::::::', res, this.aumList);
-            let filteredArrValue = [];
-            const arrValue = [];
-            if (this.data.flag === 'report') {
-              res.forEach(element => {
-                filteredArrValue = this.aumListReportValue.filter(item => {
-                  return item.mutualFundId === element.id ? item : null;
-                });
-              });
-            } else {
-              res.forEach(element => {
-                filteredArrValue = this.aumList.filter(item => {
-                  return item.mutualFundId === element.id ? item : null;
-                });
-              });
-            }
-
-
-            console.log('htis is filered value::::', filteredArrValue);
-            filteredArrValue.forEach(item => {
-              arrValue.push({
-                id: item.id,
-                name: item.shemeName,
-                folioNumber: item.folioNumber,
-                mutualFundId: item.mutualFundId,
-                advisorId: item.advisorId,
-                brokerId: item.broker_id,
-                unitsRta: (item.aumUnits).toFixed(3),
-                unitsIfanow: (item.calculatedUnits).toFixed(3),
-                difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
-                freezeDate: item.freezeDate ? item.freezeDate : null,
-                isMapped: item.isMapped,
-                aumDate: item.aumDate,
-                brokerCode: item.brokerCode,
-                schemeCode: item.schemeCode,
-                mutualFundTransaction: item.mutualFundTransaction,
-                transactions: ''
+    // if (this.didAumReportListGot) {
+    this.isLoadingForDuplicate = true;
+    console.log("this is what im sending for duplicate folio data", data);
+    this.reconService.getDuplicateFolioDataValues(data)
+      // this.reconService.getDuplicateDataValues(data)
+      .subscribe(res => {
+        this.isLoadingForDuplicate = false;
+        if (res) {
+          console.log('this is some duplicate values:::::::::', res, this.aumList);
+          let filteredArrValue = [];
+          const arrValue = [];
+          if (this.data.flag === 'report') {
+            res.forEach(element => {
+              filteredArrValue = this.aumListReportValue.filter(item => {
+                return item.mutualFundId === element.id ? item : null;
               });
             });
-            this.dataSource2.data = arrValue;
           } else {
-            this.dataSource2.data = null;
+            res.forEach(element => {
+              filteredArrValue = this.aumList.filter(item => {
+                return item.mutualFundId === element.id ? item : null;
+              });
+            });
           }
 
-        }, err => {
-          console.error(err);
-        });
-    } else {
-      this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
-      this.dataSource2.data = null;
-    }
+
+          console.log('htis is filered value::::', filteredArrValue);
+          filteredArrValue.forEach(item => {
+            arrValue.push({
+              id: item.id,
+              name: item.shemeName,
+              folioNumber: item.folioNumber,
+              mutualFundId: item.mutualFundId,
+              advisorId: item.advisorId,
+              brokerId: item.broker_id,
+              unitsRta: (item.aumUnits).toFixed(3),
+              unitsIfanow: (item.calculatedUnits).toFixed(3),
+              difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+              freezeDate: item.freezeDate ? item.freezeDate : null,
+              isMapped: item.isMapped,
+              aumDate: item.aumDate,
+              brokerCode: item.brokerCode,
+              schemeCode: item.schemeCode,
+              mutualFundTransaction: item.mutualFundTransaction,
+              transactions: ''
+            });
+          });
+          this.dataSource2.data = arrValue;
+        } else {
+          this.dataSource2.data = null;
+        }
+
+      }, err => {
+        console.error(err);
+      });
+    // } else {
+    //   this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
+    //   this.dataSource2.data = null;
+    // }
   }
 
   retryFileOrder() {
@@ -414,7 +415,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   getBackofficeAumFileOrderListDeleteReorder() {
     this.isLoading = true;
     this.dataSource3.data = ELEMENT_DATA3;
-    this.supportService.getBackofficeAumOrderListValues({aumReconId: this.aumReconId})
+    this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
       .subscribe(res => {
         this.isLoading = false;
         console.log(res);
@@ -423,7 +424,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               const obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios.split(',').join('\n')], {type: 'text/plain'})
+                file: new Blob([element.folios.split(',').join('\n')], { type: 'text/plain' })
               };
               element.folios = obj;
             }
@@ -476,17 +477,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     // creation of excel sheet
     const headerData = [
-      {width: 40, key: 'Investor Name'},
-      {width: 15, key: 'Asset Id'},
-      {width: 50, key: 'Scheme Name'},
-      {width: 15, key: 'Scheme Code'},
-      {width: 20, key: 'Folio Number'},
-      {width: 15, key: 'RTA Type'},
-      {width: 15, key: 'IFANOW Units'},
-      {width: 15, key: 'RTA Units'},
-      {width: 15, key: 'RTA Bal as on'},
-      {width: 15, key: 'Unit Difference'},
-      {width: 20, key: 'Amount Difference'}
+      { width: 40, key: 'Investor Name' },
+      { width: 15, key: 'Asset Id' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 15, key: 'Scheme Code' },
+      { width: 20, key: 'Folio Number' },
+      { width: 15, key: 'RTA Type' },
+      { width: 15, key: 'IFANOW Units' },
+      { width: 15, key: 'RTA Units' },
+      { width: 15, key: 'RTA Bal as on' },
+      { width: 15, key: 'Unit Difference' },
+      { width: 20, key: 'Amount Difference' }
     ];
     const excelData = [];
     const footer = [];
@@ -568,7 +569,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     }
     const fragmentData = {
       flag,
-      data: {...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate},
+      data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
@@ -722,7 +723,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // post call
     this.postReqForBackOfficeUnmatchedFolios();
 
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
   setSubTabState(state) {
@@ -783,9 +784,9 @@ interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: ''},
-  {doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: ''},
-  {doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: ''},
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
 ];
 
 
@@ -799,13 +800,13 @@ interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
 ];
 
 const ELEMENT_DATA2: PeriodicElement1[] = [
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
-  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
 ];
 
 interface PeriodicElement3 {

@@ -74,8 +74,8 @@
 
                     <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
-                        <div class="row">
-                            <div class="col-md-12" #portFolioSection>
+                        <div class="row" #portFolioSection>
+                            <div class="col-md-12" *ngIf="tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData">
                                 <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -93,6 +93,16 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
+                                <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
+                                <div class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
+                                    <img src="assets/images/svg/asset-allocation-empty-state.svg">
+                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll first need to get some data in here </p>
+                                    <a class="text-primary c-p dataBtnAdd" [routerLink]="['/customer/detail/account/summary']">Add data</a>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +202,7 @@
                     <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
                         <div class="row">
-                            <div class="col-md-12  ">
+                            <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                 <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -210,6 +220,16 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
+                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <div class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
+                                    <img src="assets/images/svg/asset-allocation-empty-state.svg">
+                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll first need to get some data in here </p>
+                                    <a class="text-primary c-p dataBtnAdd" [routerLink]="['/customer/detail/account/summary']">Add data</a>
                                 </div>
                             </div>
                         </div>
@@ -441,24 +461,24 @@
                                     </ng-container>
 
                                     <ng-container matColumnDef="inflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderGreenColor text-right">
                                             In-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 greenColor-text text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span> </div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="outflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderDanger text-right">
                                             Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-danger text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span> </div>
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="netflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderPrimary text-right">
                                             Net-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-primary text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span> </div>
                                         </td>
                                     </ng-container>
@@ -477,24 +497,24 @@
                                     </ng-container>
 
                                     <ng-container matColumnDef="inflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderGreenColor text-right">
                                             In-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 greenColor-text text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span> </div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="outflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderDanger text-right">
                                             Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-danger text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span> </div>
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="netflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary w-20 text-right">
                                             Net-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary w-20 text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span> </div>
                                         </td>
                                     </ng-container>
@@ -513,27 +533,27 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="inflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor text-right">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor w-20 text-right">
                                         In-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br greenColor-text text-right">
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-20 greenColor-text text-right">
                                         <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span>
                                         </div>
                                     </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="outflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger text-right">
+                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger w-20 text-right">
                                         Out-flows
                                     </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-danger text-right">
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 text-danger text-right">
                                         <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span> </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="netflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimary text-right">
+                                    <th mat-header-cell *matHeaderCellDef class="br w-20 topborderPrimary text-right">
                                         Out-flows
                                     </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br text-primary text-right">
+                                    <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 text-primary text-right">
                                         <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span> </div>
                                     </td>
                                 </ng-container>
@@ -547,7 +567,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                         <div class="row">
                             <div class="col-md-8 pl-0 d-flex align-items-center">
-                                <h5 class="roboto mb-8">Recent online transactions (MF)</h5>
+                                <h5 class="roboto ml-12 mb-8">Recent online transactions (MF)</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/admin/transactions/overview']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
@@ -582,7 +602,7 @@
                                             <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
                                             <p class="mb-4">{{clientData.name}}</p>
                                             <span class="f-12 spanClass btn-danger-solid">
-                                                {{tnx.statusDesc}}
+                                                {{getTnxStatus(tnx.status)}}
                                             </span>
                                         </div>
                                     </div>
@@ -630,54 +650,6 @@
                                         <div class="col-md-12">
                                             <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
                                             <p class="mb-4">{{tnx.investorName}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ngx-slick-carousel>
-                        </div>
-                    </div>
-
-                    <!-- recent transactions-->
-                    <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
-                        <div class="row">
-                            <div class="col-md-8 pl-0 d-flex align-items-center">
-                                <h5 class="roboto mb-8">Recent transactions</h5>
-                            </div>
-                            <div class="col-md-4 text-right">
-                                <a [routerLink]="['/admin/transactions/overview']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
-                            </div>
-                        </div>
-
-                        <div class="scrollingDiv d-flex">
-
-                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
-                                <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of recentTransactions">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="mb-5">{{tnx.transactionType}}</p>
-                                        </div>
-                                        <div class="col-md-4 text-right">
-                                            <p class="mb-5 text-primitive">{{tnx.type}}</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <h4>₹<span appFormatNumber>{{tnx.amount}}</span></h4>
-                                        </div>
-                                        <div class="col-md-5 pl-0 text-right">
-                                            <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                            <p class="mb-4">{{clientData.name}}</p>
-                                            <span class="f-12 spanClass btn-danger-solid">
-                                                {{tnx.statusDesc}}
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
