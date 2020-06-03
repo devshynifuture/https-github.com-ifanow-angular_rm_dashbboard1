@@ -50,7 +50,7 @@ export class ReconciliationService {
     }
 
     getDuplicateFolioDataValues(data) {
-        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_DUPLICATE_FOLIO_DATA, data);
+        return this.http.post(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_DUPLICATE_FOLIO_DATA, data);
     }
 
     getDuplicateDataValues(data) {

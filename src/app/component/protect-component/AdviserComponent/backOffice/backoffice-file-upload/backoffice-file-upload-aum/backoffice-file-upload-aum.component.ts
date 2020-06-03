@@ -29,38 +29,41 @@ export class BackofficeFileUploadAumComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
-    this.getBackOfficeFolio();
     this.getRtNamesAndType();
+
   }
 
   getRtNamesAndType() {
     this.reconService.getRTListValues({})
       .subscribe(res => {
         if (res) {
-          console.log("this is rtlist", res);
           this.rtList = res;
+          this.getBackOfficeFolio();
         }
       })
   }
 
-  // getRtName(value) {
-  //   return this.rtList.find(c => { c.id === value }).name;
-  // }
+  getRtNameFromRtId(id) {
+    return this.rtList.find(c => c.id === id).name;
+  }
 
   getBackOfficeFolio() {
     this.reconService.getBackofficeFolioAumList({ advisorId: this.advisorId })
       .subscribe((data) => {
         if (data) {
+          data.forEach(element => {
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+          });
           this.listData = data;
           this.dataSource.data = this.listData;
-          this.dataSource.sort = this.sortList;
+          if (this.sortList) {
+            this.dataSource.sort = this.sortList;
+          }
           this.isLoading = false;
         } else {
-          this.dataSource.data = null
+          this.dataSource.data = [];
           this.isLoading = false;
         }
       });
   }
-
-
 }

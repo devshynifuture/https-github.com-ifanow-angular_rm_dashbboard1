@@ -44,16 +44,31 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
     status: 2
   };
   private unSubcrip: Subscription;
+  rtList = [];
 
   ngOnInit() {
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
+    this.getRtNamesAndType();
+  }
 
-    this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
-      this.filter = data;
-      this.getBackOfficeTransactions(this.filter);
-    })
-    this.getBackOfficeTransactions(this.filter);
+  getRtNamesAndType() {
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        if (res) {
+          console.log("this is rtlist", res);
+          this.rtList = res;
+        }
+        this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
+          this.filter = data;
+          this.getBackOfficeTransactions(this.filter);
+        })
+        this.getBackOfficeTransactions(this.filter);
+      })
+  }
+
+  getRtNameFromRtId(id) {
+    return this.rtList.find(c => c.id === id).name;
   }
 
   getBackOfficeTransactions(filter) {
@@ -65,22 +80,32 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
       status: filter.status
     }
 
-    this.reconService.getBackOfficeTransactions(obj).subscribe((data) => {
-      this.isLoading = false;
-      if (data) {
-        this.listData = data;
-        this.dataSource.data = this.listData;
-        this.dataSource.sort = this.sortList;
-      } else {
-        this.dataSource.data = null;
-      }
-    }, err => {
-      this.eventService.openSnackBar(err, "DISMISS")
-      this.dataSource.data = null;
-    });
+    this.reconService.getBackOfficeTransactions(obj)
+      .subscribe((data) => {
+        this.isLoading = false;
+        if (data) {
+          console.log(data);
+          data.forEach(element => {
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+          });
+          this.listData = data;
+
+          this.dataSource.data = this.listData;
+          if (this.sortList) {
+            this.dataSource.sort = this.sortList;
+          }
+        } else {
+          this.dataSource.data = [];
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS")
+        this.dataSource.data = [];
+      });
   }
 
   ngOnDestroy() {
-    this.unSubcrip.unsubscribe();
+    if (this.unSubcrip) {
+      this.unSubcrip.unsubscribe();
+    }
   }
 }
