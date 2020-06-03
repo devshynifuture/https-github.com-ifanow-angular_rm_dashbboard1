@@ -489,7 +489,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     if (data == true) {
       this.Close(data);
       (this.profileDetailsForm.controls.id.value == undefined) ?
-        this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
+        this.eventService.openSnackBar('Biller profile is added', 'OK') : this.eventService.openSnackBar('Biller profile is edited', 'OK');
 
 
     }

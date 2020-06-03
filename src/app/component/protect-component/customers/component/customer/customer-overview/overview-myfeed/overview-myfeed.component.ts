@@ -299,6 +299,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     console.log(this.enumSerice.getClientRole());
     // break intentionally not applied. DO NOT ADD BREAKS!!!!!
     switch(this.clientData.advisorOrClientRole) {
+      case 0: // because currently system is giving it as 0 :(
       case 7:
       case 6:
         this.tabsLoaded.goalsData.displaySection = true;
@@ -539,8 +540,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
-      if (res == null) {
+      if (res == null || res[0].id === 0) {
         this.riskProfile = [];
+        this.tabsLoaded.riskProfile.hasData = false;
       } else {
         this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;

@@ -118,58 +118,78 @@
             <div  class="highcharts-figure" id="piechartStock"></div>
           </div>
           <div class=" b-a p-0" [ngClass]="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS?'col-md-8':'col-md-12'" [ngStyle]="{'border-left':categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS? 'none':''}">
-            <div class="row b-b pt-10 pb-10">
-              <div class="col-md-1">
-                  <div class="hw-16 mt-2 bg-primary"></div>
-              </div>
-              <div class="col-md-6">
-                  <p class="f-500 text-black mb-0">Banking</p>
-              </div>
-              <div class="col-md-3 pl-0">
-                  <!-- <p class="text-black mb-0">23.43%</p> -->
-                  <span>₹0</span>
-              </div>
-
-              <div class="col-md-2 pl-0">
-                  <!-- <p class="text-black mb-0">23.43%</p> -->
-                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
-              </div>
-
-          </div>
           <div class="row b-b pt-10 pb-10">
-              <div class="col-md-1">
-                  <div class="hw-16 mt-2 bg-success"></div>
-              </div>
-              <div class="col-md-6">
-                  <p class="f-500 text-black mb-0">Information technology</p>
-              </div>
-              <div class="col-md-3 pl-0">
-                  <!-- <p class="text-black mb-0">23.43%</p> -->
-                  <span>₹0</span>
-              </div>
-
-              <div class="col-md-2 pl-0">
-                  <!-- <p class="text-black mb-0">23.43%</p> -->
-                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
-              </div>
-          </div>
+            <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-danger"></div>
+            </div>
+            <div class="col-md-6">
+                <p class="f-500 text-black mb-0">Banking</p>
+            </div>
+            <div class="col-md-3 pl-0" *ngIf="categories.Banks == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <span>₹0</span>
+            </div>
+            <div class="col-md-3 pl-0" *ngIf="categories.Banks != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                {{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue" appFormatNumber>{{categories.Banks.currentValue}}</span>
+            </div>
+            <div class="col-md-2 pl-0" *ngIf="categories.Banks == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
+            </div>
+            <div class="col-md-2 pl-0" *ngIf="categories.Banks != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{categories.Banks.perrcentage | number: '1.2-2'}}%</p>
+            </div>
+        </div>
           <div class="row b-b pt-10 pb-10">
-              <div class="col-md-1">
-                  <div class="hw-16 mt-2 bg-warning"></div>
-              </div>
-              <div class="col-md-6">
-                  <p class="f-500 text-black mb-0">FMCG</p>
-              </div>
-              <div class="col-md-3 pl-0">
-                  <!-- <p class="text-black mb-0">23.43%</p> -->
-                  <span>₹0</span>
-              </div>
-
-              <div class="col-md-2 pl-0">
-                  <!-- <p class="text-black mb-0">23.43%</p> -->
-                  <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
-              </div>
-          </div>
+            <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-danger"></div>
+            </div>
+            <div class="col-md-6">
+                <p class="f-500 text-black mb-0">Information technology</p>
+            </div>
+            <div class="col-md-3 pl-0" *ngIf="categories.Information_Technology == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <span>₹0</span>
+            </div>
+            <div class="col-md-3 pl-0" *ngIf="categories.Information_Technology != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                {{categories.Information_Technology?'₹':''}}<span [value]="categories.Information_Technology.currentValue" appFormatNumber>{{categories.Information_Technology.currentValue}}</span>
+            </div>
+            <div class="col-md-2 pl-0" *ngIf="categories.Information_Technology == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
+            </div>
+            <div class="col-md-2 pl-0" *ngIf="categories.Information_Technology != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{categories.Information_Technology.perrcentage | number: '1.2-2'}}%</p>
+            </div>
+        </div>
+          <div class="row b-b pt-10 pb-10">
+            <div class="col-md-1">
+                <div class="hw-16 mt-2 bg-danger"></div>
+            </div>
+            <div class="col-md-6">
+                <p class="f-500 text-black mb-0">FMCG</p>
+            </div>
+            <div class="col-md-3 pl-0" *ngIf="categories.fmcg == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <span>₹0</span>
+            </div>
+            <div class="col-md-3 pl-0" *ngIf="categories.fmcg != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                {{categories.fmcg?'₹':''}}<span [value]="categories.fmcg.currentValue" appFormatNumber>{{categories.fmcg.currentValue}}</span>
+            </div>
+            <div class="col-md-2 pl-0" *ngIf="categories.fmcg == undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
+            </div>
+            <div class="col-md-2 pl-0" *ngIf="categories.fmcg != undefined">
+                <!-- <p class="text-black mb-0">23.43%</p> -->
+                <p class="text-black mb-0">{{categories.fmcg.perrcentage | number: '1.2-2'}}%</p>
+            </div>
+        </div>
           <div class="row b-b pt-10 pb-10">
               <div class="col-md-1">
                   <div class="hw-16 mt-2 bg-danger"></div>

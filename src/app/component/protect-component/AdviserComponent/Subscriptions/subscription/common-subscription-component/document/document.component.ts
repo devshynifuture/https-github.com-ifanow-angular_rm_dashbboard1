@@ -91,7 +91,7 @@ export class DocumentComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject,
     private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService, private router: Router,private location:Location) {
+    public subscription: SubscriptionService, private router: Router, private location: Location) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -550,7 +550,7 @@ export class DocumentComponent implements OnInit {
         }
       });
 
-    }else{
+    } else {
       this.planDocumentData = [];
     }
 
@@ -692,8 +692,8 @@ export class DocumentComponent implements OnInit {
         //   'viewer.</p>\n';
       });
 
-    }else{
-      this.serviceDocumentData=[];
+    } else {
+      this.serviceDocumentData = [];
     }
   }
 
@@ -719,7 +719,7 @@ export class DocumentComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteClientDocumentsMultiple(list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'Dismiss');
+            this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
             dialogRef.close(list);
             // this.getRealEstate();
@@ -799,7 +799,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    
+
     this.changeServiceData.emit(this.upperData);
     // this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData.length == 0) {
@@ -807,9 +807,9 @@ export class DocumentComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
     }
-    this.router.navigate(['/admin/subscription/settings','plans']);
+    this.router.navigate(['/admin/subscription/settings', 'plans']);
     this.location.replaceState('/admin/subscription/settings/plans');
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
     this.barButtonOptions.active = false;
   }
 
@@ -826,7 +826,7 @@ export class DocumentComponent implements OnInit {
         obj.push(data);
       });
       this.subService.mapDocumentsToPlanData(obj).subscribe(
-        data => {}
+        data => { }
       );
 
     }
@@ -883,10 +883,10 @@ export class DocumentComponent implements OnInit {
       this.eventService.openSnackBar('Documents mapped', 'OK');
     }
     this.changeServiceData.emit(this.upperData);
-    this.router.navigate(['/admin/subscription/settings','services']);
+    this.router.navigate(['/admin/subscription/settings', 'services']);
     this.location.replaceState('/admin/subscription/settings/services');
 
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
   selectAll(event) {

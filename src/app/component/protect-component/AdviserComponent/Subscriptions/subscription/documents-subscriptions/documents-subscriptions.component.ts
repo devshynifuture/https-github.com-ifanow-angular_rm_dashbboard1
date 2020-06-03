@@ -46,7 +46,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
-  scrollLoad=false;
+  scrollLoad = false;
   lastFilterDataId: any;
   filterDataArr = [];
   statusIdLength: any = 0;
@@ -96,7 +96,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     else {
       (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
     }
-    this.getClientSubData(this.scrollLoad);  
+    this.getClientSubData(this.scrollLoad);
     this.getClientSubscriptionList();
   }
   getClientSubData(boolean) {
@@ -318,7 +318,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.dataCount = 0;
     this.isLoading = true;
     // this.dataSource.data = [{}, {}, {}];
-   return  this.subscription.getDocumentData(obj);
+    return this.subscription.getDocumentData(obj);
   }
 
   getClientSubscriptionList() {
@@ -507,7 +507,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteClientDocumentsMultiple(list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'Dismiss');
+            this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
             dialogRef.close(list);
             // this.getRealEstate();
@@ -530,14 +530,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       if (result.length > 0) {
         const tempList = [];
         this.dataSource.data.forEach(singleElement => {
-          if ( result.length > 1) {
-            if(!singleElement.selected){
+          if (result.length > 1) {
+            if (!singleElement.selected) {
               tempList.push(singleElement);
             }
-          } else{ 
-            if (result[0] != singleElement.id){
+          } else {
+            if (result[0] != singleElement.id) {
               tempList.push(singleElement);
-            } 
+            }
           }
         });
         this.dataSource.data = tempList;
