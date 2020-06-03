@@ -358,6 +358,9 @@
         }
         
         .boxTable {
+            border: 1px solid #D9DEE1;
+            border-radius: 4px;
+            padding: 20px;
             #table-low thead tr {
                 background-color: transparent !important;
             }
