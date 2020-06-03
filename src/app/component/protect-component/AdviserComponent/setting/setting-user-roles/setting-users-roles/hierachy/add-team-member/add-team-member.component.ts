@@ -83,6 +83,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       if(res && res.length > 0) {
         this.teamMembers = res;
         this.teamMembers = this.teamMembers.filter(member => member.adminAdvisorId != this.data.childId);
+        if(this.data.parentId) {
+          this.selectedMember = this.teamMembers.find(team => team.id === this.data.parentId);
+        }
       } else {
         this.teamMembers = [];
       }
