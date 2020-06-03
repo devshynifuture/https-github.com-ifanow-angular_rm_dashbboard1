@@ -248,6 +248,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         id: [this.data.id],
         assetMutualFundTransactionTypeMasterId: [this.data.assetMutualFundTransactionTypeMasterId],
         isEdited: this.data.isEdited,
+        isAdded:null,
         previousUnit: this.data.previousUnit,
         previousEffect: this.data.effect
       }))
@@ -262,6 +263,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             id: [element.id],
             assetMutualFundTransactionTypeMasterId: [element.assetMutualFundTransactionTypeMasterId],
             isEdited: element.isEdited,
+            isAdded:null,
             previousUnit: element.previousUnit,
             previousEffect: element.effect
           }))
@@ -276,6 +278,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           id: [],
           assetMutualFundTransactionTypeMasterId: [],
           isEdited: false,
+          isAdded:null,
           previousUnit: [],
           previousEffect: []
   
@@ -301,7 +304,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       assetMutualFundTransactionTypeMasterId: [],
       isEdited: false,
       previousUnit: [],
-      previousEffect: []
+      previousEffect: [],
+      isAdded:true
     }))
   }
   setDateChange(event) {
@@ -309,6 +313,14 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.dateChanged = true;
   }
   removeTransactions(index) {
+    if(this.transactionArray.controls[index].value.id){
+      let id = this.transactionArray.controls[index].value.id;
+      this.customerService.deletePartPayment(id).subscribe(
+        data => {
+          console.log('delete',data)
+        }
+      )
+    }
     (this.transactionArray.length == 1) ? console.log("cannot remove") : this.transactionArray.removeAt(index)
   }
   display(value) {
@@ -371,7 +383,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               id: element.id,
               transactionTypeId: element.transactionType,
               effect: (element.transactionType) ? this.getTransactionEffect(element.transactionType) : null,
-              isEdited: element.isEdited,
+               isEdited:(element.isAdded) ? null :element.isEdited,
+              isAdded:element.isAdded,
               previousUnit: element.previousUnit,
               previousEffect: element.previousEffect,
               assetMutualFundTransactionTypeMasterId:(element.assetMutualFundTransactionTypeMasterId) ? this.getAssetMutualFundTransactionTypeMasterId(element.assetMutualFundTransactionTypeMasterId) : null,
@@ -422,7 +435,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               amount: element.transactionAmount,
               transactionTypeId: element.transactionType,
               effect: element.transactionType ? this.getTransactionEffect(element.transactionType) : null,
-              isEdited: element.isEdited,
+              isEdited:(element.isAdded) ? null :element.isEdited,
+              isAdded:element.isAdded,
               previousUnit: element.previousUnit,
               previousEffect: element.previousEffect,
               id: element.id,

@@ -33,6 +33,8 @@ export class AddTransactionComponent implements OnInit {
   setTransactionData(data) {
   
    if(data.transactionList){
+    this.addTransactionList = data.transactionList.length
+
     // data.ppfTransactionList;
     // let list = data.ppfTransactionList?data.ppfTransactionList:data.ssyTransactionList;
     data.transactionList.forEach(element => {

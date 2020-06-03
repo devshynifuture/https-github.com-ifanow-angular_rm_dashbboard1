@@ -139,8 +139,13 @@ Description description: "this is futurewise Tech" -->
                         Payout received till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹<span appFormatNumber>{{fixedDeposit.payoutTillToday}}</span>
-                        <!-- {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillToday):'-'}} -->
+                        <!-- ₹<span appFormatNumber>{{fixedDeposit.payoutTillToday}}</span> -->
+                        <div *ngIf="!matured">
+                            {{fixedDeposit.currentValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.payoutTillToday}}</span>
+                        </div>
+                        <div *ngIf="matured">
+                            {{fixedDeposit.maturityValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.payoutTillMaturity}}</span>
+                        </div>
                     </div>
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2"F class="row bb p-8 b-l br">
@@ -188,6 +193,18 @@ Description description: "this is futurewise Tech" -->
                         <!-- ₹<span appFormatNumber>{{fixedDeposit.amountInvested}}</span> -->
                         ₹<span [value]="fixedDeposit.currentValue - fixedDeposit.amountInvested" appFormatNumber>{{fixedDeposit.currentValue - fixedDeposit.amountInvested}}</span>
                         <!-- ₹{{utils.formatter()}} -->
+                    </div>
+                    <div  class="col-md-4 text-right f-14 roboto p-0" >
+                        <!-- ₹{{}} -->
+                        <div *ngIf="!matured">
+                            {{fixedDeposit.currentValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.currentValue - fixedDeposit.amountInvested}}</span>
+                        </div>
+                        <div *ngIf="matured">
+                            {{fixedDeposit.maturityValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.maturityValue - fixedDeposit.amountInvested}}</span>
+                        </div>
+                        
+                        <!-- ₹{{utils.formatter(}} -->
+
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

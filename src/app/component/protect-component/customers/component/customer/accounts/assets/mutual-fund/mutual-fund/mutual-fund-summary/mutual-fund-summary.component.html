@@ -268,8 +268,8 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" class="" mat-cell class="c-p">
-                        <div *ngIf="!isLoading">
+                    <td *matCellDef="let element" class="" mat-cell>
+                        <div *ngIf="!isLoading && element.schemeName!='Total'">
                             <img class="c-p" [matMenuTriggerFor]="menu25" src="/assets/images/svg/dot-menu.svg">
                             <mat-menu #menu25="matMenu">
                                 <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View

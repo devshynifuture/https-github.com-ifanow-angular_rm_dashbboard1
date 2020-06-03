@@ -20,10 +20,17 @@ export class DetailedViewBondsComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+  matured:boolean=false;
   ngOnInit() {
     this.bonds = this.inputData;
     this.bankList = this.enumService.getBank();
-
+    if(new Date(this.inputData.maturityDate).getTime() < new Date().getTime()){
+      this.matured = true;
+    }
+    else{
+      this.matured = false;
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
