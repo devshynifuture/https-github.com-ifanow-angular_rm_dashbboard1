@@ -166,6 +166,7 @@ export class CreateSubscriptionComponent implements OnInit {
         }
       }
       else {
+        (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
         if (this.clientData.billingCycle == 1) {
           date.setMonth(date.getMonth() + this.clientData.billEvery)
         }
