@@ -46,7 +46,7 @@
                     <!-- your account intro -->
                     <div class="wrapperBox mb-20" [hidden]="true">
                         <div class="row">
-                            <div class="col-md-12 ml-12 mb-10 d-flex align-items-center">
+                            <div class="col-md-12  mb-10 d-flex align-items-center">
                                 <h5 class="roboto m-0 ">Your account</h5>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     <div class="wrapperBox">
                         <div class="row" #portFolioSection>
                             <div class="col-md-12" *ngIf="tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData">
-                                <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
+                                <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-md-7 pr-0 heightBox">
@@ -97,7 +97,7 @@
                             </div>
 
                             <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
-                                <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
+                                <h5 class="roboto mb-0">Asset allocation</h5>
 
                                 <div class="borderChatBoxEmpty bg-white">
                                     <div class="row">
@@ -121,7 +121,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded">
                         <div class="row">
                             <div class="col-md-8  d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Portfolio</h5>
+                                <h5 class="roboto  mb-8">Portfolio</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/customer/detail/account/summary']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
@@ -212,7 +212,7 @@
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
-                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBoxMutual bg-white">
                                     <div class="row  pt-20 pl-40">
                                         <div class="col-md-4">
@@ -260,7 +260,7 @@
                             </div>
 
                             <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
-                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBoxMutual bg-white">
                                     <div class="row pt-20 pl-40">
                                         <div class="col-md-4">
@@ -307,7 +307,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
                         <div class="row">
                             <div class="col-md-12 ">
-                                <h5 class="roboto ml-12 mb-0">Sub category wise summary - mutual funds</h5>
+                                <h5 class="roboto  mb-0">Sub category wise summary - mutual funds</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-md-7 heightBox1 ">
@@ -332,7 +332,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded && familyWiseAllocation?.length > 0">
                         <div class="row">
                             <div class="col-md-8  d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Family member wise summary</h5>
+                                <h5 class="roboto  mb-8">Family member wise summary</h5>
                             </div>
                         </div>
 
@@ -375,7 +375,7 @@
                     <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0 ">Complete your profile</h5>
+                                <h5 class="roboto  mb-0 ">Complete your profile</h5>
                             </div>
                         </div>
 
@@ -408,7 +408,7 @@
                     <div class="wrapperBox mb-20" [hidden]="true">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
-                                <h5 class="roboto mb-0 ml-12 ">Mutual found protfolio</h5>
+                                <h5 class="roboto mb-0  ">Mutual found protfolio</h5>
                             </div>
                         </div>
 
@@ -521,7 +521,7 @@
                     <div class="wrapperBox" [hidden]="true">
                         <div class="row">
                             <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 m-0">Activity overview</h5>
+                                <h5 class="roboto  m-0">Activity overview</h5>
                             </div>
                         </div>
 
@@ -559,7 +559,7 @@
                     <div class="wrapperBox" #cashFlowSection>
                         <div class="row">
                             <div class="col-md-12  mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0">In-flows & Out-flows</h5>
+                                <h5 class="roboto  mb-0">In-flows & Out-flows</h5>
                             </div>
                         </div>
                         <div class="boxTable">
@@ -692,7 +692,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                         <div class="row">
                             <div class="col-md-8 pl-0 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Recent online transactions (MF)</h5>
+                                <h5 class="roboto  mb-8">Recent online transactions (MF)</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/admin/transactions/overview']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
@@ -740,7 +740,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                         <div class="row">
                             <div class="col-md-8   d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Recent transactions (As per RTA feeds)</h5>
+                                <h5 class="roboto  mb-8">Recent transactions (As per RTA feeds)</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/admin/transactions/overview']" class="viewBtn c-p mb-8 text-primitive br-2 f-12"> View all </a>
@@ -786,7 +786,7 @@
                     <div class="wrapperBox" #riskProfileSection>
                         <div class="row">
                             <div class="col-md-12  mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0">Risk profile</h5>
+                                <h5 class="roboto  mb-0">Risk profile</h5>
                             </div>
                         </div>
 
@@ -853,7 +853,7 @@
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-12   mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0 ">Document vault</h5>
+                                <h5 class="roboto  mb-0 ">Document vault</h5>
                             </div>
                         </div>
 
@@ -924,7 +924,7 @@
                     <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
                         <div class="row">
                             <div class="col-md-12  mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0 ">Family members</h5>
+                                <h5 class="roboto  mb-0 ">Family members</h5>
                             </div>
                         </div>
 
