@@ -119,9 +119,8 @@
                 </div>
                 <div class="col-md-6 right classToggleBtn">
                     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                        <mat-button-toggle value="bold" (click)="setShowFilter(true)"
-                            routerLink="/admin/backoffice-file-upload/transaction" [state]="filter"
-                            routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
+                        <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction"
+                            [state]="filter" routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
                             Transactions</mat-button-toggle>
                         <mat-button-toggle value="italic" (click)="setShowFilter(false)"
                             routerLink="/admin/backoffice-file-upload/sip-stp" [state]="filter"
