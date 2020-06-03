@@ -447,6 +447,12 @@
                   }
                 }
 
+                .doc-name {
+                  .mat-input-element::placeholder {
+                    color: rgba(0, 0, 0, .38) !important;
+                  }
+                }
+
                 // .change-payee {
                 //   .mat-card {
                 //     height: 250px !important;
@@ -2097,5 +2103,3 @@
                   border-left: transparent;
                   border-right: transparent;
                 }
-
-                .cash-bank {}
