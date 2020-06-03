@@ -224,29 +224,35 @@
                                 *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                 <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBox bg-white">
+                                    <div>
                                         <div>
-                                                <div>
-                                                    <h5>Current Value</h5>
-                                                    ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
-                                                   
-                                                </div>
-                                                <div>
-                                                    <h5>Amount invested</h5>
-                                                    ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
-        
-                                                </div>
-                                                <div>
-                                                    <h5>Returns</h5>
-                                                    <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
-                                                    <i class="material-icons f-14 f-700 text-success" *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
-                                                        <span >arrow_upward</span>
-                                                    </i>
-                                                    <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 " class="text-danger">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
-                                                    <i class="material-icons f-14 f-700 text-danger" *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0">
-                                                        <span >arrow_downward</span>
-                                                    </i>
-                                                </div>
-                                            </div>
+                                            <h5>Current Value</h5>
+                                            ₹<span
+                                                appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+
+                                        </div>
+                                        <div>
+                                            <h5>Amount invested</h5>
+                                            ₹<span
+                                                appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
+
+                                        </div>
+                                        <div>
+                                            <h5>Returns</h5>
+                                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  "
+                                                class="text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                                            <i class="material-icons f-14 f-700 text-success"
+                                                *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
+                                                <span>arrow_upward</span>
+                                            </i>
+                                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 "
+                                                class="text-danger">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                                            <i class="material-icons f-14 f-700 text-danger"
+                                                *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0">
+                                                <span>arrow_downward</span>
+                                            </i>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-7 heightBox pr-0">
                                             <div class="piechartMutualFund" [chart]="mfAllocationPieConfig"></div>
@@ -308,6 +314,49 @@
                             </div>
                         </div>
                     </div>
+                    <!--family member wise-->
+                    <div class="wrapperBox"
+                        *ngIf="tabsLoaded.portfolioData.dataLoaded && familyWiseAllocation?.length > 0">
+                        <div class="row">
+                            <div class="col-md-8  d-flex align-items-center">
+                                <h5 class="roboto ml-12 mb-8">Family member wise summary</h5>
+                            </div>
+                        </div>
+
+
+                        <div class="scrollingDiv d-flex ">
+                            <!-- portfolio data present -->
+                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig"
+                                #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
+                                <div class="fundBox bg-white slide" ngxSlickItem
+                                    *ngFor="let item of familyWiseAllocation">
+                                    <div class="row">
+                                        <h1>
+                                            <img class="documentImg" src="/assets/images/svg/man-profile.svg">
+                                        </h1>
+                                        <div class="col-md-9  pr-0">
+                                            <h5 class="roboto">{{item.name}}</h5>
+                                        </div>
+
+                                        <div class="col-md-9  pr-0">
+                                            <h5 class="roboto">{{item.relationshipId}}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <p class="m-0 text-primitive f-12">Mutual Funds</p>
+                                            <h3 class="mb-20">Rs.<span appFormatNumber>{{item.currentValue}}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </ngx-slick-carousel>
+                        </div>
+                    </div>
+
                     <!-- complete your profile -->
                     <div class="wrapperBox mb-20"
                         [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
