@@ -2,7 +2,9 @@
     <div class="dialogclose">
         <div class="row popup-header-fix-100">
             <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
-                <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+                <!-- <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"> -->
+                <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
+                <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
             </div>
             <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
                 <p class="f-16 mb-0"

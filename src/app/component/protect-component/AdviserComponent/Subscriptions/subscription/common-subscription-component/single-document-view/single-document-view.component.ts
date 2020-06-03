@@ -16,7 +16,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./single-document-view.component.scss']
 })
 export class SingleDocumentViewComponent implements OnInit {
-  advisorId:any
+  advisorId: any
 
   constructor(public dialog: MatDialog, private eventService: EventService, private subService: SubscriptionService, private router: Router, private location: Location) {
   }
@@ -119,11 +119,11 @@ export class SingleDocumentViewComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const obj = {
-          advisorId: this.advisorId,
-          id: deleteData
-        }
-        this.subService.deleteSettingsDocument(obj).subscribe(
+        // const obj = {
+        //   advisorId: this.advisorId,
+        //   id: deleteData
+        // }
+        this.subService.deleteSettingsDocument(deleteData).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'Dismiss');
             this.valueChange.emit('close');

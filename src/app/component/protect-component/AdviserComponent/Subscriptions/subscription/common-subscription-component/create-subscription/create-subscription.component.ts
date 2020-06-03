@@ -166,6 +166,7 @@ export class CreateSubscriptionComponent implements OnInit {
         }
       }
       else {
+        (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
         if (this.clientData.billingCycle == 1) {
           date.setMonth(date.getMonth() + this.clientData.billEvery)
         }
@@ -291,6 +292,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.feeModeData = feeModeData;
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
+    this.subscriptionDetails.controls.subscription.disable();
     this.billersData = data.billers;
     this.payeesData = data.payees;
   }
@@ -308,6 +310,11 @@ export class CreateSubscriptionComponent implements OnInit {
         id: this.clientData.subId,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
+        services: [
+          {
+            serviceName: this.payeeSettingData.serviceName,
+            description: ''
+          }],
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
@@ -344,8 +351,12 @@ export class CreateSubscriptionComponent implements OnInit {
       const obj = {
         id: this.clientData.subId,
         advisorId: this.advisorId,
-
         billerProfileId: this.selectedBiller.id,
+        services: [
+          {
+            serviceName: this.payeeSettingData.serviceName,
+            description: ''
+          }],
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,

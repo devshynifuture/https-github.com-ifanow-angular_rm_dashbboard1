@@ -1,4 +1,31 @@
-.test-right-padder {}
+.subs-subs-table,
+.subs-documents {
+  #tbs {
+    .mat-sort-header-button {
+      white-space: nowrap !important;
+    }
+  }
+}
+
+
+
+#ui-settingsHeaders .mat-tab-header {
+  background: transparent !important;
+  box-shadow: none;
+  position: inherit;
+  z-index: 0;
+
+  .mat-tab-group {
+    margin-top: auto !important;
+    padding-top: 64px !important;
+  }
+
+  .mat-tab-labels {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+}
 
 @media(max-width:1224px) {
   #ui-subscriptions {

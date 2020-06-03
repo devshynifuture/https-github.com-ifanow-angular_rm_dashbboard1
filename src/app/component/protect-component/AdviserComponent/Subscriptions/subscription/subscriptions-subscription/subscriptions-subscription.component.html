@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div *ngIf="dataSource.data.length > 0" class="wrapper-20 pt-8 bg-white " id="wrapper">
+    <div *ngIf="dataSource.data.length > 0" class="wrapper-20 pt-8 bg-white subs-subs-table" id="wrapper">
         <div [ngClass]="isLoading ? '': 'table-scroll'">
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                 class="skeletonAnimation" id="tbs" mat-table matSort>

@@ -38,6 +38,7 @@ export class PreferencesSettingsComponent implements OnInit {
   viewMode = 'tab1';
   dataTOget: object;
   saveUpdateFlag: any;
+  invoiceNumber: any;
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
     public dialog: MatDialog, private subscription: SubscriptionService,
@@ -156,10 +157,16 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   savePrefixResponse(data) {
+    this.viewMode == 'tab2' ? this.eventService.openSnackBar("Invoice updated sucessfully", "Dismiss") : this.eventService.openSnackBar("Subscription updated sucessfully", "Dismiss");
     this.barButtonOptions.active = false;
     this.prefixData.get('prefix').setValue(data.prefix);
     this.prefixData.get('nextNo').setValue(data.nextNumber);
     // this.prefixData = data;
+  }
+
+
+  toUpperCase(formControl, event) {
+    this.utilservice.toUpperCase(formControl, event);
   }
 
   resetPrefix() {
@@ -181,9 +188,14 @@ export class PreferencesSettingsComponent implements OnInit {
     this.saveUpdateFlag = data;
     this.prefixData = this.fb.group({
       prefix: [data.prefix, [Validators.required]],
-      nextNo: [data.nextNumber, [Validators.required]]
+      nextNo: [data.nextNumber, [Validators.required, Validators.min(data.nextNumber)]]
     });
+    this.invoiceNumber = data.nextNumber;
+  }
 
+  changeNextNumberValidation() {
+    this.prefixData.controls.nextNo.setValidators([Validators.required]);
+    this.prefixData.controls.nextNo.updateValueAndValidity();
   }
 
   Open(singleProfile, value) {
