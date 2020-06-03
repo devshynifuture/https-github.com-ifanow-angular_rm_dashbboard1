@@ -37,8 +37,7 @@
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 overflow-hidden real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
-    <table #tableEl class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table
-        [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table #tableEl class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no" sticky>
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
@@ -66,8 +65,7 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue"
-                        appFormatNumber>{{sumOfCurrentValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
 
@@ -88,8 +86,7 @@
                 </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMonthlyDeposit"
-                        appFormatNumber>{{sumOfMonthlyDeposit}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMonthlyDeposit" appFormatNumber>{{sumOfMonthlyDeposit}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
@@ -99,8 +96,7 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue}}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue"
-                        appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
@@ -119,7 +115,7 @@
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description </th>
+            <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br w-12"> Description </th>
             <td mat-cell *matCellDef="let element" class="br wb">
                 <div class="bar"> {{isLoading ? '' : element.description || '-'}} </div>
             </td>
