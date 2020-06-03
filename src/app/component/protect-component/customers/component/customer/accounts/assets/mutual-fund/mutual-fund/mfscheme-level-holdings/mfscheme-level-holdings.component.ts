@@ -49,6 +49,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   transactionTypeList = [];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  maxDate = new Date();
   parentId = AuthService.getParentId() !== 0 ? AuthService.getParentId() : this.advisorId;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   validatorType = ValidatorType;
@@ -58,6 +59,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
   @ViewChild(MatAutocompleteTrigger, { static: false }) trigger: MatAutocompleteTrigger;
   selectedTransactionType: any;
+  maximumDate: any;
 
   constructor(
     public subInjectService: SubscriptionInject,
@@ -80,6 +82,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   // @ViewChild(MatAutocompleteTrigger, { static: true }) _auto: MatAutocompleteTrigger;
 
   ngOnInit() {
+    let date = this.maxDate.setDate(this.maxDate.getDate() - 1);
+    this.maximumDate =new Date(date);
     console.log('ttra data', this.data)
     this.getRtTypeIdList();
     this.setFormValue(this.data);

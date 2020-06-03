@@ -396,6 +396,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // this.mutualFund = data;
       if (this.addedData) {
           this.mutualFund = this.mfData
+          this.getTransactionTypeData();
         this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         this.mfService.setDataForMfGet(this.mfData);
         this.mfService.setMfData(this.mfData);
@@ -413,7 +414,25 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // }
     }
   }
+  getTransactionTypeData() {
+    const obj = {
+      advisorIds: [this.advisorId],
+      clientId: this.clientId,
+      parentId: 0
 
+    };
+    this.custumService.getTransactionTypeInMF(obj).subscribe(
+      data => {
+        if (data) {
+          data = data.filter(item => item !=null);
+          this.mfService.setTransactionType(data);
+          // this.setDefaultFilterData.transactionTypeList = filterData
+
+        }
+        // this.transactionTypeList = data;
+      }
+    );
+  }
   // ngOnChanges(changes: SimpleChanges) {
 
   //   for (const propName in changes) {
@@ -593,6 +612,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.addedData = true;
             this.mfService.setDataForMfGet('');
             this.mfService.setMfData('');
+            this.mfService.setTransactionType('');
             this.ngOnInit();
             // this.getMutualFund();
           }
@@ -642,6 +662,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
                 this.addedData = true;
                 this.mfService.setDataForMfGet('');
                 this.mfService.setMfData('');
+                this.mfService.setTransactionType('');
                 this.ngOnInit();
                 // this.getMutualFund();
                 console.log("again re hitting mutual fund get:::", res)

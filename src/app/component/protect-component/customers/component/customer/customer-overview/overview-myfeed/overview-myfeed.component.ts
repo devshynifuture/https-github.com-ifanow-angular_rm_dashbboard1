@@ -117,14 +117,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, {
       name: 'SOLUTION ORIENTED',
       y: 0,
-      color: AppConstants.DONUT_CHART_COLORS[3],
+      color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {
         enabled: false
       }
     }, {
       name: 'OTHERS',
       y: 0,
-      color: AppConstants.DONUT_CHART_COLORS[4],
+      color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
         enabled: false
       }
@@ -881,6 +881,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.worker.onmessage = ({ data }) => {
         this.totalValue = data.totalValue;
         this.generateMFallocationChartData(categoryList); // for Calculating MF categories percentage
+        this.generateSubCategorywiseChartData(this.mutualFund.subCategoryData);
+        this.generateSubCategorywiseAllocationData(this.mutualFund.subCategoryData); // For subCategoryWiseAllocation
         this.mfPieChartDataMgnt(); // pie chart data after calculating percentage
         this.tabsLoaded.mfPortfolioSummaryData.hasData = true;
         this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = true;
@@ -891,13 +893,17 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // You should add a fallback so that your program still executes correctly.
     }
   }
+  generateSubCategorywiseChartData(data){
+    data = this.mfServiceService.sorting(data, 'currentValue');
+    console.log(data);
 
+  }
   getMutualFundResponse(data) {
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
-      this.generateSubCategorywiseAllocationData(data); // For subCategoryWiseAllocation
+
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     }
   }
@@ -946,7 +952,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.mfAllocationData.push({
             name: element.category,
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[3],
+            color: AppConstants.DONUT_CHART_COLORS[4],
             dataLabels: {
               enabled: false
             }
@@ -957,7 +963,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.mfAllocationData.push({
             name: 'OTHERS',
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[4],
+            color: AppConstants.DONUT_CHART_COLORS[3],
             dataLabels: {
               enabled: false
             }
@@ -985,8 +991,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   generateSubCategorywiseAllocationData(data) {
-    let subCatChartData = this.mfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    subCatChartData = subCatChartData.sort((a,b) => a.allocatedPercentage - b.allocatedPercentage)
+    data = this.mfServiceService.sorting(data, 'currentValue');
+    console.log(data);
     let counter = 0;
     this.mfSubCatAllocationData = [];
     let othersData = {
@@ -995,8 +1001,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {enabled:false}
     }
-    subCatChartData.forEach(data => {
-      if(counter < 4) {
+    data.forEach((data,ind) => {
+      if(ind < 4) {
         this.mfSubCatAllocationData.push({
           name: data.subCategory,
           y: parseFloat((data.allocatedPercentage).toFixed(2)),

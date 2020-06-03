@@ -32,11 +32,18 @@ export class DetailedViewFixedDepositComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
+  matured:boolean=false;
   ngOnInit() {
     console.log('inputData', this.inputData);
     this.fixedDeposit = this.inputData;
     this.bankList = this.enumService.getBank();
     console.log(this.bankList, 'this.bankList');
-
+    if(new Date(this.inputData.maturityDate).getTime() < new Date().getTime()){
+      this.matured = true;
+    }
+    else{
+      this.matured = false;
+    }
+  
   }
 }

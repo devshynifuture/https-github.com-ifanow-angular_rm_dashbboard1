@@ -23,10 +23,18 @@
                 <!-- put that code here Gayatri Pawar -->
 
                 <!-- end -->
-                <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD
-                    NEW</button>
-                <mat-menu #menu1="matMenu" class="add-new-btn">
-                    <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
+                <<<<<<< HEAD <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
+                    ADD NEW
+                    </button>
+                    <mat-menu #menu1="matMenu" class="add-new-btn">
+                        =======
+                        <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)"  [matMenuTriggerFor]="menu1">ADD
+                    NEW</button> -->
+                        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)">ADD
+                            NEW</button>
+                        <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
+                        >>>>>>> 2f511f1518e99a14109a97bb6df2e4765a9d385b
+                        <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b t-t">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -39,7 +47,7 @@
                             </div>
                         </div>
                     </button> -->
-                    <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+                        <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -54,8 +62,8 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
-                    <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                    </button> -->
+                        <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/dark-download.svg">
@@ -68,7 +76,7 @@
                             </div>
                         </div>
                     </button> -->
-                </mat-menu>
+                        <!-- </mat-menu> -->
             </div>
         </div>
         <div class="overflow-y skeletonAnimation" *ngIf="showSummaryBar" appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -763,10 +771,13 @@
     <div *ngIf="dataSource.data?.length == 0 && dataSource2.data?.length==0  && dataSource3.data?.length==0 && dataSource4.data?.length==0 " class="d-flex flex-column align-items-center">
         <img src="assets/images/svg/documents-empty-states.svg">
         <h4 class="text-center mt-12 mb-20">No Data Found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
+        <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)"  [matMenuTriggerFor]="menu1">ADD NEW
+        </button> -->
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)">ADD
+            NEW
         </button>
-        <mat-menu #menu1="matMenu" class="add-new-btn">
-            <!-- <button mat-menu-item class="b-b">
+        <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
+        <!-- <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">
                         <img src="assets/images/svg/dark-three-dot.svg">
@@ -779,7 +790,7 @@
                     </div>
                 </div>
             </button> -->
-            <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+        <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pl-4 pr-4 text-center">
                         <img src="assets/images/svg/scheme-icon.svg">
@@ -794,8 +805,8 @@
                         </p>
                     </div>
                 </div>
-            </button>
-            <!-- <button mat-menu-item class="b-b">
+            </button> -->
+        <!-- <button mat-menu-item class="b-b">
                 <div class="row">
                     <div class="col-md-2 pr-8 text-right">
                         <img src="assets/images/svg/scheme-icon.svg">
@@ -808,7 +819,7 @@
                     </div>
                 </div>
             </button> -->
-        </mat-menu>
+        <!-- </mat-menu> -->
     </div>
 </div>
 

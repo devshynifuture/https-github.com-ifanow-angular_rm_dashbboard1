@@ -99,6 +99,16 @@
                 Account number
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right t-7">
+                <!-- <div class="bar">
+                    <div *ngIf="element.accountNo" [ngSwitch]="element.accountNo">
+                        <div *ngFor="let bank of bankList">
+                            <div *ngSwitchCase="bank.id">{{bank.accountNumber}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="!element.accountNo">
+                        {{'-'}}
+                    </div>
+                </div> -->
                 <div class="bar"> {{isLoading ? '' : element.ssyNo || '-'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>

@@ -155,7 +155,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.custumService.getTransactionTypeInMF(obj).subscribe(
       data => {
         if (data) {
-
+          data = data.filter(item => item !=null);
           this.MfServiceService.setTransactionType(data);
           // this.setDefaultFilterData.transactionTypeList = filterData
 

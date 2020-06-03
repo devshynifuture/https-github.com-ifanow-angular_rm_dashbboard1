@@ -61,9 +61,9 @@
                         <div class="bar text-primary text-underline" (click)="Open('open',element)"
                             *ngIf="element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
                         <div appFormatNumber *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
-                            {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
+                            ₹ {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
                         <div appFormatNumber *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
-                            {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</div>
+                            {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}} %</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="type">

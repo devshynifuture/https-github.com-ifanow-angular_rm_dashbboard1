@@ -142,29 +142,6 @@
 
     </div>
 
-    <hr>
-    <div class="row pl-28">
-        <div class="col-md-12 pl-0">
-            <h4 class="mb-20 text-black">Transactions</h4>
-        </div>
-    </div>
-    <div class="row pl-28">
-        <div class="col-md-4 pl-0">
-            <label class="f-14"> Transaction type</label>
-        </div>
-
-        <div class="col-md-2 pl-0">
-            <label class=" f-14"> Date </label>
-        </div>
-
-        <div class="col-md-3">
-            <label class=" f-14">Transaction amount </label>
-        </div>
-        <div class="col-md-3 pl-0">
-            <label class=" f-14">Units</label>
-        </div>
-    </div>
-
     <div [formGroup]="transactionListForm">
         <div class="row pb-36 pl-24" *ngFor="let singleTransaction of transactionArray.controls; let i = index;" [formGroup]="singleTransaction">
             <div class="col-md-4 pl-0">
@@ -185,7 +162,7 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" matInput (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)" autocomplete="off" formControlName="date" #date [matDatepicker]="picker" class="form-control br-0 b-0">
+                        <input (click)="picker.open()" matInput (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)" autocomplete="off" formControlName="date" [max]="maximumDate" #date [matDatepicker]="picker" class="form-control br-0 b-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error>
@@ -194,55 +171,101 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput autocomplete="off" type="number" formControlName="transactionAmount" maxlength="20" class="form-control br-0 rupess" #trnAmt (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-2 pl-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput autocomplete="off" #totalNetContribution appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units"
-                            type="number" maxlength="20" class="form-control br-0 rupess">
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-
+            <div class="row pl-28">
+                <div class="col-md-4 pl-0">
+                    <label class="f-14"> Transaction type</label>
                 </div>
 
+                <div class="col-md-2 pl-0">
+                    <label class=" f-14"> Date </label>
+                </div>
+
+                <div class="col-md-3">
+                    <label class=" f-14">Transaction amount </label>
+                </div>
+                <div class="col-md-3 pl-0">
+                    <label class=" f-14">Units</label>
+                </div>
             </div>
 
-            <div class="col-md-1 d-flex pt-10 pl-0" *ngIf="data.flag =='addMutualFund' || data.flag =='addTransaction'">
-                <i class="material-icons text-primitive f-20 c-p float-left" *ngIf="i==transactionArray.length-1" (click)="addTransactions()">
-          add
-        </i>
-                <i class="material-icons text-primitive f-20 c-p pl-10" *ngIf="transactionArray.length != 1" (click)="removeTransactions(i)">
-          remove
-        </i>
-            </div>
+            <div [formGroup]="transactionListForm">
+                <div class="row pb-36 pl-24" *ngFor="let singleTransaction of transactionArray.controls; let i = index;" [formGroup]="singleTransaction">
+                    <div class="col-md-4 pl-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select matInput formControlName="transactionType" class="form-control br-0">
+                                    <mat-option>None</mat-option>
+                                    <mat-option [value]="item.id" #type *ngFor="let item of transactionTypeList" (click)="setTransactionType(item.id, singleTransaction,item);getIndexOfSelectedElement(type.value,singleTransaction)">
+                                        {{ item.transactionType }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field class="ba-date">
+                                <input (click)="picker.open()" matInput (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)" autocomplete="off" formControlName="date" #date [matDatepicker]="picker" class="form-control br-0 b-0">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-error>
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" type="number" formControlName="transactionAmount" maxlength="20" class="form-control br-0 rupess" #trnAmt (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
+                                <mat-error>
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pl-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" #totalNetContribution appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units"
+                                    type="number" maxlength="20" class="form-control br-0 rupess">
+                                <mat-error>
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
 
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-1 d-flex pt-10 pl-0" *ngIf="data.flag =='addMutualFund' || data.flag =='addTransaction'">
+                        <i class="material-icons text-primitive f-20 c-p float-left" *ngIf="i==transactionArray.length-1" (click)="addTransactions()">
+              add
+            </i>
+                        <i class="material-icons text-primitive f-20 c-p pl-10" *ngIf="transactionArray.length != 1" (click)="removeTransactions(i)">
+              remove
+            </i>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="bottom-fixed wrapper-12 pt-16 w-60">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+        <div class="bottom-fixed wrapper-12 pt-16 w-60">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+                </div>
+                <div class="col-md-8 right text-right">
+                    <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button> -->
+                    <app-progress-button class="btn-bottom br-0 text-inherit c-p" (click)="saveMfSchemeLevel()" [options]="barButtonOptions">
+                    </app-progress-button>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8 right text-right">
-            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button> -->
-            <app-progress-button class="btn-bottom br-0 text-inherit c-p" (click)="saveMfSchemeLevel()" [options]="barButtonOptions">
-            </app-progress-button>
-        </div>
-    </div>
-</div>
-<!-- <div class="row">
+        <!-- <div class="row">
     <div class="col-md-12 p-0">
       <h4 class="m-0 text-black">TRANSACTIONS</h4>
     </div>
