@@ -93,3 +93,15 @@
     justify-content: end;
     margin-right: 10px;
 }
+
+::ng-deep .add-new-btn {
+    min-width: 300px !important;
+    .mat-menu-item {
+        height: 105px;
+        line-height: 28px;
+        padding: 0 !important;
+    }
+    .mat-menu-content:not(:empty) {
+        padding-bottom: 0px;
+    }
+}

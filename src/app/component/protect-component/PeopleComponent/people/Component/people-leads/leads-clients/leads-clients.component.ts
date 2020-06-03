@@ -22,7 +22,7 @@ export class LeadsClientsComponent implements OnInit {
   convertClientForm;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
