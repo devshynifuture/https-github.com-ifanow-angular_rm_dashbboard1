@@ -168,6 +168,7 @@ export const appConfig = {
   MOVE_FILES: 'document/account/document/all-file/file/move',
   MOVE_FOLDER: 'document/account/document/all-file/folder/move',
   COPY_FILES: 'document/account/document/all-file/file/copy',
+  COPY_FOLDER: 'document/account/document/all-file/folder/copy',
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
