@@ -332,7 +332,7 @@
                                     *ngFor="let item of familyWiseAllocation">
                                     <div class="row">
                                         <h1>
-                                            <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 0"
+                                            <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 1"
                                                 src="/assets/images/svg/man-profile.svg">
                                             <img class="documentImg" *ngIf="item.relationshipId==3"
                                                 src="/assets/images/svg/women-profile-icon.svg">
@@ -347,10 +347,6 @@
                                         </h1>
                                         <div class="col-md-9  pr-0">
                                             <h5 class="roboto">{{item.name}}</h5>
-                                        </div>
-
-                                        <div class="col-md-9  pr-0">
-                                            <h5 class="roboto">{{item.relationshipId}}</h5>
                                         </div>
                                     </div>
 
