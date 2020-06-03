@@ -78,8 +78,10 @@
                                         <p class="text-primitive f-12">FEE TYPE</p>
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
-                                                <label *ngIf="serviceData&&serviceData.feeTypeId==1">Fixed</label>
-                                                <label *ngIf="serviceData&&serviceData.feeTypeId==2">Variable</label>
+                                                <label
+                                                    *ngIf="serviceData&&serviceData.servicePricing.feeTypeId==1">Fixed</label>
+                                                <label
+                                                    *ngIf="serviceData&&serviceData.servicePricing.feeTypeId==2">Variable</label>
                                             </div>
                                         </div>
 
@@ -89,10 +91,10 @@
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
                                                 <h3 class="m-0 proxima"
-                                                    *ngIf="serviceData&&serviceData.billingNature==1">
+                                                    *ngIf="serviceData&&serviceData.servicePricing.billingNature==1">
                                                     Recurring</h3>
                                                 <h3 class="m-0 proxima"
-                                                    *ngIf="serviceData&&serviceData.billingNature==2">
+                                                    *ngIf="serviceData&&serviceData.servicePricing.billingNature==2">
                                                     Once</h3>
                                             </div>
                                         </div>
@@ -105,10 +107,10 @@
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
                                                 <h3 class="m-0 proxima f-18"
-                                                    *ngIf="serviceData&&serviceData.billingMode==1">
+                                                    *ngIf="serviceData&&serviceData.servicePricing.billingMode==1">
                                                     Start Of Period</h3>
                                                 <h3 class="m-0 proxima f-18"
-                                                    *ngIf="serviceData&&serviceData.billingMode==2">
+                                                    *ngIf="serviceData&&serviceData.servicePricing.billingMode==2">
                                                     End Of Period
                                                 </h3>
                                             </div>
@@ -116,17 +118,21 @@
 
                                     </div>
                                     <div class="col-md-6 p-0">
-                                        <p *ngIf="serviceData&&serviceData.feeTypeId==1" class="text-primitive f-12">
+                                        <p *ngIf="serviceData&&serviceData.servicePricing.feeTypeId==1"
+                                            class="text-primitive f-12">
                                             FEES</p>
 
-                                        <p *ngIf="serviceData&&serviceData.feeTypeId==2" class="text-primitive f-12">
+                                        <p *ngIf="serviceData&&serviceData.servicePricing.feeTypeId==2"
+                                            class="text-primitive f-12">
                                             OTHER ASSET FEES</p>
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
-                                                <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==1">
+                                                <h3 class="m-0 proxima"
+                                                    *ngIf="serviceData&&serviceData.servicePricing.feeTypeId==1">
                                                     ₹{{serviceData.averageFees}}
                                                 </h3>
-                                                <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==2">
+                                                <h3 class="m-0 proxima"
+                                                    *ngIf="serviceData&&serviceData.servicePricing.feeTypeId==2">
                                                     {{serviceData.averageFees}}%
                                                 </h3>
                                             </div>
