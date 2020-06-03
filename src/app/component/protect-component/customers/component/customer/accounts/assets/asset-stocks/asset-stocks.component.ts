@@ -56,7 +56,9 @@ export class AssetStocksComponent implements OnInit {
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
         this.getStocksDataRes(data);
-        this.pieChart(data.categories);
+        setTimeout(() => {
+          this.pieChart(data.categories);
+        }, 1000);
         this.isLoading = false;
       },
       err => {

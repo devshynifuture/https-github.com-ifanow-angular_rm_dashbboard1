@@ -305,7 +305,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteClientDocumentsMultiple(this.list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'Dismiss');
+            this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
             dialogRef.close(this.list);
             // this.getRealEstate();

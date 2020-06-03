@@ -1,5 +1,14 @@
 .test-right-padder {}
 
+.subs-subs-table,
+.subs-documents {
+  #tbs {
+    .mat-sort-header-button {
+      white-space: nowrap !important;
+    }
+  }
+}
+
 @media(max-width:1224px) {
   #ui-subscriptions {
     h3 {

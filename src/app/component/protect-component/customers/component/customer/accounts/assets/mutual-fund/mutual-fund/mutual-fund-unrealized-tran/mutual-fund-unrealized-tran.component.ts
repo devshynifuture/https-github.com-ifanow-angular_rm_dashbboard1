@@ -184,11 +184,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             });
             if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions') {
               this.displayedColumns.forEach(element => {
-                this.styleObjectUnrealised(element)
+                if(this.customDataSource.length > 0){
+                  this.styleObjectUnrealised(element)
+                }
               });
             } else {
               this.displayedColumns.forEach(element => {
-                this.styleObjectTransaction(element)
+                if(this.customDataSource.length > 0){
+                  this.styleObjectTransaction(element)
+                }
               });
             }
           } else {

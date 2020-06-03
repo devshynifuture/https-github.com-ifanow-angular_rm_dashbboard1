@@ -1,14 +1,14 @@
 <div *ngIf="fragmentDataSubsUpper">
-  <div class="dialogclose">
-    <div class="row popup-header-fix-100">
-      <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
-        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-      </div>
-      <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-        <p class="f-16 mb-0"
-           *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan
-          details, map services/documents to the selected plan</p>
-        <p class="f-16 mb-0"
+    <div class="dialogclose">
+        <div class="row popup-header-fix-100">
+            <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
+                <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            </div>
+            <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+                <p class="f-16 mb-0"
+                    *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan
+                    details, map services/documents to the selected plan</p>
+                <p class="f-16 mb-0"
                     *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add fee
                     structure, map plans/documents to the selected service</p>
                 <p class="f-16 mb-0"
@@ -70,7 +70,8 @@
                         </app-plans>
                     </ng-template>
                 </mat-tab>
-                <mat-tab #tab [disabled]='addedData!="" && !addedData && fragmentDataSubsUpper.data==""' label="DOCUMENTS">
+                <mat-tab #tab [disabled]='addedData!="" && !addedData && fragmentDataSubsUpper.data==""'
+                    label="DOCUMENTS">
                     <ng-template matTabContent>
                         <app-document (changeServiceData)="getData($event)" [componentFlag1]='servicesDocuments'
                             [upperData]="!sendAddedData?fragmentDataSubsUpper.data:sendAddedData"></app-document>
@@ -126,20 +127,20 @@
                         </app-client-upper-subscription>
                     </ng-template>
                 </mat-tab>
-                <mat-tab label="QUOTATIONS">
-                    <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
-                    <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
-                    <!--                  </div>-->
-                    <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
-                    <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
-                    <ng-template matTabContent>
+                <!-- <mat-tab label="QUOTATIONS"> -->
+                <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
+                <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
+                <!--                  </div>-->
+                <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
+                <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
+                <!-- <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-quotations [clientData]="fragmentDataSubsUpper.data">
                         </app-quotations>
-                    </ng-template>
-                </mat-tab>
+                    </ng-template> -->
+                <!-- </mat-tab> -->
                 <mat-tab label="INVOICES">
                     <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">

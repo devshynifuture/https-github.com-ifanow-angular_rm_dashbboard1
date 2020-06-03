@@ -41,21 +41,21 @@ export const pieChart = (data) => {
             data: [
                 {
                     name: 'Banking',
-                    y: 0,
+                    y: data.Banks?data.Banks.perrcentage:0,
                     color: '#008FFF',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'Information technology',
-                    y: 0,
+                    y: data.Information_Technology?data.Information_Technology.perrcentage:0,
                     color: '#5DC644',
                     dataLabels: {
                         enabled: false
                     }
                 }, {
                     name: 'FMCG',
-                    y: 0,
+                    y: data.fmcg?data.fmcg.perrcentage:0,
                     color: '#FFC100',
                     dataLabels: {
                         enabled: false
