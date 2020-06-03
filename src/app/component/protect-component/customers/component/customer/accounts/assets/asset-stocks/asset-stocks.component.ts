@@ -56,7 +56,9 @@ export class AssetStocksComponent implements OnInit {
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
         this.getStocksDataRes(data);
-        this.pieChart(data.categories);
+        setTimeout(() => {
+          this.pieChart(data.categories);
+        }, 1000);
         this.isLoading = false;
       },
       err => {
@@ -67,6 +69,7 @@ export class AssetStocksComponent implements OnInit {
   }
 
   categories:any;
+  stockListGroup:any = [];
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
     if(data){
@@ -75,6 +78,19 @@ export class AssetStocksComponent implements OnInit {
     if (data.portfolios.length != 0) {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
+      this.portfolioData.forEach(p => {
+        p.categoryWiseStockList.forEach((s, i) => {
+          for (let index = 0; index < s.stockList.length; index++) {
+              if(index == 0 && s.categoryName){
+                this.stockListGroup.push({group:s.categoryName});
+              }
+              this.stockListGroup.push(s.stockList[index]);
+            }
+        });
+        p['stockListGroup'] = this.stockListGroup;
+        this.stockListGroup = [];
+      });
+      console.log(this.portfolioData,"this.portfolioData 123");
       
     } else {
       this.noData = 'No Stocks Found';
@@ -126,7 +142,7 @@ export class AssetStocksComponent implements OnInit {
   isGroup(index, item): boolean {
     // console.log('index : ', index);
     // console.log('item : ', item);
-    return item.groupName;
+    return item.group;
   }
 
   deleteModal(value, data) {

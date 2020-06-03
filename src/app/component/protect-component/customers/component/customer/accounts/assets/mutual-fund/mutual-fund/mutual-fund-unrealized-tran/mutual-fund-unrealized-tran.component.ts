@@ -184,11 +184,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             });
             if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions') {
               this.displayedColumns.forEach(element => {
-                this.styleObjectUnrealised(element)
+                if(this.customDataSource.length > 0){
+                  this.styleObjectUnrealised(element)
+                }
               });
             } else {
               this.displayedColumns.forEach(element => {
-                this.styleObjectTransaction(element)
+                if(this.customDataSource.length > 0){
+                  this.styleObjectTransaction(element)
+                }
               });
             }
           } else {
@@ -391,8 +395,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mfData = data;
       // this.mutualFund = data;
       if (this.addedData) {
+          this.mutualFund = this.mfData
+        this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         this.mfService.setDataForMfGet(this.mfData);
         this.mfService.setMfData(this.mfData);
+        this.mfService.setFilterValues(this.setDefaultFilterData);
       }
       this.addedData = false;
       this.mfService.changeShowMutualFundDropDown(false);
@@ -551,9 +558,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   openMutualEditFund(flag, element) {
     let sendData:any;
-    // this.mfData.mutualFundList.forEach(element => {
-    //  element.mutualFundTransactions.filter(item => item.id === element.id);
-    // });
+  //   let list = [];
+  //   this.mfData.mutualFundList.forEach(val => list.push(Object.assign({}, val)));
+  //   list.forEach(element => {
+  //     element.mutualFundTransactions = element.mutualFundTransactions.filter(item => item.id === element.id);
+  // });
 
 
     this.mfData.mutualFundList.forEach(ele => {
@@ -564,10 +573,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         }
       });
     });
+    this.selectedLoadData.mutualFundTransactions = this.selectedLoadData.mutualFundTransactions.filter(item => item.id === sendData.id);
+    this.selectedLoadData.id=sendData.id;
     // this.mfService.getMutualFundData()
     //   .subscribe(res => {
     const fragmentData = {
       flag: 'editTransaction',
+      // data: { family_member_list: ['family_member_list'], flag, ...sendData, ...this.selectedLoadData },
       data: { family_member_list: ['family_member_list'], flag, ...sendData, ...this.selectedLoadData },
       id: 1,
       state: 'open',

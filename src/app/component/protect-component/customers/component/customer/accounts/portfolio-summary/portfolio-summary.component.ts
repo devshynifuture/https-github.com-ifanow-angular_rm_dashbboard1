@@ -6,12 +6,12 @@ import { CustomerService } from '../../customer.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss']
+  selector: 'app-portfolio-summary',
+  templateUrl: './portfolio-summary.component.html',
+  styleUrls: ['./portfolio-summary.component.scss']
 })
 
-export class SummaryComponent implements OnInit {
+export class PortfolioSummaryComponent implements OnInit {
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;

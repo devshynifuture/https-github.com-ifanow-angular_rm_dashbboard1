@@ -330,7 +330,7 @@ export class MutualFundOverviewComponent implements OnInit {
         }
         // this.mutualFund = this.filterData;
 
-        if (this.setDefaultFilterData == '' || !this.setDefaultFilterData) {
+        if (this.addedData == true || this.setDefaultFilterData == '' || !this.setDefaultFilterData) {
           this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         }
         this.MfServiceService.setFilterValues(this.setDefaultFilterData);
@@ -692,6 +692,7 @@ export class MutualFundOverviewComponent implements OnInit {
             this.addedData = true;
             this.MfServiceService.setDataForMfGet('');
             this.MfServiceService.setMfData('');
+            
             // this.getMutualFundData();
             this.ngOnInit();
           }

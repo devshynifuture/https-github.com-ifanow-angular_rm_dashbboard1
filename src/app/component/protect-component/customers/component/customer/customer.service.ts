@@ -528,6 +528,9 @@ export class CustomerService {
   copyFiles(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FILES, data);
   }
+  copyFolders(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FOLDER, data);
+  }
 
   renameFiles(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FILE, data);

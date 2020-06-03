@@ -1,20 +1,20 @@
-import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { CustomerService } from '../../../../customer.service';
-import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { Observable } from 'rxjs/Observable';
+import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
+import {FormBuilder, Validators, FormArray} from '@angular/forms';
+import {CustomerService} from '../../../../customer.service';
+import {MAT_DATE_FORMATS, MatInput, MatDialog} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DatePipe} from '@angular/common';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Observable} from 'rxjs/Observable';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { ActiityService } from '../../../../customer-activity/actiity.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import {Router} from '@angular/router';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {ActiityService} from '../../../../customer-activity/actiity.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
 
 
 @Component({
@@ -23,7 +23,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
   styleUrls: ['./fixed-deposit.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class FixedDepositComponent implements OnInit {
@@ -42,8 +42,8 @@ export class FixedDepositComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  validatorType = ValidatorType
-  maxDate:Date = new Date();
+  validatorType = ValidatorType;
+  maxDate: Date = new Date();
   showHide = false;
   isownerName = false;
   showTenure = true;
@@ -73,13 +73,13 @@ export class FixedDepositComponent implements OnInit {
   showErrorOwner = false;
   callMethod: any;
   compoundValue = [
-    { name: 'Daily', value: 2 },
-    { name: 'Monthly', value: 3 },
-    { name: 'Quarterly', value: 1 },
-    { name: 'Semi annually ', value: 4 },
-    { name: 'Annually', value: 5 }
+    {name: 'Daily', value: 2},
+    {name: 'Monthly', value: 3},
+    {name: 'Quarterly', value: 1},
+    {name: 'Semi annually ', value: 4},
+    {name: 'Annually', value: 5}
   ];
-  isOwnerPercent
+  isOwnerPercent;
   ownerData: any;
   nomineeData: any;
   tenure: any;
@@ -105,7 +105,7 @@ export class FixedDepositComponent implements OnInit {
     '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
     '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114',
     '115', '116', '117', '118', '119', '120'];
-  fdDays = ['0','7', '8', '9', '10', '11', '12', '13', '14',
+  fdDays = ['0', '7', '8', '9', '10', '11', '12', '13', '14',
     '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
   fdYears = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
   addOwner: any;
@@ -116,9 +116,10 @@ export class FixedDepositComponent implements OnInit {
   tenureFlag: boolean;
 
   constructor(public utils: UtilService, public dialog: MatDialog, private event: EventService, private router: Router,
-    private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
-    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService) {
+              private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
+              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService) {
   }
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -136,6 +137,7 @@ export class FixedDepositComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;
@@ -156,8 +158,8 @@ export class FixedDepositComponent implements OnInit {
     //link bank
     this.bankList = this.enumService.getBank();
     //link bank
-    console.log(this.bankList, "this.bankList");
-    
+    console.log(this.bankList, 'this.bankList');
+
   }
 
   getAccountList() {
@@ -169,10 +171,13 @@ export class FixedDepositComponent implements OnInit {
       data => this.getBankAccountRes(data)
     );
   }
-  bankList:any = [];
-  getBankAccountRes(data){
+
+  bankList: any = [];
+
+  getBankAccountRes(data) {
     this.bankList = data;
   }
+
   getOwnerListRes(data) {
     console.log('familymember', data);
   }
@@ -182,6 +187,7 @@ export class FixedDepositComponent implements OnInit {
     console.log(this.validMaturity);
     // this.checkCommDateAndTenure();
   }
+
   // checkCommDateAndTenure() {
   //   if (this.tenure && this.getFormControl().commencementDate.value) {
   //     if (this.tenure._d < new Date()) {
@@ -194,17 +200,18 @@ export class FixedDepositComponent implements OnInit {
   //   }
   // }
   tenureError() {
-    return { flag: true }
+    return {flag: true};
   }
+
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
   // ===================owner-nominee directive=====================//
   display(value) {
-    console.log('value selected', value)
+    console.log('value selected', value);
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.id;
   }
 
   lisNominee(value) {
@@ -214,10 +221,10 @@ export class FixedDepositComponent implements OnInit {
 
   disabledMember(value, type) {
     this.callMethod = {
-      methodName: "disabledMember",
+      methodName: 'disabledMember',
       ParamValue: value,
       disControl: type
-    }
+    };
   }
 
   displayControler(con) {
@@ -232,9 +239,9 @@ export class FixedDepositComponent implements OnInit {
 
   onChangeJointOwnership(data) {
     this.callMethod = {
-      methodName: "onChangeJointOwnership",
+      methodName: 'onChangeJointOwnership',
       ParamValue: data
-    }
+    };
   }
 
   /***owner***/
@@ -245,7 +252,11 @@ export class FixedDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]],
+      share: [data ? data.share : '', [Validators.required]],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -256,10 +267,9 @@ export class FixedDepositComponent implements OnInit {
     if (this.getCoOwner.value.length > 1 && !data) {
       let share = 100 / this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        if (!Number.isInteger(share) && e == "0") {
+        if (!Number.isInteger(share) && e == '0') {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-        }
-        else {
+        } else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
@@ -278,16 +288,16 @@ export class FixedDepositComponent implements OnInit {
     } else {
       let share = 100 / this.getCoOwner.value.length;
       for (let e in this.getCoOwner.controls) {
-        if (!Number.isInteger(share) && e == "0") {
+        if (!Number.isInteger(share) && e == '0') {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
-        }
-        else {
+        } else {
           this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
         }
       }
     }
     this.disabledMember(null, null);
   }
+
   /***owner***/
 
   /***nominee***/
@@ -297,17 +307,16 @@ export class FixedDepositComponent implements OnInit {
   }
 
   removeNewNominee(item) {
-  this.disabledMember(null, null);
+    this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.fixedDeposit.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
     } else {
-      let share = 100/this.getNominee.value.length;
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == '0') {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-        }
-        else{
+        } else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
@@ -316,10 +325,13 @@ export class FixedDepositComponent implements OnInit {
   }
 
 
-
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''],
+      sharePercentage: [data ? data.sharePercentage : 0],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -327,19 +339,19 @@ export class FixedDepositComponent implements OnInit {
       }
     }
 
-    if(this.getNominee.value.length > 1){
-      let share = 100/this.getNominee.value.length;
+    if (this.getNominee.value.length > 1) {
+      let share = 100 / this.getNominee.value.length;
       for (let e in this.getNominee.controls) {
-        if(!Number.isInteger(share) && e == "0"){
+        if (!Number.isInteger(share) && e == '0') {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
-        }
-        else{
+        } else {
           this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
         }
       }
-     }
+    }
 
   }
+
   /***nominee***/
   // ===================owner-nominee directive=====================//
 
@@ -348,9 +360,6 @@ export class FixedDepositComponent implements OnInit {
     this.familyMemberId = value.id;
     // this.reqError = true;
   }
-
-
-
 
 
   showLess(value) {
@@ -384,6 +393,7 @@ export class FixedDepositComponent implements OnInit {
   }
 
   tenureValid: boolean = true;
+
   getDateYMD() {
     let d = this.fixedDeposit.controls.tenureD.value;
     let m = this.fixedDeposit.controls.tenureM.value;
@@ -399,16 +409,15 @@ export class FixedDepositComponent implements OnInit {
       }
       this.tenureValid = true;
       return this.getDate;
-    }
-    else {
+    } else {
       this.tenureValid = false;
-      this.fixedDeposit.get('tenureD').setErrors(this.tenureValid)
+      this.fixedDeposit.get('tenureD').setErrors(this.tenureValid);
     }
   }
 
   getdataForm(data) {
     this.flag = data;
-    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
+    (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     if (this.dataSource) {
       data = this.dataSource;
     }
@@ -419,7 +428,7 @@ export class FixedDepositComponent implements OnInit {
         share: ['', [Validators.required]],
         familyMemberId: 0,
         id: 0,
-        isClient:0
+        isClient: 0
       })]),
       // ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
       // ownerName: [(!data.ownerName) ? '' : data.ownerName],
@@ -450,7 +459,7 @@ export class FixedDepositComponent implements OnInit {
       })])
     });
 
-    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.fixedDeposit }
+    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.fixedDeposit};
 
     if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -463,8 +472,8 @@ export class FixedDepositComponent implements OnInit {
     }
 
     /***nominee***/
-    if(data.nomineeList){
-      if (data.nomineeList.length>0) {
+    if (data.nomineeList) {
+      if (data.nomineeList.length > 0) {
         this.getNominee.removeAt(0);
         data.nomineeList.forEach(element => {
           this.addNewNominee(element);
@@ -475,6 +484,7 @@ export class FixedDepositComponent implements OnInit {
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
+
   getFormControl(): any {
     return this.fixedDeposit.controls;
   }
@@ -482,19 +492,16 @@ export class FixedDepositComponent implements OnInit {
   getIntPayout() {
     if (this.fixedDeposit.value.payOpt == 1) {
       this.getFormControl().compound.setValidators([Validators.required]);
-    }
-    else {
+    } else {
       this.getFormControl().compound.setValidators(null);
     }
   }
 
 
-
   saveFixedDeposit() {
-    if(this.fixedDeposit.value.maturity == 2){
+    if (this.fixedDeposit.value.maturity == 2) {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
-    }
-    else{
+    } else {
       if (this.showTenure == true) {
         this.tenure = this.getDateYMD();
         this.maturityDate = this.tenure;
@@ -505,11 +512,11 @@ export class FixedDepositComponent implements OnInit {
     if (this.tenureFlag) {
       return;
     }
-    if (this.fixedDeposit.invalid || (!this.tenureValid && this.fixedDeposit.value.maturity != "2")) {
+    if (this.fixedDeposit.invalid || (!this.tenureValid && this.fixedDeposit.value.maturity != '2')) {
       // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
       for (let element in this.fixedDeposit.controls) {
-        console.log(element)
+        console.log(element);
         this.fixedDeposit.controls[element].markAsTouched();
         if (element == 'getCoOwnerName') {
           for (let e in this.getCoOwner.controls) {
@@ -532,7 +539,7 @@ export class FixedDepositComponent implements OnInit {
       // }
       // }
     } else {
-      
+
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -562,12 +569,12 @@ export class FixedDepositComponent implements OnInit {
       };
 
       obj.nomineeList.forEach((element, index) => {
-        if(element.name == ''){
+        if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.nomineeList= this.fixedDeposit.value.getNomineeName;
-      console.log("fd log", obj);
+      obj.nomineeList = this.fixedDeposit.value.getNomineeName;
+      console.log('fd log', obj);
       // return;
       this.barButtonOptions.active = true;
       console.log('fixedDeposit', obj);
@@ -576,42 +583,42 @@ export class FixedDepositComponent implements OnInit {
         // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
-        adviceDescription: "manualAssetDescription"
-      }
+        adviceDescription: 'manualAssetDescription'
+      };
 
       if (this.flag == 'adviceFixedDeposit') {
         this.custumService.getAdviceFd(adviceObj).subscribe(
           data => this.getAdviceFdRes(data),
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
-            this.event.openSnackBar(err, "Dismiss")
-          } 
+            this.event.openSnackBar(err, 'Dismiss');
+          }
         );
-      }
-      else if (this.fixedDeposit.controls.id.value) {
+      } else if (this.fixedDeposit.controls.id.value) {
         // edit call
         this.custumService.editFixedDeposit(obj).subscribe(
           data => this.editFixedDepositRes(data),
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
-            this.event.openSnackBar(err, "Dismiss")
-          } 
+            this.event.openSnackBar(err, 'Dismiss');
+          }
         );
       } else {
         this.custumService.addFixedDeposit(obj).subscribe(
           data => this.addFixedDepositRes(data),
-          err =>{
+          err => {
             this.barButtonOptions.active = false;
-            this.event.openSnackBar(err, "Dismiss")
+            this.event.openSnackBar(err, 'Dismiss');
           }
         );
       }
     }
   }
+
   getMaturityDate(data) {
-    console.log(data)
+    console.log(data);
     if (data.value == '1') {
-      if (this.flag.fdEndDateIn == "1") {
+      if (this.flag.fdEndDateIn == '1') {
         // this.fixedDeposit.get('tenureM').updateValueAndValidity();
         // this.fixedDeposit.get('tenureY').updateValueAndValidity();
         // this.fixedDeposit.get('tenureD').updateValueAndValidity();
@@ -619,36 +626,35 @@ export class FixedDepositComponent implements OnInit {
           tenureY: this.flag.tenureInYear,
           tenureM: this.flag.tenureInMonth,
           tenureD: this.flag.tenureInDay
-        }
+        };
         this.fixedDeposit.setValue(valueSet);
         // this.fixedDeposit.get('tenureY').setValue(this.flag.tenureInYear);
         // this.fixedDeposit.get('tenureD').setValue(this.flag.tenureInDay);
 
-      }
-      else {
+      } else {
         this.fixedDeposit.get('tenureY').setValue('0');
         this.fixedDeposit.get('tenureM').setValue('0');
         this.fixedDeposit.get('tenureD').setValue('0');
       }
-    }
-    else {
-      if (this.flag.fdEndDateIn == "2") {
+    } else {
+      if (this.flag.fdEndDateIn == '2') {
         this.fixedDeposit.get('maturityDate').setValue(new Date(this.flag.maturityDate));
-      }
-      else {
+      } else {
         this.fixedDeposit.get('maturityDate').reset();
       }
     }
   }
+
   getAdviceFdRes(data) {
-    console.log('advice activity res ==>', data)
+    console.log('advice activity res ==>', data);
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Fixed deposite added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
   }
+
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
-      event.target.value = "100";
+      event.target.value = '100';
       this.fixedDeposit.get('interestRate').setValue(event.target.value);
     }
   }
@@ -658,13 +664,15 @@ export class FixedDepositComponent implements OnInit {
     console.log('addFixedDepositRes', data);
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
   }
+
   editFixedDepositRes(data) {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
   }
+
 //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
@@ -676,10 +684,11 @@ export class FixedDepositComponent implements OnInit {
       setTimeout(() => {
         this.bankList = this.enumService.getBank();
       }, 5000);
-    })
+    });
 
   }
+
 //link bank
 
-  
+
 }
