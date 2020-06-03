@@ -75,6 +75,7 @@ export class AddSsyComponent implements OnInit {
   };
   validatorType = ValidatorType;
   maxDate = new Date();
+  minDate = new Date(2014, 1, 1);
   inputData: any;
   ownerName: any;
   familyMemberId: any;

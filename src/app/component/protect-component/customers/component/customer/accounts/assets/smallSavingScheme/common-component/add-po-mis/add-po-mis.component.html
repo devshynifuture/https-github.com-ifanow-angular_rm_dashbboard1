@@ -98,7 +98,7 @@
                 </mat-form-field> -->
                 <mat-form-field class="ba-date">
                     <input matInput autocomplete="off" (focus)="picker.open()" formControlName="commencementdate"
-                        class="form-control br-0 b-0" [max]="maxDate" [matDatepicker]="picker" readonly>
+                        class="form-control br-0 b-0" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12" >

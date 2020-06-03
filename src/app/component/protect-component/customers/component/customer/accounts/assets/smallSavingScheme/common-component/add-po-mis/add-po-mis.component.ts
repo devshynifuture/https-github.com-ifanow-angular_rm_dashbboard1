@@ -40,6 +40,7 @@ export class AddPoMisComponent implements OnInit {
   };
   validatorType = ValidatorType
   maxDate = new Date();
+  minDate = new Date(2010, 3, 1);
   show: boolean;
   _inputData: any;
   pomisForm: any;
