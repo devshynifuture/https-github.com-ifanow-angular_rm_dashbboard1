@@ -2,35 +2,35 @@
     <div class="row">
         <div class="col-md-3  pr-24">
             <ul class="d-block sticky-top myFeedUi">
-                <li [ngClass]="{'activeClass': currentViewId == 1}">
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}">
                     <a class="f-14 roboto" (click)="goToSectionView(60)"> All feeds</a>
                 </li>
 
-                <li [ngClass]="{'activeClass': currentViewId == 2}">
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 2}">
                     <a class="f-14 roboto" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
                 </li>
                 <!-- 
-                <li>
+                <li class="c-p">
                     <a class="f-14 roboto"> Plan</a>
                 </li> -->
                 <!-- 
-                <li>
+                <li class="c-p">
                     <a class="f-14 roboto" > Activity</a>
                 </li> -->
 
-                <li [ngClass]="{'activeClass': currentViewId == 3}">
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 3}">
                     <a class="f-14 roboto" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
                 </li>
 
-                <li [ngClass]="{'activeClass': currentViewId == 4}">
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 4}">
                     <a class="f-14 roboto" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
                 </li>
                 <!-- 
-                <li>
+                <li class="c-p">
                     <a class="f-14 roboto"> Education</a>
                 </li>
 
-                <li>
+                <li class="c-p">
                     <a class="f-14 roboto"> Videos</a>
                 </li> -->
             </ul>
@@ -765,6 +765,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
                             <div class="col-md-12  ">
                                 <div class="bg-white vaultbBox">
@@ -774,7 +775,7 @@
                                                 Do you know you risk profile?
                                             </h5>
                                             <p>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                                Take a risk profiling test to understand how much portfolio risk you can likely take. Once done our experts will guide you further.
                                             </p>
 
                                             <button [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab2'}" routerLinkActive="router-link-active" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -786,7 +787,9 @@
 
                                         </div>
                                         <div class="col-md-5 pr-0">
-                                            <img src="/assets/images/svg/vault-icon.svg">
+                                            <img src="/assets/images/svg/moderate.svg">
+                                            <span>Conservative</span>
+                                            <span>Aggressive</span>
                                         </div>
                                     </div>
                                 </div>
