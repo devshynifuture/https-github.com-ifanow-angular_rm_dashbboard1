@@ -10,6 +10,6 @@
     width: 100%;
 }
 
-::ng-deep .cdk-overlay-pane {
-    width: 400px !important;
+::ng-deep .widthBig .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
 }
