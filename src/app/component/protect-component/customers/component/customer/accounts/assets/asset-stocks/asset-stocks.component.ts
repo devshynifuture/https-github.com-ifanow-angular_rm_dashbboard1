@@ -187,7 +187,7 @@ export class AssetStocksComponent implements OnInit {
     switch (true) {
       case (data.stockType == 1):
         component = AddAssetStocksComponent;
-        data = portfolioData;
+        data = data;
         break;
       case (data.stockType == 2):
         component = StockScripLevelHoldingComponent;
@@ -197,7 +197,7 @@ export class AssetStocksComponent implements OnInit {
     }
     data.portfolioName = portfolioData.portfolioName;
     data.portfolioId = portfolioData.id;
-    data.ownerList = portfolioData.ownerList;
+    data.portfolioOwner = portfolioData.ownerList;
     const fragmentData = {
       flag: 'addStock',
       data,
