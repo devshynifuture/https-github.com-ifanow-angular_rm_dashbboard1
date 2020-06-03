@@ -38,6 +38,7 @@ export class AddPoTdComponent implements OnInit {
   };
   validatorType = ValidatorType
   maxDate = new Date();
+  minDate = new Date(2015, 4, 1);
   inputData: any;
   ownerName: any;
   familyMemberId: any;

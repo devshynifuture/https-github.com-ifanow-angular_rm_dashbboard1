@@ -38,6 +38,7 @@ export class AddScssComponent implements OnInit {
   };
   validatorType = ValidatorType
   maxDate = new Date();
+  minDate = new Date(2010, 1, 1);
   inputData: any;
   familyMemberId: any;
   ownerName: any;

@@ -79,7 +79,13 @@
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
-                        {{data.currentValue? "₹" : ""}}<span appFormatNumber>{{data.currentValue - data.amountInvested}}</span>
+                        <div *ngIf="!matured">
+                            {{data.currentValue? "₹" : ""}}<span appFormatNumber>{{data.currentValue - data.amountInvested}}</span>
+                        </div>
+                        <div *ngIf="matured">
+                            {{data.maturityValue? "₹" : ""}}<span appFormatNumber>{{data.maturityValue - data.amountInvested}}</span>
+                        </div>
+                        
                         <!-- ₹{{utils.formatter(}} -->
 
                     </div>

@@ -134,7 +134,7 @@
       <div class="form-group mb-0">
         <mat-form-field class="ba-date">
           <input autocomplete="off" matInput (click)="SSYpicker.open()" [matDatepicker]="SSYpicker"
-                 [max]="maxDate" class="form-control br-0 b-0"
+                 [max]="maxDate" [min]="minDate" class="form-control br-0 b-0"
                  (dateChange)="setCommencementDate($event.target.value)" formControlName="commDate" matInput
                  readonly>
           <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>

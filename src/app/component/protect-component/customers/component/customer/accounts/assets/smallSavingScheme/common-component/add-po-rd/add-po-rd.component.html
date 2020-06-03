@@ -94,7 +94,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input  matInput (focus)="KVPpicker.open()" (click)="KVPpicker.open()"
-                            formControlName="commDate" [max]="maxDate" [matDatepicker]="KVPpicker"
+                            formControlName="commDate" [min]="minDate" [max]="maxDate" [matDatepicker]="KVPpicker"
                             class="form-control b-0 br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
