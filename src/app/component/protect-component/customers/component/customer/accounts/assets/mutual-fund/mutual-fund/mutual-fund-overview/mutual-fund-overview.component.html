@@ -84,7 +84,7 @@
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-24 pl-8">Current value</p>
                             <div class="relClass">
-                                <div class="bar" [ngClass]="{'height24': isLoading}">
+                                <div class="bar" [ngClass]="{'heightNew24': isLoading}">
                                     <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-20 ">
                                         <span appFormatNumber *ngIf="!isLoading" [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
                                         <!-- <span *ngIf="isLoading"> {{''}}</span> -->
@@ -109,7 +109,7 @@
                                         </div>
                                     </h5>
                                 </div>
-                                <div class="col-md-5 pr-0 pl-12">
+                                <div class="col-md-5 pl-12">
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24" *ngIf="isLoading"></div>
@@ -119,7 +119,7 @@
                                         <span *ngIf="isLoading">{{''}}</span>
                                     </h5>
                                 </div>
-                                <div class="col-md-3 p-0">
+                                <div class="col-md-3 pl-0">
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 relClass height24">
                                         <div class="bar height24">
