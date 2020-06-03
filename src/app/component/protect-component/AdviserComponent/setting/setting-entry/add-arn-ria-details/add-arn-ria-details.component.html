@@ -104,6 +104,7 @@
                     <input matInput type="text" [placeholder]="formPlaceHolders.ENTER_EUIN" formControlName="euin"
                         class="form-control inputBorderTransparent br-0" maxlength="6" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY">
+                        <mat-hint align="end">{{arnRiaFG.get('euin').value.length}}/6</mat-hint>
                     <mat-error *ngIf="arnRiaFG.get('euin').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="arnRiaFG.get('euin').errors?.pattern">Valid EUIN required</mat-error>
                 </mat-form-field>
