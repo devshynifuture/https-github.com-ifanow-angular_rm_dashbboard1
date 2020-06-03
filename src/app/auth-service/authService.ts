@@ -32,7 +32,11 @@ export class AuthService {
   }
 
   static getAdminId() {
-    return this.getUserInfo().adminAdvisorId;
+    let adminAdvisorId = this.getUserInfo().adminAdvisorId;
+    if (!adminAdvisorId || adminAdvisorId == 0) {
+      adminAdvisorId = this.getAdvisorId();
+    }
+    return adminAdvisorId;
   }
 
   static getRmId() {
