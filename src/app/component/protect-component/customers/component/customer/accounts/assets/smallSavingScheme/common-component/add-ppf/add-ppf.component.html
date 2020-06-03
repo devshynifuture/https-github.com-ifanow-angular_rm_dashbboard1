@@ -89,7 +89,7 @@
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field class="ba-date">
                         <input matInput autocomplete="off" (click)="CommencementPicker.open()"
-                            [matDatepicker]="CommencementPicker" [max]="maxDate"
+                            [matDatepicker]="CommencementPicker" [min]="minDate" [max]="maxDate"
                             (dateChange)="setCommencementDate(null)" class="form-control br-0 b-0"
                             formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>

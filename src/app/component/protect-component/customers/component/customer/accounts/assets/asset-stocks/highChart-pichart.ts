@@ -70,7 +70,7 @@ export const pieChart = (data) => {
                 }, {
                     name: 'Auto ancillaries',
                     y: data.Auto_Ancillaries?data.Auto_Ancillaries.perrcentage:0,
-                    color: '#FF7272',
+                    color: '#FF6823',
                     dataLabels: {
                         enabled: false
                     }

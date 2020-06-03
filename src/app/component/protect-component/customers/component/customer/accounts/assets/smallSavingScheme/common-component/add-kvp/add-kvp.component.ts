@@ -37,6 +37,7 @@ export class AddKvpComponent implements OnInit {
   };
   validatorType = ValidatorType
   maxDate = new Date();
+  minDate = new Date(2016, 4, 1);
   inputData: any;
   advisorId: any;
   clientId: any; Outstanding
