@@ -219,7 +219,7 @@
             </div>
         </div>
     </div>
-    <div class="row pt-32">
+    <div *ngIf="moreInfoData.categoryTypeflag!='familyMinor'" class="row pt-32">
         <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
             <h5 class="m-0">Marital status</h5>
         </div>
@@ -242,7 +242,7 @@
             </mat-radio-group>
         </div>
     </div>
-    <div *ngIf="moreInfoData.categoryTypeflag!='clientNonIndividual' && moreInfoForm.get('maritalStatus').value=='1'"
+    <div *ngIf="moreInfoData.categoryTypeflag!='familyMinor' && moreInfoForm.get('maritalStatus').value=='1'"
         class="row pt-36">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Anniversary date</h5>
