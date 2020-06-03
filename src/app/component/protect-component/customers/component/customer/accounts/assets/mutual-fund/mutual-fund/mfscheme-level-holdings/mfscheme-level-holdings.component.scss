@@ -1,12 +1,15 @@
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0px;
+    padding: 0px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-  width: 1.5em !important;
+    width: 1.5em !important;
 }
 
-
 ::ng-deep .mat-form-field {
-  width: 100%;
+    width: 100%;
+}
+
+::ng-deep .cdk-overlay-pane {
+    width: 400px !important;
 }
