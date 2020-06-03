@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { LoaderFunction } from 'src/app/services/util.service';
+import { LoaderFunction, UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Chart } from 'angular-highcharts';
 import { AppConstants } from 'src/app/services/app-constants';
@@ -147,7 +147,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
-    private workerService: WebworkerService
+    private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -1034,5 +1034,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     } else {  
       this.welcomeMessage = "Good evening";  
     }  
+  }
+
+  getTnxStatus(id) {
+    return UtilService.getTransactionStatusFromStatusId(id);
   }
 }
