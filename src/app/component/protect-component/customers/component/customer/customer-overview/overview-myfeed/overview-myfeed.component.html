@@ -321,7 +321,7 @@
                                                     <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
                                                     <span class="f-14 mr-8 roboto">₹<span
-                                                            appFormatNumber>{{(data.y)}}</span> {{'('+(data.percentage | number:'1.2-2')+')'}}</span>
+                                                            appFormatNumber>{{(data.y)}}</span> {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
                                                     <p class=" l-14 f-14 mr-8 text-primitive mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
@@ -646,7 +646,7 @@
                                     </table>
                                 </ng-container>
                             </ng-container>
-                            <ng-container *ngIf="!tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
+                            <ng-container *ngIf="!tabsLoaded.cashflowData.hasData || !tabsLoaded.cashflowData.dataLoaded">
                                 <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
                                     <ng-container matColumnDef="bankName">
                                         <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
