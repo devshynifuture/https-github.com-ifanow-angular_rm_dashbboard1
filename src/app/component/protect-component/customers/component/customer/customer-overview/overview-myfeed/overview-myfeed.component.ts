@@ -1001,6 +1001,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     let othersData = {
       name: 'Others',
       y:0,
+      percentage:0,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {enabled:false}
     }
@@ -1017,7 +1018,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         })
         counter ++;
       } else {
-        othersData.y += data.allocatedPercentage
+        othersData.y += data.currentValue
+        othersData.percentage += data.allocatedPercentage
+
       }
     })
     this.mfSubCatAllocationData.push(othersData);
