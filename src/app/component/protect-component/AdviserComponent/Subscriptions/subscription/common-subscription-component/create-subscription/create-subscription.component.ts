@@ -308,6 +308,11 @@ export class CreateSubscriptionComponent implements OnInit {
         id: this.clientData.subId,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
+        services: [
+          {
+            serviceName: this.payeeSettingData.serviceName,
+            description: ''
+          }],
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
@@ -344,8 +349,12 @@ export class CreateSubscriptionComponent implements OnInit {
       const obj = {
         id: this.clientData.subId,
         advisorId: this.advisorId,
-
         billerProfileId: this.selectedBiller.id,
+        services: [
+          {
+            serviceName: this.payeeSettingData.serviceName,
+            description: ''
+          }],
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
