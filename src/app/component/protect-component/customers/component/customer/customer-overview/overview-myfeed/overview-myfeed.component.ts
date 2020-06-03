@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { LoaderFunction } from 'src/app/services/util.service';
+import { LoaderFunction, UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Chart } from 'angular-highcharts';
 import { AppConstants } from 'src/app/services/app-constants';
@@ -117,14 +117,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, {
       name: 'SOLUTION ORIENTED',
       y: 0,
-      color: AppConstants.DONUT_CHART_COLORS[3],
+      color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {
         enabled: false
       }
     }, {
       name: 'OTHERS',
       y: 0,
-      color: AppConstants.DONUT_CHART_COLORS[4],
+      color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
         enabled: false
       }
@@ -147,7 +147,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
-    private workerService: WebworkerService
+    private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -432,6 +432,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
       if (res == null) {
         this.portFolioData = [];
+        this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
         this.portFolioData = res;
@@ -447,6 +448,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           }
         }
         let chartTotal = 1;
+        let hasNoDataCounter = res.length;
         res.forEach(element => {
           if (element.investedAmount > 0) {
             chartTotal += element.investedAmount;
@@ -463,8 +465,13 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
               othersData.y += element.investedAmount;
             }
             counter++;
+          } else {
+            hasNoDataCounter--;
           }
         });
+        if(hasNoDataCounter === 0) {
+          this.tabsLoaded.portfolioData.hasData = false;
+        }
         chartTotal -= 1;
         if (counter > 4) {
           chartData.push(othersData);
@@ -834,6 +841,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
           this.eventService.openSnackBar(error, "DISMISS");
+          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
         }
       );
     }
@@ -873,6 +881,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.worker.onmessage = ({ data }) => {
         this.totalValue = data.totalValue;
         this.generateMFallocationChartData(categoryList); // for Calculating MF categories percentage
+        this.generateSubCategorywiseChartData(this.mutualFund.subCategoryData);
+        this.generateSubCategorywiseAllocationData(this.mutualFund.subCategoryData); // For subCategoryWiseAllocation
         this.mfPieChartDataMgnt(); // pie chart data after calculating percentage
         this.tabsLoaded.mfPortfolioSummaryData.hasData = true;
         this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = true;
@@ -883,13 +893,17 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // You should add a fallback so that your program still executes correctly.
     }
   }
+  generateSubCategorywiseChartData(data){
+    data = this.mfServiceService.sorting(data, 'currentValue');
+    console.log(data);
 
+  }
   getMutualFundResponse(data) {
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
-      this.generateSubCategorywiseAllocationData(data); // For subCategoryWiseAllocation
+
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     }
   }
@@ -938,7 +952,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.mfAllocationData.push({
             name: element.category,
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[3],
+            color: AppConstants.DONUT_CHART_COLORS[4],
             dataLabels: {
               enabled: false
             }
@@ -949,7 +963,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.mfAllocationData.push({
             name: 'OTHERS',
             y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-            color: AppConstants.DONUT_CHART_COLORS[4],
+            color: AppConstants.DONUT_CHART_COLORS[3],
             dataLabels: {
               enabled: false
             }
@@ -977,8 +991,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   generateSubCategorywiseAllocationData(data) {
-    let subCatChartData = this.mfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    subCatChartData = subCatChartData.sort((a,b) => a.allocatedPercentage - b.allocatedPercentage)
+    data = this.mfServiceService.sorting(data, 'currentValue');
+    console.log(data);
     let counter = 0;
     this.mfSubCatAllocationData = [];
     let othersData = {
@@ -987,8 +1001,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {enabled:false}
     }
-    subCatChartData.forEach(data => {
-      if(counter < 4) {
+    data.forEach((data,ind) => {
+      if(ind < 4) {
         this.mfSubCatAllocationData.push({
           name: data.subCategory,
           y: parseFloat((data.allocatedPercentage).toFixed(2)),
@@ -1034,5 +1048,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     } else {  
       this.welcomeMessage = "Good evening";  
     }  
+  }
+
+  getTnxStatus(id) {
+    return UtilService.getTransactionStatusFromStatusId(id);
   }
 }

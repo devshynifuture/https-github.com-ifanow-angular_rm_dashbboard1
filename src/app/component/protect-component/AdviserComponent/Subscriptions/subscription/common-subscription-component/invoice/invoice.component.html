@@ -149,8 +149,10 @@
                                 </div>
                                 <div class="row p-16 pr-0 pl-0">
                                     <div class="col-md-9">
-                                        <h4 class="m-0 f-14">{{(storeData.services.length>0)?storeData.services[0].serviceName:''}}</h4>
-                                        <span class="m-0 f-14 text-custom"> {{(storeData.services.length>0)?storeData.services[0].description:''}}</span>
+                                        <h4 class="m-0 f-14">
+                                            {{(storeData.services.length>0)?storeData.services[0].serviceName:''}}</h4>
+                                        <span class="m-0 f-14 text-custom">
+                                            {{(storeData.services.length>0)?storeData.services[0].description:''}}</span>
                                     </div>
                                     <div class="col-md-3 d-flex align-items-center justify-content-end">
                                         <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
@@ -233,8 +235,7 @@
                             </div>
                         </div>
                         <div class="wrapper-9">
-                            <div *ngIf="storeData.auto == true"
-                                class="row b-a bg-grey lter ">
+                            <div *ngIf="storeData.auto == true" class="row b-a bg-grey lter ">
                                 <div class="col-md-10 d-flex  align-items-center">
                                     <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                                 </div>
@@ -346,8 +347,7 @@
                 <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
             </div>
             <div class="col-md-3 text-right">
-                <img class="pt-20"
-                    src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                <img class="pt-20 w-100" src={{inputData.logoUrl}}>
             </div>
         </div>
         <div class="row">
@@ -484,9 +484,8 @@
                   <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
                </div> -->
                     </div>
-                    <div class="wrapper-9" >
-                        <div *ngIf="storeData.auto == true"
-                            class="row b-a bg-grey lter ">
+                    <div class="wrapper-9">
+                        <div *ngIf="storeData.auto == true" class="row b-a bg-grey lter ">
                             <div class="col-md-10 d-flex  align-items-center">
                                 <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                             </div>
@@ -562,4 +561,4 @@
         (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
         [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
     </app-add-edit-subscription-invoice>
-</div>  
+</div>

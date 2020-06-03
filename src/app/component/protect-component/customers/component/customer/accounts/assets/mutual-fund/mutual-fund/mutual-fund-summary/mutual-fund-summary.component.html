@@ -25,8 +25,10 @@
                 </div>
                 <div class="mat-button-focus-overlay"></div>
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button>
-            <mat-menu #menu1="matMenu" class="add-new">
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)" >ADD NEW</button>
+            <!-- <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button> -->
+
+            <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
                 <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
@@ -40,7 +42,7 @@
                         </div>
                     </div>
                 </button> -->
-                <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+                <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
                             <img src="assets/images/svg/scheme-icon.svg">
@@ -52,7 +54,7 @@
                             </p>
                         </div>
                     </div>
-                </button>
+                </button> -->
                 <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                     <div class="row">
                         <div class="col-md-2 pr-8 text-right">
@@ -66,7 +68,7 @@
                         </div>
                     </div>
                 </button> -->
-            </mat-menu>
+            <!-- </mat-menu> -->
         </div>
     </div>
 
@@ -320,9 +322,11 @@
             <div *ngIf="summary.data.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No data found</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
-                    ADD NEW</button>
-                <mat-menu #menu1="matMenu" class="add-new">
+                <!-- <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
+                    ADD NEW</button> -->
+                    <button mat-stroked-button (click)="openMutualFund('addMutualFund',null)" class="btn-primary addon v-middle" >
+                        ADD NEW</button>
+                <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
                     <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
@@ -336,7 +340,7 @@
                             </div>
                         </div>
                     </button> -->
-                    <button (click)="openMutualFund('holding',null)" mat-menu-item class="b-b">
+                    <!-- <button  (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -348,7 +352,7 @@
                                 </p>
                             </div>
                         </div>
-                    </button>
+                    </button> -->
                     <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
                         <div class="row">
                             <div class="col-md-2 pr-8 text-right">
@@ -362,7 +366,7 @@
                             </div>
                         </div>
                     </button> -->
-                </mat-menu>
+                <!-- </mat-menu> -->
             </div>
         </div>
     </div>
