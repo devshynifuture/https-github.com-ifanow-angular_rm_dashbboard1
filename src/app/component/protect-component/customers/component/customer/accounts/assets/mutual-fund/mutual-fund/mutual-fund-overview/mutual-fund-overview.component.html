@@ -81,14 +81,17 @@
                         </div>
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-24 pl-8">Current value</p>
-                            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-20 relClass">
+                            <div class="relClass">
                                 <div class="bar" [ngClass]="{'height24': isLoading}">
-                                    <span appFormatNumber *ngIf="!isLoading" [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
-                                    <!-- <span *ngIf="isLoading"> {{''}}</span> -->
-                                    <span *ngIf="!isLoading" class="left">{{'₹'}} </span> <span *ngIf="isLoading">{{''}}
-                                    </span>
+                                    <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-20 ">
+                                        <span appFormatNumber *ngIf="!isLoading" [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
+                                        <!-- <span *ngIf="isLoading"> {{''}}</span> -->
+                                        <span *ngIf="!isLoading" class="left">{{'₹'}} </span> <span *ngIf="isLoading">{{''}}
+                                        </span>
+                                    </h2>
                                 </div>
-                            </h2>
+                            </div>
+
 
                         </div>
                         <div class="col-md-12 p-0">
