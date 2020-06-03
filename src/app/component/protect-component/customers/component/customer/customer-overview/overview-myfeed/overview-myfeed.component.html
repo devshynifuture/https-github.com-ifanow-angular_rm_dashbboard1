@@ -324,18 +324,12 @@
                                 <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let item of familyWiseAllocation">
                                     <div class="row">
                                         <h1>
-                                            <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 1"
-                                                src="/assets/images/svg/man-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==3"
-                                                src="/assets/images/svg/women-profile-icon.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==4"
-                                                src="/assets/images/svg/son-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==5"
-                                                src="/assets/images/svg/daughter-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==7"
-                                                src="/assets/images/svg/mother-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==6"
-                                                src="/assets/images/svg/father-profile.svg">
+                                            <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 1" src="/assets/images/svg/man-profile.svg">
+                                            <img class="documentImg" *ngIf="item.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
+                                            <img class="documentImg" *ngIf="item.relationshipId==4" src="/assets/images/svg/son-profile.svg">
+                                            <img class="documentImg" *ngIf="item.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
+                                            <img class="documentImg" *ngIf="item.relationshipId==7" src="/assets/images/svg/mother-profile.svg">
+                                            <img class="documentImg" *ngIf="item.relationshipId==6" src="/assets/images/svg/father-profile.svg">
                                         </h1>
                                         <div class="col-md-9  pr-0">
                                             <h5 class="roboto">{{item.name}}</h5>
