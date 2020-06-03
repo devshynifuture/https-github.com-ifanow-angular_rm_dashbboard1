@@ -691,7 +691,7 @@
                             </div>
                         </div>
 
-                        <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
+                        <div class="row" *ngIf="!tabsLoaded.riskProfile.dataLoaded || !tabsLoaded.riskProfile.hasData">
                             <div class="col-md-12  ">
                                 <div class="bg-white vaultbBox">
                                     <div class="row">
@@ -756,7 +756,7 @@
                                                     src="/assets/images/svg/father-profile.svg">
                                             </span>
 
-                                            <p class="mb-0">{{documentVault.fileStats[0].filesCount}} items in your vault {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} space used</p>
+                                            <p class="mb-0">{{documentVault.fileStats[0].filesCount}} items in your vault {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} mb space used</p>
 
                                             <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button (click)="routeAndAddQueryParams('Documents')">
                                                 Access your vault
