@@ -163,6 +163,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.eventService.openSnackBar('File copied successfully', 'Dismiss');
     this.getAllFileList(1, 'copy')
   }
+  copyFoldersrRes(){
+    this.eventService.openSnackBar('Folder copied successfully', 'Dismiss');
+    this.getAllFileList(1, 'copy')
+  }
   moveFilesRes() {
     this.eventService.openSnackBar('File moved successfully', 'Dismiss');
     this.getAllFileList(1, 'move')
@@ -184,10 +188,17 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       console.log('The dialog was closed', element);
       this.getInnerDoc = result;
       if (result.value == 'Copy') {
-        delete result.value;
-        this.custumService.copyFiles(result).subscribe(
-          data => this.copyFilesRes()
-        );
+        if(element.folderName){
+          delete result.value;
+          this.custumService.copyFolders(result).subscribe(
+            data => this.copyFoldersrRes()
+          );
+        }else{
+          delete result.value;
+          this.custumService.copyFiles(result).subscribe(
+            data => this.copyFilesRes()
+          );
+        }
       } else if (result.value == 'Move') {
         if (element.folderName == undefined) {
           delete result.value;
