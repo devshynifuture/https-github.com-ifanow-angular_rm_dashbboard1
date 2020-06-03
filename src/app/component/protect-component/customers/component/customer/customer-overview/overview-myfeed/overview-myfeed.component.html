@@ -74,8 +74,8 @@
 
                     <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
-                        <div class="row">
-                            <div class="col-md-12" #portFolioSection>
+                        <div class="row" #portFolioSection>
+                            <div class="col-md-12" *ngIf="tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData">
                                 <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -93,6 +93,16 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
+                                <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
+                                <div class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
+                                    <img src="assets/images/svg/asset-allocation-empty-state.svg">
+                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll first need to get some data in here </p>
+                                    <a class="text-primary c-p dataBtnAdd" [routerLink]="['/customer/detail/account/summary']">Add data</a>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +202,7 @@
                     <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
                         <div class="row">
-                            <div class="col-md-12  ">
+                            <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                 <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -210,6 +220,16 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
+                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <div class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
+                                    <img src="assets/images/svg/asset-allocation-empty-state.svg">
+                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll first need to get some data in here </p>
+                                    <a class="text-primary c-p dataBtnAdd" [routerLink]="['/customer/detail/account/summary']">Add data</a>
                                 </div>
                             </div>
                         </div>

@@ -432,6 +432,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
       if (res == null) {
         this.portFolioData = [];
+        this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
         this.portFolioData = res;
@@ -447,6 +448,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           }
         }
         let chartTotal = 1;
+        let hasNoDataCounter = res.length;
         res.forEach(element => {
           if (element.investedAmount > 0) {
             chartTotal += element.investedAmount;
@@ -463,8 +465,13 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
               othersData.y += element.investedAmount;
             }
             counter++;
+          } else {
+            hasNoDataCounter--;
           }
         });
+        if(hasNoDataCounter === 0) {
+          this.tabsLoaded.portfolioData.hasData = false;
+        }
         chartTotal -= 1;
         if (counter > 4) {
           chartData.push(othersData);
@@ -834,6 +841,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
           this.eventService.openSnackBar(error, "DISMISS");
+          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
         }
       );
     }
