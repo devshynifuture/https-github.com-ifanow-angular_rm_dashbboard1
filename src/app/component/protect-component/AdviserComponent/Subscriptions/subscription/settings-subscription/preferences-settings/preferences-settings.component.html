@@ -14,10 +14,10 @@
                         [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)"
+                    <!-- <li (click)="viewMode ='tab3';getPrefixData(2)"
                         [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
-                    </li>
+                    </li> -->
                     <li (click)="viewMode ='tab4';getPrefixData(3)"
                         [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
@@ -218,10 +218,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngSwitchCase="'tab3'">
-                    <!-- <div *ngIf="showLoader">
-                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div> -->
+                <!-- <div *ngSwitchCase="'tab3'">
                     <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <div class="row pl-44">
@@ -246,8 +243,6 @@
                                 </div>
                             </div>
                             <div class="col-md-12 pt-44 d-flex">
-                                <!-- <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
-                                </button> -->
                                 <app-progress-button class="btn-primary br-0 mr-8" (btnClick)="savePrefix(2)"
                                     [options]="barButtonOptions" style="box-shadow: none;">
                                 </app-progress-button>
@@ -257,7 +252,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
                 <div *ngSwitchCase="'tab4'">
                     <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
