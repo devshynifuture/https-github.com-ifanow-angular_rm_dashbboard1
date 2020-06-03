@@ -195,7 +195,7 @@
           <mat-form-field class="ba-date">
             <input (click)="picker.open()" matInput
               (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)"
-              autocomplete="off" formControlName="date" #date [matDatepicker]="picker" class="form-control br-0 b-0">
+              autocomplete="off" formControlName="date" [max]="maximumDate" #date [matDatepicker]="picker" class="form-control br-0 b-0">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>
