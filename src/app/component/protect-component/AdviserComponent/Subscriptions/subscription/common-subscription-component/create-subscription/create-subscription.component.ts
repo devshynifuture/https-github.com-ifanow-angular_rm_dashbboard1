@@ -292,6 +292,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.feeModeData = feeModeData;
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
+    this.subscriptionDetails.controls.subscription.disable();
     this.billersData = data.billers;
     this.payeesData = data.payees;
   }

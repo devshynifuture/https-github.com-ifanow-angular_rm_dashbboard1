@@ -280,7 +280,8 @@
                                 <div class="form-group relClass">
                                     <mat-form-field *ngIf="!isLoading">
                                         <input matInput class="form-control br-0" formControlName="nextNo" type="text">
-                                        <mat-error *ngIf="prefixData.get('nextNo').required" class="f-12">Subscription
+                                        <mat-error *ngIf="prefixData.get('nextNo').errors?.required" class="f-12">
+                                            Subscription
                                             next number required</mat-error>
                                         <mat-error *ngIf="prefixData.get('nextNo').errors?.min">
                                             Number must be greater than {{invoiceNumber}}</mat-error>
