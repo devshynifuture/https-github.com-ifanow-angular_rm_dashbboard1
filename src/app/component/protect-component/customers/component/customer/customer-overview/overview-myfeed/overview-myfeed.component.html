@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-md-3  pr-24">
             <ul class="d-block sticky-top myFeedUi">
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}">
-                    <a class="f-14 roboto" (click)="goToSectionView(60)"> All feeds</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)">
+                    <a class="f-14 roboto"> All feeds</a>
                 </li>
 
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 2}">
-                    <a class="f-14 roboto" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 2}" (click)="goToSectionView(portFolioSectionOffset)">
+                    <a class="f-14 roboto"> Portfolio</a>
                 </li>
                 <!-- 
                 <li class="c-p">
@@ -18,12 +18,12 @@
                     <a class="f-14 roboto" > Activity</a>
                 </li> -->
 
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 3}">
-                    <a class="f-14 roboto" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 3}" (click)="goToSectionView(cashFlowSectionOffset)">
+                    <a class="f-14 roboto"> Transactions</a>
                 </li>
 
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 4}">
-                    <a class="f-14 roboto" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 4}" (click)="goToSectionView(riskProfileSectionOffset)">
+                    <a class="f-14 roboto"> Profile</a>
                 </li>
                 <!-- 
                 <li class="c-p">
