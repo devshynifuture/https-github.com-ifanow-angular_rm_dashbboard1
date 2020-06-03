@@ -145,6 +145,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       // fromDate : [data.services[0].fromDate,[Validators.required]],
 
     });
+    this.editPayment.controls.invoiceNumber.disable();
     this.editPayment.controls.finalAmount.disable();
     this.igstTaxAmount = data.igstTaxAmount;
     this.cgstTaxAmount = data.cgstTaxAmount;
