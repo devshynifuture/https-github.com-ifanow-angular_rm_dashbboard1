@@ -204,9 +204,9 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
-      currentMarketValue: [!data.stockList ? '' : data.stockList[data.stockList.length-1].currentMarketValue, [Validators.required]],
-      valueAsOn: [!data.stockList ? '' : new Date(data.stockList[data.stockList.length-1].valueAsOn), [Validators.required]],
-      amtInvested: [!data.stockList ? '' : data.stockList[data.stockList.length-1].amountInvested, [Validators.required]],
+      currentMarketValue: [!data? '' : data.currentMarketValue, [Validators.required]],
+      valueAsOn: [!data ? '' : new Date(data.valueAsOn), [Validators.required]],
+      amtInvested: [!data ? '' : data.amountInvested, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
