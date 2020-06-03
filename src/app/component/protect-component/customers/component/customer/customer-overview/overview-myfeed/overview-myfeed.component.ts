@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { LoaderFunction } from 'src/app/services/util.service';
+import { LoaderFunction, UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Chart } from 'angular-highcharts';
 import { AppConstants } from 'src/app/services/app-constants';
@@ -147,7 +147,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
-    private workerService: WebworkerService
+    private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -432,6 +432,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
       if (res == null) {
         this.portFolioData = [];
+        this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
         this.portFolioData = res;
@@ -447,6 +448,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           }
         }
         let chartTotal = 1;
+        let hasNoDataCounter = res.length;
         res.forEach(element => {
           if (element.investedAmount > 0) {
             chartTotal += element.investedAmount;
@@ -463,8 +465,13 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
               othersData.y += element.investedAmount;
             }
             counter++;
+          } else {
+            hasNoDataCounter--;
           }
         });
+        if(hasNoDataCounter === 0) {
+          this.tabsLoaded.portfolioData.hasData = false;
+        }
         chartTotal -= 1;
         if (counter > 4) {
           chartData.push(othersData);
@@ -834,6 +841,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
           this.eventService.openSnackBar(error, "DISMISS");
+          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
         }
       );
     }
@@ -1040,5 +1048,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     } else {  
       this.welcomeMessage = "Good evening";  
     }  
+  }
+
+  getTnxStatus(id) {
+    return UtilService.getTransactionStatusFromStatusId(id);
   }
 }
