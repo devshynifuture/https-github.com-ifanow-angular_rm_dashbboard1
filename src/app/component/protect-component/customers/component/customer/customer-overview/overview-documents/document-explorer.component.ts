@@ -229,6 +229,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFilesRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('File renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -246,6 +247,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFolderRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('Folder renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
