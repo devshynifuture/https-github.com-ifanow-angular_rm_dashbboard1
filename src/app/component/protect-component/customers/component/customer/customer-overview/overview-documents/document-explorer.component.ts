@@ -229,6 +229,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFilesRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('File renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -246,6 +247,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFolderRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('Folder renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -668,13 +670,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
-      data => this.starFileRes(data)
+      data => this.starFileRes(data,flag)
     );
   }
 
-  starFileRes(data) {
+  starFileRes(data,flag) {
     console.log(data);
     if (data) {
+      if(flag == 0){
+        this.eventService.openSnackBar('Removed starred successfully', 'Dismiss');
+      }else{
+        this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      }
       this.getCount()
       this.getAllFileList(this.valueTab, 'starred');
     }
