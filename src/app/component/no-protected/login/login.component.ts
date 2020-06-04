@@ -151,12 +151,7 @@ export class LoginComponent implements OnInit {
             this.userName.setErrors({ incorrect: true });
           }
           else {
-            if (err.type == undefined) {
-              this.userName.setErrors({ incorrect: true });
-            }
-            else {
-              this.eventService.openSnackBar(err.type, 'Dismiss');
-            }
+            this.eventService.openSnackBar(err, 'Dismiss');
           }
         }
       );
