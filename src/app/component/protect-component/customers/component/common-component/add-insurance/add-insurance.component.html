@@ -246,7 +246,7 @@
         <label class="f-14 roboto">Last unpaid premium</label>
       </div>
     </div>
-    <div class="row pt-0">
+    <div class="row " [ngClass]="{'pt-0':policyStatus.value == '2','pt-40':policyStatus.value != '2'}">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-8">Policy status</h5>
       </div>

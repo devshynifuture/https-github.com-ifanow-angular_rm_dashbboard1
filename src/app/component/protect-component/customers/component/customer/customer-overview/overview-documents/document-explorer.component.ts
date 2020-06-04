@@ -229,6 +229,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFilesRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('File renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -246,6 +247,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFolderRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('Folder renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -370,6 +372,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   keyPress(event, tabValue) {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
+    this.openFolderName = []
     if (event == '') {
       this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
@@ -536,7 +539,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: 'You have received this email because AdvisorName shared link with you.  ' + '' + this.element.link
+        messageBody: 'You have received this email because' + this.getUserInfo.name+' shared link with you.  ' + '' + this.element.link
       }
       if(this.element != ""){
         this.custumService.sendSharebleLink(obj).subscribe(
@@ -547,7 +550,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
   }
   sendSharebleLinkRes(data) {
-
+    this.eventService.openSnackBar('Link shared on email successfully', 'Dismiss');
   }
   deleteModal(flag, data) {
     this.parentId = data.parentFolderId
@@ -668,13 +671,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
-      data => this.starFileRes(data)
+      data => this.starFileRes(data,flag)
     );
   }
 
-  starFileRes(data) {
+  starFileRes(data,flag) {
     console.log(data);
     if (data) {
+      if(flag == 0){
+        this.eventService.openSnackBar('Removed starred successfully', 'Dismiss');
+      }else{
+        this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      }
       this.getCount()
       this.getAllFileList(this.valueTab, 'starred');
     }
