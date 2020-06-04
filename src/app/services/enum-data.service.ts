@@ -13,26 +13,26 @@ import {PeopleService} from '../component/protect-component/PeopleComponent/peop
 })
 export class EnumDataService {
   searchData: any;
-  clientAndFamilyData: any;
+  clientAndFamilyData: any = [];
   proofType = [
     {proofId: 1, proofType: 'Personal Pan'},
     {proofId: 2, proofType: 'Company Pan'},
-    { proofId: 3, proofType: 'Passport' },
-    { proofId: 4, proofType: 'Aadhaar' },
-    { proofId: 5, proofType: 'Driving licence' },
-    { proofId: 6, proofType: 'Voter\'s ID card' },
-    { proofId: 7, proofType: 'NREGA job card' }
+    {proofId: 3, proofType: 'Passport'},
+    {proofId: 4, proofType: 'Aadhaar'},
+    {proofId: 5, proofType: 'Driving licence'},
+    {proofId: 6, proofType: 'Voter\'s ID card'},
+    {proofId: 7, proofType: 'NREGA job card'}
   ];
   roleList = [
-    { roleTypeId: 1, roleTypeName: 'Admin' },
-    { roleTypeId: 2, roleTypeName: 'Para planner' },
-    { roleTypeId: 3, roleTypeName: 'Relationship manager' },
-    { roleTypeId: 4, roleTypeName: 'Operations' },
+    {roleTypeId: 1, roleTypeName: 'Admin'},
+    {roleTypeId: 2, roleTypeName: 'Para planner'},
+    {roleTypeId: 3, roleTypeName: 'Relationship manager'},
+    {roleTypeId: 4, roleTypeName: 'Operations'},
   ];
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
-    private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
-    private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
+              private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
+              private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
   }
 
   // clientRoleList = [
