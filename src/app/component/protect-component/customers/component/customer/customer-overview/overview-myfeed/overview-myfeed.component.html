@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-md-3  pr-24">
             <ul class="d-block sticky-top myFeedUi">
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}">
-                    <a class="f-14 roboto" (click)="goToSectionView(60)"> All feeds</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)">
+                    <a class="f-14 roboto"> All feeds</a>
                 </li>
 
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 2}">
-                    <a class="f-14 roboto" (click)="goToSectionView(portFolioSectionOffset)"> Portfolio</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 2}" (click)="goToSectionView(portFolioSectionOffset)">
+                    <a class="f-14 roboto"> Portfolio</a>
                 </li>
                 <!-- 
                 <li class="c-p">
@@ -18,12 +18,12 @@
                     <a class="f-14 roboto" > Activity</a>
                 </li> -->
 
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 3}">
-                    <a class="f-14 roboto" (click)="goToSectionView(cashFlowSectionOffset)"> Transactions</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 3}" (click)="goToSectionView(cashFlowSectionOffset)">
+                    <a class="f-14 roboto"> Transactions</a>
                 </li>
 
-                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 4}">
-                    <a class="f-14 roboto" (click)="goToSectionView(riskProfileSectionOffset)"> Profile</a>
+                <li class="c-p" [ngClass]="{'activeClass': currentViewId == 4}" (click)="goToSectionView(riskProfileSectionOffset)">
+                    <a class="f-14 roboto"> Profile</a>
                 </li>
                 <!-- 
                 <li class="c-p">
@@ -46,7 +46,7 @@
                     <!-- your account intro -->
                     <div class="wrapperBox mb-20" [hidden]="true">
                         <div class="row">
-                            <div class="col-md-12 ml-12 mb-10 d-flex align-items-center">
+                            <div class="col-md-12  mb-10 d-flex align-items-center">
                                 <h5 class="roboto m-0 ">Your account</h5>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     <div class="wrapperBox">
                         <div class="row" #portFolioSection>
                             <div class="col-md-12" *ngIf="tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData">
-                                <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
+                                <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-md-7 pr-0 heightBox">
@@ -97,12 +97,21 @@
                             </div>
 
                             <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
-                                <h5 class="roboto ml-12 mb-0">Asset allocation</h5>
-                                <div class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
-                                    <img src="assets/images/svg/asset-allocation-empty-state.svg">
-                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
-                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll first need to get some data in here </p>
-                                    <a class="text-primary c-p dataBtnAdd" [routerLink]="['/customer/detail/account/summary']">Add data</a>
+                                <h5 class="roboto mb-0">Asset allocation</h5>
+
+                                <div class="borderChatBoxEmpty bg-white">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>Once your data is uploaded, this chart will come to life</p>
+                                            <p>Let’s get some data in here. There are lot’s of things you can add to your portfolio. Let’s get going.</p>
+                                            <button [routerLink]="['/customer/detail/account/summary']" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                                Add data
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <img class="w-180" src="assets/images/svg/asset-allocation-empty-state.svg">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +121,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded">
                         <div class="row">
                             <div class="col-md-8  d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Portfolio</h5>
+                                <h5 class="roboto  mb-8">Portfolio</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/customer/detail/account/summary']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
@@ -128,7 +137,7 @@
                                         <div class="col-md-9  pr-0">
                                             <h5 class="roboto">{{portData.assetTypeString}}</h5>
                                         </div>
-                                        <div class="col-md-3 d-flex justify-content-end">
+                                        <div class="col-md-3 pl-0 d-flex justify-content-end">
                                             <span *ngIf="portData.currentValue==0" (click)="routeAndAddQueryParams(portData.assetTypeString)" class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
                                                 Add
                                             </span>
@@ -138,7 +147,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                            <h3 class="mb-20">₹<span appFormatNumber>{{portData.currentValue}}</span>
+                                            <h3 class="mb-20 roboto">₹<span appFormatNumber>{{portData.currentValue}}</span>
                                             </h3>
                                         </div>
                                     </div>
@@ -146,13 +155,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                            <p class="m-0" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
+                                            <p class="m-0 roboto" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
                                                 ₹<span appFormatNumber>{{portData.investedAmount}}</span>
                                             </p>
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                            <p class="m-0" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
+                                            <p class="m-0 roboto" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
                                                 ₹<span appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
                                             </p>
                                         </div>
@@ -178,18 +187,18 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                        <h3 class="mb-20">₹0</h3>
+                                        <h3 class="mb-20 roboto">₹0</h3>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                        <p class="m-0">₹0</p>
+                                        <p class="m-0 roboto">₹0</p>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                        <p class="m-0 text-success">₹0</p>
+                                        <p class="m-0 roboto text-success">₹0</p>
                                     </div>
                                 </div>
 
@@ -203,23 +212,28 @@
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
-                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBoxMutual bg-white">
-                                    <div class="row pt-20 pl-40">
+                                    <div class="row  pt-20 pl-40">
                                         <div class="col-md-4">
-                                            <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
-                                            ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                            <div class="border-Right-line">
+                                                <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
+                                                <span class="roboto"> ₹<span
+                                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <h5 class="f-14  mb-0 text-primitive">Amount invested</h5>
-                                            <span class="text-success"> ₹<span
-                                                    appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
-                                            </span>
-
+                                        <div class="col-md-4 pr-8">
+                                            <div class="border-Right-line">
+                                                <h5 class="f-14  mb-0 text-primitive">Amount invested</h5>
+                                                <span class="text-success roboto"> ₹<span
+                                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="col-md-4">
                                             <h5 class="f-14 mb-0 text-primitive">Returns</h5>
-                                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success roboto">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
                                             <i class="material-icons f-14 f-700 text-success" *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
                                                 <span>arrow_upward</span>
                                             </i>
@@ -248,34 +262,42 @@
                             </div>
 
                             <div class="col-md-12" *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
-                                <h5 class="roboto ml-12 mb-0">Portfolio Summary Mutual funds</h5>
+                                <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                 <div class="borderChatBoxMutual bg-white">
-                                    <div class="row pt-20 pl-20">
+                                    <div class="row pt-20 pl-40">
                                         <div class="col-md-4">
-                                            <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
-                                            <span class="text-black"> ₹0 </span>
+                                            <div class="border-Right-line">
+                                                <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
+                                                <span class="text-black roboto"> ₹0 </span>
+                                            </div>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <h5 class="f-14 mb-0 text-primitive">Amount invested</h5>
-                                            <span class="text-success"> ₹0 </span>
+                                        <div class="col-md-4 pr-8">
+                                            <div class="border-Right-line">
+                                                <h5 class="f-14 mb-0 text-primitive">Amount invested</h5>
+                                                <span class="text-success roboto"> ₹0 </span>
+                                            </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <h5 class="f-14 mb-0 text-primitive">Returns</h5>
-                                            <span class="text-success"> 0.00% </span>
+                                            <span class="text-success roboto"> 0.00% </span>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <img src="assets/images/svg/portfolio-summary-icon.svg.svg">
+                                    <div class="row pt-40">
+                                        <div class="col-md-6 text-center">
+                                            <img class="w-180" src="assets/images/svg/asset-allocation-empty-state.svg">
                                         </div>
 
-                                        <div class="col-md-7">
+                                        <div class="col-md-6 pl-0">
                                             <p>Once your MF data is uploaded, this chart will come to life</p>
                                             <p>There are lot’s of reports you can view once you add details about your MF portfolio. Let’s get going.</p>
-                                            <a class="text-primary c-p dataBtnAdd" [routerLink]="['/customer/detail/account/summary']">Add data</a>
+
+
+                                            <button [routerLink]="['/customer/detail/account/summary']" class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                                Add data
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -287,20 +309,20 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
                         <div class="row">
                             <div class="col-md-12 ">
-                                <h5 class="roboto ml-12 mb-0">Sub category wise summary - mutual funds</h5>
+                                <h5 class="roboto  mb-0">Sub category wise summary - mutual funds</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
-                                        <div class="col-md-6 p-0">
-                                            <div class="piechartMutualFund" [chart]="mfSubCategoryPieConfig"></div>
+                                        <div class="col-md-7 heightBox1 ">
+                                            <div class="piechartMutualFund1" [chart]="mfSubCategoryPieConfig"></div>
                                         </div>
-                                        <div class="col-md-6 pr-0">
-                                            <ul class="pointUl">
+                                        <div class="col-md-5 pr-0">
+                                            <ul class="pointUlNew">
                                                 <li *ngFor="let data of mfSubCatAllocationData">
                                                     <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
-                                                    <span class="f-14 mr-8">₹<span
-                                                            appFormatNumber>{{(data.y)}}</span>{{'('+(data.percentage | number:'1.2-2')+')'}}</span>
-                                                    <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                                                    <span class="f-14 mr-8 roboto">₹<span
+                                                            appFormatNumber>{{(data.y)}}</span> {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
+                                                    <p class=" l-14 f-14 mr-8 text-primitive mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -313,7 +335,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded && familyWiseAllocation?.length > 0">
                         <div class="row">
                             <div class="col-md-8  d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Family member wise summary</h5>
+                                <h5 class="roboto  mb-8">Family member wise summary</h5>
                             </div>
                         </div>
 
@@ -321,22 +343,24 @@
                         <div class="scrollingDiv d-flex ">
                             <!-- portfolio data present -->
                             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
-                                <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let item of familyWiseAllocation">
-                                    <div class="row">
-                                        <h1>
-                                            <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 1" src="/assets/images/svg/man-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==4" src="/assets/images/svg/son-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==7" src="/assets/images/svg/mother-profile.svg">
-                                            <img class="documentImg" *ngIf="item.relationshipId==6" src="/assets/images/svg/father-profile.svg">
-                                        </h1>
-                                        <div class="col-md-9  pr-0">
+                                <div class="fundBox2 bg-white slide" ngxSlickItem *ngFor="let item of familyWiseAllocation">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <h1>
+                                                <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 1" src="/assets/images/svg/man-profile.svg">
+                                                <img class="documentImg" *ngIf="item.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
+                                                <img class="documentImg" *ngIf="item.relationshipId==4" src="/assets/images/svg/son-profile.svg">
+                                                <img class="documentImg" *ngIf="item.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
+                                                <img class="documentImg" *ngIf="item.relationshipId==7" src="/assets/images/svg/mother-profile.svg">
+                                                <img class="documentImg" *ngIf="item.relationshipId==6" src="/assets/images/svg/father-profile.svg">
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-9  pl-4">
                                             <h5 class="roboto">{{item.name}}</h5>
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row pt-10">
                                         <div class="col-md-8">
                                             <p class="m-0 text-primitive f-12">Mutual Funds</p>
                                             <h3 class="mb-20">Rs.<span appFormatNumber>{{item.currentValue}}</span>
@@ -354,7 +378,7 @@
                     <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0 ">Complete your profile</h5>
+                                <h5 class="roboto  mb-0 ">Complete your profile</h5>
                             </div>
                         </div>
 
@@ -387,7 +411,7 @@
                     <div class="wrapperBox mb-20" [hidden]="true">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
-                                <h5 class="roboto mb-0 ml-12 ">Mutual found protfolio</h5>
+                                <h5 class="roboto mb-0  ">Mutual found protfolio</h5>
                             </div>
                         </div>
 
@@ -500,7 +524,7 @@
                     <div class="wrapperBox" [hidden]="true">
                         <div class="row">
                             <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
-                                <h5 class="roboto m-0">Activity overview</h5>
+                                <h5 class="roboto  m-0">Activity overview</h5>
                             </div>
                         </div>
 
@@ -535,13 +559,97 @@
 
                     <!-- cashflow -->
                     <!-- to be used later if ever the api created -->
-                    <div class="wrapperBox boxTable" #cashFlowSection>
-                        <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
-                            <ng-container *ngFor="let flowData of cashflowData.cashflowData">
-                                {{flowData.familyMemberFullName}}
-                                <table mat-table [dataSource]="flowData.cashflowLedgger" class="mb-12 tableOne" id="table-low">
+                    <div class="wrapperBox" #cashFlowSection>
+                        <div class="row">
+                            <div class="col-md-12  mb-10 d-flex align-items-center">
+                                <h5 class="roboto  mb-0">In-flows & Out-flows</h5>
+                            </div>
+                        </div>
+                        <div class="boxTable">
+                            <ng-container *ngIf="tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
+                                <ng-container *ngFor="let flowData of cashflowData.cashflowData">
+                                    {{flowData.familyMemberFullName}}
+                                    <table mat-table [dataSource]="flowData.cashflowLedgger" class="mb-12 tableOne" id="table-low">
+                                        <ng-container matColumnDef="bankName">
+                                            <th mat-header-cell *matHeaderCellDef class="br w-40 topborderPrimitive">
+                                                Bank A/c
+                                            </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                                <div class="bar"> {{element.bankName}} </div>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="inflow">
+                                            <th mat-header-cell *matHeaderCellDef class="br w-20 topborderGreenColor text-right">
+                                                In-flows </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 greenColor-text text-right">
+                                                <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span> </div>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="outflow">
+                                            <th mat-header-cell *matHeaderCellDef class="br w-20 topborderDanger text-right">
+                                                Out-flows </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-danger text-right">
+                                                <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="netflow">
+                                            <th mat-header-cell *matHeaderCellDef class="br w-20 topborderPrimary text-right">
+                                                Net-flows </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-primary text-right">
+                                                <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
+                                    </table>
+                                </ng-container>
+                                <ng-container>
+                                    <table mat-table [dataSource]="cashflowData.total" class="mb-12" id="table-low">
+                                        <ng-container matColumnDef="bankName">
+                                            <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40">
+                                                Bank A/c
+                                            </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
+                                                <div class="bar">{{element.bankName}} </div>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="inflow">
+                                            <th mat-header-cell *matHeaderCellDef class="br w-20 topborderGreenColor text-right">
+                                                In-flows </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-20 greenColor-text text-right">
+                                                <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span> </div>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="outflow">
+                                            <th mat-header-cell *matHeaderCellDef class="br w-20 topborderDanger text-right">
+                                                Out-flows </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-danger text-right">
+                                                <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="netflow">
+                                            <th mat-header-cell *matHeaderCellDef class="br topborderPrimary w-20 text-right">
+                                                Net-flows </th>
+                                            <td valign="top" mat-cell *matCellDef="let element" class="br text-primary w-20 text-right">
+                                                <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
+                                    </table>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="!tabsLoaded.cashflowData.hasData || !tabsLoaded.cashflowData.dataLoaded">
+                                <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
                                     <ng-container matColumnDef="bankName">
-                                        <th mat-header-cell *matHeaderCellDef class="br w-40 topborderPrimitive"> Bank A/c
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
                                         </th>
                                         <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
                                             <div class="bar"> {{element.bankName}} </div>
@@ -549,113 +657,45 @@
                                     </ng-container>
 
                                     <ng-container matColumnDef="inflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderGreenColor text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor w-20 text-right">
                                             In-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 greenColor-text text-right">
-                                            <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span> </div>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 greenColor-text text-right">
+                                            <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span>
+                                            </div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="outflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderDanger text-right">
-                                            Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-danger text-right">
+                                        <th mat-header-cell *matHeaderCellDef class="br topborderDanger w-20 text-right">
+                                            Out-flows
+                                        </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 text-danger text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span> </div>
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="netflow">
                                         <th mat-header-cell *matHeaderCellDef class="br w-20 topborderPrimary text-right">
-                                            Net-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-primary text-right">
+                                            Out-flows
+                                        </th>
+                                        <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 text-primary text-right">
                                             <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span> </div>
                                         </td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
                                     <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
                                 </table>
+                                <p class="text-primitive">When you start providing data, you will see a summary of cash in-flows and out-flows at a family member level and bank a/c level. </p>
+                                <p class="text-primitive"><span class="f-600"> Out-flows: </span> We’ll consider MF SIP, EMI, Insurance premiums, Recurring deposits.</p>
+                                <p class="text-primitive"> <span class="f-600"> In-flows: </span> We’ll consider maturing Fixed deposits, Recurring deposits, Bonds, KVP, NSC, Life insurance cash flows etc.</p>
                             </ng-container>
-                            <ng-container>
-                                <table mat-table [dataSource]="cashflowData.total" class="mb-12" id="table-low">
-                                    <ng-container matColumnDef="bankName">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
-                                        </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
-                                            <div class="bar">{{element.bankName}} </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="inflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderGreenColor text-right">
-                                            In-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 greenColor-text text-right">
-                                            <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span> </div>
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="outflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br w-20 topborderDanger text-right">
-                                            Out-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br w-20 text-danger text-right">
-                                            <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span> </div>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="netflow">
-                                        <th mat-header-cell *matHeaderCellDef class="br topborderPrimary w-20 text-right">
-                                            Net-flows </th>
-                                        <td valign="top" mat-cell *matCellDef="let element" class="br text-primary w-20 text-right">
-                                            <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span> </div>
-                                        </td>
-                                    </ng-container>
-                                    <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
-                                </table>
-                            </ng-container>
-                        </ng-container>
-                        <ng-container *ngIf="!tabsLoaded.cashflowData.hasData && tabsLoaded.cashflowData.dataLoaded">
-                            <table mat-table [dataSource]="cashflowData.emptyData" class="mb-12" id="table-low">
-                                <ng-container matColumnDef="bankName">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderPrimitive w-40"> Bank A/c
-                                    </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-40">
-                                        <div class="bar"> {{element.bankName}} </div>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="inflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderGreenColor w-20 text-right">
-                                        In-flows </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br w-20 greenColor-text text-right">
-                                        <div class="bar">₹<span appFormatNumber>{{element.inflow}}</span>
-                                        </div>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="outflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br topborderDanger w-20 text-right">
-                                        Out-flows
-                                    </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 text-danger text-right">
-                                        <div class="bar">₹<span appFormatNumber>{{element.outflow}}</span> </div>
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="netflow">
-                                    <th mat-header-cell *matHeaderCellDef class="br w-20 topborderPrimary text-right">
-                                        Out-flows
-                                    </th>
-                                    <td valign="top" mat-cell *matCellDef="let element" class="br  w-20 text-primary text-right">
-                                        <div class="bar">₹<span appFormatNumber>{{element.netflow}}</span> </div>
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="cashflowColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: cashflowColumns;"></tr>
-                            </table>
-                        </ng-container>
+                        </div>
                     </div>
 
                     <!-- recent transactions-->
                     <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                         <div class="row">
                             <div class="col-md-8 pl-0 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Recent online transactions (MF)</h5>
+                                <h5 class="roboto  mb-8">Recent online transactions (MF)</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/admin/transactions/overview']" class="viewBtn mb-8 c-p text-primitive br-2 f-12"> View all </a>
@@ -703,7 +743,7 @@
                     <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                         <div class="row">
                             <div class="col-md-8   d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-8">Recent transactions (As per RTA feeds)</h5>
+                                <h5 class="roboto  mb-8">Recent transactions (As per RTA feeds)</h5>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a [routerLink]="['/admin/transactions/overview']" class="viewBtn c-p mb-8 text-primitive br-2 f-12"> View all </a>
@@ -749,7 +789,7 @@
                     <div class="wrapperBox" #riskProfileSection>
                         <div class="row">
                             <div class="col-md-12  mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0">Risk profile</h5>
+                                <h5 class="roboto  mb-0">Risk profile</h5>
                             </div>
                         </div>
 
@@ -801,8 +841,7 @@
                                         </div>
                                         <div class="col-md-5 pr-0">
                                             <img src="/assets/images/svg/moderate.svg">
-                                            <span>Conservative</span>
-                                            <span>Aggressive</span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -816,7 +855,7 @@
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-12   mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0 ">Document vault</h5>
+                                <h5 class="roboto  mb-0 ">Document vault</h5>
                             </div>
                         </div>
 
@@ -873,7 +912,7 @@
                                                 Add documents
                                             </button>
                                         </div>
-                                        <div class="col-md-5 pr-0">
+                                        <div class="col-md-5 text-center pr-0">
                                             <img src="/assets/images/svg/vault-icon.svg">
                                         </div>
                                     </div>
@@ -887,7 +926,7 @@
                     <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
                         <div class="row">
                             <div class="col-md-12  mb-10 d-flex align-items-center">
-                                <h5 class="roboto ml-12 mb-0 ">Family members</h5>
+                                <h5 class="roboto  mb-0 ">Family members</h5>
                             </div>
                         </div>
 
@@ -911,7 +950,7 @@
 
 
                                         </div>
-                                        <div class="col-md-5 pr-0">
+                                        <div class="col-md-5 text-center pr-0">
                                             <img src="/assets/images/svg/family-members-icon.svg">
                                         </div>
                                     </div>

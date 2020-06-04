@@ -84,6 +84,7 @@
                         <h2 *ngIf="assetStockData" appFormatNumber class="m-0 f-300 text-black pt-4 pl-8 pb-24">
                             ₹<span [value]="assetStockData.grandTotalCurrentValue" appFormatNumber>{{assetStockData.grandTotalCurrentValue?'assetStockData.grandTotalCurrentValue':0}}</span>
                         </h2>
+                        <h2 *ngIf="!assetStockData" class="m-0 f-300 text-black pt-4 pl-8 pb-24">₹0</h2>
                     </div>
                     <div class="col-md-12 p-0">
                         <div class="row bg-light lter pt-20 pb-20 bt-1">
@@ -92,11 +93,17 @@
                                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-black">
                                     ₹<span [value]="assetStockData.grandTotalAmountInvested" appFormatNumber>{{assetStockData.grandTotalAmountInvested?'assetStockData.grandTotalAmountInvested':0}}</span>
                                 </h5>
+                                <h5 *ngIf="!assetStockData" appFormatNumber class="m-0 text-black">
+                                    ₹0
+                                </h5>
                             </div>
                             <div class="col-md-5 pr-0 pl-12">
                                 <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
                                 <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
                                     ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss?'assetStockData.grandTotalUnrealizedGainLoss':0}}</span>
+                                </h5>
+                                <h5 *ngIf="!assetStockData" appFormatNumber class="m-0 text-danger">
+                                    ₹0
                                 </h5>
                             </div>
                             <div class="col-md-3 pr-0 pl-12">
@@ -106,6 +113,9 @@
                                     <i class="material-icons text-danger v-sub f-18 f-700">
                                         arrow_upward
                                     </i>
+                                </h5>
+                                <h5 *ngIf="!assetStockData" appFormatNumber class="m-0 text-danger">
+                                    ₹0
                                 </h5>
                             </div>
                         </div>

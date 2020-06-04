@@ -142,7 +142,7 @@
                         {{(data.bankName)?data.bankName:'-'}}
                     </div>
                 </div> -->
-                <div class="row bb p-8 b-l br" *ngIf="data.nomineeList.length == 0 ">
+                <div class="row bb p-8 b-l br" *ngIf="!data.nomineeList || data.nomineeList.length == 0 ">
                     <div class="col-md-8 text-left f-14 roboto p-0" >
                         Nominee
                     </div>
