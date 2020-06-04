@@ -171,6 +171,14 @@
                 {{(_data.policyInceptionDate) ? (_data.policyInceptionDate | date:'dd/MM/yyyy') : '-'}}
               </div>
             </div>
+            <div class="row bb p-8 b-l br">
+              <div class="col-md-8 text-left f-14 roboto p-0">
+                Duration remaining
+              </div>
+              <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
+                {{(_data.durationRemaining) ? _data.durationRemaining : '-'}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
