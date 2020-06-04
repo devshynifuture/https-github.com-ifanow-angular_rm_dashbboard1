@@ -400,7 +400,9 @@ addNewNominee(data) {
                 if(element.get('id').value != null){
                   objStock.id = this.editApiData.id;
                 }
-          
+                if(objStock.id == null){
+                  objStock.ownerList[0].id = null;
+                }
           
           finalStocks.push(objStock);
         })
