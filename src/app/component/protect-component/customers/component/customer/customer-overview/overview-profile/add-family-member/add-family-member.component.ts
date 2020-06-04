@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import * as moment from 'moment';
-import {MergeClientFamilyMemberComponent} from '../merge-client-family-member/merge-client-family-member.component';
+import { MergeClientFamilyMemberComponent } from '../merge-client-family-member/merge-client-family-member.component';
 
 @Component({
   selector: 'app-add-family-member',
@@ -22,15 +22,15 @@ export class AddFamilyMemberComponent implements OnInit {
   familyMemberList = {
     firstRow: [],
     secondRow: [
-      {name: 'Father', imgUrl: '/assets/images/svg/father-profile.svg', selected: false, relationshipTypeId: 6, genderId: 1},
-      {name: 'Mother', genderId: 2, imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 7}
+      { name: 'Father', imgUrl: '/assets/images/svg/father-profile.svg', selected: false, relationshipTypeId: 6, genderId: 1 },
+      { name: 'Mother', genderId: 2, imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 7 }
     ],
     thirdRow: [
       {
         name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, genderId: 1, count: 1, relationshipTypeId: 4
       },
-      {name: 'Daughter', genderId: 2, imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 5},
-      {name: 'Others', genderId: 3, imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 10}
+      { name: 'Daughter', genderId: 2, imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 5 },
+      { name: 'Others', genderId: 3, imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 10 }
     ]
   };
 
@@ -41,8 +41,8 @@ export class AddFamilyMemberComponent implements OnInit {
   step = 1;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private eventService: EventService,
-              private peopleService: PeopleService) {
+    private fb: FormBuilder, private eventService: EventService,
+    private peopleService: PeopleService) {
   }
 
   createFamily: any;
@@ -84,17 +84,17 @@ export class AddFamilyMemberComponent implements OnInit {
       if (genderId == 2) {
         this.familyMemberList.firstRow.push({
           name: 'Husband',
-          imgUrl: '/assets/images/svg/wife-profile.svg',
+          imgUrl: '/assets/images/svg/man-profile.svg',
           selected: false,
           relationshipTypeId: 2, genderId: 1
         });
       } else {
         this.familyMemberList.firstRow.push({
-            name: 'Wife',
-            imgUrl: '/assets/images/svg/wife-profile.svg',
-            selected: false,
-            relationshipTypeId: 3, genderId: 2
-          }
+          name: 'Wife',
+          imgUrl: '/assets/images/svg/wife-profile.svg',
+          selected: false,
+          relationshipTypeId: 3, genderId: 2
+        }
         );
       }
     }
@@ -115,7 +115,7 @@ export class AddFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState((data == 'close') ? {state: 'close'} : {state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
   next() {
