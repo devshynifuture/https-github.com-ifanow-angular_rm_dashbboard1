@@ -145,7 +145,7 @@ export class ClientAddressComponent implements OnInit {
     //   this.firstTimeEditFlag = true;
     // }
     // this.userMappingIdFlag = true;
-    // this.addressForm.get('proofIdNum').updateValueAndValidity();
+    this.addressForm.get('proofIdNum').updateValueAndValidity();
 
   }
 
