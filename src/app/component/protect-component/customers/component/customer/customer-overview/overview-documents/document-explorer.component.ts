@@ -677,6 +677,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   starFileRes(data) {
     console.log(data);
     if (data) {
+      this.eventService.openSnackBar('Starred successfully', 'Dismiss');
       this.getCount()
       this.getAllFileList(this.valueTab, 'starred');
     }
