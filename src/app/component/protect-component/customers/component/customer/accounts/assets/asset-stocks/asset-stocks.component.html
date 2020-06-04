@@ -19,7 +19,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
         </div>
-        <div *ngIf="portfolioData!=undefined" class="col-md-8 p-0 right text-right">
+        <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 right text-right">
             <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p">
             <img src="assets/images/svg/up-down.svg" class="c-p">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
@@ -72,7 +72,7 @@
             </mat-menu>
         </div>
     </div>
-    <div class="overflow-y">
+    <div class="overflow-y"  *ngIf="portfolioData.length > 0">
         <div class="row pt-12 w-1024">
             <div class="col-md-5 pl-0 pr-4">
                 <div class="row b-a">
@@ -99,7 +99,7 @@
                             </div>
                             <div class="col-md-5 pr-0 pl-12">
                                 <p class="text-custom m-0 roboto">Unrealized gain/loss</p>
-                                <h5 *ngIf="assetStockData" appFormatNumber class="m-0 text-danger">
+                                <h5 *ngIf="assetStockData" appFormatNumber class="m-0" [ngClass]="gain?'textGreen':'text-danger'">
                                     ₹<span [value]="assetStockData.grandTotalUnrealizedGainLoss" appFormatNumber>{{assetStockData.grandTotalUnrealizedGainLoss?'assetStockData.grandTotalUnrealizedGainLoss':0}}</span>
                                 </h5>
                                 <h5 *ngIf="!assetStockData" appFormatNumber class="m-0 text-danger">
@@ -108,10 +108,13 @@
                             </div>
                             <div class="col-md-3 pr-0 pl-12">
                                 <p class="text-custom m-0 roboto">Returns</p>
-                                <h5 *ngIf="assetStockData" class="m-0 text-danger">
-                                    ₹<span [value]="assetStockData.grandTotalAbsReturns" appFormatNumber>{{assetStockData.grandTotalAbsReturns?'assetStockData.grandTotalAbsReturns':0}}</span>
-                                    <i class="material-icons text-danger v-sub f-18 f-700">
+                                <h5 *ngIf="assetStockData" class="m-0" [ngClass]="gain?'textGreen':'text-danger'">
+                                    <span>{{assetStockData.grandTotalAbsReturns?assetStockData.grandTotalAbsReturns:0}}{{assetStockData.grandTotalAbsReturns?'%':''}}</span>
+                                    <i class="material-icons v-sub f-18 f-700 textGreen" *ngIf="gain">
                                         arrow_upward
+                                    </i>
+                                    <i class="material-icons v-sub f-18 f-700 text-danger" *ngIf="!gain">
+                                        arrow_downward
                                     </i>
                                 </h5>
                                 <h5 *ngIf="!assetStockData" appFormatNumber class="m-0 text-danger">
@@ -254,7 +257,7 @@
                     </div>
                 </div>
             </div>
-            <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
+            <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12" style="width:100% !important;">
                 <div class="col-md-12 p-0">
                     <div class="bg-white">
                         <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}}
@@ -270,7 +273,7 @@
      </div>
    </div> -->
                 <div class="stock-overview">
-                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
+                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low" >
                         <!-- <ng-container matColumnDef="static-header">
         <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
             class=" text-center text-primary bg-white" mat-header-cell>
@@ -309,7 +312,7 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.balanceShares}}</span></div>
+                                <div class="bar">{{element.balanceShares}}</div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -371,7 +374,7 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.absoluteReturn}}</span></div>
+                                <div class="bar"><span >{{element.absoluteReturn}} {{element.absoluteReturn?'%':''}}</span></div>
                             </td>
                             <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
                                 ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
@@ -428,7 +431,7 @@
     </div>
 
 
-    <div *ngIf="portfolioData==undefined" class="row">
+    <div *ngIf="portfolioData.length <= 0" class="row">
         <div class="d-flex flex-column align-items-center col-md-12">
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">{{noData }}</h4>

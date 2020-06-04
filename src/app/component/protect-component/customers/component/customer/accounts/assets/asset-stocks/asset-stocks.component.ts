@@ -27,10 +27,10 @@ export class AssetStocksComponent implements OnInit {
   advisorId: any;
   clientId: any;
   assetStockData: any;
-  portfolioData: any;
+  portfolioData: any=[];
   isLoading = false;
   noData: string;
-
+  
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private eventService: EventService) {
   }
@@ -69,7 +69,9 @@ export class AssetStocksComponent implements OnInit {
   }
 
   categories:any;
+  grandTotalUnrealizedGainLoss:any;
   stockListGroup:any = [];
+  gain:boolean = true;
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
     if(data){
@@ -78,6 +80,13 @@ export class AssetStocksComponent implements OnInit {
     if (data.portfolios.length != 0) {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
+     this.grandTotalUnrealizedGainLoss = data.grandTotalUnrealizedGainLoss;
+     if(Math.sign(this.grandTotalUnrealizedGainLoss) == 1){
+      this.gain = true;
+     }
+     else{
+      this.gain = false;
+     }
       this.portfolioData.forEach(p => {
         p.categoryWiseStockList.forEach((s, i) => {
           for (let index = 0; index < s.stockList.length; index++) {
@@ -93,6 +102,7 @@ export class AssetStocksComponent implements OnInit {
       console.log(this.portfolioData,"this.portfolioData 123");
       
     } else {
+      this.portfolioData = []; 
       this.noData = 'No Stocks Found';
     }
   }
