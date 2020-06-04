@@ -536,7 +536,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: 'You have received this email because' +this.getUserInfo.name+' shared link with you.  ' + '' + this.element.link
+        messageBody: 'You have received this email because' + this.getUserInfo.name+' shared link with you.  ' + '' + this.element.link
       }
       if(this.element != ""){
         this.custumService.sendSharebleLink(obj).subscribe(
