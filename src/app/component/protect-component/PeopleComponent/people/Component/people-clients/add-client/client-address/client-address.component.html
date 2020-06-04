@@ -114,7 +114,7 @@
         <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter pin code" [maxLength]="6" #pinCode
+                    <input autocomplete="off" placeholder="Enter pin code" maxlength="6" #pinCode
                         (focusout)="getPostalPin($event.target.value)" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode"
                         class="form-control">
