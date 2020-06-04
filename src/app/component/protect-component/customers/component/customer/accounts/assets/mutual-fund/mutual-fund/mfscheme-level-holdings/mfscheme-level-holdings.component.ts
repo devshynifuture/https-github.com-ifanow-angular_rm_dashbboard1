@@ -533,7 +533,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         if (mutualFundTransactions.length > 0) {
           this.customerService.postEditTransactionMutualFund(transactionEditObj)
             .subscribe(res => {
-              if (res) {
+              if (res || res==0) {
                 console.log("success:: transaction::", res);
 
                 this.customerService.postMutualFundEdit(postObj)
