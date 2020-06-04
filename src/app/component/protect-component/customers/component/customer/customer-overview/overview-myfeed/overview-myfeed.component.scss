@@ -1,390 +1,464 @@
-.myfeedWrapper {
-    margin: 42px auto 0;
-    width: 78%;
-    .row {
-        margin-right: -15px !important;
-        margin-left: -15px !important;
-    }
-}
-
-.myFeedUi {
-    margin: 40px 0px 0px 0px;
-    padding: 0px;
-    list-style-type: none;
-    li {
-        height: 43px;
-        display: flex;
-        align-items: center;
-        padding-left: 32px;
-        border-left: 6px solid transparent;
-        cursor: pointer;
-    }
-    .activeClass {
-        background: #D9DEE1;
-        border-left: 6px solid #008FFF;
-    }
-}
-
-.feedInformation {
-    .clientNameBox {
-        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
-        border-radius: 0px;
-        padding: 14px 20px;
-        margin-top: 35px;
-    }
-    .wrapperBox {
-        margin-top: 34px;
-    }
-    .viewBtn {
-        display: inline-block;
-        border: 1px solid #83959D;
-        padding: 2px 5px;
-    }
-    .borderChatBox {
-        width: 100%;
-        height: 260px;
-        border: 1px solid #D9DEE1;
-        margin-top: 10px;
-        img {
-            max-width: 100%;
-        }
-    }
-    .scrollingDiv {
-        // margin-top: 10px;
-        .fundBox {
-            min-width: 240px;
-            height: 170px;
-            border-radius: 4px;
-            padding: 10px;
-            border: 1px solid #D9DEE1;
-            margin-right: 20px;
+        .myfeedWrapper {
+            margin: 42px auto 0;
+            width: 78%;
             .row {
                 margin-right: -15px !important;
                 margin-left: -15px !important;
             }
-            .mfBox {
-                width: 30px;
-                height: 30px;
+        }
+        
+        .myFeedUi {
+            margin: 40px 0px 0px 0px;
+            padding: 0px;
+            list-style-type: none;
+            li {
+                height: 43px;
+                display: flex;
+                align-items: center;
+                padding-left: 32px;
+                border-left: 6px solid transparent;
+                cursor: pointer;
+            }
+            .activeClass {
+                background: #D9DEE1;
+                border-left: 6px solid #008FFF;
+            }
+        }
+        
+        .feedInformation {
+            .clientNameBox {
+                box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+                border-radius: 0px;
+                padding: 14px 20px;
+                margin-top: 35px;
+            }
+            .wrapperBox {
+                margin-top: 34px;
+            }
+            .viewBtn {
                 display: inline-block;
+                border: 1px solid #83959D;
+                padding: 2px 5px;
+            }
+            .borderChatBox {
+                width: 100%;
+                height: 260px;
+                border-radius: 4px !important;
+                border: 1px solid #D9DEE1;
+                margin-top: 10px;
+                img {
+                    max-width: 100%;
+                }
+                .w-180 {
+                    width: 180px;
+                }
+            }
+            .scrollingDiv {
+                // margin-top: 10px;
+                .fundBox {
+                    min-width: 240px;
+                    height: 170px;
+                    border-radius: 4px;
+                    padding: 10px;
+                    border: 1px solid #D9DEE1;
+                    margin-right: 20px;
+                    .row {
+                        margin-right: -15px !important;
+                        margin-left: -15px !important;
+                    }
+                    .mfBox {
+                        width: 50px;
+                        height: 30px;
+                        display: inline-block;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+                }
+                .goalsOverViewBox {
+                    width: 400px;
+                    height: 163px;
+                    border: 1px solid #D9DEE1;
+                    border-radius: 4px;
+                    padding: 10px;
+                    margin-right: 20px;
+                }
+                .insuranceListBox {
+                    width: 300px;
+                    height: 136px;
+                    border: 1px solid #D9DEE1;
+                    border-radius: 4px;
+                    padding: 10px;
+                    margin-right: 20px;
+                }
+                .transactionsBox {
+                    width: 300px;
+                    height: 166px;
+                    border: 1px solid #D9DEE1;
+                    border-radius: 4px;
+                    padding: 10px;
+                    margin-right: 20px;
+                    .spanClass {
+                        display: inline-block;
+                        padding: 0px 4px;
+                        border-radius: 2px;
+                    }
+                    .spanClassDanger {
+                        display: inline-block;
+                        border: 1px solid #FF6823;
+                        padding: 0px 4px;
+                        border-radius: 2px;
+                    }
+                }
+            }
+            .activityBox {
+                border: 1px solid #D9DEE1;
                 border-radius: 4px;
-                font-size: 14px;
+                height: 140px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .vaultbBox {
+                border: 1px solid #D9DEE1;
+                padding: 20px;
+                border-radius: 4px;
+                .vaultBtn {
+                    width: 196px;
+                    height: 40px;
+                }
+            }
+            .riskProfileBox {
+                border: 1px solid #D9DEE1;
+                border-radius: 4px;
+                .numberBox {
+                    width: 100px;
+                    height: 100px;
+                    margin: 0px auto;
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    justify-content: center;
+                    border: 3px solid #1F1F1F;
+                    font-size: 48px;
+                }
             }
         }
-        .goalsOverViewBox {
-            width: 400px;
-            height: 163px;
-            border: 1px solid #D9DEE1;
-            border-radius: 4px;
-            padding: 10px;
-            margin-right: 20px;
-        }
-        .insuranceListBox {
-            width: 300px;
-            height: 136px;
-            border: 1px solid #D9DEE1;
-            border-radius: 4px;
-            padding: 10px;
-            margin-right: 20px;
-        }
-        .transactionsBox {
-            width: 300px;
-            height: 166px;
-            border: 1px solid #D9DEE1;
-            border-radius: 4px;
-            padding: 10px;
-            margin-right: 20px;
-            .spanClass {
-                display: inline-block;
-                padding: 0px 4px;
-                border-radius: 2px;
-            }
-            .spanClassDanger {
-                display: inline-block;
-                border: 1px solid #FF6823;
-                padding: 0px 4px;
-                border-radius: 2px;
+        
+        .advi_name {
+            width: 45px;
+            height: 45px;
+            overflow: hidden;
+            border-radius: 50%;
+            img {
+                max-width: 100%;
             }
         }
-    }
-    .activityBox {
-        border: 1px solid #D9DEE1;
-        border-radius: 4px;
-        height: 140px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-    .vaultbBox {
-        border: 1px solid #D9DEE1;
-        padding: 20px;
-        border-radius: 4px;
-        .vaultBtn {
-            width: 196px;
+        
+        .markBtn {
+            background: transparent;
+            width: 78px;
+            height: 30px;
+            border: 1px solid #83959D;
+            padding: 0px;
+        }
+        
+        .paddleft30 {
+            padding-left: 30px;
+        }
+        
+        // .scrolling_myFeed {
+        //     // height: 500px;
+        //     // overflow-y: scroll;
+        // }
+         ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+            line-height: 30px !important;
+            padding: 0 !important;
+            font-size: 14px;
+        }
+        
+         ::ng-deep .matToggleToggle button {
+            height: 30px !important;
+        }
+        
+        .piechartMutualFund {
+            height: 270px;
+        }
+        
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+         ::ng-deep .highcharts-credits {
+            display: none !important;
+        }
+        
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        
+        .highcharts-data-table td,
+        .highcharts-data-table th,
+        .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        
+        .highcharts-data-table thead tr,
+        .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+        
+        .highcharts-figure,
+        .highcharts-data-table table {
+            min-width: 360px;
+            max-width: 800px;
+            height: 330px;
+        }
+        
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        
+        .highcharts-data-table td,
+        .highcharts-data-table th,
+        .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        
+        .highcharts-data-table thead tr,
+        .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+        
+        #cashFlow {
+            height: 400px;
+        }
+        
+        .highcharts-figure,
+        .highcharts-data-table table {
+            min-width: 310px;
+            max-width: 800px;
+        }
+        
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        
+        .highcharts-data-table td,
+        .highcharts-data-table th,
+        .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        
+        .highcharts-data-table thead tr,
+        .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+        
+        .disable-checkbox {
+            pointer-events: none;
+        }
+        
+        .documentImg {
+            width: 40px;
             height: 40px;
+            border-radius: 50%;
+            margin-right: 8px;
         }
-    }
-    .riskProfileBox {
-        border: 1px solid #D9DEE1;
-        border-radius: 4px;
-        .numberBox {
-            width: 100px;
-            height: 100px;
-            margin: 0px auto;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            border: 3px solid #1F1F1F;
-            font-size: 48px;
+        
+        .pointUl {
+            display: block;
+            margin-top: 60px;
+            li {
+                text-align: left;
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+            }
         }
-    }
-}
-
-.advi_name {
-    width: 45px;
-    height: 45px;
-    overflow: hidden;
-    border-radius: 50%;
-    img {
-        max-width: 100%;
-    }
-}
-
-.markBtn {
-    background: transparent;
-    width: 78px;
-    height: 30px;
-    border: 1px solid #83959D;
-    padding: 0px;
-}
-
-.paddleft30 {
-    padding-left: 30px;
-}
-
-// .scrolling_myFeed {
-//     // height: 500px;
-//     // overflow-y: scroll;
-// }
-::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
-    line-height: 30px !important;
-    padding: 0 !important;
-    font-size: 14px;
-}
-
-::ng-deep .matToggleToggle button {
-    height: 30px !important;
-}
-
-.piechartMutualFund {
-    height: 270px;
-}
-
-.highcharts-data-table table {
-    font-family: Verdana, sans-serif;
-    border-collapse: collapse;
-    border: 1px solid #EBEBEB;
-    margin: 10px auto;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-}
-
-::ng-deep .highcharts-credits {
-    display: none !important;
-}
-
-.highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
-}
-
-.highcharts-data-table th {
-    font-weight: 600;
-    padding: 0.5em;
-}
-
-.highcharts-data-table td,
-.highcharts-data-table th,
-.highcharts-data-table caption {
-    padding: 0.5em;
-}
-
-.highcharts-data-table thead tr,
-.highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
-
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
-
-.highcharts-figure,
-.highcharts-data-table table {
-    min-width: 360px;
-    max-width: 800px;
-    height: 330px;
-}
-
-.highcharts-data-table table {
-    font-family: Verdana, sans-serif;
-    border-collapse: collapse;
-    border: 1px solid #EBEBEB;
-    margin: 10px auto;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-}
-
-.highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
-}
-
-.highcharts-data-table th {
-    font-weight: 600;
-    padding: 0.5em;
-}
-
-.highcharts-data-table td,
-.highcharts-data-table th,
-.highcharts-data-table caption {
-    padding: 0.5em;
-}
-
-.highcharts-data-table thead tr,
-.highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
-
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
-
-#cashFlow {
-    height: 400px;
-}
-
-.highcharts-figure,
-.highcharts-data-table table {
-    min-width: 310px;
-    max-width: 800px;
-}
-
-.highcharts-data-table table {
-    font-family: Verdana, sans-serif;
-    border-collapse: collapse;
-    border: 1px solid #EBEBEB;
-    margin: 10px auto;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-}
-
-.highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
-}
-
-.highcharts-data-table th {
-    font-weight: 600;
-    padding: 0.5em;
-}
-
-.highcharts-data-table td,
-.highcharts-data-table th,
-.highcharts-data-table caption {
-    padding: 0.5em;
-}
-
-.highcharts-data-table thead tr,
-.highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
-
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
-
-.disable-checkbox {
-    pointer-events: none;
-}
-
-.documentImg {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.pointUl {
-    display: block;
-    margin-top: 60px;
-    li {
-        text-align: left;
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-    }
-}
-
-.pointNumber {
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.next-slide {
-    position: absolute;
-    top: 80px;
-    right: 0;
-    cursor: pointer;
-}
-
-.tableOne {
-    tr.mat-header-row {
-        height: 35px;
-    }
-}
-
-.boxTable {
-    #table-low thead tr {
-        background-color: transparent !important;
-    }
-}
-
-.sticky-top {
-    //  position: -webkit-sticky;
-    position: sticky;
-    top: 140px;
-    z-index: 1020;
-}
-
-::ng-deep .feedSumaaryMarket .toggleBtnClass .mat-button-toggle {
-    width: 75px !important;
-}
-
-::ng-deep .heightBox svg {
-    height: 250px !important;
-    width: 240px !important;
-}
-
-.myfeedWrapper {
-    li.activeClass {
-        width: 100%;
-        /* height: 40px; */
-        padding-top: 10px;
-        padding-bottom: 10px;
-        text-align: left;
-    }
-}
-
-::ng-deep .boxTable #table-low tbody td {
-    vertical-align: middle;
-}
+        
+        .pointNumber {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .next-slide {
+            position: absolute;
+            top: 80px;
+            right: 0;
+            cursor: pointer;
+        }
+        
+        .tableOne {
+            tr.mat-header-row {
+                height: 35px;
+            }
+        }
+        
+        .boxTable {
+            border: 1px solid #D9DEE1;
+            border-radius: 4px;
+            padding: 20px;
+            #table-low thead tr {
+                background-color: transparent !important;
+            }
+        }
+        
+        .sticky-top {
+            //  position: -webkit-sticky;
+            position: sticky;
+            top: 140px;
+            z-index: 1020;
+        }
+        
+         ::ng-deep .feedSumaaryMarket .toggleBtnClass .mat-button-toggle {
+            width: 75px !important;
+        }
+        
+         ::ng-deep .heightBox svg {
+            height: 250px !important;
+            width: 240px !important;
+        }
+        
+        .myfeedWrapper {
+            li.activeClass {
+                width: 100%;
+                /* height: 40px; */
+                padding-top: 10px;
+                padding-bottom: 10px;
+                text-align: left;
+            }
+        }
+        
+         ::ng-deep .boxTable #table-low tbody td {
+            vertical-align: middle;
+        }
+        
+        .borderChatBoxMutual {
+            width: 100%;
+            height: 310px;
+            border: 1px solid #D9DEE1;
+            margin-top: 10px;
+            border-radius: 4px !important;
+            img {
+                max-width: 100%;
+            }
+            .w-180 {
+                width: 180px;
+            }
+        }
+        
+        .piechartMutualFund1 {
+            height: 250px;
+        }
+        
+         ::ng-deep .heightBox1 svg {
+            height: 250px !important;
+            width: 240px !important;
+        }
+        
+        .widthValueportfolio {
+            width: 33%;
+        }
+        
+        .border-Right-line {
+            border-right: 1px solid #D9DEE1;
+        }
+        
+        .borderChatBoxEmpty {
+            width: 100%;
+            padding: 20px;
+            height: 240px;
+            border-radius: 4px !important;
+            border: 1px solid #D9DEE1;
+            margin-top: 10px;
+            img {
+                max-width: 100%;
+            }
+            .w-180 {
+                width: 180px;
+            }
+        }
+        
+        .pointUlNew {
+            display: block;
+            margin-top: 8px;
+            li {
+                text-align: left;
+                // display: flex;
+                // align-items: center;
+                margin-bottom: 5px;
+            }
+        }
+        
+        .fundBox2 {
+            min-width: 240px;
+            height: 136px;
+            border-radius: 4px;
+            padding: 15px;
+            border: 1px solid #D9DEE1;
+            margin-right: 20px;
+        }

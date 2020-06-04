@@ -20,6 +20,7 @@ import { ErrPageOpenComponent } from 'src/app/component/protect-component/custom
 import { SubscriptionDataService } from '../../subscription-data.service';
 import { SubscriptionDetailsComponent } from '../common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { element } from 'protractor';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -145,13 +146,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService,
-    public enumService: EnumServiceService, private datePipe: DatePipe, private utilservice: UtilService) {
+    public enumService: EnumServiceService, private datePipe: DatePipe, private utilservice: UtilService, private datePipie: DatePipe) {
   }
 
 
   ngOnInit() {
     // this.data = [{}, {}, {}];
-    
+
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     if (this.utilservice.checkSubscriptionastepData(3) == undefined) {
@@ -302,7 +303,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     if (data && data.length > 0) {
       this.data = data;
-
+      this.data.forEach(element => {
+        element['previousBillDate'] = (element.prevBillingDate) ? this.datePipe.transform(element.prevBillingDate, 'dd/MM/yyyy') : 'N/A';
+        element['nextBillDate'] = (element.nextBillingDate) ? this.datePipe.transform(element.nextBillingDate, 'dd/MM/yyyy') : 'N/A';
+      })
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       uisubs.scrollTo(0, this.scrollPosition);
@@ -365,7 +369,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.tableData = [];
-              this.getClientSubData(false, false);
+            this.getClientSubData(false, false);
 
           }
           rightSideDataSub.unsubscribe();
@@ -403,7 +407,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         feeModeName = 'NACH Mandate';
         break;
       default:
-        feeModeName = '';
+        feeModeName = 'N/A';
     }
 
     return feeModeName;

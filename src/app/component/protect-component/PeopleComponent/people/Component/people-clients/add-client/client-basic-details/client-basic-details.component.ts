@@ -379,6 +379,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       }
       const obj: any = {
         parentAdvisorId: this.advisorId,
+        adminAdvisorId: AuthService.getAdminId(),
         advisorId,
         residentFlag: parseInt(this.invTaxStatus),
         emailList,
@@ -564,6 +565,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
     ;
     const obj = {
+      adminAdvisorId: AuthService.getAdminId(),
+      advisorId: AuthService.getClientData().advisorId,
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
       name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,

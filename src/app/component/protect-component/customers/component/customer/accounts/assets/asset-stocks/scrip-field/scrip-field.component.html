@@ -2,9 +2,9 @@
     <mat-form-field>
         <input matInput autocomplete="off" #name (keyup)="filterScripList(name.value)" aria-label="State" formControlName="scripName" [matAutocomplete]="auto" class="form-control br-0 pl-8">
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option class="flexCenter" (click)="addScrip()"><strong><i class="material-icons">add</i>New
+            <!-- <mat-option class="flexCenter" (click)="addScrip()"><strong><i class="material-icons">add</i>New
                     scrip</strong>
-            </mat-option>
+            </mat-option> -->
             <mat-option *ngFor="let singleScrip of scripList" [hidden]="!singleScrip.name" (click)="selectedScript(singleScrip)" [value]="singleScrip.name">
                 {{singleScrip.name}}
             </mat-option>
@@ -20,8 +20,8 @@
             <mat-option *ngFor="let singleScrip of scripList" [value]="singleScrip.name" (click)="selectedScript(singleScrip)">
                 {{ singleScrip.name}}
             </mat-option>
-            <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
-            </mat-option>
+            <!-- <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
+            </mat-option> -->
         </mat-autocomplete>
         <mat-error>This field is required</mat-error>
     </mat-form-field>

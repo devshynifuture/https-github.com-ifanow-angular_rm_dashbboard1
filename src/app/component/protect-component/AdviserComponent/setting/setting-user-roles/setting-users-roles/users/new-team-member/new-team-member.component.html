@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div class="row pt-28">
+    <div class="row pt-28" *ngIf="!data.is_add_call">
         <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
             <h5 class="m-0 pt-8">Profile Photo</h5>
         </div>
@@ -112,7 +112,12 @@
         </div>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28" *ngIf="isLoading">Loading data...</div>
+<div class="row" *ngIf="isLoading">
+    <div class="col-md-12 d-flex justify-content-center align-items-center h-80vh">
+        <div class="pt-90 pl-28 pr-28">Loading data...</div>
+    </div>
+</div>
+
 <div class="bottom-fixed wrapper-12 w-35">
     <div class="row">
         <div class="col-md-4">

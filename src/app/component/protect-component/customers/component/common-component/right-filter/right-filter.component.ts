@@ -331,6 +331,11 @@ export class RightFilterComponent implements OnInit {
         }
 
       });
+      this.financialYears.forEach(item => {
+        if(item.from >= 2018){
+          form.get('grandfathering').setValue('1');
+        }
+      })
     }
     if (this._data.filterDataForCapital) {
       this.financialYears.forEach(item => item.selected = '');

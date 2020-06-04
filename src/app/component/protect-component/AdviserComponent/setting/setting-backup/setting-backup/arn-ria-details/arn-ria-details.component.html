@@ -89,7 +89,9 @@
         <div class="boxEmpty mt-52">
             <img src="assets/images/svg/arn-ria-details-empty-state.svg">
             <h4 class="mt-24 mb-12"> No details added yet </h4>
-            <button class="btn-primary addon v-middle " mat-stroked-button>
+            <button class="btn-primary addon v-middle " mat-stroked-button
+                (click)="openArnDetails(null, null, true)"
+                [disabled]="utilService.isLoading">
                 ADD NEW
             </button>
         </div>
