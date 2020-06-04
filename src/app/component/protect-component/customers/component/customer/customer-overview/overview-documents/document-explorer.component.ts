@@ -372,6 +372,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   keyPress(event, tabValue) {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
+    this.openFolderName = []
     if (event == '') {
       this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
@@ -670,14 +671,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
-      data => this.starFileRes(data)
+      data => this.starFileRes(data,flag)
     );
   }
 
-  starFileRes(data) {
+  starFileRes(data,flag) {
     console.log(data);
     if (data) {
-      this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      if(flag == 0){
+        this.eventService.openSnackBar('Removed starred successfully', 'Dismiss');
+      }else{
+        this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      }
       this.getCount()
       this.getAllFileList(this.valueTab, 'starred');
     }
