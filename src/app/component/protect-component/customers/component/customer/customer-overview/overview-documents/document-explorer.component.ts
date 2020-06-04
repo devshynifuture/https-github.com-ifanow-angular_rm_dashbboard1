@@ -670,14 +670,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
-      data => this.starFileRes(data)
+      data => this.starFileRes(data,flag)
     );
   }
 
-  starFileRes(data) {
+  starFileRes(data,flag) {
     console.log(data);
     if (data) {
-      this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      if(flag == 0){
+        this.eventService.openSnackBar('Removed starred successfully', 'Dismiss');
+      }else{
+        this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      }
       this.getCount()
       this.getAllFileList(this.valueTab, 'starred');
     }
