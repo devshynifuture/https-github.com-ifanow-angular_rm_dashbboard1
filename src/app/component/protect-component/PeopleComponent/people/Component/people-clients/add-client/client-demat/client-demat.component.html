@@ -11,7 +11,7 @@
     </i>
   </div>
 </div>
-<div class="pl-16 pb-12 mob-pl-0" [formGroup]="dematForm">
+<div class="pl-16 pb-12 mob-pl-0" [formGroup]="dematForm" [ngClass]="{'pb-48': fieldFlag==undefined}">
   <div [ngClass]="{'pt-76': fieldFlag==undefined}">
     <!-- <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
       <h5 class="m-0 pt-8 mob-pb-10">Mode of holding</h5>

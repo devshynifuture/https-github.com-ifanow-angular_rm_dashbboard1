@@ -135,6 +135,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   currentViewId = 1;
   greeterFnID:any;
   mutualFund: any;
+  userInfo:any;
 
   constructor(
     private customerService: CustomerService,
@@ -151,6 +152,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
+    this.userInfo = AuthService.getUserInfo();
     if (!this.orgDetails) {
       this.orgDetails = {};
     }
@@ -724,7 +726,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           }
         })
         let leddger = {
-          bankName: 'need to be mapped' + bank,
+          bankName: account_transactions[0].bankName,
           inflow: account_income,
           outflow: account_expense,
           netflow: account_income - account_expense

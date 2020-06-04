@@ -12,7 +12,7 @@
         </i>
     </div>
 </div>
-<div class="pb-12" [ngClass]="{'pb-90': fieldFlag==undefined}" [formGroup]="addressForm">
+<div class="pb-12" [ngClass]="{'pb-90': fieldFlag==undefined,'pt-90': fieldFlag==undefined}" [formGroup]="addressForm">
     <h4 class="f-500 text-black pt-20 pl-20 m-0">Permanent address</h4>
     <!-- <div *ngIf="permanentAddFlag" class="row pt-24">
         <div class="col-md-4 text-right">
@@ -107,14 +107,14 @@
             </div>
         </div>
     </div>
-    <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Pin code</h5>
+    <div class="row pt-58">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
+            <h5 class="m-0">Pin code</h5>
         </div>
         <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 people-pincode">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter pin code" [maxLength]="6" #pinCode
+                    <input autocomplete="off" placeholder="Enter pin code" maxlength="6" #pinCode
                         (focusout)="getPostalPin($event.target.value)" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode"
                         class="form-control">
@@ -123,7 +123,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+        <div class="col-md-1 p-0 d-flex align-items-center justify-content-center">
             <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
         </div>
     </div>

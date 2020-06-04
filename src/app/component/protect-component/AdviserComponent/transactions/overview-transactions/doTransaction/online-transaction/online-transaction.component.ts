@@ -20,6 +20,49 @@ import {of} from 'rxjs';
 })
 export class OnlineTransactionComponent implements OnInit {
 
+  isAdvisorSection = true;
+
+  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
+              private eventService: EventService, private fb: FormBuilder,
+              public processTransaction: ProcessTransactionService, private router: Router,
+              private enumDataService: EnumDataService, private peopleService: PeopleService) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    if (!this.inputData) {
+      this.inputData = {};
+    } else {
+      if (this.inputData.isAdvisorSection == false) {
+        this.isAdvisorSection = false;
+      }
+    }
+    this.familyMemberList = this.enumDataService.getClientAndFamilyData('');
+    if (this.familyMemberList && this.familyMemberList.length > 0) {
+
+    } else {
+      const obj = {
+        advisorId: AuthService.getAdvisorId(),
+      };
+      this.peopleService.getClientFamilyMemberList(obj).subscribe(responseData => {
+        this.familyMemberList = responseData;
+        this.enumDataService.setClientAndFamilyData(responseData);
+      }, error => {
+      });
+    }
+
+
+    if (this.isViewInitCalled) {
+      this.getdataForm(data);
+    }
+  }
+
   formStep = 'step-1';
   isSaveAndAddClicked = false;
   familyMemberList = [];
@@ -63,31 +106,8 @@ export class OnlineTransactionComponent implements OnInit {
   selectedClientOrFamily: any;
   selectedName: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private eventService: EventService, private fb: FormBuilder,
-              public processTransaction: ProcessTransactionService, private router: Router,
-              private enumDataService: EnumDataService, private peopleService: PeopleService) {
-    this.advisorId = AuthService.getAdvisorId();
-  }
-
   stateCtrl = new FormControl('', [Validators.required]);
 
-  @Input()
-  set data(data) {
-    this.familyMemberList = this.enumDataService.getEmptySearchStateData();
-    this.inputData = data;
-    if (!this.inputData) {
-      this.inputData = {};
-    }
-
-    if (this.isViewInitCalled) {
-      this.getdataForm(data);
-    }
-  }
-
-  get data() {
-    return this.inputData;
-  }
 
   ngOnInit() {
     this.getdataForm(this.inputData);
@@ -95,13 +115,8 @@ export class OnlineTransactionComponent implements OnInit {
     // this.getDefaultDetails(null)
   }
 
-  isAdvisorSection;
-
   setClientFilterList() {
-    if (!this.inputData || this.inputData.isAdvisorSection == null ||
-      this.inputData.isAdvisorSection == undefined ||
-      this.inputData.isAdvisorSection) {
-      this.isAdvisorSection = true;
+    if (this.isAdvisorSection) {
       this.stateCtrl.valueChanges
         .subscribe(newValue => {
           this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
@@ -114,7 +129,6 @@ export class OnlineTransactionComponent implements OnInit {
             }));
         });
     } else {
-      this.isAdvisorSection = false;
       const obj = {
         clientId: AuthService.getClientId(),
       };

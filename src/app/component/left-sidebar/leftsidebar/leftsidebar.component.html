@@ -29,10 +29,10 @@
                         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                     </button>
 
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
+                    <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                         <img src="assets/images/svg/time-meter.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
-                    </a>
+                    </a> -->
                     <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/people">
                         <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                         <span *ngIf="showTabs" class="title" mat-line>People</span>
@@ -86,11 +86,11 @@
                         </mat-expansion-panel>
                     </mat-accordion> -->
 
-                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
+                    <!-- <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
                         routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
-                    </a>
+                    </a> -->
                     <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
                         routerLink="./transactions/overview">
                         <img src="assets/images/svg/cart.svg">
@@ -102,15 +102,15 @@
                         <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                     </a>
 
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/calendar">
+                    <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/calendar">
                         <img src="assets/images/svg/file-lines.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Documents</span>
-                    </a>
-                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                    </a> -->
+                    <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
                         routerLink="./advisor-marketplace">
                         <img src="assets/images/svg/file-lines.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Marketplace</span>
-                    </a>
+                    </a> -->
                     <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                         <img src="assets/images/svg/secure.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Compliance</span>

@@ -34,6 +34,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
     {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'},
     {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
+  greeting;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               public processTransaction: ProcessTransactionService,
@@ -42,12 +43,26 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
               private onlineTransact: OnlineTransactionService, public eventService: EventService,
               private enumDataService: EnumDataService, private enumService: EnumServiceService) {
     this.advisorId = AuthService.getAdvisorId();
+    const date = new Date();
+    const hourOfDay = date.getHours();
+    if (hourOfDay < 12) {
+      this.greeting = 'Good morning';
+    } else if (hourOfDay < 16) {
+      this.greeting = 'Good afternoon';
+    } else {
+      this.greeting = 'Good evening';
+    }
   }
 
   ngOnInit() {
     // this.getIINUCCRegistration();
-    this.getDataForm('');
-    // this.getClients();
+    const clientAndFamilyList = this.enumDataService.getClientAndFamilyData('');
+    if (clientAndFamilyList && clientAndFamilyList.length > 0) {
+      this.getDataForm('');
+    } else {
+      this.getClients();
+    }
+    //
 
 
     this.processTransaction.getCountryCodeList().subscribe((responseData) => {
@@ -92,7 +107,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
             if (newValue) {
               return this.enumDataService.getClientAndFamilyData(newValue);
             } else {
-              return this.enumDataService.getEmptySearchStateData();
+              return this.enumDataService.getClientAndFamilyData('');
             }
           }));
       });
@@ -103,7 +118,10 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
         this.generalDetails.controls.taxStatus.setValue('01');
       } else {
         this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
-          {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
+          {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {
+            taxStatusDesc: 'NRI - Repatriable (NRE)',
+            taxStatusCode: '21'
+          }];
       }
     });
   }
@@ -128,13 +146,16 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     const obj = {
       advisorId: this.advisorId,
     };
-    this.peopleService.getClientList(obj).subscribe(
-      data => this.getClientListRes(data)
-    );
+    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+      this.getClientListRes(responseArray);
+    }, error => {
+      console.log('getFamilyMemberListRes error : ', error);
+    });
   }
 
   getClientListRes(data) {
-    this.clientData = data[0];
+    this.enumDataService.setClientAndFamilyData(data);
+    this.getDataForm('');
   }
 
   getIINUCCRegistration() {
