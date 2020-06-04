@@ -587,7 +587,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(1, 'uplaodFile');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else if (flag == 'permanently') {
           const obj = {
@@ -603,7 +603,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(4, 'delete');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else if (flag == 'file/folder') {
           const obj = {
@@ -619,7 +619,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(4, 'Recovered ');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else {
           const obj1 = {
@@ -635,7 +635,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(1, 'uplaodFile');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         }
       },
