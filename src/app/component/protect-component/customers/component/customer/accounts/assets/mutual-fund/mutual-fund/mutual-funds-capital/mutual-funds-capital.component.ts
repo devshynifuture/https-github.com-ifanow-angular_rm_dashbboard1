@@ -190,10 +190,18 @@ export class MutualFundsCapitalComponent implements OnInit {
     };
     this.custumService.capitalGainGet(obj).subscribe(
       data => {
+      if(data){
         this.capitalGainData = data;
         this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
         this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
         this.calculateCapitalGain(this.capitalGainData)
+      }else{
+        this.dataSource.data = [];
+        this.dataSource1.data = [];
+        this.dataSource2.data = [];
+        this.changeInput.emit(false);
+      }
+     
       }, (error) => {
         this.dataSource.data = [];
         this.dataSource1.data = [];
