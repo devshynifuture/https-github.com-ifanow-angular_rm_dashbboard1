@@ -372,6 +372,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   keyPress(event, tabValue) {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
+    this.openFolderName = []
     if (event == '') {
       this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
