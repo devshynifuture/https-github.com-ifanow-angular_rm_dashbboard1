@@ -538,10 +538,12 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         emailSubject: "Share link",
         messageBody: 'You have received this email because AdvisorName shared link with you.  ' + '' + this.element.link
       }
-      this.custumService.sendSharebleLink(obj).subscribe(
-        data => this.sendSharebleLinkRes(data),
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      );
+      if(this.element != ""){
+        this.custumService.sendSharebleLink(obj).subscribe(
+          data => this.sendSharebleLinkRes(data),
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        );
+      }
     });
   }
   sendSharebleLinkRes(data) {
