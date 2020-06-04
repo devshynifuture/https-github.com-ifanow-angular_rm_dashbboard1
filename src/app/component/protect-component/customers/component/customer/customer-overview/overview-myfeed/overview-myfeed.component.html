@@ -745,9 +745,9 @@
                             <div class="col-md-8   d-flex align-items-center">
                                 <h5 class="roboto  mb-8">Recent transactions (As per RTA feeds)</h5>
                             </div>
-                            <!-- <div class="col-md-4 text-right">
+                            <div class="col-md-4 text-right" *ngIf="userInfo.userType == 1">
                                 <a [routerLink]="['/admin/transactions/overview']" class="viewBtn c-p mb-8 text-primitive br-2 f-12"> View all </a>
-                            </div> -->
+                            </div>
                         </div>
 
                         <div class="scrollingDiv d-flex">
