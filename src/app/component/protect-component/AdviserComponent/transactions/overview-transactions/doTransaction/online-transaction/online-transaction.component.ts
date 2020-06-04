@@ -74,7 +74,17 @@ export class OnlineTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
-    this.familyMemberList = this.enumDataService.getEmptySearchStateData();
+    this.familyMemberList = this.enumDataService.getClientAndFamilyData('');
+    if (this.familyMemberList && this.familyMemberList.length > 0) {
+      const obj = {
+        advisorId: AuthService.getAdvisorId(),
+      };
+      this.peopleService.getClientFamilyMemberList(obj).subscribe(responseData => {
+        this.familyMemberList = responseData;
+        this.enumDataService.setClientAndFamilyData(responseData);
+      }, error => {
+      });
+    }
     this.inputData = data;
     if (!this.inputData) {
       this.inputData = {};
