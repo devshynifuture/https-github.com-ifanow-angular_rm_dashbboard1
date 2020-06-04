@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { UtilService } from './util.service';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { EnumServiceService } from './enum-service.service';
-import { OnlineTransactionService } from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
-import { AuthService } from '../auth-service/authService';
-import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
-import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
-import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
+import {Injectable} from '@angular/core';
+import {UtilService} from './util.service';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {EnumServiceService} from './enum-service.service';
+import {OnlineTransactionService} from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import {AuthService} from '../auth-service/authService';
+import {CustomerService} from '../component/protect-component/customers/component/customer/customer.service';
+import {OrgSettingServiceService} from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class EnumDataService {
   searchData: any;
   clientAndFamilyData: any;
   proofType = [
-    { proofId: 1, proofType: 'Personal Pan' },
-    { proofId: 2, proofType: 'Company Pan' },
+    {proofId: 1, proofType: 'Personal Pan'},
+    {proofId: 2, proofType: 'Company Pan'},
     { proofId: 3, proofType: 'Passport' },
     { proofId: 4, proofType: 'Aadhaar' },
     { proofId: 5, proofType: 'Driving licence' },
@@ -98,7 +98,6 @@ export class EnumDataService {
   searchClientAndFamilyMember() {
     const obj = {
       advisorId: AuthService.getAdvisorId(),
-      // displayName: '%'
     };
     this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
       this.setClientAndFamilyData(responseArray);

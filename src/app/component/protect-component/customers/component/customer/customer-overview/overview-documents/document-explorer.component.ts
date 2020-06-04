@@ -229,6 +229,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFilesRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('File renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -246,6 +247,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFolderRes(data) {
     console.log(data);
+     this.eventService.openSnackBar('Folder renamed successfully', 'Dismiss');
     this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
@@ -536,16 +538,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: 'You have received this email because AdvisorName shared link with you.  ' + '' + this.element.link
+        messageBody: 'You have received this email because' + this.getUserInfo.name+' shared link with you.  ' + '' + this.element.link
       }
-      this.custumService.sendSharebleLink(obj).subscribe(
-        data => this.sendSharebleLinkRes(data),
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      );
+      if(this.element != ""){
+        this.custumService.sendSharebleLink(obj).subscribe(
+          data => this.sendSharebleLinkRes(data),
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        );
+      }
     });
   }
   sendSharebleLinkRes(data) {
-
+    this.eventService.openSnackBar('Link shared on email successfully', 'Dismiss');
   }
   deleteModal(flag, data) {
     this.parentId = data.parentFolderId
@@ -587,7 +591,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(1, 'uplaodFile');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else if (flag == 'permanently') {
           const obj = {
@@ -603,7 +607,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(4, 'delete');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else if (flag == 'file/folder') {
           const obj = {
@@ -619,7 +623,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(4, 'Recovered ');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else {
           const obj1 = {
@@ -635,7 +639,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(1, 'uplaodFile');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         }
       },
@@ -673,6 +677,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   starFileRes(data) {
     console.log(data);
     if (data) {
+      this.eventService.openSnackBar('Starred successfully', 'Dismiss');
       this.getCount()
       this.getAllFileList(this.valueTab, 'starred');
     }
