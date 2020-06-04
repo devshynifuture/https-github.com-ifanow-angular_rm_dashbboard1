@@ -538,10 +538,12 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         emailSubject: "Share link",
         messageBody: 'You have received this email because AdvisorName shared link with you.  ' + '' + this.element.link
       }
-      this.custumService.sendSharebleLink(obj).subscribe(
-        data => this.sendSharebleLinkRes(data),
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      );
+      if(this.element != ""){
+        this.custumService.sendSharebleLink(obj).subscribe(
+          data => this.sendSharebleLinkRes(data),
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        );
+      }
     });
   }
   sendSharebleLinkRes(data) {
@@ -587,7 +589,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(1, 'uplaodFile');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else if (flag == 'permanently') {
           const obj = {
@@ -603,7 +605,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(4, 'delete');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else if (flag == 'file/folder') {
           const obj = {
@@ -619,7 +621,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(4, 'Recovered ');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         } else {
           const obj1 = {
@@ -635,7 +637,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.getCount()
               this.getAllFileList(1, 'uplaodFile');
             },
-            error => this.eventService.showErrorMessage(error)
+            error => this.eventService.openSnackBar(error)
           );
         }
       },

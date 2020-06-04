@@ -724,7 +724,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           }
         })
         let leddger = {
-          bankName: 'need to be mapped' + bank,
+          bankName: account_transactions[0].bankName,
           inflow: account_income,
           outflow: account_expense,
           netflow: account_income - account_expense
