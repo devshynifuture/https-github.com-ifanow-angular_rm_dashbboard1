@@ -27,9 +27,8 @@
           <div class="form-group">
             <mat-form-field floatLabel="never" appearance="standard">
               <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                          (selectionChange)="disabledMember($event.value,'owner')"
-                          (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
-                          class="form-control br-0" [callMethod]='callMethod'>
+                (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)'
+                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                 <mat-option value='' disabled>Select family members</mat-option>
                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                   <span>{{f.userName}}</span>
@@ -45,7 +44,7 @@
           <div class="form-group mb-0 iconPetage">
             <mat-form-field>
               <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                     (focusout)="onChangeJointOwnership('owner')">
+                (focusout)="onChangeJointOwnership('owner')">
               <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                 This field is required
               </mat-error>
@@ -58,7 +57,7 @@
         <div class="col-md-2 p-0 d-flex align-items-center">
           <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
           <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-             (click)="removeCoOwner(pointIndex)">remove</i>
+            (click)="removeCoOwner(pointIndex)">remove</i>
         </div>
 
       </div>
@@ -73,7 +72,7 @@
           <mat-form-field floatLabel="never" appearance="standard">
             <mat-select matInput formControlName="proposer" #lifeAssured autocomplete="true" class="form-control br-0">
               <mat-option (click)="getProposerData(option,i)" *ngFor="let option of nomineesListFM;index as i"
-                          [value]="option.userName">
+                [value]="option.userName">
                 {{option.userName}}</mat-option>
             </mat-select>
             <mat-error>This field is required
@@ -92,8 +91,8 @@
         <div class="form-group ">
           <mat-form-field floatLabel="never" appearance="standard" class="example-full-width">
             <input matInput class="form-control br-0" [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                   type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number"
-                   matInput [matAutocomplete]="auto">
+              type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput
+              [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
                 {{option.policyName}}
@@ -114,8 +113,8 @@
         <div class="form-group">
           <mat-form-field floatLabel="never" appearance="standard">
             <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20"
-                   formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off"
-                   class="form-control br-0">
+              formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off"
+              class="form-control br-0">
             <mat-error>This field is required
             </mat-error>
             <mat-hint align="end" class="f-12">{{policynumber.value.length}}/20</mat-hint>
@@ -132,8 +131,8 @@
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
             <input matInput formControlName="commencementDate" [max]="maxDate" class="form-control br-0 b-0"
-                   [min]="minDate" [matDatepicker]="CommencementPicker" (focus)="CommencementPicker.open()"
-                   (input)="preventDefault($event)">
+              [min]="minDate" [matDatepicker]="CommencementPicker" (focus)="CommencementPicker.open()"
+              (input)="preventDefault($event)">
             <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
             <mat-datepicker #CommencementPicker></mat-datepicker>
             <mat-error>This field is required
@@ -151,8 +150,8 @@
         <div class="form-group iconRupess">
           <mat-form-field floatLabel="never" appearance="standard">
             <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                   [maxLength]="10" formControlName="sumAssured" [maxLength]="10" #sumassured autocomplete="off"
-                   class="form-control rupess br-0">
+              [maxLength]="10" formControlName="sumAssured" [maxLength]="10" #sumassured autocomplete="off"
+              class="form-control rupess br-0">
             <mat-error>This field is required
             </mat-error>
             <mat-hint align="end" class="f-12">{{sumassured.value.length}}/10</mat-hint>
@@ -170,8 +169,8 @@
           <label class="f-14 roboto">Amount</label>
           <mat-form-field>
             <input matInput type="number" formControlName="premiumDetailsAmount"
-                   [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premiumdetails
-                   autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+              [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premiumdetails autocomplete="true"
+              [maxLength]="10" class="form-control rupess br-0">
             <mat-error>This field is required
             </mat-error>
             <mat-hint align="end" class="f-12">{{premiumdetails.value.length}}/10</mat-hint>
@@ -183,7 +182,7 @@
           <label class="f-14 roboto">Frequency</label>
           <mat-form-field>
             <mat-select matInput formControlName="premiumDetailsFrequency" #frequency autocomplete="off"
-                        class="form-control br-0">
+              class="form-control br-0">
               <mat-option value='12'>Monthly</mat-option>
               <mat-option value='4'>Quarterly</mat-option>
               <mat-option value='2'>Half yearly</mat-option>
@@ -213,10 +212,9 @@
                 <mat-option value="20">20 Years</mat-option>
             </mat-select> -->
             <input matInput type="number" formControlName="tenureDetailsPolicy"
-                   (keyup)="onChange(lifeInsuranceForm,'tenureDetailsPolicy',$event)"
-                   [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #tenureDetailsPolicy
-                   autocomplete="true" [maxLength]="3"
-                   class="form-control br-0">
+              (keyup)="onChange(lifeInsuranceForm,'tenureDetailsPolicy',$event)"
+              [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #tenureDetailsPolicy
+              autocomplete="true" [maxLength]="3" class="form-control br-0">
             <mat-error>This field is required
             </mat-error>
             <!-- <mat-hint align="end" class="f-12">{{premiumdetails.value.length}}/10</mat-hint> -->
@@ -229,9 +227,9 @@
           <h5 class="mb-0 f-14">Premium paying term </h5>
           <mat-form-field>
             <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                   (keyup)="onChange(lifeInsuranceForm,'premiumPayingTerm',$event)" appInputValueValidation
-                   formControlName="premiumPayingTerm" [maxLength]="10" #premiumterm autocomplete="off"
-                   class="form-control  br-0">
+              (keyup)="onChange(lifeInsuranceForm,'premiumPayingTerm',$event)" appInputValueValidation
+              formControlName="premiumPayingTerm" [maxLength]="10" #premiumterm autocomplete="off"
+              class="form-control  br-0">
             <mat-error>This field is required
             </mat-error>
             <!-- <mat-hint align="end" class="f-12">{{premiumterm.value.length}}/10</mat-hint> -->
@@ -239,8 +237,16 @@
         </div>
       </div>
     </div>
+    <div class="row pt-40" *ngIf="policyStatus.value == '2'">
+      <div class="col-md-5 pr-0"></div>
+      <div class="col-md-3">
 
-    <div class="row pt-40">
+      </div>
+      <div class="col-md-4">
+        <label class="f-14 roboto">Last unpaid premium</label>
+      </div>
+    </div>
+    <div class="row " [ngClass]="{'pt-0':policyStatus.value == '2','pt-40':policyStatus.value != '2'}">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-8">Policy status</h5>
       </div>
@@ -249,7 +255,7 @@
           <label class="f-16 roboto"> </label>
           <mat-form-field>
             <mat-select matInput formControlName="policyStatus" #policyStatus autocomplete="off"
-                        class="form-control  br-0">
+              class="form-control  br-0">
               <mat-option value="1">In force</mat-option>
               <mat-option value="2">Lapsed</mat-option>
               <mat-option value="3">Paid up</mat-option>
@@ -262,11 +268,11 @@
       </div>
       <div class="col-md-3" *ngIf="policyStatus.value == '2'">
         <div class="form-group mb-0 iconRupess">
-          <label class="f-14 roboto">Last unpaid premium</label>
+
           <mat-form-field>
             <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                   formControlName="policyStatusLastUnpaid" [maxLength]="10" #lastunpaid autocomplete="off"
-                   class="form-control rupess br-0">
+              formControlName="policyStatusLastUnpaid" [maxLength]="10" #lastunpaid autocomplete="off"
+              class="form-control rupess br-0">
             <!-- <mat-error>This field is required
             </mat-error> -->
             <mat-hint>Optional</mat-hint>
@@ -305,8 +311,8 @@
                 <div class="form-group mb-0 iconRupess">
                   <mat-form-field>
                     <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           formControlName="riskCover" [maxLength]="10" matInput autocomplete="off" #riskCover
-                           class="rupess form-control br-0">
+                      formControlName="riskCover" [maxLength]="10" matInput autocomplete="off" #riskCover
+                      class="rupess form-control br-0">
                     <mat-hint align="end" class="f-12">{{riskCover.value.length}}/10</mat-hint>
                   </mat-form-field>
                 </div>
@@ -320,8 +326,8 @@
                 <div class="form-group mb-0 iconRupess">
                   <mat-form-field>
                     <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           formControlName="surrenderName" #surrenderName [maxLength]="10" matInput autocomplete="off"
-                           class="form-control rupess br-0">
+                      formControlName="surrenderName" #surrenderName [maxLength]="10" matInput autocomplete="off"
+                      class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{surrenderName.value.length}}/10</mat-hint>
                   </mat-form-field>
                 </div>
@@ -331,7 +337,7 @@
 
             <div formArrayName="getNomineeName">
               <div class="row pt-36" *ngFor="let obj of getNominee.controls; let pointIndex=index"
-                   [formGroupName]="pointIndex">
+                [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                   <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
@@ -339,10 +345,9 @@
                   <div class="form-group mb-0">
                     <mat-form-field>
                       <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                  (selectionChange)="getFamilyData($event.value,nomineesListFM)"
-                                  (selectionChange)="disabledMember($event.value,'nominee')"
-                                  (valueChange1)='lisNominee($event)' class="form-control br-0"
-                                  [callMethod]='callMethod'>
+                        (selectionChange)="getFamilyData($event.value,nomineesListFM)"
+                        (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)'
+                        class="form-control br-0" [callMethod]='callMethod'>
                         <mat-option value='' disabled>Select family members</mat-option>
                         <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                           <span>{{f.userName}}</span>
@@ -358,7 +363,7 @@
                   <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
                       <input matInput class="form-control br-0 percentage" type="number"
-                             formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                        formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
                       <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                         This field is required
                       </mat-error>
@@ -370,11 +375,10 @@
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
                   <i *ngIf="keyDetailsForm.value.getNomineeName.length < 3"
-                     class="material-icons text-primitive f-20 c-p float-left"
-                     (click)="addNewNominee(undefined)">add</i>
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
                   <i *ngIf="keyDetailsForm.value.getNomineeName.length > 1"
-                     class="material-icons text-primitive f-20 c-p pl-10"
-                     (click)="removeNewNominee(pointIndex)">remove</i>
+                    class="material-icons text-primitive f-20 c-p pl-10"
+                    (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
               </div>
@@ -388,7 +392,7 @@
                 <div class="form-group mb-0 iconRupess">
                   <mat-form-field>
                     <input type="number" autocomplete="off" [maxLength]="10" formControlName="vestedBonus" #vestedBonus
-                           matInput class="form-control rupess br-0">
+                      matInput class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{vestedBonus.value.length}}/10</mat-hint>
                   </mat-form-field>
                 </div>
@@ -403,9 +407,9 @@
                 <div class="form-group mb-0 iconPetage">
                   <mat-form-field>
                     <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                           (keyup)="onChange(keyDetailsForm,'assumedRate',$event)" appInputValueValidation
-                           autocomplete="off" [maxLength]="3" formControlName="assumedRate" #assumedRate matInput
-                           class="form-control percentage br-0">
+                      (keyup)="onChange(keyDetailsForm,'assumedRate',$event)" appInputValueValidation autocomplete="off"
+                      [maxLength]="3" formControlName="assumedRate" #assumedRate matInput
+                      class="form-control percentage br-0">
                     <!-- <mat-hint align="end" class="f-12">{{assumedRate.value.length}}/10</mat-hint> -->
                   </mat-form-field>
                 </div>
@@ -416,14 +420,14 @@
 
               <div formArrayName="fundValueForm">
                 <div [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-40  "
-                     *ngFor="let obj of getFundValues.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                  *ngFor="let obj of getFundValues.controls; let pointIndex=index" [formGroupName]="pointIndex">
                   <div class="col-md-2 p-0">
                     <div class="form-group nameMatField mb-0">
                       <h5 class="mb-8 f-14">Fund name </h5>
                       <mat-form-field floatLabel="never" appearance="standard">
                         <input matInput type="text" [maxLength]="40" formControlName="fundName" #fundName
-                               appInputValueValidation autocomplete="off" class="form-control br-0"
-                               placeholder="Enter fund name">
+                          appInputValueValidation autocomplete="off" class="form-control br-0"
+                          placeholder="Enter fund name">
                         <mat-hint align="end" class="f-12">{{fundName.value.length}}/40
                         </mat-hint>
                       </mat-form-field>
@@ -436,18 +440,18 @@
                         <div class="col-md-6 pl-0 form-group mb-0 iconPetage">
                           <mat-form-field>
                             <input matInput type="number" formControlName="debtPer" #debtPer
-                                   (keyup)="onChange(obj,'debtPer',$event)" [inputValidator]="validatorType.NUMBER_ONLY"
-                                   appInputValueValidation autocomplete="true" [maxLength]="10"
-                                   class="form-control percentage br-0">
+                              (keyup)="onChange(obj,'debtPer',$event)" [inputValidator]="validatorType.NUMBER_ONLY"
+                              appInputValueValidation autocomplete="true" [maxLength]="10"
+                              class="form-control percentage br-0">
                           </mat-form-field>
                         </div>
 
                         <div class="col-md-6 pl-0 form-group mb-0 iconPetage">
                           <mat-form-field>
                             <input matInput type="number" formControlName="equityPer" #equityPer
-                                   (keyup)="onChange(obj,'equityPer',$event)"
-                                   [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                                   autocomplete="true" [maxLength]="10" class="form-control percentage br-0">
+                              (keyup)="onChange(obj,'equityPer',$event)" [inputValidator]="validatorType.NUMBER_ONLY"
+                              appInputValueValidation autocomplete="true" [maxLength]="10"
+                              class="form-control percentage br-0">
                           </mat-form-field>
                         </div>
                       </div>
@@ -458,7 +462,7 @@
                       <h5 class="mb-8 f-14">Option </h5>
                       <mat-form-field>
                         <mat-select matInput formControlName="option" #option autocomplete="true"
-                                    class="form-control br-0">
+                          class="form-control br-0">
                           <mat-option value='1'>Enter units</mat-option>
                           <mat-option value='2'>Enter value</mat-option>
                         </mat-select>
@@ -470,8 +474,8 @@
                       <h5 class="mb-8 f-14">Units</h5>
                       <mat-form-field>
                         <input matInput type="number" formControlName="units"
-                               [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #units
-                               autocomplete="true" [maxLength]="10" class="form-control br-0">
+                          [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #units
+                          autocomplete="true" [maxLength]="10" class="form-control br-0">
                         <!-- <mat-hint align="end" class="f-12">{{ttdSumInsured.value.length}}/10</mat-hint> -->
                       </mat-form-field>
                     </div>
@@ -481,8 +485,7 @@
                       <h5 class="mb-8 f-14">NAV</h5>
                       <mat-form-field>
                         <input matInput type="number" formControlName="nav" [inputValidator]="validatorType.NUMBER_ONLY"
-                               appInputValueValidation #nav autocomplete="true" [maxLength]="10"
-                               class="form-control br-0">
+                          appInputValueValidation #nav autocomplete="true" [maxLength]="10" class="form-control br-0">
                       </mat-form-field>
                     </div>
                   </div>
@@ -491,8 +494,8 @@
                       <h5 class="mb-8 f-14">Fund value</h5>
                       <mat-form-field>
                         <input type="number" #fundValue [inputValidator]="validatorType.NUMBER_ONLY"
-                               appInputValueValidation formControlName="fundValue" [maxLength]="10" autocomplete="off"
-                               matInput class="form-control rupess br-0">
+                          appInputValueValidation formControlName="fundValue" [maxLength]="10" autocomplete="off"
+                          matInput class="form-control rupess br-0">
                         <mat-hint align="end" class="f-12">{{fundValue.value.length}}/10
                         </mat-hint>
                       </mat-form-field>
@@ -525,7 +528,7 @@
             </div>
             <div formArrayName="cashFlow">
               <div [ngClass]="{'pt-36': pointIndex > 0}" class="row pb-16"
-                   *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
                 <div class="col-md-3 pr-0">
                   <div class="form-group">
                     <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
@@ -534,7 +537,7 @@
                           formControlName="cashFlowType" #cashFlowType matInput
                           class="form-control  br-0"> -->
                       <mat-select matInput formControlName="cashFlowType" #cashFlowType autocomplete="off"
-                                  class="form-control br-0">
+                        class="form-control br-0">
                         <mat-option value="1">Survival benefit</mat-option>
                         <mat-option value="2">Maturity benefit</mat-option>
                         <mat-option value="3">Annuity</mat-option>
@@ -556,7 +559,7 @@
                     </mat-form-field> -->
                     <mat-form-field class="ba-date">
                       <input formControlName="year" (input)="preventDefault($event)" (focus)="year.open()"
-                             autocomplete="off" [matDatepicker]="year" matInput class="form-control b-0 br-0">
+                        autocomplete="off" [matDatepicker]="year" matInput class="form-control b-0 br-0">
                       <mat-datepicker-toggle matSuffix [for]="year"></mat-datepicker-toggle>
                       <mat-datepicker #year></mat-datepicker>
                     </mat-form-field>
@@ -567,8 +570,8 @@
                     <!-- <label class="f-16 roboto">Approx amount</label> -->
                     <mat-form-field>
                       <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                             [maxLength]="10" autocomplete="off" formControlName="approxAmt" #approxAmt matInput
-                             class="form-control br-0 rupess">
+                        [maxLength]="10" autocomplete="off" formControlName="approxAmt" #approxAmt matInput
+                        class="form-control br-0 rupess">
                       <mat-hint align="end" class="f-12">{{approxAmt.value.length}}/10
                       </mat-hint>
                     </mat-form-field>
@@ -577,7 +580,8 @@
 
                 <div class="col-md-1 pr-0 pt-8 d-flex">
                   <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
-                  <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(pointIndex)">remove</i>
+                  <i class="material-icons text-primitive c-p float-right"
+                    (click)="removeTransaction(pointIndex)">remove</i>
                 </div>
               </div>
             </div>
@@ -593,8 +597,8 @@
                   <h5 class="mb-8 f-16 ">Accidental benefit</h5>
                   <mat-form-field>
                     <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           autocomplete="off" [maxLength]="10" formControlName="accidentalBenefit" #accidentalBenefit
-                           matInput class="form-control rupess br-0">
+                      autocomplete="off" [maxLength]="10" formControlName="accidentalBenefit" #accidentalBenefit
+                      matInput class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{accidentalBenefit.value.length}}/10
                     </mat-hint>
                   </mat-form-field>
@@ -605,8 +609,8 @@
                   <h5 class="mb-8 f-16 ">Critical illeness </h5>
                   <mat-form-field>
                     <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           autocomplete="off" [maxLength]="10" formControlName="criticalIlleness" #criticalIlleness
-                           matInput class="form-control rupess br-0">
+                      autocomplete="off" [maxLength]="10" formControlName="criticalIlleness" #criticalIlleness matInput
+                      class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{criticalIlleness.value.length}}/10
                     </mat-hint>
                   </mat-form-field>
@@ -617,8 +621,8 @@
                   <h5 class="mb-8 f-16 "> Double Accidental </h5>
                   <mat-form-field>
                     <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           autocomplete="off" [maxLength]="10" formControlName="doubleAccidental" #doubleAccidental
-                           matInput class="form-control rupess br-0">
+                      autocomplete="off" [maxLength]="10" formControlName="doubleAccidental" #doubleAccidental matInput
+                      class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{doubleAccidental.value.length}}/10
                     </mat-hint>
                   </mat-form-field>
@@ -638,8 +642,8 @@
                   <h5 class="mb-8 f-16 "> loan availble </h5>
                   <mat-form-field>
                     <input type="number" autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY"
-                           [maxLength]="10" appInputValueValidation formControlName="loanAvailable" #loanAvailable
-                           matInput class="form-control rupess br-0">
+                      [maxLength]="10" appInputValueValidation formControlName="loanAvailable" #loanAvailable matInput
+                      class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{loanAvailable.value.length}}/10
                     </mat-hint>
                   </mat-form-field>
@@ -650,8 +654,8 @@
                   <h5 class="mb-8 f-16 ">Loan taken </h5>
                   <mat-form-field>
                     <input type="number" autocomplete="off" [maxLength]="10"
-                           [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off"
-                           formControlName="loanTaken" #loanTaken matInput class="form-control rupess br-0">
+                      [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off"
+                      formControlName="loanTaken" #loanTaken matInput class="form-control rupess br-0">
                     <mat-hint align="end" class="f-12">{{loanTaken.value.length}}/10
                     </mat-hint>
                   </mat-form-field>
@@ -662,7 +666,7 @@
                   <h5 class="mb-8 f-16 "> Loan taken on </h5>
                   <mat-form-field class="ba-date">
                     <input formControlName="loanTakenOn" (input)="preventDefault($event)" (focus)="loanTakenOn.open()"
-                           autocomplete="off" [matDatepicker]="loanTakenOn" matInput class="form-control b-0 br-0">
+                      autocomplete="off" [matDatepicker]="loanTakenOn" matInput class="form-control b-0 br-0">
                     <mat-datepicker-toggle matSuffix [for]="loanTakenOn"></mat-datepicker-toggle>
                     <mat-datepicker #loanTakenOn></mat-datepicker>
                   </mat-form-field>
@@ -683,7 +687,7 @@
 
                   <mat-form-field>
                     <mat-select formControlName="permiumPaymentMode" #frequency autocomplete="off"
-                                class="form-control mt-28 br-0">
+                      class="form-control mt-28 br-0">
                       <mat-option value="1">Cheque</mat-option>
                       <mat-option value="2">Cash</mat-option>
                       <mat-option value="3">Net banking</mat-option>
@@ -709,7 +713,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input formControlName="advisorName" autocomplete="off" maxlength="40" matInput #advisorName
-                           class="form-control br-0">
+                      class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40
                     </mat-hint>
                   </mat-form-field>
@@ -725,7 +729,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input formControlName="serviceBranch" #serviceName maxlength="40" autocomplete="off" matInput
-                           class="form-control br-0">
+                      class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{serviceName.value.length}}/40
                     </mat-hint>
                   </mat-form-field>
@@ -769,7 +773,7 @@
     <div class="col-md-8 right text-right">
       <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveAddInsurance()">SAVE</button> -->
       <app-progress-button (btnClick)="saveAddInsurance()" class="btn-bottom br-0 text-inherit"
-                           [options]="barButtonOptions">
+        [options]="barButtonOptions">
       </app-progress-button>
     </div>
   </div>

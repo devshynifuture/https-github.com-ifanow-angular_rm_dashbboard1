@@ -79,6 +79,7 @@ export class GetSharebleLinkComponent implements OnInit {
       document.execCommand('copy');
       document.body.removeChild(selBox);
       console.log('37563756 link ==', this.link);
+      this.eventService.openSnackBar('Link copied successfully', 'Dismiss');
       this.dialogRef.close('');
     }
   }
