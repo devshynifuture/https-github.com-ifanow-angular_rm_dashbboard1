@@ -83,11 +83,15 @@
                                             </div>
                                             <p class="f-12 pt-24">PAN</p>
                                             <div class="bar">
-                                                <h5 class="height20">{{singleBillerProfile.pan}}</h5>
+                                                <h5 class="height20">
+                                                    <span
+                                                        *ngIf="!isLoading">{{singleBillerProfile.pan?singleBillerProfile.pan:'N/A'}}</span>
+                                                </h5>
                                             </div>
                                             <p class="f-12 pt-24">ADDRESS</p>
                                             <div class="bar">
-                                                <h5>{{singleBillerProfile.billerAddress}}</h5>
+                                                <h5>{{singleBillerProfile.billerAddress?singleBillerProfile.billerAddress:'N/A'}}
+                                                </h5>
                                             </div>
                                         </div>
                                         <hr>
@@ -96,13 +100,19 @@
                                                 <div class="col-md-12 p-0 relClass">
                                                     <p class="text-uppercase f-12">Name on bank A/c</p>
                                                     <div class="bar">
-                                                        <h5 class="height20">{{singleBillerProfile.nameAsPerBank}}</h5>
+                                                        <h5 class="height20">
+                                                            <span *ngIf="!isLoading">
+                                                                {{singleBillerProfile.nameAsPerBank?singleBillerProfile.nameAsPerBank:'N/A'}}</span>
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 p-0 relClass">
                                                     <p class="text-uppercase f-12">Account No.</p>
                                                     <div class="bar">
-                                                        <h5 class="height20">{{singleBillerProfile.acNumber}}</h5>
+                                                        <h5 class="height20">
+                                                            <span *ngIf="!isLoading">
+                                                                {{singleBillerProfile.acNumber?singleBillerProfile.acNumber:'N/A'}}</span>
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,18 +122,24 @@
                                                     <p class="text-uppercase f-12">Bank name</p>
                                                     <div class="bar">
                                                         <div>
-                                                            <h5>{{singleBillerProfile.bankName}}</h5>
+                                                            <h5><span
+                                                                    *ngIf="!isLoading">{{singleBillerProfile.bankName?singleBillerProfile.bankName:'N/A'}}</span>
+                                                            </h5>
                                                         </div>
                                                     </div>
                                                     <p class="f-12 text-uppercase pt-24">IFSC code</p>
                                                     <div class="bar">
                                                         <div>
-                                                            <h5>{{singleBillerProfile.ifscCode}}</h5>
+                                                            <h5><span
+                                                                    *ngIf="!isLoading">{{singleBillerProfile.ifscCode?singleBillerProfile.ifscCode:'N/A'}}</span>
+                                                            </h5>
                                                         </div>
                                                     </div>
                                                     <p class="f-12 text-uppercase pt-24">ADDRESS</p>
                                                     <div class="bar">
-                                                        <h5>{{singleBillerProfile.branchAddress}}</h5>
+                                                        <h5><span
+                                                                *ngIf="!isLoading">{{singleBillerProfile.branchAddress?singleBillerProfile.branchAddress:'N/A'}}</span>
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,7 +156,10 @@
                                             <div [ngClass]="singleBillerProfile.read? '': 'bar'"
                                                 style="overflow: hidden;"
                                                 [ngStyle]="{'height':singleBillerProfile.read?'':'55px'}">
-                                                <h5>{{singleBillerProfile.footnote}}</h5>
+                                                <h5>
+                                                    <span
+                                                        *ngIf="!isLoading">{{singleBillerProfile.footnote?singleBillerProfile.footnote:'N/A'}}</span>
+                                                </h5>
                                             </div>
                                             <div (click)="singleBillerProfile.read = singleBillerProfile.read? false : true"
                                                 class="read-more c-p"
@@ -150,7 +169,9 @@
                                             <div [ngClass]="singleBillerProfile.read? '': 'bar'"
                                                 style="overflow: hidden;"
                                                 [ngStyle]="{'height':singleBillerProfile.read?'':'55px'}">
-                                                <h5>{{singleBillerProfile.terms}} </h5>
+                                                <h5><span
+                                                        *ngIf="!isLoading">{{singleBillerProfile.terms?singleBillerProfile.terms:'N/A'}}</span>
+                                                </h5>
                                             </div>
                                             <div (click)="singleBillerProfile.read = singleBillerProfile.read? false : true"
                                                 class="read-more c-p"
