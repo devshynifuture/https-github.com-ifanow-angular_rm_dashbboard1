@@ -214,7 +214,7 @@
                     <p class="m-0 f-12 text-custom mob-pt-10 mob-pb-5">Team Owner</p>
                 </div>
                 <div class="col-md-5 p-0 mob-pr-10 mob-pl-10">
-                    <div class="form-group m-0">
+                    <div class="form-group">
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" class="form-control"
                                 formControlName="clientOwner">
@@ -234,12 +234,12 @@
                 </div>
             </div>
 
-            <div *ngIf="fieldFlag=='lead'" class="row pt-28">
+            <div *ngIf="fieldFlag=='lead'" class="row pt-40">
                 <div class="col-md-4 text-right full-end">
                     <h5 class="m-0">Lead source</h5>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <mat-form-field>
                             <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="leadSource" matInput>
@@ -266,7 +266,7 @@
                     <h5 class="m-0">Lead status</h5>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="leaadStatus" class="form-control">
                                 <mat-option value='' disabled>Select lead status</mat-option>
@@ -283,7 +283,7 @@
                     <h5 class="m-0">Lead rating</h5>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="leadRating" class="form-control">
                                 <mat-option value='' disabled>Select lead rating</mat-option>
@@ -295,12 +295,12 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="fieldFlag=='lead'" class="row pt-28">
+            <div *ngIf="fieldFlag=='lead'" class="row pt-40">
                 <div class="col-md-4 text-right full-end">
                     <h5 class="m-0">Lead Owner</h5>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
                                 class="form-control">
@@ -318,7 +318,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="fieldFlag!='familyMember'" class="row pt-28 pb-28">
+            <div *ngIf="fieldFlag!='familyMember'" class="row pt-40 pb-28">
                 <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-12">Role</h5>
                     <p class="m-0 f-12 text-custom mob-pt-10 mob-pb-5">The selected role decides<br class="mobile-none">
@@ -326,7 +326,7 @@
                     </p>
                 </div>
                 <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
-                    <div class="form-group m-0">
+                    <div class="form-group">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
                                 <!-- <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
@@ -606,7 +606,7 @@
                     </p>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group m-0">
+                    <div class="form-group">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
                                 <mat-option value='' disabled>Select roles</mat-option>
@@ -834,24 +834,24 @@
                     <h5 class="m-0">Lead source</h5>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group">
-                        <mat-form-field>
-                            <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+
+                    <mat-form-field>
+                        <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="leadSource" matInput>
                             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint> -->
-                            <mat-select formControlName="leadSource" class="form-control">
-                                <mat-option value="" disable>Select option</mat-option>
-                                <mat-option value="1">Search engine</mat-option>
-                                <mat-option value="2">Website</mat-option>
-                                <mat-option value="3">Refrerals from existing clients</mat-option>
-                                <mat-option value="4">Refrerals from existing friends</mat-option>
-                                <mat-option value="5">Refrerals from existing relatives</mat-option>
-                                <mat-option value="6">LinkedIn </mat-option>
-                                <mat-option value="7">Others</mat-option>
-                            </mat-select>
-                            <mat-hint>Optional</mat-hint>
-                        </mat-form-field>
-                    </div>
+                        <mat-select formControlName="leadSource" class="form-control">
+                            <mat-option value="" disable>Select option</mat-option>
+                            <mat-option value="1">Search engine</mat-option>
+                            <mat-option value="2">Website</mat-option>
+                            <mat-option value="3">Refrerals from existing clients</mat-option>
+                            <mat-option value="4">Refrerals from existing friends</mat-option>
+                            <mat-option value="5">Refrerals from existing relatives</mat-option>
+                            <mat-option value="6">LinkedIn </mat-option>
+                            <mat-option value="7">Others</mat-option>
+                        </mat-select>
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+
                 </div>
             </div>
 
@@ -945,7 +945,7 @@
                     </p>
                 </div>
                 <div class="col-md-5 p-0">
-                    <div class="form-group m-0">
+                    <div class="form-group">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
                                 <mat-option value='' disabled>Select roles</mat-option>
