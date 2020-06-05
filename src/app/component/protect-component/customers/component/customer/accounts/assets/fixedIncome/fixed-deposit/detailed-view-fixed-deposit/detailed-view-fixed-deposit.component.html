@@ -188,12 +188,7 @@ Description description: "this is futurewise Tech" -->
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Total interest earned 
                     </div>
-                    <div  class="col-md-4 text-right f-14 roboto p-0" >
-                        <!-- ₹{{}} -->
-                        <!-- ₹<span appFormatNumber>{{fixedDeposit.amountInvested}}</span> -->
-                        ₹<span [value]="fixedDeposit.currentValue - fixedDeposit.amountInvested" appFormatNumber>{{fixedDeposit.currentValue - fixedDeposit.amountInvested}}</span>
-                        <!-- ₹{{utils.formatter()}} -->
-                    </div>
+                   
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
                         <div *ngIf="!matured">

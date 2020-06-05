@@ -222,6 +222,7 @@ export class OtherPayablesComponent implements OnInit {
         this.totalAmountOutstandingBalance += element.outstandingBalance;
       });
     }else{
+      this.OtherDataChange.emit(data);
       this.dataSource.data = []
     }
 
