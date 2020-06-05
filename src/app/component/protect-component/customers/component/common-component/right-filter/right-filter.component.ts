@@ -182,7 +182,7 @@ export class RightFilterComponent implements OnInit {
       fromDate: [data.fromDate ? new Date(data.fromDate) : null, [Validators.required]],
       toDate: [data.toDate ? new Date(data.toDate) : null, [Validators.required]],
       showFolios: [(data.showFolio) ? data.showFolio + '' : '2', [Validators.required]],
-      grandfathering: [(data.grandfathering) ? data.grandfathering + '' : '2', [Validators.required]],
+      grandfathering: [(data.filterDataForCapital) ? data.filterDataForCapital.grandfathering + '' : '2', [Validators.required]],
     });
   }
 
@@ -332,7 +332,7 @@ export class RightFilterComponent implements OnInit {
 
       });
       this.financialYears.forEach(item => {
-        if(item.from >= 2018){
+        if(this._data.capitalGainData.fromDateYear >= 2018){
           form.get('grandfathering').setValue('1');
         }
       })
