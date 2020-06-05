@@ -6,8 +6,8 @@
 
         <div class="row pt-180" *ngIf="SettingProfileData.length > 0">
             <div class="col-md-12 mt-36">
-                <button (click)="openPayeeSettings({},'Add')"
-                    class="btn-primary br-0 right text-right addon" mat-stroked-button>
+                <button (click)="openPayeeSettings({},'Add')" class="btn-primary br-0 right text-right addon"
+                    mat-stroked-button>
                     ADD MORE
                 </button>
                 <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
@@ -33,8 +33,7 @@
                                 </i>
                                 <mat-menu #menu="matMenu">
                                     <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
-                                    <a (click)="openPayeeSettings(profileData,'Edit')"
-                                        mat-menu-item>Edit
+                                    <a (click)="openPayeeSettings(profileData,'Edit')" mat-menu-item>Edit
                                         client profile</a>
                                     <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete
                                         client
@@ -82,7 +81,7 @@
                                             <p>GST</p>
                                             <div class="relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{profileData.gstin}} </h5>
+                                                    <h5> {{profileData.gstin!=0?profileData.gstin:'N/A'}} </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -152,8 +151,8 @@
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/no-data-found.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
-            <button (click)="openPayeeSettings({},'Add')"
-                class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
+            <button (click)="openPayeeSettings({},'Add')" class="btn-primary mt-20 br-0 right text-right addon"
+                mat-stroked-button>
                 ADD MORE
             </button>
         </div>
