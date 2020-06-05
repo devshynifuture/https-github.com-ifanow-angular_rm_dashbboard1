@@ -1,5 +1,5 @@
 <div class="pos-rel" [ngClass]="isMainLoading ? 'cur-wait opacity-4': ''">
-    <div class="popup-header-fix-40">
+    <div class="popup-header-fix w-50">
         <div class="row bb-1">
             <div class="col-md-8 p-0">
                 <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
@@ -12,44 +12,44 @@
         </div>
     </div>
 
-    <div class="pb-100 order-historical" [formGroup]="orderHistoryFileForm">
+    <div class="pb-100 pt-90 order-historical" [formGroup]="orderHistoryFileForm">
         <div class="row pt-28">
-            <div class="col-md-5 pr-0">
+            <div class="col-md-5 pr-0 full-end">
                 <h5 class="text-right pt-20 mb-0">Search Advisor</h5>
             </div>
             <div class="col-md-7">
-                <div class="form-group">
-                    <mat-form-field floatLabel="never" appearance="standard" [formGroup]="searchAdvisorForm">
-                        <input class="form-control" matInput placeholder="Search" aria-label="State"
-                            [matAutocomplete]="auto1" #advisorRef formControlName="searchAdvisor"
-                            [value]="advisorNameInput">
-                        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
-                            <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
+
+                <mat-form-field floatLabel="never" appearance="standard" [formGroup]="searchAdvisorForm">
+                    <input class="form-control" matInput placeholder="Search" aria-label="State"
+                        [matAutocomplete]="auto1" #advisorRef formControlName="searchAdvisor"
+                        [value]="advisorNameInput">
+                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
+                        </mat-option>
+                        <ng-container *ngIf="!isLoadingForDropDown">
+                            <mat-option (onSelectionChange)="setAdvisorId(advisor)"
+                                *ngFor="let advisor of arrayOfAdvisorName" [value]="advisor.name"
+                                [matTooltip]="advisor.name" matTooltipPosition="after">
+                                <span>
+                                    <b>
+                                        {{advisor.name}}
+                                    </b>
+                                </span>
                             </mat-option>
-                            <ng-container *ngIf="!isLoadingForDropDown">
-                                <mat-option (onSelectionChange)="setAdvisorId(advisor)"
-                                    *ngFor="let advisor of arrayOfAdvisorName" [value]="advisor.name"
-                                    [matTooltip]="advisor.name" matTooltipPosition="after">
-                                    <span>
-                                        <b>
-                                            {{advisor.name}}
-                                        </b>
-                                    </span>
-                                </mat-option>
-                            </ng-container>
-                        </mat-autocomplete>
-                        <mat-error
-                            *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                    <br>
-                    <ng-container *ngIf="arrayAdvisorNameError">
-                        <span class="f-12">
-                            {{errorMsg}}
-                        </span>
-                    </ng-container>
-                </div>
+                        </ng-container>
+                    </mat-autocomplete>
+                    <mat-error
+                        *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+                <br>
+                <ng-container *ngIf="arrayAdvisorNameError">
+                    <span class="f-12">
+                        {{errorMsg}}
+                    </span>
+                </ng-container>
+
             </div>
         </div>
         <div class="row pt-28">
