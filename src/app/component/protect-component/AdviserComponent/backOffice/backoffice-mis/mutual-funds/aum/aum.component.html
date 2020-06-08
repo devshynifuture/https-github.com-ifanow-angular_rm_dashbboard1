@@ -51,24 +51,20 @@
                                             <!-- *ngIf="MiscData1" -->
                                             <div class="col-md-5 text-left p-0">
                                                 <div class="pl-12">
-                                                    <h1 class="relClass f-24 text-diff mb-0 pb-8">
-                                                        <div class="bar height24">
+                                                    <h1 class="f-24 text-diff mb-0 pb-8">
                                                             <span *ngIf="!isLoading">
                                                                 {{(MiscData1) ? MiscData1.totalFolioCount : '-'}}</span>
                                                             <span *ngIf="isLoading">{{''}}</span>
-                                                        </div>
                                                     </h1>
                                                     <p class="f-12 text-diff mb-0">Folio Count</p>
                                                 </div>
                                             </div>
                                             <!-- *ngIf="MiscData1" -->
                                             <div class="col-md-7 p-0 text-right">
-                                                <h1 class="relClass text-diff f-24 mb-0 pb-8">
-                                                    <div class="bar height24">
+                                                <h1 class="text-diff f-24 mb-0 pb-8">
                                                         <span *ngIf="!isloading && MiscData1" appFormatNumber>{{(MiscData1) ? MiscData1.averageFolioSize : '-'}}
                                                         </span>
                                                         <span *ngIf="isLoading">{{''}}</span>
-                                                    </div>
                                                 </h1>
 
 
