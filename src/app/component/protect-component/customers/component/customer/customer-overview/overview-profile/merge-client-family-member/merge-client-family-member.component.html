@@ -94,6 +94,21 @@
           <!--              <img src="/assets/images/svg/cancel-icon.svg">-->
           <!--            </td>-->
           <!--          </ng-container>-->
+          <ng-container matColumnDef="relation">
+            <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
+            <td *matCellDef="let element" class="br" mat-cell>
+              <div class="form-group">
+                <mat-form-field appearance="standard" floatLabel="never">
+                  <mat-select [formControl]="relationType" class="form-control">
+                    <mat-option value='' disabled>Select option</mat-option>
+                    <mat-option *ngFor="let singleType of relationTypeList" [value]="singleType.value">
+                      {{singleType.name}}</mat-option>
+                  </mat-select>
+                  <mat-error>This field is required</mat-error>
+                </mat-form-field>
+              </div>
+            </td>
+          </ng-container>
 
           <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
           <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
