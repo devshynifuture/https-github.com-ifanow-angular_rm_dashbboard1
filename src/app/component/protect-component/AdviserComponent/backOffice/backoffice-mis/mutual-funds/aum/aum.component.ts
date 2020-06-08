@@ -17,10 +17,10 @@ export class AumComponent implements OnInit {
   showSubTable: boolean = false;
   showAddBtn: boolean = true;
   showRemoveBtn: boolean;
-  clientTotalAum;
-  amcTotalAum;
-  category;
-  subcategory;
+  clientTotalAum=[{},{},{}];
+  amcTotalAum=[{},{},{}];
+  category=[{},{},{}];
+  subcategory=[{},{},{}];
   MiscData;
   MiscData1;
   aumComponent = true;
@@ -29,6 +29,8 @@ export class AumComponent implements OnInit {
   arnRiaList: any;
   aumGraph: any;
   parentId;
+  isLoading = true;
+  
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
     private fb: FormBuilder
@@ -115,6 +117,8 @@ export class AumComponent implements OnInit {
   }
 
   getTotalAum() {
+    this.isLoading = true;
+
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
@@ -126,12 +130,15 @@ export class AumComponent implements OnInit {
     )
   }
   getMisData() {
+    this.isLoading = true;
     this.backoffice.getMisData(this.advisorId).subscribe(
       data => this.getFileResponseDataForMis(data),
       err => this.getFilerrorResponse(err)
     )
   }
   getSubCatAum() {
+    this.isLoading = true;
+
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailId: this.arnRiaValue,
@@ -146,15 +153,19 @@ export class AumComponent implements OnInit {
   getSubCatSchemeRes(data) {
   }
   getFileResponseDataAum(data) {
+    this.isLoading = false;
+    if(data){
+      this.clientTotalAum = data.clientTotalAum;
+      this.amcTotalAum = data.amcTotalAum;
+    }
 
-
-    this.clientTotalAum = data.clientTotalAum;
-    this.amcTotalAum = data.amcTotalAum;
   }
   getFileResponseDataForMis(data) {
+    this.isLoading = false;
     this.MiscData1 = data;
   }
   getFileResponseDataForSub(data) {
+    this.isLoading = false;
     this.category = data.category;
     this.subcategory = data.subcategory;
   }

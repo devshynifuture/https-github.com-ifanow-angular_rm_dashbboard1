@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div class="mr-12">
+            <div class="mr-12 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="row ">
                     <div class="col-md-9 p-0">
                         <div class="row">
@@ -32,8 +32,13 @@
                                 <div class="bg-grey lter pt-24 pb-24 text-center br-2 height180">
                                     <div class="row">
                                         <div class="col-md-12 p-0">
-                                            <h1 *ngIf="MiscData1" class="text-diff f-44 f-300 pt-32">
-                                                {{MiscData1.totalAumRupees}}
+                                            <!-- *ngIf="MiscData1" -->
+                                            <h1 class="relClass text-diff f-44 f-300 pt-32">
+                                                <div class="bar height24">
+                                                    <span>
+                                                        {{(isLoading) ? '' :((MiscData1) ? MiscData1.totalAumRupees : '-')}}
+                                                    </span>
+                                                </div>
                                             </h1>
                                             <p class="f-16 pt-4 text-diff">TOTAL AUM</p>
                                         </div>
@@ -43,17 +48,29 @@
                             <div class="col-md-4 pr-0">
                                 <div class="bg-grey lter br-2 height180 pr-20 pl-12">
                                     <div class="row pt-12">
-                                        <div *ngIf="MiscData1" class="col-md-5 text-left p-0">
+                                        <!-- *ngIf="MiscData1" -->
+                                        <div class="col-md-5 text-left p-0">
                                             <div class="pl-12">
-                                                <h1 class="f-24 ttext-diff mb-0 pb-8">{{MiscData1.totalFolioCount}}
+                                                <h1 class="relClass f-24 text-diff mb-0 pb-8">
+                                                    <div class="bar height24">
+                                                        <span *ngIf="!isLoading"> {{(MiscData1) ? MiscData1.totalFolioCount : '-'}}</span>
+                                                        <span *ngIf="isLoading">{{''}}</span>
+                                                    </div>
                                                 </h1>
                                                 <p class="f-12 text-diff mb-0">Folio Count</p>
                                             </div>
                                         </div>
-                                        <div *ngIf="MiscData1" class="col-md-7 p-0 text-right">
-                                            <h1 class="text-diff f-24 mb-0 pb-8"><span
-                                                    appFormatNumber>{{MiscData1.averageFolioSize}}</span>
+                                        <!-- *ngIf="MiscData1" -->
+                                        <div class="col-md-7 p-0 text-right">
+                                            <h1 class="relClass text-diff f-24 mb-0 pb-8">
+                                                <div class="bar height24">
+                                                    <span *ngIf="!isloading && MiscData1" appFormatNumber>{{(MiscData1) ? MiscData1.averageFolioSize : '-'}}
+                                                    </span>
+                                                    <span *ngIf="isLoading">{{''}}</span>
+                                                </div>
                                             </h1>
+
+
                                             <p class="f-12 mb-0 text-diff">Average Folio Size</p>
                                         </div>
                                         <div class="col-md-12 pr-0">
@@ -143,25 +160,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pr-0">
+                    <div class="col-md-3 pr-0 skeletonAnimation"  appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div id="mistabs1">
                             <mat-tab-group class="h-300 bg-white borderLine pt-0">
                                 <mat-tab label="Clients">
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Top Clients </h6>
 
-                                    <div *ngIf="clientTotalAum" class="b-white">
+                                    <div  class="b-white">
                                         <div *ngFor="let item of clientTotalAum" class="row bb">
-                                            <div class="col-md-7 p-0 ">
-                                                <p class="mb-0 f-bold f-13 p-8 ">{{(item.name) ? item.name : '-'}}</p>
+                                            <div class="bar col-md-7 p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">{{(item.name) ? item.name : '-'}}</p>
+                                                <p *ngIf="isLoading">{{''}}</p>
                                             </div>
-                                            <div class="col-md-5 text-right p-0 ">
-                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                            <div class="bar col-md-5 text-right p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                     {{(item.totalAum) ? item.totalAum : '-'}}</p>
+                                                    <p *ngIf="isLoading">{{''}}</p>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div *ngIf="!clientTotalAum || clientTotalAum.length==0" class="text-center">
+                                    <div *ngIf="clientTotalAum?.length==0" class="text-center">
                                         No client found
                                     </div>
                                 </mat-tab>
@@ -169,17 +188,21 @@
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Top AMC</h6>
                                     <div *ngIf="amcTotalAum" class="b-white ">
                                         <div *ngFor="let item of amcTotalAum" class="row bb ">
-                                            <div class="col-md-7 p-0 ">
-                                                <p class="mb-0 f-bold f-13 p-8 ">
+                                            <div class="bar col-md-7 p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">
                                                     {{(item.schemeName) ? item.schemeName : '-'}}</p>
+                                                    <p *ngIf="isLoading">{{''}}</p>
+
                                             </div>
-                                            <div class="col-md-5 p-0 text-right ">
-                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                            <div class="bar col-md-5 p-0 text-right ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                     {{(item.totalAum) ? item.totalAum : '-'}}</p>
+                                                    <p *ngIf="isLoading">{{''}}</p>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="!amcTotalAum || amcTotalAum.length==0" class="text-center">
+                                    <div *ngIf="amcTotalAum?.length==0" class="text-center">
                                         No Amc Found
                                     </div>
                                 </mat-tab>
@@ -191,16 +214,20 @@
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">TOP CATEGORY</h6>
                                     <div *ngIf="category" class="b-white ">
                                         <div *ngFor="let item of category" class="row bb ">
-                                            <div class="col-md-7 p-0 ">
-                                                <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
+                                            <div class="bar col-md-7 p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
+                                                <p *ngIf="isLoading">{{''}}</p>
+
                                             </div>
-                                            <div class="col-md-5 text-right p-0 ">
-                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                            <div class="bar col-md-5 text-right p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                     {{item.totalAum}}</p>
+                                                    <p *ngIf="isLoading">{{''}}</p>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="!category || category.length==0" class="text-center">
+                                    <div *ngIf="category?.length==0" class="text-center">
                                         No category Found
                                     </div>
                                 </mat-tab>
@@ -209,16 +236,18 @@
                                     <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Sub Category</h6>
                                     <div *ngIf="subcategory" class="b-white ">
                                         <div *ngFor="let item of subcategory" class="row bb ">
-                                            <div class="col-md-7 p-0 ">
-                                                <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
+                                            <div class="bar col-md-7 p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
+                                                <p *ngIf="isLoading">{{''}}</p>
                                             </div>
-                                            <div class="col-md-5 text-right p-0 ">
-                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                            <div class="bar col-md-5 text-right p-0 ">
+                                                <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                     {{item.totalAum}}</p>
+                                                    <p *ngIf="isLoading">{{''}}</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="!subcategory || subcategory.length==0" class="text-center">
+                                    <div *ngIf="subcategory?.length==0" class="text-center">
                                         No subCategory Found
                                     </div>
                                 </mat-tab>
