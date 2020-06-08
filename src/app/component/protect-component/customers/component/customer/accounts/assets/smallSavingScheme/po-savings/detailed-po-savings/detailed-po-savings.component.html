@@ -68,6 +68,7 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.accumalatedValue != 0">
                         ₹<span appFormatNumber>{{data.accumalatedValue}}</span>
+                        {{data.accumalatedValue? "₹" : ""}}<span appFormatNumber>{{data.accumalatedValue?data.accumalatedValue:'-'}}</span>
                     </div>
                 </div>
                 

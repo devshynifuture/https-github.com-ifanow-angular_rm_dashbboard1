@@ -128,6 +128,7 @@ export class SsySchemeComponent implements OnInit {
     );
   }
 
+  sumOfAccountBalance:any;
   getSsySchemedataResponse(data) {
     this.isLoading = false;
     if (data != undefined) {
@@ -138,6 +139,7 @@ export class SsySchemeComponent implements OnInit {
         UtilService.checkStatusId(this.datasource.filteredData);
         this.sumOfCurrentValue = data.sumOfCurrentValue;
         this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.sumOfAccountBalance = data.sumOfAccountBalance;
         this.ssyData = data;
       }
     } else {
