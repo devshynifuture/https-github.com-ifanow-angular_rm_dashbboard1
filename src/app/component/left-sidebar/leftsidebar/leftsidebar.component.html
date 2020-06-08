@@ -464,21 +464,22 @@
                                 <div class="col-md-3 p-0 pt-10 pb-10">
                                     <img [src]="authService.appPic" class="w-100">
                                 </div>
-                                <div class="col-md-9 pt-20">
+                                <div class="col-md-9 d-flex justify-content-center flex-column">
                                     <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
                                     <p class="text-custom m-0 roboto f-400">{{role}}</p>
                                 </div>
                             </div>
 
-                            <ul class="d-block bb-1">
+                            <ul class="d-block bb-1 pb-20">
                                 <li class="text-left pt-20 f-14 c-p"
                                     *ngIf="userInfo.userType==1 || userInfo.userType==8">Profile</li>
                                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
-                                <li class="text-left pt-20 f-14 pb-20 c-p" *ngIf="userInfo.userType==1">Refer & Earn
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Refer & Earn
                                 </li>
                                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
                             </ul>
-                            <p (click)="logout()" class="c-p mb-0 pb-24 pt-20">Logout</p>
+                            <p (click)="logout()" class="c-p mb-0 pb-12
+                             pt-20">Logout</p>
                         </div>
                     </mat-menu>
                 </a>
