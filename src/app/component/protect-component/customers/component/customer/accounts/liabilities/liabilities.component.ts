@@ -219,6 +219,9 @@ export class LiabilitiesComponent implements OnInit {
     if (data != undefined) {
       this.OtherPayableData = data;
       this.OtherData = data.length;
+    }else{
+      this.OtherPayableData = data;
+      this.OtherData = '';
     }
   }
   sortTable(data) {
@@ -486,7 +489,7 @@ export class LiabilitiesComponent implements OnInit {
     this.open('openHelp', 'liabilityright');
   }
   display(data) {
-    this.getPayables();
+      this.getPayables()
   }
 }
 export interface PeriodicElement {

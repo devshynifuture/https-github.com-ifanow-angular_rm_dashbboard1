@@ -135,6 +135,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   currentViewId = 1;
   greeterFnID:any;
   mutualFund: any;
+  userInfo:any;
 
   constructor(
     private customerService: CustomerService,
@@ -151,6 +152,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
+    this.userInfo = AuthService.getUserInfo();
     if (!this.orgDetails) {
       this.orgDetails = {};
     }

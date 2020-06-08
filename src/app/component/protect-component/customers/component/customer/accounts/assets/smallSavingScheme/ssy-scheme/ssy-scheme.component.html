@@ -38,8 +38,7 @@
     </div>
 </div>
 <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate">
-    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
-        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -62,15 +61,13 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
-                class="br right-hcb w-11 text-right hide-arrow">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br right-hcb w-11 text-right hide-arrow">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
-                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="sumOfCurrentValue"
-                        appFormatNumber>{{sumOfCurrentValue}}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span> </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -82,20 +79,17 @@
             <td mat-footer-cell class="br text-right " *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
-                class="br right-hcb w-16 text-right hide-arrow">
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br right-hcb w-16 text-right hide-arrow">
                 Total amount invested </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
-                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="sumOfAmountInvested"
-                        appFormatNumber>{{sumOfAmountInvested}}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span> </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="number">
-            <th mat-sort-header="number" mat-header-cell *matHeaderCellDef
-                class="br   text-right right-hcb w-14 hide-arrow">
+            <th mat-sort-header="number" mat-header-cell *matHeaderCellDef class="br   text-right right-hcb w-14 hide-arrow">
                 Account number
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right t-7">
@@ -138,23 +132,19 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td id="hide" mat-cell *matCellDef="let element" class="t-2 text-center">
-                <div *ngIf="!isLoading">
-                    <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                        more_vert
-                    </i> -->
-                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
-                    <mat-menu #menubank="matMenu">
-                        <button mat-menu-item (click)="addOpenSSY(element,'editSsy')">Edit</button>
-                        <button mat-menu-item (click)="addOpenSSY(element,'detailedSsy')">Detailed view</button>
-                        <button mat-menu-item (click)="file.click()">Upload file
-                        </button>
-                        <input #file (change)="fetchData('SSY',$event,element)" style="display: none;"
-                            class="uploadInput" id="file-4" multiple type="file">
-                        <!-- <button mat-menu-item>Activity</button> -->
-                        <button mat-menu-item (click)="deleteModal('SSY',element)">Delete</button>
-                    </mat-menu>
-                </div>
+            <td id="hide" [matMenuTriggerFor]="menubank" mat-cell *matCellDef="let element" class="t-2 c-p text-center">
+
+                <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
+                <mat-menu #menubank="matMenu">
+                    <button mat-menu-item (click)="addOpenSSY(element,'editSsy')">Edit</button>
+                    <button mat-menu-item (click)="addOpenSSY(element,'detailedSsy')">Detailed view</button>
+                    <button mat-menu-item (click)="file.click()">Upload file
+                    </button>
+                    <input #file (change)="fetchData('SSY',$event,element)" style="display: none;" class="uploadInput" id="file-4" multiple type="file">
+                    <!-- <button mat-menu-item>Activity</button> -->
+                    <button mat-menu-item (click)="deleteModal('SSY',element)">Delete</button>
+                </mat-menu>
+
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>

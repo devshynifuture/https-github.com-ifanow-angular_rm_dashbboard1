@@ -265,19 +265,20 @@ addNewNominee(data) {
         let obj =
         {
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          // "ownerName": this.editApiData.portfolioOwner,
           "portfolioName": this.assetForm.get('portfolioName').value,
-          "id": this.editApiData.id,
-          "ownerList": this.assetForm.value.getCoOwnerName,
+          "id": this.editApiData.portfolioId,
+          "ownerList": this.editApiData.portfolioOwner,
           "stockList": [
             {
               "ownerList": this.assetForm.value.getCoOwnerName,
               "valueAsOn": this.assetForm.get("valueAsOn").value,
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
-              "id": this.editApiData.stockList[this.editApiData.stockList.length - 1].id,
-              "scripNameId": this.editApiData.stockList[this.editApiData.stockList.length - 1].scripNameId,
-              "transactionorHoldingSummaryList": this.editApiData.stockList[this.editApiData.stockList.length - 1].transactionorHoldingSummaryList
+              "id": this.editApiData.id,
+              "stockType": 1,
+              "scripNameId": this.editApiData.scripNameId,
+              "transactionorHoldingSummaryList": this.editApiData.transactionorHoldingSummaryList
             }
           ]
         }
