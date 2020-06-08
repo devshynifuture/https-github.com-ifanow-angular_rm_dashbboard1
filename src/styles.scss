@@ -34,7 +34,6 @@
 }
 
 .menuAccordion {
-
   .mat-expansion-panel-header:not([aria-disabled=true]) {
     cursor: pointer;
     margin-right: 0px;
@@ -65,7 +64,6 @@
     margin-right: 0px;
   }
 
-
   .sidenav-link:hover,
   .sidenav-link:active,
   .sidenav-link:focus {
@@ -77,7 +75,6 @@
     }
   }
 }
-
 
 #earphones-menu {
   .mat-menu-item {
@@ -103,8 +100,6 @@
 }
 
 #setting-menu {
-
-
   .mat-menu-item {
     height: 89px !important;
   }
@@ -254,8 +249,6 @@
     height: 52px;
   }
 }
-
-
 
 #ui-dashboard {
   .h-513 {
@@ -422,7 +415,6 @@
 //     height: 250px !important;
 //   }
 // }
-
 #mistabs1,
 #mistabs2,
 #siptabs1,
@@ -934,9 +926,7 @@ mat-tab-group[vertical] {
 
 #ui-liabilities {
   .vertical-menu {
-
     height: calc(100vh - 126px);
-
   }
 }
 
@@ -1050,7 +1040,7 @@ mat-tab-group[vertical] {
 
   .mat-tab-link {
     min-width: 100px !important;
-    height: 58px !important;
+    height: 60px !important;
     padding: 0 !important;
     padding-bottom: 5px !important;
     // border-bottom: 1px solid transparent !important;
@@ -1097,7 +1087,7 @@ mat-tab-group[vertical] {
   position: fixed !important;
   margin-right: 0px !important;
   right: 0 !important;
-  margin-top: 58px !important;
+  margin-top: 60px !important;
   background-color: #000;
   width: 100%;
   box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
@@ -1205,7 +1195,6 @@ mat-tab-group[vertical] {
 }
 
 .cashflow #table-low {
-
   .mat-row:last-child {
     font-weight: normal !important;
     text-align: left !important;
@@ -1222,10 +1211,7 @@ mat-tab-group[vertical] {
 
   tr.mat-header-row {
     height: 40px !important;
-
   }
-
-
 }
 
 .cashflows-headers-hide#table-low {
@@ -1293,7 +1279,6 @@ mat-tab-group[vertical] {
     resize: none;
   }
 }
-
 
 .mf-summary .mat-row:last-child,
 .mutualfunds-capital-debt .mat-row:last-child,
@@ -1471,8 +1456,8 @@ mat-tab-group[vertical] {
 
 #ui-add-goals {
   padding-bottom: 65px !important;
-  // height: 100vh !important;
 
+  // height: 100vh !important;
   .col-half-offset {
     margin-left: 3.26667%;
   }
@@ -1571,15 +1556,9 @@ textarea {
 // #table-low tbody td.amt {
 //   padding-right: 20px !important;
 // }
-
 // #table-low tfoot td.amt {
 //   padding-right: 20px !important;
 // }
-
-
-
-
-
 .example-container {
   height: auto;
   max-height: 400px;
@@ -1877,7 +1856,6 @@ textarea {
 
 .advisorHomeBtn {
   padding: 0px 5px !important;
-
 }
 
 .mat-form-field-subscript-wrapper {
@@ -1889,12 +1867,11 @@ textarea {
   }
 }
 
-
 #overview-secondhead {
   position: fixed !important;
   margin-right: 0px !important;
   right: 0 !important;
-  margin-top: 58px !important;
+  margin-top: 60px !important;
   background-color: #000;
   width: 100%;
   box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
