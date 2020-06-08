@@ -168,8 +168,10 @@ export class AdminDetailsComponent implements OnInit {
         console.log("editStageComment", data);
         this.getstageComment(stage, true);
         this.CommentStage = "";
+        this.getStageCountData();
         if (data == null) {
           // this.getOverview = data.stageList;
+
         }
       },
       (err) => this.eventService.openSnackBar(err, "Dismiss")
@@ -350,6 +352,7 @@ export class AdminDetailsComponent implements OnInit {
         this.Comment = "";
         console.log("editStageComment", data);
         if (data) {
+          this.getStageCountData();
         }
       },
       (err) => this.eventService.openSnackBar(err, "Dismiss")

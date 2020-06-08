@@ -43,7 +43,7 @@
             <ng-container matColumnDef="doneOn">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header="doneOn" class="b-a"> Done On </th>
                 <td mat-cell *matCellDef="let element" class="b-a fc-green">
-                    <div class="bar"> {{element.doneOn|date:"short"}} </div>
+                    <div class="bar"> {{element.doneOn | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
 
