@@ -123,7 +123,11 @@ export class SipComponent implements OnInit {
       parentId: this.parentId
     }
     this.backoffice.getSipcountGet(obj).subscribe(
-      data => this.getsipCountGet(data)
+      data => this.getsipCountGet(data),
+      err=>{
+        this.isLoading = false;
+        this.sipCount = '';
+      }
     )
   }
   getsipCountGet(data) {
@@ -173,6 +177,10 @@ export class SipComponent implements OnInit {
         }else{
           this.expiredSip = [];
         }
+      },
+      err=>{
+        this.isExpiredLoading = false;
+        this.expiredSip = [];
       }
     )
   }
@@ -194,6 +202,11 @@ export class SipComponent implements OnInit {
           this.expiringSip=[];
         }
 
+      },
+      err=>{
+        this.isExpiringLoading = false;
+        this.expiringSip=[];
+
       }
     )
   }
@@ -214,6 +227,10 @@ export class SipComponent implements OnInit {
         }else{
           this.rejectionSip = [];
         }
+      },
+      err=>{
+        this.isRejectionLoading = false;
+        this.rejectionSip = [];
       }
     )
   }
@@ -228,6 +245,11 @@ export class SipComponent implements OnInit {
       data => {
         this.sipPanCount = data.sipCount;
         this.getWbrPanCount();
+      },
+      err=>{
+        this.sipPanCount='';
+        this.clientWithoutSip=0;
+
       }
     )
   }

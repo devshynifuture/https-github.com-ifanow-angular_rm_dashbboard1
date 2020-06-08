@@ -158,14 +158,23 @@ export class AumComponent implements OnInit {
     }
     this.backoffice.getClientTotalAUM(obj).subscribe(
       data => this.getFileResponseDataAum(data),
-      err => this.getFilerrorResponse(err)
+      err =>{
+        this.isLoading =false;
+        this.clientTotalAum = [];
+        this.amcTotalAum = [];
+        this.getFilerrorResponse(err)
+      } 
     )
   }
   getMisData() {
     this.isLoading = true;
     this.backoffice.getMisData(this.advisorId).subscribe(
       data => this.getFileResponseDataForMis(data),
-      err => this.getFilerrorResponse(err)
+      err => {
+        this.isLoading = false;
+        this.MiscData1 = '';
+        this.getFilerrorResponse(err)
+      }
     )
   }
   getSubCatAum() {
@@ -178,7 +187,12 @@ export class AumComponent implements OnInit {
     }
     this.backoffice.getSubCatAum(obj).subscribe(
       data => this.getFileResponseDataForSub(data),
-      err => this.getFilerrorResponse(err)
+      err => {
+        this.isLoading =false;
+        this.category = [];
+        this.subcategory = [];
+        this.getFilerrorResponse(err)
+      }
     )
   }
 
@@ -226,6 +240,9 @@ export class AumComponent implements OnInit {
         setTimeout(() => {
           this.pieChart('pieChartAum', data);
         }, 1000);
+      },
+      err=>{
+        this.aumGraph='';
       }
     )
   }
