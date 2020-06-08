@@ -20,9 +20,9 @@ export class SipComponent implements OnInit {
   showMainWrapperFlag: boolean = true;
   advisorId: any;
   clientId: any;
-  expiringSip =[{},{},{}];
-  expiredSip =[{},{},{}];
-  rejectionSip=[{},{},{}];
+  expiringSip = [{}, {}, {}];
+  expiredSip = [{}, {}, {}];
+  rejectionSip = [{}, {}, {}];
   sipPanCount: any;
   wbrCount: any;
   clientWithoutSip = 0;
@@ -34,7 +34,7 @@ export class SipComponent implements OnInit {
   isLoading = true;
   parentId;
   adminAdvisorIds: any;
-  constructor(private backoffice: BackOfficeService, private dataService: EventService,private reconService:ReconciliationService) { }
+  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -180,7 +180,7 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_EXPIRING(obj).subscribe(
       data => {
-        this.isLoading=false;
+        this.isLoading = false;
         this.expiringSip = data;
       }
     )
@@ -240,7 +240,7 @@ export class SipComponent implements OnInit {
   }
   newSip() {
     const obj = {
-      advisorId: this.parentId ? 0 :[this.adminAdvisorIds],
+      advisorId: this.parentId ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
