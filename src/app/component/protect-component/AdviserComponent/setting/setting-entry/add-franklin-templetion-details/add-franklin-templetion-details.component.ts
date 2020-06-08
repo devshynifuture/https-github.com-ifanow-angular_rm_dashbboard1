@@ -57,7 +57,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
       rtExtTypeId: [2], // dbf file extension
       loginId: [this.data.mainData.loginId || '', [Validators.required]],
       loginPassword: [this.data.mainData.loginPassword || '', [Validators.required]],
-      mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
+      mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       fileOrderingUseabilityStatusId: [1]
     });

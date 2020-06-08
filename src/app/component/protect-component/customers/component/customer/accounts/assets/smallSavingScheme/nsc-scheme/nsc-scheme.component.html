@@ -37,10 +37,8 @@
         </button>
     </div>
 </div>
-<div [ngClass]="{'table-scroll':isLoading==false }"
-    class="overflow-hidden col-md-12 p-0 mt-8 real-estate table-header-normal">
-    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
-        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+<div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden col-md-12 p-0 mt-8 real-estate table-header-normal">
+    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
             <td mat-cell *matCellDef="let element;let i=index" class="br">
@@ -59,8 +57,7 @@
             <td mat-footer-cell class="br text-right pr-20 f-600" *matFooterCellDef> Total</td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
-                class="br w-11 right-hcb text-right hide-arrow">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right hide-arrow">
                 Current value
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -73,8 +70,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef
-                class="br w-8 right-hcb text-right hide-arrow "> Rate
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-8 right-hcb text-right hide-arrow "> Rate
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar"> {{element.rate | number: '1.2-2'}}{{!isLoading ?'%':''}} </div>
@@ -82,8 +78,7 @@
             <td mat-footer-cell class="br text-left" *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="invested">
-            <th mat-sort-header="invested" mat-header-cell *matHeaderCellDef
-                class="br w-11 right-hcb text-right hide-arrow">
+            <th mat-sort-header="invested" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right hide-arrow">
                 Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -93,16 +88,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef
-                class="br w-11 right-hcb text-right hide-arrow">
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right hide-arrow">
                 Maturity value
             </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
-                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="SumOfMaturityValue"
-                        appFormatNumber>{{SumOfMaturityValue}}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="SumOfMaturityValue" appFormatNumber>{{SumOfMaturityValue}}</span> </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
@@ -139,21 +132,20 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"></th>
-            <td mat-cell *matCellDef="let element" class="t-2 text-center">
-                <div *ngIf="!isLoading">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menubank" class="t-2 c-p text-center">
 
-                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
-                    <mat-menu #menubank="matMenu">
-                        <button mat-menu-item (click)="openAddNSC(element,'editNsc')">Edit</button>
-                        <button mat-menu-item (click)="openAddNSC(element,'detailedNsc')">Detailed view</button>
-                        <button mat-menu-item>Upload file
-                            <input (change)="fetchData('NSC',$event,element)" class="uploadInput" id="file-4" multiple
-                                type="file">
-                        </button>
-                        <!-- <button mat-menu-item>Activity</button> -->
-                        <button mat-menu-item (click)="deleteModal('NSC',element)">Delete</button>
-                    </mat-menu>
-                </div>
+                <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
+                <mat-menu #menubank="matMenu">
+                    <button mat-menu-item (click)="openAddNSC(element,'editNsc')">Edit</button>
+                    <button mat-menu-item (click)="openAddNSC(element,'detailedNsc')">Detailed view</button>
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('NSC',$event,element)" class="uploadInput" id="file-4" multiple
+                            type="file">
+                    </button>
+                    <!-- <button mat-menu-item>Activity</button> -->
+                    <button mat-menu-item (click)="deleteModal('NSC',element)">Delete</button>
+                </mat-menu>
+
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"></td>
         </ng-container>

@@ -308,3 +308,9 @@ textarea.mat-input-element {
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
 }
+
+.remove-top {
+  .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+  }
+}

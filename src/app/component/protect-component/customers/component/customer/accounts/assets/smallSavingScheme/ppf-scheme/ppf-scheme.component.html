@@ -30,8 +30,7 @@
     </div>
 </div>
 <div class="overflow-hidden mt-8 real-estate">
-    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading
-        [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <table #tableEl *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -79,8 +78,12 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accountBalance }}</span> </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
+<<<<<<< HEAD
                 <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAccountBalance"
                         appFormatNumber>{{sumOfAccountBalance}}</span></div>
+=======
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
+>>>>>>> 08ba525c299815fba57d64f3c58ca4316eabd9eb
             </td>
         </ng-container>
         <ng-container matColumnDef="number">
@@ -115,23 +118,20 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2 text-center">
-                <div *ngIf="!isLoading">
-                    <!-- <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                        more_vert
-                    </i> -->
-                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
-                    <mat-menu #menubank="matMenu">
-                        <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
-                        <button mat-menu-item (click)="openDetailPPF(element)">Detailed view</button>
-                        <button mat-menu-item>Upload file
-                            <input (change)="fetchData('PPF',$event,element)" class="uploadInput" id="file-4" multiple
-                                type="file">
-                        </button>
-                        <!-- <button mat-menu-item>Activity</button> -->
-                        <button mat-menu-item (click)="deleteModal('PPF',element)">Delete</button>
-                    </mat-menu>
-                </div>
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menubank" class="t-2 c-p text-center">
+
+                <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
+                <mat-menu #menubank="matMenu">
+                    <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
+                    <button mat-menu-item (click)="openDetailPPF(element)">Detailed view</button>
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('PPF',$event,element)" class="uploadInput" id="file-4" multiple
+                            type="file">
+                    </button>
+                    <!-- <button mat-menu-item>Activity</button> -->
+                    <button mat-menu-item (click)="deleteModal('PPF',element)">Delete</button>
+                </mat-menu>
+
             </td>
             <td *matFooterCellDef class="br text-right br" mat-footer-cell></td>
         </ng-container>

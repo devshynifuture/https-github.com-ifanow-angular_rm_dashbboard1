@@ -121,6 +121,8 @@
                                         src="/assets/images/svg/mother-profile.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==6"
                                         src="/assets/images/svg/father-profile.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==10"
+                                        src="/assets/images/svg/others.svg" width="48px">
                                     <div (click)="open('edit',singleMembers)" class="familyList">
                                         <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
                                             <span
@@ -151,7 +153,7 @@
                             </div>
 
                             <div (click)="open('add',null)" *ngIf="!letsideBarLoader"
-                                class="addFamilyMember c-p primary-border-dash">
+                                class="addFamilyMember c-p primary-border-dash ml-8">
                                 <i class=" material-icons text-primary ">
                                     add
                                 </i>
@@ -216,10 +218,10 @@
                                     </div>
                                 </div>
 
-                                <div class=" basicDetaisList ">
+                                <!-- <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">KYC STATUS</p>
                                     <p class=" f-14 roboto f-500 m-0 "> Not verified</p>
-                                </div>
+                                </div> -->
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">GENDER</p>

@@ -12,13 +12,16 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class PreviewComponent implements OnInit {
   link: any;
   loadSpinner: boolean = false;
+  selectedElement: any;
   constructor(public dialogRef: MatDialogRef<PreviewComponent>, private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
   }
 
   ngOnInit() {
-    console.log('investorList == ', this.data);
+    console.log('preview == ', this.data);
     this.link = this.data.bank;
+    this.selectedElement = this.data.selectedElement
+    console.log('preview == ', this.selectedElement);
     console.log('link == ', this.link);
     this.loadSpinner = true
     setTimeout(() => {

@@ -22,7 +22,7 @@
         </div>
 
         <div class="" [ngClass]="classObj.mobile">
-            <div class="form-group mb-0">
+            <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input #num (keyup)="checkUniqueNumber()" placeholder={{placeHolderObj[i]}} formControlName="number"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off"

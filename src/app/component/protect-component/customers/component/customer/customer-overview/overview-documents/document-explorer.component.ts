@@ -76,6 +76,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   urlData: any;
   previewDoc = false;
   shortUrl: any;
+  selectedElement: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -155,6 +156,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   getSharebleLink(element, flag) {
+    this.selectedElement = element
     if (element.fileName) {
       this.downlodFiles(element, flag);
     }
@@ -297,6 +299,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     if (tabValue == undefined) {
       tabValue = 1
     }
+    if(tabValue =='Documents' || tabValue == 1){
+      this.openFolderName = []
+    }
     if (flag == 'refresh') {
       this.backUpfiles = [];
       this.commonFileFolders.data = [];
@@ -422,6 +427,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   getFolders(data, index) {
+    this.urlData = ''
     this.isLoading = true;
     this.showMsg = false;
     this.commonFileFolders.data = [{}, {}, {}];
@@ -477,6 +483,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   downlodFiles(element, value) {
+    this.previewDoc = true
     if (value == 'download') {
       this.isLoading = false
     } else if (value != 'preview') {
@@ -507,7 +514,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       const dialogRef = this.dialog.open(PreviewComponent, {
         width: '500px',
         height: '600px',
-        data: { bank: data, flag: 'flag' }
+        data: { bank: data, selectedElement: this.selectedElement }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result == undefined) {
@@ -522,7 +529,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
     setTimeout(() => {
       this.previewDoc = false
-    }, 5000);
+    }, 4000);
   }
   verifyEmail(value, flag) {
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
@@ -684,7 +691,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         this.eventService.openSnackBar('Starred successfully', 'Dismiss');
       }
       this.getCount()
-      this.getAllFileList(this.valueTab, 'starred');
+      this.getAllFileList(1, 'starred');
     }
     // this.isLoading = false
   }

@@ -348,8 +348,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       if (parseInt(value) > 50) {
         this.addLiabilityForm.get('loanTenure').markAsTouched();
       }
-      this.minDate = new Date();
-      this.minDate.setFullYear(this.maxDate.getFullYear() - value);
+      if(value!=''){
+        this.minDate = new Date();
+        this.minDate.setFullYear(this.maxDate.getFullYear() - value);
+      }
     } else {
       (this.addLiabilityForm.controls.loanAmount.value) ? this.loanAmount = this.addLiabilityForm.controls.loanAmount.value : null;
       let formValue = parseInt(this.addLiabilityForm.controls.loanAmount.value);

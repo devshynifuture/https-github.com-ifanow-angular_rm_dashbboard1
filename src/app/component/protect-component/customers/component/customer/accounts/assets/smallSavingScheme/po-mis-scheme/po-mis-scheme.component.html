@@ -168,20 +168,20 @@
         </ng-container>
         <ng-container matColumnDef="icons" sticky>
             <th *matHeaderCellDef class="" mat-header-cell></th>
-            <td *matCellDef="let element" class=" text-center" mat-cell>
-                <div *ngIf="!isLoading">
-                    <img [matMenuTriggerFor]="menubank" class="c-p " src="/assets/images/svg/dot-menu.svg">
-                    <mat-menu #menubank="matMenu">
-                        <button (click)="openAddPOMIS(element)" mat-menu-item>Edit</button>
-                        <button (click)="openDetailPOMIS(element)" mat-menu-item>Detailed view</button>
-                        <button mat-menu-item>Upload file
-                            <input (change)="fetchData('Po MIS',$event,element)" class="uploadInput" id="file-4"
-                                multiple type="file">
-                        </button>
-                        <!-- <button mat-menu-item>Activity</button> -->
-                        <button (click)="deleteModal('PO MIS',element)" mat-menu-item>Delete</button>
-                    </mat-menu>
-                </div>
+            <td *matCellDef="let element" [matMenuTriggerFor]="menubank" class=" c-p text-center" mat-cell>
+
+                <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
+                <mat-menu #menubank="matMenu">
+                    <button (click)="openAddPOMIS(element)" mat-menu-item>Edit</button>
+                    <button (click)="openDetailPOMIS(element)" mat-menu-item>Detailed view</button>
+                    <button mat-menu-item>Upload file
+                        <input (change)="fetchData('Po MIS',$event,element)" class="uploadInput" id="file-4" multiple
+                            type="file">
+                    </button>
+                    <!-- <button mat-menu-item>Activity</button> -->
+                    <button (click)="deleteModal('PO MIS',element)" mat-menu-item>Delete</button>
+                </mat-menu>
+
             </td>
             <td *matFooterCellDef mat-footer-cell class="br"></td>
         </ng-container>
