@@ -34,10 +34,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   updateDomain: any = {};
   emailDetails: any = {};
   element: any;
-  emailList: any;
+  emailList: any[] = [{}, {}, {}];
   normalDomain: any;
   whiteLabledDomain: any;
-  emailTemplateList: any;
+  emailTemplateList: any[] = [{}, {}, {}];
   showUpdate = false;
   normalLable;
   whiteLable;
@@ -53,6 +53,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   counter: number = 0;
   appearanceFG:FormGroup;
   appearanceUpdateFlag: boolean;
+  hasError: boolean = false;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
       
@@ -87,7 +88,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getDomainSetting(obj).subscribe(
       data => this.getDomainSettingRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1);
+      }
     );
   }
   getDomainSettingRes(data) {
@@ -157,7 +162,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.portfolio = undefined;
+        this.loader(-1);
+        this.hasError = true;
+      }
     );
   }
   getPortfolioRes(data) {
@@ -175,7 +185,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.loader(-1);
+        this.hasError = true;
+      }
     );
   }
   
@@ -234,7 +248,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       let obj = {
         id: this.element.id,
         emailAddress: this.element.emailAddress,
-        userId: this.userId
+        userId: this.advisorId
       }
       this.orgSetting.addEmailVerfify(obj).subscribe(
         data => this.addEmailVerfifyRes(data),
@@ -293,13 +307,18 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   getEmailVerification() {
     this.loader(1);
+    this.emailList  = [{},{},{}];
     let obj = {
-      userId: this.userId,
+      userId: this.advisorId,
       // advisorId: this.advisorId
     }
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => this.getEmailVerificationRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1);
+      }
     );
   }
   getEmailVerificationRes(data) {
@@ -313,12 +332,17 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getEmailTemplate() {
     this.loader(1);
+    this.emailTemplateList = [{},{},{}];
     let obj = {
       advisorId: this.advisorId
     }
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1);
+      }
     );
   }
   getEmailTempalatRes(data) {
@@ -384,11 +408,15 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
         this.appearanceFG.controls.portfolioOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
-        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
-        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 2).advisorOrOrganisation);
+        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation);
         this.appearanceUpdateFlag = true;
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1)
+      }
     );
   }
 
@@ -422,6 +450,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   changeView(tab) {
     this.viewMode = tab;
+    this.hasError = false;
     switch(tab) {
       case 'tab1': 
         this.getPortfolio();
