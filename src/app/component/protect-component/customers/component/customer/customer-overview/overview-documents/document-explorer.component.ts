@@ -297,6 +297,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     if (tabValue == undefined) {
       tabValue = 1
     }
+    if(tabValue =='Documents' || tabValue == 1){
+      this.openFolderName = []
+    }
     if (flag == 'refresh') {
       this.backUpfiles = [];
       this.commonFileFolders.data = [];
@@ -684,7 +687,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         this.eventService.openSnackBar('Starred successfully', 'Dismiss');
       }
       this.getCount()
-      this.getAllFileList(this.valueTab, 'starred');
+      this.getAllFileList(1, 'starred');
     }
     // this.isLoading = false
   }
