@@ -66,7 +66,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       );
   }
 
-  ownerDetails(value) {
+  optionSelected(value) {
     console.log(' selected client to merge ', value);
     this.selectedClient = value;
     this.getClientData(value);
