@@ -179,10 +179,10 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchPinCode').setValue(pincode)
 
     this.bankForm.get('bankName').disable();
-    this.bankForm.get('branchCity').disable();
-    this.bankForm.get('branchState').disable();
-    this.bankForm.get('branchName').disable();
-    this.bankForm.get('branchCountry').disable();
+    // this.bankForm.get('branchCity').disable();
+    // this.bankForm.get('branchState').disable();
+    // this.bankForm.get('branchName').disable();
+    // this.bankForm.get('branchCountry').disable();
 
   }
 
