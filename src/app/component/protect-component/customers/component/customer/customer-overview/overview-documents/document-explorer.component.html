@@ -92,7 +92,7 @@
                         </div>
                         <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
                         <!-- <button class="text-custom br-0 mr-12" mat-stroked-button> HELP</button> -->
-                        <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0  "
+                        <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0 " (click)="urlData = ''"
                             mat-stroked-button> ADD
                             NEW
                         </button>
@@ -274,11 +274,16 @@
                     <div class="col-md-3 pr-0 " *ngIf="showMsg == false && noResult == false">
                         <div class="bg-grey sticky-top lter mb-16 boxGrey f-14" *ngIf="urlData">
 
-                            <p class="selectMoreDetails">
+                            <p class="selectMoreDetails" *ngIf="urlData != '' && urlData == undefined">
                                 Select a file to see more details
                             </p>
-                            <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
-                            </ngx-doc-viewer>
+                            <div *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png'">
+                                <img [src]="urlData" height="200"> <br/>
+                            </div>
+                            <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png'">
+                                <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
+                                </ngx-doc-viewer>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div *ngIf="previewDoc==true">

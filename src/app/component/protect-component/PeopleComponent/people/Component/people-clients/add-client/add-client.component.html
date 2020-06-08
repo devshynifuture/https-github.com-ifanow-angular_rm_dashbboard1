@@ -2,19 +2,23 @@
     <div class="col-md-10 p-0">
         <h4 class="mb-0 l-22 wrapper-20">{{headingData.flag}}</h4>
     </div>
-    <div class="col-md-2 col-2 text-right">
-        <span *ngIf="headingData.fieldFlag=='familyMember'" class="material-icons familyDelete c-p"
-            (click)="deleteModal('FAMILY MEMBER')">
-            delete
-        </span>
-        <i (click)="close('close')" class="material-icons pt-20 c-p pr-16">
+    <div class="col-md-2 col-2 text-right full-end">
+
+        <i (click)="close('close')" class="material-icons c-p">
             clear
         </i>
+
     </div>
 </div>
 <div class="pt-90  pb-100 ">
     <div class="row">
         <div class="col-md-12 p-0">
+            <div class="right-cross-icons">
+                <span *ngIf="headingData.fieldFlag=='familyMember'" class="material-icons familyDelete c-p"
+                    (click)="deleteModal('FAMILY MEMBER')">
+                    delete
+                </span>
+            </div>
             <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding"
                 id="ui-add-client">
                 <mat-tab label="Basic details">
@@ -55,6 +59,9 @@
                     <app-client-upload (tabChange)="changeTab($event)" [data]="tabData"
                         [fieldFlag]="headingData.fieldFlag"></app-client-upload>
                 </mat-tab>
+
+
+
             </mat-tab-group>
         </div>
     </div>
