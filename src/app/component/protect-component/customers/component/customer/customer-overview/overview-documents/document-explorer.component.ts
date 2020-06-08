@@ -687,7 +687,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         this.eventService.openSnackBar('Starred successfully', 'Dismiss');
       }
       this.getCount()
-      this.getAllFileList(this.valueTab, 'starred');
+      this.getAllFileList(1, 'starred');
     }
     // this.isLoading = false
   }
