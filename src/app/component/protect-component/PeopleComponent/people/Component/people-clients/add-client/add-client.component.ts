@@ -18,6 +18,7 @@ export class AddClientComponent implements OnInit {
   isRefreshFlag: any;
   matTabGroupFlag: boolean;
   hideDematFlag: any;
+  refreshBankFlag: any;
 
   constructor(private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private cancelFlagService: CancelFlagService, public dialog: MatDialog) { }
   ngOnInit() {
@@ -44,6 +45,11 @@ export class AddClientComponent implements OnInit {
   }
   hideDematTab(data) {
     this.hideDematFlag = data;
+  }
+  refreshBankUpload(flag) {
+    if (flag) {
+      this.refreshBankFlag = flag
+    }
   }
   deleteModal(value) {
     const dialogData = {

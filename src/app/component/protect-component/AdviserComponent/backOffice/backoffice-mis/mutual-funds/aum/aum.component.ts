@@ -4,6 +4,7 @@ import { BackOfficeService } from '../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
 import { FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-aum',
@@ -17,10 +18,10 @@ export class AumComponent implements OnInit {
   showSubTable: boolean = false;
   showAddBtn: boolean = true;
   showRemoveBtn: boolean;
-  clientTotalAum;
-  amcTotalAum;
-  category;
-  subcategory;
+  clientTotalAum = [{}, {}, {}];
+  amcTotalAum = [{}, {}, {}];
+  category = [{}, {}, {}];
+  subcategory = [{}, {}, {}];
   MiscData;
   MiscData1;
   aumComponent = true;
@@ -29,9 +30,12 @@ export class AumComponent implements OnInit {
   arnRiaList: any;
   aumGraph: any;
   parentId;
+  isLoading = true;
+  adminAdvisorIds = [];
+
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
-    private fb: FormBuilder
+    private fb: FormBuilder, private reconService: ReconciliationService
   ) { }
 
   teamMemberId = 2929;
@@ -40,17 +44,45 @@ export class AumComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.teamMemberListGet();
     this.viewMode = 'Select option';
-    if (this.parentId !== 0) {
-      this.getArnRiaList();
-    } else {
-      this.initPoint();
-    }
 
     // if parentId = 0 arnRiaDetails selection will be disabled 
     // if parentId present use it and arn Ria deail selection with advisor Id as 0
   }
-
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          console.log('team members: ', data);
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+          if (this.parentId !== 0) {
+            this.getArnRiaList();
+          } else {
+            this.initPoint();
+          }
+          // this.handlingDataVariable();
+        } else {
+          this.adminAdvisorIds = [this.advisorId];
+          if (this.parentId !== 0) {
+            this.getArnRiaList();
+          } else {
+            this.initPoint();
+          }
+          // this.handlingDataVariable();
+          // this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+        }
+      }, err => {
+        if (this.parentId !== 0) {
+          this.getArnRiaList();
+        } else {
+          this.initPoint();
+        }
+        // console.log(err);
+      });
+  }
   initPoint() {
 
     this.getGraphData();
@@ -87,9 +119,11 @@ export class AumComponent implements OnInit {
             id: -1
           }
           this.arnRiaList.unshift(obj);
-          this.initPoint();
+         this.initPoint();
         } else {
-          this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+          this.initPoint();
+
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
     )
@@ -115,8 +149,10 @@ export class AumComponent implements OnInit {
   }
 
   getTotalAum() {
+    this.isLoading = true;
+
     const obj = {
-      advisorId: this.advisorId,
+      advisorId:this.parentId ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     }
@@ -126,14 +162,17 @@ export class AumComponent implements OnInit {
     )
   }
   getMisData() {
+    this.isLoading = true;
     this.backoffice.getMisData(this.advisorId).subscribe(
       data => this.getFileResponseDataForMis(data),
       err => this.getFilerrorResponse(err)
     )
   }
   getSubCatAum() {
+    this.isLoading = true;
+
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: this.parentId ? 0 :[this.adminAdvisorIds],
       arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId
     }
@@ -146,15 +185,19 @@ export class AumComponent implements OnInit {
   getSubCatSchemeRes(data) {
   }
   getFileResponseDataAum(data) {
+    this.isLoading = false;
+    if (data) {
+      this.clientTotalAum = data.clientTotalAum;
+      this.amcTotalAum = data.amcTotalAum;
+    }
 
-
-    this.clientTotalAum = data.clientTotalAum;
-    this.amcTotalAum = data.amcTotalAum;
   }
   getFileResponseDataForMis(data) {
+    this.isLoading = false;
     this.MiscData1 = data;
   }
   getFileResponseDataForSub(data) {
+    this.isLoading = false;
     this.category = data.category;
     this.subcategory = data.subcategory;
   }
@@ -173,7 +216,7 @@ export class AumComponent implements OnInit {
   getGraphData() {
     this.aumGraph = null;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: this.parentId ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     }

@@ -223,6 +223,7 @@ export class RetirementAccountComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.showRecurring = '1';
+    this.isLoading = true;
     this.getObject = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -476,7 +477,6 @@ export class RetirementAccountComponent implements OnInit {
     });
   }
   getListEPF() {
-    this.isLoading = true;
     const obj = this.getObject;
     this.dataSource.data = [{}, {}, {}];
     this.custumService.getEPF_EPS(obj).subscribe(

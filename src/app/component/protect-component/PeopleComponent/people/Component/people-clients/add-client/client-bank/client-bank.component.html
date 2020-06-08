@@ -38,22 +38,6 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
-            <h5 class="m-0">Bank name</h5>
-        </div>
-        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter your bank name" autocomplete="off" [maxLength]="50" #bankName
-                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName"
-                        matInput class="form-control">
-                    <mat-error>This field is required</mat-error>
-                    <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
             <h5 class="m-0">MICR code</h5>
         </div>
         <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
@@ -64,6 +48,22 @@
                         class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
+            <h5 class="m-0">Bank name</h5>
+        </div>
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter your bank name" autocomplete="off" [maxLength]="50" #bankName
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName"
+                        matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>

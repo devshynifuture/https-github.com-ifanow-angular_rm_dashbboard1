@@ -171,7 +171,7 @@ Description description: "this is futurewise Tech" -->
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        ₹<span appFormatNumber>{{fixedDeposit.currentValue}}</span>
+                        {{fixedDeposit.currentValue? "₹" : ""}}<span appFormatNumber>{{fixedDeposit.currentValue?fixedDeposit.currentValue:'-'}}</span>
                         <!-- {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}} -->
                     </div>
                 </div>

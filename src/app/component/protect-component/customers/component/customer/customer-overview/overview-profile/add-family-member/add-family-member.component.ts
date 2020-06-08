@@ -30,7 +30,7 @@ export class AddFamilyMemberComponent implements OnInit {
         name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, genderId: 1, count: 1, relationshipTypeId: 4
       },
       { name: 'Daughter', genderId: 2, imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 5 },
-      { name: 'Others', genderId: 3, imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 10 }
+      { name: 'Others', genderId: 1, imgUrl: '/assets/images/svg/others.svg', selected: false, count: 1, relationshipTypeId: 10 }
     ]
   };
 
@@ -79,24 +79,30 @@ export class AddFamilyMemberComponent implements OnInit {
       familyMemberList: new FormArray([])
     });
     this.advisorId = AuthService.getAdvisorId();
-    if (this.data && this.data.client && this.data.client.genderId) {
-      const genderId = this.data.client.genderId;
-      if (genderId == 2) {
-        this.familyMemberList.firstRow.push({
-          name: 'Husband',
-          imgUrl: '/assets/images/svg/man-profile.svg',
-          selected: false,
-          relationshipTypeId: 2, genderId: 1
-        });
-      } else {
-        this.familyMemberList.firstRow.push({
-          name: 'Wife',
-          imgUrl: '/assets/images/svg/wife-profile.svg',
-          selected: false,
-          relationshipTypeId: 3, genderId: 2
+    if ((this.data.client.martialStatusId == 1 || this.data.client.martialStatusId == 0) && this.data.client.clientType == 1) {
+      if (this.data && this.data.client && this.data.client.duplicateFlag == false) {
+        const genderId = this.data.client.genderId;
+        if (genderId == 2) {
+          this.familyMemberList.firstRow.push({
+            name: 'Husband',
+            imgUrl: '/assets/images/svg/man-profile.svg',
+            selected: false,
+            relationshipTypeId: 2, genderId: 1
+          });
+        } else {
+          this.familyMemberList.firstRow.push({
+            name: 'Wife',
+            imgUrl: '/assets/images/svg/wife-profile.svg',
+            selected: false,
+            relationshipTypeId: 3, genderId: 2
+          }
+          );
         }
-        );
       }
+    }
+    else {
+      this.familyMemberList.firstRow = [];
+      this.familyMemberList.thirdRow = [{ name: 'Others', genderId: 1, imgUrl: '/assets/images/svg/others.svg', selected: false, count: 1, relationshipTypeId: 10 }]
     }
   }
 
@@ -236,7 +242,7 @@ export class AddFamilyMemberComponent implements OnInit {
 
   openMergeClient() {
     const data = {
-      flag: 'Add Family Member', clientId: AuthService.getClientId(),
+      flag: 'Add Family Member', clientData: this.data,
       advisorId: this.advisorId
     };
 

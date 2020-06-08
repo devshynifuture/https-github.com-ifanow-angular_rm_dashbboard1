@@ -47,8 +47,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput formControlName="loginPassword" class="form-control">
-                    <mat-error>This field is required</mat-error>
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput formControlName="loginPassword" class="form-control" minlength="8" maxlength="8">
+                    <mat-error *ngIf="franklinFG.get('loginPassword').errors?.required && franklinFG.get('loginPassword').touched">This field is required</mat-error>
+                    <mat-error *ngIf="(franklinFG.get('loginPassword').errors?.minlength || franklinFG.get('loginPassword').errors?.maxlength) && franklinFG.get('loginPassword').touched">Please enter valid password</mat-error>
                 </mat-form-field>
             </div>
         </div>

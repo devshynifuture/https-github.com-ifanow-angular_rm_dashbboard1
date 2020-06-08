@@ -50,6 +50,7 @@ export class ClientBankComponent implements OnInit {
   @Output() tabChange = new EventEmitter();
   @Output() saveNextData = new EventEmitter();
   @Output() cancelTab = new EventEmitter();
+  @Output() refreshClientUploadBankDetails = new EventEmitter();
 
   @Input() fieldFlag;
 
@@ -179,10 +180,10 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchPinCode').setValue(pincode)
 
     this.bankForm.get('bankName').disable();
-    this.bankForm.get('branchCity').disable();
-    this.bankForm.get('branchState').disable();
-    this.bankForm.get('branchName').disable();
-    this.bankForm.get('branchCountry').disable();
+    // this.bankForm.get('branchCity').disable();
+    // this.bankForm.get('branchState').disable();
+    // this.bankForm.get('branchName').disable();
+    // this.bankForm.get('branchCountry').disable();
 
   }
 
@@ -269,6 +270,7 @@ export class ClientBankComponent implements OnInit {
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
+            this.refreshClientUploadBankDetails.emit(true)
           } else {
             this.closeAndSave();
           }
@@ -281,6 +283,7 @@ export class ClientBankComponent implements OnInit {
       );
     }
   }
+
   deleteModal(value) {
     const dialogData = {
       data: value,

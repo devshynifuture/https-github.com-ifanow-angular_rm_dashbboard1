@@ -32,7 +32,7 @@ export class InsuranceComponent implements OnInit {
 
   [x: string]: any;
 
-  displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
+  displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm','Duration', 'desc','number', 'status', 'icons'];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
 
@@ -118,7 +118,7 @@ export class InsuranceComponent implements OnInit {
     this.isLoadingUpload = true;
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: this.clientId,
       familyMemberId: element.familyMemberId,
       asset: value
     };
