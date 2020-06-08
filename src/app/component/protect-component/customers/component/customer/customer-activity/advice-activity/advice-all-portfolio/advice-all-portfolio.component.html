@@ -54,54 +54,54 @@
                 class="pr-8">Filters</button>
     </div>
 </div>
-<div class="wrapper-16">
+<div class="wrapper-16 cash-flow-advice">
     <table #tableOne="matSort" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort mat-table
         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox (change)="checkAll($event,dataSource)"></mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.position}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.name}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-heade class="br text-right w-8"> Value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right w-8">
                 <div class="bar"> {{element.weight}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.symbol}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.status}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.date}}</div>
             </td>
         </ng-container>
@@ -134,60 +134,60 @@
         [dataSource]="dataSource1" class="skeletonAnimation" id="table-low">
 
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox (change)="checkAll($event,dataSource1)"></mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.position}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Scheme details </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Scheme details </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.name}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-right right-hcb"> Current
                 value </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{element.weight}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Notional
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Notional
                 gain (loss) </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.symbol}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.status}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.date}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.adate}}</div>
             </td>
         </ng-container>

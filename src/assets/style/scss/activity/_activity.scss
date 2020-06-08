@@ -1,0 +1,26 @@
+.advice-commodities {}
+
+.cash-flow-advice,
+.advice-mutual-funds {
+  #table-low .mat-sort-header-button {
+    white-space: nowrap;
+  }
+
+  tr.mat-header-row {
+    height: 48px !important;
+  }
+
+  #table-low {
+    th {
+      padding: 5px 8px !important;
+    }
+
+    tbody td {
+      padding: 5px 8px !important;
+    }
+
+    tr.mat-row {
+      height: 40px !important;
+    }
+  }
+}
