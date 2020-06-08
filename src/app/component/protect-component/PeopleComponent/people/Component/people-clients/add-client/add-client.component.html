@@ -45,7 +45,8 @@
                     </app-client-address>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-                    <app-client-bank (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                    <app-client-bank (cancelTab)="close($event)"
+                        (refreshClientUploadBankDetails)="refreshBankUpload($event)" (tabChange)="changeTab($event)"
                         (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-bank>
                 </mat-tab>
@@ -56,8 +57,8 @@
                 </mat-tab>
                 <!-- [disabled]="tabData.userId==undefined" -->
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
-                    <app-client-upload (tabChange)="changeTab($event)" [data]="tabData"
-                        [fieldFlag]="headingData.fieldFlag"></app-client-upload>
+                    <app-client-upload [isRefreshBank]="refreshBankFlag" (tabChange)="changeTab($event)"
+                        [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-upload>
                 </mat-tab>
 
 
