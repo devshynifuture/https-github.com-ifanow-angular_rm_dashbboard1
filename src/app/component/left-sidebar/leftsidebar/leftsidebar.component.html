@@ -458,16 +458,16 @@
                 </a>
                 <a class="sidenav-link" mat-list-item>
                     <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
-                    <mat-menu #menu="matMenu">
+                    <!-- <mat-menu #menu="matMenu">
                         <button (click)="logout()" mat-menu-item>Logout</button>
-                    </mat-menu>
+                    </mat-menu> -->
 
                     <!-- log out new section -->
-                    <!-- <mat-menu #menu="matMenu" class="log-out">
+                    <mat-menu #menu="matMenu" class="log-out">
                         <div class="p-8 pr-0 pl-16 w-240">
                             <div class="row bb-1">
                                 <div class="col-md-3 p-0 pt-10 pb-10">
-                                    <img src="/assets/images/sonesh.png" class="w-100">
+                                    <img [src]="authService.appPic" class="w-100">
                                 </div>
                                 <div class="col-md-9 pt-20">
                                     <p class="m-0 text-diff roboto f-400 f-16">Sonesh Dedhia</p>
@@ -480,9 +480,9 @@
                                 <li class="text-left pt-20 f-14 c-p">Account & Billing</li>
                                 <li class="text-left pt-20 f-14 pb-20 c-p">Refer & Earn</li>
                             </ul>
-                            <p class="c-p mb-0 pb-24 pt-20">Logout</p>
+                            <p (click)="logout()" class="c-p mb-0 pb-24 pt-20">Logout</p>
                         </div>
-                    </mat-menu> -->
+                    </mat-menu>
                 </a>
             </div>
 

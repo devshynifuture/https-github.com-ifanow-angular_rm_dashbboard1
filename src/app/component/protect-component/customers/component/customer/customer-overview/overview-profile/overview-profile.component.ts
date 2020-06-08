@@ -318,17 +318,19 @@ export class OverviewProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
-            this.getClientData(this.clientOverviewData);
-            this.clientOverviewData = undefined;
-            this.getAddressList(this.clientData);
-            this.getBankList(this.clientData);
-            this.getDematList(this.clientData);
-            this.addressList = undefined;
-            this.bankList = undefined;
-            this.dematList = undefined;
-            // this.authService.setClientData(sideBarData.clientData);
-            // this.clientOverviewData = sideBarData.clientData;
-            // this.getFamilyMembersList(this.clientData);
+            setTimeout(() => {
+              this.getClientData(this.clientOverviewData);
+              this.clientOverviewData = undefined;
+              this.getAddressList(this.clientData);
+              this.getBankList(this.clientData);
+              this.getDematList(this.clientData);
+              this.addressList = undefined;
+              this.bankList = undefined;
+              this.dematList = undefined;
+              // this.authService.setClientData(sideBarData.clientData);
+              // this.clientOverviewData = sideBarData.clientData;
+              // this.getFamilyMembersList(this.clientData);
+            });
           }
           if (UtilService.isRefreshRequired(sideBarData)) {
           }

@@ -108,7 +108,11 @@ export class ClientUploadComponent implements OnInit {
       }
     });   ////////// user data////////////////////
   }
-
+  @Input() set isRefreshBank(data) {
+    if (data) {
+      this.getBankList();
+    }
+  }
   ngOnInit() {
     this.advisorId = AuthService.getUserInfo().advisorId;
     // this.clientId = AuthService.getClientId();
@@ -364,8 +368,8 @@ export class ClientUploadComponent implements OnInit {
         }
       },
       err => {
-          this.bankList = [];
-          this.selectedBank = '';
+        this.bankList = [];
+        this.selectedBank = '';
       }
       // this.eventService.openSnackBar(err, "Dismiss")
     )

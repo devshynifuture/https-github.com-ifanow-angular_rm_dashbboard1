@@ -79,6 +79,30 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         { name: 'Other', value: 10 }
       ]
     }
+    else {
+      if (this.data.clientData.client.duplicateFlag) {
+        this.relationTypeList = [
+          // { name: 'Mother', value:  },
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
+          { name: 'Other', value: 10 },
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 }
+        ]
+      }
+      else {
+        let obj = (this.data.clientData.client.genderId == 2) ? { name: 'Husband', value: 2 } : { name: 'Wife', value: 3 };
+        this.relationTypeList = [
+          obj,
+          // { name: 'Mother', value:  },
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
+          { name: 'Other', value: 10 },
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 }
+        ]
+      }
+    }
     this.getClientData(value);
   }
 
