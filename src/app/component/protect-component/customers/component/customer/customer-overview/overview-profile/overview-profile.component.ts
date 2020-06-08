@@ -251,9 +251,9 @@ export class OverviewProfileComponent implements OnInit {
     let component;
     if (value == 'add') {
       component = AddFamilyMemberComponent;
-      data = {flag: 'Add Family Member', fieldFlag: 'familyMember', client: this.clientOverviewData};
+      data = {flag: 'Add family member', fieldFlag: 'familyMember', client: this.clientOverviewData};
     } else {
-      data.flag = 'Edit Family Member';
+      data.flag = 'Edit family member';
       data.fieldFlag = 'familyMember';
       component = AddClientComponent;
     }
