@@ -108,7 +108,7 @@ export class AumComponent implements OnInit {
     this.showMainWrapperFlag = false;
   }
   getArnRiaList() {
-    this.backoffice.getArnRiaList(this.parentId ? 0 :[this.adminAdvisorIds]).subscribe(
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data => {
         if (data) {
           this.advisorId = 0;
