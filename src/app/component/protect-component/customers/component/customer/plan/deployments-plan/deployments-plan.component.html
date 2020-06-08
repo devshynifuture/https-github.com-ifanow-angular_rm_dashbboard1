@@ -1,13 +1,31 @@
 <div id="investmentPlan">
     <div class="row">
-        <div class="col-md-2 bg-grey lter p-0">
-            <ul class="vertical-menu">
-                <li class="c-p d-flex pl-10 f-14 f-normal text-left " (click)="type=1;getDeploymentData()"
-                    [ngClass]="{'activeColor': type==1}"> <img src="assets/images/svg/investment-man.svg"
-                        class="c-p pr-8 pt-12"> Goal based </li>
-                <li class="c-p d-flex pl-10 f-14 f-normal text-left" (click)="type=2;getDeploymentData()"
-                    [ngClass]="{'activeColor': type==2}"> <img src="assets/images/svg/Insurance-plan.svg"
-                        class="c-p pr-8 pt-12"> Non goal based </li>
+        <div class="col-md-2 bg-grey lter p-0 pt-8">
+            <ul class="vertical-menu sticky-top">
+                <li class="c-p f-14 f-normal text-left " (click)="type=1;getDeploymentData()"
+                    [ngClass]="{'activeColor': type==1}">
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img src="assets/images/svg/investment-man.svg" class="c-p pr-8">
+                        </div>
+                        <div class="col-md-10 p-0 lh-42">
+                            Goal based
+                        </div>
+                    </div>
+
+                </li>
+                <li class="c-p f-14 f-normal text-left" (click)="type=2;getDeploymentData()"
+                    [ngClass]="{'activeColor': type==2}">
+
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img src="assets/images/svg/Insurance-plan.svg" class="c-p pr-8">
+                        </div>
+                        <div class="col-md-10 p-0 lh-42">
+                            Non goal based
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
 
