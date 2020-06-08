@@ -198,7 +198,7 @@
                                     <button class="small-primitive" *ngIf="singleClient.userType==3"
                                         mat-stroked-button>FAMILY MEMBER</button>
                                     <button class="small-primitive" *ngIf="singleClient.userType==2"
-                                        mat-stroked-button>CLIENT</button>
+                                        mat-stroked-button>Group head</button>
                                 </div>
                             </div>
                         </mat-option>
@@ -458,8 +458,28 @@
                 </a>
                 <a class="sidenav-link" mat-list-item>
                     <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
-                    <mat-menu #menu="matMenu">
-                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    <mat-menu #menu="matMenu" class="log-out">
+                        <div class="p-8 pr-0 pl-16 w-240">
+                            <div class="row bb-1">
+                                <div class="col-md-3 p-0 pt-10 pb-10">
+                                    <img [src]="authService.appPic" class="w-100">
+                                </div>
+                                <div class="col-md-9 pt-20">
+                                    <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
+                                    <p class="text-custom m-0 roboto f-400">{{role}}</p>
+                                </div>
+                            </div>
+
+                            <ul class="d-block bb-1">
+                                <li class="text-left pt-20 f-14 c-p"
+                                    *ngIf="userInfo.userType==1 || userInfo.userType==8">Profile</li>
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
+                                <li class="text-left pt-20 f-14 pb-20 c-p" *ngIf="userInfo.userType==1">Refer & Earn
+                                </li>
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
+                            </ul>
+                            <p (click)="logout()" class="c-p mb-0 pb-24 pt-20">Logout</p>
+                        </div>
                     </mat-menu>
                 </a>
             </div>

@@ -17,7 +17,7 @@ import { UtilService } from '../../../../../../../../services/util.service';
   styleUrls: ['./merge-client-family-member.component.scss']
 })
 export class MergeClientFamilyMemberComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'pan', 'gender'];
+  displayedColumns: string[] = ['name', 'pan', 'gender', 'relation'];
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -34,6 +34,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  relationType = new FormControl('', [Validators.required]);
   showSpinnerOwner = false;
   dataForTable: any[] = [];
   dataSource = new MatTableDataSource(this.dataForTable);
@@ -41,6 +42,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   filteredStates: any;
   selectedClient;
   @Input() data;
+  relationTypeList: { name: string; value: number; }[];
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
@@ -66,9 +68,41 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       );
   }
 
-  ownerDetails(value) {
+  optionSelected(value) {
     console.log(' selected client to merge ', value);
     this.selectedClient = value;
+    this.data.clientData
+    if (this.data.clientData.client.clientType == 2) {
+      this.relationTypeList = [
+        { name: 'Father', value: 6 },
+        { name: 'Mother', value: 7 },
+        { name: 'Other', value: 10 }
+      ]
+    }
+    else {
+      if (this.data.clientData.client.duplicateFlag) {
+        this.relationTypeList = [
+          // { name: 'Mother', value:  },
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
+          { name: 'Other', value: 10 },
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 }
+        ]
+      }
+      else {
+        let obj = (this.data.clientData.client.genderId == 2) ? { name: 'Husband', value: 2 } : { name: 'Wife', value: 3 };
+        this.relationTypeList = [
+          obj,
+          // { name: 'Mother', value:  },
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
+          { name: 'Other', value: 10 },
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 }
+        ]
+      }
+    }
     this.getClientData(value);
   }
 
@@ -104,10 +138,17 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   saveFamilyMembers() {
     if (!this.selectedClient) {
       this.eventService.openSnackBar('Please select the client to merge', 'Dismiss');
+      return;
     }
+    if (this.relationType.invalid) {
+      this.relationType.markAllAsTouched();
+      return;
+    }
+    this.barButtonOptions.active = true
     const arrayObj = {
-      ownerClientId: this.data.clientId,
-      mergeClientId: this.selectedClient.clientId
+      ownerClientId: this.data.clientData.client.clientId,
+      mergeClientId: this.selectedClient.clientId,
+      relationshipId: this.relationType.value
     };
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {

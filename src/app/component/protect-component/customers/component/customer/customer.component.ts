@@ -32,6 +32,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   user: any;
 
   organizationLogo = 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png';
+  advisorName: any;
+  role: any;
+  clientName: any;
+  userInfo: any;
 
   constructor(
     private router: Router,
@@ -92,7 +96,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       this.enumDataService.searchClientList();
       this.enumDataService.searchClientAndFamilyMember();
     }
-
+    this.userInfo = AuthService.getUserInfo();
+    this.advisorName = AuthService.getUserInfo().name;
+    this.role = AuthService.getUserRoleType().roleName;
+    this.clientName = AuthService.getClientData().userName;
     this.showRouter = true;
     this.selected = 1;
     this._value = 1;

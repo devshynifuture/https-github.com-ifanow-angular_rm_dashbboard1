@@ -195,7 +195,7 @@
                                 </ng-container>
                                 <ng-container matColumnDef="term">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="premiumPayingTerm">
-                                        Premium paying term
+                                       PPT
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar">{{element.premiumPayingTerm}} </div>
@@ -204,13 +204,21 @@
                                 </ng-container>
                                 <ng-container matColumnDef="pterm">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="policyTenure">
-                                        Policy term
+                                       PT
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar"> {{element.policyTenure}} </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
+                                <ng-container matColumnDef="Duration">
+                                        <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
+                                        </th>
+                                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                                            <div class="bar"> {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}} </div>
+                                        </td>
+                                        <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
+                                    </ng-container>
                                 <ng-container matColumnDef="desc">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="insuranceSubTypeId">
                                         Plan type

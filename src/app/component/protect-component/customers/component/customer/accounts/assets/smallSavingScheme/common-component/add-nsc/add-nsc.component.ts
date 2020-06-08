@@ -280,7 +280,7 @@ addNewNominee(data) {
       cNo: [data.certificateNumber],
       poBranch: [data.postOfficeBranch],
       nominees: this.nominees,
-      linkedBankAccount: [data.userBankMappingId],
+      linkedBankAccount: [data.userBankMappingId? data.userBankMappingId: null],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -406,7 +406,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormField.get('cNo').value,
           "postOfficeBranch": this.nscFormField.get('poBranch').value,
-          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value,
+          "bankAccountNumber": this.nscFormField.get('linkedBankAccount').value?this.nscFormField.get('linkedBankAccount').value:0,
+          "userBankMappingId": this.nscFormField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominees": this.nominees,
           "nomineeList": this.nscFormField.value.getNomineeName,

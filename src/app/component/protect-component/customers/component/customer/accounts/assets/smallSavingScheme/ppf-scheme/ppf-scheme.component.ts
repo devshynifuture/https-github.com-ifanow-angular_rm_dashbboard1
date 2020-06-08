@@ -95,6 +95,7 @@ export class PPFSchemeComponent implements OnInit {
       });
   }
   sumOfAmountInvested:any;
+  sumOfAccountBalance:any;
   getPpfSchemeDataResponse(data) {
     this.isLoading = false;
     if (data != undefined) {
@@ -105,6 +106,7 @@ export class PPFSchemeComponent implements OnInit {
         UtilService.checkStatusId(this.dataSource.filteredData);
         this.SumOfCurrentValue = data.sumOfCurrentValue;
         this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.sumOfAccountBalance = data.sumOfAccountBalance;
       }
     } else {
       this.noData = 'No scheme found';

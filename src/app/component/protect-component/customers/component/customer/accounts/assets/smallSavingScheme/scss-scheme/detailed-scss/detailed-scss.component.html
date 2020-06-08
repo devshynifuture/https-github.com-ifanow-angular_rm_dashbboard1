@@ -69,7 +69,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
-                        ₹<span appFormatNumber>{{data.amountInvested}}</span>
+                        {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested?data.amountInvested:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
