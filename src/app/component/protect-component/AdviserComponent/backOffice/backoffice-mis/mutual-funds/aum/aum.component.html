@@ -214,7 +214,7 @@
                             </mat-tab-group>
                         </div>
                         <div class="col-md-12 aumtabs p-0 mt-20 " id="mistabs2">
-                            <mat-tab-group class="h-300 bg-white borderLine ">
+                            <mat-tab-group class="h-300 bg-white borderLine skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <mat-tab label="Category ">
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">TOP CATEGORY</h6>
                                     <div *ngIf="category" class="b-white ">
@@ -223,6 +223,16 @@
                                                 <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
                                                 <p *ngIf="isLoading">{{''}}</p>
 
+                                            </div>
+
+
+
+                                            <div class="col-md-7 p-0 relClass ">
+                                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">
+                                                        {{(item.name) ? item.name : '-'}}</p>
+                                                    <p *ngIf="isLoading">{{''}}</p>
+                                                </div>
                                             </div>
                                             <div class="bar col-md-5 text-right p-0 ">
                                                 <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>

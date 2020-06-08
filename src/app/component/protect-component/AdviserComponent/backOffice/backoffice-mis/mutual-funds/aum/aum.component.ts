@@ -163,7 +163,7 @@ export class AumComponent implements OnInit {
   }
   getMisData() {
     this.isLoading = true;
-    this.backoffice.getMisData([this.adminAdvisorIds]).subscribe(
+    this.backoffice.getMisData(this.advisorId).subscribe(
       data => this.getFileResponseDataForMis(data),
       err => this.getFilerrorResponse(err)
     )
