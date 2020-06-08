@@ -451,7 +451,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         }
         let chartTotal = 1;
         let hasNoDataCounter = res.length;
-        res.forEach(element => {
+        let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
+        pieChartData.forEach(element => {
           if (element.investedAmount > 0) {
             chartTotal += element.investedAmount;
             if (counter < 4) {

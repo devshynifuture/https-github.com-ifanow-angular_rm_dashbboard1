@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-35">
     <div class="col-md-10 p-0">
-        <h3 class="m-0 wrapper-16"> SELECT FILTERS - {{(_data.name == 'UNREALIZED TRANSACTION REPORT') ? 'UNREALIZED REPORT' : (_data.name | uppercase)}}</h3>
+        <h3 class="m-0 wrapper-16"> Select filters - {{(_data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (_data.name == 'SUMMARY REPORT') ? 'Summary report' : (_data.name == 'Overview Report') ? 'Overview report' : (_data.name == 'ALL TRANSACTION REPORT') ? 'All transaction report' : (_data.name == 'CAPITAL GAIN REPORT') ? 'Capital gain report' : '-'}}</h3>
     </div>
     <div class="col-md-2">
         <i class="material-icons pt-16 right text-right c-p" (click)="Close('Close')"> clear </i>
