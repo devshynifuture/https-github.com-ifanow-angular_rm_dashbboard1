@@ -18,6 +18,7 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
   styleUrls: ['./upper-slider-backoffice.component.scss'],
 })
 export class UpperSliderBackofficeComponent implements OnInit {
+  arrWithTransCheckTrueAndisMappedMinusOne: any = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -168,11 +169,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   getDataFromObsAfterDeletingTransacn() {
     console.log('updoate ifanow units function called');
+    this.isLoading = true;
     this.supportService.getDataThroughObs().subscribe(res => {
       console.log('this is something coming from obs:::::::::::', res);
+      this.isLoading = false;
       if (res !== '') {
         // update units ifanow
         console.log('this is response that im getting::::', res);
+
         this.dataSource1.data.map(item => {
           item.unitsIfanow = String((res.units).toFixed(3));
           item.difference = String((parseInt(item.unitsIfanow) - parseInt(item.unitsRta)).toFixed(3));
@@ -184,7 +188,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getBackofficeAumReconListSummary(doStartRecon) {
-
+    this.isLoading = true;
     const isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
     const data = {
       advisorIds: [...this.adminAdvisorIds],
@@ -213,6 +217,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
 
           console.log('see the difference::::::::', this.filteredAumListWithIsMappedToMinusOne, res.aumList, arrWithTransactionCheckedTrue);
+          this.arrWithTransCheckTrueAndisMappedMinusOne = arrWithTransactionCheckedTrue;
 
           arrWithTransactionCheckedTrue.forEach(element => {
             // check  and compare date object and can delete value
@@ -229,7 +234,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
               investorName: element.investorName
             });
           });
-          this.dataSource1.data = arrayValue;
+          if (arrayValue.length !== 0) {
+            this.dataSource1.data = arrayValue;
+          } else {
+            this.dataSource1.data = null;
+          }
           const doneOnDate = new Date(res.doneOn);
           const doneOnFormatted = doneOnDate.getFullYear() + '-' +
             this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
@@ -286,7 +295,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   getDuplicateFolioList() {
     let data;
     if (this.data.flag == 'report') {
-      const mutualFundIds = [];
+      let mutualFundIds = [];
       this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
         return item.isMapped === -1;
       });
@@ -298,7 +307,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         folio: mutualFundIds
       };
     } else {
-      const mutualFundIds = [];
+      let mutualFundIds = [];
       const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
       this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
         return item.isMapped === -1;
@@ -308,13 +317,16 @@ export class UpperSliderBackofficeComponent implements OnInit {
       });
       data = {
         advisorIds: [...this.adminAdvisorIds],
-        folio: mutualFundIds,
+        aum: {
+          folio: mutualFundIds
+        },
         parentId: this.parentId,
         isParent
       };
     }
     // if (this.didAumReportListGot) {
     this.isLoadingForDuplicate = true;
+    this.dataSource2.data = ELEMENT_DATA2;
     console.log("this is what im sending for duplicate folio data", data);
     this.reconService.getDuplicateFolioDataValues(data)
       // this.reconService.getDuplicateDataValues(data)
@@ -393,12 +405,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   deleteAndReorder() {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+    let mutualFundIds = [];
+    mutualFundIds = this.filteredAumListWithIsMappedToMinusOne.filter(element => {
+      return (Math.abs(element.calculatedUnits - element.aumUnits) !== 0);
+    })
+
     const data = {
       id: this.aumReconId,
       brokerId: this.brokerId,
       advisorIds: [this.advisorId],
       rtId: this.data.rtId,
-      mutualFundIds: this.mutualFundIds,
+      mutualFundIds,
       parentId: this.parentId,
       isParent
     };
@@ -557,7 +574,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       if (this.data.flag === 'report') {
         tableData = this.aumListReportValue[index].mutualFundTransaction;
       } else {
-        tableData = this.filteredAumListWithIsMappedToMinusOne[index].mutualFundTransaction;
+        tableData = this.arrWithTransCheckTrueAndisMappedMinusOne[index].mutualFundTransaction;
       }
     }
     if (tableType === 'duplicate-folios') {
@@ -569,7 +586,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     }
     const fragmentData = {
       flag,
-      data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate },
+      data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate, arnRiaCode: this.arnRiaCode + " " + this.upperHeaderName },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
