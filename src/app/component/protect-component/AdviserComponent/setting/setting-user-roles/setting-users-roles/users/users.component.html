@@ -24,6 +24,8 @@
                         <div class="col-md-11 p-0 relClass overflow-text-users">
                             <div class="bar" [ngClass]="{'height23': isLoading}">
                                 <h5 class="m-0 text-black" *ngIf="user.fullName.length < 13">{{user.fullName}}</h5>
+                            </div>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
                                 <h5 class="m-0 text-black" *ngIf="user.fullName.length > 13" [title]="user.fullName">
                                     {{user.fullName}}</h5>
                             </div>
