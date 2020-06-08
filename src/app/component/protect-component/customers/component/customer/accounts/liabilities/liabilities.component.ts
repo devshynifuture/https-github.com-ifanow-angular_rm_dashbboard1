@@ -122,7 +122,7 @@ export class LiabilitiesComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: this.clientId,
       familyMemberId: element.familyMemberId,
       asset: value
     }
