@@ -34,10 +34,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   updateDomain: any = {};
   emailDetails: any = {};
   element: any;
-  emailList: any[] = [{}, {}, {}];
+  emailList: any;
   normalDomain: any;
   whiteLabledDomain: any;
-  emailTemplateList: any[] = [{}, {}, {}];
+  emailTemplateList: any;
   showUpdate = false;
   normalLable;
   whiteLable;
@@ -53,12 +53,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   counter: number = 0;
   appearanceFG:FormGroup;
   appearanceUpdateFlag: boolean;
-  hasError = false;
-
-  appearancePortfolio:number = 0;
-  appearanceFinancial:number = 0;
-  appearanceClient:number = 0;
-
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
       
@@ -69,7 +63,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getPortfolio()
     this.getdataForm('')
-    this.planSection = [];
+    this.emailList = []
+    this.planSection = []
+    this.emailTemplateList = []
+    this.createAppearanceForm();
+    this.addAppearanceFormListener();
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -89,11 +87,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getDomainSetting(obj).subscribe(
       data => this.getDomainSettingRes(data),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.hasError = true;
-        this.loader(-1);
-      }
+      err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   getDomainSettingRes(data) {
@@ -163,12 +157,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.portfolio = undefined;
-        this.loader(-1);
-        this.hasError = true;
-      }
+      err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   getPortfolioRes(data) {
@@ -186,11 +175,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.loader(-1);
-        this.hasError = true;
-      }
+      err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   
@@ -249,7 +234,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       let obj = {
         id: this.element.id,
         emailAddress: this.element.emailAddress,
-        userId: this.advisorId
+        userId: this.userId
       }
       this.orgSetting.addEmailVerfify(obj).subscribe(
         data => this.addEmailVerfifyRes(data),
@@ -259,7 +244,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     });
   }
   addEmailVerfifyRes(data) {
-    this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss")
+    this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss");
     this.getEmailVerification()
   }
   deleteEmailModal(value, data) {
@@ -308,18 +293,13 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   getEmailVerification() {
     this.loader(1);
-    this.emailList  = [{},{},{}];
     let obj = {
-      userId: this.advisorId,
+      userId: this.userId,
       // advisorId: this.advisorId
     }
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => this.getEmailVerificationRes(data),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.hasError = true;
-        this.loader(-1);
-      }
+      err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   getEmailVerificationRes(data) {
@@ -333,17 +313,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getEmailTemplate() {
     this.loader(1);
-    this.emailTemplateList = [{},{},{}];
     let obj = {
       advisorId: this.advisorId
     }
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.hasError = true;
-        this.loader(-1);
-      }
+      err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
   getEmailTempalatRes(data) {
@@ -408,44 +383,45 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.appearanceUpdateFlag = false;
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
-        this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation
-        this.appearanceFinancial = data.find(data => data.appearanceOptionId == 2).advisorOrOrganisation
-        this.appearanceClient = data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation
+        this.appearanceFG.controls.portfolioOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
         this.appearanceUpdateFlag = true;
-        this.loader(-1)
       },
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.hasError = true;
-        this.loader(-1)
-      }
+      err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
 
-  changeAppearanceSettings() {
-    let jsonArr = [];
-    jsonArr.push({
-      advisorId: this.advisorId,
-      appearanceOptionId: 1,
-      advisorOrOrganisation: this.appearancePortfolio
+  createAppearanceForm() {
+    this.appearanceFG = this.fb.group({
+      portfolioOpt: '',
+      financialOpt: '',
+      clientOpt: '',
     })
-    jsonArr.push({
-      advisorId: this.advisorId,
-      appearanceOptionId: 2,
-      advisorOrOrganisation: this.appearanceFinancial
-    })
-    jsonArr.push({
-      advisorId: this.advisorId,
-      appearanceOptionId: 3,
-      advisorOrOrganisation: this.appearanceClient
-    })
-    if(this.appearanceUpdateFlag)
-      this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
+  }
+
+  addAppearanceFormListener(){
+    this.subcription.add(
+      this.appearanceFG.valueChanges.subscribe(value => {
+        let jsonArr = [];
+        let counter = 0;
+        for(let k in value) {
+          counter++;
+          jsonArr.push({
+            advisorId: this.advisorId,
+            appearanceOptionId: counter,
+            advisorOrOrganisation: value[k]
+          })
+        }
+
+        if(this.appearanceUpdateFlag)
+          this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
+      })
+    );
   }
 
   changeView(tab) {
     this.viewMode = tab;
-    this.hasError = false;
     switch(tab) {
       case 'tab1': 
         this.getPortfolio();
