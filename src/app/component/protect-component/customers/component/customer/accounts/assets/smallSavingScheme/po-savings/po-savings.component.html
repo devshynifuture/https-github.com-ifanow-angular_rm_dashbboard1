@@ -75,11 +75,12 @@
                 Current value
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accumalatedValue }}</span>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accumalatedValue?element.accumalatedValue:!isLoading? "-" : "" }}</span>
                 </div>
+                
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue"
+                <div *ngIf="SumOfCurrentValue">{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue"
                         appFormatNumber>{{SumOfCurrentValue}}</span></div>
             </td>
         </ng-container>

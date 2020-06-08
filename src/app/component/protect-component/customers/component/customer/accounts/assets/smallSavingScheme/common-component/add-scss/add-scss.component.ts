@@ -252,7 +252,7 @@ addNewNominee(data) {
       poBranch: [data.postOfficeBranch?data.postOfficeBranch:''],
       scssNumber:[data.scssNumber],
       nominees: this.nominees,
-      bankAccNumber: [data.userBankMappingId?data.userBankMappingId:''],
+      bankAccNumber: [data.userBankMappingId?data.userBankMappingId:null],
       description: [data.description?data.description:''],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],

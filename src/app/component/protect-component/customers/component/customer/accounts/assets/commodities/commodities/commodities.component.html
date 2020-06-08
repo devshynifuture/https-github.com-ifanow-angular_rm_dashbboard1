@@ -106,8 +106,8 @@
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
                         <div class="bar">{{!isLoading? "₹" : ""}}<span
                                 appFormatNumber>{{element.caratGoldPrice }}</span> </div>
-                        <div *ngIf="!isLoading" class="text-custom f-12">(as on {{currentDate | date:'dd/MM/yyyy' }})
-                        </div>
+                        <!-- <div *ngIf="!isLoading" class="text-custom f-12">(as on {{currentDate | date:'dd/MM/yyyy' }})
+                        </div> -->
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 pr-8 amt text-right">
                         <div class="bar"> {{isLoading ? '' : 'Total'}} </div>

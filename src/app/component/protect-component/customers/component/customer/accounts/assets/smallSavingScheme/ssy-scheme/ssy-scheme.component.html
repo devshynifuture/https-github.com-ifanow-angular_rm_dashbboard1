@@ -66,10 +66,11 @@
                 class="br right-hcb w-11 text-right hide-arrow">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
+                <div class="bar">{{!isLoading && element.currentValue? "₹" : ""}}<span appFormatNumber>{{element.currentValue?element.currentValue:!isLoading?'-':''}}</span>
+                </div>
             </td>
             <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
-                <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="sumOfCurrentValue"
+                <div class="bar" *ngIf="sumOfCurrentValue">{{!isLoading? "₹" : ""}}<span [value]="sumOfCurrentValue"
                         appFormatNumber>{{sumOfCurrentValue}}</span> </div>
             </td>
         </ng-container>
@@ -84,13 +85,13 @@
         <ng-container matColumnDef="amt">
             <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
                 class="br right-hcb w-16 text-right hide-arrow">
-                Total amount invested </th>
+                Account balance </th>
             <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
+                <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accountBalance}}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right p-8 f-600" *matFooterCellDef>
                 <div class="bar">{{!isLoading? "₹" : ""}} <span [value]="sumOfAmountInvested"
-                        appFormatNumber>{{sumOfAmountInvested}}</span> </div>
+                        appFormatNumber>{{sumOfAccountBalance}}</span> </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="number">
