@@ -30,7 +30,7 @@ export class AddFamilyMemberComponent implements OnInit {
         name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, genderId: 1, count: 1, relationshipTypeId: 4
       },
       { name: 'Daughter', genderId: 2, imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 5 },
-      { name: 'Others', genderId: 3, imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 10 }
+      { name: 'Others', genderId: 3, imgUrl: '/assets/images/svg/others.svg', selected: false, count: 1, relationshipTypeId: 10 }
     ]
   };
 
