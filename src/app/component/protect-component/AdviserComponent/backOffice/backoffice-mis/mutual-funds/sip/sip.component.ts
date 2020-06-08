@@ -34,6 +34,9 @@ export class SipComponent implements OnInit {
   isLoading = true;
   parentId;
   adminAdvisorIds: any;
+  isExpiringLoading=true;
+  isExpiredLoading=true;
+  isRejectionLoading=true;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
 
   ngOnInit() {
@@ -154,7 +157,7 @@ export class SipComponent implements OnInit {
     )
   }
   expiredGet() {
-    this.isLoading = true;
+    this.isExpiredLoading = true;
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: this.arnRiaId,
@@ -164,13 +167,17 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_expired(obj).subscribe(
       data => {
-        this.isLoading = false;
-        this.expiredSip = data;
+        this.isExpiredLoading = false;
+        if(data){
+          this.expiredSip = data;
+        }else{
+          this.expiredSip = [];
+        }
       }
     )
   }
   expiringGet() {
-    this.isLoading = true;
+    this.isExpiringLoading = true;
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: this.arnRiaId,
@@ -180,13 +187,18 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_EXPIRING(obj).subscribe(
       data => {
-        this.isLoading = false;
-        this.expiringSip = data;
+        this.isExpiringLoading = false;
+        if(data){
+          this.expiringSip = data;
+        }else{
+          this.expiringSip=[];
+        }
+
       }
     )
   }
   sipRejectionGet() {
-    this.isLoading = true;
+    this.isRejectionLoading = true;
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: this.arnRiaId,
@@ -196,8 +208,12 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_SIP_REJECTION(obj).subscribe(
       data => {
-        this.isLoading = false;
-        this.rejectionSip = data;
+        this.isRejectionLoading = false;
+        if(data){
+          this.rejectionSip = data;
+        }else{
+          this.rejectionSip = [];
+        }
       }
     )
   }

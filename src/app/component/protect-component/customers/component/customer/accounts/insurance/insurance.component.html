@@ -136,17 +136,7 @@
                                     <td *matFooterCellDef class="f-600 pl-4 proximaFont text-left" mat-footer-cell>
                                     </td>
                                 </ng-container>
-                                <ng-container matColumnDef="number">
-                                    <th *matHeaderCellDef class="br textLeft w-11" mat-sort-header="policyNumber">
-                                        Policy number
-                                    </th>
-                                    <td *matCellDef="let element" class="br" mat-cell>
-                                        <div class="bar"> {{element.policyNumber}} </div>
-                                    </td>
-                                    <td *matFooterCellDef class="f-600 br p-8 proximaFont text-right" mat-footer-cell>
-                                        Total
-                                    </td>
-                                </ng-container>
+                               
 
                                 <ng-container matColumnDef="sum">
                                     <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell mat-sort-header="sumAssured"> Sum assured
@@ -230,6 +220,17 @@
                                         <div *ngIf="isLoading" class="bar">{{''}}</div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
+                                </ng-container>
+                                <ng-container matColumnDef="number">
+                                    <th *matHeaderCellDef class="br textLeft w-11" mat-sort-header="policyNumber">
+                                        Policy number
+                                    </th>
+                                    <td *matCellDef="let element" class="br" mat-cell>
+                                        <div class="bar"> {{element.policyNumber}} </div>
+                                    </td>
+                                    <td *matFooterCellDef class="f-600 br p-8 proximaFont text-right" mat-footer-cell>
+                                        Total
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="status">
                                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status
