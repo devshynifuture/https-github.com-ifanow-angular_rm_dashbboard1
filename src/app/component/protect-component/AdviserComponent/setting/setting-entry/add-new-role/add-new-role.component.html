@@ -13,7 +13,7 @@
 </div>
 
 <div class="row pt-100 pb-90">
-    <div class="col-md-3" [formGroup]="rolesFG">
+    <div class="col-md-3 pr-36 pl-36" [formGroup]="rolesFG">
         <h5 class="m-0 pt-12">Role Type</h5>
         <div class="form-group ">
             <mat-form-field>
@@ -36,7 +36,7 @@
         <p class="m-0 text-custom roboto f-12 pb-4">E.g. write something descriptive for easy recall.</p>
         <div class="form-group mb-0">
             <mat-form-field hintLabel="Optional">
-                <textarea matInput formControlName="roleDescription" class="form-control" rows="5"
+                <textarea matInput formControlName="roleDescription" class="form-control h-180" rows="5"
                     [placeholder]="formPlaceHolders.enter_description"></textarea>
                 <mat-hint align="end">{{rolesFG.get('roleDescription').value.length}}/ 250</mat-hint>
                 <mat-error *ngIf="rolesFG.get('roleDescription').errors?.required">This field is required</mat-error>

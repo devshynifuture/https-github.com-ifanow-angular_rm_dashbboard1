@@ -170,7 +170,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #policyNum [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" appInputValueValidation autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text">
+                        <input #policyNum [maxLength]="20"  autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text">
                         <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
                         <mat-error>This field is required
                         </mat-error>

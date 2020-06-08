@@ -2067,3 +2067,13 @@ ngx-slick-carousel>.slick-disabled {
   border-left: transparent;
   border-right: transparent;
 }
+
+.right-cross-icons {
+  .familyDelete {
+
+    position: absolute !important;
+    right: 0px !important;
+    padding-right: 6px;
+    padding-top: 5px;
+  }
+}
