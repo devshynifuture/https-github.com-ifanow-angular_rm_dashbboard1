@@ -297,6 +297,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     if (tabValue == undefined) {
       tabValue = 1
     }
+    if(tabValue =='Documents' || tabValue == 1){
+      this.openFolderName = []
+    }
     if (flag == 'refresh') {
       this.backUpfiles = [];
       this.commonFileFolders.data = [];
