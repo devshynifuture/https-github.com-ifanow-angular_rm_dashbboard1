@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-35">
     <div class="col-md-10 p-0">
-        <h3 class="m-0 wrapper-16"> Select filters - {{_data.name}}</h3>
+        <h3 class="m-0 wrapper-16"> SELECT FILTERS - {{(_data.name == 'UNREALIZED TRANSACTION REPORT') ? 'UNREALIZED REPORT' : (_data.name | uppercase)}}</h3>
     </div>
     <div class="col-md-2">
         <i class="material-icons pt-16 right text-right c-p" (click)="Close('Close')"> clear </i>
@@ -108,7 +108,7 @@
             *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
                 <mat-panel-title>
-                    <h5 class="m-0">Report Type <span class="text-right f-14 pl-12 text-custom"></span></h5>
+                    <h5 class="m-0">Report type <span class="text-right f-14 pl-12 text-custom"></span></h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
@@ -143,7 +143,7 @@
             *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
                 <mat-panel-title>
-                    <h5 class="m-0">Transaction Period</h5>
+                    <h5 class="m-0">Transaction period</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
@@ -159,7 +159,7 @@
             *ngIf="_data.name == 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
                 <mat-panel-title>
-                    <h5 class="m-0">Select Filter View<span
+                    <h5 class="m-0">Select filter view<span
                             class="text-right f-14 pl-12">{{(overviewFilterCount)?overviewFilterCount:0}} of
                             {{overviewFilter.length}}
                             selected</span></h5>
@@ -175,7 +175,7 @@
         <mat-expansion-panel *ngIf="_data.name!='SUMMARY REPORT'  && _data.name!='CAPITAL GAIN REPORT' && _data.name != 'Overview Report' &&  _data.name!='UNREALIZED TRANSACTION REPORT'" class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false">
         <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
             <mat-panel-title>
-                <h5 class="m-0">Select Transaction Type</h5>
+                <h5 class="m-0">Select transaction type</h5>
             </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="borderTopbox" *ngIf="panelOpenState == true">
@@ -189,7 +189,7 @@
         *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight" [expandedHeight]="customExpandedHeight">
                 <mat-panel-title>
-                    <h5 class="m-0">Save Filters</h5>
+                    <h5 class="m-0">Save filters</h5>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
