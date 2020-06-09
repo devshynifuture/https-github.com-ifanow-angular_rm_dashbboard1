@@ -365,7 +365,7 @@
 <div #liabilitiesTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td style="text-align: left;">
+            <!-- <td style="text-align: left;">
                 <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
             </td>
             <td style="text-align: right;">
@@ -374,13 +374,34 @@
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+            </td> -->
+
+
+            <td style="text-align: left;">
+                <img width="100px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+            </td>
+            <td style="text-align: right;">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(userInfo.name) ? userInfo.name : '-'}}</p>
+                <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
+                    {{(details) ? details.emailId : '-'}}</p>
+                    <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
+                        {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>
             </td>
         </tr>
 
         <tr>
             <td colspan="2" style="padding: 10px;"></td>
         </tr>
+        <tr>
+            <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+                Client name :
+                {{(clientData.name) ? clientData.name : '-'}}</p>
 
+        </tr>
         <tr>
             <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 <div class="col-md-4 d-flex align-items-center p-0">

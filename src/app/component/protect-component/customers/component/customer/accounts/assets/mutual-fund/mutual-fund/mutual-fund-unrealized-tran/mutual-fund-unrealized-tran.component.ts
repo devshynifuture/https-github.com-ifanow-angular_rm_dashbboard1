@@ -51,6 +51,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   details = AuthService.getProfileDetails();
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
+  getOrgData = AuthService.getOrgDetails();
   viewMode: string = '';
   reponseData: any;
   setDefaultFilterData: any;
