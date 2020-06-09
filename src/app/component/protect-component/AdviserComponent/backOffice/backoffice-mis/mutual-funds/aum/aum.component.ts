@@ -93,8 +93,16 @@ export class AumComponent implements OnInit {
   }
 
   changeValueOfArnRia(item) {
+    this.clientTotalAum = [{}, {}, {}];
+    this.amcTotalAum = [{}, {}, {}];
+    this.category = [{}, {}, {}];
+    this.subcategory = [{}, {}, {}];
     this.viewMode = item.number;
-    this.arnRiaValue = item.number;
+    if(item.number != 'All'){
+      this.arnRiaValue = item.id;
+    }else{
+      this.arnRiaValue = -1;
+    }
     this.initPoint();
   }
 
@@ -111,7 +119,7 @@ export class AumComponent implements OnInit {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data => {
         if (data) {
-          this.advisorId = 0;
+          // this.advisorId = 0;
           this.arnRiaList = data;
 
           const obj = {
@@ -152,7 +160,7 @@ export class AumComponent implements OnInit {
     this.isLoading = true;
 
     const obj = {
-      advisorId:this.parentId ? 0 :[this.adminAdvisorIds],
+      advisorId:(this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     }
@@ -168,6 +176,11 @@ export class AumComponent implements OnInit {
   }
   getMisData() {
     this.isLoading = true;
+    // const obj = {
+    //   advisorId:(this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
+    //   arnRiaDetailsId: this.arnRiaValue,
+    //   parentId: this.parentId
+    // }
     this.backoffice.getMisData(this.advisorId).subscribe(
       data => this.getFileResponseDataForMis(data),
       err => {
@@ -181,7 +194,7 @@ export class AumComponent implements OnInit {
     this.isLoading = true;
 
     const obj = {
-      advisorId: this.parentId ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId
     }
@@ -230,9 +243,9 @@ export class AumComponent implements OnInit {
   getGraphData() {
     this.aumGraph = null;
     const obj = {
-      advisorId: this.parentId ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaValue,
-      parentId: this.parentId
+      parentId:this.parentId
     }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
