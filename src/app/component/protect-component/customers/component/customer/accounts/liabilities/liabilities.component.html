@@ -373,36 +373,28 @@
 
                         </td>
                         <td>
-                            <table style="width: 50%; float: right;">
+                            <table style="float: right;">
                                 <tr *ngIf="userInfo">
                                     <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
                                         {{(userInfo.name) ? userInfo.name : '-'}}
                                     </td>
                                 </tr>
                                 <tr *ngIf="userInfo">
-                                    <td style="font-size: 14px; font-weight: 500; text-align: right;">
-                                        Mobile no :
-                                    </td>
                                     <td style="font-size: 14px; text-align: right;">
-                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                                        <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
                                     </td>
                                 </tr>
 
                                 <tr *ngIf="userInfo">
-                                    <td style="font-size: 14px; font-weight: 500; text-align: right;">
-                                        Email Id :
-                                    </td>
                                     <td style="font-size: 14px; text-align: right;">
-                                        {{(details) ? details.emailId : '-'}}
+                                        <span style="font-weight: 500;">Email Id:</span> {{(details) ? details.emailId : '-'}}
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="font-size: 14px; font-weight: 500; text-align: right;">
-                                        Report as on :
-                                    </td>
+
                                     <td style="font-size: 14px; text-align: right;">
-                                        {{reportDate | date:'dd-MMM-yyyy' }}
+                                        <span style="font-weight: 500;">Report as on:</span> {{reportDate | date:'dd-MMM-yyyy' }}
                                     </td>
                                 </tr>
                             </table>
@@ -435,7 +427,7 @@
         <tr>
             <td colspan="11">
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
-                    Client name : {{(clientData.name) ? clientData.name : '-'}}</p>
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
 
