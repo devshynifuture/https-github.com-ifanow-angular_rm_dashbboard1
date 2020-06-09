@@ -102,7 +102,7 @@
       <div class="row pt-60">
 
         <div class="col-md-10 p-0">
-          <p class="m-0 f-500 f-16 roboto pb-10">Following are the details of Aditya Rahul Jain</p>
+          <p class="m-0 f-500 f-16 roboto pb-10">Following are the details of {{selectedClientData.displayName}}</p>
           <div class="insurance-ui bt">
             <div class="row bb p-8 b-l br">
               <div class="col-md-4 text-left f-14 roboto p-0">
@@ -153,26 +153,35 @@
               </div>
             </div>
           </div>
-          <p class="m-0 pt-20 f-16 text-danger roboto pb-10">What is Aditya’s relationship with Rahul Jain?</p>
-          <div class="row">
+          <p class="m-0 pt-20 f-16 text-danger roboto pb-10">What is {{selectedClientData.displayName}} relationship
+            with {{data.clientData.client.name}}?</p>
+          <div [formGroup]="selectedClientFormGroup" class="row">
             <div class="col-md-3 pl-0">
               <div class="form-group">
+                <p>Relation</p>
                 <mat-form-field>
-                  <mat-select class="form-control">
-                    <mat-option value="option">Son</mat-option>
+                  <mat-select (selectionChange)="changeGender($event)" formControlName="relation" class="form-control">
+                    <mat-option value='' disabled>Select option</mat-option>
+                    <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
+                    </mat-option>
                   </mat-select>
+                  <mat-error>This field is required</mat-error>
                 </mat-form-field>
               </div>
               <div class="form-group">
+                <p>Gender</p>
                 <mat-form-field>
-                  <mat-select class="form-control">
-                    <mat-option value="option">Male</mat-option>
+                  <mat-select formControlName="gender" class="form-control">
+                    <mat-option value='' disabled>Select option</mat-option>
+                    <mat-option value="1">Male</mat-option>
+                    <mat-option value="2">Female</mat-option>
+                    <mat-option value="3">Other</mat-option>
                   </mat-select>
+                  <mat-error>This field is required</mat-error>
                 </mat-form-field>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -181,9 +190,10 @@
       <p class="f-16 mt-120 m-0 pb-10 roboto text-primitive f-400">
         Based on your profile, we believe, the following members could be part of your family...
       </p>
-      <div class="row">
+      <div [formGroup]="form" class="row">
         <div class="col-md-12 pl-0 merge-client-family-member">
-          <table [dataSource]="data.clientData.SuggestionList" class=" " id="table-low" mat-table>
+          <table [dataSource]="data.clientData.SuggestionList" formArrayName="clients" class=" " id="table-low"
+            mat-table>
 
             <ng-container matColumnDef="details">
               <th *matHeaderCellDef class="br" mat-header-cell> Member details</th>
@@ -206,18 +216,37 @@
 
             <ng-container matColumnDef="relation">
               <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
-              <td *matCellDef="let element" class="br" mat-cell> Select </td>
+              <td *matCellDef="let element;index as i" class="br" mat-cell [formGroupName]="i">
+                <!-- <div class="form-group">
+                  <mat-form-field>
+                    <mat-select formControlName="relation" class="form-control">
+                      <mat-option value='' disabled>Select option</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                  </mat-form-field>
+                </div> -->
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="gender">
               <th *matHeaderCellDef class="br" mat-header-cell> Gender</th>
-              <td *matCellDef="let element" class="br" mat-cell> Select </td>
+              <td *matCellDef="let element;index as i" class="br" mat-cell [formGroupName]="i">
+                <!-- <div class="form-group">
+                  <mat-form-field>
+                    <mat-select formControlName="gender" class="form-control">
+                      <mat-option value='' disabled>Select option</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                  </mat-form-field>
+                </div> -->
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="add">
               <th *matHeaderCellDef class="br" mat-header-cell> Add</th>
-              <td *matCellDef="let element" class="text-primary br" mat-cell>
-                <button mat-stroked-button class="br-0 add-merge-client btn-primary mr-12">ADD
+              <td *matCellDef="let element;index as i" class="text-primary br" mat-cell>
+                <button mat-stroked-button (click)="saveSuggestedFamilyMember(i,element)"
+                  class="br-0 add-merge-client btn-primary mr-12">ADD
                 </button>
               </td>
             </ng-container>

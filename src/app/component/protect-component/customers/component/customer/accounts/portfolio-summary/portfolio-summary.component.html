@@ -366,7 +366,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mtClass">
+            <div class="mtClass" [formGroup]="cashFlowFG">
                 <div class="w-1024 b-a shadowBox wrapper-12 overflow-y bg-white">
                     <div class="row">
                         <div class="col-md-4 p-0">
@@ -377,21 +377,33 @@
                             <div *ngIf="cashFlowViewDataSource.length>0 && !cashflowFlag" class="row">
                                 <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
                                     <mat-checkbox
-                                        [ngClass]="{'disable-checkbox':incomeList.length>0 && expenseList.length==0}"
-                                        [disabled]="filterCashFlow.income.length==0"
-                                        (change)="filterData($event,'inflow')" [(ngModel)]="inflowFlag"
-                                        [checked]="filterCashFlow.income.length>0">
+                                        formControlName="inflow"
+                                        [ngClass]="{'disable-checkbox': false}">
                                         Inflows</mat-checkbox>
                                 </div>
                                 <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
                                     <mat-checkbox
-                                        [ngClass]="{'disable-checkbox': incomeList.length==0 && expenseList.length>0}"
-                                        [disabled]="filterCashFlow.expense.length==0"
-                                        (change)="filterData($event,'outflow')" [(ngModel)]="outflowFlag"
-                                        [checked]="filterCashFlow.expense.length>0">
+                                        formControlName="outflow"
+                                        [ngClass]="{'disable-checkbox': false}">
                                         Outflows</mat-checkbox>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-select formControlName="bankfilter">
+                                <mat-option [value]="'all'">
+                                    All banks
+                                </mat-option>
+                                <mat-option *ngFor="let bank of allBanks" [value]="bank.id">{{bank.name}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-select formControlName="familyfilter">
+                                <mat-option [value]="'all'">
+                                    All banks
+                                </mat-option>
+                                <mat-option *ngFor="let fam of families" [value]="fam.id">{{fam.name}}</mat-option>
+                            </mat-select>
                         </div>
 
 
@@ -411,7 +423,6 @@
                     </div>
                     <div class="row pt-20">
                         <div class="col-md-7 pl-8">
-
                             <table *ngIf="cashFlowViewDataSource.length>0" mat-table
                                 [dataSource]="cashFlowViewDataSource" id="table-low" class="mt-8"
                                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="cashflowFlag">
