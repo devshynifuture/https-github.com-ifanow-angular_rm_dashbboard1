@@ -326,7 +326,7 @@ export class SipComponent implements OnInit {
 
   ceaseSip() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: this.parentId ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
