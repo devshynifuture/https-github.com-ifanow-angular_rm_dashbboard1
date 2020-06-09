@@ -64,6 +64,8 @@ export class LiabilitiesComponent implements OnInit {
   clientData: any;
   isLoadingUpload: boolean = false;
   myFiles: any;
+  userInfo: any;
+  details: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -85,7 +87,10 @@ export class LiabilitiesComponent implements OnInit {
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.personalProfileData = AuthService.getProfileDetails();
+    // this.personalProfileData = AuthService.getProfileDetails();
+    this.userInfo = AuthService.getUserInfo();
+  this.clientData = AuthService.getClientData();
+  this.details = AuthService.getProfileDetails();
     // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();

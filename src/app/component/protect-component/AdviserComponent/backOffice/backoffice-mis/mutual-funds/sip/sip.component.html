@@ -281,7 +281,7 @@
         </div>
     </div>
     <div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false">
-        <app-all-sip [mode]="mode" (changedValue)="display($event)"></app-all-sip>
+        <app-all-sip [mode]="mode" [data]="objTosend" (changedValue)="display($event)"></app-all-sip>
     </div>
     <div *ngIf="sipcomponentWise=='amc'">
         <app-sip-amc-wise (changedValue)="display($event)"></app-sip-amc-wise>
