@@ -69,6 +69,10 @@ export class AuthService {
     let clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+  static getOrgDetails() {
+    let orgData = localStorage.getItem('orgData');
+    return orgData ? JSON.parse(orgData) : undefined;
+  }
 
 
   static getClientId() {

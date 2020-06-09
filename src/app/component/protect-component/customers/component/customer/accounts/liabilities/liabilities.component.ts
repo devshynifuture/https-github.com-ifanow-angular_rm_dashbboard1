@@ -67,6 +67,7 @@ export class LiabilitiesComponent implements OnInit {
   userInfo: any;
   details: any;
   reportDate: Date;
+  getOrgData: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -93,6 +94,7 @@ export class LiabilitiesComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
   this.clientData = AuthService.getClientData();
   this.details = AuthService.getProfileDetails();
+  this.getOrgData = AuthService.getOrgDetails();
     // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();
