@@ -1,7 +1,11 @@
-.advice-commodities {}
-
 .cash-flow-advice,
-.advice-mutual-funds {
+.advice-mutual-funds,
+.advice-stock,
+.advice-fixed-income,
+.advice-fix-desposit,
+.advice-real-estate,
+.advice-cash-and-hand,
+.advice-commodities {
   #table-low .mat-sort-header-button {
     white-space: nowrap;
   }
@@ -24,3 +28,11 @@
     }
   }
 }
+
+// .advice-commodities {
+//   #table-low {
+//     th {
+//       border: 0px !important;
+//     }
+//   }
+// }
