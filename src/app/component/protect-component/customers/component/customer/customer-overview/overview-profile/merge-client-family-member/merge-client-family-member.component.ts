@@ -134,7 +134,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         if (responseData == undefined) {
           return;
         } else {
-          Object.assign(data, responseData);
+          // Object.assign(data, responseData);
           data.genderString = UtilService.getGenderStringFromGenderId(data.genderId);
           this.selectedClientData = data;
           console.log('mergeclientFamilyMember this.dataSource.data ', this.dataSource.data);

@@ -90,6 +90,12 @@ export class OverviewProfileComponent implements OnInit {
         } else {
           this.letsideBarLoader = false;
           // this.authService.setClientData(data);
+          if (data.mobileList && data.mobileList.length > 0) {
+            data.mobileNo = data.mobileList[0].mobileNo;
+          }
+          if (data.emailList && data.emailList.length > 0) {
+            data.email = data.emailList[0].email;
+          }
           (data.martialStatusId == 1 || data.martialStatusId == 0) ? data.martialStatus = 'Married' : (data.martialStatusId == 2) ? data.martialStatus = 'Unmarried' : (data.martialStatusId == 0) ? data.martialStatus = 'N/A' : data.martialStatus = 'Other';
           (data.genderId == 1) ? data.gender = 'Male' : (data.genderId == 2) ? data.gender = 'Female' : data.gender = 'Other';
           this.clientOverviewData = data;
@@ -298,10 +304,22 @@ export class OverviewProfileComponent implements OnInit {
       }
       this.clientOverviewData['duplicateFlag'] = this.duplicateFlag;
       component = AddFamilyMemberComponent;
+
       let ClientList = Object.assign([], this.enumDataService.getEmptySearchStateData());
-      let SuggestionList = Object.assign([], this.clientList);
       ClientList = ClientList.filter(element => element.userId != this.clientOverviewData.userId);
-      data = { flag: 'Add Family Member', fieldFlag: 'familyMember', client: this.clientOverviewData, ClientList, SuggestionList };
+
+      let SuggestionList = Object.assign([], this.clientList);
+      SuggestionList = SuggestionList.filter(element => element.userId != this.clientOverviewData.userId);
+
+      SuggestionList = SuggestionList.filter(element => {
+        if (element.mobileNo && element.mobileNo == this.clientOverviewData.mobileNo) {
+          return element;
+        }
+        if (element.email && element.email == this.clientOverviewData.email) {
+          return element;
+        }
+      })
+      data = { flag: 'Add Family Member', fieldFlag: 'familyMember', client: this.clientOverviewData, ClientList, SuggestionList: (SuggestionList.length > 0) ? SuggestionList : undefined };
     } else {
       data.flag = 'Edit family member';
       data.fieldFlag = 'familyMember';
