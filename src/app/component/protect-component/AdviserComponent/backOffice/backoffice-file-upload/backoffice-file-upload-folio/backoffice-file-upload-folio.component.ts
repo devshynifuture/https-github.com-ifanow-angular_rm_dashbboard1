@@ -60,7 +60,9 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
   }
 
   getRtNameFromRtId(id) {
-    return this.rtList.find(c => c.id === id).name;
+    if (typeof id === 'number') {
+      return this.rtList.find(c => c.id === id).name;
+    }
   }
 
   getBackOfficeFolio(filter) {

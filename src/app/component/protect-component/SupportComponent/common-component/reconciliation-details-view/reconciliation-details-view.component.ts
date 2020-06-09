@@ -35,6 +35,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   selectedFolioUnits = 0;
   canDeleteTransaction = false;
   filteredValues: any[];
+  arnRiaCode: any = '';
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -53,6 +54,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     } else if (this.data && this.data.tableType == 'duplicate-folios') {
       this.tableEntriesType = 2;
     }
+    this.arnRiaCode = this.data.arnRiaCode;
 
     const tableArr: PeriodicElement[] = [{
       unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
@@ -62,7 +64,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
     this.dataSource.data = tableArr;
     this.upperTableArr = tableArr;
-    this.disableUnfreezeBtn = false;
+    if (this.data && this.data.freezeDate === 0) {
+      this.disableUnfreezeBtn = true;
+    } else {
+      this.disableUnfreezeBtn = false;
+    }
 
     // if (this.data && this.data.difference === '0.000') {
     //   this.disableFreezeBtn = false;

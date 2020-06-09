@@ -482,16 +482,16 @@ export class ClientBasicDetailsComponent implements OnInit {
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
-            this.disableBtn = false;
-            this.barButtonOptions.active = false;
-            console.log(data);
-            data.invCategory = this.invTypeCategory;
-            data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
-            this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
+            setTimeout(() => {
+              this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
+            });
             if (flag == 'Next') {
+              this.disableBtn = false;
+              this.barButtonOptions.active = false;
+              data.invCategory = this.invTypeCategory;
+              data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
               this.changeTabAndSendData(data);
             } else {
-              this.barButtonOptions.active = false;
               this.close(data);
             }
           },
