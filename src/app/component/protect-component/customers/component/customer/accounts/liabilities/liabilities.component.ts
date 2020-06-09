@@ -68,10 +68,10 @@ export class LiabilitiesComponent implements OnInit {
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService,
-    private fileUpload : FileUploadServiceService,
-    public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService,private pdfGen :PdfGenService) {
-      this.clientData = AuthService.getClientData()
-    }
+    private fileUpload: FileUploadServiceService,
+    public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService) {
+    this.clientData = AuthService.getClientData()
+  }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -149,11 +149,11 @@ export class LiabilitiesComponent implements OnInit {
   }
   // generatePdf() {
   //   this.fragmentData.isSpinner = true;
-  
+
   //   let para = document.getElementById('template');
   //   this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
   // }
-  generatePdf(tableTitle){
+  generatePdf(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -185,10 +185,10 @@ export class LiabilitiesComponent implements OnInit {
     if (dataFiltered.length > 0) {
       this.dataSource.data = dataFiltered;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
-      this.totalLoanAmt =0;
-      this.outStandingAmt =0;
+      this.totalLoanAmt = 0;
+      this.outStandingAmt = 0;
       this.totalEmi = 0;
-     this.dataSource.data.forEach(element => {
+      this.dataSource.data.forEach(element => {
         this.totalLoanAmt += element.loanAmount
         this.totalEmi += element.emi;
       });
@@ -219,7 +219,7 @@ export class LiabilitiesComponent implements OnInit {
     if (data != undefined) {
       this.OtherPayableData = data;
       this.OtherData = data.length;
-    }else{
+    } else {
       this.OtherPayableData = data;
       this.OtherData = '';
     }
@@ -260,7 +260,7 @@ export class LiabilitiesComponent implements OnInit {
         this.outStandingAmt = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.outstandingAmount
           , 0)
-          this.totalEmi = filterData.reduce((accumulator, currentElement) =>
+        this.totalEmi = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.emi
           , 0)
         // this.dataSource = filterData;
@@ -272,10 +272,10 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    if(this.showFilter =='tab1'){
+    if (this.showFilter == 'tab1') {
       this.deletedDataId = this.showFilter
-    }else{
-      this.deletedDataId =data.loanTypeId;
+    } else {
+      this.deletedDataId = data.loanTypeId;
     }
     // this.deletedDataId = (this.showFilter ==' tab1') ? this.deletedDataId = this.showFilter: 
     const dialogData = {
@@ -317,7 +317,7 @@ export class LiabilitiesComponent implements OnInit {
     if (data != this.showFilter) {
       data.showFilter = this.showFilter;
     }
-    (data.id) ? data.showFilter=this.showFilter : data
+    (data.id) ? data.showFilter = this.showFilter : data
     const fragmentData = {
       flag: flagValue,
       componentName: AddLiabilitiesComponent,
@@ -379,7 +379,7 @@ export class LiabilitiesComponent implements OnInit {
     );
   }
 
-  
+
   getLiability(data) {
     this.isLoading = true;
 
@@ -428,14 +428,14 @@ export class LiabilitiesComponent implements OnInit {
         this.outStandingAmt += element.outstandingAmount
       });
       data.loans.forEach(element => {
-        if(element.remainingMonths ||element.remainingMonths!=0){
-          element.months=(element.remainingMonths % 12);
-          element.years= ~~(element.remainingMonths / 12)
-          console.log('months',element.months);
-          console.log('years',element.years);
-        }else{
-          element.months=0;
-          element.years= 0
+        if (element.remainingMonths || element.remainingMonths != 0) {
+          element.months = (element.remainingMonths % 12);
+          element.years = ~~(element.remainingMonths / 12)
+          console.log('months', element.months);
+          console.log('years', element.years);
+        } else {
+          element.months = 0;
+          element.years = 0
         }
       });
       this.dataStore = [];
@@ -468,19 +468,19 @@ export class LiabilitiesComponent implements OnInit {
     } else {
       this.noData = "No Data Found";
       this.dataSource.data = []
-      this.filterForliabilities =[];
-      this.home =[];
-   
-      this.vehicle=[];
+      this.filterForliabilities = [];
+      this.home = [];
 
-      this.education=[];
-  
-      this.creditCard=[];
+      this.vehicle = [];
 
-      this.personal=[];
-    
-      this.mortgage=[];
-      this.dataStore =[];
+      this.education = [];
+
+      this.creditCard = [];
+
+      this.personal = [];
+
+      this.mortgage = [];
+      this.dataStore = [];
       this.storeData = data.loans.length;
     }
   }
@@ -489,7 +489,7 @@ export class LiabilitiesComponent implements OnInit {
     this.open('openHelp', 'liabilityright');
   }
   display(data) {
-      this.getPayables()
+    this.getPayables()
   }
 }
 export interface PeriodicElement {
