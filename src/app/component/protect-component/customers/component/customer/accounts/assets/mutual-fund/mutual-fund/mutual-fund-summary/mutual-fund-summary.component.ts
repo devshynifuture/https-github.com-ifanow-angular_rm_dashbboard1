@@ -46,6 +46,7 @@ export class MutualFundSummaryComponent implements OnInit {
   userInfo = AuthService.getUserInfo();
   clientData = AuthService.getClientData();
   details = AuthService.getProfileDetails();
+  getOrgData = AuthService.getOrgDetails();
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
   // schemeWiseForFilter: any[];
