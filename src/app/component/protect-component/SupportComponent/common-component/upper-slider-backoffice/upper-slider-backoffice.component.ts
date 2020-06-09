@@ -407,7 +407,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     let mutualFundIds = [];
     mutualFundIds = this.filteredAumListWithIsMappedToMinusOne.filter(element => {
-      return (Math.abs(element.calculatedUnits - element.aumUnits) !== 0);
+      if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+        return item.mutualFundId;
+      }
     })
 
     const data = {
