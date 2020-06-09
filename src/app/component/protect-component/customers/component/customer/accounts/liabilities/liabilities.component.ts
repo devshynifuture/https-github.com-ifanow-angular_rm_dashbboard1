@@ -147,16 +147,18 @@ export class LiabilitiesComponent implements OnInit {
       this.fragmentData.isSpinner = false;
     }
   }
-  // generatePdf() {
-  //   this.fragmentData.isSpinner = true;
+  generatePdf() {
+    this.fragmentData.isSpinner = true;
 
-  //   let para = document.getElementById('template');
-  //   this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-  // }
-  generatePdf(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    let para = document.getElementById('template');
+    // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.util.htmlToPdf(para.innerHTML, 'Liabilities', 'true', this.fragmentData, '', '');
+
   }
+  // generatePdf(tableTitle){
+  //   let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   this.pdfGen.generatePdf(rows, tableTitle);
+  // }
   getGlobalLiabilities() {
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(

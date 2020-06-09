@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -37,8 +37,8 @@ export class SipComponent implements OnInit {
   isExpiringLoading=true;
   isExpiredLoading=true;
   isRejectionLoading=true;
+  mode: any;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
-
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
@@ -95,6 +95,11 @@ export class SipComponent implements OnInit {
 
   changeArnRiaValue(item) {
     this.arnRiaId = item.number;
+    if(item.number != 'All'){
+      this.arnRiaId = item.id;
+    }else{
+      this.arnRiaId = -1;
+    }
     this.viewMode = item.number;
     this.initPoint();
   }
@@ -103,7 +108,7 @@ export class SipComponent implements OnInit {
       data => {
         if (data) {
           this.arnRiaList = data;
-          this.advisorId = 0;
+          // this.advisorId = 0;
           const obj = {
             number: 'All'
           }
@@ -173,7 +178,8 @@ export class SipComponent implements OnInit {
       data => {
         this.isExpiredLoading = false;
         if(data){
-          this.expiredSip = data;
+          let res=this.filterByDate(data);
+          this.expiredSip = res;
         }else{
           this.expiredSip = [];
         }
@@ -197,7 +203,8 @@ export class SipComponent implements OnInit {
       data => {
         this.isExpiringLoading = false;
         if(data){
-          this.expiringSip = data;
+          let res=this.filterByDate(data);
+          this.expiringSip = res;
         }else{
           this.expiringSip=[];
         }
@@ -272,9 +279,16 @@ export class SipComponent implements OnInit {
     this.sipshow = true;
     this.showMainWrapperFlag = false;
   }
-  amcWise(value) {
+  filterByDate(data){
+    data = data.filter(item => item.dateDiff <= 90);
+
+    return data
+  }
+  amcWise(value,mode) {
+    this.mode=mode;
     this.sipcomponentWise = value;
     this.sipComponent = false;
+
   }
   newSip() {
     const obj = {
