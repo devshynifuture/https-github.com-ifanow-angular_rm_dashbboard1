@@ -3,6 +3,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-sip-applicant-wise',
   templateUrl: './sip-applicant-wise.component.html',
@@ -25,6 +26,7 @@ export class SipApplicantWiseComponent implements OnInit {
   propertyName2: any;
   reverse = true;
   reverse2 = true;
+  maxDate = new Date();
   arrayOfExcelData: any[] = [];
   arrayOfHeaders: any[][] = [
     [
@@ -71,14 +73,23 @@ export class SipApplicantWiseComponent implements OnInit {
   selectedClient: any;
   isLoadingApplicant: boolean = false;
   applicantListArr: any[];
+  caesedForm: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.schemeWiseApplicantGet();
   }
+  getFormControl() {
+    return this.caesedForm.controls;
+  }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -165,6 +176,7 @@ export class SipApplicantWiseComponent implements OnInit {
             this.isLoadingApplicant = false
             data.forEach(element => {
               element.name = applicantData.name
+              element.isEdit=false;
             });
             applicantData.schemeList = data
             this.applicantListArr = data
@@ -234,6 +246,9 @@ export class SipApplicantWiseComponent implements OnInit {
       }
       this.arrayOfExcelData.push(data);
     })
+  }
+  preventDefault(e) {
+    e.preventDefault();
   }
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {

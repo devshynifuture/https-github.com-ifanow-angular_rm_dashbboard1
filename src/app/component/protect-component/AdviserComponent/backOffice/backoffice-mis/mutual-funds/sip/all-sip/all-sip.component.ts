@@ -34,8 +34,12 @@ export class AllSipComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     if(this.mode == 'expired'){
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate','ceaseDate', 'amount'];
+    }else if(this.mode == 'expiring'){
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount'];
+    }else{
       this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
-    'frequency','ceaseDate', 'amount'];
+      'frequency', 'amount'];
     }
     this.getAllSip();
   }
