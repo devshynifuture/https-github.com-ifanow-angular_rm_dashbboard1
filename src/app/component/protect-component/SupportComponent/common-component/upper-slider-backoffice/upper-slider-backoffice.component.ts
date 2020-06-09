@@ -406,8 +406,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
   deleteAndReorder() {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     let mutualFundIds = [];
-    mutualFundIds = this.filteredAumListWithIsMappedToMinusOne.filter(element => {
-      return (Math.abs(element.calculatedUnits - element.aumUnits) !== 0);
+    this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+      if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+        mutualFundIds.push(element.mutualFundId);
+      }
     })
 
     const data = {
