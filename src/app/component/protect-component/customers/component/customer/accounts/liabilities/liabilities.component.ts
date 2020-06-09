@@ -92,9 +92,9 @@ export class LiabilitiesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     // this.personalProfileData = AuthService.getProfileDetails();
     this.userInfo = AuthService.getUserInfo();
-  this.clientData = AuthService.getClientData();
-  this.details = AuthService.getProfileDetails();
-  this.getOrgData = AuthService.getOrgDetails();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
     // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();
