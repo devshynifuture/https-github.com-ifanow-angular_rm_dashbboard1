@@ -72,7 +72,7 @@
             </mat-menu>
         </div>
     </div>
-    <div class="overflow-y"  *ngIf="portfolioData.length > 0">
+    <div class="overflow-y" *ngIf="portfolioData.length > 0">
         <div class="row pt-12 w-1024">
             <div class="col-md-5 pl-0 pr-4">
                 <div class="row b-a">
@@ -273,7 +273,7 @@
      </div>
    </div> -->
                 <div class="stock-overview">
-                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low" >
+                    <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
                         <!-- <ng-container matColumnDef="static-header">
         <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
             class=" text-center text-primary bg-white" mat-header-cell>
@@ -374,7 +374,8 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar"><span >{{element.absoluteReturn}} {{element.absoluteReturn?'%':''}}</span></div>
+                                <div class="bar"><span>{{element.absoluteReturn}}
+                                        {{element.absoluteReturn?'%':''}}</span></div>
                             </td>
                             <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
                                 ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
@@ -432,7 +433,7 @@
 
 
     <div *ngIf="portfolioData.length <= 0" class="row">
-        <div class="d-flex flex-column align-items-center col-md-12">
+        <div class="d-flex flex-column align-items-center mt-80 col-md-12">
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">{{noData }}</h4>
             <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
