@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SubscriptionInject } from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormArray, FormGroup } from '@angular/forms';
 import { EventService } from '../../../../../../../../Data-service/event.service';
 import { PeopleService } from '../../../../../../PeopleComponent/people.service';
 import { MatTableDataSource } from '@angular/material';
@@ -34,7 +34,6 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  relationType = new FormControl('', [Validators.required]);
   showSpinnerOwner = false;
   dataForTable: any[] = [];
   dataSource = new MatTableDataSource(this.dataForTable);
@@ -47,6 +46,10 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   dataSource1;
   showSuggestion: boolean = true;
   selectedClientData: any;
+  rows: FormArray = this.fb.array([]);
+  form: FormGroup = this.fb.group({ 'clients': this.rows });
+
+
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
     private peopleService: PeopleService, private enumDataService: EnumDataService,
@@ -54,7 +57,15 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   ngOnInit() {
-    let clientList = Object.assign([], this.data.clientData.ClientList)
+    let clientList = Object.assign([], this.data.clientData.ClientList);
+    if (this.data.clientData.SuggestionList) {
+      this.data.clientData.SuggestionList.filter(element => {
+        this.rows.push(this.fb.group({
+          relation: ['', [Validators.required]],
+          gender: ['', [Validators.required]]
+        }))
+      })
+    }
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -65,6 +76,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
             if (list.length == 0) {
               this.showSuggestion = true;
               this.stateCtrl.setErrors({ invalid: true });
+              this.stateCtrl.markAsTouched();
             }
             return clientList.filter(state => state.name.toLowerCase().includes(filterValue));
           } else {
@@ -165,7 +177,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     const arrayObj = {
       ownerClientId: this.data.clientData.client.clientId,
       mergeClientId: this.selectedClient.clientId,
-      relationshipId: this.relationType.value
+      relationshipId: ''
     };
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
