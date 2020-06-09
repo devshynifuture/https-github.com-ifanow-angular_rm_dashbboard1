@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
@@ -19,6 +19,7 @@ export class AllSipComponent implements OnInit {
   totalAmount = 0;
   isLoading = false;
   parentId = AuthService.getUserInfo().parentId ? AuthService.getUserInfo().parentId : -1;
+  @Input() mode;
 
   @Output() changedValue = new EventEmitter();
 
@@ -32,6 +33,10 @@ export class AllSipComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    if(this.mode == 'expired'){
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
+    'frequency','ceaseDate', 'amount'];
+    }
     this.getAllSip();
   }
 
@@ -50,19 +55,61 @@ export class AllSipComponent implements OnInit {
       arnRiaDetailsId: -1,
       parentId: -1
     }
-    this.backoffice.allSipGet(obj).subscribe(
-      data => {
-        this.isLoading = false;
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.filteredData.forEach(element => {
-          this.totalAmount += element.amount;
-        });
-      },
-      err => {
-        this.isLoading = false;
-      }
-    )
+    if(this.mode=='all')
+    {
+      this.backoffice.allSipGet(obj).subscribe(
+        data => {
+          this.isLoading = false;
+          if(data){
+            this.response(data);
+          }else{
+            this.dataSource.filteredData=[]
+          }
+  
+        },
+        err => {
+          this.isLoading = false;
+        }
+      )
+    }else if(this.mode == 'expired'){
+      this.backoffice.GET_expired(obj).subscribe(
+        data => {
+          this.isLoading = false;
+          if(data){
+            this.response(data);
+          }else{
+            this.dataSource.filteredData=[]
+          }
+  
+        },
+        err => {
+          this.isLoading = false;
+        }
+      )
+    }else{
+      this.backoffice.GET_EXPIRING(obj).subscribe(
+        data => {
+          this.isLoading = false;
+          if(data){
+            this.response(data);
+          }else{
+            this.dataSource.filteredData=[]
+          }
+  
+        },
+        err => {
+          this.isLoading = false;
+        }
+      )
+    }
+
+  }
+  response(data){
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.sort;
+    this.dataSource.filteredData.forEach(element => {
+      this.totalAmount += element.amount;
+    });
   }
   aumReport() {
     this.changedValue.emit(true);
