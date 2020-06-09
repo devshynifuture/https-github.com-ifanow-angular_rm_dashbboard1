@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -11,7 +13,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./portfolio-summary.component.scss']
 })
 
-export class PortfolioSummaryComponent implements OnInit {
+export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;
@@ -65,29 +67,42 @@ export class PortfolioSummaryComponent implements OnInit {
       currentValue: 0,
       percentage: 0
     }
-  bscData: any;
-  nscDAta: any;
-  nscData: any;
-  summaryFlag: boolean;
-  cashflowFlag: boolean;
-  StockFeedFlag: boolean;
-  letsideBarLoader: boolean;
-  selectedVal: string;
-  goldData: any;
-  silverData: any;
-  nifty500Data: any;
-  deptData;
+
+  cashFlowFG:FormGroup;
+  subscription = new Subscription();
+  
   finalTotal: number;
-  constructor(public eventService: EventService, private cusService: CustomerService,
-    private datePipe: DatePipe) {
-  }
+  cashflowFlag: boolean;
+  letsideBarLoader: boolean;
+  summaryFlag: boolean;
+  allBanks:any[] = [];
+  families:any[] = [];
+  constructor(
+    public eventService: EventService, 
+    private cusService: CustomerService,
+    private datePipe: DatePipe,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
+    this.cashFlowFG = this.fb.group({
+      'inflow': [true],
+      'outflow': [true],
+      'bankfilter': ['all'],
+      'familyfilter': ['all']
+    })
     this.userData = AuthService.getUserInfo();
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.calculateTotalSummaryValues();
+    this.subscribeToCashflowChanges();
+  }
+
+  subscribeToCashflowChanges(){
+    this.cashFlowFG.valueChanges.subscribe(()=> {
+      this.filterCashflowData()
+    })
   }
 
   calculateTotalSummaryValues() {
@@ -192,13 +207,12 @@ export class PortfolioSummaryComponent implements OnInit {
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
         this.cashflowFlag = false;
-        console.log(data);
         this.filterCashFlow = Object.assign({}, data);
         this.cashFlowViewDataSource = [];
         this.incomeList = [];
         this.expenseList = [];
-        this.sortDataUsingFlowType(data, true);
-        console.log(this.cashFlowViewDataSource);
+        this.createFilterList();
+        this.sortDataUsingFlowType(data);
       },
       err => {
         this.cashFlowViewDataSource = []
@@ -206,7 +220,9 @@ export class PortfolioSummaryComponent implements OnInit {
     );
   }
 
-  sortDataUsingFlowType(ObjectArray, flag) {
+  sortDataUsingFlowType(ObjectArray) {
+    this.inflowFlag = false;
+    this.outflowFlag = false;
 
     if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
       this.cashFlowViewDataSource = ObjectArray['expense'];
@@ -244,34 +260,64 @@ export class PortfolioSummaryComponent implements OnInit {
     this.cashFlow('cashFlow', ObjectArray);
   }
 
-
-  filterData(eventData, flag) {
-    this.incomeList = [];
-    this.expenseList = [];
-    if (this.inflowFlag && this.outflowFlag == false) {
-      const ObjArray = {
-        income: this.filterCashFlow.income,
-        expense: []
-      };
-      this.sortDataUsingFlowType(ObjArray, true);
-    } else if (this.outflowFlag && this.inflowFlag == false) {
-      const ObjArray = {
-        income: [],
-        expense: this.filterCashFlow.expense
-      };
-      this.sortDataUsingFlowType(ObjArray, true);
-    } else if (this.inflowFlag == false && this.outflowFlag == false) {
-      (flag == 'inflow') ? this.outflowFlag = true : this.inflowFlag = true;
-      const ObjArray = {
-        income: (this.inflowFlag) ? this.filterCashFlow.income : [],
-        expense: (this.outflowFlag) ? this.filterCashFlow.expense : []
-      };
-      this.sortDataUsingFlowType(ObjArray, true);
-    } else {
-      this.sortDataUsingFlowType(this.filterCashFlow, true);
-    }
+  createFilterList() {
+    this.allBanks = [];
+    let cashflows = [...this.filterCashFlow.expense, ...this.filterCashFlow.income];
+    
+    let banks = [...new Set(cashflows.map(flow => flow.userBankMappingId))]
+    this.allBanks = banks.map(bank => {
+      let tnx = cashflows.find(tnx => tnx.userBankMappingId === bank);
+      let bankObj = {
+        name: tnx.bankName,
+        id: bank
+      }
+      // non linked bank id is 0
+      if(bank === 0) {
+        bankObj.name = 'Non-linked banks'
+      }
+      return bankObj;
+    });
+    
+    let families = [...new Set(cashflows.map(flow => flow.familyMemberId))]
+    this.families = families.map(family => {
+      let tnx = cashflows.find(tnx => tnx.familyMemberId === family);
+      let bankObj = {
+        name: tnx.ownerName,
+        id: family
+      }
+      return bankObj;
+    });
   }
 
+
+  filterCashflowData() {
+    this.incomeList = [];
+    this.expenseList = [];
+    
+    let cashflows = [...this.filterCashFlow.expense, ...this.filterCashFlow.income];
+
+    if(this.cashFlowFG.controls.bankfilter.value != 'all') {
+      cashflows = cashflows.filter(flow => flow.userBankMappingId === this.cashFlowFG.controls.bankfilter.value);
+    }
+
+    if(this.cashFlowFG.controls.familyfilter.value != 'all') {
+      cashflows = cashflows.filter(flow => flow.familyMemberId === this.cashFlowFG.controls.familyfilter.value);
+    }
+
+    let cashflowObj = {
+      income: [],
+      expense: []
+    }
+    if(this.cashFlowFG.controls.inflow.value) {
+      cashflowObj.income = cashflows.filter(flow => flow.inputOutputFlag === 1);
+    }
+
+    if(this.cashFlowFG.controls.outflow.value) {
+      cashflowObj.expense = cashflows.filter(flow => flow.inputOutputFlag === -1);
+    }
+    
+    this.sortDataUsingFlowType(cashflowObj);
+  }
 
   checkNumberPositiveAndNegative(value: number) {
     if (value == 0) {
@@ -362,7 +408,11 @@ export class PortfolioSummaryComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: timeArray
+        categories: timeArray,
+        visible: false
+      },
+      yAxis: {
+        visible: false
       },
       credits: {
         enabled: false
@@ -371,11 +421,13 @@ export class PortfolioSummaryComponent implements OnInit {
         name: 'Income',
         color: '#5cc644',
         data: this.incomeList,
+        showInLegend: false,
         type: undefined,
       }, {
         name: 'Expense',
         color: '#ef6725',
         data: this.expenseList,
+        showInLegend: false,
         type: undefined,
       }]
     });
@@ -493,5 +545,9 @@ export class PortfolioSummaryComponent implements OnInit {
         data: dataSeriesList
       }]
     });
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 }
