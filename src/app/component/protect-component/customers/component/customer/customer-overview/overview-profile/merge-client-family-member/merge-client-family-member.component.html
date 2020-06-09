@@ -123,7 +123,7 @@
                 Date of birth
               </div>
               <div class="col-md-4 text-right f-14 roboto p-0">
-                {{selectedClientData.dateOfBirth | date:'dd/MM/yyyy'}}
+                {{selectedClientData.dateOfBirth}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
@@ -131,7 +131,7 @@
                 PAN
               </div>
               <div class="col-md-4 text-right f-14 roboto p-0">
-                {{selectedClientData.pan}}
+                {{selectedClientData.pan?selectedClientData.pan:'-'}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
