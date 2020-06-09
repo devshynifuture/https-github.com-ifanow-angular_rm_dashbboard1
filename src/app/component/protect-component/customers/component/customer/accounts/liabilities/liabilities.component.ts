@@ -66,6 +66,7 @@ export class LiabilitiesComponent implements OnInit {
   myFiles: any;
   userInfo: any;
   details: any;
+  reportDate: Date;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -85,6 +86,7 @@ export class LiabilitiesComponent implements OnInit {
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
     //this.showLoader = true;
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     // this.personalProfileData = AuthService.getProfileDetails();
