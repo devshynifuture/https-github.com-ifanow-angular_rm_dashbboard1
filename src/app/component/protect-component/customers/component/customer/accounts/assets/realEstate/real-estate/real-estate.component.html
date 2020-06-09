@@ -34,23 +34,22 @@
             </mat-menu>
 
 
-            <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i
-          class="material-icons">filter_list</i>FILTER
-      </button>
+            <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+            </button>
             <mat-menu #filterRecurring>
                 <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterData(null, 'All')">
-          All
-        </button>
+                    All
+                </button>
                 <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterData('statusId', 'LIVE')">
-          STATUS - LIVE
-        </button>
+                    STATUS - LIVE
+                </button>
                 <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterData('statusId', 'PENDING')">
-          STATUS - PENDING
-        </button>
+                    STATUS - PENDING
+                </button>
             </mat-menu>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"> ADD
-        NEW
-      </button>
+                NEW
+            </button>
 
         </div>
     </div>
@@ -129,25 +128,23 @@
 
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class=" "></th>
-                    <td mat-cell *matCellDef="let element" matMenuTriggerFor]="menu4" class=" c-p text-center">
+                    <td *matCellDef="let element" [matMenuTriggerFor]="menu4" class="t-2 c-p text-center" mat-cell>
 
-                        <img *ngIf="!isLoading" class="c-p" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
+                        <img class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
 
                         <mat-menu #menu4="matMenu">
                             <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewRealEstate(element)">Detailed
-                View
-              </button>
+                            <button mat-menu-item (click)="detailedViewRealEstate(element)">Detailed View </button>
                             <button mat-menu-item>Upload file
-                <input (change)="fetchData('Real Estate',$event,element)" class="uploadInput" id="file-4" multiple
-                  type="file">
-              </button>
+                                <input (change)="fetchData('Real Estate',$event,element)" class="uploadInput"
+                                    id="file-4" multiple type="file">
+                            </button>
                             <!-- <button mat-menu-item>Activity</button> -->
                             <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
                         </mat-menu>
 
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br text-right t-10 br"></td>
+                    <td *matFooterCellDef mat-footer-cell class="br"></td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
@@ -158,7 +155,7 @@
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">{{noData}}</h4>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')">
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
         </div>
     </div>
