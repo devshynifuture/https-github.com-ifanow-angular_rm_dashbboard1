@@ -43,7 +43,10 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   selectedClient;
   @Input() data;
   relationTypeList: { name: string; value: number; }[];
-
+  displayedColumns1: string[] = ['details', 'status', 'pan', 'relation', 'gender', 'add'];
+  dataSource1;
+  showSuggestion: boolean = true;
+  selectedClientData: any;
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
     private peopleService: PeopleService, private enumDataService: EnumDataService,
@@ -51,24 +54,37 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   ngOnInit() {
+    let clientList = Object.assign([], this.data.clientData.ClientList)
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
         map(state => {
           if (state) {
-            const list = this.enumDataService.getClientSearchData(state);
+            const filterValue = state.toLowerCase();
+            const list = clientList.filter(state => state.name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
+              this.showSuggestion = true;
               this.stateCtrl.setErrors({ invalid: true });
             }
-            return this.enumDataService.getClientSearchData(state);
+            return clientList.filter(state => state.name.toLowerCase().includes(filterValue));
           } else {
-            return this.enumDataService.getEmptySearchStateData();
+            return this.data.clientData.ClientList;
           }
         }),
       );
   }
-
+  hideSuggetion(value) {
+    if (value == '') {
+      this.showSuggestion = true
+      this.selectedClientData = undefined
+    };
+  }
   optionSelected(value) {
+    if (value.count == 0) {
+      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
+      return;
+    }
+    // this.showSuggestion = false;
     console.log(' selected client to merge ', value);
     this.selectedClient = value;
     this.data.clientData
@@ -114,12 +130,13 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.getClientOrLeadData(obj).subscribe(
       responseData => {
         this.showSpinnerOwner = false;
+        this.showSuggestion = false
         if (responseData == undefined) {
           return;
         } else {
           Object.assign(data, responseData);
           data.genderString = UtilService.getGenderStringFromGenderId(data.genderId);
-          this.dataSource.data = [data];
+          this.selectedClientData = data;
           console.log('mergeclientFamilyMember this.dataSource.data ', this.dataSource.data);
 
         }
@@ -132,16 +149,15 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
+    if (data != 'close') {
+      this.enumDataService.searchClientList();
+    }
     this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
   saveFamilyMembers() {
     if (!this.selectedClient) {
       this.eventService.openSnackBar('Please select the client to merge', 'Dismiss');
-      return;
-    }
-    if (this.relationType.invalid) {
-      this.relationType.markAllAsTouched();
       return;
     }
     this.barButtonOptions.active = true

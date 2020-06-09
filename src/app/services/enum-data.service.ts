@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {UtilService} from './util.service';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {EnumServiceService} from './enum-service.service';
-import {OnlineTransactionService} from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
-import {AuthService} from '../auth-service/authService';
-import {CustomerService} from '../component/protect-component/customers/component/customer/customer.service';
-import {OrgSettingServiceService} from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
-import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
+import { Injectable } from '@angular/core';
+import { UtilService } from './util.service';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EnumServiceService } from './enum-service.service';
+import { OnlineTransactionService } from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { AuthService } from '../auth-service/authService';
+import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
+import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,24 +15,24 @@ export class EnumDataService {
   searchData: any;
   clientAndFamilyData: any = [];
   proofType = [
-    {proofId: 1, proofType: 'Personal Pan'},
-    {proofId: 2, proofType: 'Company Pan'},
-    {proofId: 3, proofType: 'Passport'},
-    {proofId: 4, proofType: 'Aadhaar'},
-    {proofId: 5, proofType: 'Driving licence'},
-    {proofId: 6, proofType: 'Voter\'s ID card'},
-    {proofId: 7, proofType: 'NREGA job card'}
+    { proofId: 1, proofType: 'Personal Pan' },
+    { proofId: 2, proofType: 'Company Pan' },
+    { proofId: 3, proofType: 'Passport' },
+    { proofId: 4, proofType: 'Aadhaar' },
+    { proofId: 5, proofType: 'Driving licence' },
+    { proofId: 6, proofType: 'Voter\'s ID card' },
+    { proofId: 7, proofType: 'NREGA job card' }
   ];
   roleList = [
-    {roleTypeId: 1, roleTypeName: 'Admin'},
-    {roleTypeId: 2, roleTypeName: 'Para planner'},
-    {roleTypeId: 3, roleTypeName: 'Relationship manager'},
-    {roleTypeId: 4, roleTypeName: 'Operations'},
+    { roleTypeId: 1, roleTypeName: 'Admin' },
+    { roleTypeId: 2, roleTypeName: 'Para planner' },
+    { roleTypeId: 3, roleTypeName: 'Relationship manager' },
+    { roleTypeId: 4, roleTypeName: 'Operations' },
   ];
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
-              private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
-              private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
+    private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
+    private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
   }
 
   // clientRoleList = [
@@ -122,12 +122,12 @@ export class EnumDataService {
 
   getClientAndFamilyData(value) {
     const filterValue = value.toLowerCase();
-    return this.clientAndFamilyData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.clientAndFamilyData.filter(state => state.name.toLowerCase().includes(filterValue));
   }
 
   getClientSearchData(value) {
     const filterValue = value.toLowerCase();
-    return this.searchData.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.searchData.filter(state => state.name.toLowerCase().includes(filterValue));
   }
 
   getEmptySearchStateData() {
