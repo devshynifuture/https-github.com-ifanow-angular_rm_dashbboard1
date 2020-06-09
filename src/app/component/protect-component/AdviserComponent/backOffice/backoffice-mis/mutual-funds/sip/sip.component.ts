@@ -38,6 +38,7 @@ export class SipComponent implements OnInit {
   isExpiredLoading=true;
   isRejectionLoading=true;
   mode: any;
+  objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; };
   constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -102,6 +103,11 @@ export class SipComponent implements OnInit {
     }
     this.viewMode = item.number;
     this.initPoint();
+    this.objTosend={
+      arnRiaId :this.arnRiaId,
+      parentId: this.parentId,
+      adminAdvisorIds:this.adminAdvisorIds
+    }
   }
   getArnRiaList() {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
@@ -123,7 +129,7 @@ export class SipComponent implements OnInit {
   sipCountGet() {
     this.isLoading = true
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -168,7 +174,7 @@ export class SipComponent implements OnInit {
   expiredGet() {
     this.isExpiredLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -193,7 +199,7 @@ export class SipComponent implements OnInit {
   expiringGet() {
     this.isExpiringLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -220,7 +226,7 @@ export class SipComponent implements OnInit {
   sipRejectionGet() {
     this.isRejectionLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId:(this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -244,7 +250,7 @@ export class SipComponent implements OnInit {
   getSipPanCount() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -262,7 +268,7 @@ export class SipComponent implements OnInit {
   }
   getWbrPanCount() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -288,7 +294,11 @@ export class SipComponent implements OnInit {
     this.mode=mode;
     this.sipcomponentWise = value;
     this.sipComponent = false;
-
+    this.objTosend={
+      arnRiaId :this.arnRiaId,
+      parentId: this.parentId,
+      adminAdvisorIds:this.adminAdvisorIds
+    }
   }
   newSip() {
     const obj = {

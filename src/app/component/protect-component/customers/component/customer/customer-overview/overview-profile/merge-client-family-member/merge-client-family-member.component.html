@@ -19,7 +19,7 @@
   <div class="pl-20">
     <div class="row">
       <div class="col-md-8 p-0">
-        <h5 class="m-0 text-black">Select an investor from the search box below</h5>
+        <h5 class="m-0 text-black pb-4">Select an investor from the search box below</h5>
         <mat-form-field appearance="standard" floatLabel="never">
           <input #searchClient (input)="hideSuggetion(searchClient.value)" [formControl]="stateCtrl"
             [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
@@ -98,114 +98,138 @@
 
       </div>
     </div> -->
-    <div *ngIf="showSuggestion==false" class="pl-20 pr-20 pb-48 mt-44">
-      <div class="row pt-40">
-        <div class="col-md-12 p-0">
+    <div *ngIf="showSuggestion==false" class="pr-20 pb-48">
+      <div class="row pt-60">
+
+        <div class="col-md-10 p-0">
+          <p class="m-0 f-500 f-16 roboto pb-10">Following are the details of Aditya Rahul Jain</p>
           <div class="insurance-ui bt">
             <div class="row bb p-8 b-l br">
-              <div class="col-md-8 text-left f-14 roboto p-0">
+              <div class="col-md-4 text-left f-14 roboto p-0">
                 Full name
               </div>
-              <div class="col-md-4 text-right f-14 roboto p-0">
+              <div class="col-md-8 text-right f-14 roboto p-0">
                 {{selectedClientData.displayName}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
-              <div class="col-md-8 text-left f-14 roboto p-0">
+              <div class="col-md-4 text-left f-14 roboto p-0">
                 Tax status
               </div>
-              <div class="col-md-4 text-right f-14 roboto p-0">
+              <div class="col-md-8 text-right f-14 roboto p-0">
                 {{(selectedClientData.clientType==1)?'Individual':(selectedClientData.clientType)==2?'Minor':'Non-individual'}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
-              <div class="col-md-8 text-left f-14 roboto p-0">
+              <div class="col-md-4 text-left f-14 roboto p-0">
                 Date of birth
               </div>
-              <div class="col-md-4 text-right f-14 roboto p-0">
+              <div class="col-md-8 text-right f-14 roboto p-0">
                 {{selectedClientData.dateOfBirth}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
-              <div class="col-md-8 text-left f-14 roboto p-0">
+              <div class="col-md-4 text-left f-14 roboto p-0">
                 PAN
               </div>
-              <div class="col-md-4 text-right f-14 roboto p-0">
+              <div class="col-md-8 text-right f-14 roboto p-0">
                 {{selectedClientData.pan?selectedClientData.pan:'-'}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
-              <div class="col-md-8 text-left f-14 roboto p-0">
+              <div class="col-md-4 text-left f-14 roboto p-0">
                 Mobile number
               </div>
-              <div class="col-md-4 text-right f-14 roboto p-0">
+              <div class="col-md-8 text-right f-14 roboto p-0">
                 {{selectedClientData.mobileList.length>0?selectedClientData.mobileList[0].mobileNo:'-'}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">
-              <div class="col-md-8 text-left f-14 roboto p-0">
+              <div class="col-md-4 text-left f-14 roboto p-0">
                 Email
               </div>
-              <div class="col-md-4 text-right f-14 roboto p-0">
+              <div class="col-md-8 text-right f-14 roboto p-0">
                 {{selectedClientData.emailList.length>0?selectedClientData.emailList[0].email:'-'}}
               </div>
             </div>
           </div>
+          <p class="m-0 pt-20 f-16 text-danger roboto pb-10">What is Aditya’s relationship with Rahul Jain?</p>
+          <div class="row">
+            <div class="col-md-3 pl-0">
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-select class="form-control">
+                    <mat-option value="option">Son</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-select class="form-control">
+                    <mat-option value="option">Male</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="showSuggestion && data.clientData.SuggestionList " class="pl-20">
-    <p class="f-16 mt-120 text-primitive">
-      Based on your profile, we believe, the following members could be part of your family...
-    </p>
-    <div class="row">
-      <div class="col-md-12 mamberDetailsTable pl-0">
-        <table [dataSource]="data.clientData.SuggestionList" class=" " id="table-low" mat-table>
 
-          <ng-container matColumnDef="details">
-            <th *matHeaderCellDef class="br" mat-header-cell> Member details</th>
-            <td *matCellDef="let element" class="br" mat-cell> {{element.displayName}} </td>
-          </ng-container>
+    <div *ngIf="showSuggestion && data.clientData.SuggestionList ">
+      <p class="f-16 mt-120 m-0 pb-10 roboto text-primitive f-400">
+        Based on your profile, we believe, the following members could be part of your family...
+      </p>
+      <div class="row">
+        <div class="col-md-12 pl-0 merge-client-family-member">
+          <table [dataSource]="data.clientData.SuggestionList" class=" " id="table-low" mat-table>
 
-
-          <ng-container matColumnDef="status">
-            <th *matHeaderCellDef class="br" mat-header-cell> Tax status</th>
-            <td *matCellDef="let element" class="br" mat-cell>
-              {{(element.clientType==1)?'Individual':(element.clientType)==2?'Minor':'Non-individual'}} </td>
-          </ng-container>
+            <ng-container matColumnDef="details">
+              <th *matHeaderCellDef class="br" mat-header-cell> Member details</th>
+              <td *matCellDef="let element" class="br" mat-cell> {{element.displayName}} </td>
+            </ng-container>
 
 
-          <ng-container matColumnDef="pan">
-            <th *matHeaderCellDef class="br" mat-header-cell> PAN</th>
-            <td *matCellDef="let element" class="br" mat-cell> {{element.pan}} </td>
-          </ng-container>
+            <ng-container matColumnDef="status">
+              <th *matHeaderCellDef class="br" mat-header-cell> Tax status</th>
+              <td *matCellDef="let element" class="br" mat-cell>
+                {{(element.clientType==1)?'Individual':(element.clientType)==2?'Minor':'Non-individual'}} </td>
+            </ng-container>
 
 
-          <ng-container matColumnDef="relation">
-            <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
-            <td *matCellDef="let element" class="br" mat-cell> Select </td>
-          </ng-container>
+            <ng-container matColumnDef="pan">
+              <th *matHeaderCellDef class="br" mat-header-cell> PAN</th>
+              <td *matCellDef="let element" class="br" mat-cell> {{element.pan}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="gender">
-            <th *matHeaderCellDef class="br" mat-header-cell> Gender</th>
-            <td *matCellDef="let element" class="br" mat-cell> Select </td>
-          </ng-container>
 
-          <ng-container matColumnDef="add">
-            <th *matHeaderCellDef class="br" mat-header-cell> Add</th>
-            <td *matCellDef="let element" class="text-primary br" mat-cell>
-              <button mat-raised-button class="br-0 text-inherit btn-primary mr-12">ADD
-              </button>
-            </td>
-          </ng-container>
+            <ng-container matColumnDef="relation">
+              <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
+              <td *matCellDef="let element" class="br" mat-cell> Select </td>
+            </ng-container>
 
-          <tr *matHeaderRowDef="displayedColumns1" mat-header-row></tr>
-          <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
-        </table>
+            <ng-container matColumnDef="gender">
+              <th *matHeaderCellDef class="br" mat-header-cell> Gender</th>
+              <td *matCellDef="let element" class="br" mat-cell> Select </td>
+            </ng-container>
 
+            <ng-container matColumnDef="add">
+              <th *matHeaderCellDef class="br" mat-header-cell> Add</th>
+              <td *matCellDef="let element" class="text-primary br" mat-cell>
+                <button mat-stroked-button class="br-0 add-merge-client btn-primary mr-12">ADD
+                </button>
+              </td>
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayedColumns1" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
+          </table>
+
+        </div>
       </div>
     </div>
+
   </div>
   <div class="bottom-fixed-50 wrapper-12">
     <div class="row">

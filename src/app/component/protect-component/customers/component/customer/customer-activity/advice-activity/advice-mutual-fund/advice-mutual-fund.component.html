@@ -62,7 +62,7 @@
         </ng-container>
 
         <ng-container matColumnDef="groupHeader">
-            <td class="br-grey text-primary text-center" [attr.colspan]="displayedColumns2.length" mat-cell
+            <td class="text-primary text-center b-0" [attr.colspan]="displayedColumns2.length" mat-cell
                 *matCellDef="let group">
                 {{ group.groupName }} </td>
         </ng-container>
@@ -82,9 +82,9 @@
         </ng-container>
 
         <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Current
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-right hide-arrow"> Current
                 value </th>
-            <td mat-cell *matCellDef="let element" class="br">
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{element.weight}} </div>
             </td>
         </ng-container>
