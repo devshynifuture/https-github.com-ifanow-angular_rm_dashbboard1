@@ -136,7 +136,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         } else {
           // Object.assign(data, responseData);
           data.genderString = UtilService.getGenderStringFromGenderId(data.genderId);
-          this.selectedClientData = data;
+          responseData.dateOfBirth = (responseData.dateOfBirth) ? this.datePipe.transform(responseData.dateOfBirth, 'dd/MM/yyyy') : '-'
+          this.selectedClientData = responseData;
           console.log('mergeclientFamilyMember this.dataSource.data ', this.dataSource.data);
 
         }

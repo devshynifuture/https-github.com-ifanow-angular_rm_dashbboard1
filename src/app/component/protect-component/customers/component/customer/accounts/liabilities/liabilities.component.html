@@ -365,7 +365,7 @@
 <div #liabilitiesTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td style="text-align: left;">
+            <!-- <td style="text-align: left;">
                 <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
             </td>
             <td style="text-align: right;">
@@ -374,6 +374,21 @@
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+            </td> -->
+
+
+            <td style="text-align: left;">
+                <img width="100px" *ngIf="details" [src]="details.profilePic">
+            </td>
+            <td style="text-align: right;">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(userInfo.name) ? userInfo.name : '-'}}</p>
+                <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
+                    {{(details) ? details.emailId : '-'}}</p>
+               
             </td>
         </tr>
 

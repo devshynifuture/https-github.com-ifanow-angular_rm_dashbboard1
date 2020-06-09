@@ -20,7 +20,7 @@ export class AllSipComponent implements OnInit {
   isLoading = false;
   parentId = AuthService.getUserInfo().parentId ? AuthService.getUserInfo().parentId : -1;
   @Input() mode;
-
+  @Input() data;
   @Output() changedValue = new EventEmitter();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -51,9 +51,9 @@ export class AllSipComponent implements OnInit {
     const obj = {
       limit: 20,
       offset: 0,
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     if(this.mode=='all')
     {
