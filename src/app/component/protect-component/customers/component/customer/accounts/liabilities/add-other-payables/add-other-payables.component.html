@@ -19,7 +19,7 @@
     <div formArrayName="getCoOwnerName">
         <div class="row" [ngClass]="{'pt-36': pointIndex>0}" *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8 pr-16" >{{pointIndex != 0?'Co-B' : 'B'}}orrower{{pointIndex != 0?pointIndex:''}}</h5>
+                <h5 class="m-0 pt-8 pr-16">{{pointIndex != 0?'Co-B' : 'B'}}orrower{{pointIndex != 0?pointIndex:''}}</h5>
             </div>
             <div class="pl-0" [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
@@ -161,7 +161,7 @@
     </div>
     <div class="row pt-40" *ngIf="this.show==false">
         <div class="col-md-5 text-right">
-            <p class="m-0 text-primitive f-16 c-p" (click)="showMore()"> + Add more [optional data] </p>
+            <p class="m-0 text-primitive f-14 c-p" (click)="showMore()"> + Add more [optional data] </p>
         </div>
         <div class="col-md-3">
 
@@ -170,7 +170,7 @@
     <div *ngIf="this.show==true">
         <div class="row pt-40">
             <div class="col-md-5 text-right">
-                <p class="m-0 text-primitive f-16 c-p" (click)="showLess()"> Show less </p>
+                <p class="m-0 text-primitive f-14 c-p" (click)="showLess()"> Show less </p>
             </div>
             <div class="col-md-3">
 
