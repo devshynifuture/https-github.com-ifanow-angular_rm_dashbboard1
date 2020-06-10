@@ -30,7 +30,7 @@ export class EnumDataService {
     { roleTypeId: 4, roleTypeName: 'Operations' },
   ];
 
-  assetTypeSortForms = [
+  cashflowAssetNaming = [
     {assetName: 'ASSETS', assetType: 1, assetShortName: 'Asset'},
     {assetName: 'LIABILITIES', assetType: 2, assetShortName: 'Li'},
     {assetName: 'LIFE_INSURANCE', assetType: 3, assetShortName: ''},
@@ -69,14 +69,8 @@ export class EnumDataService {
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
     private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
+      this.enumService.setAssetShortForms(this.cashflowAssetNaming);
   }
-
-  // clientRoleList = [
-  //   { clientRoleId: 1, clientRoleName: 'Mutual Fund (MF) only' },
-  //   { clientRoleId: 2, clientRoleName: 'MF + Multi asset' },
-  //   { clientRoleId: 3, clientRoleName: 'MF + Multi asset + Basic Plan' },
-  //   { clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan' },
-  // ];
 
   bankList: any = [];
   advisorId: any;
