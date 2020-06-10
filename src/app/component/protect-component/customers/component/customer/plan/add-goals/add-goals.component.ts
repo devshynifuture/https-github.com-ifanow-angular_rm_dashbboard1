@@ -4,6 +4,8 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {PlanService} from '../plan.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../customer.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-goals',
@@ -26,6 +28,7 @@ export class AddGoalsComponent implements OnInit {
     private eventService: EventService, 
     private planService: PlanService,
     private utilService: UtilService,
+    private peopleService: PeopleService,
   ) {
     let clientData = AuthService.getClientData();
     this.clientName = clientData.name;
@@ -52,17 +55,52 @@ export class AddGoalsComponent implements OnInit {
       error => this.eventService.showErrorMessage(error)
     )
 
-    let advisor_client_obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId
-    }
+    //EDIT:- this api is no longer working. shifting to new api
+    // let advisor_client_obj = {
+    //   advisorId: this.advisorId,
+    //   clientId: this.clientId
+    // }
 
-    this.planService.getListOfFamilyByClient(advisor_client_obj).subscribe((data)=>{
-      this.familyList = data.familyMembersList.sort((a, b) => {
-        return a.relationshipId - b.relationshipId;
-      });
-      this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
-    }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
+    // this.planService.getListOfFamilyByClient(advisor_client_obj).subscribe((data)=>{
+    //   this.familyList = data.familyMembersList.sort((a, b) => {
+    //     return a.relationshipId - b.relationshipId;
+    //   });
+    //   this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
+    // }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
+
+    this.getFamilyMembersList();
+  }
+
+
+
+  getFamilyMembersList() {
+    const obj = {
+      clientId: this.clientId,
+    };
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          this.familyList = data;
+        } else {
+          this.familyList = [];
+        }
+        this.familyList = this.familyList.map(fam => {
+          return {
+            ...fam,
+            relationshipId: fam.familyMemberType
+          }
+        })
+        this.familyList = this.familyList.sort((a, b) => {
+          return a.relationshipId - b.relationshipId;
+        });
+        this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
+      },
+      err => {
+        this.familyList = [];
+        this.eventService.openSnackBar(err, "Dismiss")
+        console.error(err);
+      }
+    );
   }
 
   // Set questionnaires for all the and divide the goal set into two rows
