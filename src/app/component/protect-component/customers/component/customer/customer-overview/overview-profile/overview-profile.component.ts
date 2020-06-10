@@ -313,9 +313,11 @@ export class OverviewProfileComponent implements OnInit {
 
       SuggestionList = SuggestionList.filter(element => {
         if (element.mobileNo && element.mobileNo == this.clientOverviewData.mobileNo) {
+          element['addedFlag'] = false;
           return element;
         }
         if (element.email && element.email == this.clientOverviewData.email) {
+          element['addedFlag'] = false;
           return element;
         }
       })

@@ -252,9 +252,10 @@
             <ng-container matColumnDef="add">
               <th *matHeaderCellDef class="br" mat-header-cell> Add</th>
               <td *matCellDef="let element;index as i" class="text-primary br" mat-cell>
-                <button mat-stroked-button (click)="saveSuggestedFamilyMember(i,element)"
-                  class="br-0 add-merge-client btn-primary mr-12">ADD
+                <button *ngIf="element.addedFlag==false" mat-stroked-button
+                  (click)="saveSuggestedFamilyMember(i,element)" class="br-0 add-merge-client btn-primary mr-12">ADD
                 </button>
+                <p *ngIf="element.addedFlag" class="txt-primary">Added</p>
               </td>
             </ng-container>
 
