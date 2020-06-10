@@ -155,10 +155,10 @@
           </div>
           <p class="m-0 pt-20 f-16 text-danger roboto pb-10">What is {{selectedClientData.displayName}} relationship
             with {{data.clientData.client.name}}?</p>
-          <div [formGroup]="selectedClientFormGroup" class="row">
+          <div [formGroup]="selectedClientFormGroup" class="row pt-20">
             <div class="col-md-3 pl-0">
               <div class="form-group">
-                <p>Relation</p>
+                <p class="m-0 roboto f-400 pb-10">Relation</p>
                 <mat-form-field>
                   <mat-select (selectionChange)="changeGender($event)" formControlName="relation" class="form-control">
                     <mat-option value='' disabled>Select option</mat-option>
@@ -169,7 +169,7 @@
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <p>Gender</p>
+                <p class="m-0 roboto f-400 pb-10">Gender</p>
                 <mat-form-field>
                   <mat-select formControlName="gender" class="form-control">
                     <mat-option value='' disabled>Select option</mat-option>
