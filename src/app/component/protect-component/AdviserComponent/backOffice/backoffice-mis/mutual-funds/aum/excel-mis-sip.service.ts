@@ -119,7 +119,7 @@ export class ExcelMisSipService {
                         catElement.weightInPerc
                     ]);
 
-                    if (catElement.subCatList.length !== 0) {
+                    if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
                                 currentRowPos = currentRowPos + index1 + 2;
@@ -137,7 +137,7 @@ export class ExcelMisSipService {
                                     subCatElement.weightInPerc
                                 ]);
 
-                                if (subCatElement.applicantList.length !== 0) {
+                                if (subCatElement && subCatElement.hasOwnProperty('applicantList') && subCatElement.applicantList.length !== 0) {
                                     if (!excluded.applicantList) {
                                         if (subCatElement.applicantList !== 0) {
                                             currentRowPos = currentRowPos + catElement.subCatList.length + 1;
@@ -201,7 +201,7 @@ export class ExcelMisSipService {
                     }
 
                 } else {
-                    if (catElement.subCatList.length !== 0) {
+                    if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
                                 currentRowPos = currentRowPos + index1 + 2;
@@ -330,7 +330,7 @@ export class ExcelMisSipService {
                                                 schemeElement.weightInPerc,
                                             ]);
 
-                                            if (schemeElement.applicantList.length !== 0) {
+                                            if (schemeElement && schemeElement.hasOwnProperty('applicantList') && schemeElement.applicantList.length !== 0) {
                                                 if (catElement.subCatList.length !== 0) {
                                                     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
                                                 } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
@@ -742,7 +742,7 @@ export class ExcelMisSipService {
                     ]);
                 }
 
-                if (applicantElement.categoryList.length !== 0) {
+                if (applicantElement && applicantElement.hasOwnProperty('categoryList') && applicantElement.categoryList.length !== 0) {
                     if (!excluded.categoryList) {
                         applicantElement.categoryList.forEach((categoryElement, index2) => {
                             currentRowPos = currentRowPos + arrayOfExcelData.length + 1;

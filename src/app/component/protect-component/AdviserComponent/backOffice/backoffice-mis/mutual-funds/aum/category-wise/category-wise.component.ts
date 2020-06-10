@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AumComponent } from '../aum.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 @Component({
   selector: 'app-category-wise',
   templateUrl: './category-wise.component.html',
@@ -90,7 +91,7 @@ export class CategoryWiseComponent implements OnInit {
   reverse3=true;
   reverse4=true;
   constructor(
-    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent
+    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent,private mfService:MfServiceService
   ) { }
   selectedCategory;
   ngOnInit() {
@@ -275,7 +276,7 @@ export class CategoryWiseComponent implements OnInit {
       dataValue = {
         index: index1 + 1,
         categoryName: element.name,
-        totalAum: element.totalAum,
+        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         weightInPerc: element.weightInPercentage,
         subCatList: []
       };
@@ -292,7 +293,7 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
             name: element.name,
-            totalAum: element.totalAum,
+            totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             schemeList: []
           });
@@ -304,7 +305,7 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: element.totalAum,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             applicantList: []
           });
@@ -315,9 +316,9 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory]
             .schemeList[index].applicantList.push({
               name: element.name,
-              balanceUnit: element.balanceUnit,
+              balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
               folioNumber: element.folioNumber,
-              totalAum: element.totalAum,
+              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
               weightInPerc: element.weightInPercentage
             });
         });
@@ -361,9 +362,9 @@ export class CategoryWiseComponent implements OnInit {
     applicantList.forEach(element => {
       newarr.push({
         field1: element.name,
-        field2: element.balanceUnit,
+        field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field3: element.folioNumber,
-        field4: element.totalAum,
+        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field5: element.weightInPerc
       });
     })
