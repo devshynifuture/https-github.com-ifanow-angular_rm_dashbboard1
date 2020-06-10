@@ -9,7 +9,8 @@
 .advice-retirment-account,
 .all-retirement-assest,
 .advice-smallsaving-scheme,
-.all-advice-smallsaving-scheme {
+.all-advice-smallsaving-scheme,
+.all-advice-stock {
   #table-low .mat-sort-header-button {
     white-space: nowrap;
   }
@@ -40,3 +41,49 @@
 //     }
 //   }
 // }
+#ui-activity {
+  .vertical-menu {
+    position: fixed;
+    display: block !important;
+    width: 16.70%;
+  }
+
+  li {
+    color: #212121;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    padding: 8px 12px 4px;
+    text-align: left;
+    border-right: 0px !important;
+  }
+
+  li:after {
+    display: none;
+  }
+
+  a {
+    padding: 8px;
+  }
+}
+
+@media(max-width:1142px) {
+
+  .cash-flow-advice,
+  .advice-mutual-funds,
+  .advice-stock,
+  .advice-fixed-income,
+  .advice-fix-desposit,
+  .advice-real-estate,
+  .advice-cash-and-hand,
+  .advice-commodities,
+  .advice-retirment-account,
+  .all-retirement-assest,
+  .advice-smallsaving-scheme,
+  .all-advice-smallsaving-scheme,
+  .all-advice-stock {
+    #table-low .mat-sort-header-button {
+      white-space: initial !important;
+    }
+  }
+}

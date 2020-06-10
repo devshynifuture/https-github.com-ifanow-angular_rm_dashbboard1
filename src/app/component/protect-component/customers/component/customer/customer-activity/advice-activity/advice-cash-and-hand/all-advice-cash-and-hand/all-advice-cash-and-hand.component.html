@@ -45,8 +45,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openCashAndBank('')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new bank account</button>
+            <button mat-stroked-button class="btn-primary br-0" (click)="openCashAndBank('')">Suggest new bank
+                account</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="bankAccDataSource"
@@ -146,8 +146,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openCashInHand(null)"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new cash in hand</button>
+            <button mat-stroked-button class="btn-primary br-0" (click)="openCashInHand(null)">Suggest new cash in
+                hand</button>
         </div>
     </div>
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="cashInHandDataSource"
