@@ -49,6 +49,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   rows: FormArray = this.fb.array([]);
   form: FormGroup = this.fb.group({ 'clients': this.rows });
   selectedClientFormGroup: FormGroup
+  requiredRefresh: boolean = false;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
@@ -169,7 +170,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     if (data != 'close') {
       this.enumDataService.searchClientList();
     }
-    this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState((data == 'close' && this.requiredRefresh == false) ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
   saveFamilyMembers() {
@@ -191,7 +192,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
         console.log(data),
-          this.close(data);
+          this.requiredRefresh = true
+        this.close(data);
         this.barButtonOptions.active = false;
       },
       err => {
@@ -214,9 +216,12 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     };
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
-        console.log(data)
+        console.log(data);
+        clientData.addedFlag = true;
+        this.requiredRefresh = true;
       },
       err => {
+        clientData.addedFlag = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     )
