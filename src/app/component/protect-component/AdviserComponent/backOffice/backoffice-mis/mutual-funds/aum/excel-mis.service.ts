@@ -118,7 +118,7 @@ export class ExcelMisService {
                         catElement.weightInPerc
                     ]);
 
-                    if (catElement.subCatList.length !== 0) {
+                    if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
                                 currentRowPos = currentRowPos + arrayOfExcelData.length + 1;
@@ -185,7 +185,7 @@ export class ExcelMisService {
                     }
 
                 } else {
-                    if (catElement.subCatList.length !== 0) {
+                    if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
                                 currentRowPos = currentRowPos + arrayOfExcelData.length + 1;

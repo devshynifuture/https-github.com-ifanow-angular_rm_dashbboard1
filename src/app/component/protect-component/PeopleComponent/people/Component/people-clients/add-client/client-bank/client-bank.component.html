@@ -88,18 +88,20 @@
         <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
             <h5 class="m-0">Account type</h5>
         </div>
-        <div class="col-md-8 p-0 account-type mob-pl-10 mob-pr-10">
-            <mat-radio-group class="radioWidth110" formControlName="accType" aria-label="Select an option">
-                <mat-radio-button value="1"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1','text-primary': bankForm.get('accType').value=='1','text-custom':bankForm.get('accType').value!='1'}"
-                    class="bu-primary">Savings</mat-radio-button>
-                <mat-radio-button value="2"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2','text-primary': bankForm.get('accType').value=='2','text-custom':bankForm.get('accType').value!='2'}"
-                    class="borderRadio">Current</mat-radio-button>
-                <mat-radio-button value="3"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3','text-primary': bankForm.get('accType').value=='3','text-custom':bankForm.get('accType').value!='3'}"
-                    class="borderRadio pr-8">Cash credit</mat-radio-button>
-            </mat-radio-group>
+        <div class="col-md-4 p-0  mob-pl-10 mob-pr-10">
+            <div class="form-group ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select formControlName="accType" class="form-control">
+                        <mat-option value='' disabled>Select account type</mat-option>
+                        <mat-option value='1'>Saving</mat-option>
+                        <mat-option value='2'>Current</mat-option>
+                        <mat-option value='3'>Cash credit</mat-option>
+                        <mat-option value='4'>NRE</mat-option>
+                        <mat-option value='5'>NRO</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
     <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
