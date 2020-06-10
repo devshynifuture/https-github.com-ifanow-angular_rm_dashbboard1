@@ -39,10 +39,10 @@ export class OtherPayablesComponent implements OnInit {
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-  fragmentData = {isSpinner : false};
+  fragmentData = { isSpinner: false };
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('tableEl', {static: false}) tableEl;
-  @ViewChild('otherPayablesTemp', {static: false}) otherPayablesTemp: ElementRef;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('otherPayablesTemp', { static: false }) otherPayablesTemp: ElementRef;
   filterData: MatTableDataSource<any>;
   filterForOtherPayables: any;
   personalProfileData: any;
@@ -51,19 +51,28 @@ export class OtherPayablesComponent implements OnInit {
   myFiles: any;
   isLoadingUpload: boolean = false;
   clientData: any;
+  details: any;
+  getOrgData: any;
+  userInfo: any;
+  reportDate: Date;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
-    public dialog: MatDialog,private excel :ExcelGenService,private pdfGen:PdfGenService, private fileUpload : FileUploadServiceService) {
- 
-      this.clientData = AuthService.getClientData()
-    }
+    public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private fileUpload: FileUploadServiceService) {
+
+    this.clientData = AuthService.getClientData()
+  }
   ngAfterViewInit(): void {
-      this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
   }
   ngOnInit() {
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
 
     if (!this.payableData) {
       this.noData = 'No Data Found';
@@ -125,19 +134,21 @@ export class OtherPayablesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let rows = this.tableEl._elementRef.nativeElement.rows;
     const data = this.excel.generateExcel(rows, tableTitle);
-    if(data){
+    if (data) {
       this.fragmentData.isSpinner = false;
     }
   }
-  // generatePdf() {
-  //   this.fragmentData.isSpinner = true;
-  //   let para = document.getElementById('template');
-  //   this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-  // }
-  generatePdf(tableTitle){
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+  generatePdf() {
+    this.fragmentData.isSpinner = true;
+    let para = document.getElementById('template');
+    // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
+    this.util.htmlToPdf(para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '');
   }
+
+  // generatePdf(tableTitle){
+  //   let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   this.pdfGen.generatePdf(rows, tableTitle);
+  // }
   fetchData(value, fileName) {
     this.isLoadingUpload = true
     let obj = {
@@ -176,10 +187,10 @@ export class OtherPayablesComponent implements OnInit {
     } else {
       this.eventService.openSnackBar("No data found", "Dismiss")
     }
-   
+
   }
 
-  getStatusId(data){
+  getStatusId(data) {
     data.forEach(obj => {
       if (obj.dateOfRepayment < new Date()) {
         obj.statusId = 'CLOSED';
@@ -205,7 +216,7 @@ export class OtherPayablesComponent implements OnInit {
   }
 
   getOtherPayablesRes(data) {
-    if(data){
+    if (data) {
       console.log(data);
       this.isLoading = false;
       this.dataSource = new MatTableDataSource(data);
@@ -213,7 +224,7 @@ export class OtherPayablesComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.OtherDataChange.emit(this.dataSource);
       this.getStatusId(this.dataSource.data)
-      this.totalAmountBorrowed =0;
+      this.totalAmountBorrowed = 0;
       this.totalAmountOutstandingBalance = 0;
       this.dataSource.data.forEach(element => {
         this.totalAmountBorrowed += element.amountBorrowed;
@@ -221,7 +232,7 @@ export class OtherPayablesComponent implements OnInit {
       this.dataSource.data.forEach(element => {
         this.totalAmountOutstandingBalance += element.outstandingBalance;
       });
-    }else{
+    } else {
       this.OtherDataChange.emit(data);
       this.dataSource.data = []
     }
@@ -286,7 +297,7 @@ export class OtherPayablesComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-       
+
       }
     );
   }
@@ -304,7 +315,7 @@ export class OtherPayablesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          
+
         }
         rightSideDataSub.unsubscribe();
       }

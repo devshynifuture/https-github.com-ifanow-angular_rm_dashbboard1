@@ -155,19 +155,17 @@
             </ng-container>
             <ng-container matColumnDef="icons" sticky>
                 <th mat-header-cell *matHeaderCellDef class=""></th>
-                <td mat-cell *matCellDef="let element" class="c-p">
-                    <div *ngIf="!isLoading">
+                <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="c-p text-center">
 
+                    <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
 
-                        <img class="c-p" [matMenuTriggerFor]="menu4" src="/assets/images/svg/dot-menu.svg">
+                    <mat-menu #menu4="matMenu">
+                        <button mat-menu-item (click)="open('addOtherPayables',element)">Edit</button>
+                        <button mat-menu-item (click)="openDetailedView(element)">Detailed view</button>
+                        <!-- <button mat-menu-item>Activity</button> -->
+                        <button mat-menu-item (click)="deleteModal('OTHER PAYABLES',element)">Delete</button>
+                    </mat-menu>
 
-                        <mat-menu #menu4="matMenu">
-                            <button mat-menu-item (click)="open('addOtherPayables',element)">Edit</button>
-                            <button mat-menu-item (click)="openDetailedView(element)">Detailed view</button>
-                            <!-- <button mat-menu-item>Activity</button> -->
-                            <button mat-menu-item (click)="deleteModal('OTHER PAYABLES',element)">Delete</button>
-                        </mat-menu>
-                    </div>
                 </td>
                 <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
             </ng-container>
@@ -193,24 +191,60 @@
 <div #otherPayablesTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td style="text-align: left;">
-                <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
+            <td style="vertical-align: top;">
+                <img style="width: 300px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+
             </td>
-            <td style="text-align: right;">
+
+            <td>
+                <table style="float: right;">
+                    <tr *ngIf="userInfo">
+                        <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
+                            {{(userInfo.name) ? userInfo.name : '-'}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="userInfo">
+                        <td style="font-size: 14px; text-align: right;">
+                            <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="userInfo">
+                        <td style="font-size: 14px; text-align: right;">
+                            <span style="font-weight: 500;">Email Id:</span> {{(details) ? details.emailId : '-'}}
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <td style="font-size: 14px; text-align: right;">
+                            <span style="font-weight: 500;">Report as on:</span> {{reportDate | date:'dd-MMM-yyyy' }}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+
+            <!-- <td style="text-align: right;">
                 <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
-                    {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
+                    {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}} </p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
-            </td>
+            </td> -->
         </tr>
 
-        <tr>
-            <td colspan="2" style="padding: 10px;"></td>
-        </tr>
+
         <tr>
             <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Other payables</td>
+        </tr>
+        <tr>
+            <td colspan="11">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+            </td>
         </tr>
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">

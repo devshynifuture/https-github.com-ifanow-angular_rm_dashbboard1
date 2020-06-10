@@ -104,7 +104,7 @@
                             <div class="col-md-6 d-flex align-items-center">
                                 <p class="f-16 mb-4 text-muted">Filter Options</p>
                             </div>
-                            <div class="col-md-6 pr-0 text-right mb-10">
+                            <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isLoading">
                                 <button (click)="amcWise('Allsip','all')">View all Sip</button>
                             </div>
 
@@ -218,7 +218,7 @@
                                     <div class="bb-1 ">
                                         <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90
                                             days </p>
-                                        <div class="col-md-6 pr-0 text-right mb-10">
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiringLoading">
                                             <button (click)="amcWise('Allsip','expiring')">View all</button>
                                         </div>
                                     </div>
@@ -259,7 +259,7 @@
                                     <div class="bb-1">
                                         <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90
                                             days </p>
-                                        <div class="col-md-6 pr-0 text-right mb-10">
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiredLoading">
                                             <button (click)="amcWise('Allsip','expired')">View all</button>
                                         </div>
                                     </div>
