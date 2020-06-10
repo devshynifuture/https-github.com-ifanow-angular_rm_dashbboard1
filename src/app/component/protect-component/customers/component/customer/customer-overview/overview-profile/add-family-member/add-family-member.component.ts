@@ -80,7 +80,7 @@ export class AddFamilyMemberComponent implements OnInit {
       familyMemberList: new FormArray([])
     });
     this.advisorId = AuthService.getAdvisorId();
-    this.clientData = AuthService.getClientData();
+    this.clientData = AuthService.getUserInfo();
     if ((this.data.client.martialStatusId == 1 || this.data.client.martialStatusId == 0) && this.data.client.clientType == 1) {
       if (this.data && this.data.client && this.data.client.duplicateFlag == false) {
         const genderId = this.data.client.genderId;
