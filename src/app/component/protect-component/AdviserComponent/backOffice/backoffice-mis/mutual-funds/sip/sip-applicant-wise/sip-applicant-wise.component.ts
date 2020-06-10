@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { FormBuilder } from '@angular/forms';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
 @Component({
   selector: 'app-sip-applicant-wise',
   templateUrl: './sip-applicant-wise.component.html',
@@ -76,7 +77,7 @@ export class SipApplicantWiseComponent implements OnInit {
   applicantListArr: any[];
   caesedForm: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService) { }
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService,private eventService:EventService) { }
 
   ngOnInit() {
     this.caesedForm = this.fb.group({
@@ -207,6 +208,25 @@ export class SipApplicantWiseComponent implements OnInit {
       schemeList: false,
       schemeFolioList: false
     });
+  }
+  addCeasesdDate(sip, investor, date){
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+       console.log(data);
+      //  investor.value.splice(investor.value.indexOf(sip), 1);
+      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
+       
+      }
+    )
+
   }
   exportToExcelSheet(choice, index) {
     switch (choice) {
