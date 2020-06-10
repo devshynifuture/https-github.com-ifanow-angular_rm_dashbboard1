@@ -12,7 +12,7 @@
         </i>
     </div>
 </div>
-<div class="pb-12" [formGroup]="bankForm">
+<div [ngClass]="{'pb-90': fieldFlag==undefined}" class="pb-12" [formGroup]="bankForm">
     <h4 *ngIf="userData.clientType==3" class="f-500 text-black pt-20 pl-20 m-0">Bank Company details</h4>
     <div [ngClass]="{'pt-90': fieldFlag==undefined}" class="row pt-44">
         <!-- vaibhav -->
