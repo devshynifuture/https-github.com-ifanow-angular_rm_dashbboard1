@@ -4,6 +4,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-amc-wise',
@@ -79,7 +80,7 @@ export class AmcWiseComponent implements OnInit {
   isLoadingApplicant: boolean;
   applicationList: any[];
 
-  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService) { }
+  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService,private mfService:MfServiceService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -140,7 +141,6 @@ export class AmcWiseComponent implements OnInit {
       err => this.getFilerrorResponse(err)
     )
   }
-
   exportToExcelSheet(choice, index, amcIndex) {
     switch (choice) {
       case 'amc-wise':
@@ -162,9 +162,9 @@ export class AmcWiseComponent implements OnInit {
     applicantList.forEach(element => {
       newArray.push({
         field1: element.name,
-        field2: element.balanceUnit,
+        field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field3: element.folioNumber,
-        field4: element.totalAum,
+        field4:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field5: element.weightInPerc
       })
     });
@@ -182,7 +182,7 @@ export class AmcWiseComponent implements OnInit {
         element.schemeList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'amc-wise-aum-mis', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       applicantList: false
@@ -190,7 +190,10 @@ export class AmcWiseComponent implements OnInit {
   }
 
   amcWiseExcelReport() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'category-wise-aum-mis', 'category-wise-aum-mis', {
+    // this.arrayOfExcelData.forEach(element => {
+    //   element.totalAum =this.mutualFundRoundAndFormat(element.totalAum, 0)
+    // });
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'amc-wise-aum-mis', 'amc-wise-aum-mis', {
       amcList: false,
       schemeList: false,
       applicantList: false
@@ -275,7 +278,7 @@ export class AmcWiseComponent implements OnInit {
           this.arrayOfExcelData[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: element.totalAum,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             applicantList: []
           });
@@ -286,9 +289,9 @@ export class AmcWiseComponent implements OnInit {
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedAmc].schemeList[index].applicantList.push({
             name: element.investorName,
-            balanceUnit: element.balanceUnit,
+            balanceUnit:this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
             folioNumber: element.folioNumber,
-            totalAum: element.totalAum,
+            totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage
           });
         });
@@ -301,7 +304,7 @@ export class AmcWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.name,
-        totalAum: element.totalAum,
+        totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         weightInPerc: element.weightInPercentage,
         schemeList: [],
       });

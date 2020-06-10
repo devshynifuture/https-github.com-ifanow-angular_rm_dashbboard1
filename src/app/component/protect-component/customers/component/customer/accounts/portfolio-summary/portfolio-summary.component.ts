@@ -6,6 +6,8 @@ import { CustomerService } from '../../customer.service';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -70,18 +72,21 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   cashFlowFG:FormGroup;
   subscription = new Subscription();
-  
+  noCashflowData: boolean = false;
+
   finalTotal: number;
   cashflowFlag: boolean;
   letsideBarLoader: boolean;
   summaryFlag: boolean;
   allBanks:any[] = [];
   families:any[] = [];
+  cashFlowDescNaming:any[] = [];
   constructor(
     public eventService: EventService, 
     private cusService: CustomerService,
     private datePipe: DatePipe,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private enumService: EnumServiceService,
   ) {}
 
   ngOnInit() {
@@ -97,6 +102,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.calculateTotalSummaryValues();
     this.subscribeToCashflowChanges();
+    this.cashFlowDescNaming = this.enumService.getAssetNamings();
   }
 
   subscribeToCashflowChanges(){
@@ -209,6 +215,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.cashflowFlag = false;
         this.filterCashFlow = Object.assign({}, data);
         this.cashFlowViewDataSource = [];
+        if(data.income.length === 0 && data.expense.length === 0) {
+          this.noCashflowData = true;
+        } 
         this.incomeList = [];
         this.expenseList = [];
         this.createFilterList();
@@ -216,6 +225,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       },
       err => {
         this.cashFlowViewDataSource = []
+        this.noCashflowData = true;
       }
     );
   }
@@ -545,6 +555,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         data: dataSeriesList
       }]
     });
+  }
+
+  getShortForm(elem) {
+    let name = this.cashFlowDescNaming.find(asset => asset.assetType === elem.assetType);
+    if(name) {
+      return name.assetName;
+    }
+    return '';
   }
 
   ngOnDestroy(){

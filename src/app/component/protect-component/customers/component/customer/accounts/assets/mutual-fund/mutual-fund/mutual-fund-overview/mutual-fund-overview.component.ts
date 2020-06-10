@@ -545,10 +545,9 @@ export class MutualFundOverviewComponent implements OnInit {
 
   generatePdf() {
     this.svg = this.chart.getSVG()
-    console.log(this.svg)
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Test', false, this.fragmentData, 'showPieChart', this.svg)
+    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, 'showPieChart', this.svg)
     console.log('return value ====', this.returnValue)
   }
   getReportWiseCalculation(data) {

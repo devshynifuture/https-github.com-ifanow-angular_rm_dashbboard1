@@ -112,7 +112,7 @@ export class ClientBankComponent implements OnInit {
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
       accNumber: [data.accountNumber, [Validators.required]],
-      accType: [(data.accountType) ? data.accountType : '1', [Validators.required]],
+      accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
       branchPinCode: [(data.address) ? data.address.pinCode : '', [Validators.required]],

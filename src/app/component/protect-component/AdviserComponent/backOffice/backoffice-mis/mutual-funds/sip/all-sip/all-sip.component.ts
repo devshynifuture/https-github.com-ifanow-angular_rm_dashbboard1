@@ -4,6 +4,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from '../../../../../../../../Data-service/event.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-all-sip',
@@ -24,11 +25,13 @@ export class AllSipComponent implements OnInit {
   @Output() changedValue = new EventEmitter();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   constructor(
     private backoffice: BackOfficeService,
     private sip: SipComponent,
-    private eventService: EventService
+    private eventService: EventService,
+    private excelGen: ExcelGenService
   ) { }
 
   ngOnInit() {
@@ -43,7 +46,11 @@ export class AllSipComponent implements OnInit {
     }
     this.getAllSip();
   }
+  Excel(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const data = this.excelGen.generateExcel(rows, tableTitle);
 
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
