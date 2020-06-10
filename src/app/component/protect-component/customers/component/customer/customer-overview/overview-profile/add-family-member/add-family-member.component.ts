@@ -39,6 +39,7 @@ export class AddFamilyMemberComponent implements OnInit {
   typeOfFamilyMemberAdd;
   selectedCount = 0;
   step = 1;
+  clientData: any;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
@@ -79,6 +80,7 @@ export class AddFamilyMemberComponent implements OnInit {
       familyMemberList: new FormArray([])
     });
     this.advisorId = AuthService.getAdvisorId();
+    this.clientData = AuthService.getClientData();
     if ((this.data.client.martialStatusId == 1 || this.data.client.martialStatusId == 0) && this.data.client.clientType == 1) {
       if (this.data && this.data.client && this.data.client.duplicateFlag == false) {
         const genderId = this.data.client.genderId;

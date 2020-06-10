@@ -115,7 +115,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
-    this.role = AuthService.getUserRoleType().roleName;
     this.onResize();
     this.enumDataService.searchClientList();
     this.enumDataService.searchClientAndFamilyMember();
@@ -171,6 +170,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         if (data && data.hasOwnProperty('profilePic')) {
           AuthService.setProfilePic(data.profilePic);
           AuthService.setUserRoleType(data.role || {});
+          this.role = AuthService.getUserRoleType().roleName;
           this.roleObj = data.role || {};
         } else {
           AuthService.setProfilePic('/assets/images/svg/comment-icon.svg')
