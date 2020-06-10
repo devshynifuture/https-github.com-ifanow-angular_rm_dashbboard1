@@ -80,13 +80,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   summaryFlag: boolean;
   allBanks:any[] = [];
   families:any[] = [];
+  cashFlowDescNaming:any[] = [];
   constructor(
     public eventService: EventService, 
     private cusService: CustomerService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private enumService: EnumServiceService,
-    private enumDataService: EnumDataService,
   ) {}
 
   ngOnInit() {
@@ -102,7 +102,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.calculateTotalSummaryValues();
     this.subscribeToCashflowChanges();
-    this.enumDataService.getDataForSubscriptionEnumService();
+    this.cashFlowDescNaming = this.enumService.getAssetNamings();
   }
 
   subscribeToCashflowChanges(){
@@ -558,6 +558,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   getShortForm(elem) {
+    let name = this.cashFlowDescNaming.find(asset => asset.assetType === elem.assetType);
+    if(name) {
+      return name.assetName;
+    }
     return '';
   }
 

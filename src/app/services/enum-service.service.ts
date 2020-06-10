@@ -24,6 +24,15 @@ export class EnumServiceService {
     minorTaxList: [],
   };
 
+  private cashflowAssetNaming:any[] = []
+
+  setAssetShortForms(data){
+    this.cashflowAssetNaming = data;
+  }
+
+  getAssetNamings(){
+    return this.cashflowAssetNaming;
+  }
 
   public addToGlobalEnumData(data) {
     console.log(data, 'check data variable fee 2');
