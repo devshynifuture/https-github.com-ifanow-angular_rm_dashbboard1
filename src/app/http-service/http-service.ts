@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 // import 'rxjs/Rx';
@@ -177,18 +177,21 @@ export class HttpService {
       });
   }
 
+  percentDone:any;
+  callEvent:any = 'events'
   putExternal(url: string, body, options?): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders()
-        // .set('authToken', this._userService.getToken())
-        .set('Content-Type', 'application/json')
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      reportProgress: true,
+      observe: this.callEvent
     };
     if (options != undefined) {
       httpOptions = options;
     }
-
+console.log(HttpEventType.UploadProgress,"HttpEventType.UploadProgress");
+    
     return this._http
-      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable);
+      .put<any>(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable);
   }
 
   delete(url: string, body, options?): Observable<any> {

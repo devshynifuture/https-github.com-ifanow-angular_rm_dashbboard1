@@ -292,7 +292,8 @@
                             <!-- <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>{{singlePortfolioCategory.categoryName}}</th> -->
                             <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>Category name</th>
                             <td *matCellDef="let element" class="br" mat-cell>
-                                <div class="bar">{{element.scripName}} </div>
+                                <div class="bar"  *ngIf="element.stockType != 1">{{element.scripName}} </div>
+                                <div class="bar" *ngIf="element.stockType == 1">{{'Portfolio'}}</div>
                             </td>
                             <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell style="background-color: #fff !important;"> Total
                             </th>
@@ -312,7 +313,9 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">{{element.balanceShares}}</div>
+                                <div class="bar" *ngIf="element.stockType == 1">-</div>
+                                <div class="bar" *ngIf="element.stockType == 3">{{element.balanceShares}}</div>
+                                <div class="bar" *ngIf="element.stockType == 2">{{element.transactionOrHoldingSummaryList[0].quantity}}</div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -374,7 +377,7 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar"><span >{{element.absoluteReturn}} {{element.absoluteReturn?'%':''}}</span></div>
+                                <div class="bar"><span >{{element.absoluteReturn}}{{element.absoluteReturn?'%':''}}</span></div>
                             </td>
                             <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
                                 ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
