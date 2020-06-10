@@ -10,7 +10,8 @@
                 <div class="col-md-8 d-flex align-items-center">
                     <h3 class="m-0">Mutual Fund - AUM Report</h3>
                 </div>
-                <div class="col-md-4 text-right" *ngIf="parentId !== 0">
+                <!-- *ngIf="parentId !== 0" -->
+                <div class="col-md-4 text-right" >
                     <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                         {{viewMode}}
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
@@ -219,7 +220,7 @@
                         <div class="col-md-12 aumtabs p-0 mt-20 " id="mistabs2">
                             <mat-tab-group class="h-300 bg-white borderLine skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <mat-tab label="Category ">
-                                    <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">TOP CATEGORY</h6>
+                                    <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Category</h6>
                                     <div class="b-white ">
                                         <div *ngFor="let item of category" class="row bb ">
                                             <div class="bar col-md-7 p-0 relClass">

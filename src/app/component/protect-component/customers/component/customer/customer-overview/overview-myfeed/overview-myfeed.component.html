@@ -82,7 +82,7 @@
                     <div class="wrapperBox">
                         <div class="row" #portFolioSection>
                             <div class="col-md-12"
-                                *ngIf="tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData">
+                                *ngIf="tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData && !tabsLoaded.portfolioData.isLoading">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="col-md-12"
-                                *ngIf="!(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData)">
+                                *ngIf="!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
 
                                 <div class="borderChatBoxEmpty bg-white">

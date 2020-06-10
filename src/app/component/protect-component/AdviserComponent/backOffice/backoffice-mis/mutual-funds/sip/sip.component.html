@@ -12,9 +12,9 @@
                 </div>
                 <div *ngIf="parentId !== 0" class="col-md-4 text-right ">
                     <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
-            {{viewMode}}
-            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-          </button>
+                        {{viewMode}}
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+                    </button>
                     <mat-menu #menu="matMenu">
                         <div *ngFor="let item of arnRiaList">
                             <button (click)="changeArnRiaValue(item)" mat-menu-item>{{item.number}}</button>
@@ -34,8 +34,8 @@
                                             <div class="col-md-12 p-0">
                                                 <h1 class="  text-diff f-44 f-300 pt-32">
                                                     <span>
-                            {{(isLoading) ? '' :((sipCount) ? sipCount.totalAmountInWords : '0')}}
-                          </span>
+                                                        {{(isLoading) ? '' :((sipCount.totalAmountInWords) ? sipCount.totalAmountInWords : 0)}}
+                                                    </span>
                                                 </h1>
                                                 <p class="f-16 pt-4 text-diff" *ngIf="!isLoading">TOTAL SIP BOOK</p>
                                             </div>
@@ -51,8 +51,8 @@
                                                 <div class="pl-12">
                                                     <h1 class="relClass f-24 text-diff mb-0 pb-8">
                                                         <span>
-                              {{(isLoading) ? '' : ((sipCount) ? sipCount.totalCount : 0)}}
-                            </span>
+                                                            {{(isLoading) ? '' : ((sipCount.totalCount) ? sipCount.totalCount : 0)}}
+                                                        </span>
                                                     </h1>
                                                     <p class="f-12 text-diff mb-0" *ngIf="!isLoading">SIP Count</p>
                                                 </div>
@@ -60,7 +60,7 @@
                                             <div class="col-md-7 p-0 text-right">
                                                 <h1 class="text-diff f-24 mb-0 pb-8">
                                                     <span *ngIf="!isLoading && sipCount" appFormatNumber>
-                            {{(sipCount) ? sipCount.totalAmount : 0}}</span>
+                                                        {{(sipCount.totalAmount) ? sipCount.totalAmount : 0}}</span>
                                                     <span *ngIf="isLoading">{{''}}</span>
                                                 </h1>
                                                 <p class="f-12 mb-0 text-diff" *ngIf="!isLoading">Average SIP</p>
@@ -68,9 +68,12 @@
                                             </div>
                                             <div class="col-md-12 pr-0">
                                                 <div class="pt-20" *ngIf="!isLoading">
-                                                    <mat-progress-bar class="text-diff" mode="determinate" value="clientWithoutSip">
+                                                    <mat-progress-bar class="text-diff" mode="determinate"
+                                                        value="clientWithoutSip">
                                                     </mat-progress-bar>
-                                                    <p class="text-diff f-12 pt-4 mb-0 pb-8">{{clientWithoutSip}} % Clients without SIP
+                                                    <p class="text-diff f-12 pt-4 mb-0 pb-8">
+                                                        <span>{{clientWithoutSip | number:'1.2-2'}} </span>% Clients
+                                                        without SIP
                                                     </p>
                                                 </div>
                                             </div>
@@ -86,7 +89,9 @@
                                                 <div class="text-center">
                                                     <h1 class="text-diff f-300 f-40 mb-4 pt-8">13.22%</h1>
 
-                                                    <p class="text-diff f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4% (716 folios) are currently linked to financial goals of your clients
+                                                    <p class="text-diff f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4%
+                                                        (716 folios) are currently linked to financial goals of your
+                                                        clients
                                                     </p>
                                                 </div>
                                             </div>
@@ -99,8 +104,8 @@
                             <div class="col-md-6 d-flex align-items-center">
                                 <p class="f-16 mb-4 text-muted">Filter Options</p>
                             </div>
-                            <div class="col-md-6 pr-0 text-right mb-10">
-                                <button (click)="amcWise('Allsip')">View all Sip</button>
+                            <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isLoading">
+                                <button (click)="amcWise('Allsip','all')">View all Sip</button>
                             </div>
 
                         </div>
@@ -113,7 +118,7 @@
                                         <div class="col-md-3 pt-12 pl-8">
                                             <img src="/assets/images/svg/cal.svg">
                                         </div>
-                                        <div (click)="amcWise('amc')" class="col-md-9 p-0 c-p">
+                                        <div (click)="amcWise('amc','')" class="col-md-9 p-0 c-p">
                                             <h5 class="mb-0 text-custom pt-16 pb-16 ">Amc wise</h5>
                                         </div>
                                     </div>
@@ -125,7 +130,7 @@
                                             <img src="/assets/images/svg/cal.svg">
                                         </div>
                                         <!-- (click)="categoryWise('amc')" prod build -->
-                                        <div (click)="amcWise('scheme')" class="col-sm-9 p-0 c-p">
+                                        <div (click)="amcWise('scheme','')" class="col-sm-9 p-0 c-p">
                                             <h5 class="mb-0 text-custom pt-16 pb-16 ">Scheme wise</h5>
                                         </div>
                                     </div>
@@ -137,7 +142,7 @@
                                             <img src="/assets/images/svg/cal.svg">
                                         </div>
                                         <!-- (click)="categoryWise('client')" prod build -->
-                                        <div (click)="amcWise('client')" class="col-md-9 p-0 c-p">
+                                        <div (click)="amcWise('client','')" class="col-md-9 p-0 c-p">
                                             <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
                                         </div>
                                     </div>
@@ -149,7 +154,7 @@
                                             <img src="/assets/images/svg/cal.svg">
                                         </div>
                                         <!-- (click)="categoryWise('applicant')"  prod build -->
-                                        <div (click)="amcWise('applicant')" class="col-sm-9 p-0 c-p">
+                                        <div (click)="amcWise('applicant','')" class="col-sm-9 p-0 c-p">
                                             <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
                                         </div>
                                     </div>
@@ -165,10 +170,13 @@
                             </div>
                             <div class="col-md-3 p-0">
                                 <div id="mistabs1">
-                                    <mat-tab-group class="h-500 bg-white borderLine borderLeftNone skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isRejectionLoading">
+                                    <mat-tab-group class="h-500 bg-white borderLine borderLeftNone skeletonAnimation"
+                                        appSkeletonLoading [appSkeletonLoading]="isRejectionLoading">
                                         <mat-tab label="SIP Rejections/Reversals">
-                                            <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP rejection in last 90 days
+                                            <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP rejection in
+                                                last 90 days
                                             </p>
+
                                             <!-- *ngIf="clientTotalAum" prod build -->
                                             <div class="b-white">
                                                 <div *ngFor="let item of rejectionSip" class="row bb">
@@ -176,7 +184,8 @@
                                                         <div class="bar" [ngClass]="{'height23': isRejectionLoading}">
                                                             <p *ngIf="!isRejectionLoading" class="mb-0 f-bold  p-8 ">
                                                                 {{item.schemeName}}|{{item.folioNumber}}</p>
-                                                            <p *ngIf="!isRejectionLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                            <p *ngIf="!isRejectionLoading"
+                                                                class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                                 {{item.investorName}}</p>
                                                             <p *ngIf="!isRejectionLoading"> {{item.amount}}</p>
                                                             <p *ngIf="isRejectionLoading">{{''}}</p>
@@ -184,7 +193,8 @@
                                                     </div>
                                                     <div class="bar col-md-5 p-0 relClass">
                                                         <div class="bar" [ngClass]="{'height23': isRejectionLoading}">
-                                                            <p *ngIf="!isRejectionLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                            <p *ngIf="!isRejectionLoading"
+                                                                class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                                 {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
                                                             <p *ngIf="isRejectionLoading">{{''}}</p>
                                                         </div>
@@ -205,23 +215,35 @@
                         <div id="mistabs1">
                             <mat-tab-group class="h-500 borderLine bg-white b-a">
                                 <mat-tab label="Expiring SIP">
-                                    <p class="bb-1 text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90 days </p>
+                                    <div class="bb-1 ">
+                                        <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90
+                                            days </p>
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiringLoading">
+                                            <button (click)="amcWise('Allsip','expiring')">View all</button>
+                                        </div>
+                                    </div>
+
+
                                     <!-- *ngIf="clientTotalAum" prod build -->
-                                    <div class="b-white skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isExpiringLoading">
+                                    <div class="b-white skeletonAnimation" appSkeletonLoading
+                                        [appSkeletonLoading]="isExpiringLoading">
                                         <div *ngFor="let item of expiringSip" class="row bb">
                                             <div class="bar col-md-7 p-0 relClass">
                                                 <div class="bar" [ngClass]="{'height23': isExpiringLoading}">
-                                                    <p *ngIf="!isExpiringLoading" class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}
+                                                    <p *ngIf="!isExpiringLoading" class="mb-0 f-bold  p-8 ">
+                                                        {{item.schemeName}}|{{item.folioNumber}}
                                                     </p>
-                                                    <p *ngIf="!isExpiringLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                    <p *ngIf="!isExpiringLoading"
+                                                        class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                         {{item.investorName}}</p>
-                                                    <p *ngIf="!isExpiringLoading">{{item.sipAmount}}</p>
+                                                    <p *ngIf="!isExpiringLoading">{{item.amount}}</p>
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
                                             </div>
                                             <div class="bar col-md-5 p-0 relClass">
                                                 <div class="bar" [ngClass]="{'height23': isExpiringLoading}">
-                                                    <p *ngIf="!isExpiringLoading" class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
+                                                    <p *ngIf="!isExpiringLoading"
+                                                        class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
                                                         {{item.dateDiff}}</p>
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
@@ -234,22 +256,32 @@
                                     </div>
                                 </mat-tab>
                                 <mat-tab label="Expired SIP ">
-                                    <p class="bb-1 text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90 days </p>
-                                    <div class="b-white skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isExpiredLoading">
+                                    <div class="bb-1">
+                                        <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90
+                                            days </p>
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiredLoading">
+                                            <button (click)="amcWise('Allsip','expired')">View all</button>
+                                        </div>
+                                    </div>
+                                    <div class="b-white skeletonAnimation" appSkeletonLoading
+                                        [appSkeletonLoading]="isExpiredLoading">
                                         <div *ngFor="let item of expiredSip" class="row bb ">
                                             <div class="bar col-md-7 p-0 relClass">
                                                 <div class="bar" [ngClass]="{'height23': isExpiredLoading}">
-                                                    <p *ngIf="!isExpiredLoading" class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}
+                                                    <p *ngIf="!isExpiredLoading" class="mb-0 f-bold  p-8 ">
+                                                        {{item.schemeName}}|{{item.folioNumber}}
                                                     </p>
-                                                    <p *ngIf="!isExpiredLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                    <p *ngIf="!isExpiredLoading"
+                                                        class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                         {{item.investorName}}</p>
-                                                    <p *ngIf="!isExpiredLoading">{{item.sipAmount}}</p>
+                                                    <p *ngIf="!isExpiredLoading">{{item.amount}}</p>
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
                                             </div>
                                             <div class="bar col-md-5 p-0 relClass">
                                                 <div class="bar" [ngClass]="{'height23': isExpiredLoading}">
-                                                    <p *ngIf="!isExpiredLoading" class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
+                                                    <p *ngIf="!isExpiredLoading"
+                                                        class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
                                                         {{item.dateDiff}}</p>
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
@@ -268,7 +300,7 @@
         </div>
     </div>
     <div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false">
-        <app-all-sip (changedValue)="display($event)"></app-all-sip>
+        <app-all-sip [mode]="mode" [data]="objTosend" (changedValue)="display($event)"></app-all-sip>
     </div>
     <div *ngIf="sipcomponentWise=='amc'">
         <app-sip-amc-wise (changedValue)="display($event)"></app-sip-amc-wise>

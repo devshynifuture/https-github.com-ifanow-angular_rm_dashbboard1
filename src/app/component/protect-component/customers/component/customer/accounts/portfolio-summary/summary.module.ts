@@ -5,7 +5,7 @@ import { SummaryRoutingModule } from './summary-routing.module';
 import { PortfolioSummaryComponent } from './portfolio-summary.component';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MarketSummaryComponent } from './market-summary/market-summary.component';
 
 
@@ -13,6 +13,7 @@ import { MarketSummaryComponent } from './market-summary/market-summary.componen
   declarations: [PortfolioSummaryComponent, MarketSummaryComponent],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     SummaryRoutingModule,
     MaterialModule,

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SubscriptionInject } from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormArray, FormGroup } from '@angular/forms';
 import { EventService } from '../../../../../../../../Data-service/event.service';
 import { PeopleService } from '../../../../../../PeopleComponent/people.service';
 import { MatTableDataSource } from '@angular/material';
@@ -34,7 +34,6 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  relationType = new FormControl('', [Validators.required]);
   showSpinnerOwner = false;
   dataForTable: any[] = [];
   dataSource = new MatTableDataSource(this.dataForTable);
@@ -43,6 +42,13 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   selectedClient;
   @Input() data;
   relationTypeList: { name: string; value: number; }[];
+  displayedColumns1: string[] = ['details', 'status', 'pan', 'relation', 'gender', 'add'];
+  dataSource1;
+  showSuggestion: boolean = true;
+  selectedClientData: any;
+  rows: FormArray = this.fb.array([]);
+  form: FormGroup = this.fb.group({ 'clients': this.rows });
+  selectedClientFormGroup: FormGroup
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
@@ -51,24 +57,50 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedClientFormGroup = this.fb.group({
+      relation: ['', [Validators.required]],
+      gender: ['', [Validators.required]]
+    })
+    let clientList = Object.assign([], this.data.clientData.ClientList);
+    if (this.data.clientData.SuggestionList) {
+      this.data.clientData.SuggestionList.filter(element => {
+        this.rows.push(this.fb.group({
+          relation: ['', [Validators.required]],
+          gender: ['', [Validators.required]]
+        }))
+      })
+    }
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
         map(state => {
           if (state) {
-            const list = this.enumDataService.getClientSearchData(state);
+            const filterValue = state.toLowerCase();
+            const list = clientList.filter(state => state.name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
+              this.showSuggestion = true;
               this.stateCtrl.setErrors({ invalid: true });
+              this.stateCtrl.markAsTouched();
             }
-            return this.enumDataService.getClientSearchData(state);
+            return clientList.filter(state => state.name.toLowerCase().includes(filterValue));
           } else {
-            return this.enumDataService.getEmptySearchStateData();
+            return this.data.clientData.ClientList;
           }
         }),
       );
   }
-
+  hideSuggetion(value) {
+    if (value == '') {
+      this.showSuggestion = true
+      this.selectedClientData = undefined
+    };
+  }
   optionSelected(value) {
+    if (value.count == 0) {
+      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
+      return;
+    }
+    // this.showSuggestion = false;
     console.log(' selected client to merge ', value);
     this.selectedClient = value;
     this.data.clientData
@@ -114,12 +146,14 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.getClientOrLeadData(obj).subscribe(
       responseData => {
         this.showSpinnerOwner = false;
+        this.showSuggestion = false
         if (responseData == undefined) {
           return;
         } else {
-          Object.assign(data, responseData);
+          // Object.assign(data, responseData);
           data.genderString = UtilService.getGenderStringFromGenderId(data.genderId);
-          this.dataSource.data = [data];
+          responseData.dateOfBirth = (responseData.dateOfBirth) ? this.datePipe.transform(responseData.dateOfBirth, 'dd/MM/yyyy') : '-'
+          this.selectedClientData = responseData;
           console.log('mergeclientFamilyMember this.dataSource.data ', this.dataSource.data);
 
         }
@@ -132,6 +166,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
+    if (data != 'close') {
+      this.enumDataService.searchClientList();
+    }
     this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
@@ -140,15 +177,16 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.eventService.openSnackBar('Please select the client to merge', 'Dismiss');
       return;
     }
-    if (this.relationType.invalid) {
-      this.relationType.markAllAsTouched();
+    if (this.selectedClientFormGroup.invalid) {
+      this.selectedClientFormGroup.markAllAsTouched();
       return;
     }
     this.barButtonOptions.active = true
     const arrayObj = {
       ownerClientId: this.data.clientData.client.clientId,
       mergeClientId: this.selectedClient.clientId,
-      relationshipId: this.relationType.value
+      relationshipId: this.selectedClientFormGroup.controls.relation.value,
+      genderId: this.selectedClientFormGroup.controls.gender.value
     };
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
@@ -163,4 +201,58 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     );
   }
 
+  saveSuggestedFamilyMember(index, clientData) {
+    if (this.rows.controls[index].invalid) {
+      this.rows.controls[index].markAllAsTouched();
+      return;
+    }
+    const arrayObj = {
+      ownerClientId: this.data.clientData.client.clientId,
+      mergeClientId: clientData.clientId,
+      relationshipId: this.rows.controls[index].value.relation,
+      genderId: this.rows.controls[index].value.gender
+    };
+    this.peopleService.mergeClient(arrayObj).subscribe(
+      data => {
+        console.log(data)
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    )
+  }
+
+  changeGender(relationData) {
+    let genderId;
+    if (relationData.value != 10) {
+      this.selectedClientFormGroup.controls.gender.enable()
+    }
+    switch (true) {
+      case (relationData.value == 2):
+        genderId = 1;
+        break;
+      case (relationData.value == 3):
+        genderId = 2;
+        break;
+      case (relationData.value == 4):
+        genderId = 1;
+        break;
+      case (relationData.value == 5):
+        genderId = 2;
+        break;
+      case (relationData.value == 6):
+        genderId = 1;
+        break;
+      case (relationData.value == 7):
+        genderId = 2;
+        break;
+      default:
+        genderId = 1;
+        this.selectedClientFormGroup.controls.gender.disable()
+        break;
+    }
+
+    this.selectedClientFormGroup.controls.gender.setValue(String(genderId));
+    this.selectedClientFormGroup.controls.gender.updateValueAndValidity();
+  }
 }

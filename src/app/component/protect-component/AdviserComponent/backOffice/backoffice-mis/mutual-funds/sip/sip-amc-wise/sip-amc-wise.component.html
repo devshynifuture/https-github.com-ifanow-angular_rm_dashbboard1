@@ -355,7 +355,8 @@
                                                                                     </span>
                                                                                 </th>
                                                                                 <th>% Weight</th>
-                                                                                <th>ceased</th>
+                                                                                <th>Edit/Delete
+                                                                                </th>
                                                                             </tr>
                                                                         </thead>
 
@@ -453,7 +454,7 @@
                                 <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
                                 </td>
                                 <td class="p-table"><strong>{{totalOfSipCount}}</strong></td>
-                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td class="p-table"><strong>{{totalWeight | number : '1.2-2'}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
