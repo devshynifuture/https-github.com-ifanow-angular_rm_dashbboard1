@@ -75,14 +75,34 @@
                     <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
                         <div class="row" #portFolioSection>
+
+                            <!-- loader start -->
+                            <div class="col-md-12 " >
+                                <h5 class="roboto mb-0">Asset allocation</h5>
+                                <div class="borderChatBox bg-white ">
+                                    <div class="row skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
+                                        <div class="col-md-7 pr-0 heightBox">
+                                            <div class="relClass">
+                                                <div class="bar220" [ngClass]="{'height220': isLoading}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- loader end -->
+
+
+
                             <div class="col-md-12" *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-md-7 pr-0 heightBox">
-                                                  <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading" [chart]="assetAllocationPieConfig">
-                                                    </div>
-                                            
+                                            <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading" [chart]="assetAllocationPieConfig">
+                                            </div>
+
                                         </div>
                                         <div class="col-md-5 ">
                                             <ul class="pointUl">
@@ -117,16 +137,7 @@
                                 </div>
                             </div>
 
-                            <!-- loader start -->
-                            <div class="col-md-12" *ngIf="tabsLoaded.portfolioData.isLoading">
-                                <h5 class="roboto mb-0">Asset allocation</h5>
-                                <div class="col-md-7 pr-0 heightBox skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
-                                    <div class="relClass">
-                                        <div class="bar"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- loader end -->
+
                         </div>
                     </div>
 
