@@ -365,24 +365,47 @@
 <div #liabilitiesTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
-            <td style="text-align: left;">
-                <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
-            </td>
-            <td style="text-align: right;">
-                <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
-                    {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
-                <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+            <td colspan="11">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <img style="width: 300px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+
+                        </td>
+                        <td>
+                            <table style="float: right;">
+                                <tr *ngIf="userInfo">
+                                    <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
+                                        {{(userInfo.name) ? userInfo.name : '-'}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="userInfo">
+                                    <td style="font-size: 14px; text-align: right;">
+                                        <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="userInfo">
+                                    <td style="font-size: 14px; text-align: right;">
+                                        <span style="font-weight: 500;">Email Id:</span> {{(details) ? details.emailId : '-'}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+
+                                    <td style="font-size: 14px; text-align: right;">
+                                        <span style="font-weight: 500;">Report as on:</span> {{reportDate | date:'dd-MMM-yyyy' }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
         <tr>
-            <td colspan="2" style="padding: 10px;"></td>
-        </tr>
-
-        <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="11" style="font-size: 18px; color: #000000 !important;">
                 <div class="col-md-4 d-flex align-items-center p-0">
                     <h4 class="m-0 text-black roboto" *ngIf="showFilter=='tab1'">Liabilities</h4>
                     <h4 class="m-0 text-black roboto" *ngIf="showFilter=='1'">Home</h4>
@@ -400,26 +423,35 @@
                 </div>
             </td>
         </tr>
+
+        <tr>
+            <td colspan="11">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
+                    Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+            </td>
+        </tr>
+
+
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-                No. </td>
+                No.</td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Owner</td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Type </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="text-align: right; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Loan amount </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="text-align: left; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Loan as on </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style="text-align: right; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Outstanding as on today </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style=" text-align: right; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Tenure remaining</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style=" text-align: right; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Annual interest rate</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style=" text-align: right; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 EMI </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td style=" text-align: right; padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Financial institution </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Status </td>
@@ -434,7 +466,7 @@
                 {{(item.loanTypeId == 1)?'Home Loan':(item.loanTypeId == 2)?'Vehicle':(item.loanTypeId == 3)?'Education':(item.loanTypeId == 4)?'Credit Card':(item.loanTypeId == 5)?'Personal':(item.loanTypeId == 6)?'Mortgage':''}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.loanAmount)?item.loanAmount:0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.commencementDate)?(item.commencementDate | date:'dd/MM/yyyy'):0}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;" appFormatNumber>{{(item.commencementDate)?(item.commencementDate | date:'dd/MM/yyyy'):0}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.outstandingAmount)?item.outstandingAmount:0}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.loanTenure)?(item.remainingMonths):0}}</td>
@@ -444,7 +476,7 @@
                 {{(item.emi)}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.financialInstitution)?(item.financialInstitution):0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
                     {{'LIVE'}} </span>
                 <span class="text-success" *ngIf="item.statusId == 'CLOSED'">

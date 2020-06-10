@@ -168,53 +168,65 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     portfolioData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     rtaFeeds: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     recentTransactions: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     documentsVault: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     riskProfile: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     globalRiskProfile: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     goalsData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
       displaySection: false,
     },
     cashflowData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     customerProfile: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     mfPortfolioSummaryData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
       displaySection: false,
     },
     mfSubCategorySummaryData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
       displaySection: false,
     },
     familyMembers: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     }
   };
   hasError: boolean = false;
@@ -429,6 +441,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
+    this.tabsLoaded.portfolioData.isLoading = true;
 
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
@@ -472,10 +485,10 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             hasNoDataCounter--;
           }
         });
-        if(hasNoDataCounter === 0) {
-          this.tabsLoaded.portfolioData.hasData = false;
-        }
         chartTotal -= 1;
+        if (chartTotal === 0) {
+          this.tabsLoaded.portfolioData.hasData = false
+        }
         if (counter > 4) {
           chartData.push(othersData);
         }
@@ -485,11 +498,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
       }
+      this.tabsLoaded.portfolioData.isLoading = false;
       this.tabsLoaded.portfolioData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
-      this.tabsLoaded.portfolioData.dataLoaded = false;
+      this.tabsLoaded.portfolioData.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -501,6 +515,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId,
       limit: 5
     }
+    this.tabsLoaded.rtaFeeds.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRTAFeeds(obj).subscribe(res => {
       if (res == null) {
@@ -509,10 +524,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.rtaFeeds.hasData = true;
         this.rtaFeedsData = res;
       }
+      this.tabsLoaded.rtaFeeds.isLoading = false;
       this.tabsLoaded.rtaFeeds.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.rtaFeeds.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -524,6 +541,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId,
       limit: 5
     }
+    this.tabsLoaded.documentsVault.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
       if (res == null || res.fileStats.length == 0) {
@@ -537,10 +555,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           genderId: 0
         })
       }
+      this.tabsLoaded.documentsVault.isLoading = false;
       this.tabsLoaded.documentsVault.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.documentsVault.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -551,6 +571,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
+    this.tabsLoaded.riskProfile.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res == null || res[0].id === 0) {
@@ -560,9 +581,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;
       }
+      this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
+      this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = false;
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
@@ -579,9 +602,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.globalRiskProfile = res;
       }
       this.tabsLoaded.globalRiskProfile.dataLoaded = true;
+      this.tabsLoaded.globalRiskProfile.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.globalRiskProfile.isLoading = false;
       this.tabsLoaded.globalRiskProfile.dataLoaded = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
@@ -605,10 +630,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.recentTransactions = res;
       }
       this.tabsLoaded.recentTransactions.dataLoaded = true;
+      this.tabsLoaded.recentTransactions.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
       this.tabsLoaded.recentTransactions.dataLoaded = false;
+      this.tabsLoaded.recentTransactions.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -630,8 +657,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.goalsData = res;
         }
         this.tabsLoaded.goalsData.dataLoaded = true;
+        this.tabsLoaded.goalsData.isLoading = false;
       }, err => {
         this.tabsLoaded.goalsData.hasData = false;
+        this.tabsLoaded.goalsData.dataLoaded = true;
+        this.tabsLoaded.goalsData.isLoading = false;
         this.eventService.openSnackBar(err, "Dismiss")
         this.loaderFn.decreaseCounter();
         this.hasError = true;
@@ -663,8 +693,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.createCashflowFamilyObj(res);
       }
       this.tabsLoaded.cashflowData.dataLoaded = true;
+      this.tabsLoaded.cashflowData.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
+      this.tabsLoaded.cashflowData.dataLoaded = false;
+      this.tabsLoaded.cashflowData.isLoading = false;
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
@@ -845,6 +878,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         data => this.getMutualFundResponse(data), (error) => {
           this.eventService.openSnackBar(error, "DISMISS");
           this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
         }
       );
     }
@@ -864,6 +898,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       },
       err => {
         this.tabsLoaded.familyMembers.dataLoaded = false;
+        this.tabsLoaded.familyMembers.isLoading = false;
         this.eventService.openSnackBar(err, "Dismiss");
         console.error(err);
       }

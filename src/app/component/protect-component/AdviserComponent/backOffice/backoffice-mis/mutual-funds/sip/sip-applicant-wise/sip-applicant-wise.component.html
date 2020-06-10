@@ -6,8 +6,9 @@
                     <h3 class="pt-8 mb-0">Applicant wise SIP</h3>
                 </div>
                 <div class="col-md-6 text-right pr-0">
-                    <button (click)="exportToExcelSheet('client-wise', null)" *ngIf="!isLoading && filteredArray.length>0" class="btn-default addon"
-                        mat-stroked-button><i class="material-icons">add</i>XLS
+                    <button (click)="exportToExcelSheet('client-wise', null)"
+                        *ngIf="!isLoading && filteredArray.length>0" class="btn-default addon" mat-stroked-button><i
+                            class="material-icons">add</i>XLS
                     </button>
                     <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                 </div>
@@ -50,14 +51,17 @@
                             <tr>
                                 <td>
                                     <div class="bar">
-                                          {{isLoading ? '' : data.name}}
+                                        {{isLoading ? '' : data.name}}
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="bar">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="data.totalAum"></span></div>
+                                    <div class="bar">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
+                                            [value]="data.totalAum"></span></div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{isLoading ? '' : data.weightInPercentage | number : '1.2-2'}}{{(isLoading?'':'%') }} </div>
+                                    <div class="bar">
+                                        {{isLoading ? '' : data.weightInPercentage | number : '1.2-2'}}{{(isLoading?'':'%') }}
+                                    </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,data)">
                                     <div class="bar text-center">
@@ -71,15 +75,17 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
-                                    <div class="d-block text-right" *ngIf="!data.showScheme && !isLoading && data.schemeList?.length > 0">
+                                    <div class="d-block text-right"
+                                        *ngIf="!data.showScheme && !isLoading && data.schemeList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="data.showScheme == false && data.schemeList?.length > 0" class="skeletonAnimation mt-8 mb-8"
-                                        appSkeletonLoading [appSkeletonLoading]="isLoadingApplicant" id="table-low">
+                                    <table *ngIf="data.showScheme == false && data.schemeList?.length > 0"
+                                        class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                        [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">
                                                 <th class="w-11 c-p" (click)="sortByApplicant( data.schemeList,'name')">
@@ -216,7 +222,8 @@
                                                 </td>
                                                 <td>
                                                     <div class="bar">
-                                                            {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="scheme.amount"></span>
+                                                        {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber
+                                                            *ngIf="!isLoadingApplicant" [value]="scheme.amount"></span>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -225,7 +232,38 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{(isLoadingApplicant?'':'add cease date') }}
+                                                    <!-- {{(isLoadingApplicant?'':'add cease date') }} -->
+                                                    <div class="bar">
+                                                        <div *ngIf="!isLoadingApplicant">
+                                                            <button (click)="scheme.isEdit=true" *ngIf="scheme.isEdit==false" >Add Cease Date</button>
+                                                            <div [formGroup]="caesedForm" *ngIf="scheme.isEdit == true">
+                                                                    <div class="col-md-3 pr-0">
+                                                                        <div class="form-group mb-0">
+                                                                            <mat-form-field class="ba-date">
+                                                                                <input matInput
+                                                                                    class="form-control br-0 b-0"
+                                                                                    #ceaseddate [max]="maxDate"
+                                                                                    (input)="preventDefault($event)"
+                                                                                    matInput [matDatepicker]="picker"
+                                                                                    formControlName="ceaseddate"
+                                                                                    readonly>
+                                                                                <mat-datepicker-toggle matSuffix
+                                                                                    [for]="picker">
+                                                                                </mat-datepicker-toggle>
+                                                                                <mat-datepicker #picker>
+                                                                                </mat-datepicker>
+                                                                            </mat-form-field>
+                                                                        </div>
+                                                                    </div>
+                                                                <span >
+                                                                    <button>Save</button>
+                                                                    <button (click)="scheme.isEdit=false">Cancel</button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span *ngIf="isLoadingApplicant">{{''}}</span>
+                                                    </div>
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -243,7 +281,8 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [value]="totalOfSipAmount"></span></strong>
+                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                            [value]="totalOfSipAmount"></span></strong>
                                 </td>
                                 <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>
