@@ -203,7 +203,7 @@
                                 <ng-container matColumnDef="Duration">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
                                     </th>
-                                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                                    <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
                                             {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}} </div>
                                     </td>
@@ -314,7 +314,7 @@
                                 <ng-container matColumnDef="sumInsured">
                                     <th *matHeaderCellDef class="br rightTextHide" mat-sort-header="sumAssured"> Sum insured
                                     </th>
-                                    <td *matCellDef="let element" class="br" mat-cell>
+                                    <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <!-- <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div> -->
                                         <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span></div>
 
@@ -349,9 +349,9 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="Duration">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
+                                    <th *matHeaderCellDef class="br w-9 textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
                                     </th>
-                                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                                    <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
                                             {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}} </div>
                                     </td>

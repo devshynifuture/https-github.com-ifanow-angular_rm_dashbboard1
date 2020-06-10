@@ -110,6 +110,7 @@ export class ClientAddressComponent implements OnInit {
   }
   changeAddrProofNumber(data) {
     let regexPattern;
+    this.userData.aadhaarNumber = (this.userData.aadhaarNumber == 0) ? null : this.userData.aadhaarNumber;
     if (this.firstTimeEditFlag) {
       this.proofTypeData.proofIdNumber = null
     }
