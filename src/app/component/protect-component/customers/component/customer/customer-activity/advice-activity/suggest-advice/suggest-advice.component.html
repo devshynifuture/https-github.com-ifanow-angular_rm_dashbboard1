@@ -11,6 +11,8 @@
 <div class="pt-90 pl-28 pr-28 pb-60">
     <div class="row">
         <div class="col-md-12 p-0">
+            <hr id="suggest-advice-top">
+            <hr id="suggest-advice-bottom">
             <mat-horizontal-stepper #stepper id="ui-suggest-advice">
                 <mat-step>
                     <form [formGroup]="adviceForm">
@@ -138,8 +140,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
         </div>
         <div class="col-md-8 text-right">
-            <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
-                mat-raised-button>PREVIOUS
+            <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
             </button>
             <button mat-stroked-button class="btn-bottom" (click)="addOrNextStep()">PROCEED</button>
         </div>

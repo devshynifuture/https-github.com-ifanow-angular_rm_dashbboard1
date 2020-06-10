@@ -52,8 +52,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu1"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu1">
                 Add new FD</button>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item (click)="openAddEdit('adviceFixedDeposit',null)">Suggest new
@@ -122,8 +121,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Maturity date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Maturity date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         <span>{{element.assetDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
@@ -195,9 +194,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openAddEdit('adviceRecurringDeposit', '')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new RD</button>
+            <button mat-stroked-button class="btn-primary br-0"
+                (click)="openAddEdit('adviceRecurringDeposit', '')">Suggest new RD</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="recurringDataSource"
@@ -335,8 +333,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu3"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new Bond</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu3">Add new Bond</button>
             <mat-menu #menu3="matMenu">
                 <button mat-menu-item (click)="openAddEdit('adviceBonds',null)">Suggest new
                     bond</button>

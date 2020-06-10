@@ -45,9 +45,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openFixedDeposit('adviceFixedDeposit','adviceFixedDeposit')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new FD</button>
+            <button mat-stroked-button class="btn-primary br-0"
+                (click)="openFixedDeposit('adviceFixedDeposit','adviceFixedDeposit')">Suggest new FD</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="fixedDataSource"
@@ -179,7 +178,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="fixedDataSource.tableFlag==false" class="b-a">
+    <div *ngIf="fixedDataSource.tableFlag==false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -189,9 +188,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 "
-                (click)="openRecurringDeposit('adviceRecurringDeposit','open')"><img src="/assets/images/svg/plus.svg"
-                    class="pr-8">Suggest new RD</button>
+            <button mat-stroked-button class="btn-primary br-0"
+                (click)="openRecurringDeposit('adviceRecurringDeposit','open')">Suggest new RD</button>
         </div>
     </div>
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="recurringDataSource"
@@ -319,7 +317,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
     </table>
-    <div *ngIf="recurringDataSource.tableFlag==false" class="b-a">
+    <div *ngIf="recurringDataSource.tableFlag==false" class="b-a bt-0">
         <h4 class="text-center p-44">No Data Found</h4>
     </div>
     <div class="row pt-32">
@@ -329,8 +327,8 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " (click)="openBond('adviceBonds','open')"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new Bond</button>
+            <button mat-stroked-button class="btn-primary br-0" (click)="openBond('adviceBonds','open')">Suggest new
+                Bond</button>
         </div>
     </div>
     <table mat-table [dataSource]=" bondDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
