@@ -51,6 +51,10 @@ export class OtherPayablesComponent implements OnInit {
   myFiles: any;
   isLoadingUpload: boolean = false;
   clientData: any;
+  details: any;
+  getOrgData: any;
+  userInfo: any;
+  reportDate: Date;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
     public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private fileUpload: FileUploadServiceService) {
@@ -61,9 +65,14 @@ export class OtherPayablesComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   ngOnInit() {
+    this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
 
     if (!this.payableData) {
       this.noData = 'No Data Found';
