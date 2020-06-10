@@ -75,14 +75,46 @@
                     <!-- Portfolio Asset allocation chart -->
                     <div class="wrapperBox">
                         <div class="row" #portFolioSection>
+
+                            <!-- loader start -->
+                            <div class="col-md-12 " *ngIf="tabsLoaded.portfolioData.isLoading">
+                                <h5 class="roboto mb-0">Asset allocation</h5>
+                                <div class="borderChatBox bg-white ">
+                                    <div class="row skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
+                                        <div class="col-md-6 pr-0 heightBox">
+                                            <div class="relClass">
+                                                <div class="bar220" [ngClass]="{'height220': isLoading}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  ">
+                                            <div class="mt-40 mr-20">
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                </div>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                </div>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- loader end -->
+
+
+
                             <div class="col-md-12" *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-md-7 pr-0 heightBox">
-                                                  <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading" [chart]="assetAllocationPieConfig">
-                                                    </div>
-                                            
+                                            <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading" [chart]="assetAllocationPieConfig">
+                                            </div>
+
                                         </div>
                                         <div class="col-md-5 ">
                                             <ul class="pointUl">
@@ -117,16 +149,7 @@
                                 </div>
                             </div>
 
-                            <!-- loader start -->
-                            <div class="col-md-12" *ngIf="tabsLoaded.portfolioData.isLoading">
-                                <h5 class="roboto mb-0">Asset allocation</h5>
-                                <div class="col-md-7 pr-0 heightBox skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
-                                    <div class="relClass">
-                                        <div class="bar"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- loader end -->
+
                         </div>
                     </div>
 
@@ -145,10 +168,12 @@
                         <div class="scrollingDiv d-flex ">
                             <!-- portfolio data present -->
                             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
-                                <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
+                                <div class="fundBox bg-white slide skeletonAnimation" ngxSlickItem *ngFor="let portData of portFolioData" [appSkeletonLoading]="true" appSkeletonLoading>
                                     <div class="row">
-                                        <div class="col-md-9  pr-0">
-                                            <h5 class="roboto">{{portData.assetTypeString}}</h5>
+                                        <div class="col-md-9 relClass pr-0">
+                                            <div class="bar">
+                                                <h5 class="roboto">{{portData.assetTypeString}}</h5>
+                                            </div>
                                         </div>
                                         <div class="col-md-3 pl-0 d-flex justify-content-end">
                                             <span *ngIf="portData.currentValue==0" (click)="routeAndAddQueryParams(portData.assetTypeString)" class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
@@ -160,23 +185,37 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                            <h3 class="mb-20 roboto">₹<span appFormatNumber>{{portData.currentValue}}</span>
-                                            </h3>
+                                            <div class="relClass">
+                                                <div class="bar">
+                                                    <h3 class="mb-20 roboto">₹<span appFormatNumber>{{portData.currentValue}}</span>
+                                                    </h3>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                            <p class="m-0 roboto" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
-                                                ₹<span appFormatNumber>{{portData.investedAmount}}</span>
-                                            </p>
+                                            <div class="relClass">
+                                                <div class="bar">
+                                                    <p class="m-0 roboto" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
+                                                        ₹<span appFormatNumber>{{portData.investedAmount}}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
+                                            <div class="relClass">
+                                                    <div class="bar">
                                             <p class="m-0 roboto" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
                                                 ₹<span appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
                                             </p>
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
 
