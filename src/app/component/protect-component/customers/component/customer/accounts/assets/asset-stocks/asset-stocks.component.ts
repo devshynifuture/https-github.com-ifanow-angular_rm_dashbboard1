@@ -93,6 +93,9 @@ export class AssetStocksComponent implements OnInit {
               if(index == 0 && s.categoryName){
                 this.stockListGroup.push({group:s.categoryName});
               }
+              if(s.stockListForEditView){
+                s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
+              }
               this.stockListGroup.push(s.stockList[index]);
             }
         });
