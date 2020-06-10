@@ -154,7 +154,7 @@
                     </div>
 
                     <!-- portfolio section -->
-                    <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded">
+                    <div class="wrapperBox">
                         
                         <div class="row">
                             <div class="col-md-8  d-flex align-items-center">
@@ -165,9 +165,10 @@
                             </div>
                         </div>
 
-                        <div class="scrollingDiv d-flex ">
+                        <div class="scrollingDiv d-flex">
                             <!-- portfolio data present -->
-                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
+                            <!-- add ngif false so this never loads for dev purpose -->
+                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)"  *ngIf="tabsLoaded.portfolioData.dataLoaded">
                                 <div class="fundBox bg-white slide skeletonAnimation" ngxSlickItem *ngFor="let portData of portFolioData" [appSkeletonLoading]="true" appSkeletonLoading>
                                    
                                     <div class="row">
@@ -224,7 +225,8 @@
                             </ngx-slick-carousel>
 
                             <!-- portfolio data not present -->
-                            <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioData.dataLoaded && portFolioData.length == 0">
+                            <!-- add true to the ngif condition to view the below card -->
+                            <div class="fundBox bg-white" *ngIf="!tabsLoaded.portfolioData.dataLoaded || portFolioData.length == 0 || tabsLoaded.portfolioData.isLoading">
                                 
                                 <div class="row">
                                     <div class="col-md-8  pr-0">
@@ -262,9 +264,9 @@
                         </div>
 
 
-                        <!-- Portfolio Asset allocation chart -->
+                        <!-- MF chart -->
                         <div class="wrapperBox">
-                            <div class="row">
+                            <div class="row" *ngIf="!tabsLoaded.mfPortfolioSummaryData.dataLoaded">
                                 <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                     <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                     <div class="borderChatBoxMutual bg-white">
@@ -363,9 +365,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <div *ngIf="tabsLoaded.mfPortfolioSummaryData.isLoading"></div>
                         </div>
 
-                        <!-- Portfolio Asset allocation chart -->
+                        <!-- sub mf chart -->
+                        <!-- no need of loader here -->
                         <div class="wrapperBox" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
                             <div class="row">
                                 <div class="col-md-12 ">
@@ -391,7 +395,9 @@
                                 </div>
                             </div>
                         </div>
+
                         <!--family member wise-->
+                        <!-- no need of loader here -->
                         <div class="wrapperBox" *ngIf="tabsLoaded.portfolioData.dataLoaded && familyWiseAllocation?.length > 0">
                             <div class="row">
                                 <div class="col-md-8  d-flex align-items-center">
@@ -468,6 +474,7 @@
 
                         </div>
 
+                        <!-- not for current demo -->
                         <div class="wrapperBox mb-20" [hidden]="true">
                             <div class="row">
                                 <div class="col-md-12 mb-10 d-flex align-items-center">
@@ -581,6 +588,7 @@
                         </div>
 
                         <!-- activity section -->
+                        <!-- not for current demo -->
                         <div class="wrapperBox" [hidden]="true">
                             <div class="row">
                                 <div class="col-md-12 pl-0 mb-10 d-flex align-items-center">
@@ -619,6 +627,7 @@
 
                         <!-- cashflow -->
                         <!-- to be used later if ever the api created -->
+                        <!-- ill do the loader for cashflow -->
                         <div class="wrapperBox" #cashFlowSection>
                             <div class="row">
                                 <div class="col-md-12  mb-10 d-flex align-items-center">
@@ -752,6 +761,7 @@
                         </div>
 
                         <!-- recent transactions-->
+                        <!-- no loader required -->
                         <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                             <div class="row">
                                 <div class="col-md-8 d-flex align-items-center">
@@ -800,6 +810,7 @@
                         </div>
 
                         <!-- Recent transactions as per rta -->
+                        <!-- no loader required -->
                         <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                             <div class="row">
                                 <div class="col-md-8   d-flex align-items-center">
