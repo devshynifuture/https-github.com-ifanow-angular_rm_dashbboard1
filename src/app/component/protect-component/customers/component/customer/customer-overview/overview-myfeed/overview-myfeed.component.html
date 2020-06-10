@@ -267,7 +267,7 @@
 
                         <!-- MF chart -->
                         <div class="wrapperBox">
-                            <div class="row" *ngIf="!tabsLoaded.mfPortfolioSummaryData.dataLoaded">
+                            <div class="row" *ngIf="!tabsLoaded.mfPortfolioSummaryData.isLoading">
                                 <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                     <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                     <div class="borderChatBoxMutual bg-white">
