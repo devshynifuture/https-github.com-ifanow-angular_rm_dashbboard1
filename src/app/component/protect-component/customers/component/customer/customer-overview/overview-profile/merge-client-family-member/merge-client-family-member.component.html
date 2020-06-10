@@ -43,7 +43,7 @@
               This field is required
           </mat-error> -->
           <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
-            This family member does not exist
+            This client member does not exist
           </mat-error>
         </mat-form-field>
       </div>
@@ -160,7 +160,8 @@
               <div class="form-group">
                 <p class="m-0 roboto f-400 pb-10">Relation</p>
                 <mat-form-field>
-                  <mat-select (selectionChange)="changeGender($event)" formControlName="relation" class="form-control">
+                  <mat-select (selectionChange)="changeGender($event,'NonsuggestionList')" formControlName="relation"
+                    class="form-control">
                     <mat-option value='' disabled>Select option</mat-option>
                     <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
                     </mat-option>
@@ -219,8 +220,11 @@
               <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
                 <div class="form-group">
                   <mat-form-field>
-                    <mat-select formControlName="relation" class="form-control h-32 p-4">
+                    <mat-select (selectionChange)="changeGender($event,'suggestionList',i)" formControlName="relation"
+                      class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
+                      <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
+                      </mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                   </mat-form-field>
@@ -235,6 +239,9 @@
                   <mat-form-field>
                     <mat-select formControlName="gender" class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
+                      <mat-option value="1">Male</mat-option>
+                      <mat-option value="2">Female</mat-option>
+                      <mat-option value="3">Other</mat-option>
                     </mat-select>
                     <mat-error class="">This field is required</mat-error>
                   </mat-form-field>

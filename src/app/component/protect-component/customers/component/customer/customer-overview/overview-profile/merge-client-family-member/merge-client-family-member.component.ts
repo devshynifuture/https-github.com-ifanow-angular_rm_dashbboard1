@@ -57,10 +57,6 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedClientFormGroup = this.fb.group({
-      relation: ['', [Validators.required]],
-      gender: ['', [Validators.required]]
-    })
     let clientList = Object.assign([], this.data.clientData.ClientList);
     if (this.data.clientData.SuggestionList) {
       this.data.clientData.SuggestionList.filter(element => {
@@ -88,22 +84,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           }
         }),
       );
-  }
-  hideSuggetion(value) {
-    if (value == '') {
-      this.showSuggestion = true
-      this.selectedClientData = undefined
-    };
-  }
-  optionSelected(value) {
-    if (value.count == 0) {
-      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
-      return;
-    }
-    // this.showSuggestion = false;
-    console.log(' selected client to merge ', value);
-    this.selectedClient = value;
-    this.data.clientData
+
     if (this.data.clientData.client.clientType == 2) {
       this.relationTypeList = [
         { name: 'Father', value: 6 },
@@ -135,6 +116,25 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         ]
       }
     }
+  }
+  hideSuggetion(value) {
+    if (value == '') {
+      this.showSuggestion = true
+      this.selectedClientData = undefined
+    };
+  }
+  optionSelected(value) {
+    if (value.count == 0) {
+      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
+      return;
+    }
+    // this.showSuggestion = false;
+    this.selectedClientFormGroup = this.fb.group({
+      relation: ['', [Validators.required]],
+      gender: ['', [Validators.required]]
+    })
+    console.log(' selected client to merge ', value);
+    this.selectedClient = value;
     this.getClientData(value);
   }
 
@@ -222,37 +222,24 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     )
   }
 
-  changeGender(relationData) {
+  changeGender(relationData, flag, index) {
     let genderId;
-    if (relationData.value != 10) {
-      this.selectedClientFormGroup.controls.gender.enable()
-    }
     switch (true) {
-      case (relationData.value == 2):
+      case (relationData.value == 2 || relationData.value == 4 || relationData.value == 6):
         genderId = 1;
         break;
-      case (relationData.value == 3):
-        genderId = 2;
-        break;
-      case (relationData.value == 4):
-        genderId = 1;
-        break;
-      case (relationData.value == 5):
-        genderId = 2;
-        break;
-      case (relationData.value == 6):
-        genderId = 1;
-        break;
-      case (relationData.value == 7):
+      case (relationData.value == 3 || relationData.value == 5 || relationData.value == 7):
         genderId = 2;
         break;
       default:
         genderId = 1;
-        this.selectedClientFormGroup.controls.gender.disable()
         break;
     }
-
-    this.selectedClientFormGroup.controls.gender.setValue(String(genderId));
-    this.selectedClientFormGroup.controls.gender.updateValueAndValidity();
+    if (flag == "suggestionList") {
+      this.rows.controls[index].get('gender').setValue(String(genderId));
+    }
+    else {
+      this.selectedClientFormGroup.controls.gender.setValue(String(genderId));
+    }
   }
 }

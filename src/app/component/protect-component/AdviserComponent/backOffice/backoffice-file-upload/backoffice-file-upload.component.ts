@@ -56,7 +56,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     });
     this.settingService.getArnlist({advisorId: this.advisorId})
       .subscribe(res => {
-        if (res) {
+        if (res.length > 0 ) {
           this.arnRiaList = res;
         } else {
           this.eventService.openSnackBar('No arn ria code found!!', 'DISMISS');
