@@ -257,9 +257,9 @@
                     (click)="saveSuggestedFamilyMember(i,element)" class="br-0 add-merge-client btn-primary mr-12">ADD
                   </button>
                   <!-- loader -->
-                  <!-- <mat-spinner [diameter]="20"></mat-spinner> -->
+                  <mat-spinner *ngIf='element.isLoading' [diameter]="20"></mat-spinner>
 
-                  <p *ngIf="element.addedFlag" class="txt-primary">Added</p>
+                  <p *ngIf="element.addedFlag" class="text-primary">Added</p>
                 </div>
               </td>
             </ng-container>

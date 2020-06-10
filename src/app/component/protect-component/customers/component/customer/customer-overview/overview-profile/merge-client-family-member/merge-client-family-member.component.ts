@@ -10,6 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { EnumDataService } from '../../../../../../../../services/enum-data.service';
 import { ProcessTransactionService } from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
 import { UtilService } from '../../../../../../../../services/util.service';
+import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-merge-client-family-member',
@@ -54,7 +55,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
     private peopleService: PeopleService, private enumDataService: EnumDataService,
-    public processTransaction: ProcessTransactionService) {
+    public processTransaction: ProcessTransactionService, private cancelFlagService: CancelFlagService) {
   }
 
   ngOnInit() {
@@ -130,6 +131,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       return;
     }
     // this.showSuggestion = false;
+    this.requiredRefresh = false;
     this.selectedClientFormGroup = this.fb.group({
       relation: ['', [Validators.required]],
       gender: ['', [Validators.required]]
@@ -167,7 +169,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
-    if (data != 'close') {
+    if (this.requiredRefresh) {
       this.enumDataService.searchClientList();
     }
     this.subInjectService.changeNewRightSliderState((data == 'close' && this.requiredRefresh == false) ? { state: 'close' } : { state: 'close', refreshRequired: true });
@@ -208,6 +210,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.rows.controls[index].markAllAsTouched();
       return;
     }
+    clientData.isLoading = true;
     const arrayObj = {
       ownerClientId: this.data.clientData.client.clientId,
       mergeClientId: clientData.clientId,
@@ -217,11 +220,14 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
         console.log(data);
+        clientData.isLoading = false;
         clientData.addedFlag = true;
         this.requiredRefresh = true;
+        this.cancelFlagService.setCancelFlag(true)
       },
       err => {
         clientData.addedFlag = false;
+        clientData.isLoading = true;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     )
