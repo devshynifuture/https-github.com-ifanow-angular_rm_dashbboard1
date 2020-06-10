@@ -215,11 +215,11 @@
 
 
             <ng-container matColumnDef="relation">
-              <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
-              <td *matCellDef="let element;index as i" class="br" mat-cell [formGroupName]="i">
+              <th *matHeaderCellDef class="br" mat-header-cell class="w-16"> Relation</th>
+              <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
                 <div class="form-group">
                   <mat-form-field>
-                    <mat-select formControlName="relation" class="form-control">
+                    <mat-select formControlName="relation" class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
@@ -229,14 +229,14 @@
             </ng-container>
 
             <ng-container matColumnDef="gender">
-              <th *matHeaderCellDef class="br" mat-header-cell> Gender</th>
-              <td *matCellDef="let element;index as i" class="br" mat-cell [formGroupName]="i">
+              <th *matHeaderCellDef class="br" mat-header-cell class="w-16"> Gender</th>
+              <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
                 <div class="form-group">
                   <mat-form-field>
-                    <mat-select formControlName="gender" class="form-control">
+                    <mat-select formControlName="gender" class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
                     </mat-select>
-                    <mat-error>This field is required</mat-error>
+                    <mat-error class="">This field is required</mat-error>
                   </mat-form-field>
                 </div>
               </td>
