@@ -62,8 +62,7 @@
                     </mat-menu>
                 </a>
                 <a class="sidenav-link" mat-list-item *ngIf="user.userType == 2">
-                    <img [src]="'/assets/images/svg/comment-icon.svg'" [matMenuTriggerFor]="menu"
-                        class="c-p header-img">
+                    <img [src]="authService.clientProfilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
                     <!-- <mat-menu #menu="matMenu">
                         <button (click)="logout()" mat-menu-item>Logout</button>
                     </mat-menu> -->
@@ -71,7 +70,7 @@
                         <div class="p-8 pr-0 pl-16 w-240">
                             <div class="row bb-1">
                                 <div class="col-md-3 p-0 pt-10 pb-10">
-                                    <img [src]="authService.orgData.logoUrl || organizationLogo" class="w-100">
+                                    <img [src]="authService.clientProfilePic" class="w-100">
                                 </div>
                                 <div class="col-md-9 d-flex justify-content-center flex-column">
                                     <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
