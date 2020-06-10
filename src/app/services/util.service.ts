@@ -354,7 +354,7 @@ export class UtilService {
         const file = new Blob([data], {type: 'application/pdf'});
         fragData.isSpinner = false;
         // window.open(fileURL,"hello");
-        var namePdf = AuthService.getUserInfo().name+"'s "+pdfName+ "as on:"+new Date(); 
+        var namePdf = AuthService.getClientData().name+"'s "+pdfName+ "as on:"+new Date(); 
         const a = document.createElement('a');
         a.href=window.URL.createObjectURL(file);
         a.download=namePdf+".pdf";

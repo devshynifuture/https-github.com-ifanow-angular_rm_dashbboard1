@@ -8,6 +8,8 @@
         </div>
         <div class="col-md-6 ">
             <div class="right text-right">
+                    <button mat-stroked-button 
+                    class="btn-default addon"  *ngIf="!isLoading && dataSource.filteredData?.length>0 && mode =='all'" (click)="Excel('SIP')"><i class="material-icons">add</i>XLS</button>
                 <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
             </div>
         </div>
@@ -20,7 +22,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 overflow-hidden">
-            <table matSort mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData?.length>0" id="tbs"
+            <table matSort #tableEl mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData?.length>0" id="tbs"
                 class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
