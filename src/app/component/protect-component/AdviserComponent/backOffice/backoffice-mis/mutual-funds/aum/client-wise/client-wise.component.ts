@@ -3,6 +3,7 @@ import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 
 @Component({
@@ -84,7 +85,7 @@ export class ClientWiseComponent implements OnInit {
   scheme1ListArr: any;
   isLoadingFolio: boolean;
 
-  constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
+  constructor(public aum: AumComponent, private backoffice: BackOfficeService,private mfService:MfServiceService) { }
 
 
   showLoader = true;
@@ -301,8 +302,8 @@ export class ClientWiseComponent implements OnInit {
         field1: element.index,
         field2: element.name,
         field3: element.folioNumber,
-        field4: element.totalAum,
-        field5: element.balanceUnit,
+        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field5: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field6: element.weightInPerc
       });
     });
@@ -332,7 +333,7 @@ export class ClientWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.name,
-        totalAum: element.totalAum,
+        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         weightInPerc: element.weightInPercentage,
         investorList: [],
       }
@@ -348,7 +349,7 @@ export class ClientWiseComponent implements OnInit {
           this.arrayOfExcelData[index].investorList.push({
             index: index1 + 1,
             name: element.investorName,
-            totalAum: element.totalAum,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
@@ -360,7 +361,7 @@ export class ClientWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: element.totalAum,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
@@ -373,8 +374,8 @@ export class ClientWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.schemeName,
             folioNumber: element.folioNumber,
-            totalAum: element.totalAum,
-            balanceUnit: element.balanceUnit,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
             weightInPerc: element.weightInPercentage
           });
         });

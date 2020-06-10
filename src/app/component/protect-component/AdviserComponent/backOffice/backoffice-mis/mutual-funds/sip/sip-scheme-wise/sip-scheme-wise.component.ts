@@ -4,6 +4,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -115,7 +116,7 @@ export class SipSchemeWiseComponent implements OnInit {
   applicantListArr: any[];
   subCatList: any[];
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
 
   ngOnInit() {
     this.showLoader = false;
@@ -298,7 +299,7 @@ export class SipSchemeWiseComponent implements OnInit {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
             name: element.investorName,
-            sipAmount: element.sipAmount,
+            sipAmount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             sipCount: element.sipCount,
             weightInPerc: element.weightInPercentage,
             applicantList: []
@@ -311,7 +312,7 @@ export class SipSchemeWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList.push({
             index: index1 + 1,
             name: element.schemeName,
-            sipAmount: element.sipAmount,
+            sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             sipCount: element.sipCount,
             weightInPerc: element.weightInPercentage,
             schemeList: []
@@ -329,7 +330,7 @@ export class SipSchemeWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             toTriggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: element.sipAmount,
+            amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             weightInPerc: element.weightInPercentage,
             applicantList: []
           });
@@ -384,7 +385,7 @@ export class SipSchemeWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.schemeName,
-        sipAmount: element.sipAmount,
+        sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
         sipCount: element.sipCount,
         weightInPerc: element.weightInPercentage,
         subCatList: [],

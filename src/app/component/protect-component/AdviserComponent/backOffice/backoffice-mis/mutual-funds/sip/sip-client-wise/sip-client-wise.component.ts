@@ -4,6 +4,7 @@ import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 @Component({
   selector: 'app-sip-client-wise',
   templateUrl: './sip-client-wise.component.html',
@@ -74,7 +75,7 @@ export class SipClientWiseComponent implements OnInit {
   isLoadingApplicant: boolean;
   applicantList: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
 
 
 
@@ -133,7 +134,7 @@ export class SipClientWiseComponent implements OnInit {
       data = {
         index: index1 + 1,
         name: element.investorName,
-        sipAmount: element.sipAmount,
+        sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
         weightInPerc: element.weightInPercentage,
         investorList: [],
       }
@@ -225,7 +226,7 @@ export class SipClientWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             triggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: element.sipAmount,
+            amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
@@ -237,7 +238,7 @@ export class SipClientWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum: element.totalAum,
+            totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
