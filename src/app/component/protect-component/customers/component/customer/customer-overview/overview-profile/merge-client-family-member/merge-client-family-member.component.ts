@@ -10,6 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { EnumDataService } from '../../../../../../../../services/enum-data.service';
 import { ProcessTransactionService } from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
 import { UtilService } from '../../../../../../../../services/util.service';
+import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-merge-client-family-member',
@@ -49,18 +50,15 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   rows: FormArray = this.fb.array([]);
   form: FormGroup = this.fb.group({ 'clients': this.rows });
   selectedClientFormGroup: FormGroup
+  requiredRefresh: boolean = false;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
     private peopleService: PeopleService, private enumDataService: EnumDataService,
-    public processTransaction: ProcessTransactionService) {
+    public processTransaction: ProcessTransactionService, private cancelFlagService: CancelFlagService) {
   }
 
   ngOnInit() {
-    this.selectedClientFormGroup = this.fb.group({
-      relation: ['', [Validators.required]],
-      gender: ['', [Validators.required]]
-    })
     let clientList = Object.assign([], this.data.clientData.ClientList);
     if (this.data.clientData.SuggestionList) {
       this.data.clientData.SuggestionList.filter(element => {
@@ -88,22 +86,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           }
         }),
       );
-  }
-  hideSuggetion(value) {
-    if (value == '') {
-      this.showSuggestion = true
-      this.selectedClientData = undefined
-    };
-  }
-  optionSelected(value) {
-    if (value.count == 0) {
-      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
-      return;
-    }
-    // this.showSuggestion = false;
-    console.log(' selected client to merge ', value);
-    this.selectedClient = value;
-    this.data.clientData
+
     if (this.data.clientData.client.clientType == 2) {
       this.relationTypeList = [
         { name: 'Father', value: 6 },
@@ -135,6 +118,26 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         ]
       }
     }
+  }
+  hideSuggetion(value) {
+    if (value == '') {
+      this.showSuggestion = true
+      this.selectedClientData = undefined
+    };
+  }
+  optionSelected(value) {
+    if (value.count == 0) {
+      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
+      return;
+    }
+    // this.showSuggestion = false;
+    this.requiredRefresh = false;
+    this.selectedClientFormGroup = this.fb.group({
+      relation: ['', [Validators.required]],
+      gender: ['', [Validators.required]]
+    })
+    console.log(' selected client to merge ', value);
+    this.selectedClient = value;
     this.getClientData(value);
   }
 
@@ -166,10 +169,10 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   close(data) {
-    if (data != 'close') {
+    if (this.requiredRefresh) {
       this.enumDataService.searchClientList();
     }
-    this.subInjectService.changeNewRightSliderState((data == 'close') ? { state: 'close' } : { state: 'close', refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState((data == 'close' && this.requiredRefresh == false) ? { state: 'close' } : { state: 'close', refreshRequired: true });
   }
 
   saveFamilyMembers() {
@@ -191,7 +194,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
         console.log(data),
-          this.close(data);
+          this.requiredRefresh = true
+        this.close(data);
         this.barButtonOptions.active = false;
       },
       err => {
@@ -206,6 +210,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.rows.controls[index].markAllAsTouched();
       return;
     }
+    clientData.isLoading = true;
     const arrayObj = {
       ownerClientId: this.data.clientData.client.clientId,
       mergeClientId: clientData.clientId,
@@ -214,45 +219,38 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     };
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
-        console.log(data)
+        console.log(data);
+        clientData.isLoading = false;
+        clientData.addedFlag = true;
+        this.requiredRefresh = true;
+        this.cancelFlagService.setCancelFlag(true)
       },
       err => {
+        clientData.addedFlag = false;
+        clientData.isLoading = true;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     )
   }
 
-  changeGender(relationData) {
+  changeGender(relationData, flag, index) {
     let genderId;
-    if (relationData.value != 10) {
-      this.selectedClientFormGroup.controls.gender.enable()
-    }
     switch (true) {
-      case (relationData.value == 2):
+      case (relationData.value == 2 || relationData.value == 4 || relationData.value == 6):
         genderId = 1;
         break;
-      case (relationData.value == 3):
-        genderId = 2;
-        break;
-      case (relationData.value == 4):
-        genderId = 1;
-        break;
-      case (relationData.value == 5):
-        genderId = 2;
-        break;
-      case (relationData.value == 6):
-        genderId = 1;
-        break;
-      case (relationData.value == 7):
+      case (relationData.value == 3 || relationData.value == 5 || relationData.value == 7):
         genderId = 2;
         break;
       default:
         genderId = 1;
-        this.selectedClientFormGroup.controls.gender.disable()
         break;
     }
-
-    this.selectedClientFormGroup.controls.gender.setValue(String(genderId));
-    this.selectedClientFormGroup.controls.gender.updateValueAndValidity();
+    if (flag == "suggestionList") {
+      this.rows.controls[index].get('gender').setValue(String(genderId));
+    }
+    else {
+      this.selectedClientFormGroup.controls.gender.setValue(String(genderId));
+    }
   }
 }
