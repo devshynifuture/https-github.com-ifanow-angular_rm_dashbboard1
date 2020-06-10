@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import {FormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
+import { AuthService } from '../auth-service/authService';
 
 
 @Injectable({
@@ -317,7 +318,25 @@ export class UtilService {
     }
     formGroup.patchValue(event.target.value.toUpperCase());
   }
-
+   getBrowserName() {
+    const agent = window.navigator.userAgent.toLowerCase()
+    switch (true) {
+      case agent.indexOf('edge') > -1:
+        return 'edge';
+      case agent.indexOf('opr') > -1 && !!(<any>window).opr:
+        return 'opera';
+      case agent.indexOf('chrome') > -1 && !!(<any>window).chrome:
+        return 'chrome';
+      case agent.indexOf('trident') > -1:
+        return 'ie';
+      case agent.indexOf('firefox') > -1:
+        return 'firefox';
+      case agent.indexOf('safari') > -1:
+        return 'safari';
+      default:
+        return 'other';
+    }
+  }
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
     const obj = {
       htmlInput: inputData,
@@ -326,17 +345,21 @@ export class UtilService {
       key,
       svg
     };
+    var browser = this.getBrowserName()
+    console.log(browser)
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
       {responseType: 'blob'}).subscribe(
       data => {
         const file = new Blob([data], {type: 'application/pdf'});
-        const fileURL = URL.createObjectURL(file);
-        this.fileURL = URL.createObjectURL(file);
         fragData.isSpinner = false;
-        window.open(fileURL);
+        // window.open(fileURL,"hello");
+        var namePdf = AuthService.getUserInfo().name+"'s "+pdfName+ "as on:"+new Date(); 
         const a = document.createElement('a');
-        a.download = fileURL;
+        a.href=window.URL.createObjectURL(file);
+        a.download=namePdf+".pdf";
+        a.click();
+        //a.download = fileURL;
         return (this.fileURL) ? this.fileURL : null;
       }
     );

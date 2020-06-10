@@ -43,7 +43,7 @@
               This field is required
           </mat-error> -->
           <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
-            This family member does not exist
+            This client member does not exist
           </mat-error>
         </mat-form-field>
       </div>
@@ -160,7 +160,8 @@
               <div class="form-group">
                 <p class="m-0 roboto f-400 pb-10">Relation</p>
                 <mat-form-field>
-                  <mat-select (selectionChange)="changeGender($event)" formControlName="relation" class="form-control">
+                  <mat-select (selectionChange)="changeGender($event,'NonsuggestionList')" formControlName="relation"
+                    class="form-control">
                     <mat-option value='' disabled>Select option</mat-option>
                     <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
                     </mat-option>
@@ -215,39 +216,51 @@
 
 
             <ng-container matColumnDef="relation">
-              <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
-              <td *matCellDef="let element;index as i" class="br" mat-cell [formGroupName]="i">
-                <!-- <div class="form-group">
+              <th *matHeaderCellDef class="br w-16" mat-header-cell> Relation</th>
+              <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
+                <div class="form-group mb-0 pt-8">
                   <mat-form-field>
-                    <mat-select formControlName="relation" class="form-control">
+                    <mat-select (selectionChange)="changeGender($event,'suggestionList',i)" formControlName="relation"
+                      class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
+                      <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
+                      </mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                   </mat-form-field>
-                </div> -->
+                </div>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="gender">
-              <th *matHeaderCellDef class="br" mat-header-cell> Gender</th>
-              <td *matCellDef="let element;index as i" class="br" mat-cell [formGroupName]="i">
-                <!-- <div class="form-group">
+              <th *matHeaderCellDef class="br w-16" mat-header-cell> Gender</th>
+              <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
+                <div class="form-group mb-0 pt-8">
                   <mat-form-field>
-                    <mat-select formControlName="gender" class="form-control">
+                    <mat-select formControlName="gender" class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
+                      <mat-option value="1">Male</mat-option>
+                      <mat-option value="2">Female</mat-option>
+                      <mat-option value="3">Other</mat-option>
                     </mat-select>
-                    <mat-error>This field is required</mat-error>
+                    <mat-error class="">This field is required</mat-error>
                   </mat-form-field>
-                </div> -->
+                </div>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="add">
               <th *matHeaderCellDef class="br" mat-header-cell> Add</th>
               <td *matCellDef="let element;index as i" class="text-primary br" mat-cell>
-                <button mat-stroked-button (click)="saveSuggestedFamilyMember(i,element)"
-                  class="br-0 add-merge-client btn-primary mr-12">ADD
-                </button>
+                <div class="d-flex">
+                  <button *ngIf="element.addedFlag==false" mat-stroked-button
+                    (click)="saveSuggestedFamilyMember(i,element)" class="br-0 add-merge-client btn-primary mr-12">ADD
+                  </button>
+                  <!-- loader -->
+                  <mat-spinner *ngIf='element.isLoading' [diameter]="20"></mat-spinner>
+
+                  <p *ngIf="element.addedFlag" class="text-primary">Added</p>
+                </div>
               </td>
             </ng-container>
 
