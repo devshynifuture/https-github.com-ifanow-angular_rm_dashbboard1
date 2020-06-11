@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.module').then(m => m.BackofficeAumReconciliationModule)
       },
       {
+        path: 'bulk-report-sending',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-report-sending.module').then(m => m.BulkReportSendingModule)
+      },
+      {
         path: 'backoffice-file-upload',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-file-upload/backoffice-file-upload.module').then(m => m.BackofficeFileUploadModule)
       },

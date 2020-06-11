@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ExcelService } from '../../../../excel.service';
 
 @Component({
@@ -8,11 +8,15 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class SmallSavingSchemeComponent implements OnInit {
   selectedTab: number;
-
+  @Output() changeCount = new EventEmitter();
   constructor(private excel: ExcelService, ) {
   }
 
   ngOnInit() {
     this.selectedTab = 1;
+  }
+
+  getAssetCountGLobalData(){
+    this.changeCount.emit("call");
   }
 }

@@ -36,6 +36,7 @@ export class SipSchemeWiseComponent implements OnInit {
   reverse3 = true;
   @Output() changedValue = new EventEmitter();
   @Input() data;
+  maxDate = new Date();
 
 
   arrayOfHeaders: any[][] = [
@@ -258,6 +259,9 @@ export class SipSchemeWiseComponent implements OnInit {
         : null;
     });
 
+  }
+  preventDefault(e) {
+    e.preventDefault();
   }
   showSubTableList(index, category, schemeData) {
     this.selectedCategory = index
