@@ -42,6 +42,7 @@
                     <h3 class="m-0 roboto">{{welcomeMessage}} {{clientData.name}}</h3>
                     <p class="m-0 roboto">Your personalized money feed is ready! </p>
                 </div>
+                <!-- <button (click)="generateUpload(null)">generateUpload</button> -->
                 <div class="scrolling_myFeed">
                     <!-- your account intro -->
                     <div class="wrapperBox mb-20" [hidden]="true">
@@ -318,20 +319,28 @@
                                             <div class="col-md-4 pr-8">
                                                 <div class="border-Right-line">
                                                     <h5 class="f-14  mb-0 text-primitive">Amount invested</h5>
-                                                    <span class="text-success roboto"> ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
+                                                    <span class="roboto" [ngClass]="{'text-success': mutualFund.total_xirr > 0, 'text-danger': mutualFund.total_xirr <= 0}"> ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 class="f-14 mb-0 text-primitive">Returns</h5>
-                                                <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success roboto">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
-                                                <i class="material-icons f-14 f-700 text-success" *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
-                                                <span>arrow_upward</span>
-                                            </i>
-                                                <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 " class="text-danger">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
-                                                <i class="material-icons f-14 f-700 text-danger" *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0">
-                                                <span>arrow_downward</span>
-                                            </i>
+                                                <span *ngIf="mutualFund.total_xirr > 0">
+                                                    <span class="text-success roboto">
+                                                        {{(mutualFund.total_xirr | number:'1.2-2')}}%</span>
+                                                    <i class="material-icons f-14 f-700 text-success">
+                                                        <span>arrow_upward</span>
+                                                    </i>
+                                                </span>
+                                            
+                                                <span *ngIf="mutualFund.total_xirr <= 0">
+                                                    <span class="text-danger">
+                                                        {{(mutualFund.total_absolute_return | number:'1.2-2')}}%
+                                                    </span>
+                                                    <i class="material-icons f-14 f-700 text-danger">
+                                                        <span>arrow_downward</span>
+                                                    </i>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="row">

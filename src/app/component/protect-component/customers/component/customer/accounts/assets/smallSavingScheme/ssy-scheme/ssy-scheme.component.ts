@@ -1,5 +1,5 @@
 import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
-import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation, Output, EventEmitter  } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -20,6 +20,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   encapsulation: ViewEncapsulation.None
 })
 export class SsySchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   advisorId: any;
   clientId: number;
   noData: string;
@@ -133,6 +134,7 @@ export class SsySchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getSsySchemedataResponse', data);
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -24,6 +24,8 @@ export class SipApplicantWiseComponent implements OnInit {
   applicantFilter: any;
   isLoading = false;
   @Output() changedValue = new EventEmitter();
+  @Input() data;
+
   propertyName: any;
   propertyName2: any;
   reverse = true;
@@ -76,6 +78,7 @@ export class SipApplicantWiseComponent implements OnInit {
   isLoadingApplicant: boolean = false;
   applicantListArr: any[];
   caesedForm: any;
+  parentId: any;
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService,private eventService:EventService) { }
 
@@ -86,6 +89,7 @@ export class SipApplicantWiseComponent implements OnInit {
 
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.schemeWiseApplicantGet();
   }
   getFormControl() {
@@ -129,9 +133,9 @@ export class SipApplicantWiseComponent implements OnInit {
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1,
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.sipApplicantList(obj).subscribe(
       data => {
@@ -166,9 +170,9 @@ export class SipApplicantWiseComponent implements OnInit {
       this.applicantListArr = []
       applicantData.schemeList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: applicantData.id,
         totalAum: applicantData.totalAum
       }

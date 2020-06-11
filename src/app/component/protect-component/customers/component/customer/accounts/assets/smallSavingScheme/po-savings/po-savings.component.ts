@@ -1,5 +1,5 @@
 import { AddPoSavingComponent } from './../common-component/add-po-saving/add-po-saving.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter  } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -20,6 +20,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./po-savings.component.scss']
 })
 export class PoSavingsComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   advisorId: any;
   clientId: number;
   noData: string;
@@ -30,7 +31,6 @@ export class PoSavingsComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   datasource = new MatTableDataSource(this.data);
   @ViewChild('tableEl', { static: false }) tableEl;
-
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
@@ -132,6 +132,7 @@ export class PoSavingsComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getPoSavingSchemedataResponse', data);
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;

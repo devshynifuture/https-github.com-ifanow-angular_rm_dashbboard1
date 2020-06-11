@@ -4,6 +4,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
 import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 
 @Component({
@@ -33,14 +34,14 @@ export class SipComponent implements OnInit {
   viewMode: string;
   isLoading = true;
   parentId;
-  adminAdvisorIds: any;
+  adminAdvisorIds=[];
   isExpiringLoading=true;
   isExpiredLoading=true;
   isRejectionLoading=true;
   mode: any;
   objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; };
   loaderValue: number;
-  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
+  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService,private mfService:MfServiceService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
@@ -289,7 +290,7 @@ export class SipComponent implements OnInit {
   }
   filterByDate(data){
     data = data.filter(item => item.dateDiff <= 90);
-
+    data = this.mfService.sorting(data,'dateDiff')
     return data
   }
   amcWise(value,mode) {
