@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 // import {Router} from '@angular/router';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -69,6 +69,10 @@ export class AuthService {
     let clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+  static getOrgDetails() {
+    let orgData = localStorage.getItem('orgData');
+    return orgData ? JSON.parse(orgData) : undefined;
+  }
 
 
   static getClientId() {
@@ -78,6 +82,10 @@ export class AuthService {
 
   static setProfilePic(pic) {
     localStorage.setItem('profilePic', pic);
+  }
+
+  static setClientProfilePic(pic) {
+    sessionStorage.setItem('clientProfilePic', pic);
   }
 
   static setOrgDetails(data) {
@@ -99,6 +107,10 @@ export class AuthService {
 
   get profilePic() {
     return localStorage.getItem('profilePic');
+  }
+
+  get clientProfilePic() {
+    return sessionStorage.getItem('clientProfilePic');
   }
 
   get appPic() {

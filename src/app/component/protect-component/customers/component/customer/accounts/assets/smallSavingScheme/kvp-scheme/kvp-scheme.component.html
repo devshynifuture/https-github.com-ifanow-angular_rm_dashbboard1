@@ -68,7 +68,7 @@
                 </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div *ngIf="SumOfCurrentValue">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue"
+                <div *ngIf="sumOfCurrentValue">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue"
                         appFormatNumber>{{sumOfCurrentValue}}</span></div>
             </td>
         </ng-container>

@@ -4,6 +4,8 @@ import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -39,7 +41,8 @@ export class SipAmcWiseComponent implements OnInit {
   isLoadingApplicant: boolean = false;
   subCategory: [];
   applicantList: [];
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
+  caesedForm: any;
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService) { }
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
 
@@ -121,6 +124,9 @@ export class SipAmcWiseComponent implements OnInit {
 
 
   ngOnInit() {
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.amcGet();
@@ -306,7 +312,25 @@ export class SipAmcWiseComponent implements OnInit {
         break;
     }
   }
+  addCeasesdDate(sip, investor, date){
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+       console.log(data);
+      //  investor.value.splice(investor.value.indexOf(sip), 1);
+      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
+       
+      }
+    )
 
+  }
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'schemes':
@@ -315,9 +339,9 @@ export class SipAmcWiseComponent implements OnInit {
           this.arrayOfExcelData[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            sipAmount: element.sipAmount,
+            sipAmount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             sipCount: element.sipCount,
-            totalAum: element.totalAum,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             investorList: []
           });
@@ -329,7 +353,7 @@ export class SipAmcWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].schemeList[this.selectedAmc].investorList.push({
             index: index1 + 1,
             name: element.investorName,
-            sipAmount: element.sipAmount,
+            sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             sipCount: element.sipCount,
             weightInPerc: element.weightInPercentage,
             applicantList: []
@@ -349,7 +373,7 @@ export class SipAmcWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             triggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount: element.sipAmount,
+            amount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             weightInPerc: element.weightInPercentage
           });
         });
@@ -362,9 +386,9 @@ export class SipAmcWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.amcName,
-        sipAmount: element.sipAmount,
+        sipAmount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
         sipCount: element.sipCount,
-        totalAum: element.totalAum,
+        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         weightInPerc: element.weightInPercentage,
         schemeList: [],
       });
@@ -437,6 +461,9 @@ export class SipAmcWiseComponent implements OnInit {
         data => {
           this.isLoadingApplicant = false
           if (data) {
+            data.forEach(o => {
+              o.isEdit=false;
+            });
             applicantData.applicantList = data;
             this.applicantList = data
           } else {

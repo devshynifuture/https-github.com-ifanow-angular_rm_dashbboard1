@@ -46,8 +46,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu1"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PPF</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu1">Add new PPF</button>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item (click)="openAddEdit('advicePPF',null)">Suggest new
                     PPF</button>
@@ -58,21 +57,21 @@
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="ppfDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="ppfCount==ppfDataSource.data.length"
                     [indeterminate]="ppfCount>0 && ppfCount<ppfDataSource.data.length"
                     *ngIf="isLoading==false && ppfDataSource.tableFlag" (change)="checkAll($event,ppfDataSource,'ppf')">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ppfDataSource,'ppf')"
                     [checked]="element.selected">
                 </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -81,15 +80,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -98,15 +97,16 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total amount invested </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Total amount invested
+            </th>
+            <td mat-cell *matCellDef="let element" class="text-right">
                 <div class="bar"><span *ngIf="element.assetDetails"
                         appFormatNumber>{{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left">Maturity date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         <span>{{element.assetDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
@@ -115,8 +115,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceId==1">Continue till maturity</span>
@@ -132,8 +132,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -150,8 +150,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">{{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -182,8 +182,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button [matMenuTriggerFor]="menu2" mat-stroked-button class="btn-primary br-0 pl-8 "><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new NSC</button>
+            <button [matMenuTriggerFor]="menu2" mat-stroked-button class="btn-primary br-0">Add new NSC</button>
             <mat-menu #menu2="matMenu">
                 <button mat-menu-item (click)="openAddEdit('adviceNSC',null)">Suggest new
                     NSC</button>
@@ -194,20 +193,20 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="nscDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="nscCount==nscDataSource.data.length"
                     [indeterminate]="nscCount>0 && nscCount<nscDataSource.data.length"
                     *ngIf="isLoading==false && nscDataSource.tableFlag" (change)="checkAll($event,nscDataSource,'nsc')">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox [checked]="element.selected" (change)="checkSingle($event,element,nscDataSource,'nsc')"
                     *ngIf="isLoading==false"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         <span>
@@ -218,15 +217,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -235,14 +234,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left">Maturity date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"><span *ngIf="element.assetDetails">{{element.assetDetails.emprcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceId==1">Continue till maturity</span>
@@ -253,8 +252,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -271,8 +270,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -303,8 +302,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu3"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new SSY</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu3">Add new SSY</button>
             <mat-menu #menu3="matMenu">
                 <button mat-menu-item (click)="openAddEdit('adviceSSY',null)">Suggest new
                     SSY</button>
@@ -315,20 +313,20 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="ssyDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="ssyCount==ssyDataSource.data.length"
                     [indeterminate]="ssyCount>0 && ssyCount<ssyDataSource.data.length"
                     *ngIf="isLoading==false && ssyDataSource.tableFlag" (change)="checkAll($event,nscDataSource,'ssy')">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,ssyDataSource,'ssy')">
                 </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -337,16 +335,16 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -355,14 +353,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total amount invested </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow">Total amount invested
+            </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> <span *ngIf="element.assetDetails">{{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left">Maturity date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         <span>{{element.assetDetails.maturityDate | date:'dd/MM/yyyy'}}</span>
@@ -371,14 +370,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">{{element.advice}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -395,8 +394,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">{{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -427,8 +426,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu4"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new KVP</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu4">Add new KVP</button>
             <mat-menu #menu4="matMenu">
                 <button mat-menu-item (click)="openAddEdit('adviceKVP',null)">Suggest new
                     KVP</button>
@@ -439,20 +437,20 @@
     <table matSort mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="kvpDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="kvpCount==kvpDataSource.data.length"
                     [indeterminate]="kvpCount>0 && kvpCount<kvpDataSource.data.length"
                     *ngIf="isLoading==false && kvpDataSource.tableFlag" (change)="checkAll($event,kvpDataSource,'kvp')">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,kvpDataSource,'kvp')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -461,15 +459,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -478,22 +476,24 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employee's contribution </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Anuual employee's<br>
+                contribution </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employer's contribution </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Anuual employer's<br>
+                contribution </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.emprcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceId==1">Continue contributions as per rule</span>
@@ -506,8 +506,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -524,8 +524,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -556,8 +556,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu5"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new SCSS</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu5">Add new SCSS</button>
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item (click)="openAddEdit('adviceSCSS',null)">Suggest new
                     SCSS</button>
@@ -568,21 +567,21 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="scssDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="scssCount==scssDataSource.data.length"
                     [indeterminate]="scssCount>0 && scssCount<scssDataSource.data.length"
                     (change)="checkAll($event,scssDataSource,'scss')"
                     *ngIf="isLoading==false && scssDataSource.tableFlag">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,scssDataSource,'scss')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -592,15 +591,15 @@
         </ng-container>
 
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceId==1">Continue contributions as per rule</span>
@@ -611,8 +610,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -629,8 +628,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">{{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -661,8 +660,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu6"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PO SAVINGS</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu6">Add new PO SAVINGS</button>
             <mat-menu #menu6="matMenu">
                 <button mat-menu-item (click)="openAddEdit('advicePoSaving',null)">Suggest new
                     PO SAVINGS</button>
@@ -673,20 +671,20 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="posavingDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="posavingCount==posavingDataSource.data.length"
                     [indeterminate]="posavingCount>0 && posavingCount<posavingDataSource.data.length"
                     (change)="checkAll($event,posavingDataSource,'posaving')"
                     *ngIf="isLoading==false && posavingDataSource.tableFlag"></mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" [checked]="element.selected"
                     (change)="checkSingle($event, element,posavingDataSource,'posaving')"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -696,15 +694,15 @@
         </ng-container>
 
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -713,14 +711,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> {{element.astatus}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -737,8 +735,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -769,8 +767,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu7"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PO RD</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu7">Add new PO RD</button>
             <mat-menu #menu7="matMenu">
                 <button mat-menu-item (click)="openAddEdit('advicePORD',null)">Suggest new
                     PO RD</button>
@@ -781,20 +778,20 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pordDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox (change)="checkAll($event,scssDataSource,'pord')"
                     [checked]="pordCount==pordDataSource.data.length"
                     [indeterminate]="pordCount>0 && pordCount<pordDataSource.data.length"
                     *ngIf="isLoading==false && pordDataSource.tableFlag"></mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pordDataSource,'pord')">
                 </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -802,15 +799,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -819,28 +816,30 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employee's contribution </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Anuual employee's<br>
+                contribution </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span *ngIf="element.assetDetails"
                         appFormatNumber>{{element.assetDetails.empcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Anuual employer's contribution </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Anuual employer's<br>
+                contribution </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span *ngIf="element.assetDetails"
                         appFormatNumber>{{element.assetDetails.emprcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">{{element.advice}} </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -857,8 +856,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">{{element.adate}} </div>
             </td>
         </ng-container>
@@ -889,8 +888,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu8"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Add new PO TD</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu8">Add new PO TD</button>
             <mat-menu #menu8="matMenu">
                 <button mat-menu-item (click)="openAddEdit('advicePOTD',null)">Suggest new
                     PO TD</button>
@@ -901,21 +899,21 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="potdDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="potdCount==potdDataSource.data.length"
                     [indeterminate]="potdCount>0 && potdCount<potdDataSource.data.length"
                     *ngIf="isLoading==false && potdDataSource.tableFlag"
                     (change)="checkAll($event,potdDataSource,'potd')">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,potdDataSource,'potd')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -924,15 +922,15 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Current value </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br right-hcb hide-arrow"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
                     <span *ngIf="element.assetDetails" appFormatNumber>
                         {{element.assetDetails.currentValue}}
@@ -941,14 +939,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Maturity date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left">Maturity date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span *ngIf="element.assetDetails">{{element.assetDetails.emprcon}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceId==1">Open new account</span>
@@ -961,8 +959,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Advice status</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">Advice status</th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
                         <span *ngIf="element.adviceStatusId==2">AWAITING CONSENT</span>
@@ -977,8 +975,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> {{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>
@@ -1009,8 +1007,7 @@
         <div class="col-md-6 p-0 text-right">
             <button mat-stroked-button class="br-0 text-light pl-8 mr-12"><img src="/assets/images/svg/addon-three.svg"
                     class="pr-8">Filters</button>
-            <button mat-stroked-button class="btn-primary br-0 pl-8 " [matMenuTriggerFor]="menu9"><img
-                    src="/assets/images/svg/plus.svg" class="pr-8">Suggest new PO MIS</button>
+            <button mat-stroked-button class="btn-primary br-0" [matMenuTriggerFor]="menu9">Suggest new PO MIS</button>
             <mat-menu #menu9="matMenu">
                 <button mat-menu-item (click)="openAddEdit('advicePOMIS',null)">Suggest new
                     PO MIS</button>
@@ -1021,21 +1018,21 @@
     <table matSort appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="pomisDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br">
                 <mat-checkbox [checked]="pomisCount==pomisDataSource.data.length"
                     [indeterminate]="pomisCount>0 && pomisCount<pomisDataSource.data.length"
                     *ngIf="isLoading==false && pomisDataSource.tableFlag"
                     (change)="checkAll($event,pomisDataSource,'pomis')">
                 </mat-checkbox>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false" (change)="checkSingle($event,element,pomisDataSource,'pomis')"
                     [checked]="element.selected"></mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Investor name </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Investor name </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element.assetDetails">
                         {{element.assetDetails.ownerName}}
@@ -1045,15 +1042,15 @@
         </ng-container>
 
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"><span *ngIf="element">{{element.adviceDescription}}</span>
                 </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceId==1">Open new account</span>
@@ -1065,8 +1062,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Advice status </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> Advice status </th>
+            <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
                         <span *ngIf="element.adviceStatusId==1">GIVEN</span>
@@ -1083,8 +1080,8 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Applicable date </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="br text-left"> Applicable date </th>
+            <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar">{{element.applicableDate | date:'dd/MM/yyyy'}}</div>
             </td>
         </ng-container>

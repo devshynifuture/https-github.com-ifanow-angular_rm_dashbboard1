@@ -249,19 +249,19 @@ addNewNominee(data) {
   this.holdingData=this.scipLevelHoldingForm.value
 
     if (data.transactionOrHoldingSummaryList) {
-      data.transactionOrHoldingSummaryList.forEach(element => {
-        let singleScripData = this.fb.group({
-          scripName: [element.scripName, [Validators.required]],
-          holdings: [element.quantity, [Validators.required]],
-          holdingAsOn: [new Date(element.holdingOrTransactionDate), [Validators.required]],
-          investedAmt: [element.investedOrTransactionAmount, [Validators.required]],
-          scripNameId: [element.transactionTypeOrScripNameId, [Validators.required]],
-          // isDeleted:[element.isDeleted],
-          id: [element.id]
-        })
-
-        
-        this.HoldingArray.push(singleScripData);
+      data.stockListForEditView.forEach(s => {
+        s.transactionOrHoldingSummaryList.forEach(element => {
+          let singleScripData = this.fb.group({
+            scripName: [element.scripName, [Validators.required]],
+            holdings: [element.quantity, [Validators.required]],
+            holdingAsOn: [new Date(element.holdingOrTransactionDate), [Validators.required]],
+            investedAmt: [element.investedOrTransactionAmount, [Validators.required]],
+            scripNameId: [element.transactionTypeOrScripNameId, [Validators.required]],
+            // isDeleted:[element.isDeleted],
+            id: [element.id]
+          })
+          this.HoldingArray.push(singleScripData);
+        });
       });
     }
     this.familyMemberId = data.familyMemberId;

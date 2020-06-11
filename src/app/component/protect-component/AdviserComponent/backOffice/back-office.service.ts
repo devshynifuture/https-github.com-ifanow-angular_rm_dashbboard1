@@ -45,6 +45,10 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.TOTAL_GET_AUM, httpParams);
   }
 
+  addCeasedDate(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CEASED_DATE, data);
+  }
+
   getMisData(data) {
     const httpParams = new HttpParams().set('advisorId', data);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA, httpParams);

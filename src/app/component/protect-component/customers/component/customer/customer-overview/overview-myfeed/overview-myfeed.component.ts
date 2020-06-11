@@ -35,6 +35,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   displayedColumns: string[] = ['description', 'date', 'amount'];
   cashFlowViewDataSource = [];
   welcomeMessage = '';
+  isLoading = true;
 
   chartData: any[] = [
     {
@@ -92,7 +93,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
   totalValue: any = {};
   filterData: any;
-  mfAllocationData:any[] = [
+  mfAllocationData: any[] = [
     {
       name: 'EQUITY',
       y: 0,
@@ -130,12 +131,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
     }
   ]
-  mfSubCatAllocationData:any[] = [];
-  worker:Worker;
+  mfSubCatAllocationData: any[] = [];
+  worker: Worker;
   currentViewId = 1;
-  greeterFnID:any;
+  greeterFnID: any;
   mutualFund: any;
-  userInfo:any;
+  userInfo: any;
 
   constructor(
     private customerService: CustomerService,
@@ -161,60 +162,72 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.advisorInfo = AuthService.getAdvisorDetails();
     this.advisorImg = this.advisorInfo.profilePic;
     this.greeter();
-    this.greeterFnID = setInterval(()=> this.greeter(), 1000);
+    this.greeterFnID = setInterval(() => this.greeter(), 1000);
   }
 
   tabsLoaded = {
     portfolioData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     rtaFeeds: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     recentTransactions: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     documentsVault: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     riskProfile: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     globalRiskProfile: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     goalsData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
       displaySection: false,
     },
     cashflowData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     customerProfile: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     },
     mfPortfolioSummaryData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
       displaySection: false,
     },
     mfSubCategorySummaryData: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
       displaySection: false,
     },
     familyMembers: {
       dataLoaded: false,
       hasData: false,
+      isLoading: true,
     }
   };
   hasError: boolean = false;
@@ -234,20 +247,20 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   };
   portfolioSummaryData: any[] = [];
   familyWiseAllocation: any[] = [];
-  appearancePortfolio:any = {};
+  appearancePortfolio: any = {};
   familyMembers: any[] = [];
 
 
   // highlight scroll links solution
   // https://stackoverflow.com/a/54447174
-  @ViewChild('allFeedsSection', {static: true}) allFeedsSection: ElementRef;
-  @ViewChild('riskProfileSection', {static: true}) riskProfileSection: ElementRef;
-  @ViewChild('cashFlowSection', {static: true}) cashFlowSection: ElementRef;
-  @ViewChild('portFolioSection', {static: true}) portFolioSection: ElementRef;
-  allFeedsSectionOffset:any = 0;
-  riskProfileSectionOffset:any = 0;
-  cashFlowSectionOffset:any = 0;
-  portFolioSectionOffset:any = 0;
+  @ViewChild('allFeedsSection', { static: true }) allFeedsSection: ElementRef;
+  @ViewChild('riskProfileSection', { static: true }) riskProfileSection: ElementRef;
+  @ViewChild('cashFlowSection', { static: true }) cashFlowSection: ElementRef;
+  @ViewChild('portFolioSection', { static: true }) portFolioSection: ElementRef;
+  allFeedsSectionOffset: any = 0;
+  riskProfileSectionOffset: any = 0;
+  cashFlowSectionOffset: any = 0;
+  portFolioSectionOffset: any = 0;
 
   ngOnInit() {
     this.loadLogicBasedOnRoleType();
@@ -303,7 +316,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   loadLogicBasedOnRoleType() {
     console.log(this.enumSerice.getClientRole());
     // break intentionally not applied. DO NOT ADD BREAKS!!!!!
-    switch(this.clientData.advisorOrClientRole) {
+    switch (this.clientData.advisorOrClientRole) {
       case 0: // because currently system is giving it as 0 :(
       case 7:
       case 6:
@@ -350,7 +363,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     )
   }
 
-  getAppearanceSettings(){
+  getAppearanceSettings() {
     this.loaderFn.increaseCounter()
     let obj = {
       advisorId: this.advisorId
@@ -367,7 +380,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   initializePieChart() {
-    let chartConfig:any = {
+    let chartConfig: any = {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -429,6 +442,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
+    this.tabsLoaded.portfolioData.isLoading = true;
 
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
@@ -472,24 +486,25 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             hasNoDataCounter--;
           }
         });
-        if(hasNoDataCounter === 0) {
-          this.tabsLoaded.portfolioData.hasData = false;
-        }
         chartTotal -= 1;
+        if (chartTotal === 0) {
+          this.tabsLoaded.portfolioData.hasData = false
+        }
         if (counter > 4) {
           chartData.push(othersData);
         }
-        if(counter > 0) {
+        if (counter > 0) {
           this.chartTotal = chartTotal;
           this.chartData = chartData;
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
       }
+      this.tabsLoaded.portfolioData.isLoading = false;
       this.tabsLoaded.portfolioData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
-      this.tabsLoaded.portfolioData.dataLoaded = false;
+      this.tabsLoaded.portfolioData.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -501,6 +516,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId,
       limit: 5
     }
+    this.tabsLoaded.rtaFeeds.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRTAFeeds(obj).subscribe(res => {
       if (res == null) {
@@ -509,10 +525,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.rtaFeeds.hasData = true;
         this.rtaFeedsData = res;
       }
+      this.tabsLoaded.rtaFeeds.isLoading = false;
       this.tabsLoaded.rtaFeeds.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.rtaFeeds.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -524,6 +542,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId,
       limit: 5
     }
+    this.tabsLoaded.documentsVault.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
       if (res == null || res.fileStats.length == 0) {
@@ -537,10 +556,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           genderId: 0
         })
       }
+      this.tabsLoaded.documentsVault.isLoading = false;
       this.tabsLoaded.documentsVault.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.documentsVault.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -551,6 +572,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
+    this.tabsLoaded.riskProfile.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res == null || res[0].id === 0) {
@@ -560,9 +582,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;
       }
+      this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
+      this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = false;
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
@@ -579,9 +603,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.globalRiskProfile = res;
       }
       this.tabsLoaded.globalRiskProfile.dataLoaded = true;
+      this.tabsLoaded.globalRiskProfile.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.globalRiskProfile.isLoading = false;
       this.tabsLoaded.globalRiskProfile.dataLoaded = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
@@ -605,10 +631,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.recentTransactions = res;
       }
       this.tabsLoaded.recentTransactions.dataLoaded = true;
+      this.tabsLoaded.recentTransactions.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
       this.tabsLoaded.recentTransactions.dataLoaded = false;
+      this.tabsLoaded.recentTransactions.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
@@ -620,7 +648,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId
     }
 
-    if(this.tabsLoaded.goalsData.displaySection) {
+    if (this.tabsLoaded.goalsData.displaySection) {
       this.loaderFn.increaseCounter();
       this.plansService.getAllGoals(obj).subscribe((res) => {
         if (res == null) {
@@ -630,8 +658,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.goalsData = res;
         }
         this.tabsLoaded.goalsData.dataLoaded = true;
+        this.tabsLoaded.goalsData.isLoading = false;
       }, err => {
         this.tabsLoaded.goalsData.hasData = false;
+        this.tabsLoaded.goalsData.dataLoaded = true;
+        this.tabsLoaded.goalsData.isLoading = false;
         this.eventService.openSnackBar(err, "Dismiss")
         this.loaderFn.decreaseCounter();
         this.hasError = true;
@@ -663,8 +694,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.createCashflowFamilyObj(res);
       }
       this.tabsLoaded.cashflowData.dataLoaded = true;
+      this.tabsLoaded.cashflowData.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
+      this.tabsLoaded.cashflowData.dataLoaded = false;
+      this.tabsLoaded.cashflowData.isLoading = false;
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
@@ -683,7 +717,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     tnx = tnx.flat();
 
     // show empty state if no data
-    if(tnx.length == 0) {
+    if (tnx.length == 0) {
       this.cashflowData = {
         emptyData: [{
           bankName: 'Not enough data to display',
@@ -710,7 +744,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       let all_accounts = [...new Set(transactions.map(obj => obj.userBankMappingId))];
 
       // create bank wise leddger objs
-      let cashflowLedgger = all_accounts.map(bank =>{
+      let cashflowLedgger = all_accounts.map(bank => {
         // filter transactions as per bank
         let account_transactions = transactions.filter(tnx => tnx.userBankMappingId == bank);
         let account_income = 0;
@@ -734,7 +768,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         }
 
         // non linked bank = 0
-        if(bank == 0) {
+        if (bank == 0) {
           leddger.bankName = "Non-linked bank";
         }
         return leddger;
@@ -825,7 +859,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
   carouselWheelEvent(carousel, event) {
     event.preventDefault();
-    if(event.deltaY > 0) {
+    if (event.deltaY > 0) {
       carousel.slickNext();
     } else {
       carousel.slickPrev();
@@ -838,13 +872,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       advisorId: this.advisorId
     }
 
-    if(this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
+    if (this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
       this.loaderFn.increaseCounter();
-  
+
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
           this.eventService.openSnackBar(error, "DISMISS");
           this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
         }
       );
     }
@@ -864,6 +899,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       },
       err => {
         this.tabsLoaded.familyMembers.dataLoaded = false;
+        this.tabsLoaded.familyMembers.isLoading = false;
         this.eventService.openSnackBar(err, "Dismiss");
         console.error(err);
       }
@@ -896,7 +932,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // You should add a fallback so that your program still executes correctly.
     }
   }
-  generateSubCategorywiseChartData(data){
+  generateSubCategorywiseChartData(data) {
     data = this.mfServiceService.sorting(data, 'currentValue');
     console.log(data);
 
@@ -904,6 +940,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   getMutualFundResponse(data) {
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
+      this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
       this.mutualFund = this.filterData;
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
 
@@ -916,41 +953,41 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     // this.mfAllocationData = [];
     let counter = 0;
     data.forEach(element => {
-      switch(element.category) {
+      switch (element.category) {
         case 'DEBT':
-            this.mfAllocationData.push({
-              name: element.category,
-              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-              color: AppConstants.DONUT_CHART_COLORS[1],
-              dataLabels: {
-                enabled: false
-              }
-            })
-            counter ++;
-            break;
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[1],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
 
         case 'EQUITY':
-            this.mfAllocationData.push({
-              name: element.category,
-              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-              color: AppConstants.DONUT_CHART_COLORS[0],
-              dataLabels: {
-                enabled: false
-              }
-            })
-            counter ++;
-            break;
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[0],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
         case 'HYBRID':
-            this.mfAllocationData.push({
-              name: element.category,
-              y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
-              color: AppConstants.DONUT_CHART_COLORS[2],
-              dataLabels: {
-                enabled: false
-              }
-            })
-            counter ++;
-            break;
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[2],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
         case 'SOLUTION ORIENTED':
           this.mfAllocationData.push({
             name: element.category,
@@ -960,7 +997,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
               enabled: false
             }
           })
-          counter ++;
+          counter++;
           break;
         default:
           this.mfAllocationData.push({
@@ -971,7 +1008,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
               enabled: false
             }
           })
-          counter ++;
+          counter++;
           break;
       }
     });
@@ -985,41 +1022,41 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   mfPieChartDataMgnt() {
     this.mfAllocationPieConfig.removeSeries(0);
     this.mfAllocationPieConfig.addSeries({
-        type: 'pie',
-        name: 'Browser share',
-        innerSize: '60%',
-        data: this.mfAllocationData,
-      }, true, false)
+      type: 'pie',
+      name: 'Browser share',
+      innerSize: '60%',
+      data: this.mfAllocationData,
+    }, true, false)
   }
 
 
   generateSubCategorywiseAllocationData(data) {
     data = data.sort((a, b) =>
-    a.currentValue > b.currentValue ? -1 : (a.currentValue === b.currentValue ? 0 : 1)
-  );
+      a.currentValue > b.currentValue ? -1 : (a.currentValue === b.currentValue ? 0 : 1)
+    );
 
     console.log(data);
     let counter = 0;
     this.mfSubCatAllocationData = [];
     let othersData = {
       name: 'Others',
-      y:0,
-      percentage:0,
+      y: 0,
+      percentage: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
-      dataLabels: {enabled:false}
+      dataLabels: { enabled: false }
     }
-    data.forEach((data,ind) => {
-      if(ind < 4) {
+    data.forEach((data, ind) => {
+      if (ind < 4) {
         this.mfSubCatAllocationData.push({
           name: data.subCategory,
           y: data.currentValue,
-          percentage:data.allocatedPercentage,
+          percentage: data.allocatedPercentage,
           color: AppConstants.DONUT_CHART_COLORS[counter],
           dataLabels: {
             enabled: false
           }
         })
-        counter ++;
+        counter++;
       } else {
         othersData.y += data.currentValue
         othersData.percentage += data.allocatedPercentage
@@ -1043,21 +1080,21 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.familyWiseAllocation = data.family_member_list;
   }
 
-  ngOnDestroy(){
-    if(this.worker) this.worker.terminate();
+  ngOnDestroy() {
+    if (this.worker) this.worker.terminate();
     clearInterval(this.greeterFnID);
   }
 
   greeter() {
-    var date = new Date();  
-    var hour = date.getHours();  
-    if (hour < 12) {  
-      this.welcomeMessage = "Good morning";  
-    } else if (hour < 17) {  
-      this.welcomeMessage = "Good afternoon";  
-    } else {  
-      this.welcomeMessage = "Good evening";  
-    }  
+    var date = new Date();
+    var hour = date.getHours();
+    if (hour < 12) {
+      this.welcomeMessage = "Good morning";
+    } else if (hour < 17) {
+      this.welcomeMessage = "Good afternoon";
+    } else {
+      this.welcomeMessage = "Good evening";
+    }
   }
 
   getTnxStatus(id) {

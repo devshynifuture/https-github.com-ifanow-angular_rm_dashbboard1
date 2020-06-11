@@ -179,8 +179,16 @@
   height: 50vh !important;
 }
 
+.w-208 {
+  width: 208px !important;
+}
+
 .w-240 {
   width: 240px !important;
+}
+
+.maxw-320 {
+  max-width: 320px !important;
 }
 
 .h-180 {
@@ -302,6 +310,10 @@
 
 .width200 {
   width: 200px;
+}
+
+.h-33 {
+  height: 33px !important;
 }
 
 .h-100 {
@@ -891,5 +903,5 @@
 
 .t-99,
 .w-99 {
-  width: 99%;
+  width: 99% !important;
 }

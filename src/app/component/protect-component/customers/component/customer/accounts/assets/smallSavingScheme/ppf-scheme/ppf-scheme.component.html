@@ -78,12 +78,8 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accountBalance }}</span> </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-<<<<<<< HEAD
                 <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAccountBalance"
                         appFormatNumber>{{sumOfAccountBalance}}</span></div>
-=======
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
->>>>>>> 08ba525c299815fba57d64f3c58ca4316eabd9eb
             </td>
         </ng-container>
         <ng-container matColumnDef="number">

@@ -15,29 +15,32 @@
         </div>
     </div>
     <div class="row give-adivce pt-20">
-        <div class="col-md-3 pl-0">
-
+        <div class="w-30 pl-0">
+            <p class="m-0 roboto f-400 pb-8">Select an advice <img src="/assets/images/svg/info.svg" class="c-p"></p>
             <mat-radio-group class="d-block">
-                <mat-radio-button *ngFor="let lol of advicelist;index as i" [ngClass]="{'mt-20':i>0}" class="b-ua">
+                <mat-radio-button *ngFor="let lol of advicelist;index as i" [ngClass]="{'mt-20':i>0}"
+                    class="b-ua text-custom">
                     {{lol.name}}</mat-radio-button>
             </mat-radio-group>
-            <mat-radio-group aria-label="Select an option" class="mt-20">
-                <mat-radio-button value="1" class="b-ua mt-20 pt-28 h-84">
-                    Non financial advice
-                    <div class="form-group pt-4">
-                        <mat-form-field class="w-100">
-                            <mat-select class="form-control">
+            <div class="b-ua mt-20 w-90 pb-10">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" class="mt-12 text-custom">
+                        Non financial advice
+                    </mat-radio-button>
+                    <div class="form-group b-0 b-ua w-85 m-auto">
+                        <mat-form-field class="">
+                            <mat-select class="form-control b-0">
                                 <mat-option value="option">Add nominee</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-                </mat-radio-button>
-            </mat-radio-group>
+                </mat-radio-group>
+            </div>
         </div>
-        <div class="col-md-9 pr-0 pl-24">
+        <div class="w-70 pr-0 pl-8">
             <div class="row bl-1">
                 <div class="col-md-9">
-                    <p class="m-0 roboto text-black">Advice header</p>
+                    <p class="m-0 roboto text-black pb-8">Advice header</p>
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput class="form-control">
@@ -45,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 p-0">
-                    <p class="m-0">Advice given on</p>
+                    <p class="m-0 pb-8 roboto text-black">Advice given on</p>
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
                             <input matInput [matDatepicker]="picker" class="form-control b-0">
@@ -56,7 +59,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <p class="m-0 roboto text-black pt-20">Enter amount</p>
+                    <p class="m-0 roboto text-black pt-20 pb-8">Enter amount</p>
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput class="form-control">
@@ -64,7 +67,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <p class="m-0 roboto text-black pt-44">Select bank account</p>
+                    <p class="m-0 roboto text-black pt-44 pb-8">Select bank account</p>
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select class="form-control">
@@ -74,7 +77,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 p-0">
-                    <p class="m-0 pt-44 roboto">Advice given on</p>
+                    <p class="m-0 pt-44 roboto pb-8">Advice given on</p>
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select class="form-control">
@@ -84,7 +87,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <p class="m-0 roboto text-black pt-44">Advice rationale</p>
+                    <p class="m-0 roboto text-black pt-44 pb-8">Advice rationale</p>
                     <div class="form-group m-0">
                         <textarea class="form-control" rows="5"></textarea>
                     </div>

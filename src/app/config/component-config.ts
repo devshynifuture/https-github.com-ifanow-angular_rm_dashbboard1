@@ -29,6 +29,7 @@ export const appConfig = {
   AUM_GRAPH_GET: 'backoffice/aum/graph/details/get',
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
+  ADD_CEASED_DATE:'backoffice/cease/date/add',
 
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',

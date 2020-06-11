@@ -89,19 +89,18 @@
                 </button> -->
                             </mat-menu>
                             <img class="c-p mr-8" src="assets/images/svg/three-dot-bordered.svg">
-                            <button [matMenuTriggerFor]="insuranceMenu" class="btn-default addon mr-8 v-middle" mat-stroked-button><i
-                  class="material-icons">filter_list</i>FILTERS
-              </button>
+                            <button [matMenuTriggerFor]="insuranceMenu" class="btn-default addon mr-8 v-middle" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+                            </button>
                             <mat-menu #insuranceMenu>
                                 <button (click)="filterInsurance('statusId', 'LIVE')" mat-menu-item>
-                  STATUS - LIVE
-                </button>
+                                    STATUS - LIVE
+                                </button>
                                 <button (click)="(insuranceTypeId == 1) ? filterInsurance('statusId', 'MATURED') : filterInsurance('statusId', 'EXPIRED')" mat-menu-item>
-                  {{(insuranceTypeId == 1) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}
-                </button>
+                                    {{(insuranceTypeId == 1) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}
+                                </button>
                             </mat-menu>
                             <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
-              </button>
+                            </button>
 
                         </div>
                     </div>
@@ -118,7 +117,7 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="life">
-                                    <th *matHeaderCellDef class="br w-15" mat-sort-header="lifeAssuredName">
+                                    <th *matHeaderCellDef class="br w-13" mat-sort-header="lifeAssuredName">
                                         Life assured
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -128,7 +127,7 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="name">
-                                    <th *matHeaderCellDef class="br w-15 " mat-sort-header="policyName"> Policy name
+                                    <th *matHeaderCellDef class="br w-17 " mat-sort-header="policyName"> Policy name
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar"> {{element.policyName}} </div>
@@ -136,7 +135,7 @@
                                     <td *matFooterCellDef class="f-600 pl-4 proximaFont text-left" mat-footer-cell>
                                     </td>
                                 </ng-container>
-                               
+
 
                                 <ng-container matColumnDef="sum">
                                     <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell mat-sort-header="sumAssured"> Sum assured
@@ -150,7 +149,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="cvalue">
-                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell mat-sort-header="currentValue"> Current value
+                                    <th *matHeaderCellDef class="br rightTextHide w-10 text-right" mat-header-cell mat-sort-header="currentValue"> Current value
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <div class="bar">
@@ -185,7 +184,7 @@
                                 </ng-container>
                                 <ng-container matColumnDef="term">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="premiumPayingTerm">
-                                       PPT
+                                        PPT
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar">{{element.premiumPayingTerm}} </div>
@@ -194,7 +193,7 @@
                                 </ng-container>
                                 <ng-container matColumnDef="pterm">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="policyTenure">
-                                       PT
+                                        PT
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar"> {{element.policyTenure}} </div>
@@ -202,13 +201,14 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="Duration">
-                                        <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
-                                        </th>
-                                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                                            <div class="bar"> {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}} </div>
-                                        </td>
-                                        <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
-                                    </ng-container>
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
+                                    </th>
+                                    <td *matCellDef="let element" class="br text-left" mat-cell>
+                                        <div class="bar">
+                                            {{element.statusId == 'MATURED' ? '-' : element.durationRemaining}} </div>
+                                    </td>
+                                    <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
+                                </ng-container>
                                 <ng-container matColumnDef="desc">
                                     <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="insuranceSubTypeId">
                                         Plan type
@@ -238,9 +238,9 @@
                                     <td *matCellDef="let element" class="br text-primary" mat-cell>
                                         <div class="bar">
                                             <span class="text-primary" *ngIf="element.statusId == 'LIVE'">
-                        {{'LIVE'}} </span>
+                                                {{'LIVE'}} </span>
                                             <span *ngIf="element.statusId == 'MATURED'" class="text-success">
-                        {{'MATURED'}} </span>
+                                                {{'MATURED'}} </span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -253,9 +253,9 @@
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                             <button (click)="open(element)" mat-menu-item>Detailed view</button>
                                             <button mat-menu-item>Upload file
-                        <input (change)="fetchData('Life Insurance',$event,element)" class="uploadInput" id="file-4"
-                          multiple type="file">
-                      </button>
+                                                <input (change)="fetchData('Life Insurance',$event,element)"
+                                                    class="uploadInput" id="file-4" multiple type="file">
+                                            </button>
                                             <!-- <button mat-menu-item>Activity</button> -->
                                             <button (click)="deleteModal('INSURANCE',element)" mat-menu-item>Delete</button>
                                         </mat-menu>
@@ -269,10 +269,10 @@
                             </table>
 
                             <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
-                                 <img src="assets/images/svg/documents-empty-states.svg">
-                                 <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+                                <img src="assets/images/svg/documents-empty-states.svg">
+                                <h4 class="text-center mt-12 mb-20">No Data Found</h4>
                                 <button (click)="openAddInsurance(null)" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
-                </button>
+                                </button>
                             </div>
                         </div>
 
@@ -314,7 +314,7 @@
                                 <ng-container matColumnDef="sumInsured">
                                     <th *matHeaderCellDef class="br rightTextHide" mat-sort-header="sumAssured"> Sum insured
                                     </th>
-                                    <td *matCellDef="let element" class="br" mat-cell>
+                                    <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <!-- <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div> -->
                                         <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span></div>
 
@@ -343,16 +343,17 @@
                                     <th *matHeaderCellDef class="br textLeft w-10" mat-header-cell mat-sort-header="policyExpiryDate">
                                         Policy expiry date
                                     </th>
-                                    <td *matCellDef="let element" class="br text-right" mat-cell>
+                                    <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar"> {{element.policyExpiryDate | date:'dd/MM/yyyy'}} </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="Duration">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
+                                    <th *matHeaderCellDef class="br w-9 textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
                                     </th>
-                                    <td *matCellDef="let element" class="br text-right" mat-cell>
-                                        <div class="bar"> {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}} </div>
+                                    <td *matCellDef="let element" class="br text-left" mat-cell>
+                                        <div class="bar">
+                                            {{element.statusId == 'EXPIRED' ? '-' : element.durationRemaining}} </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
@@ -382,9 +383,9 @@
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar">
                                             <span class="text-primary" *ngIf="element.statusId == 'LIVE'">
-                        {{'LIVE'}} </span>
+                                                {{'LIVE'}} </span>
                                             <span *ngIf="element.statusId == 'EXPIRED'" class="text-success">
-                        {{'EXPIRED'}} </span>
+                                                {{'EXPIRED'}} </span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -397,9 +398,9 @@
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                             <button (click)="open(element)" mat-menu-item>Detailed view</button>
                                             <button mat-menu-item>Upload file
-                        <input (change)="fetchData('General Insurance',$event,element)" class="uploadInput" id="file-4"
-                          multiple type="file">
-                      </button>
+                                                <input (change)="fetchData('General Insurance',$event,element)"
+                                                    class="uploadInput" id="file-4" multiple type="file">
+                                            </button>
                                             <!-- <button mat-menu-item>Activity</button> -->
                                             <button (click)="deleteModal('INSURANCE',element)" mat-menu-item>Delete</button>
                                         </mat-menu>
@@ -416,7 +417,7 @@
                                 <img src="assets/images/svg/documents-empty-states.svg">
                                 <h4 class="text-center mt-12 mb-20">No Data Found</h4>
                                 <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
-                </button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -440,9 +441,9 @@
                     {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
                 <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
                 <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong>
-            Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
+                        Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
                 <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong> Email
-            : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+                        : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
             </td>
         </tr>
 
@@ -518,9 +519,9 @@
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
-          {{'LIVE'}} </span>
+                    {{'LIVE'}} </span>
                 <span *ngIf="item.statusId == 'MATURED'" class="text-success">
-          {{'MATURED'}} </span>
+                    {{'MATURED'}} </span>
             </td>
 
         </tr>
@@ -564,9 +565,9 @@
                     {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
                 <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
                 <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong>
-            Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
+                        Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
                 <p *ngIf="personalProfileData" style="margin: 0px; font-size: 14px;"><strong> Email
-            : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+                        : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
             </td>
         </tr>
 
@@ -617,11 +618,11 @@
                 {{i + 1}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <span *ngFor="let ele  of item.insuredMembers">
-          {{(item.insuredMembers.length == 1) ? (ele.name) : (ele.name + ',')}}
-        </span>
+                    {{(item.insuredMembers.length == 1) ? (ele.name) : (ele.name + ',')}}
+                </span>
                 <span *ngIf="item.insuredMembers?.length == 0 && !isLoading">
-          {{item.policyHolderName}}
-        </span>
+                    {{item.policyHolderName}}
+                </span>
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{((insuranceSubTypeId == 7) ? item.insurerName : (((item.planName) ? item.insurerName + '-' + item.planName : item.insurerName)))}}
@@ -640,9 +641,9 @@
                 {{item.policyNumber}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
-          {{'LIVE'}} </span>
+                    {{'LIVE'}} </span>
                 <span *ngIf="item.statusId == 'EXPIRED'" class="text-success">
-          {{'EXPIRED'}} </span>
+                    {{'EXPIRED'}} </span>
             </td>
 
         </tr>

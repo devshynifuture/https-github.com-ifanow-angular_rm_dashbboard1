@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as Excel from 'exceljs';
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ExcelMisSipService {
+    advisor: any;
+    client: any;
 
 
-    constructor() { }
+    constructor() {
+        this.advisor = AuthService.getUserInfo();
+        this.client = AuthService.getClientData();
+     }
 
     static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any) {
         const wb = new Excel.Workbook();
@@ -119,7 +126,7 @@ export class ExcelMisSipService {
                         catElement.weightInPerc
                     ]);
 
-                    if (catElement.subCatList.length !== 0) {
+                    if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
                                 currentRowPos = currentRowPos + index1 + 2;
@@ -137,7 +144,7 @@ export class ExcelMisSipService {
                                     subCatElement.weightInPerc
                                 ]);
 
-                                if (subCatElement.applicantList.length !== 0) {
+                                if (subCatElement && subCatElement.hasOwnProperty('applicantList') && subCatElement.applicantList.length !== 0) {
                                     if (!excluded.applicantList) {
                                         if (subCatElement.applicantList !== 0) {
                                             currentRowPos = currentRowPos + catElement.subCatList.length + 1;
@@ -201,7 +208,7 @@ export class ExcelMisSipService {
                     }
 
                 } else {
-                    if (catElement.subCatList.length !== 0) {
+                    if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
                                 currentRowPos = currentRowPos + index1 + 2;
@@ -330,7 +337,7 @@ export class ExcelMisSipService {
                                                 schemeElement.weightInPerc,
                                             ]);
 
-                                            if (schemeElement.applicantList.length !== 0) {
+                                            if (schemeElement && schemeElement.hasOwnProperty('applicantList') && schemeElement.applicantList.length !== 0) {
                                                 if (catElement.subCatList.length !== 0) {
                                                     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
                                                 } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
@@ -742,7 +749,7 @@ export class ExcelMisSipService {
                     ]);
                 }
 
-                if (applicantElement.categoryList.length !== 0) {
+                if (applicantElement && applicantElement.hasOwnProperty('categoryList') && applicantElement.categoryList.length !== 0) {
                     if (!excluded.categoryList) {
                         applicantElement.categoryList.forEach((categoryElement, index2) => {
                             currentRowPos = currentRowPos + arrayOfExcelData.length + 1;
@@ -1196,6 +1203,98 @@ export class ExcelMisSipService {
 
     }
 
+    generateExcel(rows, title) {
 
+
+        const headers = [];
+        const footer = [];
+        let td = [];
+        const trTd = [];
+        const header = headers;
+        const data = trTd;
+        for (const cells in rows) {
+          for (const c in rows[cells].cells) {
+            if (parseInt(c) != rows[cells].cells.length) {
+              if (cells == '0' && rows[cells].cells[c].innerText != undefined) {
+                headers.push(rows[cells].cells[c].innerText);
+              } else if (cells == rows.length - 1 + '' && rows[cells].cells[c].innerText != undefined) {
+                footer.push(rows[cells].cells[c].innerText);
+              } else {
+                if (rows[cells].cells[c].innerText != undefined) {
+                  if (td.length >= parseInt(c) + 1) {
+                    trTd.push(td);
+                    td = [];
+                  }
+                  td.push(rows[cells].cells[c].innerText);
+                }
+              }
+            }
+          }
+        }
+    
+        trTd.push(td);
+        console.log(headers, 'dataSource excel');
+        console.log(td, 'dataSource excel');
+        console.log(trTd, 'dataSource excel');
+        console.log(footer, 'dataSource excel');
+    
+    
+        // Create workbook and worksheet
+        const workbook = new Workbook();
+        const worksheet = workbook.addWorksheet(this.advisor.name + '_' + title + '_' + 'Data');
+    
+    
+        // Add Row and formatting
+        worksheet.addRow([]);
+        const titleRow = worksheet.addRow([title]);
+        titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
+        worksheet.addRow([]);
+    
+        worksheet.addRow(['Advisor', this.advisor.name]);
+        worksheet.addRow(['Client', this.client ? this.client.name : '']);
+        worksheet.addRow([]);
+    
+        // Add Header Row
+        const headerRow = worksheet.addRow(header);
+    
+        // Cell Style : Fill and Border
+        headerRow.eachCell((cell, indexNumber) => {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFFFF00' },
+            bgColor: { argb: 'FF0000FF' }
+          };
+          cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+        });
+        // worksheet.addRows(data);
+    
+    
+        // Add Data and Conditional Formatting
+        data.forEach(d => {
+          const row = worksheet.addRow(d);
+          // let qty = row.getCell(5);
+          const color = 'FF99FF99';
+        }
+        );
+    
+        worksheet.getColumn(2).width = 30;
+        const footerRow = worksheet.addRow(footer);
+    
+    
+        footerRow.eachCell((cell, indexNumber) => {
+          footerRow.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFCCFFE5' }
+          };
+          cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+        });
+        workbook.xlsx.writeBuffer().then((data) => {
+          const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          fs.saveAs(blob, title + '.xlsx');
+        });
+        return data;
+      }
 
 }

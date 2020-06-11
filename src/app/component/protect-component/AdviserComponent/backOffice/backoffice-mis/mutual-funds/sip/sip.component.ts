@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
 import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 
 @Component({
@@ -33,12 +34,14 @@ export class SipComponent implements OnInit {
   viewMode: string;
   isLoading = true;
   parentId;
-  adminAdvisorIds: any;
+  adminAdvisorIds=[];
   isExpiringLoading=true;
   isExpiredLoading=true;
   isRejectionLoading=true;
-  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
-
+  mode: any;
+  objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; };
+  loaderValue: number;
+  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService,private mfService:MfServiceService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
@@ -95,15 +98,25 @@ export class SipComponent implements OnInit {
 
   changeArnRiaValue(item) {
     this.arnRiaId = item.number;
+    if(item.number != 'All'){
+      this.arnRiaId = item.id;
+    }else{
+      this.arnRiaId = -1;
+    }
     this.viewMode = item.number;
     this.initPoint();
+    this.objTosend={
+      arnRiaId :this.arnRiaId,
+      parentId: this.parentId,
+      adminAdvisorIds:this.adminAdvisorIds
+    }
   }
   getArnRiaList() {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data => {
         if (data) {
           this.arnRiaList = data;
-          this.advisorId = 0;
+          // this.advisorId = 0;
           const obj = {
             number: 'All'
           }
@@ -118,7 +131,7 @@ export class SipComponent implements OnInit {
   sipCountGet() {
     this.isLoading = true
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -163,7 +176,7 @@ export class SipComponent implements OnInit {
   expiredGet() {
     this.isExpiredLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -173,7 +186,8 @@ export class SipComponent implements OnInit {
       data => {
         this.isExpiredLoading = false;
         if(data){
-          this.expiredSip = data;
+          let res=this.filterByDate(data);
+          this.expiredSip = res;
         }else{
           this.expiredSip = [];
         }
@@ -187,7 +201,7 @@ export class SipComponent implements OnInit {
   expiringGet() {
     this.isExpiringLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -197,7 +211,8 @@ export class SipComponent implements OnInit {
       data => {
         this.isExpiringLoading = false;
         if(data){
-          this.expiringSip = data;
+          let res=this.filterByDate(data);
+          this.expiringSip = res;
         }else{
           this.expiringSip=[];
         }
@@ -213,7 +228,7 @@ export class SipComponent implements OnInit {
   sipRejectionGet() {
     this.isRejectionLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId:(this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -237,7 +252,7 @@ export class SipComponent implements OnInit {
   getSipPanCount() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -255,7 +270,7 @@ export class SipComponent implements OnInit {
   }
   getWbrPanCount() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -265,6 +280,7 @@ export class SipComponent implements OnInit {
         this.wbrCount = data.folioCount;
         this.clientWithoutSip = (this.sipPanCount / data.folioCount) * 100;
         this.clientWithoutSip = (!this.clientWithoutSip || this.clientWithoutSip == Infinity) ? 0 : this.clientWithoutSip;
+        (this.clientWithoutSip > 100) ? this.clientWithoutSip =100 : this.clientWithoutSip
       }
     )
   }
@@ -272,9 +288,20 @@ export class SipComponent implements OnInit {
     this.sipshow = true;
     this.showMainWrapperFlag = false;
   }
-  amcWise(value) {
+  filterByDate(data){
+    data = data.filter(item => item.dateDiff <= 90);
+    data = this.mfService.sorting(data,'dateDiff')
+    return data
+  }
+  amcWise(value,mode) {
+    this.mode=mode;
     this.sipcomponentWise = value;
     this.sipComponent = false;
+    this.objTosend={
+      arnRiaId :this.arnRiaId,
+      parentId: this.parentId,
+      adminAdvisorIds:this.adminAdvisorIds
+    }
   }
   newSip() {
     const obj = {
@@ -302,7 +329,7 @@ export class SipComponent implements OnInit {
 
   ceaseSip() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: this.parentId ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
