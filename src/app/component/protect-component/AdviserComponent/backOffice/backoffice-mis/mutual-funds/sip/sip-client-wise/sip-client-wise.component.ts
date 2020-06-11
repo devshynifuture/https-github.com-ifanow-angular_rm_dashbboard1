@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-sip-client-wise',
   templateUrl: './sip-client-wise.component.html',
@@ -74,13 +75,16 @@ export class SipClientWiseComponent implements OnInit {
   selectedClient: any;
   isLoadingApplicant: boolean;
   applicantList: any;
+  caesedForm: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService) { }
 
 
 
   ngOnInit() {
-
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientWiseClientName();
@@ -149,7 +153,25 @@ export class SipClientWiseComponent implements OnInit {
       schemeFolioList: false
     });
   }
+  addCeasesdDate(sip, investor, date){
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+       console.log(data);
+      //  investor.value.splice(investor.value.indexOf(sip), 1);
+      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
+       
+      }
+    )
 
+  }
   investorWiseExcelSheet(index) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
@@ -292,6 +314,7 @@ export class SipClientWiseComponent implements OnInit {
           if (data) {
             data.forEach(o => {
               o.showSubCategory = true;
+              o.isEdit=false;
             });
             applicantData.applicantList = data
             this.applicantList = data

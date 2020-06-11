@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -40,7 +41,8 @@ export class SipAmcWiseComponent implements OnInit {
   isLoadingApplicant: boolean = false;
   subCategory: [];
   applicantList: [];
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
+  caesedForm: any;
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService) { }
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
 
@@ -122,6 +124,9 @@ export class SipAmcWiseComponent implements OnInit {
 
 
   ngOnInit() {
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.amcGet();
@@ -307,7 +312,25 @@ export class SipAmcWiseComponent implements OnInit {
         break;
     }
   }
+  addCeasesdDate(sip, investor, date){
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+       console.log(data);
+      //  investor.value.splice(investor.value.indexOf(sip), 1);
+      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
+       
+      }
+    )
 
+  }
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'schemes':
@@ -438,6 +461,9 @@ export class SipAmcWiseComponent implements OnInit {
         data => {
           this.isLoadingApplicant = false
           if (data) {
+            data.forEach(o => {
+              o.isEdit=false;
+            });
             applicantData.applicantList = data;
             this.applicantList = data
           } else {

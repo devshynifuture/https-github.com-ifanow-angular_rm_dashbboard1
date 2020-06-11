@@ -33,7 +33,7 @@ export class SipComponent implements OnInit {
   viewMode: string;
   isLoading = true;
   parentId;
-  adminAdvisorIds: any;
+  adminAdvisorIds=[];
   isExpiringLoading=true;
   isExpiredLoading=true;
   isRejectionLoading=true;
