@@ -20,7 +20,9 @@ import { element } from 'protractor';
 })
 export class DeploymentsPlanComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
+  displayedColumns1: string[] = ['position1', 'name1', 'weight1', 'symbol1'];
   dataSource;
+  dataSourceT;
   clientId: any;
   advisorId: any;
   selectedDeployments: any = [];
@@ -81,13 +83,13 @@ export class DeploymentsPlanComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      if(result.isRefreshRequired){
+      if (result.isRefreshRequired) {
         this.getDeploymentData();
       }
     });
 
   }
-  deleteDeployment(deleteData,flag) {
+  deleteDeployment(deleteData, flag) {
     const dialogData = {
       data: flag,
       header: 'DELETE',
@@ -127,20 +129,20 @@ export class DeploymentsPlanComponent implements OnInit {
     let component, deploymentData;
     if (flagValue == 'open') {
       component = DeploymentDetailsComponent
-      deploymentData ={data}
+      deploymentData = { data }
     }
     else {
       component = SetupLumpsumDeploymentComponent;
       deploymentData =
       {
-        data:[],
+        data: [],
         deploymentIdList: this.selectedDeployments
       }
       this.dataSource.forEach(singleElement => {
-          if (singleElement.selected) {
-            deploymentData.data.push(singleElement);
-          }
-        });
+        if (singleElement.selected) {
+          deploymentData.data.push(singleElement);
+        }
+      });
     }
     const fragmentData = {
       id: 1,
