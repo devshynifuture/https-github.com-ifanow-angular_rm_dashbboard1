@@ -235,15 +235,16 @@ export class MergeClientFamilyMemberComponent implements OnInit {
 
   changeGender(relationData, flag, index) {
     let genderId;
-    switch (relationData.value) {
-      case 2:
-      case 4:
-      case 6:
+    switch (true) {
+      case (relationData.value == 2 || relationData.value == 4 || relationData.value == 6):
+        // case 4:
+        // case 6:
         genderId = 1;
         break;
-      case 3:
-      case 5:
-      case 7:
+      case (relationData.value == 3 || relationData.value == 5 || relationData.value == 7):
+        // case 3:
+        // case 5:
+        // case 7:
         genderId = 2;
         break;
       default:
