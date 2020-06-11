@@ -38,6 +38,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   arnRiaCode: any = '';
 
   filterList = [];
+  deletedTransactions = [];
+  tableData2: any = [];
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -66,10 +68,16 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
     this.dataSource.data = tableArr;
     this.upperTableArr = tableArr;
-    if ((this.data && this.data.freezeDate === 0) || (this.data && this.data.freezeDate === null)) {
+    if (this.data && this.data.freezeDate === null) {
       this.disableUnfreezeBtn = true;
     } else {
       this.disableUnfreezeBtn = false;
+    }
+
+    if (this.data && this.data.difference === "0.000") {
+      this.disableFreezeBtn = false;
+    } else {
+      this.disableFreezeBtn = true;
     }
 
     // if (this.data && this.data.difference === '0.000') {
@@ -80,20 +88,27 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.allFolioTransactionTableDataBinding();
   }
 
-  singleSelectionSelect(element) {
+  singleSelectionSelect(element, mainIndex) {
     this.selection.toggle(element);
     const parsedValue = parseFloat((element.units).toFixed(3));
     if (this.selection.isSelected(element)) {
       this.shouldDeleteMultiple = true;
       this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
+      this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
       this.deleteMultipleTransactionArray.push(element.id);
+      this.deletedTransactions.push(mainIndex);
     } else {
       // this.selectedFolioUnits = 0;
       const index = this.deleteMultipleTransactionArray.indexOf(element.id);
       this.deleteMultipleTransactionArray.splice(index, 1);
+
+      const index1 = this.deletedTransactions.indexOf(mainIndex);
+      this.deletedTransactions.splice(index1, 1);
+
       this.selectedFolioUnits = this.selectedFolioUnits - parsedValue;
-      if (this.selectedFolioUnits < 0) {
-        this.selectedFolioUnits = 0;
+      this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+      if (this.selectedFolioUnits < 0.000) {
+        this.selectedFolioUnits = 0.000;
       }
       if (this.deleteMultipleTransactionArray.length === 0) {
         this.shouldDeleteMultiple = false;
@@ -106,15 +121,20 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.isAllSelected()) {
       this.selection.clear();
       this.deleteMultipleTransactionArray = [];
+      this.deletedTransactions = [];
       this.shouldDeleteMultiple = false;
       this.selectedFolioUnits = 0;
     } else {
       this.shouldDeleteMultiple = true;
-      this.dataSource1.data.forEach(row => {
+      this.dataSource1.data.forEach((row, index) => {
         this.selection.select(row);
         if (this.deleteMultipleTransactionArray.includes(row.id)) {
           return;
         }
+        if (this.deletedTransactions.includes(index)) {
+          return;
+        }
+        this.deletedTransactions.push(index);
         const parsedValue = parseFloat(row.units);
         this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
         this.deleteMultipleTransactionArray.push(row.id);
@@ -196,6 +216,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource.data.map(item => {
           item.unitOne = String((res.units).toFixed(3));
           item.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
+          this.data.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
           if (this.data && item.difference === '0.000') {
             this.disableFreezeBtn = true;
           } else {
@@ -208,7 +229,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       });
   }
 
-  deleteSingleTransaction(element) {
+  deleteSingleTransaction(element, index) {
+    this.deletedTransactions.push(index);
     this.deleteTransactionApi([element.id]);
   }
 
@@ -227,18 +249,31 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     //   })
   }
 
-  filterTableValues(filterBasedOn) {
+  filterTableValues(filterBasedOn, whichTable) {
     // this.filteredValues = [];
-    if (filterBasedOn === 'all') {
-      this.dataSource1.data = this.tableData1;
-    } else {
-      let filteredArray = [];
-      filteredArray = this.tableData1.filter(item => {
-        return item.transactionType === filterBasedOn ? item : null;
-      });
-      this.dataSource1.data = filteredArray;
+    if (whichTable === 1) {
+      if (filterBasedOn === 'all') {
+        this.dataSource1.data = this.tableData1;
+      } else {
+        let filteredArray = [];
+        filteredArray = this.tableData1.filter(item => {
+          return item.transactionType === filterBasedOn ? item : null;
+        });
+        this.dataSource1.data = filteredArray;
+      }
     }
-    console.log('data filtered', this.dataSource1.data);
+    if (whichTable === 2) {
+      if (filterBasedOn === 'all') {
+        this.dataSource2.data = this.tableData2;
+      } else {
+        let filteredArray = [];
+        filteredArray = this.tableData2.filter(item => {
+          return item.transactionType === filterBasedOn ? item : null;
+        });
+        this.dataSource2.data = filteredArray;
+      }
+    }
+    // console.log('data filtered', this.dataSource1.data);
   }
 
 
@@ -313,7 +348,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    let refreshRequired = (this.data.difference === '0.000') ? true : false;
+    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired, fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab, deletedTransactionsIndexes: this.deletedTransactions });
   }
 
 }

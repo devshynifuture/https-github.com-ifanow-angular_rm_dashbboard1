@@ -6,6 +6,7 @@ import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { FormBuilder } from '@angular/forms';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-sip-applicant-wise',
   templateUrl: './sip-applicant-wise.component.html',
@@ -80,7 +81,7 @@ export class SipApplicantWiseComponent implements OnInit {
   caesedForm: any;
   parentId: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService,private eventService:EventService) { }
+  constructor(private datePipe: DatePipe,private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService,private eventService:EventService) { }
 
   ngOnInit() {
     this.caesedForm = this.fb.group({
@@ -174,7 +175,8 @@ export class SipApplicantWiseComponent implements OnInit {
         arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: applicantData.id,
-        totalAum: applicantData.totalAum
+        totalAum: applicantData.totalAum,
+        clientId:applicantData.clientId
       }
       this.backoffice.sipApplicantFolioList(obj).subscribe(
         data => {
@@ -215,16 +217,16 @@ export class SipApplicantWiseComponent implements OnInit {
   }
   addCeasesdDate(sip, investor, date){
     var obj = {
-      sipId: sip.id,
+      id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
-      ceaseDate: date,
+      ceaseDate: this.datePipe.transform(this.caesedForm.controls.ceaseddate.value, 'yyyy/MM/dd'),
     }
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
        console.log(data);
-      //  investor.value.splice(investor.value.indexOf(sip), 1);
-      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+       investor.schemeList.splice(investor.schemeList.indexOf(sip), 1);
+       this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
       },
       err => {
        

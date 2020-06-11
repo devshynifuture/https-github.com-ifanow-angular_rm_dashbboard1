@@ -216,7 +216,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_APPLICANT_LIST, httpParams);
   }
   sipApplicantFolioList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberId', data.familyMemberId).set('totalAum', data.totalAum);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberId', data.familyMemberId).set('totalAum', data.totalAum).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
   }
   folioSearchByGroupHead(data) {

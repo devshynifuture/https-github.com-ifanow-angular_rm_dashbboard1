@@ -63,6 +63,7 @@ const routes: Routes = [
         path: 'backoffice-file-upload',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-file-upload/backoffice-file-upload.module').then(m => m.BackofficeFileUploadModule)
       },
+
       {
         path: 'setting',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting.module').then(m => m.SettingModule)

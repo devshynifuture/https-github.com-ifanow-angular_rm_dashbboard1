@@ -375,7 +375,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     <span >
-                                                                                        <button (click)="addCeasesdDate(scheme,subInvList,ceaseddate.value)">Save</button>
+                                                                                        <button [disabled]="ceaseddate.value == ''" (click)="addCeasesdDate(scheme,subInvList,ceaseddate.value)">Save</button>
                                                                                         <button (click)="scheme.isEdit=false">Cancel</button>
                                                                                     </span>
                                                                                 </div>
