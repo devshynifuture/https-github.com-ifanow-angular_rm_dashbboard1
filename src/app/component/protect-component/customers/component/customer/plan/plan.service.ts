@@ -49,11 +49,8 @@ export class PlanService {
   addMarriageGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MARRIAGE_GOAL, data)
   }
-  addVacationGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_VACATION_GOAL, data)
-  }
-  addEducationGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EDUCATION_GOAL, data)
+  addMultiYearGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MULTI_YEAR_GOAL, data)
   }
   addEmergencyGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EMERGENCY_GOAL, data)

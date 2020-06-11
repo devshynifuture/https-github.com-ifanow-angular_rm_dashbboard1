@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -25,6 +25,9 @@ export class SipClientWiseComponent implements OnInit {
   filteredArray: any[];
   isLoading = false;
   @Output() changedValue = new EventEmitter();
+  @Input() data;
+  maxDate = new Date();
+
   propertyName: any;
   propertyName2: any;
   reverse = true;
@@ -76,8 +79,9 @@ export class SipClientWiseComponent implements OnInit {
   isLoadingApplicant: boolean;
   applicantList: any;
   caesedForm: any;
+  parentId: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private fb: FormBuilder,private mfService:MfServiceService) { }
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
 
 
 
@@ -87,6 +91,7 @@ export class SipClientWiseComponent implements OnInit {
     });
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.clientWiseClientName();
   }
   sortBy(applicant, propertyName) {
@@ -153,7 +158,7 @@ export class SipClientWiseComponent implements OnInit {
       schemeFolioList: false
     });
   }
-  addCeasesdDate(sip, investor, date){
+  addCeasesdDate(sip, investor, date) {
     var obj = {
       sipId: sip.id,
       mutualFundId: sip.mutualFundId,
@@ -162,12 +167,12 @@ export class SipClientWiseComponent implements OnInit {
     }
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
-       console.log(data);
-      //  investor.value.splice(investor.value.indexOf(sip), 1);
-      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+        console.log(data);
+        //  investor.value.splice(investor.value.indexOf(sip), 1);
+        //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
       },
       err => {
-       
+
       }
     )
 
@@ -205,9 +210,9 @@ export class SipClientWiseComponent implements OnInit {
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data => {
@@ -232,6 +237,9 @@ export class SipClientWiseComponent implements OnInit {
         this.filteredArray = [];
       }
     )
+  }
+  preventDefault(e) {
+    e.preventDefault();
   }
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
@@ -260,7 +268,7 @@ export class SipClientWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
@@ -303,10 +311,10 @@ export class SipClientWiseComponent implements OnInit {
       this.applicantList = []
       applicantData.applicantList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
         clientId: applicantData.clientId,
-        parentId: -1
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        parentId: (this.data) ? this.data.parentId : -1
       }
       this.backoffice.sipClientWiseApplicant(obj).subscribe(
         data => {
@@ -314,7 +322,7 @@ export class SipClientWiseComponent implements OnInit {
           if (data) {
             data.forEach(o => {
               o.showSubCategory = true;
-              o.isEdit=false;
+              o.isEdit = false;
             });
             applicantData.applicantList = data
             this.applicantList = data

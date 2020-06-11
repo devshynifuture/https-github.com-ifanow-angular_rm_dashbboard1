@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {CustomerService} from '../../../../customer.service';
@@ -132,6 +132,8 @@ export class RealEstateComponent implements OnInit {
       });
   }
 
+  @Output() changeCount = new EventEmitter();
+
   getRealEstateRes(data) {
     this.isLoading = false;
     if (data == undefined) {
@@ -139,6 +141,8 @@ export class RealEstateComponent implements OnInit {
       this.datasource3.data = [];
       this.hideFilter = true;
     } else if (data.assetList.length > 0) {
+      this.changeCount.emit("call");
+
       console.log('getRealEstateRes', data);
       this.dataList = data.assetList;
       this.datasource3.data = data.assetList;

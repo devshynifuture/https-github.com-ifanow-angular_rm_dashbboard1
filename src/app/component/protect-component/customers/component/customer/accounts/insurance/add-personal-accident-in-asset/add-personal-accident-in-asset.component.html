@@ -290,7 +290,7 @@
                 </div>
                 <div class="col-md-1 p-0 mt-16 d-flex">
                     <i class="material-icons text-primitive c-p  " (click)="addNewFeature(undefined)">add</i>
-                    <i class="material-icons text-primitive c-p  " (click)="removeNewFeature(pointIndex)">remove</i>
+                    <i class="material-icons text-primitive c-p  " *ngIf="personalAccidentForm.value.planFeatureForm?.length > 1" (click)="removeNewFeature(pointIndex)">remove</i>
                 </div>
             </div>
 

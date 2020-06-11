@@ -246,6 +246,7 @@ export class CommoditiesComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     }
+    this.changeCount.emit("call");
     this.otherCommodityList.data = [{}, {}, {}];
     this.custumService.getOthers(obj).subscribe(
       data => this.getOthersRes(data), (error) => {

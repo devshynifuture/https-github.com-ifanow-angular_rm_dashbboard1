@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -23,10 +23,11 @@ export class AmcWiseComponent implements OnInit {
   propertyName: any;
   propertyName2: any;
   propertyName3: any;
-  reverse=true;
-  reverse2=true;
-  reverse3=true;
+  reverse = true;
+  reverse2 = true;
+  reverse3 = true;
   @Output() changedValue = new EventEmitter();
+  @Input() data;
 
   arrayOfExcelData: any[] = [];
   arrayOfHeaders: any[][] = [
@@ -79,48 +80,52 @@ export class AmcWiseComponent implements OnInit {
   isLoadingCategory: boolean;
   isLoadingApplicant: boolean;
   applicationList: any[];
+  parentId: any;
+  clientId: any;
 
-  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService,private mfService:MfServiceService) { }
+  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.getAmcWiseData();
   }
-  sortBy(applicant,propertyName){
+  sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
-    if (this.reverse === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByScheme(applicant,propertyName){
+  sortByScheme(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
-    if (this.reverse2 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse2 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByApplicant(applicant,propertyName){
+  sortByApplicant(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
-    if (this.reverse3 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse3 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
@@ -132,9 +137,9 @@ export class AmcWiseComponent implements OnInit {
     this.isLoading = true;
     this.amcList = [{}, {}, {}]
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.amcWiseGet(obj).subscribe(
       data => this.getReponseAmcWiseGet(data),
@@ -164,7 +169,7 @@ export class AmcWiseComponent implements OnInit {
         field1: element.name,
         field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field3: element.folioNumber,
-        field4:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field5: element.weightInPerc
       })
     });
@@ -289,9 +294,9 @@ export class AmcWiseComponent implements OnInit {
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedAmc].schemeList[index].applicantList.push({
             name: element.investorName,
-            balanceUnit:this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
             folioNumber: element.folioNumber,
-            totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage
           });
         });
@@ -304,7 +309,7 @@ export class AmcWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.name,
-        totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+        totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         weightInPerc: element.weightInPercentage,
         schemeList: [],
       });
@@ -322,7 +327,7 @@ export class AmcWiseComponent implements OnInit {
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
-    }else{
+    } else {
       this.amcList = []
     }
     //this.showLoader = false;
@@ -335,7 +340,7 @@ export class AmcWiseComponent implements OnInit {
     });
 
     if (amcData.showAmc == false) {
-      if(amcData.name =="LIC Mutual Fund Asset Management Limited"){
+      if (amcData.name == "LIC Mutual Fund Asset Management Limited") {
         amcData.schemes = [];
       }
       // this.isLoadingCategory = true
@@ -355,9 +360,9 @@ export class AmcWiseComponent implements OnInit {
       schemeData.applicantList = []
       schemeData.applicantList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         schemeMasterId: schemeData.id,
         totalAum: schemeData.totalAum
       }
@@ -368,7 +373,7 @@ export class AmcWiseComponent implements OnInit {
             schemeData.applicantList = data
             this.applicationList = data
             this.appendingOfValuesInExcel(data, index, 'applicant');
-          }else{
+          } else {
             this.applicationList = []
             schemeData.applicantList = []
             this.isLoadingApplicant = false
@@ -386,10 +391,11 @@ export class AmcWiseComponent implements OnInit {
   }
   getApplicantName() {
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailId: -1,
       schemeMasterId: 1345,
-      totalAum: 2000
+      totalAum: 2000,
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      parentId: (this.data) ? this.data.parentId : -1,
     }
     this.backoffice.amcWiseApplicantGet(obj).subscribe(
       data => {
