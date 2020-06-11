@@ -54,33 +54,32 @@
                     </div>
 
                     <!-- GOAL COST -->
-                    <div class="row pt-20">
+                    <div class="row pt-20" formArrayName="detailedSpendings">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q2}}</h5>
-                            <!-- *ngFor="let spending of multiYearGoalForm.get('detailedSpendings').controls; index as i" removed for prod build -->
-                            <div class="row pt-8" >
-                                <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
-                                        <mat-form-field>
-                                            <!--[value]="spending.value" [formControl]="spending" removed for prod build -->
-                                            <input type="number"
-                                                 autocomplete="off" matInput
-                                                
-                                                class="form-control br-0 rupess">
-                                            <mat-error>This field is required</mat-error>
-                                        </mat-form-field>
+                            <ng-container [formGroupName]="i" *ngFor="let spending of detailedSpendingFormArray; let i = index;">
+                                <div class="row pt-8">
+                                    <div class="col-md-4 p-0">
+                                        <div class="form-group mb-0">
+                                            <mat-form-field>
+                                                <input type="number"
+                                                    [value]="spending.value" [formControl]="spending"
+                                                    autocomplete="off" matInput
+                                                    class="form-control br-0 rupess">
+                                                <mat-error>This field is required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 pr-0">
+                                        <div id="custom-slider">
+                                            <mat-slider 
+                                                [formControl]="spending" [value]="spending.value"
+                                                [min]="goalTypeData.validations.minCost"
+                                                [max]="goalTypeData.validations.maxCost"></mat-slider>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-8 pr-0">
-                                    <div id="custom-slider">
-                                        <!-- [formControl]="spending" removed for prod build [value]="spending.value"-->
-                                        <mat-slider 
-                                            
-                                            [min]="goalTypeData.validations.minCost"
-                                            [max]="goalTypeData.validations.maxCost"></mat-slider>
-                                    </div>
-                                </div>
-                            </div>
+                            </ng-container>
                             <div class="row pt-8" *ngIf="!detailedPlanning">
                                 Want customized goal values for each year? <span (click)="revisePlanning()">Click here</span>
                             </div>
@@ -134,9 +133,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4" (click)="file.click()">
-                    <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg">
-                    <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;">
+                <div class="col-md-4">
+                    <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg" (click)="file.click()">
+                    <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;" (click)="file.click()">
                 </div>
                 <input #file (change)="previewGoalImage($event)" accept='image/*'
                     formControlName="logo" type="file" [hidden]="true">

@@ -67,6 +67,10 @@ export class MultiYearGoalComponent implements OnInit {
     this.multiYearGoalForm.updateValueAndValidity();
   }
   
+  get detailedSpendingFormArray(){
+    let arr = this.multiYearGoalForm.get('detailedSpendings') as FormArray
+    return arr.controls
+  }
 
   // TODO:- recheck about the input params to be sent
   createGoalObj() {
@@ -77,23 +81,21 @@ export class MultiYearGoalComponent implements OnInit {
       "notes": this.multiYearGoalForm.get('field5').value,
       "imageUrl": this.logoImg,
       "goalType": this.goalTypeData.id,
+      "planningThisForId": this.multiYearGoalForm.get('field1').value.id,
+      "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     }
-
+    
     switch(this.goalTypeData.id) {
       case 5: // Vacation
-        obj['planningThisForId'] = this.multiYearGoalForm.get('field1').value.id;
-        // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
-        obj['ageAttheStartofTheCourse'] = this.multiYearGoalForm.get('field2').value[0];
-        obj['ageAtTheEndofTheCourse'] = this.multiYearGoalForm.get('field2').value[1];
-        obj['goalAdditionDate'] = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
-        break;
-
-      case 6: // Education
-        obj['planningThisForId'] = this.multiYearGoalForm.get('field1').value.id;
         // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
         obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0];
         obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1];
-        obj['goalAdditionDate'] = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+        break;
+
+      case 6: // Education
+        // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
+        obj['ageAttheStartofTheCourse'] = this.multiYearGoalForm.get('field2').value[0];
+        obj['ageAtTheEndofTheCourse'] = this.multiYearGoalForm.get('field2').value[1];
         break;
       
     }
@@ -101,10 +103,19 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   sendDataObj(obj){
-    this.planService.addHouseGoal(obj).subscribe(
+    this.planService.addMultiYearGoal(obj).subscribe(
       data => {
         this.eventService.changeUpperSliderState({state: 'close'});
-        this.eventService.openSnackBar("House goal is added");
+        switch (this.goalTypeData.id) {
+          case 5:
+            this.eventService.openSnackBar("Vacation goal is added");
+            break;
+          case 6:
+            this.eventService.openSnackBar("Education goal is added");
+            break;
+          default:
+            break;
+        }
       },
       error => this.eventService.showErrorMessage(error)
     )
@@ -115,7 +126,7 @@ export class MultiYearGoalComponent implements OnInit {
       this.multiYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();
-      console.log(goalObj);
+      console.log(goalObj)
       // this.sendDataObj(goalObj);
     }
   }

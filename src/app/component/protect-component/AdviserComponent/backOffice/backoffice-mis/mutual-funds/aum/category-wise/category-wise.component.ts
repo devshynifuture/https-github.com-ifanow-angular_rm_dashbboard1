@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 // import * as $ from 'jquery';
 import { BackOfficeService } from '../../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -21,6 +21,7 @@ export class CategoryWiseComponent implements OnInit {
   subCategoryList: any[] = [];
   totalAumForSubSchemeName: any;
   amcWiseData: any;
+  @Input() data;
 
   arrayOfHeaders: any[][] = [
     [
@@ -90,11 +91,15 @@ export class CategoryWiseComponent implements OnInit {
   reverse2=true;
   reverse3=true;
   reverse4=true;
+  parentId: any;
+  clientId: any;
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent,private mfService:MfServiceService
   ) { }
   selectedCategory;
   ngOnInit() {
+    this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.getSubCatSchemeName();
 
 
@@ -157,9 +162,9 @@ export class CategoryWiseComponent implements OnInit {
     this.isLoading = true;
     this.category = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.getTotalByAumScheme(obj).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),

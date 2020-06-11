@@ -112,7 +112,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addHouseGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("House goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -122,7 +121,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addCarGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("Car goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -132,7 +130,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addMarriageGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("Marriage goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -142,7 +139,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addEmergencyGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("Emergency goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -152,7 +148,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addWealthCreationGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("Wealth Creation goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -162,7 +157,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addBigSpendsGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("Big Spends goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -172,7 +166,6 @@ export class SingleGoalYearComponent implements OnInit {
         this.planService.addOthersGoal(obj).subscribe(
           data => {
             this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            console.log('added', data);
             this.eventService.openSnackBar("Others goal is added");
           },
           error => this.eventService.showErrorMessage(error)
@@ -188,7 +181,6 @@ export class SingleGoalYearComponent implements OnInit {
       this.singleYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();
-      console.log(goalObj);
       this.sendDataObj(goalObj);
     }
   }
