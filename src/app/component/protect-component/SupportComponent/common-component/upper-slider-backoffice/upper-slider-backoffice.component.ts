@@ -19,6 +19,7 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
 })
 export class UpperSliderBackofficeComponent implements OnInit {
   arrWithTransCheckTrueAndisMappedMinusOne: any = [];
+  markFolioIndex: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -241,6 +242,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
           if (arrayValue.length !== 0) {
             this.dataSource1.data = arrayValue;
+
           } else {
             this.dataSource1.data = null;
           }
@@ -577,6 +579,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   openReconciliationDetails(flag, data, tableType, index, freezeDate) {
+    this.markFolioIndex = index;
     let tableData = [];
     if (tableType === 'all-folios') {
       if (this.data.flag === 'report') {
@@ -594,7 +597,16 @@ export class UpperSliderBackofficeComponent implements OnInit {
     }
     const fragmentData = {
       flag,
-      data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId, freezeDate, arnRiaCode: this.arnRiaCode + " " + this.upperHeaderName },
+      data: {
+        ...data,
+        tableType,
+        tableData,
+        brokerId: this.brokerId,
+        rtId: this.rtId,
+        freezeDate,
+        arnRiaCode: this.arnRiaCode + " " + this.upperHeaderName,
+        fromAllFolioOrDuplicateTab: this.subTabState === 2 ? true : false
+      },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
@@ -607,11 +619,26 @@ export class UpperSliderBackofficeComponent implements OnInit {
             console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
             if (sideBarData.refreshRequired) {
-
+              if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
+                this.handlingDataVariable(false);
+              } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
+                this.getDuplicateFolioList();
+              }
+            } else {
               // this.getDataFromObsAfterDeletingTransacn();
-
-              this.handlingDataVariable(false);
-
+              if (sideBarData.deletedTransactionsIndexes.length !== 0) {
+                if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
+                  let mfTransArr = this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'];
+                  sideBarData.deletedTransactionsIndexes.forEach(element => {
+                    mfTransArr.splice(element, 1);
+                  });
+                } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
+                  let mfTransArr = this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'];
+                  sideBarData.deletedTransactionsIndexes.forEach(element => {
+                    mfTransArr.splice(element, 1);
+                  });
+                }
+              }
             }
           }
           rightSideDataSub.unsubscribe();

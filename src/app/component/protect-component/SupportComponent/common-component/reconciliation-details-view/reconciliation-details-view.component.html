@@ -105,22 +105,22 @@
                             <mat-icon>arrow_drop_down</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="filterTableValues('all')">
+                            <button mat-menu-item (click)="filterTableValues('all', 1)">
                                 <span>
                                     All
                                 </span>
                             </button>
-                            <button mat-menu-item (click)="filterTableValues(item)" *ngFor="let item of filterList">
+                            <button mat-menu-item (click)="filterTableValues(item, 1)" *ngFor="let item of filterList">
                                 <span>
                                     {{ item }}
                                 </span>
                             </button>
                         </mat-menu>
                     </th>
-                    <td mat-cell class="br" *matCellDef="let row">
+                    <td mat-cell class="br" *matCellDef="let row; index as i">
                         <mat-checkbox (click)="$event.stopPropagation(); "
-                            (change)="$event ? singleSelectionSelect(row): null" [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)">
+                            (change)="$event ? singleSelectionSelect(row, i): null"
+                            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                         </mat-checkbox>
                     </td>
 
@@ -164,14 +164,14 @@
 
                 <ng-container matColumnDef="action">
                     <th class="br" mat-header-cell *matHeaderCellDef> Action </th>
-                    <td class="br" mat-cell *matCellDef="let element">
+                    <td class="br" mat-cell *matCellDef="let element; index as i">
                         <div class="bar">
                             <!-- [matTooltipPosition]="below" -->
                             <div matTooltip="Kindly unfreeze folio, to delete transaction"
                                 [matTooltipDisabled]="canDeleteTransaction">
                                 <button mat-stroked-button [disabled]="!canDeleteTransaction"
                                     class="bg-primary text-white mr-12 h-22 btn-xs"
-                                    (click)="deleteSingleTransaction(element)">
+                                    (click)="deleteSingleTransaction(element, i)">
                                     Delete
                                 </button>
                             </div>
@@ -197,12 +197,12 @@
                             <mat-icon>arrow_drop_down</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="filterTableValues('all')">
+                            <button mat-menu-item (click)="filterTableValues('all',2)">
                                 <span>
                                     All
                                 </span>
                             </button>
-                            <button mat-menu-item (click)="filterTableValues(item)" *ngFor="let item of filterList">
+                            <button mat-menu-item (click)="filterTableValues(item,2)" *ngFor="let item of filterList">
                                 <span>
                                     {{ item }}
                                 </span>
