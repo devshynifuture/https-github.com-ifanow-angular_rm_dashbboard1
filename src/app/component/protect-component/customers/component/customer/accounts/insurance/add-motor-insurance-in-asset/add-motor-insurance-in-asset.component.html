@@ -376,7 +376,7 @@
                 </div>
                 <div class="col-md-1 pr-0 pt-8 d-flex">
                     <i class="material-icons text-primitive c-p float-left" (click)="addNewAddOns(undefined)">add</i>
-                    <i class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
+                    <i class="material-icons text-primitive c-p float-right" *ngIf="motorInsuranceForm.value.addOnForm?.length > 1" (click)="removeNewAddOns(pointIndex)">remove</i>
                 </div>
             </div>
 

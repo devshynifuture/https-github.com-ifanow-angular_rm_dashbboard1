@@ -430,6 +430,9 @@ export class InsuranceComponent implements OnInit {
             if (element.policyTypeId) {
               if (ele.id == element.policyTypeId) {
                 element.policyType = ele.policy_type;
+                if(element.policyType == 'Multi-trip Travel Insurance Plan') {
+                  element.policyType = 'Multi Trip Travel Insurance Plan';
+                }
                 this.showType = 'Plan type';
               }
             } else {
@@ -539,6 +542,11 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceTypeData(typeId, typeSubId) {
+    if (typeSubId == 4){
+      this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber','vehicleNum','status', 'icons'];
+    }else{
+      this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
+    }
     this.lifeInsuranceFlag = false;
     this.generalInsuranceFlag = false;
     if (typeId == 2 && typeSubId == 0) {

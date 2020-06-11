@@ -94,10 +94,14 @@ export class MutualFundOverviewComponent implements OnInit {
   details: any;
   addedData: boolean;
   getOrgData: any;
+  static dataUpload: any;
+  genObj: { htmlInput: string; name: string; landscape: boolean; key: string; svg: string; };
+  sendaata: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
-
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
     this.getAdvisorDetail = AuthService.getAdvisorDetails()
@@ -111,10 +115,30 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
+
+
+  uploadData(data) {
+    data.forEach(element => {
+      this.clientId = element.clientId
+      this.ngOnInit()
+    });
+    this.sendaata.dataSource4 = this.dataSource4.data
+    this.sendaata.dataSource = this.dataSource.data
+    this.sendaata.dataSource2 = this.dataSource2.data
+    this.sendaata.dataSource3 = this.dataSource3.data
+    this.sendaata.dataSource1 = this.datasource1.data
+    this.sendaata.mfData = this.mfData
+    return this.sendaata
+  }
+
   ngOnInit() {
+    this.sendaata = {}
+    this.sendaata.dataSource4 = []
+    this.sendaata.dataSource = []
+    this.sendaata.dataSource2 = []
+    this.sendaata.dataSource3 =[]
+    this.sendaata.dataSource1 = []
     this.reportDate = new Date()
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getFilterData(1);
     this.MfServiceService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
@@ -157,7 +181,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.custumService.getTransactionTypeInMF(obj).subscribe(
       data => {
         if (data) {
-          data = data.filter(item => item !=null);
+          data = data.filter(item => item != null);
           this.MfServiceService.setTransactionType(data);
           // this.setDefaultFilterData.transactionTypeList = filterData
 
@@ -180,7 +204,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
     this.dataSource3 = new MatTableDataSource([{}, {}, {}]);
     this.datasource1 = new MatTableDataSource([{}, {}, {}]);
-   
+
     const obj = {
       advisor_id: this.advisorId,
       clientId: this.clientId,
@@ -288,7 +312,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundData() {
-   
+
 
     const obj = {
       // advisorId: 2753,
@@ -336,7 +360,7 @@ export class MutualFundOverviewComponent implements OnInit {
           this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         }
         this.MfServiceService.setFilterValues(this.setDefaultFilterData);
-        if(this.addedData == true || !this.mfGetData){
+        if (this.addedData == true || !this.mfGetData) {
           this.MfServiceService.setDataForMfGet(this.mutualFund);
         }
         this.MfServiceService.setMfData(this.mutualFund);
@@ -443,7 +467,6 @@ export class MutualFundOverviewComponent implements OnInit {
         this.showCashFlow = false;
       }
     }
-
   }
   getsubCategorywiseAllocation(data) {
     this.isLoading = true;
@@ -547,8 +570,16 @@ export class MutualFundOverviewComponent implements OnInit {
     this.svg = this.chart.getSVG()
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
+    let obj = {
+      htmlInput: para.innerHTML,
+      name: 'Overview',
+      landscape: true,
+      key: 'showPieChart',
+      svg: this.svg
+    }
     this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, 'showPieChart', this.svg)
     console.log('return value ====', this.returnValue)
+    return obj
   }
   getReportWiseCalculation(data) {
     let xirr;
@@ -693,7 +724,7 @@ export class MutualFundOverviewComponent implements OnInit {
             this.addedData = true;
             this.MfServiceService.setDataForMfGet('');
             this.MfServiceService.setMfData('');
-            
+
             // this.getMutualFundData();
             this.ngOnInit();
           }

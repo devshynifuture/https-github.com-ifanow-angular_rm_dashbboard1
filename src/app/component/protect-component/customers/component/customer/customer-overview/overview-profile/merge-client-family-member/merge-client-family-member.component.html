@@ -156,7 +156,7 @@
           <p class="m-0 pt-20 f-16 text-danger roboto pb-10">What is {{selectedClientData.displayName}} relationship
             with {{data.clientData.client.name}}?</p>
           <div [formGroup]="selectedClientFormGroup" class="row pt-20">
-            <div class="col-md-3 pl-0">
+            <div class="col-md-6 pl-0">
               <div class="form-group">
                 <p class="m-0 roboto f-400 pb-10">Relation</p>
                 <mat-form-field>
@@ -169,6 +169,8 @@
                   <mat-error>This field is required</mat-error>
                 </mat-form-field>
               </div>
+            </div>
+            <div class="col-md-6 pr-0">
               <div class="form-group">
                 <p class="m-0 roboto f-400 pb-10">Gender</p>
                 <mat-form-field>
