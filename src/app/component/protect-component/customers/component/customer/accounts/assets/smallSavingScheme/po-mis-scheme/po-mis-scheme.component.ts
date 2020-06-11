@@ -1,5 +1,5 @@
 import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter} from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -20,6 +20,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./po-mis-scheme.component.scss']
 })
 export class PoMisSchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   advisorId: any;
   clientId: number;
   isLoading = false;
@@ -140,6 +141,7 @@ export class PoMisSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getPoMisSchemedataResponse', data);
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;

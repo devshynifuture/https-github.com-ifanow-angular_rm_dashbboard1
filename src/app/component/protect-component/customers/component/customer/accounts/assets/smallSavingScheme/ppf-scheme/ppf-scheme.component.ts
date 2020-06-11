@@ -1,5 +1,5 @@
 import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -20,6 +20,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 })
 
 export class PPFSchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   advisorId: any;
   clientId: number;
   noData: string;
@@ -100,6 +101,7 @@ export class PPFSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getPpfSchemeDataResponse', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;

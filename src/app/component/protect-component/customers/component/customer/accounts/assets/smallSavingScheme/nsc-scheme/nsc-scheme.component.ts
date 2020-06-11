@@ -1,5 +1,5 @@
 import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -20,6 +20,8 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./nsc-scheme.component.scss']
 })
 export class NscSchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
+
   advisorId: any;
   clientId: number;
   noData: string;
@@ -135,6 +137,7 @@ export class NscSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log(data, 'getNscSchemedataResponse');
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;

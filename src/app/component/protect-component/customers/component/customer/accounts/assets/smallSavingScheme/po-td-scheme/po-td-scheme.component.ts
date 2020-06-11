@@ -1,5 +1,5 @@
 import { AddPoTdComponent } from './../common-component/add-po-td/add-po-td.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -21,6 +21,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 
 })
 export class PoTdSchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   advisorId: any;
   clientId: number;
   noData: string;
@@ -57,6 +58,7 @@ export class PoTdSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getPoTdSchemedata();
   }
+
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {
@@ -134,6 +136,7 @@ export class PoTdSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getPoTdSchemedataResponse', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;
