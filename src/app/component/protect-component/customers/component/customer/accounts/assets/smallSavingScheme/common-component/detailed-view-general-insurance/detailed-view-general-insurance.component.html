@@ -18,7 +18,7 @@
         <div class="col-md-12 p-0">
           <h4 class="f-16 roboto f-500">Policy details</h4>
           <div class="insurance-ui bt">
-            <div *ngIf="_data.policyHolderName" class="row bb p-8 b-l br">
+            <div *ngIf="_data.policyHolderName && showInsurance!='Health' " class="row bb p-8 b-l br">
               <div class="col-md-8 text-left f-14 roboto p-0">
                 Name of policy holder
               </div>
