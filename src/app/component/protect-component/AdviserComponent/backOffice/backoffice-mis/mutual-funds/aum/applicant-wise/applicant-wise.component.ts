@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -40,6 +40,8 @@ export class ApplicantWiseComponent implements OnInit {
   isLoadingSubCategory: boolean = false;
   isLoadingScheme: boolean = false;
   schemeListArr: any[];
+  @Input() data;
+  parentId: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService,private mfService:MfServiceService) { }
   applicantName;
@@ -120,6 +122,7 @@ export class ApplicantWiseComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
   sortBy(applicant, propertyName) {
@@ -191,9 +194,9 @@ export class ApplicantWiseComponent implements OnInit {
     this.isLoading = true;
     this.applicantName = [{}, {}, {}]
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
       data => this.applicantNameGet(data),
@@ -433,9 +436,9 @@ export class ApplicantWiseComponent implements OnInit {
       applicantData.categoryList = [{}, {}, {}];
       this.categoryListArr = []
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: applicantData.id,
         clientTotalAum: applicantData.totalAum
       }
@@ -485,9 +488,9 @@ export class ApplicantWiseComponent implements OnInit {
       catData.subCatList = [{}, {}, {}];
       this.subCategoryList = []
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: catData.familyMemberId,
         categoryId: catData.id,
         categoryTotalAum: catData.totalAum
@@ -538,9 +541,9 @@ export class ApplicantWiseComponent implements OnInit {
       subCatData.schemeList = []
       subCatData.schemeList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: subCatData.familyMemberId,
         subCategoryId: subCatData.id,
         subCategoryTotalAum: subCatData.totalAum

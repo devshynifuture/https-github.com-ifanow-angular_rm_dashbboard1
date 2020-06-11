@@ -99,7 +99,7 @@
 
 
 
-        <div class="row  pt-40">
+        <div class="row  pt-32">
             <div class="col-md-4 text-right pr-0">
                 <h5 class="mb-0 mt-28">Insured members</h5>
             </div>
@@ -114,7 +114,7 @@
                 </div>
 
                 <div formArrayName="InsuredMemberForm">
-                    <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex" [ngClass]="{'pt-36': pointIndex > 0}" class="row">
+                    <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex" [ngClass]="{'pt-20': pointIndex > 0}" class="row">
                         <div class="col-md-7  pr-0">
                             <div class="form-group  ">
                                 <mat-form-field>
@@ -141,7 +141,7 @@
 
                         <div class="col-md-2 pr-0 d-flex mt-8 ">
                             <i (click)="addTransaction(undefined)" class="material-icons text-primitive c-p float-left">add</i>
-                            <i (click)="removeTransaction(pointIndex)" class="material-icons text-primitive c-p float-right">remove</i>
+                            <i (click)="removeTransaction(pointIndex)" *ngIf="healthInsuranceForm.value.InsuredMemberForm?.length > 1" class="material-icons text-primitive c-p float-right">remove</i>
                         </div>
 
                     </div>
@@ -155,47 +155,8 @@
 
 
 
-        <!-- <div formArrayName="InsuredMemberForm">
-            <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex" [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-32">
-                <div class="col-md-4 pr-0 text-right">
-                    <h5 class="mb-0 mt-32">Insured members</h5>
-                </div>
 
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <h5 class="mb-0">Name </h5>
-                        <mat-form-field>
-                            <mat-select (selectionChange)="getFamilyData(insuredMemberList)" autocomplete="true" class="form-control br-0" formControlName="insuredMembers" matInput>
-                                <mat-option *ngFor="let option of insuredMemberList;index as i" [disabled]="option.isDisabled" [value]="option.userName">
-                                    {{option.userName}}</mat-option>
-                            </mat-select>
-                            <mat-error>This field is required
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="col-md-2 pl-0" *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
-                    <div class="form-group mb-0 iconRupess">
-                        <h5 class="mb-0 "> Sum insured </h5>
-                        <mat-form-field>
-                            <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssured" matInput type="number">
-                            <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/10</mat-hint>
-                            <mat-error>This field is required
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="col-md-1 p-0 mt-20 d-flex align-items-center">
-                    <i (click)="addTransaction(undefined)" class="material-icons text-primitive c-p float-left">add</i>
-                    <i (click)="removeTransaction(pointIndex)" class="material-icons text-primitive c-p float-right">remove</i>
-                </div>
-
-            </div>
-        </div> -->
-
-        <div class="row pt-40" *ngIf="planType.value =='8' || showSumAssured">
+        <div class="row pt-32" *ngIf="planType.value =='8' || showSumAssured">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Sum insured</h5>
             </div>
@@ -210,7 +171,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40" *ngIf="planDetails.value != 0 && showDeductibleSum">
+        <div class="row pt-32" *ngIf="planDetails.value != 0 && showDeductibleSum">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Deductible sum insured</h5>
             </div>

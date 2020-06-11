@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChildren, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -40,9 +41,12 @@ export class SipAmcWiseComponent implements OnInit {
   isLoadingApplicant: boolean = false;
   subCategory: [];
   applicantList: [];
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
+  caesedForm: any;
+  parentId: any;
+  constructor(private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
+  @Input() data;
 
   @ViewChildren(FormatNumberDirective) formatNumber;
 
@@ -122,8 +126,12 @@ export class SipAmcWiseComponent implements OnInit {
 
 
   ngOnInit() {
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.amcGet();
   }
 
@@ -218,9 +226,9 @@ export class SipAmcWiseComponent implements OnInit {
     this.amcList = [{}, {}, {}];
     this.filteredArray = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.GET_SIP_AMC(obj).subscribe(
       data => {
@@ -257,10 +265,9 @@ export class SipAmcWiseComponent implements OnInit {
       this.schemeDataList = []
       schemeData.schemeList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        amcId: schemeData.amcId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         sipAmount: schemeData.sipAmount,
       }
 
@@ -307,7 +314,25 @@ export class SipAmcWiseComponent implements OnInit {
         break;
     }
   }
+  addCeasesdDate(sip, investor, date) {
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+        console.log(data);
+        //  investor.value.splice(investor.value.indexOf(sip), 1);
+        //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
 
+      }
+    )
+
+  }
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'schemes':
@@ -316,7 +341,7 @@ export class SipAmcWiseComponent implements OnInit {
           this.arrayOfExcelData[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
-            sipAmount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             sipCount: element.sipCount,
             totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
@@ -350,7 +375,7 @@ export class SipAmcWiseComponent implements OnInit {
             toDate: new Date(element.to_date),
             triggerDay: element.sipTriggerDay,
             frequency: element.frequency,
-            amount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+            amount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
             weightInPerc: element.weightInPercentage
           });
         });
@@ -363,7 +388,7 @@ export class SipAmcWiseComponent implements OnInit {
       this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.amcName,
-        sipAmount:this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
+        sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
         sipCount: element.sipCount,
         totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         weightInPerc: element.weightInPercentage,
@@ -382,9 +407,9 @@ export class SipAmcWiseComponent implements OnInit {
       investorData.investorList = [];
       investorData.investorList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         schemeId: investorData.mutualFundSchemeMasterId,
         sipAmount: investorData.sipAmount,
       }
@@ -427,17 +452,20 @@ export class SipAmcWiseComponent implements OnInit {
       this.applicantList = [];
       applicantData.applicantList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
         clientId: applicantData.clientId,
-        parentId: -1,
         schemeId: applicantData.mutualFundSchemeMasterId,
-        sipAmount: applicantData.sipAmount
+        sipAmount: applicantData.sipAmount,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        parentId: (this.data) ? this.data.parentId : -1
       }
       this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
         data => {
           this.isLoadingApplicant = false
           if (data) {
+            data.forEach(o => {
+              o.isEdit = false;
+            });
             applicantData.applicantList = data;
             this.applicantList = data
           } else {
@@ -460,9 +488,9 @@ export class SipAmcWiseComponent implements OnInit {
   }
   schemeInvestorGet() {
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1,
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1,
       schemeId: 122,
       sipAmount: 5000,
     }
@@ -473,11 +501,11 @@ export class SipAmcWiseComponent implements OnInit {
   }
   amcSchemeGet() {
     const obj = {
-      advisorId: this.advisorId,
       amcId: 123,
-      arnRiaDetailsId: -1,
-      parentId: -1,
       sipAmount: 5000,
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
       data => {
@@ -486,12 +514,12 @@ export class SipAmcWiseComponent implements OnInit {
   }
   investorApplicantGet() {
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
       clientId: this.clientId,
-      parentId: -1,
       schemeId: 123,
-      sipAmount: 2000
+      sipAmount: 2000,
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
       data => {

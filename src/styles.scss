@@ -861,7 +861,6 @@ mat-tab-group[vertical] {
 #ui-income,
 #ui-expenses,
 #ui-profile-plan,
-#investmentPlan,
 #onboargings {
   .vertical-menu {
     height: 100vh;
@@ -1997,5 +1996,12 @@ ngx-slick-carousel>.slick-disabled {
     cursor: pointer;
     border-bottom: 1px solid #e9eaec;
     padding-bottom: 10px;
+  }
+}
+
+.client-password-icons {
+  .mat-form-field-suffix {
+    margin-left: -25px;
+    bottom: -6px;
   }
 }
