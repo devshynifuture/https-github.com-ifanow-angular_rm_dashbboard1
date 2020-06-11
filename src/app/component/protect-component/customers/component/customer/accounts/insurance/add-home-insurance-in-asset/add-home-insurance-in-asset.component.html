@@ -176,7 +176,7 @@
                     </div>
                     <div class="col-md-2 pr-0 d-flex mt-8 ">
                         <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
-                        <i *ngIf="homeInsuranceForm.value.InsuredMemberForm?.length > 1" class="material-icons text-primitive c-p " (click)="removeNewFeature(pointIndex)">remove</i>
+                        <i *ngIf="homeInsuranceForm.value.planFeatureForm?.length > 1" class="material-icons text-primitive c-p " (click)="removeNewFeature(pointIndex)">remove</i>
                     </div>
                 </div>
 
@@ -298,7 +298,7 @@
                         </div>
                         <div class="col-md-2 pr-0 d-flex mt-8 ">
                             <i class="material-icons text-primitive c-p float-left" (click)="addNewAddOns(undefined)">add</i>
-                            <i class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
+                            <i *ngIf="homeInsuranceForm.value.addOnForm?.length > 1" class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
                         </div>
                     </div>
 
