@@ -38,22 +38,6 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
-            <h5 class="m-0">MICR code</h5>
-        </div>
-        <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input #micr autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        [maxLength]="9" placeholder="Enter micr code" formControlName="micrName" matInput
-                        class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                    <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
             <h5 class="m-0">Bank name</h5>
         </div>
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
@@ -107,6 +91,22 @@
     <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
         (holderList)="getHolderList($event)">
     </app-add-holder-names>
+    <div class="row pt-28">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
+            <h5 class="m-0">MICR code</h5>
+        </div>
+        <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input #micr autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        [maxLength]="9" placeholder="Enter micr code" formControlName="micrName" matInput
+                        class="form-control">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row pt-28">
         <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
             <h5 class="m-0">Branch name</h5>
