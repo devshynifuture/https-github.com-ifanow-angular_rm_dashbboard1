@@ -82,7 +82,7 @@ export class ReconciliationService {
     }
 
     getTeamMemberListValues(data) {
-        return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEAM_MEMBER, data);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BACKOFFICE_TEAM_MEMBER_LIST, data);
     }
 
     // post functions
