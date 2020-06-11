@@ -23,6 +23,490 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-mutual-fund-overview',
   templateUrl: './mutual-fund-overview.component.html',
+  template:`<div #mfOverviewTemplate id="template" *ngIf="mfData" class="hide">
+  <table cellpadding="0" cellspacing="0" border="0" style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+
+      <tr>
+          <td style="text-align: left;">
+              <img width="100px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+          </td>
+          <td style="text-align: right;">
+              <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                  {{(userInfo.name) ? userInfo.name : '-'}}</p>
+              <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+              <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
+              <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong> {{(details) ? details.emailId : '-'}}</p>
+              <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
+                      {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+              </p>
+          </td>
+      </tr>
+
+      <tr>
+          <td colspan="2" style="padding: 10px;"></td>
+      </tr>
+
+
+      <tr>
+          <td colspan="2" style=" border: 1px solid #dee5e7; border-bottom: transparent;" valign="top">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr>
+                      <p style="margin: 0px; font-weight: 600; font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+                          Client name : {{(clientData.name) ? clientData.name : '-'}}</p>
+                      <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
+                          Summary</p>
+                  </tr>
+                  <tr>
+                      <td style=" padding-top: 15px; padding-bottom: 10px; padding-left: 15px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+                          <p style="font-size: 14px; margin: 0px;">Current value </p>
+                          <h2 style="margin: 0px; font-size: 24px; color: #000000;"> <span appFormatNumber *ngIf="mfData.total_current_value">{{(mfData)?(mfData.total_current_value):0}}</span>
+                          </h2>
+
+                      </td>
+                  </tr>
+
+                  <tr>
+                      <td>
+                          <table bgcolor="#F5F7F7" style="padding: 16px 15px;" cellpadding="0" cellspacing="0" border="0" width="100%">
+                              <tr>
+                                  <td valign="top">
+                                      <p style="font-size: 14px; color: #757575; margin: 0px;">Amount invested</p>
+                                      <h2 style="margin: 0px; font-size: 24px; color: #000000;">
+                                          <span appFormatNumber *ngIf="mfData.total_amount_invested">
+                                              {{(mfData.total_amount_invested)?(mfData.total_amount_invested):0}}</span>
+                                      </h2>
+                                  </td>
+
+                                  <td valign="top">
+                                      <p style="font-size: 14px; color: #757575; margin: 0px;">Unrealized gain/loss
+                                      </p>
+                                      <h2 style="margin: 0px; font-size: 24px; color: #000000;">
+                                          <span appFormatNumber *ngIf="mfData.total_unrealized_gain">{{(mfData.total_unrealized_gain)?(mfData.total_unrealized_gain):0}}</span>
+                                      </h2>
+                                  </td>
+
+                                  <td valign="top">
+                                      <p style="font-size: 14px; color: #757575; margin: 0px;">Returns</p>
+                                      <h2 style="margin: 0px; font-size: 24px; color: #000000;"><span *ngIf="mfData.total_xirr">{{mfData.total_xirr | number:'1.2-2'}}</span>%
+                                      </h2>
+                                  </td>
+                              </tr>
+                          </table>
+                      </td>
+                  </tr>
+              </table>
+          </td>
+      </tr>
+
+      <tr>
+          <td valign="top" style="width: 196px;  border: 1px solid #dee5e7; ">
+              <div>showPieChart</div>
+          </td>
+
+          <td style="padding: 10px 0px; border: 1px solid #dee5e7;" valign="top">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                  <tr style="height: 40px;">
+                      <td style="font-size: 13px; padding-left: 10px; border-bottom: 1px solid #dee5e7;">
+                          <span style="width: 15px; height: 15px; background: #008FFF; display: inline-block;">
+                          </span> </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Equity </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span appFormatNumber *ngIf="this.equityCurrentValue"> {{this.equityCurrentValue}} </span><span>0</span></td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                          {{(this.equityPercentage) ? (this.equityPercentage):'0'}}%</td>
+                  </tr>
+
+                  <tr style="height: 40px;">
+                      <td style="font-size: 13px; padding-left: 10px; border-bottom: 1px solid #dee5e7;">
+                          <span style="width: 15px; height: 15px; background: #00B294; display: inline-block;">
+                          </span> </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Debt </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> <span appFormatNumber *ngIf="this.debtCurrentValue">{{this.debtCurrentValue}}</span><span>0</span></td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                          {{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2'):'0'}}%</td>
+                  </tr>
+
+
+                  <tr style="height: 40px;">
+                      <td style="padding-left: 10px; font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                          <span style="width: 15px; height: 15px; background: #FFC100; display: inline-block;">
+                          </span> </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Hybrid </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span appFormatNumber *ngIf="this.hybridCurrentValue"> {{this.hybridCurrentValue}}</span><span>0</span>
+                      </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                          {{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2'):'0'}}% </td>
+                  </tr>
+
+                  <tr style="height: 40px;">
+                      <td style=" padding-left: 10px; font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                          <span style="width: 15px; height: 15px; background: #FF6823; display: inline-block;">
+                          </span> </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"> Solution oriented </td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;"><span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">
+                              {{this.solution_OrientedCurrentValue}}</span><span>0</span></td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
+                          {{(this.solution_OrientedPercenatge) ? (this.solution_OrientedPercenatge | number:'1.2-2'):'0'}}%
+                      </td>
+                  </tr>
+
+                  <tr style="height: 40px;">
+                      <td style="padding-left: 10px; font-size: 13px;  ">
+                          <span style="width: 15px; height: 15px; background: #83959D; display: inline-block;">
+                          </span> </td>
+                      <td style="font-size: 13px;"> Others </td>
+                      <td style="font-size: 13px;"><span appFormatNumber *ngIf="this.otherCurrentValue">
+                              {{(this.otherCurrentValue) ? (this.otherCurrentValue) : '0'}}</span>
+                          <span>0</span></td>
+                      <td style="font-size: 13px;">
+                          {{(this.otherPercentage)?(this.otherPercentage | number:'1.2-2'):'0'}}% </td>
+                  </tr>
+
+              </table>
+          </td>
+      </tr>
+
+      <tr>
+          <td style="padding: 10px;" colspan="2"></td>
+      </tr>
+
+      <tr>
+          <td valign="top" colspan="2">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                  Scheme wise allocation
+              </h3>
+
+              <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
+
+                  <tr style="background: #F5F7F7;">
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-left: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Scheme name</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                          Amount invested</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                          Current value</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                          Abs Ret</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                          XIRR</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                          Alloc</th>
+                  </tr>
+
+                  <tr *ngFor="let item of dataSource2.data">
+                      <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
+                          {{(item.schemeName) ? item.schemeName : 'N.A'}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;" appFormatNumber>
+                          {{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}
+                      </td>
+                      <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                          {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                          {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}} </td>
+                      <td style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                          {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
+                  </tr>
+
+                  <tr>
+                      <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          Total
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_amount_invested">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{mfData.total_absolute_return | number:'1.2-2'}}</td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{mfData.total_xirr | number:'1.2-2'}}</td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                          {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
+                  </tr>
+
+              </table>
+          </td>
+      </tr>
+
+      <tr>
+          <td style="padding: 10px;" colspan="2"></td>
+      </tr>
+
+
+      <tr>
+          <td valign="top" colspan="2">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px; page-break-before: always;">
+                  Cashflow status
+              </h3>
+              <table cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #DADCE0;" width="100%">
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          a. Investment</td>
+                      <td style="font-size: 13px;border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_amount_inv"></td>
+                  </tr>
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          b. Switch In
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_switch_in"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          c. Switch Out
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_switch_out"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          d. Redemption
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_redemption"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          e. Dividend Payout
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_dividend_payout"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          f. Net Investment (a+b-c-d-e)
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_net_investment"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          g. Market Value
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="mfData.total_market_value"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          h. Net Gain (g-f)
+                      </td>
+                      <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;" appFormatNumber [value]="total_net_Gain"></td>
+                  </tr>
+
+                  <tr>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                          i. Lifetime XIRR (All Transactions)
+                      </td>
+                      <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">
+                          {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
+                  </tr>
+
+              </table>
+          </td>
+      </tr>
+
+      <tr>
+          <td style="padding: 10px;" colspan="2"></td>
+      </tr>
+
+      <tr>
+          <td style="padding: 20px;" colspan="2"></td>
+      </tr>
+
+
+      <tr>
+          <td valign="top" colspan="2">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                  Sub category wise allocation
+              </h3>
+
+              <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
+
+                  <tr style="background: #F5F7F7;">
+                      <th style="text-align: left; font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Scheme name</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Amount invested</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Current value</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Abs Ret</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          XIRR</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Alloc</th>
+                  </tr>
+
+                  <tr *ngFor="let item of dataSource3.data">
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
+                          {{(item.subCategory) ? item.subCategory : 'N.A'}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>
+                          {{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}
+                      </td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
+                  </tr>
+
+                  <tr>
+                      <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          Total
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_amount_invested">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                          {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
+                  </tr>
+
+
+
+              </table>
+          </td>
+      </tr>
+
+      <tr>
+          <td style="padding: 10px;" colspan="2"></td>
+      </tr>
+
+      <tr>
+          <td valign="top" colspan="2">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                  Family member wise allocation
+
+              </h3>
+
+              <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
+
+                  <tr style="background: #F5F7F7;">
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;  border-left: 1px solid #dee5e7;">
+                          Family Member Name </th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Amount invested</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Current value</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Abs Ret</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          XIRR</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Alloc</th>
+                  </tr>
+
+                  <tr *ngFor="let item of dataSource.data">
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
+                          {{(item.name) ? item.name : 'N.A'}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInv) ? item.amountInv : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
+                  </tr>
+
+                  <tr>
+                      <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          Total
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_amount_invested">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                          {{(totalValue.allocationPer) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
+                  </tr>
+
+
+
+              </table>
+          </td>
+      </tr>
+
+      <tr>
+          <td style="padding: 10px;" colspan="2"></td>
+      </tr>
+
+      <tr>
+          <td valign="top" colspan="2">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                  Category wise allocation
+              </h3>
+
+              <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
+
+                  <tr style="background: #F5F7F7;">
+                      <th style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; ">
+                          Category name</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Amount invested</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Current value</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Abs Ret</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          XIRR</th>
+                      <th style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          Alloc</th>
+                  </tr>
+
+                  <tr *ngFor="let item of dataSource4.data">
+                      <td style="font-size: 13px; padding: 5px; border-left: 1px solid #dee5e7;  border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.category) ? item.category : 'N.A'}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
+                      <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">
+                          {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
+                  </tr>
+
+                  <tr>
+                      <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          Total
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_amount_invested">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                      </td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                          {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
+                      <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
+                          {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
+                  </tr>
+
+
+
+              </table>
+          </td>
+      </tr>
+
+  </table>
+</div>`,
   styleUrls: ['./mutual-fund-overview.component.scss']
 })
 export class MutualFundOverviewComponent implements OnInit {
@@ -94,10 +578,13 @@ export class MutualFundOverviewComponent implements OnInit {
   details: any;
   addedData: boolean;
   getOrgData: any;
+  static dataUpload: any;
+  genObj: { htmlInput: string; name: string; landscape: boolean; key: string; svg: string; };
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
-
+      this.advisorId = AuthService.getAdvisorId();
+      this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
     this.getAdvisorDetail = AuthService.getAdvisorDetails()
@@ -111,10 +598,21 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
+
+
+ uploadData(data) {
+   data.forEach(element => {
+    this.clientId = element.clientId
+    this.ngOnInit()
+   });
+   setTimeout(() => {
+    this.genObj =  this.generatePdf()
+  }, 2000)
+   return this.genObj
+  }
+
   ngOnInit() {
     this.reportDate = new Date()
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getFilterData(1);
     this.MfServiceService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
@@ -157,7 +655,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.custumService.getTransactionTypeInMF(obj).subscribe(
       data => {
         if (data) {
-          data = data.filter(item => item !=null);
+          data = data.filter(item => item != null);
           this.MfServiceService.setTransactionType(data);
           // this.setDefaultFilterData.transactionTypeList = filterData
 
@@ -180,7 +678,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.dataSource2 = new MatTableDataSource([{}, {}, {}]);
     this.dataSource3 = new MatTableDataSource([{}, {}, {}]);
     this.datasource1 = new MatTableDataSource([{}, {}, {}]);
-   
+
     const obj = {
       advisor_id: this.advisorId,
       clientId: this.clientId,
@@ -288,7 +786,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundData() {
-   
+
 
     const obj = {
       // advisorId: 2753,
@@ -336,7 +834,7 @@ export class MutualFundOverviewComponent implements OnInit {
           this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
         }
         this.MfServiceService.setFilterValues(this.setDefaultFilterData);
-        if(this.addedData == true || !this.mfGetData){
+        if (this.addedData == true || !this.mfGetData) {
           this.MfServiceService.setDataForMfGet(this.mutualFund);
         }
         this.MfServiceService.setMfData(this.mutualFund);
@@ -443,7 +941,6 @@ export class MutualFundOverviewComponent implements OnInit {
         this.showCashFlow = false;
       }
     }
-
   }
   getsubCategorywiseAllocation(data) {
     this.isLoading = true;
@@ -547,8 +1044,16 @@ export class MutualFundOverviewComponent implements OnInit {
     this.svg = this.chart.getSVG()
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
+    let obj = {
+      htmlInput: para.innerHTML,
+      name: 'Overview',
+      landscape : true,
+      key :'showPieChart',
+      svg : this.svg
+    }
     this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, 'showPieChart', this.svg)
     console.log('return value ====', this.returnValue)
+    return obj
   }
   getReportWiseCalculation(data) {
     let xirr;
@@ -693,7 +1198,7 @@ export class MutualFundOverviewComponent implements OnInit {
             this.addedData = true;
             this.MfServiceService.setDataForMfGet('');
             this.MfServiceService.setMfData('');
-            
+
             // this.getMutualFundData();
             this.ngOnInit();
           }

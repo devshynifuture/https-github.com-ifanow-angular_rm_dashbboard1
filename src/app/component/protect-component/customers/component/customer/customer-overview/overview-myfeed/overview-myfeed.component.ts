@@ -14,6 +14,8 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { DatePipe } from '@angular/common';
 import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.service';
 import { WebworkerService } from 'src/app/services/web-worker.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { BulkEmailTestComponent } from '../../accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -144,6 +146,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private eventService: EventService,
     private authService: AuthService,
     private plansService: PlanService,
+    private subInjectService :SubscriptionInject,
     private router: Router,
     private orgSetting: OrgSettingServiceService,
     private enumSerice: EnumServiceService,
@@ -362,7 +365,26 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
     )
   }
+  generateUpload(data){
 
+    const fragmentData = {
+      flag: '',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: BulkEmailTestComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
   getAppearanceSettings() {
     this.loaderFn.increaseCounter()
     let obj = {
