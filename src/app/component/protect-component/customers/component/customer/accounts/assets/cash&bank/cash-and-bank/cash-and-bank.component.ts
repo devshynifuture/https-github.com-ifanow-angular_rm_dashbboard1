@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -23,6 +23,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./cash-and-bank.component.scss']
 })
 export class CashAndBankComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   
   showRequring: string;
   advisorId: any;
@@ -249,6 +250,7 @@ export class CashAndBankComponent implements OnInit {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
     if (data != undefined) {
+      this.changeCount.emit("call");
       this.bankAccountList.data = data.assetList;
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.sumOfAccountBalance;
@@ -282,6 +284,7 @@ export class CashAndBankComponent implements OnInit {
       this.cashInHandList.data = [];
     }
     else if (data.assetList.length != 0) {
+      this.changeCount.emit("call");
       this.cashInHandList.data = data.assetList;
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
