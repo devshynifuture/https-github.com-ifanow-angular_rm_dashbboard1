@@ -26,13 +26,13 @@ export class BackofficeFileUploadComponent implements OnInit {
   advisorId: any;
   filterList: any;
   arnRiaList = [];
-  arnRiaId;
+  arnRiaId:any = '';
   showFilter = true;
   fileName: any;
   fileSize: any;
   targetFile: any;
   uploadButton = false;
-
+ barWidth:any='0%' ;
   constructor(
     private reconService: ReconciliationService,
     private eventService: EventService,
@@ -91,12 +91,12 @@ export class BackofficeFileUploadComponent implements OnInit {
     // });
   }
 
-  setArnRiaId(value) {
-    console.log(value);
-    if (value) {
-      this.arnRiaId = value.id;
-    }
-  }
+  // setArnRiaId(value) {
+  //   console.log(value);
+  //   if (value) {
+  //     this.arnRiaId = value.id;
+  //   }
+  // }
 
   setShowFilter(value) {
     this.showFilter = value;
@@ -104,7 +104,11 @@ export class BackofficeFileUploadComponent implements OnInit {
 
   uploadTargetFile() {
     this.uploadButton = false;
-
+    for(let i = 0; i < 30; i++){
+      setTimeout(() => {
+        this.addbarWidth();
+      }, 1000);
+    }
     const obj = {
       fileType: this.selectedFileType,
       advisorId: this.advisorId,
@@ -139,6 +143,11 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   uploadFileRes(data, file) {
+    for(let i = 30; i < 70; i++){
+      setTimeout(() => {
+        this.addbarWidth();
+      }, 1000);
+    }
     const httpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', '')
@@ -149,8 +158,21 @@ export class BackofficeFileUploadComponent implements OnInit {
 
     });
   }
+num:any = 1;
+  addbarWidth(){
+    this.num++;
+    this.barWidth= this.num+'%';
+    if(this.barWidth == "100%"){
+      return;
+    }
+  }
 
   successFileUpload(fileType, fileName) {
+    for(let i = 70; i < 99; i++){
+      setTimeout(() => {
+        this.addbarWidth();
+      }, 1000);
+    }
     const obj = {
       fileType,
       fileName,
@@ -160,6 +182,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.reconService.successBackOfficeFileToUpload(obj).subscribe((data) => {
       this.fileName = '';
       this.fileSize = '';
+      this.barWidth = "100%";
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
       // reload
       this.setFilter();
@@ -167,6 +190,8 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   setFilter() {
+    this.barWidth = "0%";
+    this.num = 0; 
     if (this.filterStatus === undefined) {
       this.filterStatus = 2;
     }
