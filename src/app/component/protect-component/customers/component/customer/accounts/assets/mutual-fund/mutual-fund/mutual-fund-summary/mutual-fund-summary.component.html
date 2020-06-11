@@ -82,7 +82,7 @@
                     <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
                     <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar"><span
-                                *ngIf="element.schemeName!='Total'">{{(isLoading) ? '' : (element.schemeName+'|'+element.folioNumber+'|'+element.ownerName)}}</span>
+                                *ngIf="element.schemeName!='Total'">{{(isLoading) ? '' : (element.schemeName+' | '+element.folioNumber+' | '+element.ownerName)}}</span>
                             <span class="f-700" *ngIf="element.schemeName=='Total'">{{element.schemeName}}</span>
                         </div>
                     </td>

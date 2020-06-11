@@ -1,0 +1,23 @@
+#ui-profile-plan {
+  margin-top: 118px;
+
+  .vertical-menu {
+
+    display: block !important;
+    width: 100%;
+    text-align: left;
+  }
+
+  .activeColor {
+    background: #D9DEE1;
+  }
+
+  li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0px 0 24px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
