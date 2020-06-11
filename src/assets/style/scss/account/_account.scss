@@ -5,6 +5,27 @@
   }
 }
 
+#ui-plan-summary .light-blue {
+  .mat-progress-bar-buffer {
+    background: #626262 !important;
+  }
+
+  .mat-progress-bar-fill::after {
+
+    background-color: #84BDF3 !important;
+  }
+}
+
+#ui-plan-summary .light-red {
+  .mat-progress-bar-fill::after {
+    background-color: #EA5970 !important;
+  }
+
+  .mat-progress-bar-buffer {
+    background: #626262 !important;
+  }
+}
+
 .face-sheet-radio {
   display: flex;
 
