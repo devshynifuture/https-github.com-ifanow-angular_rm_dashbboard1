@@ -68,7 +68,7 @@
                     <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
                         {{option.policy_type}}</mat-option> -->
                     <mat-option value='9'> Single Trip Travel Insurance Plan </mat-option>
-                    <mat-option value='10'>Multi-trip Travel Insurance Plan</mat-option>
+                    <mat-option value='10'>Multi Trip Travel Insurance Plan</mat-option>
                     <mat-option value='11'>Family Floater Travel Insurance Plan</mat-option>
                     <mat-option value='12'>Student Travel Insurance Plan</mat-option>
                 </mat-select>
@@ -99,7 +99,7 @@
                 <div class="col-md-7 pr-0">
                     <h5 class="mb-4 f-14">Name </h5>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-3 pr-0" *ngIf="planDetails.value == ''  || planDetails.value !='1' && showinsuredMemberSum">
                     <h5 class="mb-4 f-14">Sum insured </h5>
                 </div>
             </div>
@@ -149,9 +149,9 @@
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Sum insured</h5>
         </div>
-        <div class="col-md-3 form-group iconRupess">
+        <div class="col-md-3 form-group iconDollar">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="number" formControlName="sumAssuredIdv" #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                <input matInput type="number" formControlName="sumAssuredIdv" #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control dollar br-0">
                 <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/10</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
@@ -309,7 +309,7 @@
                 </div>
                 <div class="col-md-1 p-0 pt-8 align-items-center d-flex">
                     <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
-                    <i class="material-icons text-primitive c-p float-right" (click)="removeNewFeature(pointIndex)">remove</i>
+                    <i class="material-icons text-primitive c-p float-right" *ngIf="travelInsuranceForm.value.planFeatureForm?.length > 1" (click)="removeNewFeature(pointIndex)">remove</i>
                 </div>
             </div>
 
@@ -323,7 +323,7 @@
                     <mat-select matInput formControlName="geography" #bonusType autocomplete="off" class="form-control br-0">
                         <mat-option value='1'>Worldwide</mat-option>
                         <mat-option value='2'>Worldwide excluding USA & Canada</mat-option>
-                        <mat-option value='2'>Asia</mat-option>
+                        <mat-option value='3'>Asia</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

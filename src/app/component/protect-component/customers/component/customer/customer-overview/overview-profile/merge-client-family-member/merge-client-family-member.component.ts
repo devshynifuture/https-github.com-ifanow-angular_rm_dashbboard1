@@ -126,8 +126,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     };
   }
   optionSelected(value) {
-    if (value.count == 0) {
-      this.eventService.openSnackBar("Cannot convert family member count 0 to family member", "Dismiss")
+    if (value.count > 0) {
+      this.eventService.openSnackBar("Family member count must be 0", "Dismiss")
       return;
     }
     // this.showSuggestion = false;

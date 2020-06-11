@@ -32,13 +32,13 @@
 
 <div>
 
-    <app-ppf-scheme *ngIf="selectedTab==1"></app-ppf-scheme>
-    <app-nsc-scheme *ngIf="selectedTab==2"></app-nsc-scheme>
-    <app-ssy-scheme *ngIf="selectedTab==3"></app-ssy-scheme>
-    <app-kvp-scheme *ngIf="selectedTab==4"></app-kvp-scheme>
-    <app-scss-scheme *ngIf="selectedTab==5"></app-scss-scheme>
-    <app-po-savings *ngIf="selectedTab==6"></app-po-savings>
-    <app-po-rd-scheme *ngIf="selectedTab==7"></app-po-rd-scheme>
-    <app-po-td-scheme *ngIf="selectedTab==8"></app-po-td-scheme>
-    <app-po-mis-scheme *ngIf="selectedTab==9"></app-po-mis-scheme>
+    <app-ppf-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==1"></app-ppf-scheme>
+    <app-nsc-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==2"></app-nsc-scheme>
+    <app-ssy-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==3"></app-ssy-scheme>
+    <app-kvp-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==4"></app-kvp-scheme>
+    <app-scss-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==5"></app-scss-scheme>
+    <app-po-savings (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==6"></app-po-savings>
+    <app-po-rd-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==7"></app-po-rd-scheme>
+    <app-po-td-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==8"></app-po-td-scheme>
+    <app-po-mis-scheme (changeCount)="getAssetCountGLobalData()" *ngIf="selectedTab==9"></app-po-mis-scheme>
 </div>

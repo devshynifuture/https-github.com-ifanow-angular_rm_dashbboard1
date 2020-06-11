@@ -1,5 +1,5 @@
 import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -131,6 +131,7 @@ export class FixedIncomeComponent implements OnInit {
     console.log('this is filter data', value);
     this.dataSource.filter = value.trim().toLowerCase();
   }
+  @Output() changeCount = new EventEmitter();
 
   getfixedIncomeData(value) {
     console.log('value++++++', value);
@@ -173,6 +174,7 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = false;
     } else if (data.assetList) {
+      this.changeCount.emit("call");
       this.dataList = data.assetList;
       this.dataSource.data = data.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
@@ -219,6 +221,8 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
+
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
         this.dataList = data.assetList;
         this.hideFilter = false;
@@ -259,6 +263,8 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+         this.changeCount.emit("call");
+
         console.log('getBondsRes ******** ', data);
         this.dataList = data.assetList;
         this.hideFilter = false;

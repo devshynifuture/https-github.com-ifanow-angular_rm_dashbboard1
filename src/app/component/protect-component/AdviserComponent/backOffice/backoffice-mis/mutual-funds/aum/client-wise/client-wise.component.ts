@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -84,6 +84,8 @@ export class ClientWiseComponent implements OnInit {
   isLoadingScheme: boolean;
   scheme1ListArr: any;
   isLoadingFolio: boolean;
+  @Input() data;
+  parentId: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService,private mfService:MfServiceService) { }
 
@@ -104,7 +106,9 @@ export class ClientWiseComponent implements OnInit {
   reverse4 = true;
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId()
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.getClientTotalAum();
   }
   sortBy(applicant, propertyName) {
@@ -174,9 +178,9 @@ export class ClientWiseComponent implements OnInit {
     this.isLoading = true;
     this.clientList = [{}, {}, {}];
     let obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
     }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       data => this.clientTotalAum(data),
@@ -198,9 +202,9 @@ export class ClientWiseComponent implements OnInit {
       clientData.investorList = [{}, {}, {}];
       this.isLoadingInvestor = true
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         clientId: clientData.id,
         totalAum: clientData.totalAum
       }
@@ -416,9 +420,9 @@ export class ClientWiseComponent implements OnInit {
     investorData.schemeList = [{}, {}, {}];
       this.isLoadingScheme = true
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: investorData.familyMemberId,
         totalAum: investorData.totalAum
       }
@@ -458,9 +462,9 @@ export class ClientWiseComponent implements OnInit {
       schemeData.folioList = []
       schemeData.folioList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: schemeData.familyMemberId,
         totalAum: schemeData.totalAum,
         schemeId: schemeData.mutualFundSchemeMasterId

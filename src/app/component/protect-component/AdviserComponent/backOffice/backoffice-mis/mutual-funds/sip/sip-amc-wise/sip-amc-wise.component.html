@@ -437,7 +437,7 @@
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         <span >
-                                                                                                            <button (click)="addCeasesdDate(applicant,inv,ceaseddate.value)">Save</button>
+                                                                                                            <button [disabled]="ceaseddate.value == ''" (click)="addCeasesdDate(applicant,inv,ceaseddate.value)">Save</button>
                                                                                                             <button (click)="applicant.isEdit=false">Cancel</button>
                                                                                                         </span>
                                                                                                     </div>

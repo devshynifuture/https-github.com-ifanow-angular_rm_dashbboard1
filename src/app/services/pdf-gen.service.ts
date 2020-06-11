@@ -96,12 +96,28 @@ export class PdfGenService {
        cellWidth.push('auto');
        }
     });
-    tabArr.forEach((data , i) =>{
+    tabArr.forEach((data , index) =>{
+      
       for(let i = 0; i < data.length ; i++){
-        if(data[i].charAt(0) == '₹'){
+        if(data[i].charAt(0) == '₹' || data[i].charAt(data[i].length - 1) == '%'){
           data[i]={
             text : data[i],
             alignment:'right'
+          }
+        }
+        if(index == tabArr.length - 1){
+          if(data[i] != '' || data[i] == 'Total'){
+            if( data[i] == 'Total'){
+              data[i]={
+                text : data[i],
+                bold:true,
+                fontSize: 10
+              }
+            }
+            else{
+              data[i].bold= true;
+              data[i].fontSize= 10;
+            }
           }
         }
       }
@@ -175,7 +191,7 @@ export class PdfGenService {
                 },{lineHeight: 2, text:this.advisor.name, style: 'header' }],
               [{text: 'Header 1'}, { lineHeight: 2, text: 'Number: '+this.advisor.mobileList[0].mobileNo + ' Email: '+this.advisor.emailList[0].email, style: 'advisorContactStyle' }],
               [{text: 'Header 1'}, { text: title, style: 'anotherStyle' }],
-              [{text: 'Header 1'}, { lineHeight: 2,text: 'Report as on: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'}],
+              [{text: 'Header 1'}, { lineHeight: 2,text: 'Report as on: ' + this.datePipe.transform(new Date(), 'd MMM, yyyy'), style: 'anotherStyle'}],
             ]
           }
         },

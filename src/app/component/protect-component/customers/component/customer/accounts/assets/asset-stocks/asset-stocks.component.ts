@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
@@ -47,12 +47,16 @@ export class AssetStocksComponent implements OnInit {
     pieChart(id);
   }
 
+
+  @Output() changeCount = new EventEmitter();
   getStocksData() {
     this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.changeCount.emit("call");
+
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
         this.getStocksDataRes(data);

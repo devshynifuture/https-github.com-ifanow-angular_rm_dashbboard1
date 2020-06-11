@@ -32,6 +32,7 @@ export class AumComponent implements OnInit {
   parentId;
   isLoading = true;
   adminAdvisorIds = [];
+  objTosend: any;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
@@ -239,6 +240,11 @@ export class AumComponent implements OnInit {
   categoryWise(value) {
     this.componentWise = value;
     this.aumComponent = false;
+    this.objTosend={
+      arnRiaDetailId :this.arnRiaValue,
+      parentId: this.parentId,
+      adminAdvisorIds:this.adminAdvisorIds
+    }
   }
   getGraphData() {
     this.aumGraph = null;
