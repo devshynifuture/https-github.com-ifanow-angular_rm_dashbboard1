@@ -3,7 +3,7 @@ import { AddSuperannuationComponent } from './../add-superannuation/add-superann
 import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
 import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { AddEPFComponent } from './../add-epf/add-epf.component';
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -32,6 +32,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./retirement-account.component.scss']
 })
 export class RetirementAccountComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   showRecurring = '1';
   getObject: {};
   advisorId: any;
@@ -492,6 +493,8 @@ export class RetirementAccountComponent implements OnInit {
     if (data != undefined) {
       if (data.assetList) {
         console.log('getEPFRes =', data);
+       this.changeCount.emit("call");
+
         this.sumOfcurrentEpfBalance = data.sumOfEpfBalanceTillToday;
         this.sumOfcurrentEpsBalance = data.sumOfEpsBalanceTillToday;
         this.sumOfcurrentValue = data.sumOfcurrentValue;
@@ -537,6 +540,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
       this.sumOfGratuityReceived = data.sumOfGratuityReceived;
       if (data.assetList) {
+      this.changeCount.emit("call");
         console.log('getGrauityRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.gratuityListTableSort;
@@ -566,6 +570,7 @@ export class RetirementAccountComponent implements OnInit {
 
     if (data != undefined) {
       if (data.assetList) {
+      this.changeCount.emit("call");
         console.log('getNPSRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.npsListTableSort;
@@ -628,7 +633,8 @@ export class RetirementAccountComponent implements OnInit {
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;
       if (data.epsList) {
-        console.log('getEPSRes =', data);
+      this.changeCount.emit("call");
+        // console.log('getEPSRes =', data);
         this.dataSource.data = data.epsList;
         this.dataSource.sort = this.epsListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);

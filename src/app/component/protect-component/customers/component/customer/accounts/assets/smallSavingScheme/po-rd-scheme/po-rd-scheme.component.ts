@@ -1,6 +1,6 @@
 import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
 import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren , Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -21,6 +21,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./po-rd-scheme.component.scss']
 })
 export class PoRdSchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   advisorId: any;
   clientId: number;
   noData: string;
@@ -138,6 +139,7 @@ export class PoRdSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getPoRdSchemedataResponse :::::::::::::::', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;

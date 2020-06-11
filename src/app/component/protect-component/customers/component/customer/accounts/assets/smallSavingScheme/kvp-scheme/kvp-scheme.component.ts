@@ -1,5 +1,5 @@
 import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -20,6 +20,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./kvp-scheme.component.scss']
 })
 export class KvpSchemeComponent implements OnInit {
+  @Output() changeCount = new EventEmitter();
   clientId: number;
   advisorId: any;
   noData: string;
@@ -130,6 +131,7 @@ export class KvpSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
+        this.changeCount.emit("call");
         console.log('getKvpSchemedataResponse', data);
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
