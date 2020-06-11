@@ -26,6 +26,7 @@ export class SipClientWiseComponent implements OnInit {
   isLoading = false;
   @Output() changedValue = new EventEmitter();
   @Input() data;
+  maxDate = new Date();
 
   propertyName: any;
   propertyName2: any;
@@ -236,6 +237,9 @@ export class SipClientWiseComponent implements OnInit {
         this.filteredArray = [];
       }
     )
+  }
+  preventDefault(e) {
+    e.preventDefault();
   }
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {

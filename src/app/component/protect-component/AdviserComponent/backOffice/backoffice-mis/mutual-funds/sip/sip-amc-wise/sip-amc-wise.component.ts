@@ -43,6 +43,7 @@ export class SipAmcWiseComponent implements OnInit {
   applicantList: [];
   caesedForm: any;
   parentId: any;
+  maxDate = new Date();
   constructor(private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
@@ -440,6 +441,9 @@ export class SipAmcWiseComponent implements OnInit {
         }
       )
     }
+  }
+  preventDefault(e) {
+    e.preventDefault();
   }
   showApplicantName(index, subcashowSubcat, applicantData) {
     this.selectedClientIndex = index;
