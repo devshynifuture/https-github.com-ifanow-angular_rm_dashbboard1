@@ -184,17 +184,17 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   showMainNavWrapper() {
-    document.getElementById('d').classList.add('width-230');
+    document.getElementById('d').classList.add('width-220');
     document.getElementById('d').classList.remove('width-70');
     document.getElementById('left').classList.remove('width-60');
-    document.getElementById('left').style.marginLeft = '230px';
+    document.getElementById('left').style.marginLeft = '220px';
     document.getElementById('left').style.transition = '0.2s';
     this.showTabs = true;
     this.arrow = false;
   }
 
   showsmallNavWrapper() {
-    document.getElementById('d').classList.remove('width-230');
+    document.getElementById('d').classList.remove('width-220');
     document.getElementById('d').classList.add('width-70');
     document.getElementById('left').style.transition = '0.2s';
 
