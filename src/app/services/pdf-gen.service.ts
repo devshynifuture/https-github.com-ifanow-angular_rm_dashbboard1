@@ -9,13 +9,47 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class PdfGenService {
   advisor: any;
-  client: any
+  client: any;
+  getOrgData:any;
+  imageUrl:any;
   constructor(private datePipe: DatePipe) {
     this.advisor = AuthService.getUserInfo();
     this.client = AuthService.getClientData();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.imageUrl= this.getBase64ImageFromURL(this.getOrgData.reportLogoUrl);
   }
 
+  getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+  }
+
+  
+
   generatePdf(rows, title) {
+    
+    console.log(this.imageUrl,"this.getBase64ImageFromURL(this.getOrgData.reportLogoUrl)");
     let headers = [];
     let footer = [];
     let td = [];
@@ -74,7 +108,7 @@ export class PdfGenService {
       
     })
     console.log(tabArr, "tabArr");
-
+    
 
     const documentDefinition = {
       pageOrientation: 'landscape',
@@ -109,23 +143,50 @@ export class PdfGenService {
       content: [
         // {
         //   // if you specify both width and height - image will be stretched
-        //   image: '../../assets/images/a2.PNG',
-        //   width: 150,
-        //   height: 150
+        //   image: this.imageUrl.__zone_symbol__value,
+          
+        //   // width: 150,
+        //   // height: 150
         // },
-        {lineHeight: 2, text:this.advisor.name, style: 'header' },
-        { lineHeight: 2, text: 'Number: '+this.advisor.mobileList[0].mobileNo + ' Email: '+this.advisor.emailList[0].email, style: 'advisorContactStyle' },
-        { text: title, style: 'anotherStyle' },
-        { lineHeight: 2,text: 'Report as on: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'},
-        { lineHeight: 2, text: 'Investor: ' + this.client.name, style: 'clientStyle' },
+        // {lineHeight: 2, text:this.advisor.name, style: 'header' },
+        // { lineHeight: 2, text: 'Number: '+this.advisor.mobileList[0].mobileNo + ' Email: '+this.advisor.emailList[0].email, style: 'advisorContactStyle' },
+        // { text: title, style: 'anotherStyle' },
+        // { lineHeight: 2,text: 'Report as on: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'},
+        // { lineHeight: 2, text: 'Investor: ' + this.client.name, style: 'clientStyle' },
 
+
+        {
+          layout: 'noBorders',
+          // color: '#444',
+          table: {
+            widths: [187, 400],
+            headerRows: 0,
+            // keepWithHeaderRows: 1,
+            body: [
+              [{
+                  // if you specify both width and height - image will be stretched
+                  // fillColor:'red',
+                  alignment:'right',
+                  rowSpan: 4,
+                  image: this.imageUrl.__zone_symbol__value,
+                  fit: [200, 200]
+                  // width: 150,
+                  // height: 150
+                },{lineHeight: 2, text:this.advisor.name, style: 'header' }],
+              [{text: 'Header 1'}, { lineHeight: 2, text: 'Number: '+this.advisor.mobileList[0].mobileNo + ' Email: '+this.advisor.emailList[0].email, style: 'advisorContactStyle' }],
+              [{text: 'Header 1'}, { text: title, style: 'anotherStyle' }],
+              [{text: 'Header 1'}, { lineHeight: 2,text: 'Report as on: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'}],
+            ]
+          }
+        },
+        { lineHeight: 2, text: 'Investor: ' + this.client.name, style: 'clientStyle' },
         {
           layout: {
             fillColor: function (rowIndex, node, columnIndex) {
               return (rowIndex == 0) ? '#f6f7f7' : null;
             },
-            paddingTop: function(i, node) { return 5; },
-				    paddingBottom: function(i, node) { return 5; },
+            paddingTop: function(i, node) { return 7; },
+				    paddingBottom: function(i, node) { return 7; },
             hLineColor: function (i, node) {
               return (i === 0 || i === node.table.body.length) ? '#dadce0' : '#dadce0';
             },
