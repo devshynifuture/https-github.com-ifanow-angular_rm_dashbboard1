@@ -275,7 +275,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         this.cancelFlagService.setCancelFlag(true)
         this.enumDataService.searchClientList();
         this.stateCtrl.reset();
-        this.filteredStates.unsubscribe();
+        // this.filteredStates.unsubscribe();
       },
       err => {
         clientData.addedFlag = false;
