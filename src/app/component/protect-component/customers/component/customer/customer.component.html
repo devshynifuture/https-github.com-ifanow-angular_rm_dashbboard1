@@ -51,7 +51,8 @@
 
                             <ul class="d-block bb-1 pb-20">
                                 <li class="text-left pt-20 f-14 c-p"
-                                    *ngIf="userInfo.userType==1 || userInfo.userType==8">Profile</li>
+                                    *ngIf="userInfo.userType==1 || userInfo.userType==8"
+                                    [routerLink]="['/admin/setting/orgprofile']">Profile</li>
                                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
                                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Refer & Earn
                                 </li>
@@ -79,8 +80,10 @@
                             </div>
 
                             <ul class="d-block bb-1 pb-20">
-                                <li class="text-left pt-20 f-14 c-p">Profile</li>
-                                <li class="text-left pt-20 f-14 c-p">Change password</li>
+                                <li class="text-left pt-20 f-14 c-p"
+                                    [routerLink]="['/customer/detail/overview/profile']">Profile</li>
+                                <li class="text-left pt-20 f-14 c-p"
+                                    (click)="openChangePassword('changeClientPassword',clientData)">Change password</li>
                                 <!-- <li class="text-left pt-20 f-14 pb-20 c-p">Refer & Earn</li> -->
                             </ul>
                             <p (click)="logout()" class="c-p mb-0 pb-12 pt-20">Logout</p>

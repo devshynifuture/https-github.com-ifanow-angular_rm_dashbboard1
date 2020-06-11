@@ -9,6 +9,8 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnumDataService } from '../../../../../services/enum-data.service';
+import { ChangeClientPasswordComponent } from './customer-overview/overview-profile/change-client-password/change-client-password.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-customer',
@@ -46,7 +48,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     public authService: AuthService,
     private peopleService: PeopleService,
     private _formBuilder: FormBuilder,
-    private enumDataService: EnumDataService
+    private enumDataService: EnumDataService,
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
@@ -100,6 +102,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.advisorName = AuthService.getUserInfo().name;
     this.role = AuthService.getUserRoleType().roleName;
     this.clientName = AuthService.getClientData().userName;
+    this.clientData = AuthService.getClientData();
     this.showRouter = true;
     this.selected = 1;
     this._value = 1;
@@ -139,6 +142,30 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       },
       err => {
         console.error(err);
+      }
+    );
+  }
+
+  openChangePassword(value, data) {
+
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: ChangeClientPasswordComponent,
+
+    };
+    const rightSideDataSub = this.subinject.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
       }
     );
   }
