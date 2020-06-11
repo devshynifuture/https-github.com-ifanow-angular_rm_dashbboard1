@@ -358,12 +358,12 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="planName">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="planName">
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="showType">
                                         {{showType}}{{(insuranceSubTypeId == 8) ? ' & Geography' : ''}}
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar">
-                                            {{(element.policyType) ? element.policyType : element.planName}}{{(insuranceSubTypeId == 8 && element.geographyId) ? ((element.geographyId == 1) ? ' - Worldwide' : (element.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (element.geographyId == 3) ? ' - Asia' : '') : ''}}
+                                            {{(element.policyType) ? (element.policyType) : element.planName}}{{(insuranceSubTypeId == 8 && element.geographyId) ? ((element.geographyId == 1) ? ' - Worldwide' : (element.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (element.geographyId == 3) ? ' - Asia' : '') : ''}}
                                          </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>

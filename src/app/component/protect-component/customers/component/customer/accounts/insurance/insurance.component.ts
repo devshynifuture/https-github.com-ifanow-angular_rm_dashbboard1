@@ -430,6 +430,9 @@ export class InsuranceComponent implements OnInit {
             if (element.policyTypeId) {
               if (ele.id == element.policyTypeId) {
                 element.policyType = ele.policy_type;
+                if(element.policyType == 'Multi-trip Travel Insurance Plan') {
+                  element.policyType = 'Multi Trip Travel Insurance Plan';
+                }
                 this.showType = 'Plan type';
               }
             } else {
