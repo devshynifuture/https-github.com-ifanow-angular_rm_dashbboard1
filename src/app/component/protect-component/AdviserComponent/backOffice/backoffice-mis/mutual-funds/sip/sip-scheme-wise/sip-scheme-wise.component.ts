@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -115,10 +116,14 @@ export class SipSchemeWiseComponent implements OnInit {
   isLoadingCategory: boolean;
   applicantListArr: any[];
   subCatList: any[];
+  caesedForm: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
+  constructor(private backoffice: BackOfficeService,private fb: FormBuilder, public sip: SipComponent,private mfService:MfServiceService) { }
 
   ngOnInit() {
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
     this.showLoader = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -186,7 +191,25 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     )
   }
+  addCeasesdDate(sip, investor, date){
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+       console.log(data);
+      //  investor.value.splice(investor.value.indexOf(sip), 1);
+      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
+       
+      }
+    )
 
+  }
   getSchemeWiseRes(data) {
     this.isLoading = false;
     if (data) {
@@ -358,6 +381,9 @@ export class SipSchemeWiseComponent implements OnInit {
         data => {
           this.isLoadingSubCategory = false
           if (data) {
+            data.forEach(o => {
+              o.isEdit=false;
+            });
             ApplicantData.applicantList = data;
             this.applicantListArr = data
             if (ApplicantData.showSubCategory == false) {
