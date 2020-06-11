@@ -426,10 +426,10 @@
                <ng-container matColumnDef="groupHeader2">
                   <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="zIndex">
                      <div class="bar d-flex w-100">
-                        <p class="w-50 m-0">
+                        <p class="w-50 m-0 f-400">
                            {{group.schemeName}}{{(setDefaultFilterData.reportType == 'Investor wise') ? (' | '+group.pan): '' }}
                         </p>
-                        <p class="text-right w-50 m-0">Avg Cost NAV: {{group.avgNav}} | Current NAV:
+                        <p class="text-right w-50 m-0 f-400">Avg Cost NAV: {{group.avgNav}} | Current NAV:
                            {{group.nav}} | NAV as on {{group.navDate | date:'dd/MM/yyyy'}}
                         </p>
                      </div>
@@ -486,7 +486,8 @@
             </table>
             <!-- </div>-->
          </cdk-virtual-scroll-viewport>
-         <div *ngIf="!isLoading &&  customDataSource.data?.length == 0 || dataSource.data?.length == 0" class="d-flex flex-column align-items-center">
+         <div *ngIf="!isLoading &&  customDataSource.data?.length == 0 || dataSource.data?.length == 0"
+            class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12"> No data found</h4>
          </div>
