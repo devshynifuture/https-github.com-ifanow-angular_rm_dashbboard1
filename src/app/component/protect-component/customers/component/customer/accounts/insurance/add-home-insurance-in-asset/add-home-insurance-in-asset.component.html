@@ -15,7 +15,7 @@
 </div>
 
 
-<div class=" mt-100 pl-24 pr-24 pb-24 mb-48" [formGroup]="homeInsuranceForm">
+<div class=" mt-100 pl-24 pr-24 pb-24 mb-48 insuranceRowBox" [formGroup]="homeInsuranceForm">
 
     <div formArrayName="getCoOwnerName">
         <div class="row" *ngFor="let obj of homeInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
@@ -86,7 +86,7 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field>
-                <input matInput type="text" [maxLength]="20" formControlName="policyNum" #policyNum  autocomplete="off" class="form-control br-0">
+                <input matInput type="text" [maxLength]="20" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0">
                 <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
@@ -127,49 +127,64 @@
         </div>
     </div>
 
-    <div formArrayName="planFeatureForm">
-        <div class="row pt-32" *ngFor="let obj of homeInsuranceForm.controls['planFeatureForm'].controls; let pointIndex=index" [formGroupName]="pointIndex">
-            <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-28 ">Plan </h5>
+    <div class="row  pt-32">
+        <div class="col-md-4 text-right pr-0">
+            <h5 class="mb-0 mt-28">Plan</h5>
+        </div>
+        <div class="col-md-8 pr-0">
+            <div class="row">
+                <div class="col-md-7 pr-0">
+                    <h5 class="mb-4 f-14">Plan features </h5>
+                </div>
+                <div class="col-md-3 pr-0">
+                    <h5 class="mb-4 f-14"> Sum insured </h5>
+                </div>
             </div>
 
-            <div class="col-md-4 pr-0 form-group">
-                <h5 class="mb-8 f-14 ">Plan features</h5>
-                <mat-form-field>
-                    <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                        <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+            <div formArrayName="planFeatureForm">
+                <div class="row " *ngFor="let obj of homeInsuranceForm.controls['planFeatureForm'].controls; let pointIndex=index" [formGroupName]="pointIndex" [ngClass]="{'pt-20': pointIndex > 0}">
+
+                    <div class="col-md-7  pr-0 form-group">
+
+                        <mat-form-field>
+                            <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
+                                <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
                             {{option.type}}</mat-option> -->
-                        <mat-option value='31'>Building</mat-option>
-                        <mat-option value='32'>Content - Furniture/Fixture/Fittings</mat-option>
-                        <mat-option value='33'>Content - Kitchen appliances</mat-option>
-                        <mat-option value='34'>Content - Apparrel/Footwear</mat-option>
-                        <mat-option value='35'>Content - Electrical appliances</mat-option>
-                        <mat-option value='36'>Content - Electronic equipment</mat-option>
-                        <mat-option value='37'>Content - Jewellery & valuables</mat-option>
-                        <mat-option value='38'>Content - Paintings, Curios, & work of art </mat-option>
+                                <mat-option value='31'>Building</mat-option>
+                                <mat-option value='32'>Content - Furniture/Fixture/Fittings</mat-option>
+                                <mat-option value='33'>Content - Kitchen appliances</mat-option>
+                                <mat-option value='34'>Content - Apparrel/Footwear</mat-option>
+                                <mat-option value='35'>Content - Electrical appliances</mat-option>
+                                <mat-option value='36'>Content - Electronic equipment</mat-option>
+                                <mat-option value='37'>Content - Jewellery & valuables</mat-option>
+                                <mat-option value='38'>Content - Paintings, Curios, & work of art </mat-option>
 
-                    </mat-select>
-                    <mat-error>This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-3 form-group">
-                <h5 class="mb-8 f-14">Sum insured</h5>
-                <mat-form-field class="iconRupess">
-                    <input type="text" matInput #sumInsured class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="sumInsured">
-                    <mat-hint align="end" class="f-12">{{sumInsured.value.length}}/10</mat-hint>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-1 p-0 pt-8 align-items-center d-flex">
-                <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
-                <i class="material-icons text-primitive c-p float-right" (click)="removeNewFeature(pointIndex)">remove</i>
+                            </mat-select>
+                            <mat-error>This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3 pr-0 form-group">
+
+                        <mat-form-field class="iconRupess">
+                            <input type="text" matInput #sumInsured class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="sumInsured">
+                            <mat-hint align="end" class="f-12">{{sumInsured.value.length}}/10</mat-hint>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 pr-0 d-flex mt-8 ">
+                        <i class="material-icons text-primitive c-p float-left" (click)="addNewFeature(undefined)">add</i>
+                        <i *ngIf="homeInsuranceForm.value.planFeatureForm?.length > 1" class="material-icons text-primitive c-p " (click)="removeNewFeature(pointIndex)">remove</i>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
+
+
 
     <div class="row pt-28">
         <div class="col-md-4 pr-0 text-right">
@@ -223,7 +238,7 @@
 
     <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
         <div (click)="openOptionField()" class="col-md-5 text-right">
-            <p class="m-0 text-primitive f-16 c-p"> + Add more [optional data] </p>
+            <p class="m-0 text-primitive f-14 c-p"> + Add more [optional data] </p>
         </div>
         <div class="col-md-3">
         </div>
@@ -231,50 +246,67 @@
 
     <div class="pt-40 pb-48" *ngIf="addMoreFlag">
         <div (click)="openOptionField()" class="col-md-5 text-right">
-            <p class="m-0 text-primitive f-16 c-p">Show less</p>
+            <p class="m-0 text-primitive f-14 c-p">Show less</p>
         </div>
 
-        <div formArrayName="addOnForm">
-            <div class="row pt-36" *ngFor="let obj of homeInsuranceForm.controls['addOnForm'].controls; let pointIndex=index" [formGroupName]="pointIndex">
-                <div class="col-md-4 pr-0 text-right">
-                    <h5 class="m-0 pt-28 ">Add ons</h5>
+
+        <div class="row  pt-32">
+            <div class="col-md-4 text-right pr-0">
+                <h5 class="mb-0 mt-28"> Add ons</h5>
+            </div>
+            <div class="col-md-8 pr-0">
+                <div class="row">
+                    <div class="col-md-7 pr-0">
+                        <h5 class="mb-4 f-14">Cover </h5>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <h5 class="mb-4 f-14">Sum insured </h5>
+                    </div>
                 </div>
 
-                <div class="col-md-4 pr-0 form-group">
-                    <h5 class="mb-0 f-14 ">Cover</h5>
-                    <mat-form-field>
-                        <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                            <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                <div formArrayName="addOnForm">
+                    <div class="row " *ngFor="let obj of homeInsuranceForm.controls['addOnForm'].controls; let pointIndex=index" [ngClass]="{'pt-20': pointIndex > 0}" [formGroupName]="pointIndex">
+
+
+                        <div class="col-md-7  pr-0 form-group">
+
+                            <mat-form-field>
+                                <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
+                                    <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
                                 {{option.add_on}}</mat-option> -->
-                            <mat-option value='15'>Earthquake</mat-option>
-                            <mat-option value='16'>Terrorism</mat-option>
-                            <mat-option value='17'>Rent for alternative accomodation</mat-option>
-                            <mat-option value='18'>Loss of rent</mat-option>
-                            <mat-option value='19'>Emergency purchases</mat-option>
-                            <mat-option value='20'>Keys & locks replacement cover</mat-option>
-                            <mat-option value='21'>Public liability</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
+                                    <mat-option value='15'>Earthquake</mat-option>
+                                    <mat-option value='16'>Terrorism</mat-option>
+                                    <mat-option value='17'>Rent for alternative accomodation</mat-option>
+                                    <mat-option value='18'>Loss of rent</mat-option>
+                                    <mat-option value='19'>Emergency purchases</mat-option>
+                                    <mat-option value='20'>Keys & locks replacement cover</mat-option>
+                                    <mat-option value='21'>Public liability</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
 
-                </div>
-                <div class="col-md-3 form-group">
-                    <h5 class="mb-0 f-14">Sum insured</h5>
-                    <mat-form-field class="iconRupess">
-                        <input matInput type="number" formControlName="sumAddOns" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #sumAddOns autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
-                        <mat-hint align="end" class="f-12">{{sumAddOns.value.length}}/10</mat-hint>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-1 p-0 pt-8 align-items-center d-flex">
-                    <i class="material-icons text-primitive c-p float-left" (click)="addNewAddOns(undefined)">add</i>
-                    <i class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
+                        </div>
+                        <div class="col-md-3 pr-0 form-group">
+
+                            <mat-form-field class="iconRupess">
+                                <input matInput type="number" formControlName="sumAddOns" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #sumAddOns autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                                <mat-hint align="end" class="f-12">{{sumAddOns.value.length}}/10</mat-hint>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 pr-0 d-flex mt-8 ">
+                            <i class="material-icons text-primitive c-p float-left" (click)="addNewAddOns(undefined)">add</i>
+                            <i *ngIf="homeInsuranceForm.value.addOnForm?.length > 1" class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
+
+
 
         <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">

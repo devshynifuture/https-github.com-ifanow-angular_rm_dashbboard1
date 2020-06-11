@@ -235,8 +235,8 @@
                                                     <!-- {{(isLoadingApplicant?'':'add cease date') }} -->
                                                     <div class="bar">
                                                         <div *ngIf="!isLoadingApplicant">
-                                                            <button (click)="scheme.isEdit=true" *ngIf="scheme.isEdit==false" >Add Cease Date</button>
-                                                            <div [formGroup]="caesedForm" *ngIf="scheme.isEdit == true">
+                                                            <button (click)="scheme.isEdit=true" *ngIf="!scheme.isEdit" >Add Cease Date</button>
+                                                            <div [formGroup]="caesedForm" *ngIf="scheme.isEdit">
                                                                     <div class="col-md-3 pr-0">
                                                                         <div class="form-group mb-0">
                                                                             <mat-form-field class="ba-date">

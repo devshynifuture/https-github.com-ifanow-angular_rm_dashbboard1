@@ -19,7 +19,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   displayedColumns1: string[] = ['checkbox', 'transactionType', 'date', 'amount', 'units', 'balanceUnits', 'action'];
-  displayedColumns2: string[] = ['transactionType', 'date', 'amount', 'nav', 'units', 'action'];
+  displayedColumns2: string[] = ['srNo', 'transactionType', 'date', 'amount', 'nav', 'units', 'action'];
   dataSource1 = new MatTableDataSource<PeriodicElement1>(ELEMENT_DATA1); // with delete operation
   dataSource2 = new MatTableDataSource<PeriodicElement2>(ELEMENT_DATA2); // with keep and remove operation
   tableEntriesType: number;
@@ -36,6 +36,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   canDeleteTransaction = false;
   filteredValues: any[];
   arnRiaCode: any = '';
+
+  filterList = [];
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -64,7 +66,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
     this.dataSource.data = tableArr;
     this.upperTableArr = tableArr;
-    if (this.data && this.data.freezeDate === 0) {
+    if ((this.data && this.data.freezeDate === 0) || (this.data && this.data.freezeDate === null)) {
       this.disableUnfreezeBtn = true;
     } else {
       this.disableUnfreezeBtn = false;
@@ -232,7 +234,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     } else {
       let filteredArray = [];
       filteredArray = this.tableData1.filter(item => {
-        return item.transactionType === filterBasedOn.toUpperCase() ? item : null;
+        return item.transactionType === filterBasedOn ? item : null;
       });
       this.dataSource1.data = filteredArray;
     }
@@ -244,8 +246,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.canDeleteTransaction = this.data.canDeleteTransaction ? this.data.canDeleteTransaction : false;
     if (this.data.tableData.length !== 0) {
 
-      this.data.tableData.forEach(element => {
+      this.data.tableData.forEach((element, index1) => {
         this.tableData1.push({
+          srNo: index1 + 1,
           id: element.id,
           transactionType: element.fwTransactionType,
           date: element.transactionDate,
@@ -256,7 +259,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           keep: element.keep,
           nav: element.purchasePrice ? element.purchasePrice : null
         });
+        if (!(this.filterList.includes(element.fwTransactionType))) {
+          this.filterList.push(element.fwTransactionType);
+        }
       });
+      // populate table filters
+
       console.log(this.tableData1);
       if (this.data.tableType == 'all-folios') {
         this.dataSource1.data = this.tableData1;

@@ -13,7 +13,7 @@
         <div class="col-md-12 p-0">
             <hr id="suggest-advice-top">
             <hr id="suggest-advice-bottom">
-            <mat-horizontal-stepper #stepper id="ui-suggest-advice">
+            <mat-horizontal-stepper #stepper id="ui-suggest-advice" [disableRipple]="true">
                 <mat-step>
                     <form [formGroup]="adviceForm">
                         <ng-template matStepLabel>
@@ -123,7 +123,7 @@
                         </div>
                     </form>
                 </mat-step>
-                <mat-step>
+                <mat-step class="remove-bl">
                     <ng-template matStepLabel>
                         STEP 2
                         <p class="m-0 text-black roboto">Asset details</p>

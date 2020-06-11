@@ -221,10 +221,12 @@ export class IfasDetailsComponent implements OnInit {
       id: 1,
       data: {
         ...data,
+        clientName: this.ifasData.adminName,
+        // arnRiaCode: this.selectedOption.brokerCode,
         startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
         rtId,
         flag,
-        clientName: '',
+        // clientName: '',
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,

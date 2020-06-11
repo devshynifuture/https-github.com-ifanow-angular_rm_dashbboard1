@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ReconciliationService} from '../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {HttpHeaders} from '@angular/common/http';
-import {HttpService} from 'src/app/http-service/http-service';
-import {BackofficeFileUploadService} from './backoffice-file-upload.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SettingsService} from '../../setting/settings.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ReconciliationService } from '../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpService } from 'src/app/http-service/http-service';
+import { BackofficeFileUploadService } from './backoffice-file-upload.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SettingsService } from '../../setting/settings.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-backoffice-file-upload',
@@ -54,7 +54,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       this.filterList = data;
       console.log('this is filter list :::', data);
     });
-    this.settingService.getArnlist({advisorId: this.advisorId})
+    this.settingService.getArnlist({ advisorId: this.advisorId })
       .subscribe(res => {
         if (res.length > 0 ) {
           this.arnRiaList = res;
@@ -167,13 +167,20 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   setFilter() {
+    if (this.filterStatus === undefined) {
+      this.filterStatus = 2;
+    }
+    if (this.filterRTA === undefined) {
+      this.filterRTA = 0;
+    }
     this.filter.status = this.filterStatus;
     this.filter.rt = this.filterRTA;
     this.BackOffice.addFilterData(this.filter);
+
   }
 
   setDefaultFilter() {
-    this.BackOffice.addFilterData({rt: 0, status: 2});
+    this.BackOffice.addFilterData({ rt: 0, status: 2 });
   }
 
   refresh(flag) {

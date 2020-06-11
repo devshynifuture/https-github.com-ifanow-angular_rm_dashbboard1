@@ -110,29 +110,10 @@
                                     All
                                 </span>
                             </button>
-                            <button mat-menu-item (click)="filterTableValues('sip')">
-                                <span>SIP</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('stp')">
-                                <span>STP</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('swp')">
-                                <span>SWP</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('sep')">
-                                <span>SEP</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('transfer-in')">
-                                <span>Transfer in</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('transfer-out')">
-                                <span>Transfer out</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('Purchase')">
-                                <span>Purchase</span>
-                            </button>
-                            <button mat-menu-item (click)="filterTableValues('Redemption')">
-                                <span>Redemption</span>
+                            <button mat-menu-item (click)="filterTableValues(item)" *ngFor="let item of filterList">
+                                <span>
+                                    {{ item }}
+                                </span>
                             </button>
                         </mat-menu>
                     </th>
@@ -210,6 +191,28 @@
         <div *ngIf="tableEntriesType == 2">
             <table mat-table [dataSource]="dataSource2" id="table-low" class="mt-8">
                 <!-- transaction Type Column -->
+                <ng-container matColumnDef="srNo">
+                    <th class="br" mat-header-cell *matHeaderCellDef>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>arrow_drop_down</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="filterTableValues('all')">
+                                <span>
+                                    All
+                                </span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues(item)" *ngFor="let item of filterList">
+                                <span>
+                                    {{ item }}
+                                </span>
+                            </button>
+                        </mat-menu>
+                    </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.srNo}} </div>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="transactionType">
                     <th class="br" mat-header-cell *matHeaderCellDef> Transaction type </th>
                     <td class="br" mat-cell *matCellDef="let element">

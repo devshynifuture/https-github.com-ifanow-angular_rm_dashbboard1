@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChildren, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChildren, EventEmitter, Output, Input } from '@angular/core';
 import { SipComponent } from '../sip.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -34,6 +35,7 @@ export class SipSchemeWiseComponent implements OnInit {
   reverse2 = true;
   reverse3 = true;
   @Output() changedValue = new EventEmitter();
+  @Input() data;
 
 
   arrayOfHeaders: any[][] = [
@@ -115,13 +117,19 @@ export class SipSchemeWiseComponent implements OnInit {
   isLoadingCategory: boolean;
   applicantListArr: any[];
   subCatList: any[];
+  caesedForm: any;
+  parentId: any;
 
-  constructor(private backoffice: BackOfficeService, public sip: SipComponent,private mfService:MfServiceService) { }
+  constructor(private backoffice: BackOfficeService,private fb: FormBuilder, public sip: SipComponent,private mfService:MfServiceService) { }
 
   ngOnInit() {
+    this.caesedForm = this.fb.group({
+      ceaseddate: ['']
+    });
     this.showLoader = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.getSchemeWiseGet();
   }
   sortBy(applicant, propertyName) {
@@ -174,9 +182,9 @@ export class SipSchemeWiseComponent implements OnInit {
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}]
     const obj = {
-      advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.Sip_Schemewise_Get(obj).subscribe(
       data => this.getSchemeWiseRes(data),
@@ -186,7 +194,25 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     )
   }
+  addCeasesdDate(sip, investor, date){
+    var obj = {
+      sipId: sip.id,
+      mutualFundId: sip.mutualFundId,
+      amount: sip.amount,
+      ceaseDate: date,
+    }
+    this.backoffice.addCeasedDate(obj).subscribe(
+      data => {
+       console.log(data);
+      //  investor.value.splice(investor.value.indexOf(sip), 1);
+      //  this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+      },
+      err => {
+       
+      }
+    )
 
+  }
   getSchemeWiseRes(data) {
     this.isLoading = false;
     if (data) {
@@ -242,9 +268,9 @@ export class SipSchemeWiseComponent implements OnInit {
       this.subCatList = []
       schemeData.subCatList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        parentId: (this.data) ? this.data.parentId : -1,
         schemeId: schemeData.mutualFundSchemeMasterId
       }
       this.backoffice.Scheme_Wise_Investor_Get(obj).subscribe(
@@ -347,9 +373,9 @@ export class SipSchemeWiseComponent implements OnInit {
       this.applicantListArr = []
       ApplicantData.applicantList = [{}, {}, {}];
       const obj = {
-        advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
-        parentId: -1,
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1,
 
         schemeId: ApplicantData.mutualFundSchemeMasterId,
         clientId: ApplicantData.clientId
@@ -358,6 +384,9 @@ export class SipSchemeWiseComponent implements OnInit {
         data => {
           this.isLoadingSubCategory = false
           if (data) {
+            data.forEach(o => {
+              o.isEdit=false;
+            });
             ApplicantData.applicantList = data;
             this.applicantListArr = data
             if (ApplicantData.showSubCategory == false) {
