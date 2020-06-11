@@ -1,18 +1,20 @@
 <div class="row" id="ui-activity-secondhead">
     <div class="col-md-2 d-flex align-items-center">
         <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()"
-                class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-          <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+            class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
         </button>
     </div>
     <div class="col-md-8">
         <nav mat-tab-nav-bar mat-align-tabs="center">
 
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
-            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']">ADVICE</a>
-            <a mat-tab-link routerLinkActive="active"
-                [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
-            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']">ACTION
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']"
+                class="min-width-90">ADVICE</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/deployments']"
+                class="min-width-140">DEPLOYMENTS</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']"
+                class="min-width-140">ACTION
                 PLANS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']">TASKS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/notes']">NOTES</a>

@@ -88,8 +88,14 @@ hr#suggest-advice-bottom {
 
 #ui-suggest-advice {
 
-  #cdk-step-label-2-1 {
+  #cdk-step-label-1-1 {
     border-left: 0px;
+  }
+
+  .mat-step-header.cdk-keyboard-focused,
+  .mat-step-header.cdk-program-focused,
+  .mat-step-header:hover {
+    background-color: transparent !important;
   }
 
   // .mat-step-header {
@@ -120,11 +126,16 @@ hr#suggest-advice-bottom {
     // border-top: px solid red;
     // border-bottom: 1px solid red;
     // border-left: 1px solid blue;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    // border: 1px solid rgba(0, 0, 0, 0.12);
     // right: -40px;
     // border-bottom-right-radius: 208px;
     // border-top-right-radius: 208px;
     top: 0;
+  }
+
+  .mat-horizontal-stepper-header-container {
+    width: 46%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
   }
 
   .mat-horizontal-stepper-header {
@@ -134,9 +145,9 @@ hr#suggest-advice-bottom {
       border-right: 0px;
     }
 
-    &:nth-child(2) {
-      border-left: 0px;
-    }
+
+
+
   }
 
   // #cdk-step-label-0-0 {
@@ -151,11 +162,59 @@ hr#suggest-advice-bottom {
   //   padding-left: 40px;
   // }
 
-  .mat-step-header::nth-child(2) {
-    border-left: 0px;
+  .mat-step-header:nth-child(2) {
+    border-left: 0px !important;
   }
 
 
+
+}
+
+.deployment-top {
+  #table-low {
+    tr {
+      border: 0px !important;
+    }
+
+    th {
+      background-color: #fff !important;
+      border-bottom: 0px !important;
+      padding: 0px 8px !important;
+
+    }
+  }
+}
+
+#investmentPlan {
+  .vertical-menu {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    display: block;
+    position: fixed;
+    width: 16.7%;
+
+    li {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 0 0 20px;
+      font-size: 14px;
+      text-align: left;
+      margin-bottom: 10px;
+
+
+    }
+  }
+}
+
+#ui-activity-secondhead {
+  .mat-tab-link.min-width-140 {
+    min-width: 140px !important;
+  }
+
+  .mat-tab-link.min-width-90 {
+    min-width: 90px !important;
+  }
 }
 
 @media(max-width:1142px) {
