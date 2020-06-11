@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -142,5 +142,13 @@ export class PeopleService {
 
   deleteDemat(data) {
     return this.http.put(apiConfig.USER + appConfig.DELETE_DEMAT, data);
+  }
+
+  getClientBasedOnMobile(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_CLIENT_BASED_ON_MOBILE, data, 1);
+  }
+
+  getClientBasedOnEmail(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_CLIENT_BASED_ON_EMAIL, data, 1);
   }
 }

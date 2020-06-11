@@ -11,6 +11,8 @@ import { EnumDataService } from '../../../../../../../../services/enum-data.serv
 import { ProcessTransactionService } from '../../../../../../AdviserComponent/transactions/overview-transactions/doTransaction/process-transaction.service';
 import { UtilService } from '../../../../../../../../services/util.service';
 import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { ClientSggestionListService } from '../client-sggestion-list.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-merge-client-family-member',
@@ -51,43 +53,88 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   form: FormGroup = this.fb.group({ 'clients': this.rows });
   selectedClientFormGroup: FormGroup
   requiredRefresh: boolean = false;
+  clientListEmail;
+  clientListMobile;
+  finalSuggestionList;
+  clientList: any;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
     private peopleService: PeopleService, private enumDataService: EnumDataService,
-    public processTransaction: ProcessTransactionService, private cancelFlagService: CancelFlagService) {
+    public processTransaction: ProcessTransactionService, private cancelFlagService: CancelFlagService,
+    private clientSuggeService: ClientSggestionListService) {
   }
 
   ngOnInit() {
-    let clientList = Object.assign([], this.data.clientData.ClientList);
-    if (this.data.clientData.SuggestionList) {
-      this.data.clientData.SuggestionList.filter(element => {
+    this.clientList = Object.assign([], this.data.clientData.ClientList);
+    // if (this.data.clientData.SuggestionList) {
+    //   this.data.clientData.SuggestionList.filter(element => {
+    //     this.rows.push(this.fb.group({
+    //       relation: ['', [Validators.required]],
+    //       gender: ['', [Validators.required]]
+    //     }))
+    //   })
+    // }
+    this.clientListEmail = this.clientSuggeService.getSuggestionListUsingEmail();
+    if (this.clientListEmail) {
+      this.clientListEmail = this.clientListEmail.filter(element => element.userId != this.data.clientData.client.userId)
+      // (this.clientListEmail.length == 0) ? this.clientListEmail = undefined : '';
+    }
+    this.clientListMobile = this.clientSuggeService.getSuggestionListUsingMobile();
+    if (this.clientListMobile) {
+      this.clientListMobile = this.clientListMobile.filter(element => element.userId != this.data.clientData.client.userId)
+      // (this.clientListMobile.length == 0) ? this.clientListMobile = undefined : '';
+    }
+
+    if ((this.clientListEmail && this.clientListEmail.length > 0) && (this.clientListMobile == undefined || this.clientListMobile.length == 0)) {
+      this.finalSuggestionList = this.clientListEmail
+    }
+    if ((this.clientListMobile && this.clientListMobile.length > 0) && (this.clientListEmail == undefined || this.clientListEmail.length == 0)) {
+      this.finalSuggestionList = this.clientListMobile
+    }
+    if ((this.clientListEmail && this.clientListEmail.length > 0) && (this.clientListMobile && this.clientListMobile.length > 0)) {
+      this.finalSuggestionList = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId === b.userId));
+      this.clientListEmail = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId != b.userId));
+      this.finalSuggestionList = this.finalSuggestionList.filter(a => this.clientListMobile.some(b => a.userId != b.userId));
+      this.clientListMobile = this.clientListMobile.filter(a => this.clientListEmail.some(b => a.userId != b.userId));
+      this.finalSuggestionList = this.finalSuggestionList.filter(a => this.clientListEmail.some(b => a.userId != b.userId));
+      this.finalSuggestionList = this.finalSuggestionList.concat(this.clientListMobile)
+      this.finalSuggestionList = this.finalSuggestionList.concat(this.clientListEmail);
+      // this.finalSuggestionList = this.finalSuggestionList.filter(a => this.finalSuggestionList.some(b => a.userId === b.userId));
+
+    }
+    if (this.finalSuggestionList) {
+      this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
+      this.finalSuggestionList.map(element => {
+        element['addedFlag'] = false;
+        element['isLoading'] = false;
         this.rows.push(this.fb.group({
           relation: ['', [Validators.required]],
           gender: ['', [Validators.required]]
         }))
       })
     }
+
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
         map(state => {
           if (state) {
             const filterValue = state.toLowerCase();
-            const list = clientList.filter(state => state.name.toLowerCase().includes(filterValue));
+            const list = this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
               this.showSuggestion = true;
               this.stateCtrl.setErrors({ invalid: true });
               this.stateCtrl.markAsTouched();
             }
-            return clientList.filter(state => state.name.toLowerCase().includes(filterValue));
+            return this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
           } else {
             return this.data.clientData.ClientList;
           }
         }),
       );
 
-    if (this.data.clientData.client.clientType == 2) {
+    if (this.data.clientData.client.clientType == 2 || this.data.clientData.client.martialStatusId == 2) {
       this.relationTypeList = [
         { name: 'Father', value: 6 },
         { name: 'Mother', value: 7 },
@@ -195,6 +242,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       data => {
         console.log(data),
           this.requiredRefresh = true
+        this.enumDataService.searchClientList();
         this.close(data);
         this.barButtonOptions.active = false;
       },
@@ -220,10 +268,14 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
         console.log(data);
+        this.clientList = this.clientList.filter(element => element.userId != clientData.userId)
         clientData.isLoading = false;
         clientData.addedFlag = true;
         this.requiredRefresh = true;
         this.cancelFlagService.setCancelFlag(true)
+        this.enumDataService.searchClientList();
+        this.stateCtrl.reset();
+        this.filteredStates.unsubscribe();
       },
       err => {
         clientData.addedFlag = false;

@@ -29,7 +29,7 @@ export const appConfig = {
   AUM_GRAPH_GET: 'backoffice/aum/graph/details/get',
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
-  ADD_CEASED_DATE:'backoffice/cease/date/add',
+  ADD_CEASED_DATE: 'backoffice/cease/date/add',
 
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
@@ -682,8 +682,8 @@ export const appConfig = {
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
   MERGE_CLIENT: 'user/client/merge/client',
-
-
+  SEARCH_CLIENT_BASED_ON_MOBILE: 'user/client/search/mobile/get',
+  SEARCH_CLIENT_BASED_ON_EMAIL: 'user/client/search/email/get',
   UPDATE_CLIENT_STATUS: 'user/client/status/update',
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',

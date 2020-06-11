@@ -18,6 +18,7 @@ import { CancelFlagService } from 'src/app/component/protect-component/PeopleCom
 import { UpdateClientProfileComponent } from './update-client-profile/update-client-profile.component';
 import { AgePopupComponent } from './age-popup/age-popup.component';
 import { element } from 'protractor';
+import { ClientSggestionListService } from './client-sggestion-list.service';
 
 @Component({
   selector: 'app-overview-profile',
@@ -52,7 +53,8 @@ export class OverviewProfileComponent implements OnInit {
   clientList: any;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute, private cancelFlagService: CancelFlagService) {
+    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute, private cancelFlagService: CancelFlagService
+    , private clientSuggeService: ClientSggestionListService) {
   }
 
   ngOnInit() {
@@ -69,7 +71,6 @@ export class OverviewProfileComponent implements OnInit {
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
     this.letsideBarLoader = true;
-    this.getClientList();
     this.getClientData(this.clientData);
     this.getAddressList(this.clientData);
     this.getDematList(this.clientData);
@@ -92,9 +93,22 @@ export class OverviewProfileComponent implements OnInit {
           // this.authService.setClientData(data);
           if (data.mobileList && data.mobileList.length > 0) {
             data.mobileNo = data.mobileList[0].mobileNo;
+            const obj =
+            {
+              advisorId: AuthService.getAdvisorId(),
+              isdCodeId: data.mobileList[0].isdCodeId,
+              mobileNo: data.mobileNo
+            }
+            this.clientSuggeService.setSuggestionListUsingMobile(obj);
           }
           if (data.emailList && data.emailList.length > 0) {
             data.email = data.emailList[0].email;
+            const obj =
+            {
+              advisorId: AuthService.getAdvisorId(),
+              email: data.email
+            }
+            this.clientSuggeService.setSuggestionListUsingEmail(obj);
           }
           (data.martialStatusId == 1 || data.martialStatusId == 0) ? data.martialStatus = 'Married' : (data.martialStatusId == 2) ? data.martialStatus = 'Unmarried' : (data.martialStatusId == 0) ? data.martialStatus = 'N/A' : data.martialStatus = 'Other';
           (data.genderId == 1) ? data.gender = 'Male' : (data.genderId == 2) ? data.gender = 'Female' : data.gender = 'Other';
@@ -243,29 +257,7 @@ export class OverviewProfileComponent implements OnInit {
     );
   }
 
-  getClientList() {
-    const obj = {
-      advisorId: AuthService.getAdvisorId(),
-      status: 1
-    };
 
-    this.peopleService.getClientList(obj).subscribe(
-      data => {
-        console.log(data);
-        if (data && data.length > 0) {
-          data.forEach((singleData) => {
-            if (singleData.mobileList && singleData.mobileList.length > 0) {
-              singleData.mobileNo = singleData.mobileList[0].mobileNo;
-            }
-            if (singleData.emailList && singleData.emailList.length > 0) {
-              singleData.email = singleData.emailList[0].email;
-            }
-            this.clientList = data;
-          });
-        }
-      }
-    );
-  }
   next(flag, index) {
     // console.log('next index: ', index);
     if (flag == 'bank') {
@@ -307,21 +299,7 @@ export class OverviewProfileComponent implements OnInit {
 
       let ClientList = Object.assign([], this.enumDataService.getEmptySearchStateData());
       ClientList = ClientList.filter(element => element.userId != this.clientOverviewData.userId);
-
-      let SuggestionList = Object.assign([], this.clientList);
-      SuggestionList = SuggestionList.filter(element => element.userId != this.clientOverviewData.userId);
-
-      SuggestionList = SuggestionList.filter(element => {
-        element['addedFlag'] = false;
-        element['isLoading'] = false;
-        if (element.mobileNo && element.mobileNo == this.clientOverviewData.mobileNo) {
-          return element;
-        }
-        if (element.email && element.email == this.clientOverviewData.email) {
-          return element;
-        }
-      })
-      data = { flag: 'Add Family Member', fieldFlag: 'familyMember', client: this.clientOverviewData, ClientList, SuggestionList: (SuggestionList.length > 0) ? SuggestionList : undefined };
+      data = { flag: 'Add Family Member', fieldFlag: 'familyMember', client: this.clientOverviewData, ClientList };
     } else {
       data.flag = 'Edit family member';
       data.fieldFlag = 'familyMember';
@@ -342,6 +320,25 @@ export class OverviewProfileComponent implements OnInit {
             this.getFamilyMembersList(this.clientData);
             this.cancelFlagService.setCancelFlag(undefined);
             this.familyMemberList = undefined;
+            if (this.clientOverviewData.mobileList && this.clientOverviewData.mobileList.length > 0) {
+              this.clientOverviewData.mobileNo = this.clientOverviewData.mobileList[0].mobileNo;
+              const obj =
+              {
+                advisorId: AuthService.getAdvisorId(),
+                isdCodeId: this.clientOverviewData.mobileList[0].isdCodeId,
+                mobileNo: this.clientOverviewData.mobileNo
+              }
+              this.clientSuggeService.setSuggestionListUsingMobile(obj);
+            }
+            if (this.clientOverviewData.emailList && this.clientOverviewData.emailList.length > 0) {
+              this.clientOverviewData.email = this.clientOverviewData.emailList[0].email;
+              const obj =
+              {
+                advisorId: AuthService.getAdvisorId(),
+                email: this.clientOverviewData.email
+              }
+              this.clientSuggeService.setSuggestionListUsingEmail(obj);
+            }
           }
           if (UtilService.isRefreshRequired(sideBarData)) {
           }

@@ -160,8 +160,8 @@
               <div class="form-group">
                 <p class="m-0 roboto f-400 pb-10">Relation</p>
                 <mat-form-field>
-                  <mat-select (selectionChange)="changeGender($event,'NonsuggestionList', null)" formControlName="relation"
-                    class="form-control">
+                  <mat-select (selectionChange)="changeGender($event,'NonsuggestionList', null)"
+                    formControlName="relation" class="form-control">
                     <mat-option value='' disabled>Select option</mat-option>
                     <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
                     </mat-option>
@@ -187,14 +187,13 @@
       </div>
     </div>
 
-    <div *ngIf="showSuggestion && data.clientData.SuggestionList ">
+    <div *ngIf="finalSuggestionList && finalSuggestionList.length>0 && selectedClientData==undefined">
       <p class="f-16 mt-120 m-0 pb-10 roboto text-primitive f-400">
         Based on your profile, we believe, the following members could be part of your family...
       </p>
       <div [formGroup]="form" class="row">
         <div class="col-md-12 pl-0 merge-client-family-member">
-          <table [dataSource]="data.clientData.SuggestionList" formArrayName="clients" class=" " id="table-low"
-            mat-table>
+          <table [dataSource]="finalSuggestionList" formArrayName="clients" class=" " id="table-low" mat-table>
 
             <ng-container matColumnDef="details">
               <th *matHeaderCellDef class="br" mat-header-cell> Member details</th>
