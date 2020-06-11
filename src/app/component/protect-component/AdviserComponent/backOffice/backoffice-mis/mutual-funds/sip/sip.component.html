@@ -69,10 +69,12 @@
                                             <div class="col-md-12 pr-0">
                                                 <div class="pt-20" *ngIf="!isLoading">
                                                     <mat-progress-bar class="text-diff" mode="determinate"
-                                                        value="clientWithoutSip">
+                                                        [value]="clientWithoutSip">
                                                     </mat-progress-bar>
                                                     <p class="text-diff f-12 pt-4 mb-0 pb-8">
                                                         <span>{{clientWithoutSip | number:'1.2-2'}} </span>% Clients
+                                                        <!-- prod fix -->
+                                                        <!-- without SIP{{loader}} -->
                                                         without SIP
                                                     </p>
                                                 </div>
@@ -303,14 +305,14 @@
         <app-all-sip [mode]="mode" [data]="objTosend" (changedValue)="display($event)"></app-all-sip>
     </div>
     <div *ngIf="sipcomponentWise=='amc'">
-        <app-sip-amc-wise (changedValue)="display($event)"></app-sip-amc-wise>
+        <app-sip-amc-wise [data]="objTosend" (changedValue)="display($event)"></app-sip-amc-wise>
     </div>
     <div *ngIf="sipcomponentWise=='scheme'">
-        <app-sip-scheme-wise (changedValue)="display($event)"></app-sip-scheme-wise>
+        <app-sip-scheme-wise [data]="objTosend" (changedValue)="display($event)"></app-sip-scheme-wise>
     </div>
     <div *ngIf="sipcomponentWise=='client'">
-        <app-sip-client-wise (changedValue)="display($event)"></app-sip-client-wise>
+        <app-sip-client-wise [data]="objTosend" (changedValue)="display($event)"></app-sip-client-wise>
     </div>
     <div *ngIf="sipcomponentWise=='applicant'">
-        <app-sip-applicant-wise (changedValue)="display($event)"></app-sip-applicant-wise>
+        <app-sip-applicant-wise [data]="objTosend" (changedValue)="display($event)"></app-sip-applicant-wise>
     </div>

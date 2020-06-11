@@ -1,3 +1,17 @@
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
     width: 1.5em !important;
 }
+
+.addNewmdClass {
+    flex: 0 0 64.666667%;
+    max-width: 64.666667%;
+}
+
+.insuranceRowBox {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px !important;
+        margin-left: -15px !important;
+    }
+}

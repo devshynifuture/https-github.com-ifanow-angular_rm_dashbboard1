@@ -962,6 +962,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   getMutualFundResponse(data) {
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
+      this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
       this.mutualFund = this.filterData;
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
 

@@ -24,14 +24,14 @@ export class EnumServiceService {
     minorTaxList: [],
   };
 
-  private assetNamings:any[] = []
+  private cashflowAssetNaming:any[] = []
 
-  addAssetShortForms(data){
-    this.assetNamings = data;
+  setAssetShortForms(data){
+    this.cashflowAssetNaming = data;
   }
 
   getAssetNamings(){
-    return this.assetNamings;
+    return this.cashflowAssetNaming;
   }
 
   public addToGlobalEnumData(data) {

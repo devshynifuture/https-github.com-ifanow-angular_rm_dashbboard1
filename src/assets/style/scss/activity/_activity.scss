@@ -9,7 +9,8 @@
 .advice-retirment-account,
 .all-retirement-assest,
 .advice-smallsaving-scheme,
-.all-advice-smallsaving-scheme {
+.all-advice-smallsaving-scheme,
+.all-advice-stock {
   #table-low .mat-sort-header-button {
     white-space: nowrap;
   }
@@ -40,3 +41,199 @@
 //     }
 //   }
 // }
+#ui-activity {
+  .vertical-menu {
+    position: fixed;
+    display: block !important;
+    width: 16.70%;
+  }
+
+  li {
+    color: #212121;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    padding: 8px 12px 4px;
+    text-align: left;
+    border-right: 0px !important;
+  }
+
+  li:after {
+    display: none;
+  }
+
+  a {
+    padding: 8px;
+  }
+}
+
+hr#suggest-advice-top {
+  margin: 0;
+  position: relative;
+  transform: rotate(36deg);
+  width: 55px;
+  top: 18px;
+  left: 141px;
+}
+
+hr#suggest-advice-bottom {
+  margin: 0;
+  position: relative;
+  transform: rotate(-31deg);
+  width: 55px;
+  top: 48px;
+  left: 140px;
+
+}
+
+#ui-suggest-advice {
+
+  #cdk-step-label-1-1 {
+    border-left: 0px;
+  }
+
+  .mat-step-header.cdk-keyboard-focused,
+  .mat-step-header.cdk-program-focused,
+  .mat-step-header:hover {
+    background-color: transparent !important;
+  }
+
+  // .mat-step-header {
+  //   border: 1px solid #e9eaec;
+  //   border-right: 0px !important;
+  // }
+  .mat-step-header .mat-step-icon {
+    background-color: #F5F7F7;
+    color: #212121;
+  }
+
+  .mat-step-header .mat-step-icon-selected {
+    background-color: #008FFF;
+    color: #fff;
+  }
+
+  .mat-step-icon {
+    height: 30px;
+    width: 30px;
+  }
+
+  .mat-stepper-horizontal-line {
+    display: none;
+  }
+
+  .mat-step-header {
+    content: "";
+    // border-top: px solid red;
+    // border-bottom: 1px solid red;
+    // border-left: 1px solid blue;
+    // border: 1px solid rgba(0, 0, 0, 0.12);
+    // right: -40px;
+    // border-bottom-right-radius: 208px;
+    // border-top-right-radius: 208px;
+    top: 0;
+  }
+
+  .mat-horizontal-stepper-header-container {
+    width: 46%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .mat-horizontal-stepper-header {
+    height: 60px;
+
+    &:nth-child(1) {
+      border-right: 0px;
+    }
+
+
+
+
+  }
+
+  // #cdk-step-label-0-0 {
+  //   border-bottom-right-radius: 208px;
+  //   border-top-right-radius: 208px;
+  // }
+
+  // #cdk-step-label-0-1 {
+  //   border-left: 0px !important;
+  //   position: absolute;
+  //   left: 146px;
+  //   padding-left: 40px;
+  // }
+
+  .mat-step-header:nth-child(2) {
+    border-left: 0px !important;
+  }
+
+
+
+}
+
+.deployment-top {
+  #table-low {
+    tr {
+      border: 0px !important;
+    }
+
+    th {
+      background-color: #fff !important;
+      border-bottom: 0px !important;
+      padding: 0px 8px !important;
+
+    }
+  }
+}
+
+#investmentPlan {
+  .vertical-menu {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    display: block;
+    position: fixed;
+    width: 16.7%;
+
+    li {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 0 0 20px;
+      font-size: 14px;
+      text-align: left;
+      margin-bottom: 10px;
+
+
+    }
+  }
+}
+
+#ui-activity-secondhead {
+  .mat-tab-link.min-width-140 {
+    min-width: 140px !important;
+  }
+
+  .mat-tab-link.min-width-90 {
+    min-width: 90px !important;
+  }
+}
+
+@media(max-width:1142px) {
+
+  .cash-flow-advice,
+  .advice-mutual-funds,
+  .advice-stock,
+  .advice-fixed-income,
+  .advice-fix-desposit,
+  .advice-real-estate,
+  .advice-cash-and-hand,
+  .advice-commodities,
+  .advice-retirment-account,
+  .all-retirement-assest,
+  .advice-smallsaving-scheme,
+  .all-advice-smallsaving-scheme,
+  .all-advice-stock {
+    #table-low .mat-sort-header-button {
+      white-space: initial !important;
+    }
+  }
+}

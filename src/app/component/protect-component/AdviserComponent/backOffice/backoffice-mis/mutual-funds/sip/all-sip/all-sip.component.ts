@@ -5,6 +5,7 @@ import { SipComponent } from '../sip.component';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from '../../../../../../../../Data-service/event.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 
 @Component({
   selector: 'app-all-sip',
@@ -31,7 +32,7 @@ export class AllSipComponent implements OnInit {
     private backoffice: BackOfficeService,
     private sip: SipComponent,
     private eventService: EventService,
-    private excelGen: ExcelGenService
+    private excelGen: ExcelMisSipService
   ) { }
 
   ngOnInit() {
@@ -51,6 +52,18 @@ export class AllSipComponent implements OnInit {
     const data = this.excelGen.generateExcel(rows, tableTitle);
 
   }
+
+  // Excel(tableTitle) {
+  //   setTimeout(() => {
+  //     var blob = new Blob([document.getElementById('template').innerHTML], {
+  //       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+  //     });
+  //     saveAs(blob, tableTitle + ".xls");
+  //   }, 200);
+  //   // if (data) {
+  //   //   this.fragmentData.isSpinner = false;
+  //   // }
+  // }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -74,12 +87,13 @@ export class AllSipComponent implements OnInit {
           if(data){
             this.response(data);
           }else{
-            this.dataSource.filteredData=[]
+            this.dataSource.filteredData=[];
           }
   
         },
         err => {
           this.isLoading = false;
+          this.dataSource.filteredData=[]
         }
       )
     }else if(this.mode == 'expired'){
@@ -95,6 +109,7 @@ export class AllSipComponent implements OnInit {
         },
         err => {
           this.isLoading = false;
+          this.dataSource.filteredData=[]
         }
       )
     }else{
@@ -110,6 +125,7 @@ export class AllSipComponent implements OnInit {
         },
         err => {
           this.isLoading = false;
+          this.dataSource.filteredData=[]
         }
       )
     }

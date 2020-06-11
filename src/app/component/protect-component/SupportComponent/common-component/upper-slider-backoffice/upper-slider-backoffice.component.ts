@@ -105,7 +105,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     return obj.name;
   }
 
-  handlingDataVariable() {
+  handlingDataVariable(doStartRecon?) {
     if (this.data) {
       this.aumReconId = this.data.id;
       this.brokerId = this.data.brokerId;
@@ -117,10 +117,16 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
       console.log('start recon is true::::');
       this.isLoading = true;
-      this.getBackofficeAumReconListSummary(true);
+
+      if (doStartRecon) {
+        this.getBackofficeAumReconListSummary(true);
+      } else {
+        this.getBackofficeAumReconListSummary(false);
+      }
       this.dataSource3.data = null;
 
     } else if (this.data.startRecon === false) {
+      this.arnRiaCode = this.data.arnRiaNumber;
       this.rtId = this.data.rtId;
       console.log('start recon is false::::');
       this.bindDataWithSummaryTable();
@@ -139,13 +145,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
           });
-
-          this.handlingDataVariable();
         } else {
           this.adminAdvisorIds = [this.advisorId];
-          this.handlingDataVariable();
           this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
         }
+        this.handlingDataVariable(true);
       }, err => {
         console.log(err);
       });
@@ -189,6 +193,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   getBackofficeAumReconListSummary(doStartRecon) {
     this.isLoading = true;
+    this.dataSource.data = ELEMENT_DATA;
+    this.dataSource1.data = ELEMENT_DATA1;
     const isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
     const data = {
       advisorIds: [...this.adminAdvisorIds],
@@ -200,7 +206,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     this.supportService.getAumReconListGetValues(data)
       .subscribe(res => {
-        this.isLoading = false;
         let objArr = [];
         console.log('this is summary values::::', res);
         if (res && res.aumList) {
@@ -229,8 +234,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              canDeleteTransaction: new Date(res.transactionDate).getTime() > new Date(element.freezeDate).getTime(),
-              freezeDate: element.freezeDate ? element.freezeDate : null,
+              canDeleteTransaction: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? (new Date(res.transactionDate).getTime() > new Date(element.freezeDate).getTime()) : true,
+              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
               investorName: element.investorName
             });
           });
@@ -289,6 +294,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           objArr = null;
         }
         this.dataSource.data = objArr;
+        this.isLoading = false;
       });
   }
 
@@ -523,7 +529,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       'Unit Difference',
       'Amount Difference'
     ];
-    if (this.filteredAumListWithIsMappedToMinusOne) {
+    if (this.filteredAumListWithIsMappedToMinusOne.length !== 0) {
       const rtName = this.getRtName(this.data.rtId);
       this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         const data = [
@@ -601,7 +607,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
             console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
             if (sideBarData.refreshRequired) {
-              this.getDataFromObsAfterDeletingTransacn();
+
+              // this.getDataFromObsAfterDeletingTransacn();
+
+              this.handlingDataVariable(false);
+
             }
           }
           rightSideDataSub.unsubscribe();
@@ -695,7 +705,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime(),
+              canDeleteTransaction: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? (new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime()) : true,
+              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freeeDate : null,
               investorName: element.investorName
             });
           });
