@@ -16,6 +16,16 @@
   }
 }
 
+.loaderWrap{
+  width:100%; margin: 0px auto; border: solid 1px royalblue; padding:9px;
+}
+.loaderBar{
+  height: 20px; width: 100%; border: solid 1px royalblue;
+}
+
+.loaderBarFill{
+  height: 100%;  background: greenyellow;
+}
 .wb-bw {
   word-break: break-word !important;
 }
