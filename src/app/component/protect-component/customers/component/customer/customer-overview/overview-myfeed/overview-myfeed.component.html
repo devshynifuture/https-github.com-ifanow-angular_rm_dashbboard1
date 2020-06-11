@@ -154,6 +154,7 @@
                     </div>
 
                     <!-- portfolio section -->
+
                     <div class="wrapperBox">
                         
                         <div class="row">
@@ -169,13 +170,11 @@
                             <!-- portfolio data present -->
                             <!-- add ngif false so this never loads for dev purpose -->
                             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)"  *ngIf="tabsLoaded.portfolioData.dataLoaded">
-                                <div class="fundBox bg-white slide skeletonAnimation" ngxSlickItem *ngFor="let portData of portFolioData" [appSkeletonLoading]="true" appSkeletonLoading>
+                                <div class="fundBox bg-white slide  " ngxSlickItem *ngFor="let portData of portFolioData"   >
                                    
                                     <div class="row">
-                                        <div class="col-md-9 relClass pr-0">
-                                            <div class="bar">
-                                                <h5 class="roboto">{{portData.assetTypeString}}</h5>
-                                            </div>
+                                        <div class="col-md-9   pr-0">
+                                                <h5 class="roboto">{{portData.assetTypeString}}</h5>                                           
                                         </div>
                                         <div class="col-md-3 pl-0 d-flex justify-content-end">
                                             <span *ngIf="portData.currentValue==0" (click)="routeAndAddQueryParams(portData.assetTypeString)" class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
@@ -187,37 +186,23 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                            <div class="relClass">
-                                                <div class="bar">
                                                     <h3 class="mb-20 roboto">₹<span appFormatNumber>{{portData.currentValue}}</span>
                                                     </h3>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                            <div class="relClass">
-                                                <div class="bar">
                                                     <p class="m-0 roboto" [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0}">
                                                         ₹<span appFormatNumber>{{portData.investedAmount}}</span>
                                                     </p>
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                            <div class="relClass">
-                                                <div class="bar">
                                                     <p class="m-0 roboto" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
                                                         ₹<span appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
                                                     </p>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                      
@@ -226,39 +211,91 @@
 
                             <!-- portfolio data not present -->
                             <!-- add true to the ngif condition to view the below card -->
-                            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)"*ngIf="!tabsLoaded.portfolioData.dataLoaded || portFolioData.length == 0 || tabsLoaded.portfolioData.isLoading">
-                                <div class="fundBox bg-white">
-                                    
-                                    <div class="row">
-                                        <div class="col-md-8  pr-0">
-                                            <h5 class="roboto">Mutual funds</h5>
-                                        </div>
-                                        <div class="col-md-4 d-flex justify-content-end">
-                                            <span class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
-                                                Add
-                                            </span>
-                                        </div>
-                                    </div>
+                            <ngx-slick-carousel class="carousel p-0 col-md-12 skeletonAnimation"  [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)"*ngIf="!tabsLoaded.portfolioData.dataLoaded || portFolioData.length == 0 || tabsLoaded.portfolioData.isLoading" [appSkeletonLoading]="true" appSkeletonLoading>
+                              <div class="row">
+                                  <div class="col-md-12 d-flex"> 
+                                        <div class="fundBox bg-white ">
+                                            <div class="row">
+                                                <div class="col-md-8 relClass  pr-0">
+                                                    <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                            <h5 class="roboto"> </h5>
+                                                    </div>
+                                                </div>
+                                                 
+                                            </div>
 
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                            <h3 class="mb-20 roboto">₹0</h3>
-                                        </div>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-8 relClass">
+                                                    <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
+                                                            <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                            </div>
+                                                </div>
+                                            </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                            <p class="m-0 roboto">₹0</p>
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                            <p class="m-0 roboto text-success">₹0</p>
-                                        </div>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
+                                                    <div class="relClass">
+                                                            <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                                <p class="m-0 roboto"></p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
+                                                    <div class="relClass">
+                                                            <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                                    <p class="m-0 roboto text-success"></p>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                </div>
+                                            </div>
 
-                                </div>
+                                        </div>
+                                        <div class="fundBox bg-white ">
+                                                <div class="row">
+                                                    <div class="col-md-8 relClass  pr-0">
+                                                        <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                                <h5 class="roboto"> </h5>
+                                                        </div>
+                                                    </div>
+                                                     
+                                                </div>
+    
+                                                <div class="row">
+                                                    <div class="col-md-8 relClass">
+                                                        <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
+                                                                <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                                </div>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
+                                                        <div class="relClass">
+                                                                <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                                    <p class="m-0 roboto"></p>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
+                                                        <div class="relClass">
+                                                                <div class="bar" [ngClass]="{'height24': isLoading}">
+                                                                        <p class="m-0 roboto text-success"></p>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                </div>
+    
+                                            </div> 
+                                    </div>
+                             </div>
                             </ngx-slick-carousel>
                             </div>
 
@@ -267,7 +304,7 @@
 
                         <!-- MF chart -->
                         <div class="wrapperBox">
-                            <div class="row" *ngIf="!tabsLoaded.mfPortfolioSummaryData.dataLoaded">
+                            <div class="row" *ngIf="!tabsLoaded.mfPortfolioSummaryData.isLoading">
                                 <div class="col-md-12" *ngIf="tabsLoaded.mfPortfolioSummaryData.dataLoaded && tabsLoaded.mfPortfolioSummaryData.hasData">
                                     <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
                                     <div class="borderChatBoxMutual bg-white">
@@ -275,25 +312,18 @@
                                             <div class="col-md-4">
                                                 <div class="border-Right-line">
                                                     <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
-                                                    <div class="relClass"> 
-                                                    <div class="bar">
                                                         <span class="roboto"> ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span> </span>
-                                                    </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 pr-8">
                                                 <div class="border-Right-line">
                                                     <h5 class="f-14  mb-0 text-primitive">Amount invested</h5>
-                                                    <div class="bar"> 
                                                     <span class="text-success roboto"> ₹<span appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
                                                     </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 class="f-14 mb-0 text-primitive">Returns</h5>
-                                                <div class="bar"> 
                                                 <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  " class="text-success roboto">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
                                                 <i class="material-icons f-14 f-700 text-success" *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
                                                 <span>arrow_upward</span>
@@ -302,8 +332,6 @@
                                                 <i class="material-icons f-14 f-700 text-danger" *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0">
                                                 <span>arrow_downward</span>
                                             </i>
-                                            </div>
-
                                             </div>
                                         </div>
                                         <div class="row">
@@ -366,7 +394,65 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="tabsLoaded.mfPortfolioSummaryData.isLoading"></div>
+
+                            <div class="row skeletonAnimation" *ngIf="tabsLoaded.mfPortfolioSummaryData.isLoading" [appSkeletonLoading]="true" appSkeletonLoading>
+                                        <div class="col-md-12">
+                                            <h5 class="roboto  mb-0">Portfolio Summary Mutual funds</h5>
+                                            <div class="borderChatBoxMutual bg-white">
+                                                <div class="row pt-20 pl-40">
+                                                    <div class="col-md-4">
+                                                        <div class="border-Right-line">
+                                                            <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
+                                                            <div class="relClass">
+                                                                <div class="bar" [ngClass]="{'heightBar24': isLoading}"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+        
+                                                    <div class="col-md-4 pr-8">
+                                                        <div class="border-Right-line">
+                                                            <h5 class="f-14 mb-0 text-primitive">Amount invested</h5>
+                                                            <div class="relClass">
+                                                                    <div class="bar" [ngClass]="{'heightBar24': isLoading}"></div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+        
+                                                    <div class="col-md-4">
+                                                        <h5 class="f-14 mb-0 text-primitive">Returns</h5>
+                                                        <div class="relClass">
+                                                                <div class="bar" [ngClass]="{'heightBar24': isLoading}"></div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="row pt-20">
+                                                    <div class="col-md-6 text-center">
+                                                        <div class="relClass">
+                                                            <div class="bar200" [ngClass]="{'height200': isLoading}"></div>
+                                                        </div>
+                                                    </div>
+        
+                                                    <div class="col-md-5 pl-0">
+                                                        <div class="mt-20"> 
+                                                         <div class="relClass">
+                                                             <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                         </div>
+                                                         <div class="relClass">
+                                                                <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                            </div>
+                                                            <div class="relClass">
+                                                                    <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                                </div>
+                                                                <div class="relClass">
+                                                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                                                    </div>
+                                                                </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>  
                         </div>
 
                         <!-- sub mf chart -->

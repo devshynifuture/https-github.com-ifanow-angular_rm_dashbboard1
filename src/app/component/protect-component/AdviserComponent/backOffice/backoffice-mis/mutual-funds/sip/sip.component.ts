@@ -39,6 +39,7 @@ export class SipComponent implements OnInit {
   isRejectionLoading=true;
   mode: any;
   objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; };
+  loaderValue: number;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -278,6 +279,7 @@ export class SipComponent implements OnInit {
         this.wbrCount = data.folioCount;
         this.clientWithoutSip = (this.sipPanCount / data.folioCount) * 100;
         this.clientWithoutSip = (!this.clientWithoutSip || this.clientWithoutSip == Infinity) ? 0 : this.clientWithoutSip;
+        (this.clientWithoutSip > 100) ? this.clientWithoutSip =100 : this.clientWithoutSip
       }
     )
   }

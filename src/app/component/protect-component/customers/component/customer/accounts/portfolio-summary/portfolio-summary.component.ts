@@ -560,7 +560,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   getShortForm(elem) {
     let name = this.cashFlowDescNaming.find(asset => asset.assetType === elem.assetType);
     if(name) {
-      return name.assetName;
+      return name.assetShortName;
     }
     return '';
   }

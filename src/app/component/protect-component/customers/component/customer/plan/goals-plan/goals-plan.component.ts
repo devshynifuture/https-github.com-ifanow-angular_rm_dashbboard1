@@ -226,10 +226,12 @@ export class GoalsPlanComponent implements OnInit {
   // load all goals created for the client and select the first goal
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
-      // this.allGoals = data || [];
-      // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
-      console.log('sagar', data);
-      this.loadSelectedGoalData(this.allGoals[0]);
+      if (data) {
+        // this.allGoals = data || [];
+        // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
+        console.log('sagar', data);
+        this.loadSelectedGoalData(this.allGoals[0]);
+      }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
