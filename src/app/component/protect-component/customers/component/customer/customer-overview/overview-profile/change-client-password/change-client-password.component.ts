@@ -67,10 +67,7 @@ export class ChangeClientPasswordComponent implements OnInit {
   setNewPasswordForm: FormGroup;
 
   setNewPassword() {
-    if (this.setNewPasswordForm.pristine) {
-      this.Close();
-    }
-    if (this.setNewPasswordForm.invalid || this.barButtonOptions.active) {
+    if (this.setNewPasswordForm.invalid) {
       this.setNewPasswordForm.markAllAsTouched();
       return;
     } else {
