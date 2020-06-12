@@ -211,6 +211,7 @@ export const appConfig = {
   GET_SCRIP_FILTER: 'account/asset/stock/filtered/scrip-name/get',
   ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',
   DELETE_STOCK: 'account/asset/stock/delete',
+  DELETE_PORTFOLIO: 'account/asset/stock/portfolio/delete',
   EDIT_STOCK_PORTFOLIO: 'account/asset/stock/edit',
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
@@ -464,6 +465,10 @@ export const appConfig = {
   GET_UNMAPPED_CLIENTS: 'user/client/unmapped/view',
   GET_MAPPED_CLIENTS: 'user/client/mapped/view',
   GET_MAPPED_CLIENTS_FILTER: 'user/client/mapped/filter/client-wise/view',
+  UPDATE_ALL_NSE_CLIENTS: 'nse/iin/all/update',
+  AUTO_REMAP_CLIENT: 'user/clients/remap/auto',
+
+
 
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',

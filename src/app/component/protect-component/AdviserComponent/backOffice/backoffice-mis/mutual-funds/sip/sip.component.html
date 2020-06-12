@@ -173,7 +173,7 @@
                             <div class="col-md-3 p-0">
                                 <div id="mistabs1">
                                     <mat-tab-group class="h-500 bg-white borderLine borderLeftNone skeletonAnimation"
-                                        appSkeletonLoading [appSkeletonLoading]="isRejectionLoading">
+                                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                                         <mat-tab label="SIP Rejections/Reversals">
                                             <p class="bb text-center p-8 mb-0 f-12 text-custom">List of SIP rejection in
                                                 last 90 days
@@ -183,22 +183,22 @@
                                             <div class="b-white">
                                                 <div *ngFor="let item of rejectionSip" class="row bb">
                                                     <div class="bar col-md-7 p-0 relClass">
-                                                        <div class="bar" [ngClass]="{'height23': isRejectionLoading}">
-                                                            <p *ngIf="!isRejectionLoading" class="mb-0 f-bold  p-8 ">
+                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                            <p *ngIf="!isLoading" class="mb-0 f-bold  p-8 ">
                                                                 {{item.schemeName}}|{{item.folioNumber}}</p>
-                                                            <p *ngIf="!isRejectionLoading"
+                                                            <p *ngIf="!isLoading"
                                                                 class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                                 {{item.investorName}}</p>
-                                                            <p *ngIf="!isRejectionLoading"> {{item.amount}}</p>
-                                                            <p *ngIf="isRejectionLoading">{{''}}</p>
+                                                            <p *ngIf="!isLoading"> {{item.amount}}</p>
+                                                            <p *ngIf="isLoading">{{''}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="bar col-md-5 p-0 relClass">
-                                                        <div class="bar" [ngClass]="{'height23': isRejectionLoading}">
-                                                            <p *ngIf="!isRejectionLoading"
+                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                            <p *ngIf="!isLoading"
                                                                 class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                                 {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
-                                                            <p *ngIf="isRejectionLoading">{{''}}</p>
+                                                            <p *ngIf="isLoading">{{''}}</p>
                                                         </div>
                                                     </div>
                                                 </div>

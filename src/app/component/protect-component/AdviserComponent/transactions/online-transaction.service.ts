@@ -87,6 +87,14 @@ export class OnlineTransactionService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_CLIENTS, data, 1);
   }
 
+  updateAllNseClients(data) {
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.UPDATE_ALL_NSE_CLIENTS, data, 1);
+  }
+
+  autoRemapClientsToClientCode(data) {
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.AUTO_REMAP_CLIENT, data, 1);
+  }
+
   getMapppedClientsFilterClientWise(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MAPPED_CLIENTS_FILTER, data, 1);
   }

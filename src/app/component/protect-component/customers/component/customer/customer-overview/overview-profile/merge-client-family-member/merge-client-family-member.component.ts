@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SubscriptionInject } from '../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, FormControl, Validators, FormArray, FormGroup } from '@angular/forms';
 import { EventService } from '../../../../../../../../Data-service/event.service';
 import { PeopleService } from '../../../../../../PeopleComponent/people.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatAutocompleteTrigger } from '@angular/material';
 import { MatProgressButtonOptions } from '../../../../../../../../common/progress-button/progress-button.component';
 import { map, startWith } from 'rxjs/operators';
 import { EnumDataService } from '../../../../../../../../services/enum-data.service';
@@ -57,6 +57,8 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   clientListMobile;
   finalSuggestionList;
   clientList: any;
+  @ViewChild('searchClient', { read: MatAutocompleteTrigger, static: true }) autoComplete: MatAutocompleteTrigger;
+
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
@@ -75,6 +77,37 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     //     }))
     //   })
     // }
+    if (this.data.clientData.client.clientType == 2 || this.data.clientData.client.martialStatusId == 2) {
+      this.relationTypeList = [
+        { name: 'Father', value: 6 },
+        { name: 'Mother', value: 7 },
+        { name: 'Other', value: 10 }
+      ]
+    }
+    else {
+      if (this.data.clientData.client.duplicateFlag) {
+        this.relationTypeList = [
+          // { name: 'Mother', value:  },
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
+          { name: 'Other', value: 10 },
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 }
+        ]
+      }
+      else {
+        let obj = (this.data.clientData.client.genderId == 2) ? { name: 'Husband', value: 2 } : { name: 'Wife', value: 3 };
+        this.relationTypeList = [
+          obj,
+          // { name: 'Mother', value:  },
+          { name: 'Father', value: 6 },
+          { name: 'Mother', value: 7 },
+          { name: 'Other', value: 10 },
+          { name: 'Son', value: 4 },
+          { name: 'Daughter', value: 5 }
+        ]
+      }
+    }
     this.clientListEmail = this.clientSuggeService.getSuggestionListUsingEmail();
     if (this.clientListEmail) {
       this.clientListEmail = this.clientListEmail.filter(element => element.userId != this.data.clientData.client.userId)
@@ -91,6 +124,21 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     }
     if ((this.clientListMobile && this.clientListMobile.length > 0) && (this.clientListEmail == undefined || this.clientListEmail.length == 0)) {
       this.finalSuggestionList = this.clientListMobile
+    }
+    if ((this.clientListEmail && this.clientListEmail.length) == (this.clientListMobile && this.clientListMobile.length) && this.clientListEmail.some(a => this.clientListMobile.some(b => a.userId === b.userId))) {
+      this.finalSuggestionList = this.clientListEmail;
+      if (this.finalSuggestionList) {
+        this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
+        this.finalSuggestionList.map(element => {
+          element['addedFlag'] = false;
+          element['isLoading'] = false;
+          this.rows.push(this.fb.group({
+            relation: ['', [Validators.required]],
+            gender: ['', [Validators.required]]
+          }))
+        })
+      }
+      return;
     }
     if ((this.clientListEmail && this.clientListEmail.length > 0) && (this.clientListMobile && this.clientListMobile.length > 0)) {
       this.finalSuggestionList = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId === b.userId));
@@ -133,38 +181,6 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           }
         }),
       );
-
-    if (this.data.clientData.client.clientType == 2 || this.data.clientData.client.martialStatusId == 2) {
-      this.relationTypeList = [
-        { name: 'Father', value: 6 },
-        { name: 'Mother', value: 7 },
-        { name: 'Other', value: 10 }
-      ]
-    }
-    else {
-      if (this.data.clientData.client.duplicateFlag) {
-        this.relationTypeList = [
-          // { name: 'Mother', value:  },
-          { name: 'Father', value: 6 },
-          { name: 'Mother', value: 7 },
-          { name: 'Other', value: 10 },
-          { name: 'Son', value: 4 },
-          { name: 'Daughter', value: 5 }
-        ]
-      }
-      else {
-        let obj = (this.data.clientData.client.genderId == 2) ? { name: 'Husband', value: 2 } : { name: 'Wife', value: 3 };
-        this.relationTypeList = [
-          obj,
-          // { name: 'Mother', value:  },
-          { name: 'Father', value: 6 },
-          { name: 'Mother', value: 7 },
-          { name: 'Other', value: 10 },
-          { name: 'Son', value: 4 },
-          { name: 'Daughter', value: 5 }
-        ]
-      }
-    }
   }
   hideSuggetion(value) {
     if (value == '') {
@@ -275,8 +291,27 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         this.cancelFlagService.setCancelFlag(true)
         this.enumDataService.searchClientList();
         this.stateCtrl.reset();
-        // this.filteredStates.unsubscribe();
+        this.filteredStates = this.stateCtrl.valueChanges
+          .pipe(
+            startWith(''),
+            map(state => {
+              if (state) {
+                const filterValue = state.toLowerCase();
+                const list = this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
+                if (list.length == 0) {
+                  this.showSuggestion = true;
+                  this.stateCtrl.setErrors({ invalid: true });
+                  this.stateCtrl.markAsTouched();
+                }
+                return this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
+              } else {
+                return this.data.clientData.ClientList;
+              }
+            }),
+          );
       },
+      // this.filteredStates.unsubscribe();
+
       err => {
         clientData.addedFlag = false;
         clientData.isLoading = true;
