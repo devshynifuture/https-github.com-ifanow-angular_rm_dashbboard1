@@ -63,6 +63,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getProofType();
     this.enumDataService.getBank();
     this.enumDataService.getClientRole();
+    this.clientSuggeService.setEmptySuggestionList();
     this.route.queryParams.subscribe((params) => {
       if (params.Tab) {
         this.Tab = params.Tab;
@@ -319,6 +320,7 @@ export class OverviewProfileComponent implements OnInit {
           if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
             this.getFamilyMembersList(this.clientData);
             this.cancelFlagService.setCancelFlag(undefined);
+            this.clientSuggeService.setEmptySuggestionList();
             this.familyMemberList = undefined;
             if (this.clientOverviewData.mobileList && this.clientOverviewData.mobileList.length > 0) {
               this.clientOverviewData.mobileNo = this.clientOverviewData.mobileList[0].mobileNo;
