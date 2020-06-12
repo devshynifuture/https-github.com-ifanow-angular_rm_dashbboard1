@@ -86,8 +86,8 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <mat-select class="form-control" formControlName="bankAcNo" matInput>
-                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                <mat-select class="form-control" formControlName="bankAcNo" matInput  (selectionChange) = "setAccountType()">
+                    <mat-option *ngFor="let option of bankList ;index as i" (click)="setAccountType(option.accountType)" [value]="option.id">
                         {{option.bankNameAndLast4Digit}}</mat-option>
                 </mat-select>
                 <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -109,8 +109,8 @@
                 <mat-form-field>
                     <mat-select matInput formControlName="accountType" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option value="1">Current</mat-option>
-                        <mat-option value="2">Savings</mat-option>
+                        <mat-option value="1" disabled>Savings</mat-option>
+                        <mat-option value="2" disabled>Current</mat-option>
                     </mat-select>
                     <mat-error class="f-12">
                         This field is required

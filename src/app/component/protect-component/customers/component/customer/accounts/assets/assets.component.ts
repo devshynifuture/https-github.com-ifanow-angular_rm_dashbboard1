@@ -174,6 +174,7 @@ export class AssetsComponent implements OnInit {
 
   getAssetCountGLobalDataRes(data) {
     const {
+      STOCKS,
       cashAndBank,
       fixedIncome,
       real_estate,
@@ -183,6 +184,7 @@ export class AssetsComponent implements OnInit {
       mutual_fund
     } = data;
     this.assetSideBarData[0].count = mutual_fund;
+    this.assetSideBarData[1].count = STOCKS;
     this.assetSideBarData[2].count = fixedIncome;
     this.assetSideBarData[3].count = real_estate;
     this.assetSideBarData[4].count = retirementAccounts;

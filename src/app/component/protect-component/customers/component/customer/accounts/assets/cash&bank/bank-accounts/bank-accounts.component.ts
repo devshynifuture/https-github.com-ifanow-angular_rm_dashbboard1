@@ -85,6 +85,8 @@ export class BankAccountsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
+    console.log(this.bankList,"this.bankList");
+    
 
   }
 
@@ -405,6 +407,10 @@ export class BankAccountsComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  setAccountType(type){
+    this.bankAccounts.get('accountType').setValue(type);
   }
 
   getAdviceBankAccountRes(data) {
