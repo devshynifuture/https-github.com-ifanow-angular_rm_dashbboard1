@@ -118,17 +118,22 @@ export class MutualFundOverviewComponent implements OnInit {
 
 
   uploadData(data) {
-    data.forEach(element => {
-      this.clientId = element.clientId
-      this.ngOnInit()
-    });
-    this.sendaata.dataSource4 = this.dataSource4.data
-    this.sendaata.dataSource = this.dataSource.data
-    this.sendaata.dataSource2 = this.dataSource2.data
-    this.sendaata.dataSource3 = this.dataSource3.data
-    this.sendaata.dataSource1 = this.datasource1.data
-    this.sendaata.mfData = this.mfData
-    return this.sendaata
+    if (data.length > 0) {
+      data.forEach(element => {
+        this.clientId = element.clientId
+        this.ngOnInit()
+        this.sendaata.dataSource4 = this.dataSource4.data
+        this.sendaata.dataSource = this.dataSource.data
+        this.sendaata.dataSource2 = this.dataSource2.data
+        this.sendaata.dataSource3 = this.dataSource3.data
+        this.sendaata.dataSource1 = this.datasource1.data
+        this.sendaata.equityPercentage = this.equityPercentage
+        this.sendaata.debtPercentage = this.debtPercentage
+        this.sendaata.hybridPercenatge = this.hybridPercenatge
+        this.sendaata.otherPercentage = this.otherPercentage
+        this.sendaata.mfData = this.mfData
+      });
+    } return this.sendaata
   }
 
   ngOnInit() {
@@ -136,8 +141,13 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendaata.dataSource4 = []
     this.sendaata.dataSource = []
     this.sendaata.dataSource2 = []
-    this.sendaata.dataSource3 =[]
+    this.sendaata.dataSource3 = []
+    this.sendaata.mutualFund =[]
     this.sendaata.dataSource1 = []
+    this.sendaata.equityPercentage = {}
+    this.sendaata.debtPercentage = {}
+    this.sendaata.hybridPercenatge = {}
+    this.sendaata.otherPercentage = {}
     this.reportDate = new Date()
     this.getFilterData(1);
     this.MfServiceService.getClientId().subscribe(res => {
@@ -165,11 +175,12 @@ export class MutualFundOverviewComponent implements OnInit {
       .subscribe(res => {
         this.mfGetData = res; //used for gettign data after filterd
       })
-    if (this.mfGetData) {
+    if (this.mfGetData && this.mfGetData != "") {
       this.getMutualFundResponse(this.mfGetData);
     } else {
       this.getMutualFundData();
     }
+
   }
   getTransactionTypeData() {
     const obj = {
@@ -312,8 +323,6 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundData() {
-
-
     const obj = {
       // advisorId: 2753,
       advisorId: this.advisorId,
@@ -349,8 +358,8 @@ export class MutualFundOverviewComponent implements OnInit {
         if (this.addedData == true || this.mutualFund == '') {
           this.mutualFund = this.filterData
         } else {
-          this.mfService.getMfData()
-            .subscribe(res => {
+          this.sendaata.mutualFund = this.mfService.getMfData()
+             .subscribe(res => {
               this.mutualFund = res;
             })
         }
@@ -697,6 +706,7 @@ export class MutualFundOverviewComponent implements OnInit {
         ]
       }]
     });
+    this.sendaata.pieChart = this.svg
   }
   openMutualFund(flag, data) {
     let component;
@@ -890,7 +900,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generateUpload(data) {
-    
+
   }
 }
 export interface PeriodicElement1 {
