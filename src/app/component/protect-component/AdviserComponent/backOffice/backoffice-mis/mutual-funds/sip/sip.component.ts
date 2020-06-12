@@ -48,11 +48,11 @@ export class SipComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.teamMemberListGet();
     this.viewMode = 'Select option';
-    if (this.parentId !== 0) {
-      this.getArnRiaList();
-    } else {
-      this.initPoint();
-    }
+    // if (this.parentId !== 0) {
+    //   this.getArnRiaList();
+    // } else {
+    //   this.initPoint();
+    // }
   }
   teamMemberListGet() {
     this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
@@ -144,7 +144,7 @@ export class SipComponent implements OnInit {
     )
   }
   getsipCountGet(data) {
-    this.isLoading = false
+    // this.isLoading = false
     this.sipCount = data;
   }
   getFilerrorResponse(err) {
@@ -226,7 +226,6 @@ export class SipComponent implements OnInit {
     )
   }
   sipRejectionGet() {
-    this.isRejectionLoading = true;
     const obj = {
       advisorId:(this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
@@ -236,15 +235,16 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_SIP_REJECTION(obj).subscribe(
       data => {
-        this.isRejectionLoading = false;
         if(data){
+          this.isLoading = false;
           this.rejectionSip = data;
         }else{
+          this.isLoading = false;
           this.rejectionSip = [];
         }
       },
       err=>{
-        this.isRejectionLoading = false;
+        this.isLoading = false;
         this.rejectionSip = [];
       }
     )
