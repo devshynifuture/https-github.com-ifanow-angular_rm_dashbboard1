@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SendNowReportsComponent } from './send-now-reports/send-now-reports.component';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -9,13 +12,35 @@ export class BulkReportSendingComponent implements OnInit {
   displayedColumns: string[] = ['type', 'sendDate', 'recipients', 'emails', 'status'];
   dataSource = ELEMENT_DATA;
 
-  constructor() { }
+  constructor(
+    private subInjectService : SubscriptionInject,
+  ) { }
 
   ngOnInit() {
   }
-
+  openSendNow(data){
+      const fragmentData = {
+        flag: 'openSendNow',
+        data,
+        id: 1,
+        state: 'open65',
+        componentName: SendNowReportsComponent,
+      };
+      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          if (UtilService.isDialogClose(sideBarData)) {
+            if (UtilService.isRefreshRequired(sideBarData)) {
+            }
+            rightSideDataSub.unsubscribe();
+  
+          }
+        }
+      );
+    
+  }
 
 }
+
 export interface PeriodicElement {
   type: string;
   sendDate: string;
