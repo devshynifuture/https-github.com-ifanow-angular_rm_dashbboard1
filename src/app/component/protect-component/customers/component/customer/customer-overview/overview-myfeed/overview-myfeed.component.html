@@ -499,6 +499,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-md-3">
                                                 <h1>
+                                                    <img class="documentImg" *ngIf="item.relationshipId==0 || item.relationshipId == null" [src]="imgGenderSrc">
                                                     <img class="documentImg" *ngIf="item.relationshipId==2 || item.relationshipId == 1" src="/assets/images/svg/man-profile.svg">
                                                     <img class="documentImg" *ngIf="item.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
                                                     <img class="documentImg" *ngIf="item.relationshipId==4" src="/assets/images/svg/son-profile.svg">
@@ -515,7 +516,7 @@
                                         <div class="row pt-10">
                                             <div class="col-md-8">
                                                 <p class="m-0 text-primitive f-12">Mutual Funds</p>
-                                                <h3 class="mb-20">Rs.<span appFormatNumber>{{item.currentValue}}</span>
+                                                <h3 class="mb-20">₹<span appFormatNumber>{{item.currentValue}}</span>
                                                 </h3>
                                             </div>
                                         </div>
