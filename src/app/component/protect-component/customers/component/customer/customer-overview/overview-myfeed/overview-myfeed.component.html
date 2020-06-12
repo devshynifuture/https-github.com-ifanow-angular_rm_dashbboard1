@@ -211,11 +211,11 @@
                                         <div class="col-md-6 text-right">
                                             <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
                                             <div class="relClass">
-                                                    <div class="bar">
-                                            <p class="m-0 roboto" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
-                                                ₹<span appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
-                                            </p>
-                                            </div>
+                                                <div class="bar">
+                                                    <p class="m-0 roboto" [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0}">
+                                                        ₹<span appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -257,6 +257,7 @@
 
 
                             </div>
+
                         </div>
                     </div>
 
