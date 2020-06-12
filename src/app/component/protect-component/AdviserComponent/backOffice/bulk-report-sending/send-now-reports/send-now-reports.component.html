@@ -1,1 +1,202 @@
-<p>send-now-reports works!</p>
+<div class="popup-header-fix w-65">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h3 class="mb-0 wrapper-20">Select report type</h3>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-100 mb-100">
+
+    <!-- step One start-->
+
+    <!-- <div class="row  pl-20 pr-40">
+        <div class="col-md-12 p-0">
+            <h3 class="f-16 roboto">Select report type from the below given options. You can select more than one.</h3>
+        </div>
+    </div>
+
+    <div class="row pl-10 pr-10">
+        <div class="col-md-4 pl-8 pr-8 c-p">
+            <mat-checkbox checked="false" class="checked poscheck"> </mat-checkbox>
+            <div class="row pt-20 pb-20 b-Radius ba-bule ba-Tr bg-grey lter">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/overview-report-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Overview</h3>
+                    <p class="mb-0 lh-13 f-12 text-primitive">Just an overview of the mutual fund portfolio. Sometimes less is more!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p">
+            <div class="row pt-20 pb-20 b-Radius ba-Tr bg-grey lter">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/summary-report-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Summary</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive">This report has the scheme level summary with more data points.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p">
+            <div class="row pt-20 pb-20 b-Radius ba-Tr bg-grey lter">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/all-transactions-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">All transactions</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive"> A simple report which just lists down all transactions during a certain period.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row pt-16 pl-10 pr-10">
+        <div class="col-md-4 pl-8 pr-8 c-p">
+            <div class="row pt-20 pb-20 b-Radius ba-Tr bg-grey lter">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/unrealized-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Unrealized transactions</h3>
+                    <p class="mb-0 lh-13 f-12 text-primitive">
+                        This report shows valuation, returns generated from unrealized investments
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p">
+            <div class="row pt-20 pb-20 b-Radius ba-Tr bg-grey lter">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/capital-gains-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Capital gains: Detailed</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive">
+                        A comprehensive report with a detailed breakup of capital gains for a FY
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p">
+            <div class="row pt-20 pb-20 b-Radius ba-Tr bg-grey lter">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/capital-summary-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Capital gains: Summary</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive"> Scheme level summary of capital gains for a financial year
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-52">
+        <div class="col-md-8">
+            <h3 class="borderBtm mb-0 f-16">Three reports selected</h3>
+
+            <div class="row h-80 borderDasd">
+                <div class="col-md-12 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 mb-0"> Overview </h3>
+                </div>
+            </div>
+
+            <div class="row h-80 borderDasd">
+                <div class="col-md-5 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 m-0">All transactions</h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option> Select period </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row h-80 borderDasd">
+                <div class="col-md-5 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 m-0"> Capital Gains</h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option> Select period </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+
+    <!-- step One end-->
+
+
+    <!-- step Two start-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-success f-16 ">Good stuff this, Archit Gupta!</h3>
+            <h3 class="f-16 mb-28">The reports are now being sent...</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 d-flex">
+            <div class="bg-grey lter smallBoxReport">
+                <p class=" mb-4 pl-10 f-14 text-primitive">Total recipients</p>
+                <p class="mb-0 pl-10 f-20">127</p>
+            </div>
+            <div class="bg-grey lter smallBoxReport">
+                <p class=" f-14 pl-10 mb-4 text-primitive">Total recipients</p>
+                <p class="mb-12 pl-10 f-20">30 <span class="primary-border refeClassBox text-primary f-12">REFRESH</span> </p>
+                <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-28">
+        <div class="col-md-12">
+            <h3 class="f-16">This might take a while. You can safely close this window and resume your work.</h3>
+            <p class="f-14 text-primitive">You can always come back here and check the status of this exercise. <br> By the way, we’ll also email you once done. No worries!</p>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+<div class="bottom-fixed wrapper-12 pt-16 w-65">
+    <div class="row">
+        <div class="col-md-4 pt-8">
+            <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
+        </div>
+
+        <div class="col-md-8 text-right">
+
+
+        </div>
+    </div>
+</div>
