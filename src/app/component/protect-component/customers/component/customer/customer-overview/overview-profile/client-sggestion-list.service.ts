@@ -31,6 +31,11 @@ export class ClientSggestionListService {
     )
   }
 
+  setEmptySuggestionList() {
+    this.clientListusingEmail = undefined;
+    this.clientListusingMobile = undefined
+  }
+
   getSuggestionListUsingEmail() {
     return this.clientListusingEmail
   }
