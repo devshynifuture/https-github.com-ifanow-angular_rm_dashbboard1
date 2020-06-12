@@ -31,17 +31,17 @@
             <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
                <ng-container matColumnDef="categoryName">
-                  <th *matHeaderCellDef class="br bl bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br" mat-header-cell>
                      {{(columnHeader) ? columnHeader : 'Sub Category Name'}}
                   </th>
-                  <td *matCellDef="let element" class="br bl" mat-cell>
+                  <td *matCellDef="let element" class="br" mat-cell>
                      <div class="bar">{{element.categoryName}}</div>
                   </td>
-                  <td *matFooterCellDef class="br f-600 p-8 proximaFont text-left bl-1" mat-footer-cell>Grand Total
+                  <td *matFooterCellDef class="br f-600 p-8 proximaFont text-left" mat-footer-cell>Grand Total
                   </td>
                </ng-container>
                <ng-container matColumnDef="amtInvested">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Amount invested
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -56,7 +56,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="currentValue">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Current value
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -71,7 +71,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="dividendPayout">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Dividend payout
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -86,7 +86,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="dividendReinvest">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Dividend reinvestment
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -100,7 +100,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="gain">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Gain
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -115,7 +115,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="absReturn">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      Absolute Return
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -130,7 +130,7 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="xirr">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
                      XIRR
                   </th>
                   <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -144,15 +144,15 @@
                   </td>
                </ng-container>
                <ng-container matColumnDef="allocation">
-                  <th *matHeaderCellDef class="br text-right  bt-1" mat-header-cell>
+                  <th *matHeaderCellDef class="text-right" mat-header-cell>
                      Allocation
                   </th>
-                  <td *matCellDef="let element" class="br text-right" mat-cell>
+                  <td *matCellDef="let element" class="text-right" mat-cell>
                      <div class="bar">
                         <span>{{isLoading ? '' : ((element.allocationPer) ? (element.allocationPer | number:'1.2-2') : 0)}}</span>
                      </div>
                   </td>
-                  <td *matFooterCellDef class="br f-600 p-8 proximaFont text-right" mat-footer-cell>
+                  <td *matFooterCellDef class="f-600 p-8 proximaFont text-right" mat-footer-cell>
                      <div class="bar">
                         {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
                      </div>
@@ -168,8 +168,7 @@
    </div>
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2 ba-light-top-0 "
-            tvsItemSize>
+         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2 " tvsItemSize>
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
