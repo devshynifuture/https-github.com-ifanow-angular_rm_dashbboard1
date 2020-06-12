@@ -86,7 +86,7 @@
                             <span class="f-700" *ngIf="element.schemeName=='Total'">{{element.schemeName}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left bl-1">Grand Total
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
                     </td>
                 </ng-container>
 
@@ -261,16 +261,16 @@
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                        class="text-center text-primary">
+                        class="text-center text-primary bb">
                         <div class="bar">{{group.groupName}}{{(group.pan) ? (' (PAN : '+group.pan+')') : ''}}
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" class="" mat-cell>
-                        <div *ngIf="!isLoading && element.schemeName!='Total'">
-                            <img class="c-p" [matMenuTriggerFor]="menu25" src="/assets/images/svg/dot-menu.svg">
+                    <td *matCellDef="let element"  [matMenuTriggerFor]="menu25" [ngClass]="!isLoading && element.schemeName=='Total' ? 'disabled': ''" class="" mat-cell>
+                        <div >
+                            <img class="c-p" src="/assets/images/svg/dot-menu.svg" *ngIf="!isLoading && element.schemeName!='Total' ">
                             <mat-menu #menu25="matMenu">
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
                                     factsheet</button> -->
@@ -309,7 +309,7 @@
                         </div>
                     </td>
 
-                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                    <td *matFooterCellDef class="text-right" mat-footer-cell></td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MutualFundOverviewComponent } from '../mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
+import { MfServiceService } from '../mf-service.service';
 
 @Component({
   selector: 'app-bulk-email-test',
@@ -38,37 +39,57 @@ export class BulkEmailTestComponent implements OnInit {
   otherPercentage: any;
   total_net_Gain: any;
   fragmentData: any;
+  mutualFund: string;
+  svg: any;
 
-  constructor(public overview: MutualFundOverviewComponent, private UtilService: UtilService) { }
+  constructor(public overview: MutualFundOverviewComponent, private UtilService: UtilService, public mfService: MfServiceService) { }
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
 
   ngOnInit() {
     this.fragmentData = {}
-    this.getUploadData()
+    this.getUploadData();
     this.fragmentData.isSpinner = true;
+    this.mfService.getSendData()
+      .subscribe(res => {
+        this.getObj = res; //used for getting mutual fund data coming from main gain call
+        if (this.getObj.hasOwnProperty('dataSource3') && this.getObj.hasOwnProperty('dataSource') && this.getObj.mfData && this.getObj.hasOwnProperty('dataSource4') && this.getObj.hasOwnProperty('dataSource2')) {
+          this.getAllData()
+        }
+      })
+    console.log(this.getObj)
+  }
+
+  ngAfterViewInit() {
+    this.pieChart('piechartMutualFund');
+    this.generatePdf()
   }
   getUploadData() {
     this.getObj = this.overview.uploadData(this.sendData)
     console.log('data ======', this.getObj)
+    console.log(this.getObj)
+  }
+  getAllData() {
     this.dataSource3 = this.getObj.dataSource3;
     this.dataSource = this.getObj.dataSource;
     this.mfData = this.getObj.mfData;
     this.dataSource4 = this.getObj.dataSource4;
     this.dataSource2 = this.getObj.dataSource2;
     this.chart = this.getObj.dataSource2;
-    this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
-    this.generatePdf()
-
+    this.equityPercentage = this.getObj.equityPercentage;
+    this.debtPercentage = this.getObj.debtPercentage;
+    this.otherPercentage = this.getObj.otherPercentage;
+    this.hybridPercenatge = this.getObj.hybridPercenatge;
+    // pie chart data after calculating percentage
   }
   generatePdf() {
-    //this.svg = this.chart.getSVG()
+    this.svg = this.chart.getSVG()
     let para = document.getElementById('templateOver');
     let obj = {
       htmlInput: para.innerHTML,
       name: 'Overview',
       landscape: true,
       key: 'showPieChart',
-      svg: ''
+      svg: this.svg
     }
     this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
     return obj
@@ -121,7 +142,7 @@ export class BulkEmailTestComponent implements OnInit {
           {
             name: 'Equity',
             // y:20,
-            y: (this.equityPercentage) ? this.equityPercentage : 20,
+            y: (this.equityPercentage) ? this.equityPercentage : 0,
             color: '#008FFF',
             dataLabels: {
               enabled: false
@@ -129,7 +150,7 @@ export class BulkEmailTestComponent implements OnInit {
           }, {
             name: 'Debt',
             // y:20,
-            y: (this.debtPercentage) ? this.debtPercentage : 20,
+            y: (this.debtPercentage) ? this.debtPercentage : 0,
             color: '#5DC644',
             dataLabels: {
               enabled: false
@@ -137,7 +158,7 @@ export class BulkEmailTestComponent implements OnInit {
           }, {
             name: 'Hybrid',
             // y:20,
-            y: (this.hybridPercenatge) ? this.hybridPercenatge : 20,
+            y: (this.hybridPercenatge) ? this.hybridPercenatge : 0,
             color: '#FFC100',
             dataLabels: {
               enabled: false
@@ -145,7 +166,7 @@ export class BulkEmailTestComponent implements OnInit {
           }, {
             name: 'Other',
             // y:20,
-            y: (this.otherPercentage) ? this.otherPercentage : 20,
+            y: (this.otherPercentage) ? this.otherPercentage : 0,
             color: '#A0AEB4',
             dataLabels: {
               enabled: false
@@ -162,5 +183,6 @@ export class BulkEmailTestComponent implements OnInit {
         ]
       }]
     });
+    //this.generatePdf()
   }
 }

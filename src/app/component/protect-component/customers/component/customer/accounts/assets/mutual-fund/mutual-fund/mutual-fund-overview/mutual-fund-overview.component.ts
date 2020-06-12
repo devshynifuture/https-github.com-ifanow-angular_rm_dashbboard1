@@ -122,16 +122,17 @@ export class MutualFundOverviewComponent implements OnInit {
       data.forEach(element => {
         this.clientId = element.clientId
         this.ngOnInit()
-        this.sendaata.dataSource4 = this.dataSource4.data
-        this.sendaata.dataSource = this.dataSource.data
-        this.sendaata.dataSource2 = this.dataSource2.data
-        this.sendaata.dataSource3 = this.dataSource3.data
-        this.sendaata.dataSource1 = this.datasource1.data
-        this.sendaata.equityPercentage = this.equityPercentage
-        this.sendaata.debtPercentage = this.debtPercentage
-        this.sendaata.hybridPercenatge = this.hybridPercenatge
-        this.sendaata.otherPercentage = this.otherPercentage
-        this.sendaata.mfData = this.mfData
+        // this.sendaata.dataSource4 = this.dataSource4.data
+        // this.sendaata.dataSource = this.dataSource.data
+        // this.sendaata.dataSource2 = this.dataSource2.data
+        // this.sendaata.dataSource3 = this.dataSource3.data
+        // this.sendaata.dataSource1 = this.datasource1.data
+        // this.sendaata.equityPercentage = this.equityPercentage
+        // this.sendaata.debtPercentage = this.debtPercentage
+        // this.sendaata.hybridPercenatge = this.hybridPercenatge
+        // this.sendaata.otherPercentage = this.otherPercentage
+        // this.sendaata.mfData = this.mfData;
+
       });
     } return this.sendaata
   }
@@ -142,7 +143,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendaata.dataSource = []
     this.sendaata.dataSource2 = []
     this.sendaata.dataSource3 = []
-    this.sendaata.mutualFund =[]
+    this.sendaata.mutualFund = []
     this.sendaata.dataSource1 = []
     this.sendaata.equityPercentage = {}
     this.sendaata.debtPercentage = {}
@@ -303,11 +304,12 @@ export class MutualFundOverviewComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.totalValue = data.totalValue;
-        this.calculatePercentage(categoryList); // for Calculating MF categories percentage
-        this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
         if (this.showCashFlow) {
           this.getCashFlowStatus();
         }
+        this.calculatePercentage(categoryList); // for Calculating MF categories percentage
+        this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+
         this.isLoading = false;
         this.changeInput.emit(false);
       };
@@ -359,7 +361,7 @@ export class MutualFundOverviewComponent implements OnInit {
           this.mutualFund = this.filterData
         } else {
           this.sendaata.mutualFund = this.mfService.getMfData()
-             .subscribe(res => {
+            .subscribe(res => {
               this.mutualFund = res;
             })
         }
@@ -390,6 +392,9 @@ export class MutualFundOverviewComponent implements OnInit {
         item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
+      this.sendaata.dataSource4 = this.dataSource4
+
+      this.MfServiceService.setSendData(this.sendaata);
       if (this.dataSource4.data.length == 0) {
         this.showCategory = false;
       }
@@ -451,6 +456,13 @@ export class MutualFundOverviewComponent implements OnInit {
         this.otherPercentage = parseFloat(this.otherPercentage);
       }
     });
+    this.sendaata.equityPercentage = this.equityPercentage
+    this.sendaata.debtPercentage = this.debtPercentage
+    this.sendaata.hybridPercenatge = this.hybridPercenatge
+    this.sendaata.otherPercentage = this.otherPercentage
+    this.sendaata.mfData = this.mfData;
+
+    this.MfServiceService.setSendData(this.sendaata);
   }
   getCashFlowStatus() {
     // Used for cashFlow status
@@ -467,6 +479,10 @@ export class MutualFundOverviewComponent implements OnInit {
         { data: 'i. Lifetime XIRR (All Transactions)', amts: (this.cashFlowXirr) ? this.cashFlowXirr : 0 },
 
       ];
+
+      this.sendaata.dataSource1 = this.datasource1.data
+
+      this.MfServiceService.setSendData(this.sendaata);
       if (this.datasource1.data.length == 0) {
         this.showCashFlow = false;
       }
@@ -487,6 +503,9 @@ export class MutualFundOverviewComponent implements OnInit {
         item.currentValue != 0 && item.currentValue > 0
       );
       this.dataSource3 = new MatTableDataSource(sortedData);
+      this.sendaata.dataSource3 = this.dataSource3
+
+      this.MfServiceService.setSendData(this.sendaata);
       if (this.dataSource3.data.length == 0) {
         this.showSubCategory = false;
       }
@@ -504,6 +523,9 @@ export class MutualFundOverviewComponent implements OnInit {
         item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
       );
       this.dataSource = new MatTableDataSource(sortedData);
+      this.sendaata.dataSource = this.dataSource
+
+      this.MfServiceService.setSendData(this.sendaata);
       if (this.dataSource.data.length == 0) {
         this.showFamilyMember = false;
       }
@@ -545,6 +567,9 @@ export class MutualFundOverviewComponent implements OnInit {
                 item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnit != 0 && item.balanceUnit > 0)
               );
               this.dataSource2 = new MatTableDataSource(sortedData);
+              this.sendaata.dataSource2 = this.dataSource2
+
+              this.MfServiceService.setSendData(this.sendaata);
               // if(this.dataSource2.data.length == 0){
               //   this.showSchemeWise=false
               // }
@@ -565,6 +590,9 @@ export class MutualFundOverviewComponent implements OnInit {
           (item.currentValue != 0 && item.currentValue > 0) || (item.balanceUnit != 0 && item.balanceUnit > 0)
         );
         this.dataSource2 = new MatTableDataSource(sortedData);
+        this.sendaata.dataSource2 = this.dataSource2
+
+        this.MfServiceService.setSendData(this.sendaata);
         // if(this.dataSource2.data.length == 0){
         //   this.showSchemeWise=false
         // }

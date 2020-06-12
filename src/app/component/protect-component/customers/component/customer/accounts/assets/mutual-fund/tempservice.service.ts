@@ -9,6 +9,7 @@ export class TempserviceService {
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Investor wise') ? reportType = 'ownerName' :reportType = 'ownerName';
     const filteredArray = [];
+
     let catObj;
     if (mutualFundList) {
       if (reportType != 'ownerName') {
@@ -446,7 +447,7 @@ export class TempserviceService {
     let name;
     const categoryArray = [];
     data.forEach(ele => {
-      if (ele[type]) {
+      if (ele[type] || ele[type] == 0) {
         // const categoryArrayLocal = catObj[ele[type]] ? catObj[ele[type]] : [];
         list.family_member_list.forEach(element => {
           if (element.id == ele.familyMemberId) {

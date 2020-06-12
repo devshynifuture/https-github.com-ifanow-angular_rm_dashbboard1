@@ -5,6 +5,7 @@ import { BackOfficeService } from '../../../back-office.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { ExcelService } from '../../../../../customers/component/customer/excel.service';
+import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-folios',
@@ -19,10 +20,13 @@ export class FoliosComponent implements OnInit {
   dataSource;
   folioList: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  adminAdvisorIds=[];
+  clientId: any;
+  parentId: any;
 
   constructor(
     private fb: FormBuilder, private backoffice: BackOfficeService,
-    private eventService: EventService
+    private eventService: EventService,private reconService:ReconciliationService
   ) { }
   isLoading = false;
   searchGroupForm = this.fb.group({
@@ -37,7 +41,9 @@ export class FoliosComponent implements OnInit {
   ngOnInit() {
     // this.getFolioDetails();
     this.advisorId = AuthService.getAdvisorId();
-
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.clientId = AuthService.getClientId();
+    // this.teamMemberListGet();
   }
 
   // getFolioDetails(){
@@ -49,7 +55,39 @@ export class FoliosComponent implements OnInit {
   displayFn(value): string | undefined {
     return value ? value.name : undefined;
   }
-
+  // teamMemberListGet() {
+  //   this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+  //     .subscribe(data => {
+  //       if (data && data.length !== 0) {
+  //         console.log('team members: ', data);
+  //         data.forEach(element => {
+  //           this.adminAdvisorIds.push(element.adminAdvisorId);
+  //         });
+  //         if (this.parentId !== 0) {
+  //           this.getArnRiaList();
+  //         } else {
+  //           this.initPoint();
+  //         }
+  //         // this.handlingDataVariable();
+  //       } else {
+  //         this.adminAdvisorIds = [this.advisorId];
+  //         if (this.parentId !== 0) {
+  //           this.getArnRiaList();
+  //         } else {
+  //           this.initPoint();
+  //         }
+  //         // this.handlingDataVariable();
+  //         // this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+  //       }
+  //     }, err => {
+  //       if (this.parentId !== 0) {
+  //         this.getArnRiaList();
+  //       } else {
+  //         this.initPoint();
+  //       }
+  //       // console.log(err);
+  //     });
+  // }
   getList(data, value) {//for seraching and dropdown of pan and folio
     if (value == 'groupyHead') {
       const obj = {
