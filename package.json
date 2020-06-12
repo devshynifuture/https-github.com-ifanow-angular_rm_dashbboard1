@@ -15,7 +15,7 @@
     "build": "ng build --stats-json",
     "build-prod-nostat": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --extra-webpack-config webpack.extra.js",
     "build-dev": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration dev --extra-webpack-config webpack.extra.js",
-    "build-stage": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration staging --extra-webpack-config webpack.extra.js",
+    "build-staging": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration staging --extra-webpack-config webpack.extra.js",
     "build-prod": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --stats-json --extra-webpack-config webpack.extra.js --watch",
     "test": "ng test",
     "lint": "ng lint",
