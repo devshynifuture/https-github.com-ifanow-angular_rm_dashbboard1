@@ -117,11 +117,11 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_MEMBER, httpParams);
   }
   getAumFamilyMemberScheme(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_SCHEME, httpParams);
   }
   getAumFamilyMemberSchemeFolio(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum).set('schemeId', data.schemeId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum).set('schemeId', data.schemeId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_SCHEME_FOLIO, httpParams);
   }
   getAumClientScheme(data) {

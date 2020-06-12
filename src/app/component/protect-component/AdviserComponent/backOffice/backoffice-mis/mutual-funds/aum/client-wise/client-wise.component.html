@@ -220,7 +220,7 @@
                                       </mat-icon>
                                     </button>
                                   </div>
-                                  <table *ngIf="scheme.showScheme==false && !isLoadingFolio && scheme.folioList?.length > 0" class="skeletonAnimation mt-8 mb-8"
+                                  <table *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0" class="skeletonAnimation mt-8 mb-8"
                                     appSkeletonLoading [appSkeletonLoading]="isLoadingFolio" id="table-low">
                                     <thead>
                                       <tr class="h-40">
