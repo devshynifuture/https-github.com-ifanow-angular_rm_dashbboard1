@@ -6,6 +6,9 @@
     display: block !important;
     width: 100%;
     text-align: left;
+    height: calc(100vh - 148px);
+    position: fixed;
+    width: 16.7%;
   }
 
   .activeColor {
@@ -15,9 +18,29 @@
   li {
     height: 40px;
     line-height: 40px;
-    padding: 0 0px 0 24px;
+    padding: 0 0px 0 20px;
     font-size: 14px;
     text-align: left;
     margin-bottom: 10px;
+  }
+}
+
+.plan-icome {
+  #table-low {
+    tr.mat-header-row {
+      height: 48px !important;
+    }
+
+    th {
+      padding: 5px 8px !important;
+    }
+
+    tr.mat-row {
+      height: 36px !important;
+    }
+
+    tbody td {
+      padding: 4px 8px !important;
+    }
   }
 }

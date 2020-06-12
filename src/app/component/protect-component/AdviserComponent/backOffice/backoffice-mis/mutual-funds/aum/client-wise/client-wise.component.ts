@@ -424,7 +424,8 @@ export class ClientWiseComponent implements OnInit {
         arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: investorData.familyMemberId,
-        totalAum: investorData.totalAum
+        totalAum: investorData.totalAum,
+        clientId:investorData.clientId
       }
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         data => {
@@ -433,6 +434,7 @@ export class ClientWiseComponent implements OnInit {
             data.forEach(element => {
               element.showScheme = true;
               element.familyMemberId = investorData.familyMemberId;
+              element.clientId=investorData.clientId
             });
             investorData.schemeList = data;
             this.scheme1ListArr = data
@@ -467,7 +469,8 @@ export class ClientWiseComponent implements OnInit {
         parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: schemeData.familyMemberId,
         totalAum: schemeData.totalAum,
-        schemeId: schemeData.mutualFundSchemeMasterId
+        schemeId: schemeData.mutualFundSchemeMasterId,
+        clientId:schemeData.clientId
       }
       this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
         data => {

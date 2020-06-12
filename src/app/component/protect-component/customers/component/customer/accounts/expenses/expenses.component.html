@@ -5,13 +5,18 @@
                 <div class="wrapper-8">
                     <div class="row pt-28 pb-28">
                         <div class="col-md-4 pl-0">
-                            <button mat-stroked-button
+                            <button mat-button
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Transactions','text-primary':viewMode == 'Transactions'}"
                                 (click)="viewMode='Transactions';getBugetTab(viewMode)">Transactions</button>
                             <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
                         <div class="col-md-8 right text-right pr-0">
+                            <mat-form-field class="w-30">
+                                <mat-select class="form-control">
+                                    <mat-option value="option">This month</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                     </div>
                     <div>
@@ -266,7 +271,7 @@
                             <div class="col-md-8 p-0 right text-right"
                                 *ngIf="dataSource5.filteredData.length > 0 || dataSource4.filteredData.length > 0">
                                 <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
-                                <img src="assets/images/svg/download-bordered.svg" class="c-p">
+                                <img src="assets/images/svg/download-ba.svg" class="c-p">
                                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                                 <button mat-stroked-button class="btn-default addon mr-12 v-middle">
                                     <i class="material-icons">filter_list</i>

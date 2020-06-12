@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MutualFundOverviewComponent } from '../mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
+import { MfServiceService } from '../mf-service.service';
 
 @Component({
   selector: 'app-bulk-email-test',
@@ -38,18 +39,36 @@ export class BulkEmailTestComponent implements OnInit {
   otherPercentage: any;
   total_net_Gain: any;
   fragmentData: any;
+  mutualFund: string;
 
-  constructor(public overview: MutualFundOverviewComponent, private UtilService: UtilService) { }
+  constructor(public overview: MutualFundOverviewComponent, private UtilService: UtilService,public mfService:MfServiceService) { }
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
 
   ngOnInit() {
     this.fragmentData = {}
-    this.getUploadData()
+    this.getUploadData();
     this.fragmentData.isSpinner = true;
+    this.mfService.getSendData()
+    .subscribe(res => {
+       this.getObj = res; //used for getting mutual fund data coming from main gain call
+       if(this.getObj.hasOwnProperty('dataSource3') && this.getObj.hasOwnProperty('dataSource') && this.getObj.mfData && this.getObj.hasOwnProperty('dataSource4') && this.getObj.hasOwnProperty('dataSource2')){ 
+        this.getAllData()
+     }
+    })
+    console.log(this.getObj)
+
+    
+
   }
   getUploadData() {
     this.getObj = this.overview.uploadData(this.sendData)
     console.log('data ======', this.getObj)
+    console.log(this.getObj)
+
+ 
+
+  }
+  getAllData(){
     this.dataSource3 = this.getObj.dataSource3;
     this.dataSource = this.getObj.dataSource;
     this.mfData = this.getObj.mfData;
@@ -58,7 +77,6 @@ export class BulkEmailTestComponent implements OnInit {
     this.chart = this.getObj.dataSource2;
     this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
     this.generatePdf()
-
   }
   generatePdf() {
     //this.svg = this.chart.getSVG()
