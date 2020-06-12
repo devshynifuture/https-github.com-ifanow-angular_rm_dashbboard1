@@ -11,8 +11,17 @@
 }
 
 .reportImg {
-    border-right: 1 solid #83959D;
     img {
         max-width: 100%;
     }
+}
+
+.borderLeftLine {
+    border-left: 1px solid #83959D;
+}
+
+.sendEmailBtn {
+    border-radius: 2px;
+    width: 115px;
+    height: 36px;
 }

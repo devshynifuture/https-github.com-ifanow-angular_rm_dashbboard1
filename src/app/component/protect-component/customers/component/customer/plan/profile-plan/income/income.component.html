@@ -18,20 +18,22 @@
                     <h4 class="m-0 text-black roboto pt-8">Income</h4>
                 </div>
                 <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.data.length > 0">
-                    <img class="c-p" src="assets/images/svg/download-bordered.svg">
-                    <img class="c-p" src="assets/images/svg/up-down.svg">
+                    <img class="c-p" src="assets/images/svg/download-ba.svg">
+                    <img class="c-p" src="assets/images/svg/unfold.svg">
                     <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
                     <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
                     </button>
-                    <button (click)="addIncome('addIncome',null)" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                    <button (click)="addIncome('addIncome',null)" class="btn-primary addon v-middle"
+                        mat-stroked-button>ADD
                         NEW
                     </button>
                 </div>
             </div>
 
-            <div class="liabilities">
-                <table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table matSort appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <div class="plan-icome">
+                <table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table matSort
+                    appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no">
                         <th *matHeaderCellDef class="br t-right t-1" mat-header-cell mat-sort-header> No.</th>
                         <td *matCellDef="let element;index as i" class="br t-1" mat-cell>
@@ -50,16 +52,17 @@
                         <td *matCellDef="let element" class="br" mat-cell>
                             <div class="bar"> <span>
                                     <span *ngIf="element.incomeTypeId==1">Salaried</span>
-                                <span *ngIf="element.incomeTypeId==2">Buisness</span>
-                                <span *ngIf="element.incomeTypeId==3">Profession</span>
-                                <span *ngIf="element.incomeTypeId==4">Rental</span>
-                                <span *ngIf="element.incomeTypeId==5">Others</span>
+                                    <span *ngIf="element.incomeTypeId==2">Buisness</span>
+                                    <span *ngIf="element.incomeTypeId==3">Profession</span>
+                                    <span *ngIf="element.incomeTypeId==4">Rental</span>
+                                    <span *ngIf="element.incomeTypeId==5">Others</span>
                                 </span>
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="amt">
-                        <th *matHeaderCellDef class="br t-right" mat-header-cell mat-sort-header="monthlyIncome">
+                        <th *matHeaderCellDef class="br right-hcb hide-arrow" mat-header-cell
+                            mat-sort-header="monthlyIncome">
                             Monthly amount
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -67,7 +70,9 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="income">
-                        <th *matHeaderCellDef class="br t-right" mat-header-cell mat-sort-header="incomeStyleId"> Income style
+                        <th *matHeaderCellDef class="br right-hcb hide-arrow" mat-header-cell
+                            mat-sort-header="incomeStyleId"> Income
+                            style
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar"> {{element.incomeStyleId}} </div>
@@ -79,14 +84,15 @@
                         <td *matCellDef="let element" class="br" mat-cell>
                             <div class="bar"> <span>
                                     <span *ngIf="element.continueTill==1">Retirement</span>
-                                <span *ngIf="element.continueTill==2">Life time</span>
-                                <span *ngIf="element.continueTill==3">{{element.numberOfYear}}Years</span>
+                                    <span *ngIf="element.continueTill==2">Life time</span>
+                                    <span *ngIf="element.continueTill==3">{{element.numberOfYear}}Years</span>
                                 </span>
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="rate">
-                        <th *matHeaderCellDef class="br t-right" mat-header-cell mat-sort-header="growthRate">
+                        <th *matHeaderCellDef class="br hide-arrow right-hcb" mat-header-cell
+                            mat-sort-header="growthRate">
                             Growth rate
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
@@ -124,7 +130,8 @@
                 <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
                     <img class="width400" src="assets/images/svg/clients-img.svg">
                     <h4 class="pt-72">No income Found</h4>
-                    <button (click)="addIncome(null,null)" class="btn-primary addon v-middle mt-20" mat-stroked-button>ADD NEW
+                    <button (click)="addIncome(null,null)" class="btn-primary addon v-middle mt-20"
+                        mat-stroked-button>ADD NEW
                     </button>
                 </div>
             </div>

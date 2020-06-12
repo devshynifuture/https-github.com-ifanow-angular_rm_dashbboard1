@@ -631,6 +631,10 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PORTFOLIO, data);
   }
 
+  deletePortfolio(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PORTFOLIO, data);
+  }
+
   deleteStockData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STOCK, data);
   }
