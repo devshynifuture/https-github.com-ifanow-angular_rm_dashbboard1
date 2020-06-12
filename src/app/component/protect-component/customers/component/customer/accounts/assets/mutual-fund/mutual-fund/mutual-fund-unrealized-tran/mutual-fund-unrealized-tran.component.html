@@ -443,9 +443,9 @@
                </ng-container>
                <ng-container matColumnDef="icons" sticky>
                   <th *matHeaderCellDef class="" mat-header-cell></th>
-                  <td *matCellDef="let element" class="zIndex" mat-cell>
-                     <div *ngIf="!isLoading">
-                        <img [matMenuTriggerFor]="menu25" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                  <td *matCellDef="let element" [matMenuTriggerFor]="menu25" class="zIndex" mat-cell>
+                     <div >
+                        <img  class="c-p" src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menu25="matMenu">
                            <div [matTooltipDisabled]="element.rtTypeId === 14"
                               [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'"

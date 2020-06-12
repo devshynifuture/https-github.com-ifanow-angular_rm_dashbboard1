@@ -51,8 +51,8 @@ export class TransactionsComponent implements OnInit {
     console.log("this is data what we got::", this.data);
     this.currentValue = this.data.currentValue;
     this.profitOrLossValue = this.currentValue - this.data.amountInvested;
-    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
-    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 2);
+    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
+    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
     this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
@@ -140,8 +140,8 @@ export class TransactionsComponent implements OnInit {
     this.dataSource.data = this.mfList.mutualFundTransactions
     this.currentValue = this.mfList.currentValue;
     this.profitOrLossValue = this.currentValue - this.mfList.amountInvested;
-    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 2);
-    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 2);
+    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
+    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
     this.xirrValue = this.mfList.xirr;
     this.investorName = this.mfList.ownerName;
     this.folioNumber = this.mfList.folioNumber;

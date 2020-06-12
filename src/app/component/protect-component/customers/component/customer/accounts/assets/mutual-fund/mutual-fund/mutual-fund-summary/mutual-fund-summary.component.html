@@ -268,9 +268,9 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" class="" mat-cell>
-                        <div *ngIf="!isLoading && element.schemeName!='Total'">
-                            <img class="c-p" [matMenuTriggerFor]="menu25" src="/assets/images/svg/dot-menu.svg">
+                    <td *matCellDef="let element"  [matMenuTriggerFor]="menu25" [ngClass]="!isLoading && element.schemeName=='Total' ? 'disabled': ''" class="" mat-cell>
+                        <div >
+                            <img class="c-p" src="/assets/images/svg/dot-menu.svg" *ngIf="!isLoading && element.schemeName!='Total' ">
                             <mat-menu #menu25="matMenu">
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
                                     factsheet</button> -->
