@@ -888,6 +888,10 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendData.emit(data);
 
   }
+
+  generateUpload(data) {
+    
+  }
 }
 export interface PeriodicElement1 {
   data: string;

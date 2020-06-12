@@ -20,6 +20,22 @@ export class BulkEmailTestComponent implements OnInit {
   dataSource4: any;
   dataSource2: any;
   chart: any;
+  getOrgData:any;
+  userInfo:any;
+  details:any;
+  clientData:any;
+  equityCurrentValue:any;
+  debtCurrentValue:any;
+  hybridCurrentValue:any;
+  solution_OrientedCurrentValue:any;
+  otherCurrentValue:any;
+  reportDate:any;
+  equityPercentage:any;
+  debtPercentage:any;
+  hybridPercenatge:any;
+  solution_OrientedPercenatge:any;
+  otherPercentage:any;
+  total_net_Gain:any;
   
   constructor(public overview: MutualFundOverviewComponent, private UtilService : UtilService) { }
 
