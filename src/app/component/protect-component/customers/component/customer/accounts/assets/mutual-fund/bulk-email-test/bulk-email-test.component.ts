@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MutualFundOverviewComponent } from '../mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -38,6 +38,7 @@ export class BulkEmailTestComponent implements OnInit {
   total_net_Gain:any;
   
   constructor(public overview: MutualFundOverviewComponent, private UtilService : UtilService) { }
+  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
 
   ngOnInit() {
     this.getUploadData()
@@ -66,5 +67,6 @@ export class BulkEmailTestComponent implements OnInit {
     }
  this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, true, 'showPieChart', '')
     return obj
+    
   }
 }
