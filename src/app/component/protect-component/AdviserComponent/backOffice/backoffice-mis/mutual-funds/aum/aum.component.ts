@@ -33,6 +33,8 @@ export class AumComponent implements OnInit {
   isLoading = true;
   adminAdvisorIds = [];
   objTosend: any;
+  isLoadingTopClients = true;
+  isLoadingCategory = true;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
@@ -158,7 +160,7 @@ export class AumComponent implements OnInit {
   }
 
   getTotalAum() {
-    this.isLoading = true;
+    this.isLoadingTopClients = true;
 
     const obj = {
       advisorId:(this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
@@ -168,7 +170,7 @@ export class AumComponent implements OnInit {
     this.backoffice.getClientTotalAUM(obj).subscribe(
       data => this.getFileResponseDataAum(data),
       err =>{
-        this.isLoading =false;
+        this.isLoadingTopClients =false;
         this.clientTotalAum = [];
         this.amcTotalAum = [];
         this.getFilerrorResponse(err)
@@ -192,7 +194,7 @@ export class AumComponent implements OnInit {
     )
   }
   getSubCatAum() {
-    this.isLoading = true;
+    this.isLoadingCategory = true;
 
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
@@ -202,7 +204,7 @@ export class AumComponent implements OnInit {
     this.backoffice.getSubCatAum(obj).subscribe(
       data => this.getFileResponseDataForSub(data),
       err => {
-        this.isLoading =false;
+        this.isLoadingCategory =false;
         this.category = [];
         this.subcategory = [];
         this.getFilerrorResponse(err)
@@ -213,7 +215,7 @@ export class AumComponent implements OnInit {
   getSubCatSchemeRes(data) {
   }
   getFileResponseDataAum(data) {
-    this.isLoading = false;
+    this.isLoadingTopClients = false;
     if (data) {
       this.clientTotalAum = data.clientTotalAum;
       this.amcTotalAum = data.amcTotalAum;
@@ -225,7 +227,7 @@ export class AumComponent implements OnInit {
     this.MiscData1 = data;
   }
   getFileResponseDataForSub(data) {
-    this.isLoading = false;
+    this.isLoadingCategory = false;
     this.category = data.category;
     this.subcategory = data.subcategory;
   }
