@@ -92,6 +92,21 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     if ((this.clientListMobile && this.clientListMobile.length > 0) && (this.clientListEmail == undefined || this.clientListEmail.length == 0)) {
       this.finalSuggestionList = this.clientListMobile
     }
+    if ((this.clientListEmail && this.clientListEmail.length == 1) && (this.clientListMobile && this.clientListMobile.length == 1) && this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId === b.userId))) {
+      this.finalSuggestionList = this.clientListEmail;
+      if (this.finalSuggestionList) {
+        this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
+        this.finalSuggestionList.map(element => {
+          element['addedFlag'] = false;
+          element['isLoading'] = false;
+          this.rows.push(this.fb.group({
+            relation: ['', [Validators.required]],
+            gender: ['', [Validators.required]]
+          }))
+        })
+      }
+      return;
+    }
     if ((this.clientListEmail && this.clientListEmail.length > 0) && (this.clientListMobile && this.clientListMobile.length > 0)) {
       this.finalSuggestionList = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId === b.userId));
       this.clientListEmail = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId != b.userId));
