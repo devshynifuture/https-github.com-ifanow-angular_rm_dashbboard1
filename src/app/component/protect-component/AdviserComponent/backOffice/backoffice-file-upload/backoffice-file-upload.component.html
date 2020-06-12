@@ -38,8 +38,8 @@
                 <div class="col-md-12 form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <mat-select class="form-control" [(ngModel)]="arnRiaId">
-                            <mat-option value = "">Select Arn Ria Code</mat-option>
-                            <mat-option *ngFor="let item of arnRiaList" [value]="item.id" >
+                            <mat-option value="">Select Arn Ria Code</mat-option>
+                            <mat-option *ngFor="let item of arnRiaList" [value]="item.id">
                                 {{ item.number }}
                             </mat-option>
                         </mat-select>
@@ -68,10 +68,10 @@
             </div>
             <div class="row">
                 <div *ngIf="fileName" class="col-md-12 text-left pr-0 pt-12">
-                    <p class="f-16 wb-bw"><span style="color:royalblue">File name:</span> {{fileName}}</p>
+                    <p class="f-16 wb-bw"><span class="text-primary">File name:</span> {{fileName}}</p>
                 </div>
                 <div *ngIf="fileSize" class="col-md-7 text-left pr-0 pt-12">
-                    <p class="f-16"><span style="color:royalblue">File size:</span> {{fileSize}}</p>
+                    <p class="f-16"><span class="text-primary">File size:</span> {{fileSize}}</p>
                 </div>
                 <div class="col-md-1 text-left pr-0">
                     <mat-spinner *ngIf="!uploadButton && fileSize" [diameter]="30"></mat-spinner>
@@ -81,11 +81,11 @@
                         class="br-0 btn-bottom">Upload
                         file</button>
                 </div>
-                <div class="col-md-12 text-left  pt-12"  *ngIf="fileSize && !uploadButton">
-                    <div class='loaderWrap' >
+                <div class="col-md-12 text-left  pt-12" *ngIf="fileSize && !uploadButton">
+                    <div class='loaderWrap'>
                         <span class='loadCount'>{{barWidth}}</span>
-                        <div class='loaderBar' >
-                            <div class="loaderBarFill"[style.width]="barWidth"></div>
+                        <div class='loaderBar'>
+                            <div class="loaderBarFill" [style.width]="barWidth"></div>
                         </div>
                     </div>
                 </div>
