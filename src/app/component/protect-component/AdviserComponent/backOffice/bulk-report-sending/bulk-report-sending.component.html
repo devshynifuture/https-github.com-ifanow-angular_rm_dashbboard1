@@ -11,27 +11,89 @@
 
 
 <div class="row pt-130">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <h3 class="f-18 mt-20">Send reports</h3>
+    </div>
+    <div class="col-md-4 d-flex align-items-center justify-content-end">
+        <button class="sendEmailBtn mt-10 bg-primary text-white" (click)="openSendNow()" mat-button>Send Now</button>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6 reportImg">
-        <img src="/assets/images/svg/send-reports.svg">
+<!-- <div class="mt-44">
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="reportImg">
+                <img src="/assets/images/svg/send-reports.svg">
+            </div>
+        </div>
+        <div class="col-md-6  pl-30 borderLeftLine">
+            <h3 class="f-16 roboto f-500">No bulk reports sent yet</h3>
+            <p>The bulk email report feature allows you to send periodic reports to all your clients with a single click. This saves your time and manual effort.</p>
+            <p>At present, we allow bulk emailing of mutual fund reports only. </p>
+
+            <p class="mb-0 roboto f-500">Here’s how it works:</p>
+            <p class="mb-0"> 1) Choose the report type you want. You can choose multiple reports as well </p>
+            <p class="mb-20"> 2) Next, hit the Send Now buton and you are done.</p>
+
+            <p class="mb-0 roboto f-500"> Things to be kept in mind: </p>
+            <p class="mb-0"> 1) Please ensure you have reconciled the data through the Back office > AUM reconciliation system. </p>
+            <p class="mb-0"> 2) If you plan to do this as a monthly exercise, then ensure that 3-4 days before hand you have done the reconciliation. </p>
+
+            <button class="sendEmailBtn bg-primary mt-40 text-white" mat-button>Send Now</button>
+
+        </div>
     </div>
-    <div class="col-md-6">
-        <h3 class="f-16 roboto f-500">No bulk reports sent yet</h3>
-        <p>The bulk email report feature allows you to send periodic reports to all your clients with a single click. This saves your time and manual effort.</p>
-        <p>At present, we allow bulk emailing of mutual fund reports only. </p>
+</div> -->
 
-        <p class="mb-0 roboto f-500">Here’s how it works:</p>
-        <p class="mb-0"> 1) Choose the report type you want. You can choose multiple reports as well </p>
-        <p class="mb-0"> 2) Next, hit the Send Now buton and you are done.</p>
 
-        <p class="mb-0 roboto f-500"> Things to be kept in mind: </p>
-        <p class="mb-0"> 1) Please ensure you have reconciled the data through the Back office > AUM reconciliation system. </p>
-        <p class="mb-0"> 2) If you plan to do this as a monthly exercise, then ensure that 3-4 days before hand you have done the reconciliation. </p>
+<div class="row">
+    <div class="col-md-12">
+        <table mat-table [dataSource]="dataSource" class="mt-20 skeletonAnimation" id="tbs">
 
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="type">
+                <th mat-header-cell class="br" *matHeaderCellDef> Report type </th>
+                <td mat-cell class="br" *matCellDef="let element">
+                    <div class="bar"> {{element.type}} </div>
+                </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="sendDate">
+                <th mat-header-cell class="br" *matHeaderCellDef> Report sent date </th>
+                <td mat-cell class="br" *matCellDef="let element">
+                    <div class="bar"> {{element.sendDate}} </div>
+                </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="recipients">
+                <th mat-header-cell class="br" *matHeaderCellDef> Number of recipients </th>
+                <td mat-cell class="br" *matCellDef="let element">
+                    <div class="bar"> {{element.recipients}} </div>
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="emails">
+                <th mat-header-cell class="br" *matHeaderCellDef> Bounced emails </th>
+                <td mat-cell class="br" *matCellDef="let element">
+                    <div class="bar"> {{element.emails}} </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell class="br" *matHeaderCellDef> Status </th>
+                <td mat-cell class="br" *matCellDef="let element">
+                    <div class="bar"> {{element.status}} </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </div>
 </div>

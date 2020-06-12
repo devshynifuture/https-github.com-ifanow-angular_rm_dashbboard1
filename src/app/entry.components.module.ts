@@ -112,6 +112,7 @@ import { DetailedViewLifeInsuranceComponent } from './component/protect-componen
 import { DatailedViewNpsHoldingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
 import { LoanAmortsComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/loan-amorts/loan-amorts.component';
 import { BulkEmailTestComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
+import { SendNowReportsComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/send-now-reports/send-now-reports.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -243,6 +244,7 @@ export const componentList = [
   AddBudgetComponent,
   RightFilterComponent,
   BulkEmailTestComponent,
+  SendNowReportsComponent,
   FolioMasterDetailsComponent,
   SipDetailsComponent,
   SingleGoalYearComponent,

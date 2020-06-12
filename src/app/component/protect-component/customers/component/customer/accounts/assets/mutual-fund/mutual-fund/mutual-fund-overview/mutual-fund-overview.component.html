@@ -326,15 +326,15 @@
                     <table mat-table [dataSource]="dataSource2" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="showSchemeWise">
                         <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef class="br"> Scheme name</th>
-                            <td mat-cell *matCellDef="let element" class="br">
+                            <th mat-header-cell *matHeaderCellDef class="br c-p"> Scheme name</th>
+                            <td mat-cell *matCellDef="let element" class="br c-p">
                                 <div class="bar"><span> {{(isLoading) ? '' : element.schemeName}}</span></div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Amount invested </th>
+                            <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                 <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                         [value]="element.amountInvested"></span>
                                     <span *ngIf="isLoading">{{''}}</span>
@@ -348,8 +348,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="value">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Current value </th>
+                            <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                 <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                         [value]="element.currentValue">{{element.currentValue}}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
@@ -364,15 +364,15 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="abs">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Abs Ret </th>
+                            <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                 <div class="bar">
                                     <span *ngIf="!isLoading">
                                         {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
                                     <span *ngIf="isLoading"> {{''}} </span>
                                 </div>
                             </td>
-                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                 <div class="bar">
                                     <span *ngIf="!isLoading">
                                         {{(mfData.total_absolute_return == 0) ? 0 : (mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}</span>
@@ -382,8 +382,8 @@
                             </td> -->
                         </ng-container>
                         <ng-container matColumnDef="xirr">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR</th>
-                            <td mat-cell *matCellDef="let element" class="br text-right">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> XIRR</th>
+                            <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                 <div class="bar">
                                     <span *ngIf="!isLoading">
                                         {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
@@ -398,8 +398,8 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
-                            <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc</th>
-                            <td mat-cell *matCellDef="let element" class="text-right">
+                            <th mat-header-cell *matHeaderCellDef class="text-right c-p"> Alloc</th>
+                            <td mat-cell *matCellDef="let element" class="text-right c-p">
                                 <div class="bar"><span
                                         *ngIf="!isLoading">{{(element.allocatedPercentage | number:'1.2-2')}}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
@@ -431,8 +431,8 @@
                         <table mat-table [dataSource]="dataSource3" class="skeletonAnimation" appSkeletonLoading
                             [appSkeletonLoading]="isLoading" *ngIf="showSubCategory ">
                             <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Sub Category Name</th>
-                                <td mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br c-p"> Sub Category Name</th>
+                                <td mat-cell *matCellDef="let element" class="br c-p">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">{{element.subCategory}}</span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -443,8 +443,8 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="amt">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Amount invested </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                             [value]="element.amountInvested"></span>
                                         <span *ngIf="isLoading">{{''}} </span>
@@ -456,12 +456,12 @@
                                 </div>
                             </td> -->
                                 <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
-                                    class="br f-600 p-8 text-right" mat-footer-cell>
+                                    class="br f-600 p-8 text-right c-p" mat-footer-cell>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="value">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Current value </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                             [value]="element.currentValue"></span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -472,12 +472,12 @@
                                 </div>
                             </td> -->
                                 <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                    class="br p-8 f-600 text-right c-p" mat-footer-cell>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Abs Ret </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
                                             {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
@@ -491,15 +491,15 @@
                             </td> -->
                                 <!-- <td *matFooterCellDef  appFormatNumber [value]="mfData.absReturn" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 c-p p-8 proximaFont text-right">
                                     <div class="bar">
                                         {{(mfData.total_absolute_return == 0) ? 0 : (mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="xirr">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR</th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> XIRR</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
                                             {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
@@ -514,14 +514,14 @@
                                 <!-- <td *matFooterCellDef appFormatNumber [value]="mfData.xirr" class="br f-600 text-right" mat-footer-cell  >
                                 {{mfData.xirr | number:'1.2-2'}}
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 c-p p-8 proximaFont text-right">
                                     <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="alloc">
-                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc</th>
-                                <td mat-cell *matCellDef="let element" class="text-right">
+                                <th mat-header-cell *matHeaderCellDef class="text-right c-p"> Alloc</th>
+                                <td mat-cell *matCellDef="let element" class="text-right c-p">
                                     <div class="bar"><span
                                             *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2' }}</span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -530,7 +530,7 @@
                                 <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{7800}}</div>
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 c-p proximaFont text-right">
                                     <div class="bar">
                                         <span appFormatNumber [value]="totalValue.allocationPer"></span>
                                     </div>
@@ -563,7 +563,7 @@
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="data">
                             <th mat-header-cell *matHeaderCellDef class="t-55"> </th>
-                            <td mat-cell *matCellDef="let element" class="t-55">
+                            <td mat-cell *matCellDef="let element" class="t-55 ">
                                 <div class="bar"><span *ngIf="!isLoading">{{element.data}}</span>
                                     <span *ngIf="isLoading">{{''}}</span>
                                 </div>
@@ -597,19 +597,19 @@
                         <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
                             [appSkeletonLoading]="isLoading" *ngIf="showFamilyMember">
                             <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Family Member Name </th>
-                                <td mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br c-p"> Family Member Name </th>
+                                <td mat-cell *matCellDef="let element" class="br c-p">
                                     <div class="bar">{{isLoading ? '' : ((element.name) ? element.name : '-')}}
                                     </div>
                                 </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left c-p">
                                     Total
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="amt">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Amount invested </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                             [value]="element.amountInv"></span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -620,11 +620,11 @@
                                 </div>
                             </td> -->
                                 <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                    class="br p-8 f-600 text-right c-p" mat-footer-cell>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="value">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Current value </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                             [value]="element.currentValue"></span>
@@ -636,7 +636,7 @@
                                 </div>
                             </td> -->
                                 <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                    class="br p-8 f-600 text-right c-p" mat-footer-cell>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
@@ -654,7 +654,7 @@
                             </td> -->
                                 <!-- <td *matFooterCellDef appFormatNumber  [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     {{(mfData.total_absolute_return == 0) ? 0 : (mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
                                 </td>
                             </ng-container>
@@ -674,7 +674,7 @@
                                 <!--  <td *matFooterCellDef appFormatNumber  [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
                                 {{mfData.total_xirr | number:'1.2-2'}}
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
                                         {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                     </div>
@@ -691,7 +691,7 @@
                                 <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{7800}}</div>
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
                                         <span appFormatNumber [value]="totalValue.allocationPer"></span>
                                     </div>
@@ -718,18 +718,19 @@
                         <table mat-table [dataSource]="dataSource4" class="skeletonAnimation" appSkeletonLoading
                             [appSkeletonLoading]="isLoading" *ngIf="showCategory">
                             <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Category name </th>
-                                <td mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br c-p"> Category name </th>
+                                <td mat-cell *matCellDef="let element" class="br c-p">
                                     <div class="bar"><span *ngIf="!isLoading">{{element.category}}</span>
                                         <span *ngIf="isLoading">{{''}}</span>
                                     </div>
                                 </td>
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left c-p">
+                                    Total
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="amt">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Amount invested </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar"><span appFormatNumber *ngIf="!isLoading"
                                             [value]="element.amountInvested"></span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -740,12 +741,12 @@
                                 </div>
                             </td> -->
                                 <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                    class="br p-8 f-600 text-right c-p" mat-footer-cell>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="value">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Current value </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar"><span appFormatNumber [value]='element.currentValue'
                                             *ngIf="!isLoading"></span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -756,12 +757,12 @@
                                 </div>
                             </td> -->
                                 <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
-                                    class="br p-8 f-600 text-right" mat-footer-cell>
+                                    class="br p-8 f-600 text-right c-p" mat-footer-cell>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret</th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> Abs Ret</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
                                             {{(element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') :  0 }}</span>
@@ -774,15 +775,15 @@
                             </td> -->
                                 <!--  <td *matFooterCellDef appFormatNumber [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
                                         {{(mfData.total_absolute_return == 0) ? 0 : (mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="xirr">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR</th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right c-p"> XIRR</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right c-p">
                                     <div class="bar">
                                         <span *ngIf="!isLoading">
                                             {{(element.xirr == 0) ? 0 : (element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
@@ -796,14 +797,14 @@
                                 <!-- <td *matFooterCellDef appFormatNumber [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
                                 {{mfData.total_xirr | number:'1.2-2'}}
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="alloc">
-                                <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc </th>
-                                <td mat-cell *matCellDef="let element" class="text-right">
+                                <th mat-header-cell *matHeaderCellDef class="text-right c-p"> Alloc </th>
+                                <td mat-cell *matCellDef="let element" class="text-right c-p">
                                     <div class="bar"> <span
                                             *ngIf="!isLoading">{{element.allocatedPercentage | number:'1.2-2'}}</span>
                                         <span *ngIf="isLoading">{{''}}</span>
@@ -812,7 +813,7 @@
                                 <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{7800}}</div>
                             </td> -->
-                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right c-p">
                                     <div class="bar">
                                         <span appFormatNumber [value]="totalValue.allocationPer"></span>
                                     </div>
