@@ -24,7 +24,7 @@
 }
 
 .loaderBarFill{
-  height: 100%;  background: greenyellow;
+  height: 100%;  background: greenyellow;transition: width 1s;
 }
 .wb-bw {
   word-break: break-word !important;
