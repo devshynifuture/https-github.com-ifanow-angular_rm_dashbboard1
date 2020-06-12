@@ -92,7 +92,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     if ((this.clientListMobile && this.clientListMobile.length > 0) && (this.clientListEmail == undefined || this.clientListEmail.length == 0)) {
       this.finalSuggestionList = this.clientListMobile
     }
-    if ((this.clientListEmail && this.clientListEmail.length == 1) && (this.clientListMobile && this.clientListMobile.length == 1) && this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId === b.userId))) {
+    if ((this.clientListEmail && this.clientListEmail.length) == (this.clientListMobile && this.clientListMobile.length) && this.clientListEmail.some(a => this.clientListMobile.some(b => a.userId === b.userId))) {
       this.finalSuggestionList = this.clientListEmail;
       if (this.finalSuggestionList) {
         this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
