@@ -145,9 +145,9 @@
                     </ng-container>
 
                     <ng-container matColumnDef="indexedLoss">
-                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                        <th class=" text-right" mat-header-cell *matHeaderCellDef>
                             Indexed loss </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element">
+                        <td class="text-right" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
                             </div>
@@ -160,7 +160,7 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
                 </table>
                 <div *ngIf="dataSource.data.length == 0"
                     [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
@@ -289,9 +289,9 @@
                     </ng-container>
 
                     <ng-container matColumnDef="indexedLoss">
-                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
+                        <th class="text-right" mat-header-cell *matHeaderCellDef>
                             Indexed loss </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element">
+                        <td class="text-right" mat-cell *matCellDef="let element">
                             <div class="bar">
                                 {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
                             </div>
