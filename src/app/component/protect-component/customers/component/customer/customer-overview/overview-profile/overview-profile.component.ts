@@ -63,6 +63,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getProofType();
     this.enumDataService.getBank();
     this.enumDataService.getClientRole();
+    this.clientSuggeService.setEmptySuggestionList();
     this.route.queryParams.subscribe((params) => {
       if (params.Tab) {
         this.Tab = params.Tab;

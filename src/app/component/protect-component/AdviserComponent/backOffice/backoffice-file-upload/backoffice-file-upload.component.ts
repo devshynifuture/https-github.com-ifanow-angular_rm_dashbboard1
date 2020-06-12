@@ -101,14 +101,12 @@ export class BackofficeFileUploadComponent implements OnInit {
   setShowFilter(value) {
     this.showFilter = value;
   }
-
+  
   uploadTargetFile() {
+    this.addbarWidth(1);
+    this.numlimit = 30;
     this.uploadButton = false;
-    for(let i = 0; i < 30; i++){
-      setTimeout(() => {
-        this.addbarWidth();
-      }, 1000);
-    }
+    
     const obj = {
       fileType: this.selectedFileType,
       advisorId: this.advisorId,
@@ -117,6 +115,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.reconService.getBackOfficeFileToUpload(obj).subscribe((data) => {
       // this.fileType = data;
       if (data) {
+      this.addbarWidth(30);
         this.uploadFileRes(data, this.targetFile.target.files[0]);
       }
     });
@@ -143,36 +142,48 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   uploadFileRes(data, file) {
-    for(let i = 30; i < 70; i++){
-      setTimeout(() => {
-        this.addbarWidth();
-      }, 1000);
-    }
+    // setInterval(this.addbarWidth(30));
+    // for(let i = 30; i < 70; i++){
+    //   setTimeout(() => {
+    //     this.addbarWidth();
+    //   }, 1000);
+    // }
+    this.numlimit =70;
+    this.addbarWidth(50);
     const httpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', '')
     };
     this.http.putExternal(data.presignedUrl, file, httpOptions).subscribe((responseData) => {
+      this.numlimit = 99;
+      this.addbarWidth(90);
       this.successFileUpload(this.selectedFileType, data.fileName);
     }, error => {
 
     });
   }
-num:any = 1;
-  addbarWidth(){
-    this.num++;
-    this.barWidth= this.num+'%';
-    if(this.barWidth == "100%"){
-      return;
-    }
+num:any=0;
+numlimit:any;
+recall(){
+  if(this.num <= this.numlimit){
+    this.addbarWidth(this.num);
+  }
+}
+  addbarWidth(c){
+      this.num = c;
+      setTimeout(() => {
+        if(this.num <= 99){
+          this.num++;
+        }
+        this.barWidth= this.num+'%';
+        console.log("1");
+        this.recall();
+      }, 500);
+    
   }
 
   successFileUpload(fileType, fileName) {
-    for(let i = 70; i < 99; i++){
-      setTimeout(() => {
-        this.addbarWidth();
-      }, 1000);
-    }
+    
     const obj = {
       fileType,
       fileName,
@@ -182,7 +193,8 @@ num:any = 1;
     this.reconService.successBackOfficeFileToUpload(obj).subscribe((data) => {
       this.fileName = '';
       this.fileSize = '';
-      this.barWidth = "100%";
+      // this.barWidth = "100%";
+      this.addbarWidth(100);
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
       // reload
       this.setFilter();
@@ -190,8 +202,8 @@ num:any = 1;
   }
 
   setFilter() {
-    this.barWidth = "0%";
-    this.num = 0; 
+    // this.barWidth = "0%";
+    // this.num = 0; 
     if (this.filterStatus === undefined) {
       this.filterStatus = 2;
     }
