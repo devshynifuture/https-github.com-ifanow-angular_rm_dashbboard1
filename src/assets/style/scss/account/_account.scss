@@ -56,6 +56,16 @@
   }
 }
 
+.mutualfunds-capital-equity {
+  border-collapse: separate;
+
+  .secoundTable {
+
+    border: 1px solid #DADCE0 !important;
+
+  }
+}
+
 // .mutualfunds-capital-equity#tabele-low {
 
 //   #table-low th.mat-column-header-row-first-group,
@@ -244,12 +254,14 @@
   th {
     background-color: #fff !important;
     font-weight: 500;
+    cursor: pointer;
   }
 }
 
 .scheme-wise-allocation {
   td.mat-footer-cell {
     padding: 8px !important;
+    cursor: pointer;
   }
 
 }
@@ -322,6 +334,8 @@
     text-align: right;
   }
 }
+
+
 
 @media(max-width:1142px) {
   // .mat-radio-button#mat-radio-3 {
