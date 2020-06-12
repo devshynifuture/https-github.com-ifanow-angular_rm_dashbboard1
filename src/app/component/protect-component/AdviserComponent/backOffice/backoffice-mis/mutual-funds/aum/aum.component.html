@@ -225,7 +225,7 @@
                                         <div *ngFor="let item of category" class="row bb ">
                                             <div class="bar col-md-7 p-0 relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">{{item.name}}
+                                                    <p *ngIf="!isLoading" class="mb-0 f-bold f-13 p-8 ">{{(item.name) ? item.name : '-'}}
                                                     </p>
                                                     <p *ngIf="isLoading">{{''}}</p>
                                                 </div>
@@ -233,7 +233,7 @@
                                             <div class="bar col-md-5 text-right p-0 relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
                                                     <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
-                                                        {{item.totalAum}}</p>
+                                                        {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoading">{{''}}</p>
                                                 </div>
                                             </div>
@@ -254,7 +254,7 @@
                                             </div>
                                             <div class="bar col-md-5 text-right p-0 ">
                                                 <p *ngIf="!isLoading" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
-                                                    {{item.totalAum}}</p>
+                                                    {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                 <p *ngIf="isLoading">{{''}}</p>
                                             </div>
                                         </div>
