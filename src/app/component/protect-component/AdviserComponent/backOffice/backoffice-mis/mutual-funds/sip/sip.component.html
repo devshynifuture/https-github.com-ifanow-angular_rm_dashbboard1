@@ -268,7 +268,7 @@
                                     <div class="b-white skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isExpiredLoading">
                                         <div *ngFor="let item of expiredSip" class="row bb ">
-                                            <div class="bar col-md-7 p-0 relClass">
+                                            <div class=" col-md-7 p-0 relClass" [ngClass]="{'bar': isExpiredLoading}">
                                                 <div class="bar" [ngClass]="{'height23': isExpiredLoading}">
                                                     <p *ngIf="!isExpiredLoading" class="mb-0 f-bold  p-8 ">
                                                         {{item.schemeName}}|{{item.folioNumber}}

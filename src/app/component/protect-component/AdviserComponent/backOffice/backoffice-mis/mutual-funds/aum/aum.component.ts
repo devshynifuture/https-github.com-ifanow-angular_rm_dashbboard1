@@ -35,6 +35,7 @@ export class AumComponent implements OnInit {
   objTosend: any;
   isLoadingTopClients = true;
   isLoadingCategory = true;
+  clientWithoutMF: number;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
@@ -91,6 +92,7 @@ export class AumComponent implements OnInit {
     this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
+    // this.getClientWithoutMf();
     this.getSubCatAum()
     this.getMisData();
   }
@@ -177,6 +179,27 @@ export class AumComponent implements OnInit {
       } 
     )
   }
+  // getClientWithoutMf(){
+  //   this.isLoading = true;
+
+  //   const obj = {
+  //     advisorId:[this.adminAdvisorIds],
+  //     arnRiaDetailsId: this.arnRiaValue,
+  //     parentId: this.parentId
+  //   }
+  //   this.backoffice.getclientWithoutMf(obj).subscribe(
+  //     data => {
+  //       console.log(data);
+  //       this.clientWithoutMF = data.loadCount / data.clientCount * 100;
+  //       this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
+  //       (this.clientWithoutMF > 100) ? this.clientWithoutMF =100 : this.clientWithoutMF
+  //     },
+  //     err =>{
+  //       this.isLoading =false;
+  //       this.clientWithoutMF=0;
+  //     } 
+  //   )
+  // }
   getMisData() {
     this.isLoading = true;
     // const obj = {
