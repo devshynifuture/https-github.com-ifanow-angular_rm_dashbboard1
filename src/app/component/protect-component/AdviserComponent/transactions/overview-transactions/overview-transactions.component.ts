@@ -59,6 +59,8 @@ export class OverviewTransactionsComponent implements OnInit {
     this.getAllTransactionList();
     this.getMandate();
     this.getIInData();
+    this.autoRemapClient();
+    this.updateAllNseClients();
   }
 
   close() {
@@ -153,11 +155,6 @@ export class OverviewTransactionsComponent implements OnInit {
 
   getAllTransactionList() {
     this.isLoading = true;
-    // this.transactionList = [
-    //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
-    //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined },
-    //   { transactionType: undefined, aggregatorType: undefined, amtUnitType: undefined, amount: undefined, orderDate: undefined, schemeName: undefined, clientName: undefined, status: undefined }
-    // ]
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: null,
@@ -218,6 +215,30 @@ export class OverviewTransactionsComponent implements OnInit {
     );
   }
 
+  updateAllNseClients() {
+    const obj = {
+      advisorId: AuthService.getAdminId(),
+    };
+    this.tranService.getOverviewMandate(obj).subscribe(
+      data => {
+      },
+      err => {
+      }
+    );
+  }
+
+  autoRemapClient() {
+    const obj = {
+      advisorId: AuthService.getAdminId(),
+    };
+    this.tranService.autoRemapClientsToClientCode(obj).subscribe(
+      data => {
+      },
+      err => {
+      }
+    );
+  }
+
   //     totalInvestorWithoutMandate: 589
   // statusList: Array(4)
   // 0: {count: 4, status: 0}
@@ -266,75 +287,5 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
 
-  }
-
-
-  soapCall() {
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'https://www.bsestarmf.in/StarMFFileUploadService/StarMFFileUploadService.svc/Secure', true);
-    xmlhttp.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8; action=http://tempuri.org/IStarMFFileUploadService/GetPassword');
-    const sr =
-      `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/" xmlns:star="http://schemas.datacontract.org/2004/07/StarMFFileUploadService">
-      <soap:Header/>
-      <soap:Body>
-         <tem:GetPassword>
-            <tem:Param>
-               <star:MemberId>19798</star:MemberId>
-               <star:Password>india.2020</star:Password>
-               <star:UserId>1979802</star:UserId>
-            </tem:Param>
-         </tem:GetPassword>
-      </soap:Body>
-   </soap:Envelope>`;
-
-    xmlhttp.onreadystatechange = () => {
-      if (xmlhttp.readyState == 4) {
-        if (xmlhttp.status == 200) {
-          const xml = xmlhttp.responseXML;
-          // Here I'm getting the value contained by the <return> node.
-          const response_number = parseInt(xml.getElementsByTagName('return')[0].childNodes[0].nodeValue);
-          // Print result square number.
-        }
-      }
-    };
-    // Send the POST request.
-    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-    xmlhttp.responseType = 'document';
-    xmlhttp.send(sr);
-  }
-
-  uploadFile(file) {
-    this.file = file.target.files[0];
-    this.nseUpload(this.file);
-  }
-
-  nseUpload(file) {
-
-
-    const BASE_NSE_URL = 'https://www.nsenmf.com/';
-    const fileuploadurl = BASE_NSE_URL + 'NMFIIImageUpload/ImageUpload/UPLOADIMG';
-    const fileName = file;
-
-    const params = new HttpParams()
-
-      .set('BrokCode', 'ARN-15348')
-      .set('Appln_id', 'MFS15348')
-      .set('Password', 'ju7w0cp2')
-      .set('CustomerID', '5011864918')
-      .set('ImageType', 'AC')
-      .set('ImageFormat', 'TIF')
-      .set('RefNo', '8000504');
-
-    const httpOptions = {
-      headers: new HttpHeaders()
-        .set('Access-Control-Allow-Origin', '*'),
-
-      params: params,
-      body: file
-
-    };
-    this.http.post(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
-
-    });
   }
 }

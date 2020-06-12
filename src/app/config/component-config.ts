@@ -464,6 +464,10 @@ export const appConfig = {
   GET_UNMAPPED_CLIENTS: 'user/client/unmapped/view',
   GET_MAPPED_CLIENTS: 'user/client/mapped/view',
   GET_MAPPED_CLIENTS_FILTER: 'user/client/mapped/filter/client-wise/view',
+  UPDATE_ALL_NSE_CLIENTS: 'nse/iin/all/update',
+  AUTO_REMAP_CLIENT: 'user/clients/remap/auto',
+
+
 
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',
