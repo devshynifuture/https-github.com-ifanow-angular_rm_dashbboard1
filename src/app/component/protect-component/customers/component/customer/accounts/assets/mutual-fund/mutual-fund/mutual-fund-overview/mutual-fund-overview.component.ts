@@ -706,7 +706,6 @@ export class MutualFundOverviewComponent implements OnInit {
         ]
       }]
     });
-    this.sendaata.pieChart = this.svg
   }
   openMutualFund(flag, data) {
     let component;
