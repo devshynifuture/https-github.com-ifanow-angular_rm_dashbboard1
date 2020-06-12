@@ -169,7 +169,7 @@
                         <div class="scrollingDiv d-flex ">
                             <!-- portfolio data present -->
                             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel" (wheel)="carouselWheelEvent(slickModal, $event)">
-                                <div class="fundBox bg-white slide skeletonAnimation" ngxSlickItem *ngFor="let portData of portFolioData" [appSkeletonLoading]="true" appSkeletonLoading>
+                                <div class="fundBox bg-white slide" ngxSlickItem *ngFor="let portData of portFolioData">
                                     <div class="row">
                                         <div class="col-md-9 relClass pr-0">
                                             <div class="bar">
