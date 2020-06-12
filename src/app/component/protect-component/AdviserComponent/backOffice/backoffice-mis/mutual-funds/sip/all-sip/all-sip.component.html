@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 overflow-hidden">
-            <table matSort  mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData?.length>0"
+            <table #tableEl matSort  mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData?.length>0"
                 id="tbs" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
@@ -91,10 +91,11 @@
                     <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="amount">Amount
                     </th>
                     <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
-                        <div class="bar" appFormatNumber>{{element.amount}}</div>
+                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount}}</span> </div>
                     </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell appFormatNumber
-                        [value]="totalAmount">
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>
+                        <div>{{isLoading ? ' ' : '₹'}}<span  [value]="totalAmount" appFormatNumber></span></div>
+
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -109,7 +110,7 @@
     </div>
     <!-------------------------------------------------------------------pdf----------------------------------------------------------------->
 
-    <div #tableEl id="template" class="hide">
+    <div  id="template" class="hide">
         <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
             <tr>
