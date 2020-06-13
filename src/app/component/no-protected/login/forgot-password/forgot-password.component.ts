@@ -119,6 +119,7 @@ export class ForgotPasswordComponent implements OnInit {
         if (data) {
           this.barButtonOptions.active = false;
           data.buttonFlag = 'reset';
+          this.saveVerifyData['advisorId'] = data.advisorId;
           this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;
@@ -158,7 +159,7 @@ export class ForgotPasswordComponent implements OnInit {
     let verifyObj;
     // if (resendFlag == true) {
     // this.intervallTimer.unsubscribe();
-    (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email, otp: (this.otpResponse) ? (this.otpResponse) : null } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo, otp: (this.otpResponse) ? (this.otpResponse) : null };
+    (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email, userType: this.saveVerifyData.userType, otp: (this.otpResponse) ? (this.otpResponse) : null, advisorId: this.saveVerifyData.advisorId } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo, userType: this.saveVerifyData.userType, otp: (this.otpResponse) ? (this.otpResponse) : null, advisorId: this.saveVerifyData.advisorId };
     this.verifyWithCredential(verifyObj, resendFlag);   //// verify Email Address
   }
 
