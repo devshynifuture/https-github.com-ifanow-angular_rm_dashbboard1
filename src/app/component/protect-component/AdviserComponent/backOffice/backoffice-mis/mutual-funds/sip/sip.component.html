@@ -220,7 +220,7 @@
                                     <div class="bb-1 ">
                                         <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90
                                             days </p>
-                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiringLoading">
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiringLoading && expiringSip?.length >0">
                                             <button (click)="amcWise('Allsip','expiring')">View all</button>
                                         </div>
                                     </div>
@@ -261,7 +261,7 @@
                                     <div class="bb-1">
                                         <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90
                                             days </p>
-                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiredLoading">
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiredLoading && expiredSip?.length > 0">
                                             <button (click)="amcWise('Allsip','expired')">View all</button>
                                         </div>
                                     </div>

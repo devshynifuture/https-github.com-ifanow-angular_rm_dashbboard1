@@ -179,14 +179,14 @@
                                     <div class="b-white">
                                         <div *ngFor="let item of clientTotalAum" class="row bb">
                                             <div class="col-md-7 p-0 relClass ">
-                                                <div class="bar" [ngClass]="{'height23': isLoadingTopClients}">
+                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
                                                     <p *ngIf="!isLoadingTopClients" class="mb-0 f-bold f-13 p-8 ">
                                                         {{(item.name) ? item.name : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
                                                 </div>
                                             </div>
                                             <div class=" relClass col-md-5 text-right p-0 ">
-                                                <div class="bar" [ngClass]="{'height23': isLoadingTopClients}">
+                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
                                                     <p *ngIf="!isLoadingTopClients" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                         {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
@@ -204,7 +204,7 @@
                                     <div *ngIf="amcTotalAum" class="b-white ">
                                         <div *ngFor="let item of amcTotalAum" class="row bb ">
                                             <div class=" relClass col-md-7 p-0 ">
-                                                <div class="bar" [ngClass]="{'height23': isLoadingTopClients}">
+                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
                                                     <p *ngIf="!isLoadingTopClients" class="mb-0 f-bold f-13 p-8 ">
                                                         {{(item.schemeName) ? item.schemeName : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
@@ -212,7 +212,7 @@
 
                                             </div>
                                             <div class=" relClass col-md-5 p-0 text-right ">
-                                                <div class="bar" [ngClass]="{'height23': isLoadingTopClients}">
+                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
                                                     <p *ngIf="!isLoadingTopClients" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                         {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
@@ -232,15 +232,15 @@
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Category</h6>
                                     <div class="b-white ">
                                         <div *ngFor="let item of category" class="row bb ">
-                                            <div class="bar col-md-7 p-0 relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoadingCategory}">
+                                            <div class=" col-md-7 p-0 relClass">
+                                                <div [ngClass]="{'height23': isLoadingCategory,'bar':isLoadingCategory}">
                                                     <p *ngIf="!isLoadingCategory" class="mb-0 f-bold f-13 p-8 ">{{(item.name) ? item.name : '-'}}
                                                     </p>
                                                     <p *ngIf="isLoadingCategory">{{''}}</p>
                                                 </div>
                                             </div>
-                                            <div class="bar col-md-5 text-right p-0 relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoadingCategory}">
+                                            <div class=" col-md-5 text-right p-0 relClass">
+                                                <div [ngClass]="{'height23': isLoadingCategory,'bar':isLoadingCategory}">
                                                     <p *ngIf="!isLoadingCategory" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                         {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoadingCategory">{{''}}</p>
