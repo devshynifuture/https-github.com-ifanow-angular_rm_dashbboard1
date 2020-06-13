@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SendNowReportsComponent } from './send-now-reports/send-now-reports.component';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { StatusReportComponent } from './status-report/status-report.component';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -37,6 +38,25 @@ export class BulkReportSendingComponent implements OnInit {
         }
       );
     
+  }
+  openStatusReport(data){
+    const fragmentData = {
+      flag: 'openSendNow',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: StatusReportComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 
 }

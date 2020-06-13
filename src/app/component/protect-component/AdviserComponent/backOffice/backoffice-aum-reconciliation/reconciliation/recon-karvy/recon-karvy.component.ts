@@ -16,7 +16,7 @@ export class ReconKarvyComponent implements OnInit {
   adminAdvisorIds: any[] = [];
   adminId = AuthService.getAdminId();
 
-
+  clientName = AuthService.getUserInfo().name;
   constructor(
     private reconService: ReconciliationService,
     private eventService: EventService,
@@ -70,6 +70,7 @@ export class ReconKarvyComponent implements OnInit {
   getAumReconHistoryData() {
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
+      this.dataSource.data = ELEMENT_DATA;
       this.isBrokerSelected = true;
 
       const data = {
@@ -89,6 +90,8 @@ export class ReconKarvyComponent implements OnInit {
   }
 
   openAumReconciliation(flag, data) {
+    let brokerId = this.selectBrokerForm.get('selectBrokerId').value;
+    let brokerCode = this.brokerList.find(c => c.id === brokerId).brokerCode;
     const fragmentData = {
       flag,
       id: 1,
@@ -97,7 +100,9 @@ export class ReconKarvyComponent implements OnInit {
         startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rtId: this.rtId,
-        flag
+        flag,
+        arnRiaCode: brokerCode,
+        clientName: this.clientName
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,

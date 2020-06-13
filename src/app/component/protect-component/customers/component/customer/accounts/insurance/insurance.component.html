@@ -1,21 +1,23 @@
 <div id="ui-insurance">
-    <div class="row">
-        <div class="col-md-2 p-0  pt-8 pb-20 bg-grey lter">
-            <div class="vertical-menu sticky-top ">
+    <div class="row" style="height: calc(100vh - 119px);">
+        <div class="col-md-2 p-0  pt-8 pb-20">
+            <div class="vertical-menu bg-grey lter">
 
                 <ul class="d-block ">
                     <li [ngClass]="{'bg-grey lt':lifeInsuranceFlag}" class="  pb-8 c-p">
                         <div (click)="getInsuranceData(1)" class="row">
-                            <div class="col-md-10 p-0 f-700">LIFE INSURANCE</div>
-                            <div class="col-md-2 p-0 text-custom text-center">
+                            <div class="col-md-9 p-0 f-700 roboto">LIFE INSURANCE</div>
+                            <div class="col-md-3 pl-0 pr-20 text-right text-custom roboto">
                                 {{(lifeInsuranceCount) ? lifeInsuranceCount : '0'}}</div>
                         </div>
                     </li>
-                    <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-8">
+                    <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
+                        [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-8">
                         <div>
                             <div class="row">
-                                <div class="col-md-10 p-0">{{item.name}}</div>
-                                <div class="col-md-2 p-0 text-custom text-center">{{(item.count) ? item.count : '0'}}
+                                <div class="col-md-9 p-0 roboto">{{item.name}}</div>
+                                <div class="col-md-3 pl-0 pr-20 text-right roboto text-custom">
+                                    {{(item.count) ? item.count : '0'}}
                                 </div>
                             </div>
                         </div>
@@ -29,15 +31,16 @@
                 <ul class="d-block b-t pt-12 mt-12 ">
                     <li [ngClass]="{'bg-grey lt':generalInsuranceFlag}" class="pb-8 c-p">
                         <div (click)="getInsuranceTypeData(2,0)" class="row">
-                            <div class="col-md-10 p-0 f-700">GENERAL INSURANCE</div>
-                            <div class="col-md-2 p-0 text-custom text-center">
+                            <div class="col-md-9 p-0 f-700 roboto">GENERAL INSURANCE</div>
+                            <div class="col-md-3 pl-0 pr-20 roboto text-right text-custom">
                                 {{(generalInsuranceCount) ? generalInsuranceCount : '0'}} </div>
                         </div>
                     </li>
-                    <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-8 c-p">
+                    <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
+                        [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-8 c-p">
                         <div class="row">
-                            <div class="col-md-10 p-0">{{item1.name}}</div>
-                            <div class="col-md-2 p-0 text-custom text-center">
+                            <div class="col-md-9 p-0 roboto">{{item1.name}}</div>
+                            <div class="col-md-3 pl-0 roboto pr-20 text-right text-custom">
                                 {{(item1.count) ? item1.count : '0'}}
                             </div>
                         </div>
@@ -58,13 +61,15 @@
                         <div class="col-md-4 d-flex align-items-center p-0">
                             <h4 class="m-0 text-black roboto ">{{showInsurance}} insurance </h4>
                         </div>
-                        <div *ngIf="(dataSource.data.length > 0 && insuranceTypeId == 1 && !isLoading ) || (dataSourceGeneralInsurance.data.length > 0 && insuranceTypeId == 2 && !isLoading)" class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center">
+                        <div *ngIf="(dataSource.data.length > 0 && insuranceTypeId == 1 && !isLoading ) || (dataSourceGeneralInsurance.data.length > 0 && insuranceTypeId == 2 && !isLoading)"
+                            class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center">
                             <div>
                                 <div class="p-0 d-flex align-items-center justify-content-center">
                                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                                 </div>
 
-                                <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu1" class="c-p downloadPdfIcon">
+                                <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu1"
+                                    class="c-p downloadPdfIcon">
                                     <img src="assets/images/svg/download-bordered.svg">
                                 </a>
 
@@ -90,25 +95,32 @@
                 </button> -->
                             </mat-menu>
                             <img class="c-p mr-8" src="assets/images/svg/three-dot-bordered.svg">
-                            <button [matMenuTriggerFor]="insuranceMenu" class="btn-default addon mr-8 v-middle" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+                            <button [matMenuTriggerFor]="insuranceMenu" class="btn-default addon mr-8 v-middle"
+                                mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
                             </button>
                             <mat-menu #insuranceMenu>
                                 <button (click)="filterInsurance('statusId', 'LIVE')" mat-menu-item>
                                     STATUS - LIVE
                                 </button>
-                                <button (click)="(insuranceTypeId == 1) ? filterInsurance('statusId', 'MATURED') : filterInsurance('statusId', 'EXPIRED')" mat-menu-item>
+                                <button
+                                    (click)="(insuranceTypeId == 1) ? filterInsurance('statusId', 'MATURED') : filterInsurance('statusId', 'EXPIRED')"
+                                    mat-menu-item>
                                     {{(insuranceTypeId == 1) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}
                                 </button>
                             </mat-menu>
-                            <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+                            <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle"
+                                mat-stroked-button> ADD NEW
                             </button>
 
                         </div>
                     </div>
 
-                    <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 liabilities overflow-hidden">
+                    <div [ngClass]="{'table-scroll':isLoading==false }"
+                        class="col-md-12 p-0 liabilities overflow-hidden">
                         <div>
-                            <table #tableEl *ngIf="insuranceTypeId == 1 && dataSource && dataSource.data.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="tbs" mat-table matSort>
+                            <table #tableEl *ngIf="insuranceTypeId == 1 && dataSource && dataSource.data.length > 0"
+                                [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
+                                class="skeletonAnimation" id="tbs" mat-table matSort>
                                 <ng-container matColumnDef="no" sticky>
                                     <th *matHeaderCellDef class="br" mat-header-cell> No.</th>
                                     <td *matCellDef="let element; let i = index" class="br" mat-cell>
@@ -140,39 +152,48 @@
 
 
                                 <ng-container matColumnDef="sum">
-                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell mat-sort-header="sumAssured"> Sum assured
+                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell
+                                        mat-sort-header="sumAssured"> Sum assured
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
-                                        <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span></div>
+                                        <div class="bar">{{!isLoading ? "₹" : ""}}<span
+                                                appFormatNumber>{{element.sumAssured }}</span></div>
 
                                     </td>
                                     <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalSumAssuredLifeIns" appFormatNumber></span></div>
+                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalSumAssuredLifeIns"
+                                                appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="cvalue">
-                                    <th *matHeaderCellDef class="br rightTextHide w-10 text-right" mat-header-cell mat-sort-header="currentValue"> Current value
+                                    <th *matHeaderCellDef class="br rightTextHide w-10 text-right" mat-header-cell
+                                        mat-sort-header="currentValue"> Current value
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <div class="bar">
                                             {{(!isLoading && (element.currentValue != 0 || element.vestedBonus != 0)) ? "₹" : (element.currentValue == 0 || element.vestedBonus == 0) ? "" : ''}}
                                             <!-- <span
                           appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span> -->
-                                            <span *ngIf="!isLoading" appFormatNumber>{{(element.vestedBonus) ? element.vestedBonus : (element.currentValue) ? element.currentValue : '-'}}</span>
+                                            <span *ngIf="!isLoading"
+                                                appFormatNumber>{{(element.vestedBonus) ? element.vestedBonus : (element.currentValue) ? element.currentValue : '-'}}</span>
                                         </div>
 
                                     </td>
                                     <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                        <div>{{isLoading ? ' ' : (totalCurrentValue != 0) ? '₹' : ''}}<span [value]="(totalCurrentValue) ? totalCurrentValue : (totalCurrentValue == 0) ? '-' : '-'" appFormatNumber></span></div>
+                                        <div>{{isLoading ? ' ' : (totalCurrentValue != 0) ? '₹' : ''}}<span
+                                                [value]="(totalCurrentValue) ? totalCurrentValue : (totalCurrentValue == 0) ? '-' : '-'"
+                                                appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="premium">
-                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell mat-sort-header="premiumAmount">
+                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell
+                                        mat-sort-header="premiumAmount">
                                         Premium
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <!-- <div class="bar"> <span appFormatNumber>{{element.premiumAmount}}</span> </div> -->
-                                        <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.premiumAmount }}</span>
+                                        <div class="bar">{{!isLoading ? "₹" : ""}}<span
+                                                appFormatNumber>{{element.premiumAmount }}</span>
                                         </div>
 
                                     </td>
@@ -180,12 +201,14 @@
                       <div class="bar"><span>{{totalPremiunAmountLifeIns}}</span></div>
                   </td> -->
                                     <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmountLifeIns" appFormatNumber></span>
+                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmountLifeIns"
+                                                appFormatNumber></span>
                                         </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="term">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="premiumPayingTerm">
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                                        mat-sort-header="premiumPayingTerm">
                                         PPT
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -194,7 +217,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="pterm">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="policyTenure">
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                                        mat-sort-header="policyTenure">
                                         PT
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -203,7 +227,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="Duration">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                                        mat-sort-header="durationRemaining">Duration remaining
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
@@ -212,7 +237,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="desc">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="insuranceSubTypeId">
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                                        mat-sort-header="insuranceSubTypeId">
                                         Plan type
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -249,7 +275,8 @@
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
                                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                                    <td *matCellDef="let element" [matMenuTriggerFor]="menu4" class="t-2 mat-menu-trigger text-center c-p" mat-cell>
+                                    <td *matCellDef="let element" [matMenuTriggerFor]="menu4"
+                                        class="t-2 mat-menu-trigger text-center c-p" mat-cell>
                                         <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                         <mat-menu #menu4="matMenu">
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
@@ -259,7 +286,8 @@
                                                     class="uploadInput" id="file-4" multiple type="file">
                                             </button>
                                             <!-- <button mat-menu-item>Activity</button> -->
-                                            <button (click)="deleteModal('INSURANCE',element)" mat-menu-item>Delete</button>
+                                            <button (click)="deleteModal('INSURANCE',element)"
+                                                mat-menu-item>Delete</button>
                                         </mat-menu>
 
                                     </td>
@@ -267,13 +295,16 @@
                                 </ng-container>
                                 <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-                                <tr *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
+                                <tr *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"
+                                    mat-footer-row></tr>
                             </table>
 
-                            <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
+                            <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0"
+                                class="w-100 mt-70 d-flex flex-column align-items-center">
                                 <img src="assets/images/svg/documents-empty-states.svg">
                                 <h4 class="text-center mt-12 mb-20">No Data Found</h4>
-                                <button (click)="openAddInsurance(null)" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+                                <button (click)="openAddInsurance(null)" class="btn-primary addon v-middle"
+                                    mat-stroked-button>ADD NEW
                                 </button>
                             </div>
                         </div>
@@ -283,7 +314,9 @@
 
 
                         <div *ngIf="insuranceTypeId == 2">
-                            <table #tableEl2 *ngIf="dataSourceGeneralInsurance.data.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSourceGeneralInsurance" appSkeletonLoading class="skeletonAnimation" id="tbs" mat-table matSort>
+                            <table #tableEl2 *ngIf="dataSourceGeneralInsurance.data.length > 0"
+                                [appSkeletonLoading]="isLoading" [dataSource]="dataSourceGeneralInsurance"
+                                appSkeletonLoading class="skeletonAnimation" id="tbs" mat-table matSort>
                                 <ng-container matColumnDef="no" sticky>
                                     <th *matHeaderCellDef class="br" mat-header-cell> No.</th>
                                     <td *matCellDef="let element; let i = index" class="br" mat-cell>
@@ -315,35 +348,42 @@
                                 </ng-container>
                                 <ng-container matColumnDef="sumInsured">
                                     <th *matHeaderCellDef class="br w-10 rightTextHide" mat-sort-header="sumAssured">
-                                        Sum insured{{(insuranceSubTypeId == 8) ? ' (USD)' : ''}}{{(insuranceSubTypeId == 4) ? ' (IDV)' : ''}}
+                                        Sum
+                                        insured{{(insuranceSubTypeId == 8) ? ' (USD)' : ''}}{{(insuranceSubTypeId == 4) ? ' (IDV)' : ''}}
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <!-- <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div> -->
-                                        <div class="bar">{{(!isLoading && insuranceSubTypeId!=8) ? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span></div>
+                                        <div class="bar">{{(!isLoading && insuranceSubTypeId!=8) ? "₹" : ""}}<span
+                                                appFormatNumber>{{element.sumAssured }}</span></div>
 
                                     </td>
                                     <!-- <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalSumAssured" appFormatNumber>
                       <div class="bar"><span>{{totalSumAssured}}</span></div>
                   </td> -->
                                     <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                        <div>{{(!isLoading && insuranceSubTypeId!=8) ? "₹" : ""}}<span [value]="totalSumAssured" appFormatNumber></span></div>
+                                        <div>{{(!isLoading && insuranceSubTypeId!=8) ? "₹" : ""}}<span
+                                                [value]="totalSumAssured" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="premiumAmount">
-                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell mat-sort-header="premiumAmount"> Premium
+                                    <th *matHeaderCellDef class="br rightTextHide text-right" mat-header-cell
+                                        mat-sort-header="premiumAmount"> Premium
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <!-- <div class="bar"><span appFormatNumber>{{element.premiumAmount}} </span></div> -->
-                                        <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.premiumAmount }}</span>
+                                        <div class="bar">{{!isLoading ? "₹" : ""}}<span
+                                                appFormatNumber>{{element.premiumAmount }}</span>
                                         </div>
 
                                     </td>
                                     <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmount" appFormatNumber></span></div>
+                                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmount"
+                                                appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="policyExpiryDate">
-                                    <th *matHeaderCellDef class="br textLeft w-10" mat-header-cell mat-sort-header="policyExpiryDate">
+                                    <th *matHeaderCellDef class="br textLeft w-10" mat-header-cell
+                                        mat-sort-header="policyExpiryDate">
                                         Policy expiry date
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
@@ -352,7 +392,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="Duration">
-                                    <th *matHeaderCellDef class="br w-9 textLeft" mat-header-cell mat-sort-header="durationRemaining">Duration remaining
+                                    <th *matHeaderCellDef class="br w-9 textLeft" mat-header-cell
+                                        mat-sort-header="durationRemaining">Duration remaining
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
@@ -361,7 +402,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="planName">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="showType">
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                                        mat-sort-header="showType">
                                         {{showType}}{{(insuranceSubTypeId == 8) ? ' & Geography' : ''}}
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -373,7 +415,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="policyNumber">
-                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="policyNumber">
+                                    <th *matHeaderCellDef class="br textLeft" mat-header-cell
+                                        mat-sort-header="policyNumber">
                                         Policy number
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -382,7 +425,8 @@
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="vehicleNum">
-                                    <th *matHeaderCellDef class="br w-13 textLeft" mat-header-cell mat-sort-header="vehicleNum">
+                                    <th *matHeaderCellDef class="br w-13 textLeft" mat-header-cell
+                                        mat-sort-header="vehicleNum">
                                         Vehicle registration no.
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -408,7 +452,8 @@
                                 </ng-container>
                                 <ng-container matColumnDef="icons" sticky>
                                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                                    <td *matCellDef="let element" [matMenuTriggerFor]="menu4" class="t-2 text-center mat-menu-trigger  c-p" mat-cell>
+                                    <td *matCellDef="let element" [matMenuTriggerFor]="menu4"
+                                        class="t-2 text-center mat-menu-trigger  c-p" mat-cell>
                                         <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                         <mat-menu #menu4="matMenu">
                                             <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
@@ -418,7 +463,8 @@
                                                     class="uploadInput" id="file-4" multiple type="file">
                                             </button>
                                             <!-- <button mat-menu-item>Activity</button> -->
-                                            <button (click)="deleteModal('INSURANCE',element)" mat-menu-item>Delete</button>
+                                            <button (click)="deleteModal('INSURANCE',element)"
+                                                mat-menu-item>Delete</button>
                                         </mat-menu>
 
                                     </td>
@@ -426,13 +472,16 @@
                                 </ng-container>
                                 <tr *matHeaderRowDef="displayedColumns2; sticky: true" mat-header-row></tr>
                                 <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
-                                <tr *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
+                                <tr *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"
+                                    mat-footer-row></tr>
                             </table>
 
-                            <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
+                            <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance.data.length == 0"
+                                class="w-100 mt-70 d-flex flex-column align-items-center">
                                 <img src="assets/images/svg/documents-empty-states.svg">
                                 <h4 class="text-center mt-12 mb-20">No Data Found</h4>
-                                <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
+                                <button (click)="openAddInsurance(null)" *ngIf="showAdd"
+                                    class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                                 </button>
                             </div>
                         </div>
@@ -467,7 +516,8 @@
             <td colspan="2" style="padding: 10px;"></td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 <div class="col-md-4 d-flex align-items-center p-0">
                     <h4 class="m-0 text-black roboto">{{showInsurance}} insurance</h4>
 
@@ -475,65 +525,88 @@
             </td>
         </tr>
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No.
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Life assured
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Policy name
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Policy number
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Sum assured
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Current value
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Premium
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Premium paying term
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Policy term
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Plan type
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Status
             </td>
 
         </tr>
-        <tr *ngFor="let item of dataSource.data ;index as i" style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr *ngFor="let item of dataSource.data ;index as i"
+            style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.lifeAssuredName}}</td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{(item.policyName) ? item.policyName : '-'}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.policyNumber) ? item.policyNumber : '-'}}</td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.sumAssured) ? (item.sumAssured) : 0}}</td>
-            <td appFormatNumbercurrentVa style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumbercurrentVa
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.currentValue == 'Infinity' ? 0 : item.currentValue)}}</td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.premiumAmount) ? (item.premiumAmount) : 0}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.premiumPayingTerm) ? (item.premiumPayingTerm) : '-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.policyTenure) ? item.policyTenure : '-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' : (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
                     {{'LIVE'}} </span>
                 <span *ngIf="item.statusId == 'MATURED'" class="text-success">
@@ -541,29 +614,41 @@
             </td>
 
         </tr>
-        <tr style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 Total
             </td>
-            <td [value]="totalSumAssuredLifeIns" appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td [value]="totalSumAssuredLifeIns" appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td [value]="totalCurrentValue" appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td [value]="totalCurrentValue" appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td [value]="totalPremiunAmountLifeIns" appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td [value]="totalPremiunAmountLifeIns" appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
         </tr>
     </table>
@@ -591,7 +676,8 @@
             <td colspan="2" style="padding: 10px;"></td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 <div class="col-md-4 d-flex align-items-center p-0">
                     <h4 class="m-0 text-black roboto">{{showInsurance}} insurance</h4>
 
@@ -599,40 +685,53 @@
             </td>
         </tr>
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No.
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{showPolicyHolder}}</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{(insuranceSubTypeId == 7) ? 'Name of insurer' : 'Name of insurer & Plan'}} </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Sum insured
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Premium
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Policy expiry date
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Duration remaining
             </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{showType}}</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Policy number
             </td>
 
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Status
             </td>
 
         </tr>
-        <tr *ngFor="let item of dataSourceGeneralInsurance.data ;index as i" style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr *ngFor="let item of dataSourceGeneralInsurance.data ;index as i"
+            style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 <span *ngFor="let ele  of item.insuredMembers">
                     {{(item.insuredMembers.length == 1) ? (ele.name) : (ele.name + ',')}}
                 </span>
@@ -640,22 +739,30 @@
                     {{item.policyHolderName}}
                 </span>
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{((insuranceSubTypeId == 7) ? item.insurerName : (((item.planName) ? item.insurerName + '-' + item.planName : item.insurerName)))}}
             </td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.sumAssured}}</td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.premiumAmount}}</td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.statusId == 'EXPIRED' ? '-' : item.durationRemaining}} </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.policyType) ? item.policyType : item.planName}}</td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{item.policyNumber}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
                     {{'LIVE'}} </span>
                 <span *ngIf="item.statusId == 'EXPIRED'" class="text-success">
@@ -663,29 +770,41 @@
             </td>
 
         </tr>
-        <tr style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             </td>
-            <td appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 Total
             </td>
-            <td [value]="totalSumAssured" appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td [value]="totalSumAssured" appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td [value]="totalPremiunAmount" appFormatNumber style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td [value]="totalPremiunAmount" appFormatNumber
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
             </td>
         </tr>
     </table>

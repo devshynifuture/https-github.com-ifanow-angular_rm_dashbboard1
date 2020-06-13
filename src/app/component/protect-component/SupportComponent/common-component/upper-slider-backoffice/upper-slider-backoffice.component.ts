@@ -29,8 +29,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private datePipe: DatePipe,
     private reconService: ReconciliationService,
     private util: UtilService
-  ) {
-  }
+  ) { }
 
   displayedColumns: string[] = ['doneOne', 'totalfolios', 'before_recon', 'after_recon', 'aum_balance', 'transaction', 'export_folios'];
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
@@ -80,6 +79,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getRtaList() {
+    this.isLoading = true;
     this.reconService.getRTListValues({})
       .subscribe(res => {
         if (res && res.length !== 0) {
@@ -172,25 +172,25 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.dataSource.data = objArr;
   }
 
-  getDataFromObsAfterDeletingTransacn() {
-    console.log('updoate ifanow units function called');
-    this.isLoading = true;
-    this.supportService.getDataThroughObs().subscribe(res => {
-      console.log('this is something coming from obs:::::::::::', res);
-      this.isLoading = false;
-      if (res !== '') {
-        // update units ifanow
-        console.log('this is response that im getting::::', res);
+  // getDataFromObsAfterDeletingTransacn() {
+  //   console.log('updoate ifanow units function called');
+  //   this.isLoading = true;
+  //   this.supportService.getDataThroughObs().subscribe(res => {
+  //     console.log('this is something coming from obs:::::::::::', res);
+  //     this.isLoading = false;
+  //     if (res !== '') {
+  //       // update units ifanow
+  //       console.log('this is response that im getting::::', res);
 
-        this.dataSource1.data.map(item => {
-          item.unitsIfanow = String((res.units).toFixed(3));
-          item.difference = String((parseInt(item.unitsIfanow) - parseInt(item.unitsRta)).toFixed(3));
-        });
-        this.getBackofficeAumReconListSummary(false);
-        this.getDuplicateFolioList();
-      }
-    });
-  }
+  //       this.dataSource1.data.map(item => {
+  //         item.unitsIfanow = String((res.units).toFixed(3));
+  //         item.difference = String((parseInt(item.unitsIfanow) - parseInt(item.unitsRta)).toFixed(3));
+  //       });
+  //       this.getBackofficeAumReconListSummary(false);
+  //       this.getDuplicateFolioList();
+  //     }
+  //   });
+  // }
 
   getBackofficeAumReconListSummary(doStartRecon) {
     this.isLoading = true;
@@ -235,9 +235,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              canDeleteTransaction: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? (new Date(res.transactionDate).getTime() > new Date(element.freezeDate).getTime()) : true,
               freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
-              investorName: element.investorName
+              investorName: element.investorName,
+              isUnfreezeClicked: false,
+              isFreezeClicked: false
             });
           });
           if (arrayValue.length !== 0) {
@@ -377,7 +378,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
               brokerCode: item.brokerCode,
               schemeCode: item.schemeCode,
               mutualFundTransaction: item.mutualFundTransaction,
-              transactions: ''
+              transactions: '',
+              isUnfreezeClicked: false,
+              isFreezeClicked: false
             });
           });
           this.dataSource2.data = arrValue;
@@ -387,6 +390,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
       }, err => {
         console.error(err);
+        this.eventService.openSnackBar(err, "DISMISS");
+        this.isLoadingForDuplicate = false;
       });
     // } else {
     //   this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
@@ -418,25 +423,30 @@ export class UpperSliderBackofficeComponent implements OnInit {
       if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
         mutualFundIds.push(element.mutualFundId);
       }
-    })
+    });
 
-    const data = {
-      id: this.aumReconId,
-      brokerId: this.brokerId,
-      advisorIds: [this.advisorId],
-      rtId: this.data.rtId,
-      mutualFundIds,
-      parentId: this.parentId,
-      isParent
-    };
-    console.log('this is requestjson for delete and reorder:::: ', data);
-    this.reconService.deleteAndReorder(data)
-      .subscribe(res => {
-        console.log(res);
-        this.getBackofficeAumFileOrderListDeleteReorder();
-      }, err => {
-        console.error(err);
-      });
+    if (mutualFundIds && mutualFundIds.length !== 0) {
+      const data = {
+        id: this.aumReconId,
+        brokerId: this.brokerId,
+        advisorIds: [this.advisorId],
+        rtId: this.data.rtId,
+        mutualFundIds,
+        parentId: this.parentId,
+        isParent
+      };
+      console.log('this is requestjson for delete and reorder:::: ', data);
+      this.reconService.deleteAndReorder(data)
+        .subscribe(res => {
+          console.log(res);
+          this.getBackofficeAumFileOrderListDeleteReorder();
+        }, err => {
+          console.error(err);
+        });
+
+    } else {
+      this.eventService.openSnackBar("No Mutual Fund ids found to delete", "DISMISS");
+    }
   }
 
   getBackofficeAumFileOrderListDeleteReorder() {
@@ -583,7 +593,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
     let tableData = [];
     if (tableType === 'all-folios') {
       if (this.data.flag === 'report') {
-        tableData = this.aumListReportValue[index].mutualFundTransaction;
+        if (this.aumListReportValue[index].mutualFundTransaction) {
+          tableData = this.aumListReportValue[index].mutualFundTransaction;
+        }
       } else {
         tableData = this.arrWithTransCheckTrueAndisMappedMinusOne[index].mutualFundTransaction;
       }
@@ -605,46 +617,82 @@ export class UpperSliderBackofficeComponent implements OnInit {
         rtId: this.rtId,
         freezeDate,
         arnRiaCode: this.arnRiaCode + " " + this.upperHeaderName,
-        fromAllFolioOrDuplicateTab: this.subTabState === 2 ? true : false
+        fromAllFolioOrDuplicateTab: this.subTabState
       },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
-            if (sideBarData.refreshRequired) {
-              if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
-                this.handlingDataVariable(false);
-              } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
-                this.getDuplicateFolioList();
-              }
-            } else {
-              // this.getDataFromObsAfterDeletingTransacn();
-              if (sideBarData.deletedTransactionsIndexes.length !== 0) {
+    if (tableData && tableData.length !== 0) {
+      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            if (UtilService.isRefreshRequired(sideBarData)) {
+              console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
+
+              if (sideBarData.refreshRequired) {
                 if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
-                  let mfTransArr = this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'];
-                  sideBarData.deletedTransactionsIndexes.forEach(element => {
-                    mfTransArr.splice(element, 1);
-                  });
+                  this.handlingDataVariable(false);
                 } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
-                  let mfTransArr = this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'];
-                  sideBarData.deletedTransactionsIndexes.forEach(element => {
-                    mfTransArr.splice(element, 1);
-                  });
+                  this.getDuplicateFolioList();
+                }
+              } else {
+                if (sideBarData.deletedTransactionsIndexes.length !== 0) {
+                  if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
+                    let mfTransArr = this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'];
+                    sideBarData.deletedTransactionsIndexes.forEach(element => {
+                      mfTransArr.splice(element, 1);
+                    });
+
+                  } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
+                    let mfTransArr = this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'];
+                    sideBarData.deletedTransactionsIndexes.forEach(element => {
+                      mfTransArr.splice(element, 1);
+                    });
+                  }
                 }
               }
             }
+            if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
+              this.dataSource1.data[this.markFolioIndex]['isUnfreezeClicked'] = sideBarData.isUnfreezeClicked;
+              this.dataSource1.data[this.markFolioIndex]['isFreezeClicked'] = sideBarData.isFreezeClicked;
+
+              if (sideBarData.isUnfreezeClicked) {
+                this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
+                  element.canDeleteTransaction = true;
+                });
+              }
+              if (sideBarData.isFreezeClicked) {
+                this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
+                  element.canDeleteTransaction = false;
+                });
+              }
+            }
+            if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
+              this.dataSource2.data[this.markFolioIndex]['isUnfreezeClicked'] = sideBarData.isUnfreezeClicked;
+              this.dataSource2.data[this.markFolioIndex]['isFreezeClicked'] = sideBarData.isFreezeClicked;
+
+              if (sideBarData.isUnfreezeClicked) {
+                this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
+                  element.canDeleteTransaction = true;
+                });
+              }
+              if (sideBarData.isFreezeClicked) {
+                this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
+                  element.canDeleteTransaction = false;
+                });
+              }
+            }
+            rightSideDataSub.unsubscribe();
           }
-          rightSideDataSub.unsubscribe();
         }
-      }
-    );
+      );
+
+    } else {
+      this.eventService.openSnackBar("This Folio doesn't have Mutual fund Transaction!", "DISMISS");
+    }
   }
 
   openDeleteDialog() {
@@ -732,9 +780,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              canDeleteTransaction: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? (new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime()) : true,
               freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freeeDate : null,
-              investorName: element.investorName
+              investorName: element.investorName,
+              isUnfreezeClicked: false,
+              isFreezeClicked: false
             });
           });
           this.dataSource1.data = arrayValue;
