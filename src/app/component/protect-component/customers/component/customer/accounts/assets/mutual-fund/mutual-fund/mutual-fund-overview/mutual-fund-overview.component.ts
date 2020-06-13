@@ -119,7 +119,9 @@ export class MutualFundOverviewComponent implements OnInit {
 
   uploadData(data) {
         this.clientId = data.clientId
-        this.ngOnInit()
+        if(this.clientId){
+          this.ngOnInit()
+        }
     return this.sendaata
   }
 
@@ -135,6 +137,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendaata.debtPercentage = {}
     this.sendaata.hybridPercenatge = {}
     this.sendaata.otherPercentage = {}
+    this.sendaata.totalValue ={}
     this.reportDate = new Date()
     this.getFilterData(1);
     this.MfServiceService.getClientId().subscribe(res => {
@@ -290,6 +293,8 @@ export class MutualFundOverviewComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.totalValue = data.totalValue;
+        this.sendaata.totalValue = this.totalValue
+        this.MfServiceService.setSendData(this.sendaata);
         if (this.showCashFlow) {
           this.getCashFlowStatus();
         }

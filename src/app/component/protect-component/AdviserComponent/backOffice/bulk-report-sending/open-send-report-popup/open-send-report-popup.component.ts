@@ -7,16 +7,25 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-open-send-report-popup',
   templateUrl: './open-send-report-popup.component.html',
-  styleUrls: ['./open-send-report-popup.component.scss']
+  styleUrls: ['./open-send-report-popup.component.scss'],
 })
 export class OpenSendReportPopupComponent implements OnInit {
   sendReport: any;
+  clientsSend: any;
 
-  constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>, private fb: FormBuilder,
+  constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
+     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
   }
 
   ngOnInit() {
+    console.log('reportType',this.data)
+  }
+
+  sendClientId(){
+    this.clientsSend = {
+      clientId : 93808
+    }
   }
 
   getdataForm(data) {
