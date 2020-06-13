@@ -113,6 +113,8 @@ import { DatailedViewNpsHoldingsComponent } from './component/protect-component/
 import { LoanAmortsComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/loan-amorts/loan-amorts.component';
 import { BulkEmailTestComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
 import { SendNowReportsComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/send-now-reports/send-now-reports.component';
+import { StatusReportComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/status-report/status-report.component';
+import { OpenSendReportPopupComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/open-send-report-popup/open-send-report-popup.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -214,6 +216,7 @@ export const componentList = [
   DatailedViewNpsHoldingsComponent,
   CopyDocumentsComponent,
   GetSharebleLinkComponent,
+  OpenSendReportPopupComponent,
   BottomSheetComponent,
   DetailedPoRdComponent,
   AddPlaninsuranceComponent,
@@ -245,6 +248,7 @@ export const componentList = [
   RightFilterComponent,
   BulkEmailTestComponent,
   SendNowReportsComponent,
+  StatusReportComponent,
   FolioMasterDetailsComponent,
   SipDetailsComponent,
   SingleGoalYearComponent,
