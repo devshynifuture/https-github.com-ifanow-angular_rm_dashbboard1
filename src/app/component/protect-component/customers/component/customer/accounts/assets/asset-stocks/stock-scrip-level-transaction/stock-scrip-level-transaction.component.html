@@ -149,10 +149,10 @@
             </div>
 
             <div class="col-md-1 d-flex pt-10 pl-0">
-                <i class="material-icons text-custom c-p pl-10" *ngIf="i==transactionArray.length-1" (click)="addTransactions()">
+                <i class="material-icons text-custom c-p pl-10" (click)="addTransactions()">
                     add
                 </i>
-                <i class="material-icons text-custom c-p pl-10" [hidden]="i==transactionArray.length-1" (click)="removeTransactions(i)">
+                <i class="material-icons text-custom c-p pl-10" *ngIf="transactionArray.length > 1" (click)="removeTransactions(i)">
                     remove
                 </i>
             </div>

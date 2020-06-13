@@ -98,4 +98,5 @@ export class SendNowReportsComponent implements OnInit {
       }
     }
   }
+
 }

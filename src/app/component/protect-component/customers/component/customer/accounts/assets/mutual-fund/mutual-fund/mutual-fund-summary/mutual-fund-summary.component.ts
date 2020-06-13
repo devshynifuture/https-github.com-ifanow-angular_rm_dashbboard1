@@ -53,6 +53,7 @@ export class MutualFundSummaryComponent implements OnInit {
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', { static: false }) tableEl;
   @Output() changeInput = new EventEmitter();
+  @Output() getCountData = new EventEmitter();
   viewMode: string;
   reponseData: any;
   setDefaultFilterData: any;
@@ -344,6 +345,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   getMutualFundResponse(data) {
     if (data) {
+      this.getCountData.emit("call");
       this.mfData = data;
       if (this.addedData) {
         this.mutualFund = this.mfData
