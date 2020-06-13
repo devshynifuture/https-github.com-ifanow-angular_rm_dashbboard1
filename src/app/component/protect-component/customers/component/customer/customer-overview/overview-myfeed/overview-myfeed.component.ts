@@ -38,6 +38,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   cashFlowViewDataSource = [];
   welcomeMessage = '';
   isLoading = true;
+  imgGenderSrc:string;
 
   chartData: any[] = [
     {
@@ -161,6 +162,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.orgDetails = {};
     }
     this.clientData = AuthService.getClientData();
+    this.imgGenderSrc = this.clientData.profilePicUrl;
+    // if(this.clientData.genderId == 2) {
+    //   this.imgGenderSrc = '/assets/images/svg/women-profile-icon.svg';
+    // } else {
+    //   this.imgGenderSrc = '/assets/images/svg/man-profile.svg';
+    // }
     this.clientId - AuthService.getClientId();
     this.advisorInfo = AuthService.getAdvisorDetails();
     this.advisorImg = this.advisorInfo.profilePic;
