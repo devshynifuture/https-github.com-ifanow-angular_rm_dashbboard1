@@ -572,7 +572,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     };
     this.customerService.getPolicyName(obj).subscribe(
       data => {
-        this.options = data.policyDetails;
+        if(data.policyDetails.length>0){
+          this.options = data.policyDetails;
+        }else{
+          this.lifeInsuranceForm.controls.policyName.setErrors({ erroInPolicy: true });
+          this.lifeInsuranceForm.get('policyName').markAsTouched();
+        }
       }
     );
   }
@@ -646,7 +651,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
       return;
-    } else {
+  } else {
       this.barButtonOptions.active = true;
       this.insuranceFormFilledData = {
         familyMemberIdLifeAssured: this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,

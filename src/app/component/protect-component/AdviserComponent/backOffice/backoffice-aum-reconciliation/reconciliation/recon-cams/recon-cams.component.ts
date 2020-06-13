@@ -28,7 +28,7 @@ export class ReconCamsComponent implements OnInit {
   selectBrokerForm = this.fb.group({
     selectBrokerId: [, Validators.required]
   });
-
+  clientName = AuthService.getUserInfo().name;
   isBrokerSelected: boolean = false;
   parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   adminId = AuthService.getAdminId();
@@ -72,6 +72,7 @@ export class ReconCamsComponent implements OnInit {
     // make separate function for toggling the same
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
+      this.dataSource.data = ELEMENT_DATA;
       this.isBrokerSelected = true;
       const data = {
         advisorIds: [...this.adminAdvisorIds],
@@ -90,6 +91,8 @@ export class ReconCamsComponent implements OnInit {
   }
 
   openAumReconciliation(flag, data) {
+    let brokerId = this.selectBrokerForm.get('selectBrokerId').value;
+    let brokerCode = this.brokerList.find(c => c.id === brokerId).brokerCode;
     const fragmentData = {
       flag,
       id: 1,
@@ -99,6 +102,8 @@ export class ReconCamsComponent implements OnInit {
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rtId: this.rtId,
         flag,
+        clientName: this.clientName,
+        arnRiaCode: brokerCode,
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
@@ -111,7 +116,7 @@ export class ReconCamsComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
             // call history get
-            this.getAumReconHistoryData()
+            this.getAumReconHistoryData();
           }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();

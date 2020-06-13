@@ -74,6 +74,8 @@ export class AssetStocksComponent implements OnInit {
 
   categories:any;
   grandTotalUnrealizedGainLoss:any;
+  grandTotalAmountInvested:any;
+  grandTotalCurrentValue:any;
   stockListGroup:any = [];
   gain:boolean = true;
   getStocksDataRes(data) {
@@ -85,6 +87,8 @@ export class AssetStocksComponent implements OnInit {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
      this.grandTotalUnrealizedGainLoss = data.grandTotalUnrealizedGainLoss;
+     this.grandTotalAmountInvested = data.grandTotalAmountInvested;
+     this.grandTotalCurrentValue = data.grandTotalCurrentValue;
      if(Math.sign(this.grandTotalUnrealizedGainLoss) == 1){
       this.gain = true;
      }

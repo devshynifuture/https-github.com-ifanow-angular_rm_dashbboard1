@@ -7,7 +7,7 @@
         keyboard_arrow_right
     </i>
 </div> -->
-    <div class="row" style="height: calc(100vh - 147px);">
+    <div class="row" style="height: calc(100vh - 118px);">
         <div class="col-md-2 p-0  pt-8 pb-20 bg-grey lter">
             <div class="col-md-12 p-0 pb-20  ">
                 <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
@@ -74,7 +74,8 @@
 
         <div class="col-md-10 b-a p-0 min-height pt-28">
             <div *ngIf="sidenavState">
-                <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
+                <!-- prod fix  (click)="sidenav.toggle()" -->
+                <div class="leftside-overlay-toggle-button ">
                     <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
                 </div>
 
@@ -91,7 +92,7 @@
                 <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
                         <div>
-                            <app-mutual-fund (sendData)="getValue($event)"></app-mutual-fund>
+                            <app-mutual-fund  (changeCount)="getAssetCountGLobalData()" (sendData)="getValue($event)"></app-mutual-fund>
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab2'">
