@@ -30,7 +30,7 @@ export const appConfig = {
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
   ADD_CEASED_DATE: 'backoffice/cease/date/add',
-  CLIENT_WITHOUT_MF:'asset/clientWithoutMf/get',
+  CLIENT_WITHOUT_MF:'backoffice/clientWithoutMf/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',

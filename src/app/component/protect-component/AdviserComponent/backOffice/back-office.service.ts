@@ -248,7 +248,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NEW_SIP, httpParams);
   }
   getclientWithoutMf(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    const httpParams = new HttpParams().set('advisorIds', data.advisorIds).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WITHOUT_MF, httpParams);
   }
   ceaseSipGet(data) {
