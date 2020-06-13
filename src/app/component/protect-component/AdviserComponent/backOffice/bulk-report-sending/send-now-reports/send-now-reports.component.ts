@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { OpenSendReportPopupComponent } from '../open-send-report-popup/open-send-report-popup.component';
 import { MatDialog } from '@angular/material';
+import * as Highcharts from 'highcharts';
+import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-send-now-reports',
   templateUrl: './send-now-reports.component.html',
-  styleUrls: ['./send-now-reports.component.scss']
+  styleUrls: ['./send-now-reports.component.scss'],
+  providers: [MutualFundOverviewComponent],
+
 })
 export class SendNowReportsComponent implements OnInit {
   element: any;
@@ -20,6 +25,8 @@ export class SendNowReportsComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     public dialog: MatDialog,
+    public overviewRepot: MutualFundOverviewComponent,
+    public mfService: MfServiceService,
   ) { }
 
   ngOnInit() {
@@ -89,4 +96,5 @@ export class SendNowReportsComponent implements OnInit {
       }
     }
   }
+
 }

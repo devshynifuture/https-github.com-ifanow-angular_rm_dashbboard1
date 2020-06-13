@@ -7,6 +7,7 @@ import { debounceTime } from 'rxjs/operators';
 import { Options } from 'ng5-slider';
 import { DatePipe } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-multi-year-goal',
@@ -81,24 +82,43 @@ export class MultiYearGoalComponent implements OnInit {
       "notes": this.multiYearGoalForm.get('field5').value,
       "imageUrl": this.logoImg,
       "goalType": this.goalTypeData.id,
-      "planningThisForId": this.multiYearGoalForm.get('field1').value.id,
-      "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+      "planningFor": this.multiYearGoalForm.get('field1').value.id,
+      "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
+      "frequency": (this.multiYearGoalForm.get('field2').value[1] - this.multiYearGoalForm.get('field2').value[0])
     }
     
+    const date = new Date();
+    const monthAndDayString = '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
     switch(this.goalTypeData.id) {
-      case 5: // Vacation
-        // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
-        obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0];
-        obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1];
+      case AppConstants.VACATION_GOAL:
+        obj['planningforGroupHead'] = 1;
+        obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
+        obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1] + monthAndDayString;
+          if(this.detailedSpendingFormArray.length > 1) {
+            let multiObj = [];
+            let startYear = this.multiYearGoalForm.get('field2').value[0];
+            for(let i = 0; i < this.detailedSpendingFormArray.length; i++) {
+              let spendingsObj = {};
+              let objId = startYear + monthAndDayString;
+              spendingsObj[objId] = this.detailedSpendingFormArray[i].value;
+              multiObj.push(spendingsObj);
+              startYear ++;
+            }
+            obj['goalYrsAndFutureValue'] = multiObj;
+          } else {
+            obj['presentValue'] = this.detailedSpendingFormArray[0].value;
+          }
         break;
 
-      case 6: // Education
-        // obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.id;
+      case AppConstants.EDUCATION_GOAL:
+        obj['planningforGroupHead'] = this.multiYearGoalForm.get('field1').value.relationshipId === 0 ? 1 : 0;
         obj['ageAttheStartofTheCourse'] = this.multiYearGoalForm.get('field2').value[0];
         obj['ageAtTheEndofTheCourse'] = this.multiYearGoalForm.get('field2').value[1];
+        obj['presentValue'] = this.detailedSpendingFormArray[0].value;
         break;
-      
     }
+
     return obj;
   }
 
@@ -165,6 +185,7 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   setDefaultOwner(){
+    // TODO:- Check condition for when no children found
     let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
     this.multiYearGoalForm.get('field1').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
@@ -175,7 +196,7 @@ export class MultiYearGoalComponent implements OnInit {
       if(this.detailedPlanning) {
         let range = value[1] - value[0];
         this.startRange = value[0];
-        let difference = range - (this.multiYearGoalForm.controls.detailedSpendings as FormArray).length;
+        let difference = range - this.detailedSpendingFormArray.length;
         if (difference > 0) {
           this.addToFormArray(difference);
         } else {

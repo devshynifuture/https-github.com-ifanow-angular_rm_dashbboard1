@@ -91,7 +91,7 @@
                 <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
                         <div>
-                            <app-mutual-fund (sendData)="getValue($event)"></app-mutual-fund>
+                            <app-mutual-fund  (changeCount)="getAssetCountGLobalData()" (sendData)="getValue($event)"></app-mutual-fund>
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab2'">

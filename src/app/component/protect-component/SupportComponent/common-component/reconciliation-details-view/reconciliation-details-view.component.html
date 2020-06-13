@@ -74,7 +74,8 @@
         <!-- <mat-checkbox>Show All Transactions</mat-checkbox> -->
     </div>
     <div class="col-lg-6 full-end">
-        <div matTooltip="You cannot Unfreeze Folio" [matTooltipDisabled]="!disableUnfreezeBtn">
+        <div matTooltip="You cannot Unfreeze Folio, Either it is unfreezed earlier or freeze Date is not applied"
+            [matTooltipDisabled]="!disableUnfreezeBtn">
             <button [ngClass]="disableUnfreezeBtn ? 'disableClass':''" [disabled]="disableUnfreezeBtn"
                 class="ba-black mr-16" mat-button (click)="unfreezeFolioData()">
                 Unfreeze
@@ -99,6 +100,7 @@
                     <th class="br" mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (change)="$event ? masterToggle() : null"
                             [checked]="selection.hasValue() && isAllSelected()"
+                            (click)="validationForCanDeleteCheck($event, masterCheckBoxToggle)" #masterCheckBoxToggle
                             [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                         </mat-checkbox>
                         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -118,7 +120,9 @@
                         </mat-menu>
                     </th>
                     <td mat-cell class="br" *matCellDef="let row; index as i">
-                        <mat-checkbox (click)="$event.stopPropagation(); "
+                        <mat-checkbox
+                            (click)="row.canDeleteTransaction ? $event.stopPropagation(): $event.preventDefault()"
+                            [disableRipple]="row.canDeleteTransaction"
                             (change)="$event ? singleSelectionSelect(row, i): null"
                             [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                         </mat-checkbox>
@@ -168,8 +172,8 @@
                         <div class="bar">
                             <!-- [matTooltipPosition]="below" -->
                             <div matTooltip="Kindly unfreeze folio, to delete transaction"
-                                [matTooltipDisabled]="canDeleteTransaction">
-                                <button mat-stroked-button [disabled]="!canDeleteTransaction"
+                                [matTooltipDisabled]="element.canDeleteTransaction">
+                                <button mat-stroked-button [disabled]="!element.canDeleteTransaction"
                                     class="bg-primary text-white mr-12 h-22 btn-xs"
                                     (click)="deleteSingleTransaction(element, i)">
                                     Delete

@@ -16,4 +16,8 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BulkReportSendingRoutingModule { }
+export class BulkReportSendingRoutingModule { 
+  openSendNow(){
+    
+  }
+}
