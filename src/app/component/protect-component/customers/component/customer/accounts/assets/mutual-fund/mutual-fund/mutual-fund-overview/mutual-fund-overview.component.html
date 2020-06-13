@@ -327,7 +327,7 @@
                         [appSkeletonLoading]="isLoading" *ngIf="showSchemeWise">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br c-p"> Scheme name</th>
-                            <td mat-cell *matCellDef="let element" class="br c-p">
+                            <td mat-cell *matCellDef="let element" class="br c-p" style="line-height: 20px !important;">
                                 <div class="bar"><span> {{(isLoading) ? '' : element.schemeName}}</span></div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
