@@ -6,6 +6,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-add-goals',
@@ -108,7 +109,7 @@ export class AddGoalsComponent implements OnInit {
   getGoalGlobalDataRes(data) {
     data.forEach(element => {
       switch (element.id) {
-        case 1: // Retirement
+        case AppConstants.RETIREMENT_GOAL: // Retirement
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'Age you want to retire?',
@@ -136,7 +137,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [0], // self
           }
           break;
-        case 2: // House
+        case AppConstants.HOUSE_GOAL: // House
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'When do you want to buy house?',
@@ -159,7 +160,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [0], // self
           }
           break;
-        case 3: // Car
+        case AppConstants.CAR_GOAL: // Car
           element.questions = {
             Q1: 'When do you want to buy car?',
             Q2: "Car's cost as on today?",
@@ -181,7 +182,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [0], // self
           }
           break;
-        case 4: // Marriage
+        case AppConstants.MARRIAGE_GOAL: // Marriage
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'Member"s age at the time of marriage?',
@@ -204,7 +205,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [5,6], // children
           }
           break;
-        case 5: // Vacation
+        case AppConstants.VACATION_GOAL: // Vacation
         element.questions = {
           Q1: 'Which year you plan to travel',
           Q2: 'Travel expense in today\'s value',
@@ -226,7 +227,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [0], // self
           }
           break;
-        case 6: // Education
+        case AppConstants.EDUCATION_GOAL: // Education
         element.questions = {
           Q: 'Who are you planning this for?',
           Q1: 'Member\'s age at the time of course?',
@@ -246,10 +247,10 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             gap: 5,
             cost: 3000000,
-            planningForRelative: [5,6], // children
+            planningForRelative: [0,5,6], // children // abhishek said self too
           }
           break;
-        case 7: // Emergency
+        case AppConstants.EMERGENCY_GOAL: // Emergency
           element.questions = {
             Q1: 'Set a time frame to achieve this fund',
             Q2: 'Emergency fund you want to accumulate?',
@@ -271,7 +272,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [0], // self
           }
           break;
-        case 8: // Wealth Creation
+        case AppConstants.WEALTH_CREATION_GOAL: // Wealth Creation
           element.questions = {
             Q: 'Who are you planning this for?',
             Q1: 'When do you want to it?',
@@ -294,7 +295,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [5,6], // children
           }
           break;
-        case 9: // Big Spends
+        case AppConstants.BIG_SPEND_GOAL: // Big Spends
           element.questions = {
             Q1: 'When year do you plan this to happen?',
             Q2: 'How much does it cost today',
@@ -316,7 +317,7 @@ export class AddGoalsComponent implements OnInit {
             planningForRelative: [0], // self
           }
           break;
-        case 10: // Others
+        case AppConstants.OTHERS_GOAL: // Others
           element.questions = {
             Q1: 'When do you want to achieve this?',
             Q2: 'How much does it cost today',

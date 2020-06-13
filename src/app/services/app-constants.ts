@@ -35,6 +35,15 @@ export class AppConstants {
     TEMPLATE_NAME: 'Template name',
     SELECT_OWNER: 'Select ownwer',
   }
-
+  public static EDUCATION_GOAL = 5;
+  public static VACATION_GOAL = 3;
+  public static RETIREMENT_GOAL = 4;
+  public static HOUSE_GOAL = 1;
+  public static WEALTH_CREATION_GOAL = 2;
+  public static MARRIAGE_GOAL = 6;
+  public static CAR_GOAL = 7;
+  public static EMERGENCY_GOAL = 8;
+  public static BIG_SPEND_GOAL = 9;
+  public static OTHERS_GOAL = 10;
   public static EMAIL_DOMAINS = ['gmail.com','hotmail.com','mail.com','outlook.com','yahoo.com','yahoo.co.in','rediffmail.com'];
 }
