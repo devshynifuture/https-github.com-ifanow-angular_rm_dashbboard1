@@ -54,15 +54,15 @@
                         <tbody *ngFor="let category of filteredArray; let i = index">
                             <tr>
                                 <td>
-                                    <div class="bar">
+                                    <div [ngClass]="{'bar': isLoading}" >
                                         {{isLoading? '' : category.investorName}}
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="bar">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="category.sipAmount"></span></div>
+                                    <div [ngClass]="{'bar': isLoading}" >{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="category.sipAmount"></span></div>
                                 </td>
                                 <td>
-                                    <div class="bar">{{isLoading ? '' : category.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}</div>
+                                    <div [ngClass]="{'bar': isLoading}" >{{isLoading ? '' : category.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}</div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,category.showCategory,category)">
                                     <div class="bar text-center">
@@ -186,58 +186,58 @@
                                         <tbody *ngFor="let subcategory of category.applicantList; let i = index">
                                             <tr>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : subcategory.investorName}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : subcategory.schemeName}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : subcategory.folioNumber}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant  ? '' : (subcategory.registeredDate | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : (subcategory.from_date | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : (subcategory.to_date | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : subcategory.sipTriggerDay}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant  ? '' : subcategory.frequency}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                             {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="subcategory.sipAmount"></span>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         {{isLoadingApplicant ? '' : (subcategory.weightInPercentage | number:'1.2-2')}}{{(isLoadingApplicant?'':'%') }}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <!-- {{(isLoadingApplicant?'':' Add cease date') }} -->
-                                                    <div class="bar">
+                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         <div *ngIf="!isLoadingApplicant">
                                                             <button (click)="subcategory.isEdit=true" *ngIf="!subcategory.isEdit" >Add Cease Date</button>
                                                             <div [formGroup]="caesedForm" *ngIf="subcategory.isEdit">
@@ -274,7 +274,7 @@
                                     <div *ngIf="!isLoadingApplicant && category.showCategory==false">
                                         <div *ngIf="category.applicantList?.length == 0 && applicantList.length == 0"
                                             class="d-flex flex-column align-items-center">
-                                            <h4 class="text-center pt-12">No data Found
+                                            <h4 class="text-center pt-12">No data found
                                             </h4>
                                         </div>
                                     </div>

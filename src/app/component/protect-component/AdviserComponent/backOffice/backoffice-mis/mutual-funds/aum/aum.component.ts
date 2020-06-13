@@ -35,6 +35,7 @@ export class AumComponent implements OnInit {
   objTosend: any;
   isLoadingTopClients = true;
   isLoadingCategory = true;
+  clientWithoutMF: number;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
@@ -91,6 +92,7 @@ export class AumComponent implements OnInit {
     this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
+    this.getClientWithoutMf();
     this.getSubCatAum()
     this.getMisData();
   }
@@ -174,6 +176,31 @@ export class AumComponent implements OnInit {
         this.clientTotalAum = [];
         this.amcTotalAum = [];
         this.getFilerrorResponse(err)
+      } 
+    )
+  }
+  getClientWithoutMf(){
+    this.isLoading = true;
+
+    const obj = {
+      advisorIds:[this.adminAdvisorIds],
+      parentId: this.parentId
+    }
+    this.backoffice.getclientWithoutMf(obj).subscribe(
+      data => {
+        if(data){
+          console.log(data);
+          this.clientWithoutMF = data.countWithoutMF / data.clientCount * 100;
+          this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
+          (this.clientWithoutMF > 100) ? this.clientWithoutMF =100 : this.clientWithoutMF
+        }else{
+          this.clientWithoutMF = 0;
+        }
+
+      },
+      err =>{
+        this.isLoading =false;
+        this.clientWithoutMF = 0;
       } 
     )
   }

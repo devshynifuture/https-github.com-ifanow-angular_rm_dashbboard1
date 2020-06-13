@@ -58,6 +58,8 @@
 
 .mutualfunds-capital-equity {
   border-collapse: separate;
+  border: 1px solid #DADCE0 !important;
+  border-bottom: 0px !important;
 
   .secoundTable {
 
@@ -65,6 +67,27 @@
 
   }
 }
+
+#ui-assets-account {
+  .vertical-menu {
+    width: 16.7% !important;
+    height: calc(100vh - 147px);
+    display: block !important;
+
+    text-align: left;
+    position: fixed;
+  }
+
+  li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0px 0 24px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
+
 
 // .mutualfunds-capital-equity#tabele-low {
 

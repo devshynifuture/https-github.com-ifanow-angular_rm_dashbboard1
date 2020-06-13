@@ -127,10 +127,10 @@
             </div>
             <div class="col-md-7 pl-4 pr-0" *ngIf="categories">
                 <div class="row">
-                    <div class="col-md-4 p-0 b-a" *ngIf="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS">
+                    <div class="col-md-4 p-0 b-a" *ngIf="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0)|| (categories.OTHERS && categories.OTHERS.currentValue != 0)">
                         <div class="highcharts-figure" id="piechartStock"></div>
                     </div>
-                    <div class=" b-a p-0" [ngClass]="categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS?'col-md-8':'col-md-12'" [ngStyle]="{'border-left':categories.Banks || categories.fmcg || categories.Auto_Ancillaries || categories.OTHERS? 'none':''}">
+                    <div class=" b-a p-0" [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'" [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
                         <div class="row b-b pt-10 pb-10">
                             <div class="col-md-1">
                                 <div class="hw-16 mt-2 bg-Banking"></div>
@@ -244,11 +244,11 @@
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
                             </div>
-                            <div class="col-md-2 pl-0" *ngIf="!categories.OTHERS">
+                            <div class="col-md-2 pl-0" *ngIf="!categories.OTHERS || categories.OTHERS.currentValue == 0">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <p class="text-black mb-0">{{0 | number: '1.2-2'}}%</p>
                             </div>
-                            <div class="col-md-2 pl-0" *ngIf="categories.OTHERS">
+                            <div class="col-md-2 pl-0" *ngIf="categories.OTHERS && categories.OTHERS.currentValue != 0">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <p class="text-black mb-0">{{categories.OTHERS.perrcentage | number: '1.2-2'}}%</p>
                             </div>
@@ -379,8 +379,8 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar"><span >{{element.absoluteReturn}}{{element.absoluteReturn?'%':''}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
-                                ₹<span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>
+                            <td *matFooterCellDef class="br text-right pr-8" mat-footer-cell>
+                                <span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn?'%':''}}
                             </td>
                         </ng-container>
                         <!-- <ng-container matColumnDef="xirr">

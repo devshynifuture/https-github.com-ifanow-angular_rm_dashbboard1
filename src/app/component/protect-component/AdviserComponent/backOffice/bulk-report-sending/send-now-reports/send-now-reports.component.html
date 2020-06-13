@@ -1,1 +1,193 @@
-<p>send-now-reports works!</p>
+<div class="popup-header-fix w-65">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h3 class="mb-0 wrapper-20">Select report type</h3>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-100 mb-100">
+
+    <!-- step One start-->
+
+    <div class="row  pl-20 pr-40">
+        <div class="col-md-12 p-0">
+            <h3 class="f-16 roboto">Select report type from the below given options. You can select more than one.</h3>
+        </div>
+    </div>
+
+    <div class="row pl-10 pr-10">
+        <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectReportType('overview',overview)">
+            <mat-checkbox  [checked]="overview"  class="checked poscheck"> </mat-checkbox>
+            <div [ngClass]="overview == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/overview-report-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Overview</h3>
+                    <p class="mb-0 lh-13 f-12 text-primitive">Just an overview of the mutual fund portfolio. Sometimes less is more!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectReportType('summary',summary)">
+            <mat-checkbox  [checked]="summary"  class="checked poscheck"> </mat-checkbox>
+            <div [ngClass]="summary == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/summary-report-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Summary</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive">This report has the scheme level summary with more data points.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectReportType('allTransactions',allTransactions)">
+            <mat-checkbox  [checked]="allTransactions" class="checked poscheck"> </mat-checkbox>
+            <div [ngClass]="allTransactions == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/all-transactions-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">All transactions</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive"> A simple report which just lists down all transactions during a certain period.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row pt-16 pl-10 pr-10">
+        <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectReportType('unrealisedTransactions',unrealisedTransactions)">
+            <mat-checkbox  [checked]="unrealisedTransactions" class="checked poscheck"> </mat-checkbox>
+            <div [ngClass]="unrealisedTransactions == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/unrealized-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Unrealized transactions</h3>
+                    <p class="mb-0 lh-13 f-12 text-primitive">
+                        This report shows valuation, returns generated from unrealized investments
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectReportType('capitalGainDetails',capitalGainDetails)">
+            <mat-checkbox  [checked]="capitalGainDetails" class="checked poscheck"> </mat-checkbox>
+            <div [ngClass]="capitalGainDetails == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/capital-gains-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Capital gains: Detailed</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive">
+                        A comprehensive report with a detailed breakup of capital gains for a FY
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 pl-8 pr-8 c-p" (click)="selectReportType('capitalGainSummary',capitalGainSummary)">
+            <mat-checkbox  [checked]="capitalGainSummary" class="checked poscheck"> </mat-checkbox>
+            <div [ngClass]="capitalGainSummary == true ? 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter ba-bule' : 'row pt-20 pb-20 b-Radius ba-Tr bg-grey lter'">
+                <div class="col-md-4 text-center">
+                    <img src="assets/images/svg/capital-summary-icon.svg">
+                </div>
+                <div class="col-md-8 pl-0">
+                    <h3 class="mb-4 f-14">Capital gains: Summary</h3>
+                    <p class="mb-0 lh-13  f-12 text-primitive"> Scheme level summary of capital gains for a financial year
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-52">
+        <div class="col-md-8">
+            <h3 class="borderBtm mb-0 f-16">reports selected</h3>
+
+            <div class="row h-80 borderDasd" *ngIf="overview == true">
+                <div class="col-md-12 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 mb-0"> Overview </h3>
+                </div>
+            </div>
+            <div class="row h-80 borderDasd" *ngIf="summary == true">
+                <div class="col-md-12 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 mb-0"> Summary </h3>
+                </div>
+            </div>
+
+            <div class="row h-80 borderDasd" *ngIf="allTransactions == true">
+                <div class="col-md-5 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 m-0">All transactions</h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option> Select period </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row h-80 borderDasd" *ngIf="unrealisedTransactions == true">
+                <div class="col-md-5 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 m-0">Unrealised transactions</h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option> Select period </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row h-80 borderDasd" *ngIf="capitalGainSummary == true">
+                <div class="col-md-5 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 m-0"> Capital gains summary </h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option> Select finacial year </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row h-80 borderDasd" *ngIf="capitalGainDetails == true">
+                <div class="col-md-5 pl-0 d-flex align-items-center">
+                    <h3 class="f-16 m-0"> Capital gains details </h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option> Select finacial year </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-65">
+    <div class="row">
+        <div class="col-md-4 pt-8">
+            <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
+        </div>
+
+        <div class="col-md-8 text-right">
+            <button class="btn-primary f-14 ml-12" (click)="proceed()" mat-button mat-raised-button cdkFocusInitial>PROCEED</button>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { ReconciliationService } from '../../../../../../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -70,7 +71,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     private mfService: MfServiceService,
     private reconService: ReconciliationService,
     private datePipe: DatePipe,
-    private cusService:CustomerService
+    private cusService:CustomerService,
+    private peopleService:PeopleService
   ) { }
   familyMemberList = [];
   errorMsg = '';
@@ -165,7 +167,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   }
 
   getFamilyMemberList() {
-    this.customerService.getFamilyMemberListByClientId({ clientId: this.clientId })
+    // this.customerService.getFamilyMemberListByClientId({ clientId: this.clientId })
+    this.peopleService.getClientFamilyMemberListAsset({ clientId: this.clientId })
       .subscribe(res => {
         if (res) {
           this.familyMemberList = res;
