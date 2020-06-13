@@ -35,12 +35,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   selectedFolioUnits = 0;
   filteredValues: any[];
   arnRiaCode: any = '';
+  mainLoader: boolean = false;
 
   filterList = [];
   deletedTransactions = [];
   tableData2: any = [];
   isUnfreezeClicked: boolean = false;
   isFreezeClicked: boolean = false;
+  changesInUnitOne: string = '';
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -255,6 +257,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   deleteTransactionApi(value) {
     this.selection.clear();
+    this.mainLoader = true;
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
@@ -262,15 +265,18 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           return (!value.includes(item.id)) ? item : null;
         });
         this.dataSource.data.map(item => {
-          item.unitOne = String((res.units).toFixed(3));
-          item.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
-          this.data.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
+          item.unitOne = String(res.units);
+          this.changesInUnitOne = String(res.units);
+          item.difference = String(parseFloat(res.units) - parseFloat(item.unitsRta));
+          this.data.difference = String(parseFloat(item.unitOne) - parseFloat(item.unitsRta));
           if (this.data && item.difference === '0.000') {
             this.disableFreezeBtn = false;
           } else {
             this.disableFreezeBtn = true;
           }
         });
+        this.mainLoader = false;
+        this.shouldDeleteMultiple = false;
 
         this.eventService.openSnackBar("Deleted Transaction Successfully", "DISMISS");
         // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
@@ -394,10 +400,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.dataSource.data.map(element => {
-          element.unitOne = String(parseInt(res.units).toFixed(3));
-          element.difference = String((parseInt(res.units) - parseInt(element.unitsRta)).toFixed(3));
-          if (element.difference !== '0.000') {
-            this.disableFreezeBtn = true;
+          element.unitOne = String(parseFloat(res.units).toFixed(3));
+          this.changesInUnitOne = String(parseFloat(res.units).toFixed(3));
+          element.difference = String((parseFloat(res.units) - parseFloat(element.unitsRta)).toFixed(3));
+          if (element.difference === '0.000') {
+            this.disableFreezeBtn = false;
           }
         });
       });
@@ -417,7 +424,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab,
         deletedTransactionsIndexes: this.deletedTransactions,
         isUnfreezeClicked: this.isUnfreezeClicked,
-        isFreezeClicked: this.isFreezeClicked
+        isFreezeClicked: this.isFreezeClicked,
+        changesInUnitOne: this.changesInUnitOne
       });
   }
 
