@@ -12,4 +12,6 @@ export class SendNowReportsComponent implements OnInit {
   ngOnInit() {
   }
 
+  close(){}
+
 }
