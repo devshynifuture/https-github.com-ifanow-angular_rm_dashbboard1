@@ -246,7 +246,7 @@
                                                 <div [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiringLoading"
                                                         class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
-                                                        {{item.dateDiff}}</p>
+                                                        {{item.dateDiff}}{{' Days'}}</p>
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
                                             </div>
@@ -284,7 +284,7 @@
                                                 <div  [ngClass]="{'height23': isExpiredLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiredLoading"
                                                         class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
-                                                        {{item.dateDiff}}</p>
+                                                        {{item.dateDiff}}{{' Days'}}</p>
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
                                             </div>
