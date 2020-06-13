@@ -182,8 +182,8 @@
                                             <!-- *ngIf="clientTotalAum" prod build -->
                                             <div class="b-white">
                                                 <div *ngFor="let item of rejectionSip" class="row bb">
-                                                    <div class="bar col-md-7 p-0 relClass">
-                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                    <div class=" col-md-7 p-0 relClass">
+                                                        <div  [ngClass]="{'height23': isLoading,'bar':isLoading}">
                                                             <p *ngIf="!isLoading" class="mb-0 f-bold  p-8 ">
                                                                 {{item.schemeName}}|{{item.folioNumber}}</p>
                                                             <p *ngIf="!isLoading"
@@ -194,7 +194,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="bar col-md-5 p-0 relClass">
-                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <div  [ngClass]="{'height23': isLoading,'bar':isLoading}">
                                                             <p *ngIf="!isLoading"
                                                                 class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                                 {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
@@ -220,7 +220,7 @@
                                     <div class="bb-1 ">
                                         <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90
                                             days </p>
-                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiringLoading">
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiringLoading && expiringSip?.length >0">
                                             <button (click)="amcWise('Allsip','expiring')">View all</button>
                                         </div>
                                     </div>
@@ -230,8 +230,8 @@
                                     <div class="b-white skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isExpiringLoading">
                                         <div *ngFor="let item of expiringSip" class="row bb">
-                                            <div class="bar col-md-7 p-0 relClass">
-                                                <div class="bar" [ngClass]="{'height23': isExpiringLoading}">
+                                            <div class=" col-md-7 p-0 relClass">
+                                                <div  [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiringLoading" class="mb-0 f-bold  p-8 ">
                                                         {{item.schemeName}}|{{item.folioNumber}}
                                                     </p>
@@ -243,10 +243,10 @@
                                                 </div>
                                             </div>
                                             <div class="bar col-md-5 p-0 relClass">
-                                                <div class="bar" [ngClass]="{'height23': isExpiringLoading}">
+                                                <div [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiringLoading"
                                                         class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
-                                                        {{item.dateDiff}}</p>
+                                                        {{item.dateDiff}}{{' Days'}}</p>
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
                                             </div>
@@ -261,15 +261,15 @@
                                     <div class="bb-1">
                                         <p class="text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90
                                             days </p>
-                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiredLoading">
+                                        <div class="col-md-6 pr-0 text-right mb-10" *ngIf="!isExpiredLoading && expiredSip?.length > 0">
                                             <button (click)="amcWise('Allsip','expired')">View all</button>
                                         </div>
                                     </div>
                                     <div class="b-white skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isExpiredLoading">
                                         <div *ngFor="let item of expiredSip" class="row bb ">
-                                            <div class=" col-md-7 p-0 relClass" [ngClass]="{'bar': isExpiredLoading}">
-                                                <div class="bar" [ngClass]="{'height23': isExpiredLoading}">
+                                            <div class="col-md-7 p-0 relClass">
+                                                <div  [ngClass]="{'height23': isExpiredLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiredLoading" class="mb-0 f-bold  p-8 ">
                                                         {{item.schemeName}}|{{item.folioNumber}}
                                                     </p>
@@ -280,11 +280,11 @@
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
                                             </div>
-                                            <div class="bar col-md-5 p-0 relClass">
-                                                <div class="bar" [ngClass]="{'height23': isExpiredLoading}">
+                                            <div class=" col-md-5 p-0 relClass">
+                                                <div  [ngClass]="{'height23': isExpiredLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiredLoading"
                                                         class="mb-0 f-16 f-bold roboto p-4 pr-8 text-black  pt-8">
-                                                        {{item.dateDiff}}</p>
+                                                        {{item.dateDiff}}{{' Days'}}</p>
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
                                             </div>
