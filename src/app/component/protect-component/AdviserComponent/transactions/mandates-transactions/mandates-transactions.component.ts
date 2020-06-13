@@ -23,7 +23,7 @@ export class MandatesTransactionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   clientId: any;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   credentialData: any;
   noData: string;
   dontHide: boolean;

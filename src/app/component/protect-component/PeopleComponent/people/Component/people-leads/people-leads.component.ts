@@ -23,8 +23,8 @@ export class PeopleLeadsComponent implements OnInit {
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('leadTableSort', { static: false }) leadTableSort: MatSort;
+  @ViewChild('tableEl') tableEl;
+  @ViewChild('leadTableSort') leadTableSort: MatSort;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private cancelFlagService: CancelFlagService) { }
 
   ngOnInit() {

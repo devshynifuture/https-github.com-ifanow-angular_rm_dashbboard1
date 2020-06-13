@@ -76,10 +76,10 @@ export class LiabilitiesComponent implements OnInit {
     public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService) {
     this.clientData = AuthService.getClientData()
   }
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('tableEl') tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
-  @ViewChild('liabilitiesTemp', { static: false }) liabilitiesTemp: ElementRef;
+  @ViewChild('liabilitiesTemp') liabilitiesTemp: ElementRef;
 
   viewMode: string;
 

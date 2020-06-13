@@ -23,7 +23,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 })
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
 
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue','pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
@@ -44,8 +44,8 @@ export class CommoditiesComponent implements OnInit {
   currentDate = new Date();
   footer = [];
 
-  @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
-  @ViewChild('otherListTable', { static: false }) otherListTableSort: MatSort;
+  @ViewChild('goldListTable') goldListTableSort: MatSort;
+  @ViewChild('otherListTable') otherListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   noData: string;

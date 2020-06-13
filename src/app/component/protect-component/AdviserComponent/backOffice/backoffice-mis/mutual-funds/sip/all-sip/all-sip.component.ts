@@ -25,8 +25,8 @@ export class AllSipComponent implements OnInit {
   @Input() data;
   @Output() changedValue = new EventEmitter();
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('tableEl') tableEl;
 
   constructor(
     private backoffice: BackOfficeService,

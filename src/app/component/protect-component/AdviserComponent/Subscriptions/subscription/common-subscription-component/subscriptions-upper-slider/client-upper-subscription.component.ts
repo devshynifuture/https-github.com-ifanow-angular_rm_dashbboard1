@@ -45,7 +45,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   clientData;
   advisorId;
   subscriptionData: Array<any> = [{ subscriptions: [{}, {}, {}], planName: '' }];
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
     public dialog: MatDialog, public subscription: SubscriptionService) {
   }

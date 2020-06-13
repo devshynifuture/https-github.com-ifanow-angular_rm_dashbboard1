@@ -33,7 +33,7 @@ export interface PeriodicElement {
   ],
 })
 export class InvoicesSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   isFilter: boolean = false;
   chips = [

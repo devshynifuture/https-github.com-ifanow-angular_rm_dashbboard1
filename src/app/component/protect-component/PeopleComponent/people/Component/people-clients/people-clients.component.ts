@@ -26,8 +26,8 @@ export class PeopleClientsComponent implements OnInit {
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
+  @ViewChild('tableEl') tableEl;
+  @ViewChild('clientTableSort') clientTableSort: MatSort;
   screenSize: number;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,

@@ -13,7 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 
 export class CopyDocumentsComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['name', 'lastModi', 'type', 'size'];
   dataSource = ELEMENT_DATA;
   myFiles: string[] = [];

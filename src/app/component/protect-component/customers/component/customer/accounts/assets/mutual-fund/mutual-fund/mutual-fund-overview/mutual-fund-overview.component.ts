@@ -114,7 +114,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
-  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
+  @ViewChild('mfOverviewTemplate') mfOverviewTemplate: ElementRef;
 
 
   uploadData(data) {

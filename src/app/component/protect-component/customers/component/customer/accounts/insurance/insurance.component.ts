@@ -50,7 +50,7 @@ export class InsuranceComponent implements OnInit {
   data2: Array<any> = [{}, {}, {}];
   fragmentData = {isSpinner: false};
   dataSourceGeneralInsurance = new MatTableDataSource(this.data);
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   lifeInsuranceList = [{name: 'Term', id: 1, count: ''}, {name: 'Traditional', id: 2, count: ''}, {name: 'ULIP', id: 3, count: ''}];
   generalLifeInsuranceList = [{name: 'Health', id: 5, count: ''},
     {name: 'Personal accident', id: 7, count: ''},
@@ -75,10 +75,10 @@ export class InsuranceComponent implements OnInit {
   totalPremiunAmountLifeIns = 0;
   totalSumAssuredLifeIns = 0;
   showInsurance: any;
-  @ViewChild('tableEl', {static: false}) tableEl;
-  @ViewChild('tableEl2', {static: false}) tableEl2;
-  @ViewChild('lifeInsurance', {static: false}) lifeInsurance: ElementRef;
-  @ViewChild('generalInsurance', {static: false}) generalInsurance: ElementRef;
+  @ViewChild('tableEl') tableEl;
+  @ViewChild('tableEl2') tableEl2;
+  @ViewChild('lifeInsurance') lifeInsurance: ElementRef;
+  @ViewChild('generalInsurance') generalInsurance: ElementRef;
   lifeInsuranceCount: any;
   generalInsuranceCount: any;
   showType = 'Plan type';

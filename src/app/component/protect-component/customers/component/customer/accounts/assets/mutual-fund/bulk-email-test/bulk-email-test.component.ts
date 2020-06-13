@@ -43,7 +43,7 @@ export class BulkEmailTestComponent implements OnInit {
   svg: any;
 
   constructor(public overview: MutualFundOverviewComponent, private UtilService: UtilService, public mfService: MfServiceService) { }
-  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
+  @ViewChild('mfOverviewTemplate') mfOverviewTemplate: ElementRef;
 
   ngOnInit() {
     this.fragmentData = {}

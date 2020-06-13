@@ -40,9 +40,9 @@ export class OtherPayablesComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   fragmentData = { isSpinner: false };
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('otherPayablesTemp', { static: false }) otherPayablesTemp: ElementRef;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('tableEl') tableEl;
+  @ViewChild('otherPayablesTemp') otherPayablesTemp: ElementRef;
   filterData: MatTableDataSource<any>;
   filterForOtherPayables: any;
   personalProfileData: any;

@@ -1,7 +1,7 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input} from '@angular/core';
+import { ElementRef, Injectable, Input, Directive } from '@angular/core';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {EventService} from '../Data-service/event.service';
 import {HttpClient} from '@angular/common/http';
@@ -11,6 +11,7 @@ import {BehaviorSubject} from 'rxjs';
 import { AuthService } from '../auth-service/authService';
 
 
+@Directive()
 @Injectable({
   providedIn: 'root'
 })
@@ -502,6 +503,7 @@ export function escapeRegExp(s: string): string {
  * @description private loader function which tells when all api's have been resolved
  * You will need to add this to the component's providers to make this function private
  */
+@Injectable()
 export class LoaderFunction {
 
   public get loading() {

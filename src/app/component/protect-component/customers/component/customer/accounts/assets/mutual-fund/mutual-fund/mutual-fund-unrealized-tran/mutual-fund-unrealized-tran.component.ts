@@ -39,7 +39,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mutualFundListFilter: any[];
   isSpinner = false;
   customDataHolder = [];
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
   fragmentData = { isSpinner: false };

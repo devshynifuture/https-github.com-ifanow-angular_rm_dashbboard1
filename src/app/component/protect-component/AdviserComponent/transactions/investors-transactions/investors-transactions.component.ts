@@ -29,7 +29,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   advisorId: any;
   clientId;
   filterData: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   noData: string;
   innUccPendindList: any;
   credentialData: any;

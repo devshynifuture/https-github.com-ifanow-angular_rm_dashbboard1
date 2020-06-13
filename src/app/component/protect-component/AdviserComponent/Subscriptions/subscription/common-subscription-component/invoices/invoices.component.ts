@@ -26,7 +26,7 @@ export interface PeriodicElement {
   styleUrls: ['./invoices.component.scss']
 })
 export class InvoicesComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   isLoading = false;
   clientList: any;
   dataTOget: object;

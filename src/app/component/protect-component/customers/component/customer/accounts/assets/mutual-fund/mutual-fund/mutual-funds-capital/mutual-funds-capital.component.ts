@@ -20,7 +20,7 @@ import { Key } from 'protractor';
   styleUrls: ['./mutual-funds-capital.component.scss']
 })
 export class MutualFundsCapitalComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   // dataSource = ;
@@ -77,9 +77,9 @@ export class MutualFundsCapitalComponent implements OnInit {
   GTdividendReinvestment=0;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('tableEl2', { static: false }) tableEl2;
-  @ViewChild('tableEl3', { static: false }) tableEl3;
+  @ViewChild('tableEl') tableEl;
+  @ViewChild('tableEl2') tableEl2;
+  @ViewChild('tableEl3') tableEl3;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

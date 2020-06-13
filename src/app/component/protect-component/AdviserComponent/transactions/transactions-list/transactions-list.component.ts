@@ -26,7 +26,7 @@ export class TransactionsListComponent implements OnInit {
   finalStartDate;
   finalEndDate;
   errMessage: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   noData: string;
   maxDate = new Date();
   dontHide: boolean;

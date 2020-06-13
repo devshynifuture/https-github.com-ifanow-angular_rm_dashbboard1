@@ -13,7 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class LoanAmortsComponent implements OnInit {
   _data: any;
   dataSource: any = new MatTableDataSource();
-  @ViewChild('epfListTable', {static: false}) holdingsTableSort: MatSort;
+  @ViewChild('epfListTable') holdingsTableSort: MatSort;
   displayedColumns = ['no', 'date', 'bal', 'pay-time', 'pre-pay', 'total-pay', 'interest', 'principal', 'end-bal'];
   constructor(private subInjectService: SubscriptionInject, public util: UtilService) {
   }

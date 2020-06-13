@@ -51,7 +51,7 @@ export class MutualFundSummaryComponent implements OnInit {
   clientId = AuthService.getClientId();
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   @Output() changeInput = new EventEmitter();
   @Output() getCountData = new EventEmitter();
   viewMode: string;
@@ -96,7 +96,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   mutualFund;
-  @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
+  @ViewChild('summaryTemplate') summaryTemplate: ElementRef;
   uploadData(data) {
     this.clientId = data.clientId
     if (this.clientId) {

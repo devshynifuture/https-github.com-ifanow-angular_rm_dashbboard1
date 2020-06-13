@@ -35,7 +35,7 @@ export class NscSchemeComponent implements OnInit {
   SumOfMaturityValue;
   SumOfCurrentValue;
   datasource = new MatTableDataSource(this.data);
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
 

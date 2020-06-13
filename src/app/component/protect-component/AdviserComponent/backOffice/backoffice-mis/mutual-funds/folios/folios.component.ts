@@ -19,7 +19,7 @@ export class FoliosComponent implements OnInit {
   advisorId: any;
   dataSource;
   folioList: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   adminAdvisorIds=[];
   clientId: any;
   parentId: any;

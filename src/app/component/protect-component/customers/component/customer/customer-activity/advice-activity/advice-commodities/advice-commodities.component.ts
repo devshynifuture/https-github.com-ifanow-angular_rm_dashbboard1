@@ -24,8 +24,8 @@ export class AdviceCommoditiesComponent implements OnInit, AfterViewInit {
   advisorId: any;
   clientId: any;
   isLoading: boolean;
-  @ViewChild("tableOne", { static: false }) sort1: MatSort;
-  @ViewChild("tableTwo", { static: false }) sort2: MatSort;
+  @ViewChild("tableOne") sort1: MatSort;
+  @ViewChild("tableTwo") sort2: MatSort;
   goldDataSource: any = new MatTableDataSource();
   selectedAssetId: any = [];
   otherDataSource: any = new MatTableDataSource();

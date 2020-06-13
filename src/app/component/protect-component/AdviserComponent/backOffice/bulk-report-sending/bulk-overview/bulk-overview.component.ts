@@ -49,7 +49,7 @@ export class BulkOverviewComponent implements OnInit {
   constructor(public overview: MutualFundOverviewComponent,
     private utilService : UtilService,
     public mfService: MfServiceService) { }
-  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
+  @ViewChild('mfOverviewTemplate') mfOverviewTemplate: ElementRef;
   @Input()
   set data(data) {
     this.inputData = data;

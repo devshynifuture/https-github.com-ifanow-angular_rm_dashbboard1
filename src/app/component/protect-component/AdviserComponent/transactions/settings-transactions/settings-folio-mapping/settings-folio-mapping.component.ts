@@ -31,7 +31,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   clientData: any;
   advisorId: any;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private utilService: UtilService,

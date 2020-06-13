@@ -58,7 +58,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   @Output() dateChange: EventEmitter<MatDatepickerInputEvent<Date>>
   @Input() data;
 
-  @ViewChild(MatAutocompleteTrigger, { static: false }) trigger: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
   selectedTransactionType: any;
   maximumDate: any;
 

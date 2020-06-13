@@ -24,7 +24,7 @@ import {EmailQuotationComponent} from 'src/app/component/protect-component/Advis
 
 export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   fileType = [
     {id: 1, name: 'PDF'},
     {id: 2, name: 'DOC'},

@@ -34,7 +34,7 @@ export class SettingsClientMappingComponent implements OnInit {
   isLoading: any;
   advisorId: any;
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   credentialsData: any;
   noData: string;
 

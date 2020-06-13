@@ -79,7 +79,7 @@ export class CreateSubscriptionComponent implements OnInit {
     return this.inputData;
   }
 
-  @ViewChild('stepper', { static: false }) stepper: MatStepper;
+  @ViewChild('stepper') stepper: MatStepper;
   stepper2: MatStepper
   feeStructureData;
   clientData;
