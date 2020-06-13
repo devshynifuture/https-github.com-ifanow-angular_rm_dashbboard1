@@ -58,6 +58,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   finalSuggestionList;
   clientList: any;
   @ViewChild('searchClient', { read: MatAutocompleteTrigger, static: true }) autoComplete: MatAutocompleteTrigger;
+  addClientList = [];
 
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
@@ -189,6 +190,10 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     };
   }
   optionSelected(value) {
+    if (this.addClientList.length > 0 && this.addClientList.some(element => element == value.displayName)) {
+      this.eventService.openSnackBar("Client is already converted into family member", "Dismiss");
+      return;
+    }
     if (value.count > 0) {
       this.eventService.openSnackBar("Family member count must be 0", "Dismiss")
       return;
@@ -284,34 +289,15 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.peopleService.mergeClient(arrayObj).subscribe(
       data => {
         console.log(data);
-        this.clientList = this.clientList.filter(element => element.userId != clientData.userId)
+        this.addClientList.push(clientData.displayName)
+        // this.clientList = this.clientList.filter(element => element.userId != clientData.userId)
         clientData.isLoading = false;
         clientData.addedFlag = true;
         this.requiredRefresh = true;
         this.cancelFlagService.setCancelFlag(true)
         this.enumDataService.searchClientList();
         this.stateCtrl.reset();
-        this.filteredStates = this.stateCtrl.valueChanges
-          .pipe(
-            startWith(''),
-            map(state => {
-              if (state) {
-                const filterValue = state.toLowerCase();
-                const list = this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
-                if (list.length == 0) {
-                  this.showSuggestion = true;
-                  this.stateCtrl.setErrors({ invalid: true });
-                  this.stateCtrl.markAsTouched();
-                }
-                return this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
-              } else {
-                return this.data.clientData.ClientList;
-              }
-            }),
-          );
       },
-      // this.filteredStates.unsubscribe();
-
       err => {
         clientData.addedFlag = false;
         clientData.isLoading = true;

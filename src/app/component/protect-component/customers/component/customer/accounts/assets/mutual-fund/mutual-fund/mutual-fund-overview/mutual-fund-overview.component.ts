@@ -44,7 +44,7 @@ export class MutualFundOverviewComponent implements OnInit {
   dataSource2 = new MatTableDataSource([{}, {}, {}]);
   dataSource3 = new MatTableDataSource([{}, {}, {}]);
   datasource1 = new MatTableDataSource([{}, {}, {}]);
-
+  @Output() getCountData = new EventEmitter();
   subCategoryArray: any;
   isLoading: boolean = true;
   rightFilterData: any;
@@ -118,23 +118,9 @@ export class MutualFundOverviewComponent implements OnInit {
 
 
   uploadData(data) {
-    if (data.length > 0) {
-      data.forEach(element => {
-        this.clientId = element.clientId
+        this.clientId = data.clientId
         this.ngOnInit()
-        // this.sendaata.dataSource4 = this.dataSource4.data
-        // this.sendaata.dataSource = this.dataSource.data
-        // this.sendaata.dataSource2 = this.dataSource2.data
-        // this.sendaata.dataSource3 = this.dataSource3.data
-        // this.sendaata.dataSource1 = this.datasource1.data
-        // this.sendaata.equityPercentage = this.equityPercentage
-        // this.sendaata.debtPercentage = this.debtPercentage
-        // this.sendaata.hybridPercenatge = this.hybridPercenatge
-        // this.sendaata.otherPercentage = this.otherPercentage
-        // this.sendaata.mfData = this.mfData;
-
-      });
-    } return this.sendaata
+    return this.sendaata
   }
 
   ngOnInit() {
@@ -352,6 +338,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.getNav();
     this.getTransactionTypeData();
     if (data) {
+      this.getCountData.emit("call");
       this.mfCopyData = data
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);

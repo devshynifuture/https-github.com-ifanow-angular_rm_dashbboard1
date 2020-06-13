@@ -33,25 +33,31 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   upperTableArr: PeriodicElement[];
   advisorId = AuthService.getAdvisorId();
   selectedFolioUnits = 0;
-  canDeleteTransaction = false;
   filteredValues: any[];
   arnRiaCode: any = '';
 
   filterList = [];
   deletedTransactions = [];
   tableData2: any = [];
+  isUnfreezeClicked: boolean = false;
+  isFreezeClicked: boolean = false;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
     private reconService: ReconciliationService,
     private eventService: EventService,
     private supportService: SupportService
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     console.log(this.data);
     // this.unmapFolioTransaction();
+    if (this.data.hasOwnProperty('isUnfreezeClicked')) {
+      this.isUnfreezeClicked = this.data.isUnfreezeClicked;
+    }
+    if (this.data.hasOwnProperty('isFreezeClicked')) {
+      this.isFreezeClicked = this.data.isFreezeClicked;
+    }
 
     if (this.data && this.data.tableType == 'all-folios') {
       this.tableEntriesType = 1;
@@ -80,6 +86,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       this.disableFreezeBtn = true;
     }
 
+    if (this.isUnfreezeClicked) {
+      this.disableUnfreezeBtn = true;
+    }
+
+    if (this.isFreezeClicked) {
+      this.disableFreezeBtn = true;
+    }
+
     // if (this.data && this.data.difference === '0.000') {
     //   this.disableFreezeBtn = false;
     // } else {
@@ -89,30 +103,35 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   singleSelectionSelect(element, mainIndex) {
-    this.selection.toggle(element);
-    const parsedValue = parseFloat((element.units).toFixed(3));
-    if (this.selection.isSelected(element)) {
-      this.shouldDeleteMultiple = true;
-      this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
-      this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
-      this.deleteMultipleTransactionArray.push(element.id);
-      this.deletedTransactions.push(mainIndex);
+    if (element.canDeleteTransaction === true) {
+      this.selection.toggle(element);
+      const parsedValue = parseFloat((element.units).toFixed(3));
+      if (this.selection.isSelected(element)) {
+        this.shouldDeleteMultiple = true;
+        this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
+        this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+        this.deleteMultipleTransactionArray.push(element.id);
+        this.deletedTransactions.push(mainIndex);
+      } else {
+        // this.selectedFolioUnits = 0;
+        const index = this.deleteMultipleTransactionArray.indexOf(element.id);
+        this.deleteMultipleTransactionArray.splice(index, 1);
+
+        const index1 = this.deletedTransactions.indexOf(mainIndex);
+        this.deletedTransactions.splice(index1, 1);
+
+        this.selectedFolioUnits = this.selectedFolioUnits - parsedValue;
+        this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+        if (this.selectedFolioUnits < 0.000) {
+          this.selectedFolioUnits = 0.000;
+        }
+        if (this.deleteMultipleTransactionArray.length === 0) {
+          this.shouldDeleteMultiple = false;
+        }
+      }
     } else {
-      // this.selectedFolioUnits = 0;
-      const index = this.deleteMultipleTransactionArray.indexOf(element.id);
-      this.deleteMultipleTransactionArray.splice(index, 1);
-
-      const index1 = this.deletedTransactions.indexOf(mainIndex);
-      this.deletedTransactions.splice(index1, 1);
-
-      this.selectedFolioUnits = this.selectedFolioUnits - parsedValue;
-      this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
-      if (this.selectedFolioUnits < 0.000) {
-        this.selectedFolioUnits = 0.000;
-      }
-      if (this.deleteMultipleTransactionArray.length === 0) {
-        this.shouldDeleteMultiple = false;
-      }
+      this.selection.clear();
+      this.eventService.openSnackBarNoDuration("Kindly unfreeze folio first!", "DISMISS");
     }
     console.log(this.deleteMultipleTransactionArray);
   }
@@ -125,22 +144,38 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       this.shouldDeleteMultiple = false;
       this.selectedFolioUnits = 0;
     } else {
-      this.shouldDeleteMultiple = true;
-      this.dataSource1.data.forEach((row, index) => {
-        this.selection.select(row);
-        if (this.deleteMultipleTransactionArray.includes(row.id)) {
-          return;
-        }
-        if (this.deletedTransactions.includes(index)) {
-          return;
-        }
-        this.deletedTransactions.push(index);
-        const parsedValue = parseFloat(row.units);
-        this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
-        this.deleteMultipleTransactionArray.push(row.id);
-      });
+      // this need change
+
+      if (!(this.dataSource1.data.some(item => item.canDeleteTransaction === false))) {
+        this.shouldDeleteMultiple = true;
+        this.dataSource1.data.forEach((row, index) => {
+          if (row.canDeleteTransaction) {
+            this.selection.select(row);
+            if (this.deleteMultipleTransactionArray.includes(row.id)) {
+              return;
+            }
+            if (this.deletedTransactions.includes(index)) {
+              return;
+            }
+            this.deletedTransactions.push(index);
+            const parsedValue = parseFloat(row.units);
+            this.selectedFolioUnits = this.selectedFolioUnits + parsedValue;
+            this.deleteMultipleTransactionArray.push(row.id);
+          }
+        });
+      } else {
+        this.selection.clear()
+        this.eventService.openSnackBarNoDuration("Cannot Delete Transaction, Please unfreeze Folio!", "DISMISS");
+      }
+      ////
     }
     console.log(this.deleteMultipleTransactionArray);
+  }
+
+  validationForCanDeleteCheck(event, elRef) {
+    if (this.dataSource1.data.some(item => item.canDeleteTransaction === false)) {
+      elRef.disableRipple = true;
+    }
   }
 
   /** The label for the checkbox on the passed row */
@@ -179,7 +214,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
-          this.canDeleteTransaction = false;
+
+          this.dataSource1.data.forEach(item => {
+            item.canDeleteTransaction = false
+          });
+
+          this.eventService.openSnackBar("Freezed Folio Successfully", "DISMISS");
+          // this.canDeleteTransaction = false;
         }, err => {
           console.error(err);
         });
@@ -187,14 +228,21 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   unfreezeFolioData() {
+    this.isUnfreezeClicked = true;
     if (this.data && this.data.mutualFundId) {
       this.reconService.putUnfreezeFolio(this.data.mutualFundId)
         .subscribe(res => {
           console.log(res);
 
           this.disableUnfreezeBtn = true;
-          this.disableFreezeBtn = false;
-          this.canDeleteTransaction = true;
+          if (this.data.difference === '0.000') {
+            this.disableFreezeBtn = false;
+          }
+          // this.canDeleteTransaction = true;
+          this.dataSource1.data.forEach(item => {
+            item.canDeleteTransaction = true;
+          });
+          this.eventService.openSnackBar("Unfreezed Folio Successfully", "DISMISS");
         }, err => {
           console.error(err);
         });
@@ -218,14 +266,16 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           item.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
           this.data.difference = String((parseInt(item.unitOne) - parseInt(item.unitsRta)).toFixed(3));
           if (this.data && item.difference === '0.000') {
-            this.disableFreezeBtn = true;
-          } else {
             this.disableFreezeBtn = false;
+          } else {
+            this.disableFreezeBtn = true;
           }
         });
+
+        this.eventService.openSnackBar("Deleted Transaction Successfully", "DISMISS");
         // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
         // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
-        this.supportService.sendDataThroughObs(res);
+        // this.supportService.sendDataThroughObs(res);
       });
   }
 
@@ -264,10 +314,10 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     }
     if (whichTable === 2) {
       if (filterBasedOn === 'all') {
-        this.dataSource2.data = this.tableData2;
+        this.dataSource2.data = this.tableData1;
       } else {
         let filteredArray = [];
-        filteredArray = this.tableData2.filter(item => {
+        filteredArray = this.tableData1.filter(item => {
           return item.transactionType === filterBasedOn ? item : null;
         });
         this.dataSource2.data = filteredArray;
@@ -276,12 +326,22 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     // console.log('data filtered', this.dataSource1.data);
   }
 
-
   allFolioTransactionTableDataBinding() {
-    this.canDeleteTransaction = this.data.canDeleteTransaction ? this.data.canDeleteTransaction : false;
-    if (this.data.tableData.length !== 0) {
 
+    if (this.data && this.data.tableData.length !== 0) {
+      let canDeleteTransaction;
       this.data.tableData.forEach((element, index1) => {
+        if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
+          let date1 = new Date(element.transactionDate);
+          let date2 = new Date(element.freezeDate);
+          if (date1.getTime() > date2.getTime()) {
+            canDeleteTransaction = true;
+          } else {
+            canDeleteTransaction = false;
+          }
+        } else {
+          canDeleteTransaction = true;
+        }
         this.tableData1.push({
           srNo: index1 + 1,
           id: element.id,
@@ -292,7 +352,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           balanceUnits: element.balanceUnits,
           actions: '',
           keep: element.keep,
-          nav: element.purchasePrice ? element.purchasePrice : null
+          nav: element.purchasePrice ? element.purchasePrice : null,
+          canDeleteTransaction
         });
         if (!(this.filterList.includes(element.fwTransactionType))) {
           this.filterList.push(element.fwTransactionType);
@@ -349,7 +410,15 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   dialogClose() {
     let refreshRequired = (this.data.difference === '0.000') ? true : false;
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired, fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab, deletedTransactionsIndexes: this.deletedTransactions });
+    this.subscriptionInject
+      .changeNewRightSliderState({
+        state: 'close',
+        refreshRequired,
+        fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab,
+        deletedTransactionsIndexes: this.deletedTransactions,
+        isUnfreezeClicked: this.isUnfreezeClicked,
+        isFreezeClicked: this.isFreezeClicked
+      });
   }
 
 }
@@ -375,6 +444,7 @@ interface PeriodicElement1 {
   balanceUnits: string;
   action: string;
   id: number;
+  canDeleteTransaction: boolean;
 }
 
 interface PeriodicElement2 {
@@ -389,8 +459,8 @@ interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0 },
-  { position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0 },
+  { position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0, canDeleteTransaction: false },
+  { position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ', id: 0, canDeleteTransaction: false },
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [

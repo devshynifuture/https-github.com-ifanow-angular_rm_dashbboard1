@@ -182,7 +182,7 @@
                                                             </mat-icon>
                                                         </button>
                                                     </div>
-                                                    <table class="skeletonAnimation mt-8 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingSubCategory && subcategory.investorList?.length > 0" id="table-low" *ngIf="subcategory.showSubCategory==false">
+                                                    <table class="skeletonAnimation mt-8 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingSubCategory" id="table-low" *ngIf="!subcategory.showSubCategory && subcategory.investorList?.length > 0">
                                                         <thead>
                                                             <tr class="h-40">
                                                                 <th class="w-10">Sr No.</th>
@@ -452,7 +452,7 @@
                                                                     </table>
                                                                     <div *ngIf="!isLoadingApplicant && inv.showInvestor==false">
                                                                         <div *ngIf="inv.applicantList?.length == 0 || applicantList.length == 0" class="d-flex flex-column align-items-center">
-                                                                            <h4 class="text-center pt-12">No data Found
+                                                                            <h4 class="text-center pt-12">No data found
                                                                             </h4>
                                                                         </div>
                                                                     </div>
@@ -462,7 +462,7 @@
                                                     </table>
                                                     <div *ngIf="!isLoadingSubCategory && subcategory.showSubCategory==false">
                                                         <div *ngIf="subcategory.investorList?.length == 0 || subCategory.length == 0" class="d-flex flex-column align-items-center">
-                                                            <h4 class="text-center pt-12">No data Found</h4>
+                                                            <h4 class="text-center pt-12">No data found</h4>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -471,7 +471,7 @@
                                     </table>
                                     <div *ngIf="!isLoadingCategory && category.showCategory==false">
                                         <div *ngIf="category.schemeList?.length == 0 && schemeDataList.length == 0" class="d-flex flex-column align-items-center">
-                                            <h4 class="text-center pt-12">No data Found</h4>
+                                            <h4 class="text-center pt-12">No data found</h4>
                                         </div>
                                     </div>
                                 </td>
@@ -493,7 +493,7 @@
 
                     <div *ngIf="filteredArray.length==0" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">No data Found</h4>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
             </div>
