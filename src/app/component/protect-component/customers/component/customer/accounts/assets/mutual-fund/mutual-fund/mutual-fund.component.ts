@@ -31,6 +31,7 @@ export class MutualFundComponent implements OnInit {
   inputData: any;
   showSelector: boolean = false;
   typeWiseData: any;
+  @Output() changeCount = new EventEmitter();
   @Input()
   set data(data) {
     this.inputData = data;
@@ -95,6 +96,9 @@ export class MutualFundComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
+  }
+  getDataCount(){
+    this.changeCount.emit("call");
   }
   doFiltering(data) {
     data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');

@@ -44,7 +44,7 @@ export class MutualFundOverviewComponent implements OnInit {
   dataSource2 = new MatTableDataSource([{}, {}, {}]);
   dataSource3 = new MatTableDataSource([{}, {}, {}]);
   datasource1 = new MatTableDataSource([{}, {}, {}]);
-
+  @Output() getCountData = new EventEmitter();
   subCategoryArray: any;
   isLoading: boolean = true;
   rightFilterData: any;
@@ -352,6 +352,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.getNav();
     this.getTransactionTypeData();
     if (data) {
+      this.getCountData.emit("call");
       this.mfCopyData = data
       this.MfServiceService.sendMutualFundData(data);
       this.MfServiceService.changeShowMutualFundDropDown(false);
