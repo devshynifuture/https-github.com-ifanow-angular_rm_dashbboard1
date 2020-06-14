@@ -15,7 +15,7 @@ export class PortfolioFieldComponent implements OnInit {
   advisorId: any;
   clientId: any;
   portfolioList: any;
-  familyWisePortfolio: any[];
+  familyWisePortfolio: any=[];
   portfolioName:any;
   @Output() outputEvent = new EventEmitter();
   portfolioForm =  this.fb.group({
@@ -55,6 +55,9 @@ export class PortfolioFieldComponent implements OnInit {
   };
 
   getPortfolioList() {
+    this.familyWisePortfolio = [];
+    this.othersWisePortfolio = [];
+  
     const obj =
     {
       advisorId: this.advisorId,
@@ -66,19 +69,36 @@ export class PortfolioFieldComponent implements OnInit {
     )
   }
 
+  othersWisePortfolio:any = []
   getPortfolioListRes(data) {
-    console.log(data, "porfolio list")
     let checkOwnerId = true;
-    this.familyWisePortfolio = data;
+    // this.familyWisePortfolio = data;
     // this.portfolioForm.get('portfolioName').setValue(this.portfolioName.value);
-    // data.forEach(element => {
-    //   if (element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId) {
-    //     checkOwnerId = true;
-    //     this.familyWisePortfolio.push(element)
-    //   }
-    // });
+    data.forEach(element => {
+      if (element.ownerList[0].familyMemberId == this.ownerIdData.familyMemberId) {
+        checkOwnerId = true;
+        this.familyWisePortfolio.push(element);
+      }
+      else{
+        element.id = 0;
+        this.othersWisePortfolio.push(element);
+      }
+    });
+    console.log(this.familyWisePortfolio,this.othersWisePortfolio, "porfolio list", data);
+
+    this.familyWisePortfolio.forEach(f=> {
+      this.othersWisePortfolio.forEach((o,i) => {
+
+        if(f.portfolioName == o.portfolioName){
+          this.othersWisePortfolio.splice(i, 1);
+        }
+      });
+    });
+    let margeArry = [];
+    margeArry = this.familyWisePortfolio.concat(this.othersWisePortfolio);
+    this.familyWisePortfolio = margeArry;
     // (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
-    console.log(this.familyWisePortfolio)
+    console.log(this.familyWisePortfolio);
   }
   openAddPortfolio() {
     console.log(this.portfolioData)

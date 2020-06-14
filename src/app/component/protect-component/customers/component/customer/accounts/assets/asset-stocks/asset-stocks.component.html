@@ -138,11 +138,11 @@
                             <div class="col-md-6">
                                 <p class="f-500 text-black mb-0">Banking</p>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.Banks == undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.Banks == undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <span>₹0</span>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.Banks != undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.Banks != undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 {{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue" appFormatNumber>{{categories.Banks.currentValue}}</span>
                             </div>
@@ -162,11 +162,11 @@
                             <div class="col-md-6">
                                 <p class="f-500 text-black mb-0">Information technology</p>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.Information_Technology == undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.Information_Technology == undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <span>₹0</span>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.Information_Technology != undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.Information_Technology != undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 {{categories.Information_Technology?'₹':''}}<span [value]="categories.Information_Technology.currentValue" appFormatNumber>{{categories.Information_Technology.currentValue}}</span>
                             </div>
@@ -187,11 +187,11 @@
                             <div class="col-md-6">
                                 <p class="f-500 text-black mb-0">FMCG</p>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.fmcg == undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.fmcg == undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <span>₹0</span>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.fmcg != undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.fmcg != undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 {{categories.fmcg?'₹':''}}<span [value]="categories.fmcg.currentValue" appFormatNumber>{{categories.fmcg.currentValue}}</span>
                             </div>
@@ -211,11 +211,11 @@
                             <div class="col-md-6">
                                 <p class="f-500 text-black mb-0">Auto ancillaries</p>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.Auto_Ancillaries == undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.Auto_Ancillaries == undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <span>₹0</span>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.Auto_Ancillaries != undefined">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.Auto_Ancillaries != undefined">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 {{categories.Auto_Ancillaries?'₹':''}}<span [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
                             </div>
@@ -236,11 +236,11 @@
                             <div class="col-md-6">
                                 <p class="f-500 text-black mb-0">Others</p>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="!categories.OTHERS">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="!categories.OTHERS">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <span>₹0</span>
                             </div>
-                            <div class="col-md-3 pl-0" *ngIf="categories.OTHERS">
+                            <div class="col-md-3 pl-0 text-right" *ngIf="categories.OTHERS">
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
                             </div>
@@ -260,7 +260,7 @@
             <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12" style="width:100% !important;">
                 <div class="col-md-12 p-0">
                     <div class="bg-white">
-                        <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}}
+                        <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}} | {{singlePortfolio.ownerList[0].name}}
                         </h5>
                     </div>
                 </div>
@@ -295,7 +295,7 @@
                                 <div class="bar"  *ngIf="element.stockType != 1">{{element.scripName}} </div>
                                 <div class="bar" *ngIf="element.stockType == 1">{{'Portfolio'}}</div>
                             </td>
-                            <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell style="background-color: #fff !important;"> Total
+                            <th *matFooterCellDef [attr.colspan]="5" class="br proximaFont amt text-right f-600 p-8" mat-header-cell style="background-color: #fff !important;"> Total
                             </th>
                         </ng-container>
                         <ng-container matColumnDef="owner">
@@ -347,7 +347,7 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar">₹<span appFormatNumber>{{element.amountInvested}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
                                 ₹<span [value]="singlePortfolio.totalAmountInvested" appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
                         </ng-container>
                         <ng-container matColumnDef="cvalue">
@@ -357,7 +357,7 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar">₹<span appFormatNumber>{{element.currentMarketValue}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
                                 ₹<span [value]="singlePortfolio.totalCurrentValue" appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
                             </td>
                         </ng-container>
@@ -368,7 +368,7 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar">₹<span appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right pr-8" mat-footer-cell>
+                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
                                 ₹<span [value]="singlePortfolio.totalUnrealizedGainLoss" appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
                             </td>
                         </ng-container>
@@ -379,8 +379,8 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar"><span >{{element.absoluteReturn}}{{element.absoluteReturn?'%':''}}</span></div>
                             </td>
-                            <td *matFooterCellDef class="br text-right pr-8" mat-footer-cell>
-                                <span [value]="singlePortfolio.totalAbsoluteReturn" appFormatNumber>{{singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn?'%':''}}
+                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                <span >{{singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn?'%':''}}
                             </td>
                         </ng-container>
                         <!-- <ng-container matColumnDef="xirr">
@@ -397,7 +397,7 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar">{{element.dividend}}</div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
                                 {{ singlePortfolio.dividend}}
                             </td>
                         </ng-container>
