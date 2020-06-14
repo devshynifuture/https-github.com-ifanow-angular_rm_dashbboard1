@@ -213,12 +213,26 @@
   height: 105px !important;
 }
 
+.h-22 {
+  height: 22px !important;
+}
+
 .height160 {
   height: 160px;
 }
 
 .h-300 {
   height: 300px;
+}
+
+.h-300 {
+  height: 300px;
+  overflow-x: auto;
+}
+
+.h-424 {
+  height: 424px;
+  overflow-x: auto;
 }
 
 .h-500 {

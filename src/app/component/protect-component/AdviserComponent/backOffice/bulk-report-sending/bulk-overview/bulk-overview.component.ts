@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import * as Highcharts from 'highcharts';
 import { UtilService } from 'src/app/services/util.service';
@@ -7,11 +7,12 @@ import { MfServiceService } from 'src/app/component/protect-component/customers/
 @Component({
   selector: 'app-bulk-overview',
   templateUrl: './bulk-overview.component.html',
-  styleUrls: ['./bulk-overview.component.scss']
+  styleUrls: ['./bulk-overview.component.scss'],
+  providers: [MutualFundOverviewComponent],
+
 })
 export class BulkOverviewComponent implements OnInit {
 
-  data: any;
   sendData = [{
     clientId: 88317
   }]
@@ -41,12 +42,25 @@ export class BulkOverviewComponent implements OnInit {
   fragmentData: any;
   mutualFund: string;
   svg: any;
+  inputData: any;
+  clientId: any;
+  totalValue: any;
 
   constructor(public overview: MutualFundOverviewComponent,
     private utilService : UtilService,
     public mfService: MfServiceService) { }
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
-
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data of proceed ', data);
+    this.clientId = data.clientId;
+    this.sendData = data
+    this.ngOnInit()
+  }
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.fragmentData = {}
     this.getUploadData();
@@ -81,7 +95,9 @@ export class BulkOverviewComponent implements OnInit {
     this.debtPercentage = this.getObj.debtPercentage;
     this.otherPercentage = this.getObj.otherPercentage;
     this.hybridPercenatge = this.getObj.hybridPercenatge;
+    this.totalValue = this.getObj.totalValue;
     // pie chart data after calculating percentage
+    //this.ngAfterViewInit()
   }
   generatePdf() {
     this.svg = this.chart.getSVG()

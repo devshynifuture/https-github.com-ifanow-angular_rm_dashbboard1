@@ -21,6 +21,7 @@ export class SendNowReportsComponent implements OnInit {
   allTransactions = false;
   summary = false;
   overview = true;
+  selectedReportType: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -44,9 +45,9 @@ export class SendNowReportsComponent implements OnInit {
   }
   proceed() {
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
-      width: '300px',
-      height: '400px',
-      data: { bank: '', selectedElement: '' }
+      width: '400px',
+      height: '500px',
+      data: { reportType: this.selectedReportType , selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -58,6 +59,7 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   selectReportType(reportType, flag) {
+    this.selectedReportType = reportType
     if (reportType == 'overview') {
       if (flag == true) {
         this.overview = false
