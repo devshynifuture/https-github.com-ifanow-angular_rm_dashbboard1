@@ -13,7 +13,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class AddPortfolioComponent implements OnInit {
   clientId: any;
   advisorId: any;
-
+  title:any;
   constructor(private fb: FormBuilder, private cusService: CustomerService,
     public dialogRef: MatDialogRef<AddPortfolioComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any, private eventService: EventService) { }
@@ -21,10 +21,16 @@ export class AddPortfolioComponent implements OnInit {
   ngOnInit() {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
-    console.log(this.dialogData)
+    console.log(this.dialogData,"data 123")
+    if(this.dialogData){
+      this.title = "Edit"
+    }
+    else{
+      this.title = "New"
+    }
   }
   portfolioGroup = this.fb.group({
-    portfolioName: [, [Validators.required]]
+    portfolioName: [this.dialogData?this.dialogData.portfolioName:'', [Validators.required]]
   })
   addPortfolio() {
     if (this.portfolioGroup.get('portfolioName').invalid) {

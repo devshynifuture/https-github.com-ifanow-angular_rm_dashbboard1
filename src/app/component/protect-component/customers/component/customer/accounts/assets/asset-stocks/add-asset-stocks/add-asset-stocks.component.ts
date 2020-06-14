@@ -83,11 +83,12 @@ export class AddAssetStocksComponent implements OnInit {
     });
     
   }
- 
+ editMood:boolean = false;
   setForm(formData){
     this.editApiData = formData;
     this.editApiData['portfolioId'] = formData.id;
     if(formData.stockList.length > 0){
+      this.editMood = true;
       this.assetForm.get('valueAsOn').setValue(new Date(formData.stockList[0].valueAsOn));
       this.assetForm.get('currentMarketValue').setValue(formData.stockList[0].currentMarketValue);
       this.assetForm.get('amtInvested').setValue(formData.stockList[0].amountInvested);
@@ -245,7 +246,7 @@ addNewNominee(data) {
     else {
       this.editApiData = data;
       this.ownerName = data.ownerName;
-
+      this.editMood = true;
     }
     this.assetForm = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
@@ -333,16 +334,21 @@ addNewNominee(data) {
             }
           ]
         }
-        this.cusService.editStockData(obj).subscribe(
-          data =>{
-            this.barButtonOptions.active = false;
-            this.submitStockDataRes(data);
-          }, 
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error)
-          }
-        )
+
+        if(this.editMood){
+          this.cusService.editStockData(obj).subscribe(
+            data =>{
+              this.barButtonOptions.active = false;
+              this.submitStockDataRes(data);
+            }, 
+            error =>{
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
+          )
+        }else{
+          this.addCall(obj);
+        }
       }
       else {
         let obj = {
@@ -363,19 +369,23 @@ addNewNominee(data) {
             }
           ]
         }
-        this.cusService.addAssetStocks(obj).subscribe(
-          data =>{
-            this.barButtonOptions.active = false;
-            this.submitStockDataRes(data);
-          },
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        )
+        this.addCall(obj);
       }
       // stock type portfolio summary
     }
+  }
+
+  addCall(obj){
+    this.cusService.addAssetStocks(obj).subscribe(
+      data =>{
+        this.barButtonOptions.active = false;
+        this.submitStockDataRes(data);
+      },
+      error =>{
+        this.barButtonOptions.active = false;
+        this.eventService.showErrorMessage(error);
+      }
+    )
   }
   submitStockDataRes(data) {
     console.log(data)
