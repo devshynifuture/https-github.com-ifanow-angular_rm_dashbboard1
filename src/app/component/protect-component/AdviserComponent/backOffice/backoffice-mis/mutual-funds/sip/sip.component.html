@@ -201,7 +201,7 @@
                                                         <p *ngIf="isLoading">{{''}}</p>
                                                     </div>
                                                     <div class="col-md-4 bar pl-0 relClass pt-4">
-                                                        <div [ngClass]="{'height23': isLoading,'bar':isLoading}">
+                                                        <div>
                                                             <p *ngIf="!isLoading"
                                                                 class="mb-0 f-12 f-500 p-4 label bg-danger bg text-white  roboto p-4 ">
                                                                 {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
@@ -261,8 +261,7 @@
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
                                                 <div class="bar col-md-4 p-0 relClass pt-6">
-                                                    <div
-                                                        [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
+                                                    <div>
                                                         <p *ngIf="!isExpiringLoading"
                                                             class="mb-0 f-12 label bg-danger bg text-white f-500 roboto p-4">
                                                             {{item.dateDiff}}{{' Days'}}</p>
