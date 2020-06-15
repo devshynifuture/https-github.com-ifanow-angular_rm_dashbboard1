@@ -717,7 +717,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       };
       if (this.editInsuranceData) {
         this.insuranceFormFilledData.id = this.editInsuranceData.id;
-        this.insuranceFormFilledData.commencementDate = this.lifeInsuranceForm.get('commencementDate').value;
+        this.insuranceFormFilledData.commencementDate = this.datePipe.transform(this.lifeInsuranceForm.get('commencementDate').value, 'yyyy-MM-dd');
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
             this.barButtonOptions.active = false;

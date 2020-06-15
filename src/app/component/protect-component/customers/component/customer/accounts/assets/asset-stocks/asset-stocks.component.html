@@ -145,13 +145,17 @@
             </div>
             <div class="col-md-7 pl-4 pr-0" >
                 <div class="row">
-                    <div class="col-md-4 p-0 b-a" *ngIf="!isLoading && ((categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0)|| (categories.OTHERS && categories.OTHERS.currentValue != 0))">
-                        <div class="highcharts-figure" id="piechartStock"></div>
+                    <div class="col-md-4 p-0 b-a" *ngIf="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0)|| (categories.OTHERS && categories.OTHERS.currentValue != 0)">
+                        <div class="bar" [ngClass]="{'height24': isLoading}">
+                            <div *ngIf="!isLoading">
+                                <div class="highcharts-figure" id="piechartStock"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class=" b-a p-0" [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'" [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
                         <div class="row b-b pt-10 pb-10">
                             <div class="col-md-1">
-                                <div class="hw-16 mt-2 bg-Banking"></div>
+                              <div class="hw-16 mt-2 bg-Banking"></div>
                             </div>
                             <div class="col-md-6">
                                 <p class="f-500 text-black mb-0">Banking</p>
@@ -161,7 +165,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <div *ngIf="!isLoading">
-                                            {{categories.Banks.currentValue?'₹':''}}<span [value]="categories.Banks.currentValue" appFormatNumber>{{categories.Banks.currentValue}}</span>
+                                            {{categories.Banks?'₹':''}}<span [value]="categories.Banks.currentValue" appFormatNumber>{{categories.Banks.currentValue}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +175,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <div *ngIf="!isLoading">
-                                            <p class="text-black mb-0">{{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks.currentValue?'%':''}}</p>
+                                            <p class="text-black mb-0">{{categories.Banks.perrcentage | number: '1.2-2'}}{{categories.Banks?'%':''}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +194,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <div *ngIf="!isLoading">
-                                            {{categories.Information_Technology.currentValue?'₹':''}}<span [value]="categories.Information_Technology.currentValue" appFormatNumber>{{categories.Information_Technology.currentValue}}</span>
+                                            {{categories.Information_Technology?'₹':''}}<span [value]="categories.Information_Technology.currentValue" appFormatNumber>{{categories.Information_Technology.currentValue}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +205,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <p class="text-black mb-0" *ngIf="!isLoading">
-                                            {{categories.Information_Technology.perrcentage | number: '1.2-2'}}{{categories.Information_Technology.currentValue?'%':''}}</p>
+                                            {{categories.Information_Technology.perrcentage | number: '1.2-2'}}{{categories.Information_Technology?'%':''}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +222,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <div *ngIf="!isLoading">
-                                            {{categories.fmcg.currentValue?'₹':''}}<span [value]="categories.fmcg.currentValue" appFormatNumber>{{categories.fmcg.currentValue}}</span>
+                                            {{categories.fmcg?'₹':''}}<span [value]="categories.fmcg.currentValue" appFormatNumber>{{categories.fmcg.currentValue}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +231,7 @@
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
-                                        <p class="text-black mb-0" *ngIf="!isLoading">{{categories.fmcg.perrcentage | number: '1.2-2'}}{{categories.fmcg.currentValue?'%':''}}</p>
+                                        <p class="text-black mb-0" *ngIf="!isLoading">{{categories.fmcg.perrcentage | number: '1.2-2'}}{{categories.fmcg?'%':''}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +248,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <div *ngIf="!isLoading">
-                                            {{categories.Auto_Ancillaries.currentValue?'₹':''}}<span [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
+                                            {{categories.Auto_Ancillaries?'₹':''}}<span [value]="categories.Auto_Ancillaries.currentValue" appFormatNumber>{{categories.Auto_Ancillaries.currentValue}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -254,7 +258,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <p class="text-black mb-0" *ngIf="!isLoading">
-                                            {{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries.currentValue?'%':''}}</p>
+                                            {{categories.Auto_Ancillaries.perrcentage | number: '1.2-2'}}{{categories.Auto_Ancillaries?'%':''}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +275,7 @@
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
                                         <div *ngIf="!isLoading">
-                                            {{categories.OTHERS.currentValue?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
+                                            {{categories.OTHERS?'₹':''}}<span [value]="categories.OTHERS.currentValue" appFormatNumber>{{categories.OTHERS.currentValue}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +284,7 @@
                                 <!-- <p class="text-black mb-0">23.43%</p> -->
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height24': isLoading}">
-                                        <p class="text-black mb-0" *ngIf="!isLoading">{{categories.OTHERS.perrcentage | number: '1.2-2'}}{{categories.OTHERS.currentValue?'%':''}}</p>
+                                        <p class="text-black mb-0" *ngIf="!isLoading">{{categories.OTHERS.perrcentage | number: '1.2-2'}}{{categories.OTHERS?'%':''}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -324,8 +328,8 @@
                             <!-- <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>{{singlePortfolioCategory.categoryName}}</th> -->
                             <th *matHeaderCellDef class="br" [attr.colspan]="11" mat-header-cell>Category name</th>
                             <td *matCellDef="let element" class="br" mat-cell>
-                                <div class="bar"  *ngIf="element.stockType != 1">{{element.scripName}} </div>
-                                <div class="bar" *ngIf="element.stockType == 1">{{'Portfolio'}}</div>
+                                <div class="bar"><span *ngIf="element.stockType != 1">{{isLoading?'':element.scripName}}</span>
+                               <span  *ngIf="element.stockType == 1">{{isLoading?'':'Portfolio'}}</span></div>
                             </td>
                             <th *matFooterCellDef [attr.colspan]="5" class="br proximaFont amt text-right f-600 p-8" mat-header-cell style="background-color: #fff !important;"> Total
                             </th>
@@ -334,8 +338,8 @@
                             <th *matHeaderCellDef class="br w-18" mat-header-cell> Owner</th>
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar" *ngIf="!element.scripName">{{singlePortfolio.ownerList[0].name}}</div>
-                                <div class="bar" *ngIf="element.scripName">{{element.ownerList[0].name}}</div>
+                                <div class="bar" ><span *ngIf="!element.scripName">{{isLoading?'':singlePortfolio.ownerList[0].name}}</span>
+                                <span *ngIf="element.scripName">{{isLoading?'':element.ownerList[0].name}}</span></div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -345,9 +349,11 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar" *ngIf="element.stockType == 1">-</div>
-                                <div class="bar" *ngIf="element.stockType == 3">{{element.balanceShares}}</div>
-                                <div class="bar" *ngIf="element.stockType == 2">{{element.transactionOrHoldingSummaryList[0].quantity}}</div>
+                                <div class="bar" >
+                                    <span *ngIf="element.stockType == 1 && !isLoading">-</span>
+                                    <span *ngIf="element.stockType == 2 && !isLoading">{{element.balanceShares}}</span>
+                                    <span *ngIf="element.stockType == 3 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
+                                </div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -357,7 +363,7 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br  text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.averagePrice}}</span></div>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading" appFormatNumber>{{element.averagePrice}}</span></div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
@@ -367,7 +373,7 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.scripCurrentValue}}</span></div>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"appFormatNumber>{{element.scripCurrentValue}}</span></div>
                             </td>
                             <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
 
@@ -377,20 +383,20 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.amountInvested}}</span></div>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading" appFormatNumber>{{element.amountInvested}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                ₹<span [value]="singlePortfolio.totalAmountInvested" appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
+                            <td *matFooterCellDef  class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading" [value]="singlePortfolio.totalAmountInvested" appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
                         </ng-container>
                         <ng-container matColumnDef="cvalue">
                             <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Current value</th>
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.currentMarketValue}}</span></div>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading" appFormatNumber>{{element.currentMarketValue}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                ₹<span [value]="singlePortfolio.totalCurrentValue" appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
+                            <td *matFooterCellDef  class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading" [value]="singlePortfolio.totalCurrentValue" appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="gain">
@@ -398,10 +404,10 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">₹<span appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading" appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
                             </td>
-                            <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                ₹<span [value]="singlePortfolio.totalUnrealizedGainLoss" appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
+                            <td *matFooterCellDef  class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading" [value]="singlePortfolio.totalUnrealizedGainLoss" appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="ret">
@@ -409,10 +415,10 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar"><span >{{element.absoluteReturn}}{{element.absoluteReturn?'%':''}}</span></div>
+                                <div class="bar"><span >{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn && !isLoading?'%':''}}</span></div>
                             </td>
                             <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                <span >{{singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn?'%':''}}
+                                <span >{{isLoading?'':singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn && !isloading?'%':''}}
                             </td>
                         </ng-container>
                         <!-- <ng-container matColumnDef="xirr">
@@ -427,10 +433,10 @@
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">{{element.dividend}}</div>
+                                <div class="bar">{{isLoading?'':element.dividend}}</div>
                             </td>
                             <td *matFooterCellDef appFormatNumber class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                {{ singlePortfolio.dividend}}
+                                {{ isLoading?'':singlePortfolio.dividend}}
                             </td>
                         </ng-container>
 
