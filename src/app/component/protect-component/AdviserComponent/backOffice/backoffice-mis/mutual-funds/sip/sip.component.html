@@ -224,14 +224,13 @@
                     </div>
                     <div class="col-md-3 pr-0">
                         <div id="mistabs1">
-                            <mat-tab-group class="h-500 borderLine bg-white b-a">
+                            <mat-tab-group class="h-800 borderLine bg-white b-a">
                                 <mat-tab label="Expiring SIP">
                                     <div class="bb-1 d-flex p-8">
                                         <p class="text-center mb-0 f-12 text-custom pt-2">List of SIP expiring in
                                             90
                                             days </p>
-                                        <div class="text-right mb-10"
-                                            *ngIf="!isExpiringLoading && expiringSip?.length >0">
+                                        <div class="text-right " *ngIf="!isExpiringLoading && expiringSip?.length >0">
                                             <button mat-stroked-button
                                                 class="btn-black h-22 lh-20 mn-auto pr-4 pl-4 ml-12 f-12"
                                                 (click)="amcWise('Allsip','expiring')">View
