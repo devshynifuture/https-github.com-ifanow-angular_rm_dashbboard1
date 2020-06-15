@@ -62,19 +62,19 @@ export class SingleGoalYearComponent implements OnInit {
 
     switch (this.goalTypeData.id) {
       case 2: // House
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['whatAgeBuyHouse'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
         break;
       case 3: // Car
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
         break;
       case 4: // Marriage
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['marryAtAge'] = this.singleYearGoalForm.get('age').value;
@@ -85,7 +85,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['goalFV'] = this.singleYearGoalForm.get('cost').value;
         break;
       case 8: // Wealth Creation
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['goalTargetAge'] = this.singleYearGoalForm.get('age').value;
@@ -188,14 +188,14 @@ export class SingleGoalYearComponent implements OnInit {
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value){
     if(this.goalTypeData.validations.showAge) {
-      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.age));
-      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.age));
+      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
+      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(this.minAgeYear < (value.age + this.goalTypeData.validations.minAgeFromPresent)) {
-      this.minAgeYear = value.age + this.goalTypeData.validations.minAgeFromPresent;
+    if(this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
+      this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
     }
   }
 

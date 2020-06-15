@@ -229,6 +229,8 @@ export class GoalsPlanComponent implements OnInit {
       if (data) {
         // this.allGoals = data || [];
         // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
+        this.allGoals = data.filter(goal => goal.singleOrMulti === 2).map(goal => this.mapGoalDashboardData(goal));
+        
         console.log('sagar', data);
         this.loadSelectedGoalData(this.allGoals[0]);
       }
@@ -237,6 +239,13 @@ export class GoalsPlanComponent implements OnInit {
 
   mapGoalDashboardData(goal:any) {
     // single year goal model
+      // id: 4,
+      // goalName: 'Aryan’s marriage',
+      // gv: 4813000,
+      // year: '2030 - 2033',
+      // img: '/assets/images/svg/higher-edu.svg',
+
+    let mapData:any = {};
     if(goal.singleOrMulti == 1) {
       goal.dashboardData = {
         presentValue: goal.singleGoalModel.goalPresentValue,
@@ -244,9 +253,25 @@ export class GoalsPlanComponent implements OnInit {
         equity_monthly: 0
       }
     } else {
-
+      mapData.id = goal.goalId;
+      const goalSubData:any = goal.multiYearGoalPlan;
+      mapData.img = '/assets/images/svg/higher-edu.svg';
+      mapData.year = (new Date(goalSubData.vacationStartYr || 2033942400000).getFullYear()) + ' - ' + (new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear());
+      mapData.goalName = goalSubData.name;
+      mapData.gv = goalSubData.futureValue;
+      mapData.dashboardData = {
+        goalYear: new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear(),
+        presentValue: goalSubData.presentValue,
+        futureValue: goalSubData.futureValue,
+        equity_monthly: goalSubData.sipAmoutEquity || 0,
+        debt_monthly: goalSubData.sipAmoutDebt || 0,
+        lump_equity: goalSubData.lumpSumAmountEquity || 0,
+        lump_debt: goalSubData.lumpSumAmountDebt || 0,
+        goalProgress: (goalSubData.presentValue / goalSubData.futureValue * 100),
+      }
+      mapData.remainingData = goalSubData;
     }
-    return goal;
+    return mapData;
   }
 
   loadGlobalAPIs(){
