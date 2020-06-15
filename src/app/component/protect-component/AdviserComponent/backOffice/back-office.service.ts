@@ -300,10 +300,14 @@ export class BackOfficeService {
     response.subscribe(beers => this.responseCache.set(this.URL, beers));
     return response;
   }
-
+  //bulk email
+  getDetailsClientAdvisor(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ADVISOR_DEATILS, data);
+  }
+  rederToHtmlToPdf(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.HTML_TO_PDF, data);
+  }
   getClientFolioWise(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
-
-
 }
