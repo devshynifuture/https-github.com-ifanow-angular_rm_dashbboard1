@@ -185,7 +185,7 @@
                                         <!-- *ngIf="clientTotalAum" prod build -->
                                         <div class="b-white h-424">
                                             <div *ngFor="let item of rejectionSip" class="row bb">
-                                                <div class=" col-md-11 p-0 relClass">
+                                                <div class=" col-md-12 p-0 relClass">
                                                     <div [ngClass]="{'height23': isLoading,'bar':isLoading}">
                                                         <p *ngIf="!isLoading" class="mb-0 f-bold  p-8 ">
                                                             {{item.schemeName}}|{{item.folioNumber}}</p>
@@ -201,11 +201,11 @@
                                                         <p *ngIf="isLoading">{{''}}</p>
                                                     </div>
                                                     <div class="col-md-4 bar pl-0 relClass">
-                                                        <div [ngClass]="{'height23': isLoading,'bar':isLoading}">
+                                                        <div >
                                                             <p *ngIf="!isLoading"
                                                                 class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                                 {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
-                                                            <p *ngIf="isLoading">{{''}}</p>
+                                                            <!-- <p *ngIf="isLoading">{{''}}</p> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -243,7 +243,7 @@
                                     <div class="b-white skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isExpiringLoading">
                                         <div *ngFor="let item of expiringSip" class="row bb">
-                                            <div class=" col-md-11 p-0 relClass">
+                                            <div class=" col-md-12 p-0 relClass">
                                                 <div
                                                     [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiringLoading" class="mb-0 f-bold  p-8 ">
@@ -261,12 +261,11 @@
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
                                                 <div class="bar col-md-4 p-0 relClass">
-                                                    <div
-                                                        [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
+                                                    <div>
                                                         <p *ngIf="!isExpiringLoading"
                                                             class="mb-0 f-12 label bg-danger bg text-white f-500 roboto p-4">
                                                             {{item.dateDiff}}{{' Days'}}</p>
-                                                        <p *ngIf="isExpiringLoading">{{''}}</p>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -292,7 +291,7 @@
                                     <div class="b-white skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isExpiredLoading">
                                         <div *ngFor="let item of expiredSip" class="row bb ">
-                                            <div class="col-md-11 p-0 relClass">
+                                            <div class="col-md-12 p-0 relClass">
                                                 <div [ngClass]="{'height23': isExpiredLoading,'bar':isExpiringLoading}">
                                                     <p *ngIf="!isExpiredLoading" class="mb-0 f-bold  p-8 ">
                                                         {{item.schemeName}}|{{item.folioNumber}}
@@ -309,13 +308,11 @@
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
 
-                                                <div class=" col-md-4 p-0 relClass">
-                                                    <div
-                                                        [ngClass]="{'height23': isExpiredLoading,'bar':isExpiringLoading}">
+                                                <div class=" col-md-4 p-0 ">
+                                                    <div  >
                                                         <p *ngIf="!isExpiredLoading"
                                                             class="mb-0 f-12 label bg-danger bg text-white f-500 roboto p-4">
                                                             {{item.dateDiff}}{{' Days'}}</p>
-                                                        <p *ngIf="isExpiredLoading">{{''}}</p>
                                                     </div>
                                                 </div>
                                             </div>
