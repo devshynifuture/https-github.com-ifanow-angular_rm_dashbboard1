@@ -76,7 +76,9 @@ export const appConfig = {
   Update_expiryDate: 'asset/update/expiryDate',
   Update_Password: 'asset/update/password',
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
-
+///////////////////////////////BULK EMAIL///////////////////////////////
+GET_CLIENT_ADVISOR_DEATILS:'/backoffice/bulk-report/advisor-client/detail/get',
+HTML_TO_PDF :'    /pdfAndEmail/bulk-mail/html-to-pdf',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
