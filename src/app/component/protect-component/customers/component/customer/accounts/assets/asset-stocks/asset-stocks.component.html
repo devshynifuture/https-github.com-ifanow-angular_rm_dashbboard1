@@ -351,8 +351,8 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar" >
                                     <span *ngIf="element.stockType == 1 && !isLoading">-</span>
-                                    <span *ngIf="element.stockType == 2">{{element.balanceShares}}</span>
-                                    <span *ngIf="element.stockType == 3">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
+                                    <span *ngIf="element.stockType == 2 && !isLoading">{{element.balanceShares}}</span>
+                                    <span *ngIf="element.stockType == 3 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
                                 </div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
