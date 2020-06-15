@@ -31,7 +31,6 @@ export class BulkSummaryComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    this.clientId = data.clientId;
     this.sendData = data
     this.ngOnInit()
   }
@@ -55,6 +54,7 @@ export class BulkSummaryComponent implements OnInit {
     this.mfService.getSummaryData()
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
+        console.log('yeeeeeeeee',res)
         if (this.getObj.hasOwnProperty('data')) {
           this.getAllData()
         }
