@@ -200,10 +200,10 @@
                                                         <p *ngIf="!isLoading" class="pl-4"> {{item.amount}}</p>
                                                         <p *ngIf="isLoading">{{''}}</p>
                                                     </div>
-                                                    <div class="col-md-4 bar pl-0 relClass">
+                                                    <div class="col-md-4 bar pl-0 relClass pt-4">
                                                         <div [ngClass]="{'height23': isLoading,'bar':isLoading}">
                                                             <p *ngIf="!isLoading"
-                                                                class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                                class="mb-0 f-12 f-500 p-4 label bg-danger bg text-white  roboto p-4 ">
                                                                 {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
                                                             <p *ngIf="isLoading">{{''}}</p>
                                                         </div>
@@ -260,7 +260,7 @@
                                                     <p *ngIf="!isExpiringLoading" class="pl-4">{{item.amount}}</p>
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
-                                                <div class="bar col-md-4 p-0 relClass">
+                                                <div class="bar col-md-4 p-0 relClass pt-6">
                                                     <div
                                                         [ngClass]="{'height23': isExpiringLoading,'bar':isExpiringLoading}">
                                                         <p *ngIf="!isExpiringLoading"

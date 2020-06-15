@@ -8,8 +8,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button  *ngIf="!isLoading && filteredArray.length > 0" class="btn-default addon"
-                            (click)="exportToExcelSheet('scheme-wise', null,null)"><i
+                        <button mat-stroked-button *ngIf="!isLoading && filteredArray.length > 0"
+                            class="btn-default addon" (click)="exportToExcelSheet('scheme-wise', null,null)"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -73,7 +73,8 @@
                                 </td>
                                 <td>
                                     <div [ngClass]="{'bar': isLoading}">
-                                            {{isLoading ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoading" [value]="data.sipAmount"></span>
+                                        {{isLoading ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoading"
+                                            [value]="data.sipAmount"></span>
                                     </div>
                                 </td>
                                 <td>
@@ -85,9 +86,11 @@
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,data.showCategory,data)">
                                     <div class="bar text-center">
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="data.showCategory && !isLoading">
+                                        <i class="material-icons b-a f-14 mt-4 c-p"
+                                            *ngIf="data.showCategory && !isLoading">
                                             add </i>
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!data.showCategory && !isLoading">
+                                        <i class="material-icons b-a f-14 mt-4 c-p"
+                                            *ngIf="!data.showCategory && !isLoading">
                                             remove
                                         </i>
                                     </div>
@@ -95,15 +98,17 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="6" class="innerTd one">
-                                    <div class="d-block text-right"  *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
+                                    <div class="d-block text-right"
+                                        *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', i,i)" mat-icon-button>
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="data.showCategory==false && data.subCatList?.length > 0" class=" mb-8 mt-8 skeletonAnimation"
-                                        appSkeletonLoading [appSkeletonLoading]="isLoadingCategory" id="table-low">
+                                    <table *ngIf="data.showCategory==false && data.subCatList?.length > 0"
+                                        class=" mb-8 mt-8 skeletonAnimation" appSkeletonLoading
+                                        [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
@@ -158,7 +163,9 @@
                                                 </td>
                                                 <td>
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
-                                                            {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoadingCategory" [value]="subInvList.sipAmount"></span>
+                                                        {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber
+                                                            *ngIf="!isLoadingCategory"
+                                                            [value]="subInvList.sipAmount"></span>
 
                                                     </div>
                                                 </td>
@@ -183,7 +190,8 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="6" class="innerTd two">
-                                                    <div class="d-block text-right" *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
+                                                    <div class="d-block text-right"
+                                                        *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
                                                         <button (click)="exportToExcelSheet('applicant-wise', i,null)"
                                                             mat-icon-button>
                                                             <mat-icon>
@@ -340,8 +348,11 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}"> {{isLoadingSubCategory ? ' ' : '₹ '}}<span
-                                                                            appFormatNumber *ngIf="!isLoadingSubCategory" [value]="scheme.sipAmount">
+                                                                    <div [ngClass]="{'bar': isLoadingSubCategory}">
+                                                                        {{isLoadingSubCategory ? ' ' : '₹ '}}<span
+                                                                            appFormatNumber
+                                                                            *ngIf="!isLoadingSubCategory"
+                                                                            [value]="scheme.sipAmount">
                                                                         </span>
                                                                     </div>
                                                                 </td>
@@ -353,47 +364,60 @@
                                                                 <td>
                                                                     <!-- {{(isLoadingSubCategory?'':'Add Ceased') }} -->
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                            <div *ngIf="!isLoadingSubCategory">
-                                                                                <button (click)="scheme.isEdit=true" *ngIf="!scheme.isEdit" >Add Cease Date</button>
-                                                                                <div [formGroup]="caesedForm" *ngIf="scheme.isEdit">
-                                                                                        <div class="col-md-3 pr-0">
-                                                                                            <div class="form-group mb-0">
-                                                                                                <mat-form-field class="ba-date">
-                                                                                                    <input matInput
-                                                                                                        class="form-control br-0 b-0"
-                                                                                                        #ceaseddate [max]="maxDate"
-                                                                                                        (input)="preventDefault($event)"
-                                                                                                        matInput [matDatepicker]="picker"
-                                                                                                        formControlName="ceaseddate"
-                                                                                                        readonly>
-                                                                                                    <mat-datepicker-toggle matSuffix
-                                                                                                        [for]="picker">
-                                                                                                    </mat-datepicker-toggle>
-                                                                                                    <mat-datepicker #picker>
-                                                                                                    </mat-datepicker>
-                                                                                                </mat-form-field>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    <span >
-                                                                                        <button [disabled]="ceaseddate.value == ''" (click)="addCeasesdDate(scheme,subInvList,ceaseddate.value)">Save</button>
-                                                                                        <button (click)="scheme.isEdit=false">Cancel</button>
-                                                                                    </span>
+                                                                        <div *ngIf="!isLoadingSubCategory">
+                                                                            <button (click)="scheme.isEdit=true"
+                                                                                *ngIf="!scheme.isEdit">Add Cease
+                                                                                Date</button>
+                                                                            <div [formGroup]="caesedForm"
+                                                                                *ngIf="scheme.isEdit">
+                                                                                <div class="">
+                                                                                    <div class="form-group mb-0">
+                                                                                        <mat-form-field class="ba-date">
+                                                                                            <input matInput
+                                                                                                class="form-control br-0 b-0"
+                                                                                                #ceaseddate
+                                                                                                [max]="maxDate"
+                                                                                                (input)="preventDefault($event)"
+                                                                                                matInput
+                                                                                                [matDatepicker]="picker"
+                                                                                                formControlName="ceaseddate"
+                                                                                                readonly>
+                                                                                            <mat-datepicker-toggle
+                                                                                                matSuffix
+                                                                                                [for]="picker">
+                                                                                            </mat-datepicker-toggle>
+                                                                                            <mat-datepicker #picker>
+                                                                                            </mat-datepicker>
+                                                                                        </mat-form-field>
+                                                                                    </div>
                                                                                 </div>
+                                                                                <span
+                                                                                    class="d-flex justify-content-center mt-4">
+                                                                                    <button
+                                                                                        class="h-24 btn-sm lh-18 btn-primary mr-4"
+                                                                                        [disabled]="ceaseddate.value == ''"
+                                                                                        (click)="addCeasesdDate(scheme,subInvList,ceaseddate.value)">Save</button>
+                                                                                    <button class="h-24 btn-sm lh-18"
+                                                                                        (click)="scheme.isEdit=false">Cancel</button>
+                                                                                </span>
                                                                             </div>
-                                                                            <span *ngIf="isLoadingSubCategory">{{''}}</span>
                                                                         </div>
+                                                                        <span *ngIf="isLoadingSubCategory">{{''}}</span>
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
                                                                         *ngIf="scheme.showSubCategory==false && !isLoadingSubCategory">add</i>
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
-                                                                        *ngIf="scheme.showSubCategory==true && !isLoadingSubCategory"> remove
+                                                                        *ngIf="scheme.showSubCategory==true && !isLoadingSubCategory">
+                                                                        remove
                                                                     </i>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <div *ngIf="!isLoadingSubCategory && subInvList.showSubCategory==false">
+                                                    <div
+                                                        *ngIf="!isLoadingSubCategory && subInvList.showSubCategory==false">
                                                         <div *ngIf="subInvList.applicantList?.length == 0 && applicantListArr.length == 0"
                                                             class="d-flex flex-column align-items-center">
                                                             <h4 class="text-center pt-12">No data found
@@ -418,7 +442,8 @@
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [value]="totalOfSipAmount"></span></strong>
+                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                            [value]="totalOfSipAmount"></span></strong>
                                 </td>
                                 <td class="p-table"><strong>{{totalOfSipCount}}</strong></td>
                                 <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
