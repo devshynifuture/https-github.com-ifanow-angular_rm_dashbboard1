@@ -3,6 +3,7 @@ import { MutualFundSummaryComponent } from 'src/app/component/protect-component/
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-bulk-summary',
@@ -94,8 +95,12 @@ export class BulkSummaryComponent implements OnInit {
       name: 'Summary',
       landscape: true,
       key: 'showPieChart',
-      svg: ''
+      clientId : 93902,
+      advisorId : AuthService.getAdvisorId(),
+      fromEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'devshyni@futurewise.co.in'
     }
+    this.utilService.bulkHtmlToPdf(obj)
     this.utilService.htmlToPdf(para.innerHTML, 'Summary', false, this.fragmentData, '', '')
     return obj
 
