@@ -36,6 +36,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   filterCashFlow = { income: [], expense: [] };
   inflowFlag;
   outflowFlag;
+  orgDetails: any = {};
   mutualFundValue: any = {
     currentValue: 0,
     percentage: 0
@@ -87,7 +88,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private enumService: EnumServiceService,
-  ) {}
+  ) {
+    this.orgDetails = AuthService.getOrgDetails();
+  }
 
   ngOnInit() {
     this.cashFlowFG = this.fb.group({
