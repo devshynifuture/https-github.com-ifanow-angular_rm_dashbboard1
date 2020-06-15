@@ -207,6 +207,8 @@ export const appConfig = {
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
   ADD_ASSET_STOCK: 'account/asset/stock/add',
   GET_PORTFOLIO_LIST: 'account/asset/stock/portfolio-list/get',
+  // GET_PORTFOLIO_LIST: 'account/asset/portfolio/name/list/get',
+  GET_PORTFOLIODATA_LIST: 'account/asset/portfolio-summary/stock/list/get',
   GET_SCRIP_lIST: 'account/asset/stock/scrip-name/get',
   GET_SCRIP_FILTER: 'account/asset/stock/filtered/scrip-name/get',
   ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',

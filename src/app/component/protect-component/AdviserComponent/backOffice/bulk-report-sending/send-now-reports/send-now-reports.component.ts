@@ -45,8 +45,8 @@ export class SendNowReportsComponent implements OnInit {
   }
   proceed() {
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
-      width: '300px',
-      height: '400px',
+      width: '400px',
+      height: '500px',
       data: { reportType: this.selectedReportType , selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {

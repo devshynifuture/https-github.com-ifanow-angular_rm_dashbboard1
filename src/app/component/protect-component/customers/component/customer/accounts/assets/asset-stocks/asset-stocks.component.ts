@@ -28,7 +28,7 @@ export class AssetStocksComponent implements OnInit {
   clientId: any;
   assetStockData: any;
   portfolioData: any=[];
-  isLoading = false;
+  isLoading = true;
   noData: string;
   
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -51,6 +51,7 @@ export class AssetStocksComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
   getStocksData() {
     this.isLoading = true;
+    this.portfolioData.stockListGroup = [{},{},{}]
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -72,7 +73,13 @@ export class AssetStocksComponent implements OnInit {
     );
   }
 
-  categories:any;
+  categories:any={
+    Banks:{},
+    fmcg:{},
+    Auto_Ancillaries:{},
+    OTHERS:{},
+    Information_Technology:{}
+  };
   grandTotalUnrealizedGainLoss:any;
   grandTotalAmountInvested:any;
   grandTotalCurrentValue:any;
@@ -81,9 +88,16 @@ export class AssetStocksComponent implements OnInit {
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
     if(data){
-      this.categories = data.categories;
+      this.categories.Banks = data.categories.Banks?data.categories.Banks:{currentValue:0,perrcentage:0};
+      this.categories.fmcg = data.categories.fmcg?data.categories.fmcg:{currentValue:0,perrcentage:0};
+      this.categories.Auto_Ancillaries = data.categories.Auto_Ancillaries?data.categories.Auto_Ancillaries:{currentValue:0,perrcentage:0};
+      this.categories.OTHERS = data.categories.OTHERS?data.categories.OTHERS:{currentValue:0,perrcentage:0};
+      this.categories.Information_Technology = data.categories.Information_Technology?data.categories.Information_Technology:{currentValue:0,perrcentage:0};
+      this.categories.OTHERS.perrcentage = data.categories.OTHERS.currentValue == 0? 0 :data.categories.OTHERS.perrcentage;
+      
     }
     if (data.portfolios.length != 0) {
+      this.isLoading = false;
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
      this.grandTotalUnrealizedGainLoss = data.grandTotalUnrealizedGainLoss;
@@ -127,6 +141,7 @@ export class AssetStocksComponent implements OnInit {
     } else {
       this.portfolioData = []; 
       this.noData = 'No Stocks Found';
+      this.isLoading = false;
     }
   }
 
@@ -179,6 +194,14 @@ export class AssetStocksComponent implements OnInit {
   }
 
   deleteModal(value, data) {
+   let deleteArry = []
+    if(data.stockListForEditView.length > 0){
+      data.stockListForEditView.forEach(d => {
+        deleteArry.push(d.id);
+      });
+    }else{
+      deleteArry.push(data.id);
+    }
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -187,7 +210,7 @@ export class AssetStocksComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteStockData(data.id).subscribe(
+        this.cusService.deleteStockData(deleteArry).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
