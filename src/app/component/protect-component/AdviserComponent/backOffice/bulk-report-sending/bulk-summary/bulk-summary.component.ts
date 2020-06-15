@@ -14,6 +14,19 @@ export class BulkSummaryComponent implements OnInit {
   inputData: any;
   clientId: any;
   sendData: any;
+  getOrgData : any;
+  userInfo: any;
+  details: any;
+  clientData : any;
+  mfData : any;
+  grandTotal : any;
+  rightFilterData :  any;
+  reponseData : any;
+  setDefaultFilterData : any;
+  saveFilterData :  any;
+  reportDate : any;
+  
+
   @Input()
   set data(data) {
     this.inputData = data;
