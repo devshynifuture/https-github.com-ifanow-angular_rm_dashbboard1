@@ -1,7 +1,5 @@
-<button (click)="generatePdf()">
-    generate
-</button>
-<div class="hide" #summaryTemplate id="template">
+
+<div style="display: none;" #summaryTemplate id="template">
 
     <table cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
@@ -22,8 +20,7 @@
                     {{(userInfo.mobile) ? userInfo.mobile : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
                     {{(userInfo.mobile) ? userInfo.email : '-'}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
-                        {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType)}}</strong>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report </strong>
                 </p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
                         {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>

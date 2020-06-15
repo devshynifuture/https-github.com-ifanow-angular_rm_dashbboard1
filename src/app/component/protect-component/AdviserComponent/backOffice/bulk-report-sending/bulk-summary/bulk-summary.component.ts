@@ -56,6 +56,7 @@ export class BulkSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
     this.fragmentData.isSpinner = true;
@@ -63,9 +64,8 @@ export class BulkSummaryComponent implements OnInit {
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
         console.log('yeeeeeeeee', res)
-        if (this.getObj.hasOwnProperty('customDataSourceData') && this.getObj.hasOwnProperty('totalValue')) {
+        if (this.getObj.hasOwnProperty('customDataSourceData') && this.getObj.hasOwnProperty('grandTotal')) {
           this.getAllDataSummary()
-          this.ngAfterViewInit()
         }
       })
     console.log(this.getObj)
@@ -83,8 +83,9 @@ export class BulkSummaryComponent implements OnInit {
     console.log(this.getObj)
   }
   getAllDataSummary() {
-    this.customDataSource = this.getObj.customDataSourceData;
-    this.totalValue = this.getObj.totalValue
+    this.customDataSource = this.getObj.customDataSourceData.customDataSourceData;
+    this.totalValue = this.getObj.customDataSourceData.totalValue
+    this.grandTotal = this.getObj.grandTotal
   }
   generatePdf() {
     let para = document.getElementById('template');
