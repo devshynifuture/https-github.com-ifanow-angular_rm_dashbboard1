@@ -26,13 +26,12 @@ export class BackofficeFileUploadComponent implements OnInit {
   advisorId: any;
   filterList: any;
   arnRiaList = [];
-  arnRiaId:any = '';
-  showFilter = true;
+  arnRiaId: any = '';
   fileName: any;
   fileSize: any;
   targetFile: any;
   uploadButton = false;
- barWidth:any='0%' ;
+  barWidth: any = '0%';
   constructor(
     private reconService: ReconciliationService,
     private eventService: EventService,
@@ -56,7 +55,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     });
     this.settingService.getArnlist({ advisorId: this.advisorId })
       .subscribe(res => {
-        if (res.length > 0 ) {
+        if (res.length > 0) {
           this.arnRiaList = res;
         } else {
           this.eventService.openSnackBar('No arn ria code found!!', 'DISMISS');
@@ -98,15 +97,11 @@ export class BackofficeFileUploadComponent implements OnInit {
   //   }
   // }
 
-  setShowFilter(value) {
-    this.showFilter = value;
-  }
-  
   uploadTargetFile() {
     this.addbarWidth(1);
     this.numlimit = 30;
     this.uploadButton = false;
-    
+
     const obj = {
       fileType: this.selectedFileType,
       advisorId: this.advisorId,
@@ -115,7 +110,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.reconService.getBackOfficeFileToUpload(obj).subscribe((data) => {
       // this.fileType = data;
       if (data) {
-      this.addbarWidth(30);
+        this.addbarWidth(30);
         this.uploadFileRes(data, this.targetFile.target.files[0]);
       }
     });
@@ -136,7 +131,6 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   setDefaultRtAndStatus() {
-    this.showFilter = true;
     this.filterStatus = '2';
     this.filterRTA = '0';
   }
@@ -148,7 +142,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     //     this.addbarWidth();
     //   }, 1000);
     // }
-    this.numlimit =70;
+    this.numlimit = 70;
     this.addbarWidth(50);
     const httpOptions = {
       headers: new HttpHeaders()
@@ -162,28 +156,28 @@ export class BackofficeFileUploadComponent implements OnInit {
 
     });
   }
-num:any=0;
-numlimit:any;
-recall(){
-  if(this.num <= this.numlimit){
-    this.addbarWidth(this.num);
+  num: any = 0;
+  numlimit: any;
+  recall() {
+    if (this.num <= this.numlimit) {
+      this.addbarWidth(this.num);
+    }
   }
-}
-  addbarWidth(c){
-      this.num = c;
-      setTimeout(() => {
-        if(this.num <= 99){
-          this.num++;
-        }
-        this.barWidth= this.num+'%';
-        console.log("1");
-        this.recall();
-      }, 500);
-    
+  addbarWidth(c) {
+    this.num = c;
+    setTimeout(() => {
+      if (this.num <= 99) {
+        this.num++;
+      }
+      this.barWidth = this.num + '%';
+      console.log("1");
+      this.recall();
+    }, 500);
+
   }
 
   successFileUpload(fileType, fileName) {
-    
+
     const obj = {
       fileType,
       fileName,
