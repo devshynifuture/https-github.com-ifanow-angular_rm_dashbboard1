@@ -47,17 +47,22 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
           this.rtList = data;
           this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
             this.filter = data;
-            this.getBackOfficeSipStp();
+            this.getBackOfficeSipStp(this.filter);
           })
-          this.getBackOfficeSipStp();
+          this.getBackOfficeSipStp(this.filter);
         }
       })
   }
 
-  getBackOfficeSipStp() {
+  getBackOfficeSipStp(filter) {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    this.reconService.getBackOfficeSipStp({ advisorId: this.advisorId }).subscribe((data) => {
+    let obj = {
+      advisorId: this.advisorId,
+      rt: filter.rt,
+      status: filter.status
+    }
+    this.reconService.getBackOfficeSipStp(obj).subscribe((data) => {
       if (data) {
         this.listData = data;
         this.dataSource.data = this.listData;

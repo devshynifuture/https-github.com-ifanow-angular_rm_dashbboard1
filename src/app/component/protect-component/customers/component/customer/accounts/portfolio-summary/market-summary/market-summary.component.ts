@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {Component, OnInit} from '@angular/core';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-market-summary',
@@ -19,13 +19,15 @@ export class MarketSummaryComponent implements OnInit {
   deptDataFlag: boolean;
   nifty500DataFlag: boolean;
 
-  constructor(private cusService: CustomerService) { }
+  constructor(private cusService: CustomerService) {
+  }
 
   ngOnInit() {
     this.getStockFeeds();
     this.getDeptData();
     this.getNifty500Data();
   }
+
   getStockFeeds() {
     this.letsideBarLoader = true;
     this.selectedVal = 'Equities';
@@ -33,12 +35,16 @@ export class MarketSummaryComponent implements OnInit {
     this.cusService.getStockFeeds().subscribe(
       data => {
         console.log(data);
-        this.getStockFeedsResponse(data)
-      }
-    )
+        this.getStockFeedsResponse(data);
+      }, error => {
+        console.log('get stockfeed error : ', error);
+        this.StockFeedFlag = false;
+        this.letsideBarLoader = false;
+      });
   }
+
   getDeptData() {
-    this.deptDataFlag = true
+    this.deptDataFlag = true;
     this.cusService.getDeptData().subscribe(
       data => {
         console.log(data);
@@ -46,46 +52,61 @@ export class MarketSummaryComponent implements OnInit {
           this.deptDataFlag = false;
           data.current_value = Math.round(data.current_value.replace(',', ''));
           this.deptData = data;
-          this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
-          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage)
+          this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage);
+          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage);
         }
+      }, error => {
+        console.log('get DeptData error : ', error);
+        this.deptDataFlag = false;
+
       }
-    )
+    );
   }
 
   getStockFeedsResponse(data) {
     this.StockFeedFlag = false;
     this.letsideBarLoader = false;
-    const { bse, nse, gold, silver } = data;
-    bse.date = new Date(bse.date).getTime();
-    if (bse) {
-      bse.current_value = Math.round((bse.current_value).replace(',', ''));
+    let {bse_and_nse, carat_22, carat_24, silver} = data;
+    if (bse_and_nse) {
+      const regex = /\=/gi;
+
+      // bse_and_nse = (bse_and_nse as string).replace(regex, ':');
+      bse_and_nse = JSON.parse(bse_and_nse);
+      bse_and_nse.date = new Date(bse_and_nse.date).getTime();
+      const bse = bse_and_nse.bse;
+      // {date=12/06/2020, bse={closing_value=33,780.89, change=+242.52,
+      //   name=BSE Sensex, change_in_percentage=+0.72%},
+      //   nifty={closing_value=9,972.90, change=+70.90, name=Nifty 50, change_in_percentage=+0.72%}}
+      bse.current_value = Math.round((bse.closing_value).replace(',', ''));
       bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
-      bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage)
+      bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage);
     }
-    if (nse) {
-      nse.current_value = Math.round((nse.current_value).replace(',', ''));
-      nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
-      nse['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
+    // if (nse) {
+    //   nse.current_value = Math.round((nse.current_value).replace(',', ''));
+    //   nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
+    //   nse['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage);
+    // }
+    if (carat_22) {
+      carat_22.change_in_percentage = parseFloat(carat_22.change_in_percentage).toFixed(2);
+      carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(carat_22.change_in_percentage.replace('%', ''));
     }
-    if (gold) {
-      gold.carat_22.change_in_percentage = parseFloat(gold.carat_22.change_in_percentage).toFixed(2);
-      gold.carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(gold.carat_22.change_in_percentage.replace('%', ''))
-      gold.carat_24.change_in_percentage = parseFloat(gold.carat_24.change_in_percentage).toFixed(2);
-      gold.carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(gold.carat_24.change_in_percentage.replace('%', ''))
+    if (carat_24) {
+      carat_24.change_in_percentage = parseFloat(carat_24.change_in_percentage).toFixed(2);
+      carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(carat_24.change_in_percentage.replace('%', ''));
     }
     if (silver) {
-      silver.current_value = (silver.current_value).replace('₹', '')
-      silver.current_value = (silver.current_value).replace(',', '')
+      silver.current_value = (silver.current_value).replace('₹', '');
+      silver.current_value = (silver.current_value).replace(',', '');
       silver.current_value = Math.round(silver.current_value);
       silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
-      silver['colourFlag'] = this.checkNumberPositiveAndNegative(silver.change_in_percentage)
+      silver['colourFlag'] = this.checkNumberPositiveAndNegative(silver.change_in_percentage);
     }
-    this.bscData = bse;
-    this.nscData = nse;
-    this.goldData = gold;
+    this.bscData = bse_and_nse;
+    // this.nscData = nse;
+    this.goldData = {carat_24, carat_22};
     this.silverData = silver;
   }
+
   getNifty500Data() {
     this.nifty500DataFlag = true;
     this.cusService.getNiftyData().subscribe(
@@ -93,13 +114,17 @@ export class MarketSummaryComponent implements OnInit {
         console.log(data);
         if (data) {
           data.current_value = Math.round(data.current_value.replace(',', ''));
-          this.nifty500DataFlag = false
-          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''))
+          this.nifty500DataFlag = false;
+          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''));
           this.nifty500Data = data;
         }
+      }, error => {
+        console.log('get getNifty500Data error : ', error);
+        this.nifty500DataFlag = false;
       }
-    )
+    );
   }
+
   checkNumberPositiveAndNegative(value) {
     if (value == 0) {
       return undefined;
@@ -109,6 +134,7 @@ export class MarketSummaryComponent implements OnInit {
       return (result == -1) ? false : true;
     }
   }
+
   onValChange(value) {
     this.selectedVal = value;
   }
