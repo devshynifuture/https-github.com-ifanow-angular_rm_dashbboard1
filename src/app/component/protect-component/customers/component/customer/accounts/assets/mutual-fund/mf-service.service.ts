@@ -24,7 +24,7 @@ export class MfServiceService {
   private clientIdToClearData = new BehaviorSubject('');
   private transactionType = new BehaviorSubject('');
   private sendData = new BehaviorSubject('');
-
+  private sendDataSummary = new BehaviorSubject('');
   getPersonalDetails(data) {
     const obj = {
       id: data
@@ -647,5 +647,11 @@ export class MfServiceService {
   }
   getSendData(){
     return this.sendData.asObservable();
+  }
+  setSummaryData(value){
+    this.sendDataSummary.next(value);
+  }
+  getSummaryData(){
+    return this.sendDataSummary.asObservable();
   }
 }

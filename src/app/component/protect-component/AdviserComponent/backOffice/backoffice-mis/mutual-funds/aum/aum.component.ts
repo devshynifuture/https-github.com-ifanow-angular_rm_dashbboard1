@@ -190,7 +190,7 @@ export class AumComponent implements OnInit {
       data => {
         if(data){
           console.log(data);
-          this.clientWithoutMF = data.loadCount / data.clientCount * 100;
+          this.clientWithoutMF = data.countWithoutMF / data.clientCount * 100;
           this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
           (this.clientWithoutMF > 100) ? this.clientWithoutMF =100 : this.clientWithoutMF
         }else{

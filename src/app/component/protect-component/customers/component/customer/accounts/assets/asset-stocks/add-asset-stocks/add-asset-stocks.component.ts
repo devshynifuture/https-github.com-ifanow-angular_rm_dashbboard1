@@ -46,8 +46,60 @@ export class AddAssetStocksComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this. getPortfolioList();
   }
 
+  getPortfolioList() {
+    const obj =
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+    this.cusService.getPortfolioDataList(obj).subscribe(
+      data => this.getPortfolioListRes(data),
+      error => this.eventService.showErrorMessage(error)
+    )
+  }
+
+  portfolioList:any=[];
+  familyMemberPortfolio:any = [];
+  getPortfolioListRes(data) {
+    console.log(data, "porfolio list")
+    // let checkOwnerId = true;
+    this.portfolioList = data;
+    // this.portfolioForm.get('portfolioName').setValue(this.portfolioName.value);
+    
+    // (checkOwnerId) ? this.familyMemberPortfolio : this.familyMemberPortfolio = [];
+    console.log(this.familyMemberPortfolio)
+  }
+
+  selectedOwner(femilyId){
+    this.familyMemberPortfolio = [];
+    this.portfolioList.forEach(element => {
+      if (element.ownerList[0].familyMemberId == femilyId) {
+        // checkOwnerId = true;
+        this.familyMemberPortfolio.push(element)
+      }
+    });
+    
+  }
+ editMood:boolean = false;
+  setForm(formData){
+    this.editApiData = formData;
+    this.editApiData['portfolioId'] = formData.id;
+    if(formData.stockList.length > 0){
+      this.editMood = true;
+      this.assetForm.get('valueAsOn').setValue(new Date(formData.stockList[0].valueAsOn));
+      this.assetForm.get('currentMarketValue').setValue(formData.stockList[0].currentMarketValue);
+      this.assetForm.get('amtInvested').setValue(formData.stockList[0].amountInvested);
+      this.editApiData.id = formData.stockList[0].id;
+    }
+    else{
+      this.editApiData.id = 0;
+    }
+    // this.assetForm.get('valueAsOn').setValue(formData);
+    this.editApiData['portfolioOwner'] = formData.ownerList;
+  }
 // ===================owner-nominee directive=====================//
 display(value) {
   console.log('value selected', value)
@@ -194,7 +246,7 @@ addNewNominee(data) {
     else {
       this.editApiData = data;
       this.ownerName = data.ownerName;
-
+      this.editMood = true;
     }
     this.assetForm = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
@@ -282,16 +334,21 @@ addNewNominee(data) {
             }
           ]
         }
-        this.cusService.editStockData(obj).subscribe(
-          data =>{
-            this.barButtonOptions.active = false;
-            this.submitStockDataRes(data);
-          }, 
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error)
-          }
-        )
+
+        if(this.editMood){
+          this.cusService.editStockData(obj).subscribe(
+            data =>{
+              this.barButtonOptions.active = false;
+              this.submitStockDataRes(data);
+            }, 
+            error =>{
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
+          )
+        }else{
+          this.addCall(obj);
+        }
       }
       else {
         let obj = {
@@ -312,19 +369,23 @@ addNewNominee(data) {
             }
           ]
         }
-        this.cusService.addAssetStocks(obj).subscribe(
-          data =>{
-            this.barButtonOptions.active = false;
-            this.submitStockDataRes(data);
-          },
-          error =>{
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        )
+        this.addCall(obj);
       }
       // stock type portfolio summary
     }
+  }
+
+  addCall(obj){
+    this.cusService.addAssetStocks(obj).subscribe(
+      data =>{
+        this.barButtonOptions.active = false;
+        this.submitStockDataRes(data);
+      },
+      error =>{
+        this.barButtonOptions.active = false;
+        this.eventService.showErrorMessage(error);
+      }
+    )
   }
   submitStockDataRes(data) {
     console.log(data)

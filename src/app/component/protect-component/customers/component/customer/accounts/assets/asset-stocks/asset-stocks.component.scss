@@ -3,6 +3,8 @@
     padding: 6px 5px !important;
   }
 
+  // .stock-overview{width:100% !important;}
+
   tr.mat-header-row {
     height: 48px !important;
   }
@@ -16,7 +18,9 @@
   }
 
 }
-
+.height24 {
+  height: 24px;
+}
 .textGreen{
   color:#5DC644;
 }

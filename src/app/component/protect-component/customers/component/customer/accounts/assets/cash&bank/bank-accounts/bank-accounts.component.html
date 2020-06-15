@@ -86,7 +86,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <mat-select class="form-control" formControlName="bankAcNo" matInput  (selectionChange) = "setAccountType()">
+                <mat-select class="form-control" formControlName="bankAcNo" matInput >
                     <mat-option *ngFor="let option of bankList ;index as i" (click)="setAccountType(option.accountType)" [value]="option.id">
                         {{option.bankNameAndLast4Digit}}</mat-option>
                 </mat-select>

@@ -91,7 +91,11 @@
                                 {{option.policyName}}
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-error>This field is required
+                        <mat-error class="f-12" *ngIf="(lifeInsuranceForm.get('policyName').errors?.required)">
+                            This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(lifeInsuranceForm.get('policyName').errors?.erroInPolicy)">
+                           Enter valid policy name
                         </mat-error>
                     </mat-form-field>
                 </div>

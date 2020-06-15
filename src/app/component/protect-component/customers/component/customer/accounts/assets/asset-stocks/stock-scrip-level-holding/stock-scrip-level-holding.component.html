@@ -130,10 +130,10 @@
                 </div>
             </div>
             <div class="col-md-1 d-flex pt-10 pl-0">
-                <i (click)="addHoldings()" *ngIf="i==HoldingArray.length-1" class="material-icons text-custom c-p">
+                <i (click)="addHoldings()" class="material-icons text-custom c-p">
                     add
                 </i>
-                <i (click)="removeHoldings(i)" class="material-icons text-custom c-p pl-10">
+                <i (click)="removeHoldings(i)" *ngIf="HoldingArray.length > 1" class="material-icons text-custom c-p pl-10">
                     remove
                 </i>
             </div>

@@ -61,6 +61,7 @@
                                 <div class="row pt-8">
                                     <div class="col-md-4 p-0">
                                         <div class="form-group mb-0">
+                                            <span *ngIf="detailedPlanning">{{multiYearGoalForm.get('field2').value[0] + i}}</span>
                                             <mat-form-field>
                                                 <input type="number"
                                                     [value]="spending.value" [formControl]="spending"
