@@ -460,12 +460,12 @@ export class MutualFundSummaryComponent implements OnInit {
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
         this.customDataSource.data = data.customDataSourceData;
-        this.mfService.setSummaryData(this.customDataSource)
         this.displayedColumns.forEach(element => {
           this.styleObject(element)
         });
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
+        this.mfService.setSummaryData(data)
         this.isLoading = false;
         this.changeInput.emit(false);
       };

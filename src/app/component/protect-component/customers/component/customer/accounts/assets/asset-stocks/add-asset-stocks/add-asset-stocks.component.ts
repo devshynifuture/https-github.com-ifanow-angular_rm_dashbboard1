@@ -95,6 +95,7 @@ export class AddAssetStocksComponent implements OnInit {
       this.editApiData.id = formData.stockList[0].id;
     }
     else{
+      this.editMood = false;
       this.editApiData.id = 0;
     }
     // this.assetForm.get('valueAsOn').setValue(formData);

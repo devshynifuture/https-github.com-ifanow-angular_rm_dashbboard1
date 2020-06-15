@@ -37,6 +37,7 @@ export class SendNowReportsComponent implements OnInit {
     this.allTransactions = false;
     this.summary = false;
     this.overview = true;
+    this.selectedReportType = 'overview'
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -47,7 +48,7 @@ export class SendNowReportsComponent implements OnInit {
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
-      data: { reportType: this.selectedReportType , selectedElement: '' }
+      data: { reportType: this.selectedReportType, selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -59,7 +60,12 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   selectReportType(reportType, flag) {
-    this.selectedReportType = reportType
+
+    if (this.selectedReportType == undefined) {
+      this.selectedReportType = 'overview'
+    } if (flag == true) {
+      this.selectedReportType = reportType
+    }
     if (reportType == 'overview') {
       if (flag == true) {
         this.overview = false
