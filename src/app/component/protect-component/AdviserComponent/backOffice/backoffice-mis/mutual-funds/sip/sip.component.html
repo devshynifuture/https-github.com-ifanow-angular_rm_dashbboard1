@@ -328,8 +328,7 @@
                 </div>
             </div>
         </div>
-    </div>*ngFor="let sub*ngFor="let subcategory of category.schemeList; let i = index"category of category.schemeList;
-    let i = index"
+    </div>
     <div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false">
         <app-all-sip [mode]="mode" [data]="objTosend" (changedValue)="display($event)"></app-all-sip>
     </div>
