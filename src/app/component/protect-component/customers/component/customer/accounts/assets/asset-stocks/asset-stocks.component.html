@@ -351,8 +351,8 @@
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar" >
                                     <span *ngIf="element.stockType == 1 && !isLoading">-</span>
-                                    <span *ngIf="element.stockType == 2 && !isLoading">{{element.balanceShares}}</span>
-                                    <span *ngIf="element.stockType == 3 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
+                                    <span *ngIf="element.stockType == 3 && !isLoading">{{element.balanceShares}}</span>
+                                    <span *ngIf="element.stockType == 2 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
                                 </div>
                             </td>
                             <th *matFooterCellDef class="br text-right" mat-header-cell></th>
@@ -460,7 +460,7 @@
                         <tr *matHeaderRowDef="displayedColumns25; sticky: true" mat-header-row></tr>
                         <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                         <tr *matRowDef="let row; columns: displayedColumns25;" mat-row></tr>
-                        <tr *matFooterRowDef="footerColumns;sticky: true" mat-footer-row></tr>
+                        <tr *matFooterRowDef="footerColumns;" mat-footer-row></tr>
 
                         <!--        <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>-->
                     </table>
