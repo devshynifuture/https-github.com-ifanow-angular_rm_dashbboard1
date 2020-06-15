@@ -63,44 +63,48 @@ export class SendNowReportsComponent implements OnInit {
 
     if (this.selectedReportType == undefined) {
       this.selectedReportType = 'overview'
-    } if (flag == true) {
-      this.selectedReportType = reportType
-    }
+    } 
     if (reportType == 'overview') {
       if (flag == true) {
         this.overview = false
       } else {
         this.overview = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'summary') {
       if (flag == true) {
         this.summary = false
       } else {
         this.summary = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'allTransactions') {
       if (flag == true) {
         this.allTransactions = false
       } else {
         this.allTransactions = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'unrealisedTransactions') {
       if (flag == true) {
         this.unrealisedTransactions = false
       } else {
         this.unrealisedTransactions = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainDetails') {
       if (flag == true) {
         this.capitalGainDetails = false
       } else {
         this.capitalGainDetails = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainSummary') {
       if (flag == true) {
         this.capitalGainSummary = false
       } else {
         this.capitalGainSummary = true
+         this.selectedReportType = reportType
       }
     }
   }

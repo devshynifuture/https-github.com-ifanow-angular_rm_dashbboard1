@@ -5,6 +5,7 @@ import { BulkReportSendingComponent } from './bulk-report-sending.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { BulkAllTransactionsComponent } from './bulk-all-transactions/bulk-all-transactions.component';
 
 
 

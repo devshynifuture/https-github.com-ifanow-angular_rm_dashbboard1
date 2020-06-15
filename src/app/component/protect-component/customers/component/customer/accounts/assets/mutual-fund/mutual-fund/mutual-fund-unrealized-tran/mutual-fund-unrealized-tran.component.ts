@@ -73,6 +73,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   reportDate: Date;
   customDataSource: any;
   unrealisedData: TableVirtualScrollDataSource<any>;
+  dataTransaction: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -91,6 +92,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   get data() {
     return this.inputData;
+  }
+  uploadData(data) {
+    this.clientId = data.clientId
+    if (this.clientId) {
+      this.ngOnInit()
+    }
+    return this.dataTransaction
   }
 
   ngOnInit() {
