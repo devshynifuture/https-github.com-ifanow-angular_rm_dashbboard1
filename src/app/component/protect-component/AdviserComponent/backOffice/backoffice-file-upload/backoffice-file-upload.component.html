@@ -94,7 +94,7 @@
         <div class="col-md-9 p-0 history-box">
             <div class="row pt-24">
                 <div class="col-md-6">
-                    <div class="row" *ngIf="showFilter">
+                    <div class="row">
                         <div class="col-md-6 p-0 pr-8 left">
                             <mat-form-field *ngIf="filterList">
                                 <mat-select class="form-control" [(ngModel)]="filterRTA"
@@ -130,15 +130,12 @@
                         <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction"
                             [state]="filter" routerLinkActive="btn-primary" (click)="setDefaultRtAndStatus()">
                             Transactions</mat-button-toggle>
-                        <mat-button-toggle value="italic" (click)="setShowFilter(false)"
-                            routerLink="/admin/backoffice-file-upload/sip-stp" [state]="filter"
-                            routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>
-                        <mat-button-toggle value="underline" (click)="setShowFilter(true)"
-                            routerLink="/admin/backoffice-file-upload/folio" [state]="filter"
-                            routerLinkActive="btn-primary">Folio Master</mat-button-toggle>
-                        <mat-button-toggle value="underline" (click)="setShowFilter(false)"
-                            routerLink="/admin/backoffice-file-upload/aum" [state]="filter"
-                            routerLinkActive="btn-primary">AUM Files</mat-button-toggle>
+                        <mat-button-toggle value="italic" routerLink="/admin/backoffice-file-upload/sip-stp"
+                            [state]="filter" routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>
+                        <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/folio"
+                            [state]="filter" routerLinkActive="btn-primary">Folio Master</mat-button-toggle>
+                        <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/aum"
+                            [state]="filter" routerLinkActive="btn-primary">AUM Files</mat-button-toggle>
                     </mat-button-toggle-group>
                 </div>
             </div>

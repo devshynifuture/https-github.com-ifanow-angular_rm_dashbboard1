@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-4 d-flex align-items-center justify-content-end">
         <!-- (click)="openSendNow()" prod build -->
-        <button class="sendEmailBtn mt-10 bg-primary text-white"  mat-button>Send Now</button>
+        <button class="sendEmailBtn mt-10 bg-primary text-white"  (click)="openSendNow()" mat-button>Send Now</button>
     </div>
 </div>
 
@@ -41,7 +41,7 @@
             <p class="mb-0"> 2) If you plan to do this as a monthly exercise, then ensure that 3-4 days before hand you have done the reconciliation. </p>
 
             <!--  (click)="openSendNow()" prod fix -->
-            <button class="sendEmailBtn bg-primary mt-40 text-white" mat-button>Send Now</button>
+            <button class="sendEmailBtn bg-primary mt-40 text-white" mat-button (click)="openSendNow()"> Send Now</button>
 
         </div>
     </div>
