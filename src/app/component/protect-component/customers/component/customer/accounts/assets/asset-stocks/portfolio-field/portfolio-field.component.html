@@ -3,9 +3,17 @@
         <mat-select class="form-control br-0" formControlName="portfolioName">
             <mat-option value=''>Select portfolio</mat-option>
             <mat-option [value]="singlePortfolio.portfolioName" (click)="selectPortfolio(singlePortfolio)" *ngFor="let singlePortfolio of familyWisePortfolio">
-                {{singlePortfolio.portfolioName}}
+                <div class="row p-0">
+                    <div class="col-md-7 pl-0">
+                        {{singlePortfolio.portfolioName}}
+                    </div>
+                    <div class="col-md-5 text-right pr-0"  *ngIf="portfolioForm.get('portfolioName').value != singlePortfolio.portfolioName && singlePortfolio.id != 0 ">
+                        <span style="margin-right: 5px; " (click)="delete('STOCK',singlePortfolio)"><i class="material-icons" style="font-size: 17px;">delete</i></span>
+                        <span ><i class="material-icons" style="font-size: 17px;" (click)="openAddPortfolio(singlePortfolio)">edit</i></span>
+                    </div>
+                </div>
             </mat-option>
-            <mat-option class="flexCenter" (click)="openAddPortfolio()">
+            <mat-option class="flexCenter" (click)="openAddPortfolio('')">
                 <i class="material-icons">add</i> New Portfolio
             </mat-option>
         </mat-select>

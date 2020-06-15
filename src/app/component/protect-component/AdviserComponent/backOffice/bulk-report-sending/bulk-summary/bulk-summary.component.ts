@@ -39,10 +39,10 @@ export class BulkSummaryComponent implements OnInit {
     this.fragmentData = {}
     this.getUploadData();
     this.fragmentData.isSpinner = true;
-    this.mfService.getSendData()
+    this.mfService.getSummaryData()
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
-        if (this.getObj.hasOwnProperty('customDataSource')) {
+        if (this.getObj.hasOwnProperty('data')) {
           this.getAllData()
         }
       })
@@ -58,7 +58,7 @@ export class BulkSummaryComponent implements OnInit {
   }
   getAllData() {
 
-    this.customDataSource = this.getObj.customDataSource;
+    this.customDataSource = this.getObj.data;
     // pie chart data after calculating percentage
     //this.ngAfterViewInit()
   }
