@@ -98,8 +98,8 @@ export class MutualFundSummaryComponent implements OnInit {
   mutualFund;
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
   uploadData(data) {
-    this.clientId = data.clientId
-    if (this.clientId) {
+    if (data.clientId) {
+      this.clientId = data.clientId
       this.addedData= true;
       this.ngOnInit()
     }
@@ -107,6 +107,9 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataSummary = {}
+    this.dataSummary.grandTotal = {}
+    this.dataSummary.customDataSourceData = {}
     this.reportDate = new Date()
     console.log('displayedColumns', this.displayedColumns)
     this.mfService.getViewMode()
@@ -454,6 +457,8 @@ export class MutualFundSummaryComponent implements OnInit {
       const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
+        this.dataSummary.grandTotal = this.grandTotal
+        this.mfService.setSummaryData(this.dataSummary)
         this.customDataSource.data = []
         this.dataSummary = {}
         this.dataSummary.customDataSource = {}
@@ -465,7 +470,8 @@ export class MutualFundSummaryComponent implements OnInit {
         });
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
-        this.mfService.setSummaryData(data)
+        this.dataSummary.customDataSourceData = data
+        this.mfService.setSummaryData(this.dataSummary)
         this.isLoading = false;
         this.changeInput.emit(false);
       };

@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class BulkOverviewComponent implements OnInit {
 
   sendData = [{
-    clientId: 88317
+    clientId: 93902
   }]
   getObj: any;
   dataSource3: any;
@@ -102,8 +102,6 @@ export class BulkOverviewComponent implements OnInit {
     this.otherPercentage = this.getObj.otherPercentage;
     this.hybridPercenatge = this.getObj.hybridPercenatge;
     this.totalValue = this.getObj.totalValue;
-    // pie chart data after calculating percentage
-    //this.ngAfterViewInit()
   }
   generatePdf() {
     this.svg = this.chart.getSVG()
@@ -114,13 +112,13 @@ export class BulkOverviewComponent implements OnInit {
       landscape: true,
       key: 'showPieChart',
       svg: this.svg,
-      clientId : this.clientId,
+      clientId : 93902,
       advisorId : AuthService.getAdvisorId(),
-      fromEmail: this.userInfo.email,
+      fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
     }
-    //this.utilService.bulkHtmlToPdf(obj)
-    this.utilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
+    this.utilService.bulkHtmlToPdf(obj)
+    //this.utilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
     return obj
 
   }
