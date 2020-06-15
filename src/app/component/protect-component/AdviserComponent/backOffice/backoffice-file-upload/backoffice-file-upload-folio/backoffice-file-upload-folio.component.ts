@@ -68,7 +68,12 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
   getBackOfficeFolio(filter) {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    this.reconService.getBackOfficeFolio({ advisorId: this.advisorId }).subscribe((data) => {
+    let obj = {
+      advisorId: this.advisorId,
+      rt: filter.rt,
+      status: filter.status
+    }
+    this.reconService.getBackOfficeFolio(obj).subscribe((data) => {
       if (data) {
         data.forEach(element => {
           element.rt = this.getRtNameFromRtId(parseInt(element.rt));

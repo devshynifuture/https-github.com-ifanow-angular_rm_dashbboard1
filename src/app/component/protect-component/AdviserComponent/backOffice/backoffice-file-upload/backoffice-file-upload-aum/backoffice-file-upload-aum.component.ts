@@ -18,6 +18,11 @@ export class BackofficeFileUploadAumComponent implements OnInit {
   listData: any = [];
   dataSource = new MatTableDataSource([{}, {}, {}]);
   rtList = [];
+  filter: any = {
+    rt: 0,
+    status: 2
+  };
+  private unSubcrip: Subscription;
   @ViewChild(MatSort, { static: true }) sortList: MatSort;
 
   constructor(
@@ -38,7 +43,11 @@ export class BackofficeFileUploadAumComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.rtList = res;
-          this.getBackOfficeFolio();
+          this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
+            this.filter = data;
+            this.getBackOfficeFolio(this.filter);
+          })
+          this.getBackOfficeFolio(this.filter);
         }
       })
   }
@@ -47,8 +56,15 @@ export class BackofficeFileUploadAumComponent implements OnInit {
     return this.rtList.find(c => c.id === id).name;
   }
 
-  getBackOfficeFolio() {
-    this.reconService.getBackofficeFolioAumList({ advisorId: this.advisorId })
+  getBackOfficeFolio(filter) {
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    let obj = {
+      advisorId: this.advisorId,
+      rt: filter.rt,
+      status: filter.status
+    }
+    this.reconService.getBackofficeFolioAumList(obj)
       .subscribe((data) => {
         if (data) {
           data.forEach(element => {
@@ -65,5 +81,9 @@ export class BackofficeFileUploadAumComponent implements OnInit {
           this.isLoading = false;
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.unSubcrip.unsubscribe();
   }
 }

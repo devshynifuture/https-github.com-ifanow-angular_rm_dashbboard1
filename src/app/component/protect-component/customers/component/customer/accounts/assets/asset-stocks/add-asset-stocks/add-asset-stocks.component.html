@@ -30,7 +30,7 @@
                                     class="form-control br-0" [callMethod]='callMethod'>
                                     <!-- || f.familyMemberAge <= 60 -->
                                     <mat-option value='' disabled>Select family members</mat-option>
-                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" (click)="selectedOwner(f.familyMemberId)" [value]="f.userName">
                                         <span>{{f.userName}}</span>
                                     </mat-option>
                                 </mat-select>
@@ -119,9 +119,17 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution
-                        maxlength="30" class="form-control ruppes br-0">
+                    <input matInput autocomplete="off" aria-label="State" formControlName="portfolioName" [matAutocomplete]="auto" class="form-control br-0 pl-8">
+                    <mat-autocomplete #auto="matAutocomplete" >
+                        <mat-option *ngFor="let singlePorfolio of familyMemberPortfolio" [value]="singlePorfolio.portfolioName" (click)="setForm(singlePorfolio)" >
+                            {{ singlePorfolio.portfolioName}}
+                        </mat-option>
+                        
+                    </mat-autocomplete>
                     <mat-error>This field is required</mat-error>
+                    <!-- <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution
+                        maxlength="30" class="form-control ruppes br-0">
+                    <mat-error>This field is required</mat-error> -->
                 </mat-form-field>
             </div>
         </div>

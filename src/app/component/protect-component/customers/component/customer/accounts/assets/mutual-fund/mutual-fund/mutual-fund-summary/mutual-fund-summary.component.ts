@@ -100,7 +100,6 @@ export class MutualFundSummaryComponent implements OnInit {
   uploadData(data) {
     this.clientId = data.clientId
     if (this.clientId) {
-      this.addedData=true;
       this.ngOnInit()
     }
     return this.dataSummary
@@ -215,18 +214,16 @@ export class MutualFundSummaryComponent implements OnInit {
             }
           });
         } else {
-          if( this.setDefaultFilterData){
-            this.setDefaultFilterData.transactionView = [];
-            this.displayedColumns.forEach(element => {
-              const obj = {
-                displayName: element,
-                selected: true
-              }
-              this.setDefaultFilterData.transactionView.push(obj)
-            });
-          }
-          }
 
+          this.setDefaultFilterData.transactionView = [];
+          this.displayedColumns.forEach(element => {
+            const obj = {
+              displayName: element,
+              selected: true
+            }
+            this.setDefaultFilterData.transactionView.push(obj)
+          });
+        }
         if (this.mfGetData  && this.mfGetData != "") {
           this.getMutualFundResponse(this.mfGetData)
         } else if (this.mutualFund) {

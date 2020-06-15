@@ -183,7 +183,7 @@ export class OverviewTransactionsComponent implements OnInit {
 
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
         //  this.errMessage = err.error.message;
       }
     );
