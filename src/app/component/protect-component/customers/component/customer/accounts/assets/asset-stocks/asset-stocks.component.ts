@@ -195,13 +195,17 @@ export class AssetStocksComponent implements OnInit {
 
   deleteModal(value, data) {
    let deleteArry = []
-    if(data.stockListForEditView.length > 0){
+    if(data.stockListForEditView){
+      if(data.stockListForEditView.length > 0){
       data.stockListForEditView.forEach(d => {
         deleteArry.push(d.id);
       });
-    }else{
+      }
+    }
+    else{
       deleteArry.push(data.id);
     }
+    
     const dialogData = {
       data: value,
       header: 'DELETE',
