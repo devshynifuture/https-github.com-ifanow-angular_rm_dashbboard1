@@ -30,7 +30,7 @@ export const appConfig = {
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
   ADD_CEASED_DATE: 'backoffice/cease/date/add',
-  CLIENT_WITHOUT_MF:'backoffice/clientWithoutMf/get',
+  CLIENT_WITHOUT_MF: 'backoffice/clientWithoutMf/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
@@ -76,9 +76,9 @@ export const appConfig = {
   Update_expiryDate: 'asset/update/expiryDate',
   Update_Password: 'asset/update/password',
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
-///////////////////////////////BULK EMAIL///////////////////////////////
-GET_CLIENT_ADVISOR_DEATILS:'/backoffice/bulk-report/advisor-client/detail/get',
-HTML_TO_PDF :'    /pdfAndEmail/bulk-mail/html-to-pdf',
+  ///////////////////////////////BULK EMAIL///////////////////////////////
+  GET_CLIENT_ADVISOR_DEATILS: '/backoffice/bulk-report/advisor-client/detail/get',
+  HTML_TO_PDF: '    /pdfAndEmail/bulk-mail/html-to-pdf',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -768,7 +768,7 @@ HTML_TO_PDF :'    /pdfAndEmail/bulk-mail/html-to-pdf',
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
   REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
-
+  GET_CLIENT_OR_ADVISOR_ROLES: 'setting/users-roles/role/module-loader/get',
 
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
