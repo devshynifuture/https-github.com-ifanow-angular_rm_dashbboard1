@@ -45,6 +45,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   logoText = 'Your Logo here';
   role: any;
+  isLoding: boolean;
 
   constructor(public authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -129,13 +130,21 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         map(state => {
           if (state) {
             let list = this.enumDataService.getClientSearchData(state);
+            if (list == undefined) {
+              this.showDefaultDropDownOnSearch = true;
+              this.isLoding = true;
+              return;
+            }
             if (list.length == 0) {
+              this.isLoding = false;
               this.showDefaultDropDownOnSearch = true;
               return;
             }
+            this.isLoding = false;
             this.showDefaultDropDownOnSearch = false;
             return this.enumDataService.getClientSearchData(state)
           } else {
+            this.isLoding = false;
             this.showDefaultDropDownOnSearch = false;
             return this.enumDataService.getEmptySearchStateData();
           }
